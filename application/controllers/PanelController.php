@@ -1,6 +1,6 @@
 <?php
 class PanelController extends Zend_Controller_Action{
-
+ 
 	private $_season;
     private $_session;
     private $_user;

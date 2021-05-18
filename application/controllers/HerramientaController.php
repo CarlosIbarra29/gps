@@ -4,7 +4,7 @@ class HerramientaController extends Zend_Controller_Action{
 	private $_season;
     private $_session;
     private $_user;
-    private $_cat;
+    private $_cat; 
     private $_her; 
 
     public function init(){

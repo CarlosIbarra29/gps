@@ -9,7 +9,7 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
 	// 		$db = Zend_Db_Table::getDefaultAdapter();
 	// 		$datasave = array(
 	// 			'imagen'=>$urldb,
-	// 			'id_cat_herramienta'=>$post['cat'],
+	// 			'id_cat_herramienta'=>$post['cat'], 
 	// 			'codigo'=>$post['cod'],
 	// 			'nombre'=>$post['name'],
 	// 			'marca'=>$post['marca'],

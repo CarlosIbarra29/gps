@@ -4,7 +4,7 @@ class ClientesController extends Zend_Controller_Action{
 	private $_season;
     private $_session;
     private $_user;
-    private $_cliente;
+    private $_cliente; 
     private $_her; 
 
     public function init(){
