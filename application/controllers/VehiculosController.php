@@ -48,6 +48,10 @@ class VehiculosController extends Zend_Controller_Action{
         $table = "vehiculos_documentacion"; 
         $this->view->alertas=$this->_veh->GetVigenciasAll($table);
 
+        $table = "vehiculos_documentacion"; 
+        $this->view->alertasvencidas=$this->_veh->GetVigenciasven($table);
+        
+
         $table="vehiculos_grupo";
         $this->view->grupov = $this->_season->GetAll($table);
 
@@ -363,6 +367,9 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table = "vehiculos_documentacion"; 
             $this->view->alertas=$this->_veh->GetVigenciasSpecific($table,$id);
+
+            $table = "vehiculos_documentacion"; 
+            $this->view->alertasvencidas=$this->_veh->GetVigenciasvenSpecific($table,$id);
 
             $op = $this->_getParam('op'); 
             $this->view->op_sel=$op; 

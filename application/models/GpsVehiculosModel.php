@@ -1788,7 +1788,26 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         }
     }   // Vigencia para alertas.
 
-     public function GetVigenciasSpecific($table,$id){
+
+    public function GetVigenciasven($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia, 
+            vd.status, IF(vd.status = 0, 'Vigente', 'Vencido') as statusd, vd.comentarios, vd.documento, vd.id_sol,
+            v.marca, v.submarca, v.modelo, v.color, v.placas 
+            FROM vehiculos_documentacion vd
+            LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
+            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() AND vd.status = 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Vigencia para alertas Vencidas.
+
+
+    public function GetVigenciasSpecific($table,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia,
@@ -1804,6 +1823,23 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   // Vigencia para alertas.
+    
+    public function GetVigenciasvenSpecific($table,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia, 
+            vd.status, IF(vd.status = 0, 'Vigente', 'Vencido') as statusd, vd.comentarios, vd.documento, vd.id_sol,
+            v.marca, v.submarca, v.modelo, v.color, v.placas 
+            FROM vehiculos_documentacion vd
+            LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
+            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() AND vd.status = 0 AND vd.id_vehiculo = $id");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Vigencia para alertas Vencidas.
 
     public function Getpaginationtipodoc($table,$offset,$no_of_records_per_page){
         try{

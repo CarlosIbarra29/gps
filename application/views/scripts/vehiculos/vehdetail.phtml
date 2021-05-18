@@ -22,14 +22,24 @@
     }
 
     .colorfont strong{
-        color: rgb(169,68,66);
-        font-weight: bold;
-    }
+		color: rgb(169,68,66);
+		font-weight: bold;
+	}
 
-    .colorfont span{
-        color: rgb(169,68,66);
-        font-weight: 350;
-    }
+	.colorfont span{
+		color: rgb(169,68,66);
+		font-weight: 350;
+	}
+
+	.colorfont1 strong{
+		color: rgb(114,97,40);
+		font-weight: bold;
+	}
+
+	.colorfont1 span{
+		color: rgb(114,97,40);
+		font-weight: 350;
+	}
 </style>
 
 <!-- INICIO DETAIL--> 
@@ -55,16 +65,30 @@
 		<div class="col m12 s12" style="margin-top: 15px;">
 		    <div class="row">
 		        <div class="col m12 s12" id="alert_box">
-		            <?php if ($this->alertas) { ?>
-		                <?php foreach ($this->alertas as $not) { ?>
+		            <?php if ($this->alertas || $this->alertasvencidas) { ?>
+		            	<?php foreach ($this->alertasvencidas as $vencidas) { ?>
 		                    <div style="background: rgb(242,222,222);"  class="card darken-1">
 		                        <div style="padding: 10px;" class="card-content white-text colorfont">
 		                            <strong>¡Cuidado!</strong> 
 		                            <span>
+		                                Esté vehículo tiene el/la <b><?php echo $vencidas['nombre_doc']; ?></b> por vencer el día: <?php echo $not['vigencia']; ?> Atiéndelo Pronto.
+		                            </span> &nbsp; 
+		                            <a href="/vehiculos/documentacion/id/<?php echo $vencidas["id_vehiculo"] ?>">
+		                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+		                            </a>
+		                        </div>    
+		                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+		                    </div>              
+		                <?php } ?> 
+		                <?php foreach ($this->alertas as $not) { ?>
+		                    <div style="background: rgb(250,252,217);"  class="card darken-1">
+		                        <div style="padding: 10px;" class="card-content white-text colorfont1">
+		                            <strong>¡Advertencia!</strong> 
+		                            <span>
 		                                Esté vehículo tiene el/la <b><?php echo $not['nombre_doc']; ?></b> por vencer el día: <?php echo $not['vigencia']; ?> Atiéndelo Pronto.
 		                            </span> &nbsp; 
 		                            <a href="/vehiculos/documentacion/id/<?php echo $not["id_vehiculo"] ?>">
-		                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+		                               <i style="color: rgb(114,97,40);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
 		                            </a>
 		                        </div>    
 		                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
