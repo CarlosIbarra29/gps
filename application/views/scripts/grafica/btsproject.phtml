@@ -1,0 +1,2886 @@
+<?php 
+
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+
+  <style type="text/css">
+  	.oculto{display: none;}
+    .title-pdf{ font-weight: bold; font-size: 14px; }
+  	.colorbar{ background-color: white !important; }
+	.progress{
+        width: 130px; height: 130px; line-height: 120px; background: none; margin: 0 auto; box-shadow: none; 
+        position: relative;
+    }
+	.progress:after{
+	    content: ""; width: 100%; height: 100%; border-radius: 50%; border: 12px solid #fff; position: absolute;
+	    top: 0; left: 0;
+	}
+	.progress > span{ width: 50%; height: 100%; overflow: hidden; position: absolute; top: 0; z-index: 1; }
+	.numero{ font-size: 23px !important; margin-left: 25px; height: 90px !important; }
+	.texto{ border: 0px !important; width: 165px; margin-top: 50px !important; }	
+	.progress .progress-left{ left: 0; }
+	.progress .progress-bar{
+	    width: 100%; height: 100%; background: none; border-width: 20px; border-style: solid; position: absolute; top: 0;
+	}
+	.progress .progress-left .progress-bar{
+	    left: 100%; border-top-right-radius: 290px; border-bottom-right-radius: 290px; border-left: 0;
+	    -webkit-transform-origin: center left; transform-origin: center left;
+	}
+	.progress .progress-right{ right: 0; }
+	.progress .progress-right .progress-bar{
+	    left: -100%; border-top-left-radius: 160px; border-bottom-left-radius: 160px; border-right: 0;
+	    -webkit-transform-origin: center right; transform-origin: center right; animation: loading-1 1.8s linear forwards;
+	}
+	.progress .progress-value{
+	    width: 90%; height: 90%; border-radius: 50%; font-size: 24px; color: #fff; line-height: 135px;
+	    text-align: center; position: absolute; top: 5%;left: 5%;
+	}
+	.progress.blue .progress-bar{ border-color: #049dff; }
+	.progress.blue .progress-left .progress-bar{ animation: loading-1 1.8s linear forwards 1.8s; }
+	.progress.yellow .progress-bar{ border-color: yellow; }
+	.progress.yellow .progress-left .progress-bar{ animation: loading-1 1.8s linear forwards 1.8s; }
+	.progress.red .progress-bar{ border-color: red; }
+	.progress.red .progress-left .progress-bar{ animation: loading-1 1.8s linear forwards 1.8s; }
+	.progress.orange .progress-bar{ border-color: orange; }
+	.progress.orange .progress-left .progress-bar{ animation: loading-1 1.8s linear forwards 1.8s; }
+	.progress.pink .progress-bar{ border-color: #ed687c; }
+	.progress.pink .progress-left .progress-bar{ animation: loading-4 1.8s linear forwards 1.8s; }
+	.progress.green .progress-bar{ border-color: #1abc9c; }
+	.progress.green .progress-left .progress-bar{ animation: loading-1 1.8s linear forwards 1.8s; }
+	.numero{ background-color: transparent !important; border: 0px !important; width: 145px !important; }
+
+	@keyframes loading-1{
+	    0%{ -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	    100%{ -webkit-transform: rotate(180deg); transform: rotate(180deg); }
+	}
+	@keyframes loading-2{
+	    0%{ -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	   	100%{ -webkit-transform: rotate(144deg); transform: rotate(144deg); }
+	}
+	@keyframes loading-3{
+	    0%{ -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	    100%{ -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+	}
+	@keyframes loading-4{
+	    0%{ -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	    100%{ -webkit-transform: rotate(36deg); transform: rotate(36deg); }
+	}
+	@keyframes loading-5{
+	    0%{ -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+	    100%{ -webkit-transform: rotate(126deg); transform: rotate(126deg); }
+	}
+	@media only screen and (max-width: 990px){ .progress{ margin-bottom: 20px; }.footer{margin-top: 200px;}
+	}
+  </style>
+
+<!--  -->
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content">
+        	<div class="row">
+        		<div class="col m6 s6">
+        			<a href="/panel/sitiosdetail/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+        		</div>
+
+        		<div class="col m6 s6 text-right">
+        			<a class='dropdown-trigger btn' href='#' style="width: 150px;" data-target='dropdown4'>Menú <i class="material-icons left">apps</i></a>
+					<ul id='dropdown4' class='dropdown-content'>
+					  	<li class="divider" tabindex="-1"></li>
+					    <li><a id="carga_uno">Documentación</a></li>
+					    <li class="divider" tabindex="-1"></li>
+					    <li><a id="reporte_uno">Reporte evidencias semana 1 y 2</a></li>
+					    <li class="divider" tabindex="-1"></li>
+					    <li><a id="reporte_dos">Reporte de evidencias semana 3 y 4</a></li>
+					    <li class="divider" tabindex="-1"></li>
+					    <li><a id="carga_dos">Documentación dos</a></li>
+					    <li class="divider" tabindex="-1"></li>
+					<?php if($this->rol_user == 1 || $this->rol_user == 8 || $this->rol_user == 4){ ?>
+					    <li><a id="gasto_id">Reporte de gastos</a></li>
+					    <li class="divider" tabindex="-1"></li>
+					<?php } ?>
+					</ul>
+        		</div>
+        	</div>
+
+			<div class="row">
+			    <div class="col m12 s12 text-center">
+			      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información general</span>
+			    </div>
+			</div>
+
+          <p>
+
+          	<div class="row">
+				<div class="col m4 s6">
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5 class="font_tittle">Nombre sitio: <a href="/panel/sitiosdetail/id/<?php echo $this->id_sitio; ?>"><?php echo $key['nombre']; ?></a></h5>
+						<h5><span class="font_tittle">Id cliente:</span> <span><?php echo $key['id_cliente']; ?></span></h5>
+						<h5> <span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+					<?php } ?>
+<!-- 					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+					<?php } ?> -->
+				</div>
+
+				<div class="col m4 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>	
+					<?php } ?>
+
+					<?php foreach ($this->estructura as $usr) { ?>
+						<h5> <span class="font_tittle">Tipo de torre:</span> <?php echo $usr["nombre_estructura"]; ?></h5>	
+					<?php } ?>
+
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5> <span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+					<?php } ?>
+				</div>
+
+				<div class="col m4 s12">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Id operador:</span> <?php echo $value['id_operador'] ?></h5>
+					<?php } ?>
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+						<h5> <span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col m6 s6">
+					<?php foreach ($this->nombreproyecto as $key){ ?>
+						<h5><span class="font_tittle">Proyecto:</span> <?php echo $key['nombre_proyecto']; ?></h5>	
+					<?php } ?>
+					<h5><span class="font_tittle">Cliente:</span> 
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->statuscliente as $mar) { 
+								 		if ($mar['id']==$usr['status_cliente']) { ?>
+								     		<?php echo $mar["nombre_status"]; ?>
+							<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+							<?php } } ?>
+						<?php } ?>
+					</h5>
+					
+					<h5> <span class="font_tittle">Status GPS:</span>
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->status as $mar) { 
+								if ($mar['id']==$usr['status_proyecto']) { ?>
+								    <?php echo $mar["nombre_status"]; ?>
+								<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+							<?php } } ?>
+						<?php } ?>
+
+					</h5>
+					<h5><span class="font_tittle">Obra civil:</span> </h5>
+				</div>
+				<div class="col m6 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5><span class="font_tittle">Coordinador:</span> <span><?php echo $value['nombre_coordinador'] ?></span></h5>
+						<h5><span class="font_tittle">Ingeniero Proyecto:</span><span><?php echo $value['nombre_ingproyecto'] ?></span></h5>
+						<h5><span class="font_tittle">Residente:</span> <span><?php echo $value['nombre_residente'] ?></span></h5>
+						<h5><span class="font_tittle">PM Cliente:</span> <span><?php echo $value['pm_cliente'] ?></span></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col m12 s12">
+			        <div class="progress green colorbar">
+			            <span class="progress-left">
+			                <span class="progress-bar"></span>
+			            </span>
+			            <span class="progress-right">
+			                <span class="progress-bar"></span>
+			            </span>
+			            <div class="progress-value">
+			               	<h2 class="barra" style="margin-left: 35px">
+			               		<input type="text" id="porcentaje_final" class="numero" readonly>
+			               	</h2>
+			            </div>
+			        </div>
+
+			        <div class="row">
+			        	<div class="col m12 s12 text-center">
+			        		<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Porcentaje del Proyecto</span>
+			        		<div style="margin-top: 20px;">
+			        			<a class="btn orange" id="add_porcentaje"><i class="material-icons right">assignment_late</i>Guardar Porcentaje</a>
+			        		</div>
+			        	</div>
+			        </div>
+				</div>
+			</div>
+
+			<input type="hidden" id="porcentaje_add">
+			<input type="hidden" id="sitio_id" value="<?php echo $this->id_sitio; ?>">
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<?php if($this->condicion_bts == 1){ ?>
+	<?php 
+	foreach ($this->docu_uno as $key){
+		if($key['ttv_baseline'] == NULL){ $ttv_baseline = 0; }else{ $ttv_baseline = 1; }
+		if($key['ttv_forecast'] == NULL){ $ttv_forecast = 0; }else{ $ttv_forecast = 1; }
+		if($key['ttv_actual'] == NULL){ $ttv_actual = 0; }else{ $ttv_actual = 1; }
+		$ttv_fechas = $ttv_baseline + $ttv_forecast + $ttv_actual;
+
+		if($key['muestreo_baseline'] == NULL){ $muestreo_baseline = 0; }else{ $muestreo_baseline = 1; }
+		if($key['muestreo_forecast'] == NULL){ $muestreo_forecast = 0; }else{ $muestreo_forecast = 1; }
+		if($key['muestreo_actual'] == NULL){ $muestreo_actual = 0; }else{ $muestreo_actual = 1; }
+		$muestreo_fechas = $muestreo_baseline + $muestreo_forecast + $muestreo_actual;
+
+		if($key['proyectopreliminar_baseline'] == NULL){ $proyectopre_baseline = 0; }else{ $proyectopre_baseline = 1; }
+		if($key['proyectopreliminar_forecast'] == NULL){ $proyectopre_forecast = 0; }else{ $proyectopre_forecast = 1; }
+		if($key['proyectopreliminar_actual'] == NULL){ $proyectopre_actual = 0; }else{ $proyectopre_actual = 1; }
+		$proyectopre_fechas = $proyectopre_baseline + $proyectopre_forecast + $proyectopre_actual;
+
+		if($key['redlines'] == NULL){ $redlines = 0; }else{ $redlines = 1; }	
+
+		if($key['mspreliminar_baseline'] == NULL){ $mspreliminar_baseline = 0; }else{ $mspreliminar_baseline = 1; }
+		if($key['mspreliminar_forecast'] == NULL){ $mspreliminar_forecast = 0; }else{ $mspreliminar_forecast = 1; }
+		if($key['mspreliminar_actual'] == NULL){ $mspreliminar_actual = 0; }else{ $mspreliminar_actual = 1; }
+		$mspreliminar_fechas = $mspreliminar_baseline + $mspreliminar_forecast + $mspreliminar_actual;
+
+		if($key['msfinal_baseline'] == NULL){ $msfinal_baseline = 0; }else{ $msfinal_baseline = 1; }
+		if($key['msfinal_forecast'] == NULL){ $msfinal_forecast = 0; }else{ $msfinal_forecast = 1; }
+		if($key['msfinal_actual'] == NULL){ $msfinal_actual = 0; }else{ $msfinal_actual = 1; }
+		$msfinal_fechas = $msfinal_baseline + $msfinal_forecast + $msfinal_actual;
+
+		if($key['proyectofinal_baseline'] == NULL){ $proyectofinal_baseline = 0; }else{ $proyectofinal_baseline = 1; }
+		if($key['proyectofinal_forecast'] == NULL){ $proyectofinal_forecast = 0; }else{ $proyectofinal_forecast = 1; }
+		if($key['proyectofinal_actual'] == NULL){ $proyectofinal_actual = 0; }else{ $proyectofinal_actual = 1; }
+		$proyectofinal = $proyectofinal_baseline + $proyectofinal_forecast + $proyectofinal_actual;
+
+		if($key['inicioobra_baseline'] == NULL){ $inicioobra_baseline = 0; }else{ $inicioobra_baseline = 1; }
+		if($key['inicioobra_forecast'] == NULL){ $inicioobra_forecast = 0; }else{ $inicioobra_forecast = 1; }
+		if($key['inicioobra_actual'] == NULL){ $inicioobra_actual = 0; }else{ $inicioobra_actual = 1; }
+		$inicioobra = $inicioobra_baseline + $inicioobra_forecast + $inicioobra_actual;
+
+		if($key['terminoobra_baseline'] == NULL){ $terminoobra_baseline = 0; }else{ $terminoobra_baseline = 1; }
+		if($key['terminoobra_forecast'] == NULL){ $terminoobra_forecast = 0; }else{ $terminoobra_forecast = 1; }
+		if($key['terminoobra_actual'] == NULL){ $terminoobra_actual = 0; }else{ $terminoobra_actual = 1; }
+		$terminoobra = $terminoobra_baseline + $terminoobra_forecast + $terminoobra_actual;
+
+	} ?>
+<?php }else{ ?>
+	<?php 	$ttv_fechas = 0; $muestreo_fechas = 0; $proyectopre_fechas = 0; $redlines = 0; $mspreliminar_fechas =0;
+	$msfinal_fechas = 0; $proyectofinal = 0; $inicioobra = 0; $terminoobra = 0; ?>
+<?php } ?>
+
+
+<?php if ($this->bts_archivo == 1){ ?>
+	<?php 
+	foreach ($this->docu_unofile as $value){
+		if($value['proyecto_preliminarap'] == NULL){ $file_preliminarap = 0; }else{ $file_preliminarap = 1; }
+		if($value['msde_preliminar'] == NULL){ $file_msdepreliminar = 0; }else{ $file_msdepreliminar = 1; }
+		if($value['msde_final'] == NULL){ $file_msdefinal = 0; }else{ $file_msdefinal = 1; }
+		if($value['proyecto_final'] == NULL){ $file_proyectofinal = 0; }else{ $file_proyectofinal = 1; }
+		if($value['ttv_colocacion'] == NULL){ $file_ttvcolocacion = 0; }else{ $file_ttvcolocacion = 1; }
+		if($value['ttv_anexoa'] == NULL){ $file_ttvanexoa = 0; }else{ $file_ttvanexoa = 1; }
+		if($value['ttv_candidato'] == NULL){ $file_ttvcandidato = 0; }else{ $file_ttvcandidato = 1; }
+		if($value['termino_obra'] == NULL){ $file_terminoobra = 0; }else{ $file_terminoobra = 1; }
+	} ?>
+<?php }else{  ?>
+
+	<?php $file_preliminarap = 0; $file_msdepreliminar = 0; $file_msdefinal = 0; $file_proyectofinal = 0;
+		$file_ttvcolocacion = 0; $file_ttvanexoa = 0; $file_ttvcandidato = 0; $file_terminoobra = 0;?>
+<?php } ?>
+	
+
+<?php  
+	$ttv_info = $ttv_fechas + $file_ttvcolocacion + $file_ttvanexoa + $file_ttvcandidato;
+	$info_proyectopreliminarAP = $proyectopre_fechas + $file_preliminarap;
+	$info_msdepreliminar = $mspreliminar_fechas + $file_msdepreliminar;
+	$info_msdefinal = $msfinal_fechas + $file_msdefinal;
+	$info_proyectofinal = $proyectofinal + $file_proyectofinal;
+	$info_inicioobra = $inicioobra + $file_terminoobra;
+
+	if($this->condicion_bts == 0){
+		$cantidad_fechas = 0 ;
+	} else{
+		$cantidad_fechas = $ttv_fechas + $muestreo_fechas + $proyectopre_fechas + $redlines + $mspreliminar_fechas + $msfinal_fechas + $proyectofinal + $inicioobra + $terminoobra;
+	}
+
+ 	if($this->bts_archivo == 0){
+ 		$cantidad_file = 0;
+ 		$cantidades_doc = 0; 
+ 	}else{
+ 		$cantidad_file = $file_preliminarap + $file_msdepreliminar + $file_msdefinal + $file_proyectofinal + 
+ 		$file_ttvcolocacion + $file_ttvanexoa + $file_ttvcandidato + $file_terminoobra;
+ 	}
+
+ 	$cantidades_doc = $cantidad_fechas + $cantidad_file;   // TOTAL DEL APARTADO DOCUMENTACION 1;
+
+    $total = 37;
+    $porcentaje = ($cantidades_doc * 100) / $total; 
+    $porcentaje_doc = round($porcentaje,1);
+?>
+
+
+<div class="row">
+    <div class="col s12 m12" id="doc_uno">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Documentación</span>
+
+	        <div class="row">
+	        	<div class="col m6 s12">
+	        		<div style="margin-top: 20px;">
+	        			<span class="title-pdf">TTV:</span> 3 Fechas y 3 Documentos, Total 6 <br/>
+	        			<span class="title-pdf">Muestreo MS/DE:</span> 3 Fechas, Total 3 <br/>
+	        			<span class="title-pdf">Proyecto Preliminar AP:</span> 3 Fechas y 1 Documentos, Total 4 <br/>
+	        			<span class="title-pdf">RedLines:</span> 1 Fecha, Total 1 <br/>
+	        			<span class="title-pdf">MS / DE Preliminar:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+
+	        			<span class="title-pdf">MS / DE Final:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+	        			<span class="title-pdf">Proyecto Final:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+	        			<span class="title-pdf">Inicio de Obra (CoS):</span> 3 Fechas y 1 Documento, Total 4 <br/>
+	        			<span class="title-pdf">Termino de Obra (CoF):</span> 3 Fechas, Total 3 <br/>
+	        		</div>
+	        	</div>
+			    <div class="col m6 s12 text-center" style="margin-top: 20px;">
+			        <div class="progress green colorbar">
+			            <span class="progress-left">
+			                <span class="progress-bar"></span>
+			            </span>
+			            <span class="progress-right">
+			                <span class="progress-bar"></span>
+			            </span>
+			            <div class="progress-value">
+			               	<h2 class="barra" style="margin-left: 35px">
+			               		<input type="text" value="<?php echo $porcentaje_doc; ?>%" class="numero" readonly>
+			               	</h2>
+			            </div>
+			        </div>
+
+			        <div class="row" style="margin-top: 20px;">
+			        	<?php if($this->condicion_bts == 0){ ?>
+			        		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Total 0 / 37</span>
+			        	<?php }else{ ?>
+			        	<?php } ?>
+			        </div>
+			    </div>
+	        </div>
+
+	          <div class="row">
+	          	<div class="col m12 s12" style="margin-top: 20px;">
+	          		<canvas id="myChartpedidos" style="width: 100px;"></canvas>	
+	          	</div>	
+	          </div>
+
+	        </div>
+	        <div class="card-action">
+	        </div>
+      	</div>
+    </div>
+</div>
+
+<input type="hidden" id="bts_fechas" value ="<?php echo $ttv_info;?>">
+<input type="hidden" id="muestreo_fechas" value="<?php echo $muestreo_fechas; ?>">
+<input type="hidden" id="proyectopre_fechas" value="<?php echo $info_proyectopreliminarAP; ?>">
+<input type="hidden" id="redlines" value="<?php echo $redlines; ?>">
+<input type="hidden" id="mspreliminar_fechas" value="<?php echo $info_msdepreliminar; ?>">
+<input type="hidden" id="msfinal_fechas" value="<?php echo $info_msdefinal; ?>">
+<input type="hidden" id="proyectofinal" value="<?php echo $info_proyectofinal; ?>">
+<input type="hidden" id="inicioobra" value="<?php echo $info_inicioobra; ?>">
+<input type="hidden" id="terminoobra" value="<?php echo $terminoobra; ?>">
+
+
+
+<?php if($this->semana_uno == 0){ ?>
+	<input type="hidden" id="actividades" value="0">
+	<input type="hidden" id="cotizacion" value="0">
+	<?php 
+		$wk1_porcentaje = 0; 
+		$cantidad_wk1 = 0;
+	?>
+<?php }else{ ?>
+
+	<?php foreach ($this->semana_btsuno as $value){
+
+		if($value['status_preliminares'] == 0){ $prel = 0; }else{ $prel = 1; }
+		if($value['status_trazo']==0){ $trazo = 0; }else{ $trazo = 1; }
+		if($value['status_excavacion'] == 0){ $excavacion= 0; }else{ $excavacion= 1; }
+		if($value['status_plantilla'] == 0){ $plantilla = 0; }else{ $plantilla = 1; }
+		if($value['status_translado'] == 0){ $translado = 0; }else{ $translado = 1; }
+		if($value['status_armado'] == 0){ $armado = 0; }else{ $armado = 1;}
+		if($value['status_muro'] == 0){ $muro = 0; }else{ $muro = 1; }
+		$act_info = $prel + $trazo + $excavacion + $plantilla + $translado + $armado + $muro;
+
+
+		if($value['status_arena'] == 0){ $arena = 0; }else{ $arena = 1; }
+		if($value['status_cemento'] == 0){ $cemento = 0; }else{ $cemento = 1; }
+		if($value['status_block'] == 0){ $block = 0; }else{ $block = 1; }
+		if($value['status_varilla'] == 0){ $varilla = 0; }else{ $varilla = 1; }
+		if($value['status_madera'] == 0){ $madera = 0; }else{ $madera = 1; }
+
+		$mat_info = $arena + $cemento + $block + $varilla + $madera;
+		$cantidad_wk1 = $act_info + $mat_info;
+
+	    $total_wk1 = 12;
+	    $porcentaje_wk1 = ($cantidad_wk1 * 100) / $total_wk1; 
+	    $wk1_porcentaje = round($porcentaje_wk1,1);
+
+	} ?>
+
+<input type="hidden" id="actividades" value="<?php echo $act_info; ?>">
+<input type="hidden" id="cotizacion" value="<?php echo $mat_info; ?>">
+<?php } ?>
+
+<div class="row" id="div_reporteuno">
+    <div class="col s12 m6">
+	    <div class="card ">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> 
+	        	Reporte de Evicencias Semana 1</span>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s12">
+		        		<div style="margin-top: 20px;">
+		        			<span class="title-pdf">Actividades:</span> 7 actividades <br/>
+		        			<span class="title-pdf">Cotización de materiales:</span> 5 Materiales<br/>
+		        		</div>
+	        		</div>
+	        		<div class="col m6 s12" style="margin-top: 20px;">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 35px">
+				               		<?php if($this->semana_uno == 0){ ?>
+				               			<input type="text" value="0%" class="numero" readonly>
+				               		<?php }else{ ?>
+				               			<input type="text" value="<?php echo $wk1_porcentaje; ?>%" class="numero" readonly>
+				               		<?php } ?>
+				               	</h2>
+				            </div>
+				        </div>
+	        		</div>
+	        	</div>
+
+	          <div class="row">
+	          	<div class="col m12 s12" style="margin-top: 20px;">
+	          		<canvas id="myChartsemanauno" style="width: 100px;"></canvas>	
+	          	</div>	
+	          </div>
+	        </div>
+	    </div>
+    </div>
+
+  <!-- S E M A N A   D O S -->
+<?php if($this->semana_dos == 0){ ?>
+	<input type="hidden" id="actividadesdos" value="0">
+	<input type="hidden" id="cotizaciondos" value="0">
+	<?php 
+		$wk2_porcentaje = 0;
+		$cantidad_wk2 = 0; 
+	?>
+<?php }else{ ?>
+
+	<?php foreach ($this->semana_btsdos as $value){
+
+		if($value['status_colocacion'] == 0){ $colocacion = 0; }else{ $colocacion = 1; }
+		if($value['status_vaciado']==0){ $vaciado = 0; }else{ $vaciado = 1; }
+		if($value['status_relleno'] == 0){ $relleno= 0; }else{ $relleno= 1; }
+		if($value['status_nicho'] == 0){ $nicho = 0; }else{ $nicho = 1; }
+		if($value['status_muro'] == 0){ $muro = 0; }else{ $muro = 1; }
+		$act_info = $colocacion + $vaciado + $relleno + $nicho + $muro;
+
+		if($value['status_tuberiapvc'] == 0){ $pvc = 0; }else{ $pvc = 1; }
+		if($value['status_laboratorio'] == 0){ $lab = 0; }else{ $lab = 1; }
+
+		$mat_info = $pvc + $lab;
+		$cantidad_wk2 = $act_info + $mat_info;
+
+	    $total_wk2 = 7;
+	    $porcentaje_wk2 = ($cantidad_wk2 * 100) / $total_wk2; 
+	    $wk2_porcentaje = round($porcentaje_wk2,1);
+
+	} ?>
+
+<input type="hidden" id="actividadesdos" value="<?php echo $act_info; ?>">
+<input type="hidden" id="cotizaciondos" value="<?php echo $mat_info; ?>">
+<?php } ?>
+
+
+
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> 
+	        	Reporte de Evicencias Semana 2</span>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s12">
+		        		<div style="margin-top: 20px;">
+		        			<span class="title-pdf">Actividades:</span> 5 actividades <br/>
+		        			<span class="title-pdf">Cotización de materiales:</span> 2 Materiales<br/>
+		        		</div>
+	        		</div>
+	        		<div class="col m6 s12" style="margin-top: 20px;">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 35px">
+				               		<?php if($this->semana_dos == 0){ ?>
+				               			<input type="text" value="0%" class="numero" readonly>
+				               		<?php }else{ ?>
+				               			<input type="text" value="<?php echo $wk2_porcentaje; ?>%" class="numero" readonly>
+				               		<?php } ?>
+				               	</h2>
+				            </div>
+				        </div>
+	        		</div>
+	        	</div>
+
+	          <div class="row">
+	          	<div class="col m12 s12" style="margin-top: 20px;">
+	          		<canvas id="myChartsemanados" style="width: 100px;"></canvas>	
+	          	</div>	
+	          </div>
+
+	        </div>
+	    </div>
+    </div>
+
+</div>
+
+
+
+<?php if($this->semana_tres == 0){ ?>
+	<input type="hidden" id="actividadestres" value="0">
+	<input type="hidden" id="cotizaciontres" value="0">
+	<?php 
+		$wk3_porcentaje = 0; 
+		$cantidad_wk3 = 0;
+	?>
+<?php }else{ ?>
+
+	<?php foreach ($this->semana_btstres as $value){
+
+		if($value['status_excavaciontrayectoria'] == 0){ $excavaciontrayectoria = 0; }else{ $excavaciontrayectoria = 1; }
+		if($value['status_basemedicion']==0){ $basemedicion = 0; }else{ $basemedicion = 1; }
+		if($value['status_baseinterruptor'] == 0){ $baseinterruptor= 0; }else{ $baseinterruptor= 1; }
+		if($value['status_registrosfo'] == 0){ $registrosfo = 0; }else{ $registrosfo = 1; }
+		if($value['status_registroelectrico'] == 0){ $registroelectrico = 0; }else{ $registroelectrico = 1; }
+		if($value['status_tuberiafo'] == 0){ $tuberiafo = 0; }else{ $tuberiafo = 1; }
+		if($value['status_tuberiaelectrica']==0){ $tuberiaelectrica = 0; }else{ $tuberiaelectrica = 1; }
+		if($value['status_trayectoriaaerea'] == 0){ $trayectoriaaerea= 0; }else{ $trayectoriaaerea= 1; }
+		if($value['status_planchaequipo'] == 0){ $planchaequipo = 0; }else{ $planchaequipo = 1; }
+		if($value['status_soportetelescopio'] == 0){ $soportetelescopio = 0; }else{ $soportetelescopio = 1; }
+		if($value['status_sistematierras'] == 0){ $sistematierras = 0; }else{ $sistematierras = 1; }
+		if($value['status_interruptorgabinetes']==0){ $interruptorgabinetes = 0; }else{ $interruptorgabinetes = 1; }
+		if($value['status_nichocentro'] == 0){ $nichocentro= 0; }else{ $nichocentro= 1; }
+		if($value['status_gabinetefuerzas'] == 0){ $gabinetefuerzas = 0; }else{ $gabinetefuerzas = 1; }
+		if($value['status_instalacioncable'] == 0){ $instalacioncable = 0; }else{ $instalacioncable = 1; }
+		if($value['status_basesequipos'] == 0){ $basesequipos = 0; }else{ $basesequipos = 1; }
+		if($value['status_orientacionsoportes']==0){ $orientacionsoporte = 0; }else{ $orientacionsoporte = 1; }
+		if($value['status_instalacioncgo'] == 0){ $instalacioncgo= 0; }else{ $instalacioncgo= 1; }
+		if($value['status_instalacionbarrastierras'] == 0){ $instalacionbarrasti = 0; }else{ $instalacionbarrasti = 1; }
+		if($value['status_aterrizajebarras'] == 0){ $aterrizajebarras = 0; }else{ $aterrizajebarras = 1; }
+		if($value['status_portacables'] == 0){ $portacables = 0; }else{ $portacables = 1; }
+		if($value['status_sistemaelectrico']==0){ $sistemaelectrico = 0; }else{ $sistemaelectrico = 1; }
+		if($value['status_fibraoptica'] == 0){ $fibraoptica= 0; }else{ $fibraoptica= 1; }
+		if($value['status_sistemadetierra'] == 0){ $sistemadetierra = 0; }else{ $sistemadetierra = 1; }
+
+
+		$act_info3 = $excavaciontrayectoria + $basemedicion + $baseinterruptor + $registrosfo + $registroelectrico +
+		$tuberiafo + $tuberiaelectrica + $trayectoriaaerea + $planchaequipo + $soportetelescopio + $sistematierras + 
+		$interruptorgabinetes + $nichocentro + $gabinetefuerzas + $instalacioncable + $basesequipos + $orientacionsoporte + 
+		$instalacioncgo + $instalacionbarrasti + $aterrizajebarras + $portacables + $sistemaelectrico + $fibraoptica + 
+		$sistemadetierra;
+
+
+		if($value['status_materialelectrico'] == 0){ $materialelectrico = 0; }else{ $materialelectrico = 1; }
+
+		$cantidad_wk3 = $act_info3 + $materialelectrico;
+	    $total_wk3 = 25;
+	    $porcentaje_wk3 = ($cantidad_wk3 * 100) / $total_wk3; 
+	    $wk3_porcentaje = round($porcentaje_wk3,1);
+
+	} ?>
+
+<input type="hidden" id="actividadestres" value="<?php echo $act_info3; ?>">
+<input type="hidden" id="cotizaciontres" value="<?php echo $materialelectrico; ?>">
+<?php } ?>
+
+
+<div class="row" id="div_reportedos">
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content ">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> 
+		        	Reporte de Evicencias Semana 3</span>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s12">
+		        		<div style="margin-top: 20px;">
+		        			<span class="title-pdf">Actividades:</span> 24 actividades <br/>
+		        			<span class="title-pdf">Cotización de materiales:</span> 1 Material<br/>
+		        		</div>
+	        		</div>
+	        		<div class="col m6 s12" style="margin-top: 20px;">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 35px">
+				               		<?php if($this->semana_tres == 0){ ?>
+				               			<input type="text" value="0%" class="numero" readonly>
+				               		<?php }else{ ?>
+				               			<input type="text" value="<?php echo $wk3_porcentaje; ?>%" class="numero" readonly>
+				               		<?php } ?>
+				               	</h2>
+				            </div>
+				        </div>
+	        		</div>
+	        	</div>
+
+		        <div class="row">
+		          	<div class="col m12 s12" style="margin-top: 20px;">
+		          		<canvas id="myChartsemanatres" style="width: 100px;"></canvas>	
+		          	</div>	
+		        </div>
+
+	        </div>
+      	</div>
+    </div>
+
+
+
+<?php if($this->semana_cuatro == 0){ ?>
+	<input type="hidden" id="actividadescuatro" value="0">
+	<?php 
+		$cantidad_wk4 = 0;
+		$wk4_porcentaje = 0; 
+	?>
+<?php }else{ ?>
+
+	<?php foreach ($this->semana_btscuatro as $value){
+
+		if($value['status_montajetorre'] == 0){ $montajetorre = 0; }else{ $montajetorre = 1; }
+		if($value['status_camagrava']==0){ $camagrava = 0; }else{ $camagrava = 1; }
+		if($value['status_limpiezadetalles'] == 0){ $limpiezadetalles= 0; }else{ $limpiezadetalles= 1; }
+		$act_info = $montajetorre + $camagrava + $limpiezadetalles;
+
+		$cantidad_wk4 = $act_info;
+	    $total_wk4 = 3;
+	    $porcentaje_wk4 = ($cantidad_wk4 * 100) / $total_wk4; 
+	    $wk4_porcentaje = round($porcentaje_wk4,1);
+
+	} ?>
+
+<input type="hidden" id="actividadescuatro" value="<?php echo $act_info; ?>">
+<?php } ?>
+
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content ">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> 
+		        	Reporte de Evicencias Semana 4</span>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s12">
+		        		<div style="margin-top: 20px;">
+		        			<span class="title-pdf">Actividades:</span> 3 actividades <br/>
+		        		</div>
+	        		</div>
+	        		<div class="col m6 s12" style="margin-top: 20px;">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 35px">
+				               		<?php if($this->semana_cuatro == 0){ ?>
+				               			<input type="text" value="0%" class="numero" readonly>
+				               		<?php }else{ ?>
+				               			<input type="text" value="<?php echo $wk4_porcentaje; ?>%" class="numero" readonly>
+				               		<?php } ?>
+				               	</h2>
+				            </div>
+				        </div>
+	        		</div>
+	        	</div>
+
+		        <div class="row">
+		          	<div class="col m12 s12" style="margin-top: 20px;">
+		          		<canvas id="myChartsemanacuatro" style="width: 100px;"></canvas>	
+		          	</div>	
+		        </div>
+
+	        </div>
+      	</div>
+    </div>
+</div>
+
+
+<?php if($this->condiciondos_bts == 1){ ?>
+	<?php foreach ($this->docu_dos as $key) {
+		if($key['reportesitio_baseline'] == NULL){ $reportesitio_baseline = 0; }else{ $reportesitio_baseline = 1; }
+		if($key['reportesitio_forecast'] == NULL){ $reportesitio_forecast = 0; }else{ $reportesitio_forecast = 1; }
+		if($key['reportesitio_actual'] == NULL){ $reportesitio_actual = 0; }else{ $reportesitio_actual = 1; }
+
+		if($key['entrega_sitio'] == NULL){ $entrega_sitio = 0; }else{ $entrega_sitio = 1; }
+		if($key['odk_operador'] == NULL){ $odk_operador = 0; }else{ $odk_operador = 1; }
+		if($key['punchlist_operador'] == NULL){ $punchlist_operador = 0; }else{ $punchlist_operador = 1; }
+
+		if($key['corecciondetalles_baseline'] == NULL){ $corecciondeta_baseline = 0; }else{ $corecciondeta_baseline = 1; }
+		if($key['correcciondetalles_forecast'] == NULL){ $correcciondeta_forecast = 0; }else{ $correcciondeta_forecast = 1; }
+		if($key['correcciondetalles_actual'] == NULL){ $correcciondetall_actual = 0; }else{ $correcciondetall_actual = 1; }
+
+		if($key['protocolo_operador'] == NULL){ $protocolo_operador = 0; }else{ $protocolo_operador = 1; }
+
+		if($key['pruebacompactacion_baseline'] == NULL){ $pruebacompacta_baseline = 0; }else{ $pruebacompacta_baseline = 1; }
+		if($key['pruebacompactacion_forecast'] == NULL){ $pruebacompactac_forecast = 0; }else{ $pruebacompactac_forecast = 1; }
+		if($key['pruebacompactacion_actual'] == NULL){ $pruebacompactacion_actual = 0; }else{ $pruebacompactacion_actual = 1; }
+
+		if($key['pruebasiete_baseline'] == NULL){ $pruebasiete_baseline = 0; }else{ $pruebasiete_baseline = 1; }
+		if($key['pruebasiete_forecast'] == NULL){ $pruebasiete_forecast = 0; }else{ $pruebasiete_forecast = 1; }
+		if($key['pruebasiete_actual'] == NULL){ $pruebasiete_actual = 0; }else{ $pruebasiete_actual = 1; }
+
+		if($key['pruebacatorce_baseline'] == NULL){ $pruebacatorce_baseline = 0; }else{ $pruebacatorce_baseline = 1; }
+		if($key['pruebacatorce_forecast'] == NULL){ $pruebacatorce_forecast = 0; }else{ $pruebacatorce_forecast = 1; }
+		if($key['pruebacatorce_actual'] == NULL){ $pruebacatorce_actual = 0; }else{ $pruebacatorce_actual = 1; }
+
+		if($key['pruebaventiuno_baseline'] == NULL){ $pruebaventiuno_baseline = 0; }else{ $pruebaventiuno_baseline = 1; }
+		if($key['pruebaventiuno_forecast'] == NULL){ $pruebaventiuno_forecast = 0; }else{ $pruebaventiuno_forecast = 1; }
+		if($key['pruebaventiuno_actual'] == NULL){ $pruebaventiuno_actual = 0; }else{ $pruebaventiuno_actual = 1; }
+
+		if($key['pruebaventiocho_baseline'] == NULL){ $pruebaventiocho_baseline = 0; }else{ $pruebaventiocho_baseline = 1; }
+		if($key['pruebaventiocho_forecast'] == NULL){ $pruebaventiocho_forecast = 0; }else{ $pruebaventiocho_forecast = 1; }
+		if($key['pruebaventiocho_actual'] == NULL){ $pruebaventiocho_actual = 0; }else{ $pruebaventiocho_actual = 1; }
+
+		if($key['resistividad_baseline'] == NULL){ $resistividad_baseline = 0; }else{ $resistividad_baseline = 1; }
+		if($key['resistividad_forecast'] == NULL){ $resistividad_forecast = 0; }else{ $resistividad_forecast = 1; }
+		if($key['resistividad_actual'] == NULL){ $resistividad_actual = 0; }else{ $resistividad_actual = 1; }
+
+		if($key['voltaje_baseline'] == NULL){ $voltaje_baseline = 0; }else{ $voltaje_baseline = 1; }
+		if($key['voltaje_forecast'] == NULL){ $voltaje_forecast = 0; }else{ $voltaje_forecast = 1; }
+		if($key['voltaje_actual'] == NULL){ $voltaje_actual = 0; }else{ $voltaje_actual = 1; }
+
+		if($key['adeudo_baseline'] == NULL){ $adeudo_baseline = 0; }else{ $adeudo_baseline = 1; }
+
+		if($key['asbuilt_baseline'] == NULL){ $asbuilt_baseline = 0; }else{ $asbuilt_baseline = 1; }
+		if($key['asbuilt_forecast'] == NULL){ $asbuilt_forecast = 0; }else{ $asbuilt_forecast = 1; }
+		if($key['asbuilt_actual'] == NULL){ $asbuilt_actual = 0; }else{ $asbuilt_actual = 1; }
+
+		if($key['carta_liberacion'] == NULL){ $carta_liberacion = 0; }else{ $carta_liberacion = 1; }
+
+		$total_fechasdos = $reportesitio_baseline + $reportesitio_forecast + $reportesitio_actual + $entrega_sitio +
+		$odk_operador + $punchlist_operador + $corecciondeta_baseline + $correcciondeta_forecast + $correcciondetall_actual
+		+ $protocolo_operador + $pruebacompacta_baseline + $pruebacompactac_forecast + $pruebacompactacion_actual +
+		$pruebasiete_baseline + $pruebasiete_forecast + $pruebasiete_actual + $pruebacatorce_baseline + $pruebacatorce_forecast + $pruebacatorce_actual + $pruebaventiuno_baseline + $pruebaventiuno_forecast + 
+		$pruebaventiuno_actual + $pruebaventiocho_baseline + $pruebaventiocho_forecast + $pruebaventiocho_actual +
+		$resistividad_baseline + $resistividad_forecast + $resistividad_actual + $voltaje_baseline + $voltaje_forecast +
+		$voltaje_actual + $adeudo_baseline + $asbuilt_baseline + $asbuilt_forecast + $asbuilt_actual +$carta_liberacion;
+
+		$info_reportesitio = $reportesitio_baseline + $reportesitio_forecast + $reportesitio_actual;
+		$info_punchlist = $punchlist_operador;
+		$info_correcciondetalles = $corecciondeta_baseline + $correcciondeta_forecast + $correcciondetall_actual;
+		$info_protocolo = $protocolo_operador;
+		$info_compactacion = $pruebacompacta_baseline + $pruebacompactac_forecast + $pruebacompactacion_actual;
+		$info_siete = $pruebasiete_baseline + $pruebasiete_forecast + $pruebasiete_actual;
+		$info_catorce = $pruebacatorce_baseline + $pruebacatorce_forecast + $pruebacatorce_actual;
+		$info_ventiuno = $pruebaventiuno_baseline + $pruebaventiuno_forecast + $pruebaventiuno_actual;
+		$info_ventiocho = $pruebaventiocho_baseline + $pruebaventiocho_forecast + $pruebaventiocho_actual;
+		$info_resistividad = $resistividad_baseline + $resistividad_forecast + $resistividad_actual;
+		$info_voltaje = $voltaje_baseline + $voltaje_forecast + $voltaje_actual;
+		$info_adeudo = $adeudo_baseline;
+		$info_asbuilt = $asbuilt_baseline + $asbuilt_forecast + $asbuilt_actual;
+		$info_liberacion = $carta_liberacion;
+
+		$info_entrga = $entrega_sitio;
+		$info_odkoperador = $odk_operador;
+	} ?>
+
+<?php }else{ ?>
+	<?php 
+		$total_fechasdos = 0; 
+
+		$info_reportesitio = 0; $info_punchlist =0; $info_correcciondetalles = 0; $info_protocolo = 0; 
+		$info_compactacion =0; $info_siete = 0; $info_catorce = 0; $info_ventiuno = 0; $info_ventiocho = 0;
+		$info_resistividad = 0; $info_voltaje = 0; $info_adeudo = 0; $info_asbuilt = 0; $info_liberacion = 0;
+
+
+		$info_entrga = 0;
+		$info_odkoperador = 0;
+	?>	
+<?php } ?>
+
+
+<?php if($this->bts_archivodos == 1){ ?>
+
+	<?php foreach ($this->docu_dosfile as $key){
+		if($key['pdf_reportesitio'] == NULL){ $pdf_reportesitio = 0; }else{ $pdf_reportesitio = 1; }
+		if($key['pdf_punchlist'] == NULL){ $pdf_punchlist = 0; }else{ $pdf_punchlist = 1; }
+		if($key['pdf_correcciondetalles'] == NULL){ $pdf_correcciondetalles = 0; }else{ $pdf_correcciondetalles = 1; }
+		if($key['pdf_protocolooperador'] == NULL){ $pdf_protocolooperador = 0; }else{ $pdf_protocolooperador = 1; }
+		if($key['pdf_compactacion'] == NULL){ $pdf_compactacion = 0; }else{ $pdf_compactacion = 1; }
+		if($key['pdf_sietedias'] == NULL){ $pdf_sietedias = 0; }else{ $pdf_sietedias = 1; }
+		if($key['pdf_catorcedias'] == NULL){ $pdf_catorcedias = 0; }else{ $pdf_catorcedias = 1; }
+		if($key['pdf_ventiundias'] == NULL){ $pdf_ventiundias = 0; }else{ $pdf_ventiundias = 1; }
+		if($key['pdf_ventiochodias'] == NULL){ $pdf_ventiochodias = 0; }else{ $pdf_ventiochodias = 1; }
+		if($key['pdf_resistividad'] == NULL){ $pdf_resistividad = 0; }else{ $pdf_resistividad = 1; }
+		if($key['pdf_voltaje'] == NULL){ $pdf_voltaje = 0; }else{ $pdf_voltaje = 1; }
+		if($key['pdf_adeudo'] == NULL){ $pdf_adeudo = 0; }else{ $pdf_adeudo = 1; }
+		if($key['pdf_asbuilt'] == NULL){ $pdf_asbuilt = 0; }else{ $pdf_asbuilt = 1; }
+		if($key['pdf_cartaliberacion'] == NULL){ $pdf_cartaliberacion = 0; }else{ $pdf_cartaliberacion = 1; }
+
+
+		$total_filedos = $pdf_reportesitio + $pdf_punchlist + $pdf_correcciondetalles + $pdf_protocolooperador +
+		$pdf_compactacion + $pdf_sietedias + $pdf_catorcedias + $pdf_ventiundias + $pdf_ventiochodias +
+		$pdf_resistividad + $pdf_voltaje + $pdf_adeudo + $pdf_asbuilt + $pdf_cartaliberacion;
+
+	} ?>
+
+<?php }else{ ?>
+	<?php 
+		$total_filedos = 0; 
+		$pdf_reportesitio = 0; $pdf_punchlist = 0; $pdf_correcciondetalles = 0; $pdf_protocolooperador= 0; 
+		$pdf_compactacion = 0; $pdf_sietedias = 0; $pdf_catorcedias = 0; $pdf_ventiundias = 0; $pdf_ventiochodias = 0;
+		$pdf_resistividad = 0; $pdf_voltaje = 0; $pdf_adeudo = 0; $pdf_asbuilt = 0; $pdf_cartaliberacion = 0;
+	?>	
+<?php } ?>
+
+
+<?php 
+	$res_reportesitio = $info_reportesitio + $pdf_reportesitio;
+	$res_punchlist = $info_punchlist + $pdf_punchlist;
+	$res_correccion = $info_correcciondetalles + $pdf_correcciondetalles;
+	$res_protocolo = $info_protocolo + $pdf_protocolooperador;
+	$res_compactacion = $info_compactacion + $pdf_compactacion;
+	$res_pruebasiete = $info_siete + $pdf_sietedias;
+	$res_pruebacatorce = $info_catorce + $pdf_catorcedias;
+	$res_pruebaventiuno = $info_ventiuno + $pdf_ventiundias;
+	$res_pruebaventiocho = $info_ventiocho + $pdf_ventiochodias;
+	$res_resistividad = $info_resistividad + $pdf_resistividad;
+	$res_voltaje = $info_voltaje + $pdf_voltaje;
+	$res_adeudo = $info_adeudo + $pdf_adeudo;
+	$res_asbuilt = $info_asbuilt + $pdf_asbuilt;
+	$res_liberacion = $info_liberacion + $pdf_cartaliberacion;
+?>
+
+<?php 
+	$filedos = $total_filedos + $total_fechasdos;
+	$total_filedos = 58;
+	$porcentaje_filedos = ($filedos * 100) / $total_filedos; 
+	$filedos_porcentaje = round($porcentaje_filedos,1);
+
+?>
+
+
+<div class="row">
+    <div class="col s12 m12" id="doc_dos">
+      	<div class="card">
+	        <div class="card-content">
+				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> 
+		        	Documentación Dos</span>
+	        </div>
+	        <div class="card-action">
+		        <div class="row">
+		        	<div class="col m6 s12">
+		        		<div style="margin-top: 20px;">
+		        			<span class="title-pdf">Reporte sitio terminado:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Entrega de sitio al cliente:</span> 1 Fecha, Total 1 <br/>
+		        			<span class="title-pdf">ODK operador:</span> 1 Fecha, Total 1 <br/>
+		        			<span class="title-pdf">Punchlist operador:</span> 1 Fecha y 1 Documento, Total 1 <br/>
+		        			<span class="title-pdf">Correccion detalles:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Protocolo limpio operador:</span> 1 Fecha y 1 Documento, Total 2 <br/> 
+		        			<span class="title-pdf">Pruebas compactación:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas de concreto 7 dias:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas de concreto 14 dias:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas de concreto 21 dias:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas de concreto 28 dias:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas resistividad:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Pruebas de voltaje:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Carta no adeudo arrendador:</span> 1 Fecha y 1 Documento, Total 2 <br/>
+		        			<span class="title-pdf">AsBuilt:</span> 3 Fechas y 1 Documento, Total 4 <br/>
+		        			<span class="title-pdf">Carta liberacion del cliente:</span> 1 Fecha y 1 Documento, Total 2 <br/>
+		        		</div>
+		        	</div>
+				    <div class="col m6 s12 text-center" style="margin-top: 20px;">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 35px">
+				               			<input type="text" value="<?php echo $filedos_porcentaje; ?>%" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+
+<!-- 				        <div class="row" style="margin-top: 20px;">
+				        	<?php if($this->condiciondos_bts == 0){ ?>
+				        		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Total 0 / 37</span>
+				        	<?php }else{ ?>
+				        	<?php } ?>
+				        </div> -->
+				    </div>
+		        </div>
+
+
+		        <div class="row">
+		          	<div class="col m12 s12" style="margin-top: 20px;">
+		          		<canvas id="myChartdocumentos" style="width: 100px;"></canvas>	
+		          	</div>	
+		        </div>
+
+	        </div>
+      	</div>
+    </div>
+</div>
+           
+
+<input type="hidden" id="reportesitio" value="<?php echo $res_reportesitio; ?>">
+<input type="hidden" id="entrega_cliente" value="<?php echo $info_entrga; ?>">
+<input type="hidden" id="odk_operador" value="<?php echo $info_odkoperador; ?>">
+<input type="hidden" id="punchlist" value="<?php echo $res_punchlist; ?>">
+<input type="hidden" id="correccion" value="<?php echo $res_correccion; ?>">
+<input type="hidden" id="protocolo" value="<?php echo $res_protocolo; ?>" >
+<input type="hidden" id="compactacion" value="<?php echo $res_compactacion; ?>">
+<input type="hidden" id="siete" value="<?php echo $res_pruebasiete; ?>">
+<input type="hidden" id="catorce" value="<?php echo $res_pruebacatorce; ?>">
+<input type="hidden" id="ventiuno" value="<?php echo $res_pruebaventiuno; ?>">
+<input type="hidden" id="ventiocho" value="<?php echo $res_pruebaventiocho; ?>">
+<input type="hidden" id="resistividad" value="<?php echo $res_resistividad; ?>">
+<input type="hidden" id="voltaje" value="<?php echo $res_voltaje; ?>">
+<input type="hidden" id="adeudo" value="<?php echo $res_adeudo; ?>">
+<input type="hidden" id="asbuilt" value="<?php echo $res_asbuilt; ?>">
+<input type="hidden" id="liberacion" value="<?php echo $res_liberacion; ?>">
+
+
+<?php 
+	
+		$total_proyecto = $cantidades_doc + $cantidad_wk1 + $cantidad_wk2 + $cantidad_wk3 + $cantidad_wk4 + $filedos;
+	    $total_wk1 = 142;
+	    $porcentaje_wk1 = ($total_proyecto * 100) / $total_wk1; 
+	    $final = round($porcentaje_wk1,1);
+ ?>
+
+<input type="hidden" id="total_proyecto" value="<?php echo $final ?>">
+
+ <!-- R E P O R T E   D E   G A S T O S  -->
+
+<?php  $suma_enero = 0; foreach ($this->enero as $usr) { $suma_enero = $suma_enero + $usr['total']; } ?>
+<?php  $suma_febrero = 0; foreach ($this->febrero as $usr) { $suma_febrero = $suma_febrero + $usr['total']; } ?>
+<?php  $suma_marzo = 0; foreach ($this->marzo as $usr) { $suma_marzo = $suma_marzo + $usr['total']; } ?>
+<?php  $suma_abril = 0; foreach ($this->abril as $usr) { $suma_abril = $suma_abril + $usr['total']; } ?>
+<?php  $suma_mayo = 0; foreach ($this->mayo as $usr) { $suma_mayo = $suma_mayo + $usr['total']; } ?>
+<?php  $suma_junio = 0; foreach ($this->junio as $usr) { $suma_junio = $suma_junio + $usr['total']; } ?>
+<?php  $suma_julio = 0; foreach ($this->julio as $usr) { $suma_julio = $suma_julio + $usr['total']; } ?>
+<?php  $suma_agosto = 0; foreach ($this->agosto as $usr) { $suma_agosto = $suma_agosto + $usr['total']; } ?>
+<?php  $suma_septiembre = 0; foreach ($this->septiembre as $usr) { $suma_septiembre = $suma_septiembre + $usr['total']; } ?>
+<?php  $suma_octubre = 0; foreach ($this->octubre as $usr) { $suma_octubre = $suma_octubre + $usr['total']; } ?>
+<?php  $suma_noviembre = 0; foreach ($this->noviembre as $usr) { $suma_noviembre = $suma_noviembre + $usr['total']; } ?>
+<?php  $suma_diciembre = 0; foreach ($this->diciembre as $usr) { $suma_diciembre = $suma_diciembre + $usr['total']; } ?>
+
+<?php $suma_total = $suma_enero+ $suma_febrero+ $suma_marzo+ $suma_abril+ $suma_mayo+ $suma_junio+ $suma_julio+ $suma_agosto+$suma_septiembre+ $suma_octubre + $suma_noviembre +$suma_diciembre ;
+ ?>
+
+
+<?php  $sugas_enero = 0; foreach ($this->gas_enero as $usr) { $sugas_enero = $sugas_enero + $usr['importe']; } ?>
+<?php  $sugas_febrero = 0; foreach ($this->gas_febrero as $usr) { $sugas_febrero = $sugas_febrero + $usr['importe']; } ?>
+<?php  $sugas_marzo = 0; foreach ($this->gas_marzo as $usr) { $sugas_marzo = $sugas_marzo + $usr['importe']; } ?>
+<?php  $sugas_abril = 0; foreach ($this->gas_abril as $usr) { $sugas_abril = $sugas_abril + $usr['importe']; } ?>
+<?php  $sugas_mayo = 0; foreach ($this->gas_mayo as $usr) { $sugas_mayo = $sugas_mayo + $usr['importe']; } ?>
+<?php  $sugas_junio = 0; foreach ($this->gas_junio as $usr) { $sugas_junio = $sugas_junio + $usr['importe']; } ?>
+
+<?php  $sugas_julio = 0; foreach ($this->gas_julio as $usr) { $sugas_julio = $sugas_julio + $usr['importe']; } ?>
+<?php  $sugas_agosto = 0; foreach ($this->gas_agosto as $usr) { $sugas_agosto = $sugas_agosto + $usr['importe']; } ?>
+<?php  $sugas_septiembre = 0; foreach ($this->gas_septiembre as $usr) { $sugas_septiembre = $sugas_septiembre + $usr['importe']; } ?>
+<?php  $sugas_octubre = 0; foreach ($this->gas_octubre as $usr) { $sugas_octubre = $sugas_octubre + $usr['importe']; } ?>
+<?php  $sugas_noviembre = 0; foreach ($this->gas_noviembre as $usr) { $sugas_noviembre = $sugas_noviembre + $usr['importe']; } ?>
+<?php  $sugas_diciembre = 0; foreach ($this->gas_diciembre as $usr) { $sugas_diciembre = $sugas_diciembre + $usr['importe']; } ?>
+
+<?php $suma_totalgas = $sugas_enero+ $sugas_febrero+ $sugas_marzo+ $sugas_abril+ $sugas_mayo+ $sugas_junio+ $sugas_julio+ $sugas_agosto+$sugas_septiembre+ $sugas_octubre + $sugas_noviembre +$sugas_diciembre ;
+ ?>
+
+
+
+<?php  $cajachica_enero=0; foreach($this->cajachica_enero as $usr){ $cajachica_enero=$cajachica_enero+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_febrero=0; foreach($this->cajachica_febrero as $usr){ $cajachica_febrero=$cajachica_febrero+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_marzo=0; foreach($this->cajachica_marzo as $usr){ $cajachica_marzo=$cajachica_marzo+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_abril=0; foreach($this->cajachica_abril as $usr){ $cajachica_abril=$cajachica_abril+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_mayo=0; foreach($this->cajachica_mayo as $usr){ $cajachica_mayo=$cajachica_mayo+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_junio=0; foreach($this->cajachica_junio as $usr){ $cajachica_junio=$cajachica_junio+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_julio=0; foreach($this->cajachica_julio as $usr){ $cajachica_julio=$cajachica_julio+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_agosto=0; foreach($this->cajachica_agosto as $usr){ $cajachica_agosto=$cajachica_agosto+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_septiembre=0; foreach($this->cajachica_septiembre as $usr){ $cajachica_septiembre=$cajachica_septiembre+$usr['monto_comprobacion']; } ?>
+<?php  $cajachica_octubre=0; foreach($this->cajachica_octubre as $usr){ $cajachica_octubre=$cajachica_octubre+$usr['monto_comprobacion']; } ?>
+
+<?php  $cajachica_noviembre=0; 
+    foreach($this->cajachica_noviembre as $usr){ 
+        $cajachica_noviembre=$cajachica_noviembre+$usr['monto_comprobacion']; 
+    } 
+?>
+<?php  $cajachica_diciembre=0; foreach($this->cajachicadiciembre as $usr){ $cajachica_diciembre=$cajachica_diciembre+$usr['monto_comprobacion']; } 
+
+	$suma_cajachica = $cajachica_enero+ $cajachica_febrero+ $cajachica_marzo+ $cajachica_abril+ $cajachica_mayo + $cajachica_junio + $cajachica_julio + $cajachica_agosto + $cajachica_septiembre + $cajachica_octubre + $cajachica_noviembre + $cajachica_diciembre;
+
+    $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero;
+    $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero;
+    $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo;
+    $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril;
+    $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo;
+    $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio;
+    $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio;
+    $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto;
+    $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre;
+    $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre;
+    $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre;
+    $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre;
+
+    $total = $suma_cajachica + $suma_totalgas + $suma_total;
+ ?>
+
+
+<?php 
+
+$count_sol = $this->count_enero + $this->count_febreo + $this->count_marzo + $this->count_abril + $this->count_mayo + $this->count_junio + $this->count_julio +$this->count_agosto + $this->count_septiembre + $this->count_octubre + $this->count_noviembre + $this->count_diciembre;
+
+$count_cajachica = $this->count_cajachicaenero + $this->count_cajachicafebrero + $this->count_cajachicamarzo + $this->count_cajachicaabril + $this->count_cajachicamayo + $this->count_cajachicajunio + $this->count_cajachicajulio + $this->count_cajachicaagosto + $this->count_cajachicaseptiembre + $this->count_cajachicaoctubre + $this->count_cajachicanoviembre + $this->count_cajachicadiciembre;     
+
+$count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasmarzo + $this->count_gasabril + $this->count_gasmayo + $this->count_gasjunio + $this->count_gasjulio + $this->count_gasagosto + $this->count_gasseptiembre + $this->count_gasoctubre + $this->count_gasnoviembre + $this->count_gasdiciembre; 
+
+?>
+
+
+<?php if($this->rol_user == 1 || $this->rol_user == 8 || $this->rol_user == 4){ ?>
+
+<div class="row">
+    <div class="col s12 m12" id="gastos_div">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m6 s6">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Gastos</span>
+	        		</div>
+	        		<div class="col m6 s6 text-right">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				Total: $<?php echo number_format($total, 2, '.', ','); ?>
+	        			</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="gastos" style="width: 100px;"></canvas>	
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Solicitudes de Compra</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+
+	        		<div class="col m6 s6 text-center">
+	        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				$<?php echo number_format($suma_total, 2, '.', ','); ?>
+	        			</span>
+
+	        			<div style="margin-top: 20px;">
+	        				<a class="btn green" id="exportBtn1">Excel</a><br>
+	        				<span>Solicitudes</span>
+	        			</div>
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 45px">
+				               		<input type="text" value="<?php echo $count_sol; ?>" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>	
+				        Total de Solicitudes
+	        		</div>
+	        	</div>
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="solicitudes" style="width: 100px;"></canvas>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Caja Chica</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s6 text-center">
+	        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				$<?php echo number_format($suma_cajachica, 2, '.', ','); ?>
+	        			</span>
+
+	        			<div style="margin-top: 20px;">
+	        				<div class="row"> 
+<!-- 	        					<div class="col m6 s12">
+	        						<a class="btn green" id="exportBtn2">Excel</a><br>
+	        						<span>Solicitudes</span>	        						
+	        					</div> -->
+	        					<div class="col m12 s12">
+	        						<a class="btn green" id="exportBtn2">Excel</a><br>
+	        						<span>Facturas</span>
+	        					</div>
+	        				</div>
+	        			</div>
+
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 45px">
+				               		<input type="text" value="<?php echo $count_cajachica; ?>" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>	
+				        Total de Solicitudes
+	        		</div>
+
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="cajachica" style="width: 100px;"></canvas>
+	        		</div>
+	        	</div> 
+	        </div>
+	    </div>
+    </div>
+
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Carga Gasolina</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s6 text-center">
+	        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				$<?php echo number_format($suma_totalgas, 2, '.', ','); ?>
+	        			</span>
+
+	        			<div style="margin-top: 10px;">
+	        				<a class="btn green" id="exportBtn3">Excel</a><br>
+	        				<span>Gasolina</span>
+	        			</div>
+
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 45px">
+				               		<input type="text" value="<?php echo $count_gas; ?>" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>	
+				        Total de cargas
+	        		</div>
+
+
+	        	</div>
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="gasolina" style="width: 100px;"></canvas>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+</div>
+<?php } ?>
+
+
+<!-- E X C E L  S O L I C I T U D E S   O R D E N   C O M P R A -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab1">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id Solicitud</th>
+					<th>Id cliente</th>
+					<th>Nombre sitio</th>
+					<th>Proveedor</th>
+					<th>Servicio</th>
+					<th>Nombre solicitante</th>
+					<th>Importe</th>
+					<th>IVA</th>
+					<th>Retencion IVA</th>
+					<th>Retencion ISR</th>
+					<th>Total</th>
+					<th>Descripcion</th>
+					<th>Condicion de compra</th>
+					<th>Referencia</th>
+					<th>Fecha Creacion</th>
+					<th>Fecha Auditoria</th>
+					<th>Fecha Direccion</th>
+					<th>Fecha Pago</th>
+					<th>Status Auditoria</th>
+					<th>Status Direccion</th>
+					<th>Status Pago</th>
+					<th>Mes</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Enero</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Febrero</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+			<?php 
+			foreach ($this->marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Marzo</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Abril</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+			<?php 
+			foreach ($this->mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Mayo</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->junio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Junio</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->julio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Julio</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->agosto as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Agosto</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->septiembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Septiembre</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->octubre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Octubre</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->noviembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Noviembre</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->diciembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?> En Proceso <?php } ?>
+						<?php if($usr['auditoria'] == 1){ ?> Autorizada <?php } ?>	
+						<?php if($usr['auditoria'] == 2){ ?> Rechazada <?php } ?>			
+					</td>
+					<td>
+						<?php if($usr['direccion'] == 0){ ?> En Proceso <?php }?>
+						<?php if($usr['direccion'] == 1){ ?> Autorizada <?php }?>
+						<?php if($usr['direccion'] == 2){ ?> Rechazada <?php }?>
+					</td>
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?> No Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 1){ ?> Pagada <?php } ?>
+						<?php if($usr['status_pago'] == 2){ ?> En pagos / No liquidada <?php } ?>
+					</td>
+					<td>Diciembre</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+		</table>	
+	</div>
+</div>
+<!-- E N D    E X C E L  S O L I C I T U D E S   O R D E N   C O M P R A -->
+
+<div class="row oculto">
+	<div class="row excel-div" id="tab2">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id Factura</th>
+					<th>Id Solicitud</th>
+					<th>Sitio</th>
+					<th>Cliente</th>
+					<th>Proyecto</th>
+					<th>Residente</th>
+					<th>Razon social</th>
+					<th>Monto Factura</th>
+					<th>Factura</th>
+					<th>Monto comprobacion</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->cajachica_factura as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_comprobacion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["sitio"]); ?></td>
+					<td><?php echo $usr['id_cliente']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td>
+						<?php echo eliminar_acentos($usr["nombre"]); ?> 
+						<?php echo eliminar_acentos($usr["apellido_pa"]); ?>
+						<?php echo eliminar_acentos($usr["apellido_ma"]); ?>
+					</td>	
+					<td><?php echo eliminar_acentos($usr["razon_social"]); ?></td>	
+					<td><?php echo $usr['monto_solicitud']; ?></td>	
+					<td><?php echo $usr['factura']; ?></td>	
+					<td><?php echo $usr['monto_comprobacion']; ?></td>		
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+ <!-- E N D   E X C E L  S O L I C I T U D E S   C O M P R O B A C I O N E S  -->
+
+
+<!-- E X C E L  G A S O L I N A -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab3">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id carga</th>
+					<th>Sitio</th>
+					<th>Responsable</th>
+					<th>Fecha Carga</th>
+					<th>Placas Vehiculo</th>
+					<th>Estacion</th>
+					<th>Forma Pago</th>
+					<th>Importe</th>
+					<th>Consumo</th>
+					<th>Odometro Inicial</th>
+					<th>Odometro Final</th>
+					<th>Tarjeta Efecticard</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->gas_enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_junio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_julio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->gas_agosto as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_septiembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->gas_octubre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_noviembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->gas_diciembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+
+		</table>	
+	</div>
+</div>
+
+<!-- E N D   E X C E L  G A S O L I N A -->
+
+
+
+    <input type="hidden" id="enero" value="<?php echo $sum_enero; ?> ">
+    <input type="hidden" id="febrero" value="<?php echo $sum_feb; ?>">
+    <input type="hidden" id="marzo" value="<?php echo $sum_marz; ?>">
+    <input type="hidden" id="abril" value="<?php echo $sum_abril; ?>">
+    <input type="hidden" id="mayo" value="<?php echo $sum_mayo; ?>">
+    <input type="hidden" id="junio" value="<?php echo $sum_junio; ?>">
+    <input type="hidden" id="julio" value="<?php echo $sum_julio; ?>">
+    <input type="hidden" id="agosto" value="<?php echo $sum_agosto; ?>">
+    <input type="hidden" id="septiembre" value="<?php echo $sum_septiembre; ?>">
+    <input type="hidden" id="octubre" value="<?php echo $sum_octubre; ?>">
+    <input type="hidden" id="noviembre" value="<?php echo $sum_noviembre ?>">
+    <input type="hidden" id="diciembre" value="<?php echo $sum_diciembre; ?>">
+
+<!-- Solicitudes orden Compra -->
+    <input type="hidden" id="enero_sol" value="<?php echo $suma_enero; ?> ">
+    <input type="hidden" id="febrero_sol" value="<?php echo $suma_febrero; ?>">
+    <input type="hidden" id="marzo_sol" value="<?php echo $suma_marzo; ?>">
+    <input type="hidden" id="abril_sol" value="<?php echo $suma_abril; ?>">
+    <input type="hidden" id="mayo_sol" value="<?php echo $suma_mayo; ?>">
+    <input type="hidden" id="junio_sol" value="<?php echo $suma_junio; ?>">
+    <input type="hidden" id="julio_sol" value="<?php echo $suma_julio; ?>">
+    <input type="hidden" id="agosto_sol" value="<?php echo $suma_agosto; ?>">
+    <input type="hidden" id="septiembre_sol" value="<?php echo $suma_septiembre; ?>">
+    <input type="hidden" id="octubre_sol" value="<?php echo $suma_octubre; ?>">
+    <input type="hidden" id="noviembre_sol" value="<?php echo $suma_noviembre ?>">
+    <input type="hidden" id="diciembre_sol" value="<?php echo $suma_diciembre; ?>">
+
+<!-- Caja Chica -->
+    <input type="hidden" id="enero_caja" value="<?php echo $cajachica_enero; ?> ">
+    <input type="hidden" id="febrero_caja" value="<?php echo $cajachica_febrero; ?>">
+    <input type="hidden" id="marzo_caja" value="<?php echo $cajachica_marzo; ?>">
+    <input type="hidden" id="abril_caja" value="<?php echo $cajachica_abril; ?>">
+    <input type="hidden" id="mayo_caja" value="<?php echo $cajachica_mayo; ?>">
+    <input type="hidden" id="junio_caja" value="<?php echo $cajachica_junio; ?>">
+    <input type="hidden" id="julio_caja" value="<?php echo $cajachica_julio; ?>">
+    <input type="hidden" id="agosto_caja" value="<?php echo $cajachica_agosto; ?>">
+    <input type="hidden" id="septiembre_caja" value="<?php echo $cajachica_septiembre; ?>">
+    <input type="hidden" id="octubre_caja" value="<?php echo $cajachica_octubre; ?>">
+    <input type="hidden" id="noviembre_caja" value="<?php echo $cajachica_noviembre ?>">
+    <input type="hidden" id="diciembre_caja" value="<?php echo $cajachica_diciembre; ?>">
+
+<!-- // GASOLINA -->
+    <input type="hidden" id="enero_gas" value="<?php echo $sugas_enero; ?> ">
+    <input type="hidden" id="febrero_gas" value="<?php echo $sugas_febrero; ?>">
+    <input type="hidden" id="marzo_gas" value="<?php echo $sugas_marzo; ?>">
+    <input type="hidden" id="abril_gas" value="<?php echo $sugas_abril; ?>">
+    <input type="hidden" id="mayo_gas" value="<?php echo $sugas_mayo; ?>">
+    <input type="hidden" id="junio_gas" value="<?php echo $sugas_junio; ?>">
+    <input type="hidden" id="julio_gas" value="<?php echo $sugas_julio; ?>">
+    <input type="hidden" id="agosto_gas" value="<?php echo $sugas_agosto; ?>">
+    <input type="hidden" id="septiembre_gas" value="<?php echo $sugas_septiembre; ?>">
+    <input type="hidden" id="octubre_gas" value="<?php echo $sugas_octubre; ?>">
+    <input type="hidden" id="noviembre_gas" value="<?php echo $sugas_noviembre ?>">
+    <input type="hidden" id="diciembre_gas" value="<?php echo $sugas_diciembre; ?>">
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script type="text/javascript">
+	$( document ).ready(function() {
+	    var total = document.getElementById("total_proyecto").value;
+	    document.getElementById("porcentaje_final").value = total+ "%";
+	    document.getElementById("porcentaje_add").value = total;
+	});
+
+	$("#add_porcentaje").click(function(){
+		var porcentaje = document.getElementById("porcentaje_add").value;
+		var sitio = document.getElementById("sitio_id").value;
+
+		swal({
+				title: "Estas seguro de guardar el porcentaje "+porcentaje+"% ?",
+			  	icon: "warning",
+			  	buttons: true,
+			  	dangerMode: true,
+			})
+		.then((willDelete) => {
+		  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+
+
+	            var request = $.ajax({
+	                url:"/grafica/requestchangeporcentaje",
+	                method:"POST",
+	                data: { sitio : sitio, porcentaje:porcentaje },
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("La accion fue cancelada!");
+		  }
+		});
+
+	});	
+
+	var bts_fechas = document.getElementById("bts_fechas").value;
+	var muestreo_fechas = document.getElementById("muestreo_fechas").value;
+	var proyectopre_fechas = document.getElementById("proyectopre_fechas").value;
+	var redlines = document.getElementById("redlines").value;
+	var mspreliminar_fechas = document.getElementById("mspreliminar_fechas").value;
+	var msfinal_fechas = document.getElementById("msfinal_fechas").value;
+	var proyectofinal = document.getElementById("proyectofinal").value;
+	var inicioobra = document.getElementById("inicioobra").value;
+	var terminoobra = document.getElementById("terminoobra").value;
+
+	var ctx = document.getElementById('myChartpedidos').getContext('2d');
+	var myChartpedidos = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['TTV','Muestreo MS / DE','Proyecto Preliminar AP','RedLines','MS / DE Preliminar','MS / DE Final','Proyecto Final','Inicio de Obra (CoS)','Termino de Obra (CoF)'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [bts_fechas, muestreo_fechas, proyectopre_fechas, redlines, mspreliminar_fechas, msfinal_fechas, proyectofinal, inicioobra, terminoobra],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script type="text/javascript">
+	var actividades = document.getElementById("actividades").value;
+	var cotizacion = document.getElementById("cotizacion").value;
+
+	var ctx = document.getElementById('myChartsemanauno').getContext('2d');
+	var myChartsemanauno = new Chart(ctx, {
+	    type: 'polarArea',
+	    data: {
+	        labels:['Actividades','Cotización de materiales'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [actividades, cotizacion],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script type="text/javascript">
+	var actividades = document.getElementById("actividadesdos").value;
+	var cotizacion = document.getElementById("cotizaciondos").value;
+
+	var ctx = document.getElementById('myChartsemanados').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'polarArea',
+	    data: {
+	        labels:['Actividades','Cotización de materiales'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [actividades, cotizacion],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script type="text/javascript">
+	var actividades = document.getElementById("actividadestres").value;
+	var cotizacion = document.getElementById("cotizaciontres").value;
+
+	var ctx = document.getElementById('myChartsemanatres').getContext('2d');
+	var myChartsemanatres = new Chart(ctx, {
+	    type: 'polarArea',
+	    data: {
+	        labels:['Actividades','Cotización de materiales'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [actividades, cotizacion],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script type="text/javascript">
+	var actividades = document.getElementById("actividadescuatro").value;
+	var ctx = document.getElementById('myChartsemanacuatro').getContext('2d');
+	var myChartsemanacuatro = new Chart(ctx, {
+	    type: 'polarArea',
+	    data: {
+	        labels:['Actividades'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [actividades],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+
+<script type="text/javascript">
+
+	var reportesitio = document.getElementById("reportesitio").value;
+	var entrega_cliente = document.getElementById("entrega_cliente").value;
+	var odk_operador = document.getElementById("odk_operador").value;
+	var punchlist = document.getElementById("punchlist").value;
+	var correccion = document.getElementById("correccion").value;
+	var protocolo = document.getElementById("protocolo").value;
+	var compactacion = document.getElementById("compactacion").value;
+	var siete = document.getElementById("siete").value;
+	var catorce = document.getElementById("catorce").value;
+	var ventiuno = document.getElementById("ventiuno").value;
+	var ventiocho = document.getElementById("ventiocho").value;
+	var resistividad = document.getElementById("resistividad").value;
+	var voltaje = document.getElementById("voltaje").value;
+	var adeudo = document.getElementById("adeudo").value;
+	var asbuilt = document.getElementById("asbuilt").value;
+	var liberacion = document.getElementById("liberacion").value;
+
+	var ctx = document.getElementById('myChartdocumentos').getContext('2d');
+	var myChartdocumentos = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Reporte sitio terminado','Entrega de sitio al cliente','ODK operador','Punchlist operador','Correccion detalles','Protocolo limpio operador','Pruebas compactación','Pruebas de concreto 7 dias','Pruebas de concreto 14 dias', 'Pruebas de concreto 21 dias', 'Pruebas de concreto 28 dias', 'Pruebas resistividad', 'Pruebas de voltaje', 'Carta no adeudo arrendador', 'AsBuilt', 'Carta liberacion del cliente'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [reportesitio, entrega_cliente, odk_operador, punchlist, correccion, protocolo, compactacion, siete, catorce,ventiuno,ventiocho,resistividad,voltaje,adeudo,asbuilt,liberacion],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.dropdown-trigger').dropdown();
+	});
+
+    $("#carga_uno").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#doc_uno").offset().top
+		}, 2000);
+    });
+    
+    $("#reporte_uno").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#div_reporteuno").offset().top
+		}, 2000);
+    });  
+
+    $("#reporte_dos").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#div_reportedos").offset().top
+		}, 2000);
+    });  
+
+    $("#carga_dos").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#doc_dos").offset().top
+		}, 2000);
+    });
+
+    $("#gasto_id").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#gastos_div").offset().top
+		}, 2000);
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    var enero = document.getElementById("enero").value;
+    var febrero = document.getElementById("febrero").value;
+    var marzo = document.getElementById("marzo").value;
+    var abril = document.getElementById("abril").value;
+    var mayo = document.getElementById("mayo").value;
+    var junio = document.getElementById("junio").value;
+    var julio = document.getElementById("julio").value;
+    var agosto = document.getElementById("agosto").value;
+    var septiembre = document.getElementById("septiembre").value;
+    var octubre = document.getElementById("octubre").value;
+    var noviembre = document.getElementById("noviembre").value;
+    var diciembre = document.getElementById("diciembre").value;
+
+	var ctx = document.getElementById('gastos').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
+
+    var enero = document.getElementById("enero_sol").value;
+    var febrero = document.getElementById("febrero_sol").value;
+    var marzo = document.getElementById("marzo_sol").value;
+    var abril = document.getElementById("abril_sol").value;
+    var mayo = document.getElementById("mayo_sol").value;
+    var junio = document.getElementById("junio_sol").value;
+    var julio = document.getElementById("julio_sol").value;
+    var agosto = document.getElementById("agosto_sol").value;
+    var septiembre = document.getElementById("septiembre_sol").value;
+    var octubre = document.getElementById("octubre_sol").value;
+    var noviembre = document.getElementById("noviembre_sol").value;
+    var diciembre = document.getElementById("diciembre_sol").value;
+
+	var ctx = document.getElementById('solicitudes').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+    var enero = document.getElementById("enero_caja").value;
+    var febrero = document.getElementById("febrero_caja").value;
+    var marzo = document.getElementById("marzo_caja").value;
+    var abril = document.getElementById("abril_caja").value;
+    var mayo = document.getElementById("mayo_caja").value;
+    var junio = document.getElementById("junio_caja").value;
+    var julio = document.getElementById("julio_caja").value;
+    var agosto = document.getElementById("agosto_caja").value;
+    var septiembre = document.getElementById("septiembre_caja").value;
+    var octubre = document.getElementById("octubre_caja").value;
+    var noviembre = document.getElementById("noviembre_caja").value;
+    var diciembre = document.getElementById("diciembre_caja").value;
+
+	var ctx = document.getElementById('cajachica').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+    var enero = document.getElementById("enero_gas").value;
+    var febrero = document.getElementById("febrero_gas").value;
+    var marzo = document.getElementById("marzo_gas").value;
+    var abril = document.getElementById("abril_gas").value;
+    var mayo = document.getElementById("mayo_gas").value;
+    var junio = document.getElementById("junio_gas").value;
+    var julio = document.getElementById("julio_gas").value;
+    var agosto = document.getElementById("agosto_gas").value;
+    var septiembre = document.getElementById("septiembre_gas").value;
+    var octubre = document.getElementById("octubre_gas").value;
+    var noviembre = document.getElementById("noviembre_gas").value;
+    var diciembre = document.getElementById("diciembre_gas").value;
+
+	var ctx = document.getElementById('gasolina').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Solicitudes orden de compra.xlsx",
+            sheet: {
+            	name: "Solicitudes orden de compra "
+            }
+        });
+    });
+
+    $("#exportBtn2").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Caja chica.xlsx",
+            sheet: {
+            	name: "Caja chica "
+            }
+        });
+    });
+
+    $("#exportBtn3").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "Gasolina.xlsx",
+            sheet: {
+            	name: "Gasolina"
+            }
+        });
+    });
+</script>

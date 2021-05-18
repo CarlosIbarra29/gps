@@ -1,0 +1,51 @@
+<?php foreach ($this->recomendation as $key => $value) { 
+	if ($value['nombre']=="Guitarras") {
+		$reco=$value['id'];
+		$rou=$value['imagen'];
+	}
+	if ($value['nombre']=="Bajo") {
+		$reco1=$value['id'];
+		$swi=$value['imagen'];
+	}
+	if ($value['nombre']=="Violin") {
+		$reco4=$value['id'];
+		$cam=$value['imagen'];
+	}
+	if ($value['nombre']=="Teclado") {
+		$reco5=$value['id'];
+		$ser=$value['imagen'];
+	}
+		if ($value['nombre']=="Flauta") {
+		$reco5=$value['id'];
+		$ser=$value['imagen'];
+	}
+} ?>
+<h1>Catalogos</h1>
+<div class="row">
+	
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco; ?>"><img src="/<?php echo $rou; ?>" width="250" height="250"><br>
+		<label>Routers</label></a>
+	</div>
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco1; ?>"><img src="/<?php echo $swi; ?>" width="250" height="250"><br>
+			<label>Switches</label></a>
+	</div>
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco2; ?>"><img src="/<?php echo $fir; ?>" width="250" height="250"><br>
+			<label>firewall</label></a>
+	</div>
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco3; ?>"><img src="/<?php echo $tel; ?>" width="250" height="250"><br>
+			<label>Telefonia IP</label></a>
+	</div>
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco4; ?>"><img src="/<?php echo $cam; ?>" width="250" height="250"><br>
+			<label>Camaras IP</label></a>
+	</div>
+	<div class="col-lg-4 text-center">
+		<a href="/home/productosrecomendacion/id/<?php echo $reco5; ?>"><img src="/<?php echo $ser; ?>" width="250" height="250"><br>
+			<label>Servidores</label></a>
+	</div>
+</div>
+			

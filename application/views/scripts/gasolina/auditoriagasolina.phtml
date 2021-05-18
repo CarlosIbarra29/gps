@@ -1,0 +1,438 @@
+<?php 
+  function isActhref($nameBtn,$urlname){
+      if($nameBtn==1 && $urlname==null){
+        return "active"; 
+      }
+      return ($nameBtn == $urlname)?"active":"";
+  }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<style type="text/css">
+  .oculto{display: none;}
+  .active_menu{
+    -webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    -moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+  }
+</style>
+
+
+
+
+<?php $status = $this->status_documento; ?>
+
+<input type="hidden" id="status_search" value="<?php echo $this->status_documento; ?>">
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/gasolina/auditoriagasolina/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/gasolina/auditoriagasolina/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/gasolina/auditoriagasolina/status/1"><h4>Rechazadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/gasolina/auditoriagasolina/status/1"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+
+        <?php if($status == 2){ ?>
+          <li class="tab col s3 active_menu">
+            <a href="/gasolina/auditoriagasolina/status/2"><h4>Aceptadas</h4></a>
+            <div></div>
+          </li>
+        <?php }else{ ?>
+          <li class="tab col s3"><a href="/gasolina/auditoriagasolina/status/2"><h4>Aceptadas</h4></a></li>
+        <?php } ?>
+	</div>
+</div>
+
+
+<div class="row">
+  <div class="col m9 s12">
+    <div class="row">
+      <div class="col m6 s12">
+        <div class="input-field col s12">
+          <select id="search_gasolina">
+            <option value="1" selected>Sitio</option>
+            <option value="2">Responsable</option>
+            <option value="3">Placas</option>
+            <option value="4">No. Tarjeta Efecticard</option>
+          </select>
+          <label>Buscar por:</label>
+        </div>
+      </div>
+      <div class="col m6 s12">
+        <div class="input-field col s12" id="div_sitio">
+          <input placeholder="Ingresa el nombre del sitio" id="sitio" type="text" class="validate">
+          <label for="sitio">Sitio</label>
+        </div>
+
+        <div class="input-field col s12 oculto" id="div_responsable">
+          <input placeholder="Ingresa el nombre del responsable" id="responsable" type="text" class="validate">
+          <label for="responsable">Responsable</label>
+        </div>
+
+        <div class="input-field col s12 oculto" id="div_placas">
+          <input placeholder="Ingresa el numero de placas" id="placas" type="text" class="validate">
+          <label for="placas">No. de placas</label>
+        </div>
+
+        <div class="input-field col s12 oculto" id="div_tarjeta">
+          <select id="tarjeta" name="tarjeta" required>
+            <option value="0" disabled selected>* Selecciona una opcion:</option>
+            <?php foreach ($this->tarjetas as $rl) { ?>
+            <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["no_tarjeta"]; ?></option>
+            <?php } ?>
+          </select>
+          <label>Tarjeta de Efecticard</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col m3 s12">
+    <div id="search_sitio">
+      <a class="btn" id="sea_sitio"><i class="material-icons right">search</i>Buscar</a>
+    </div>
+    
+    <div class="oculto" id="search_responsable">
+      <a class="btn" id="sea_responsable"><i class="material-icons right">search</i>Buscar</a>
+    </div>
+    
+    <div class="oculto" id="search_placas">
+      <a class="btn" id="sea_placas"><i class="material-icons right">search</i>Buscar</a>
+    </div>
+
+    <div class="oculto" id="search_tarjeta">
+      <a class="btn" id="sea_tarjeta"><i class="material-icons right">search</i>Buscar</a>
+    </div>
+  </div> 
+</div>
+
+
+<div class="row">
+  <div class="col m12 s12">
+    <div class="row">
+      <div class="col m8 s8">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Auditoria gasolina</span>
+      </div>
+    </div>
+
+    <table class="table text-left table-hover">
+      <thead>
+        <tr>
+          <th>NO.</th>
+          <th>Sitio</th>  
+          <th>Responsable</th>
+          <th>Placas</th>
+          <th>Fecha de Ticket</th>
+          <th>Importe</th>
+          <th>Status</th>
+        </tr> 
+      </thead>
+      <?php
+      if ($this->paginator) { 
+      foreach ($this->paginator as $usr) { ?>
+      <tbody>
+        <tr>
+          <td><?php echo $usr['id']; ?></td>
+          <td><?php echo $usr['name_sitio']; ?></td>
+          <td><?php echo $usr['name_responsable']; ?></td>
+          <td><?php echo $usr['placas']; ?></td>
+          <td><?php echo $usr['fecha_requerida']; ?></td>
+          <td>
+            <h5 style="font-weight: bold;">
+              $<?php echo number_format($usr['importe'], 2, '.', ','); ?>
+            </h5>
+          </td>
+          <td>
+            <?php if($usr['status_gasolina'] == 0){ ?>
+              <div class="chip">
+                <img src="/img/gris.jpg" >
+                En Proceso
+              </div>
+            <?php } ?>
+
+            <?php if($usr['status_gasolina'] == 1){ ?>
+              <div class="chip">
+                <img src="/img/correct.png" >
+                Autorizada
+              </div>
+            <?php } ?>
+
+            <?php if($usr['status_gasolina'] == 2){ ?>
+              <div class="chip">
+                <img src="/img/rojo.png">
+                Rechazada
+              </div>
+            <?php } ?>
+          </td>
+
+          <td>
+            <a href="/gasolina/auditoriagasolinadetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+          </td>
+        </tr>
+        <?php } }else{ ?>
+        </tbody> 
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="6"><h4>No hay solicitudes de gasolina.</h4></td>
+            </tr>
+        </tbody>
+                    
+        <?php } ?>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<script type="text/javascript">
+  $('#search_gasolina').on('change', function() {
+    var value = this.value;
+
+    if(value == 1){
+      $("#div_sitio").show();
+      $("#div_responsable").hide();
+      $("#div_placas").hide();
+      $("#div_tarjeta").hide();
+
+      $("#search_sitio").show();
+      $("#search_responsable").hide();
+      $("#search_placas").hide();
+      $("#search_tarjeta").hide();
+    }
+
+    if(value == 2){
+      $("#div_sitio").hide();
+      $("#div_responsable").show();
+      $("#div_placas").hide();
+      $("#div_tarjeta").hide();
+
+      $("#search_sitio").hide();
+      $("#search_responsable").show();
+      $("#search_placas").hide();
+      $("#search_tarjeta").hide();
+    }
+
+    if(value == 3){
+      $("#div_sitio").hide();
+      $("#div_placas").show();
+      $("#div_responsable").hide();
+      $("#div_tarjeta").hide();
+
+      $("#search_sitio").hide();
+      $("#search_responsable").hide();
+      $("#search_placas").show();
+      $("#search_tarjeta").hide();
+    }
+
+    if(value == 4){
+      $("#div_tarjeta").show();
+      $("#div_sitio").hide();
+      $("#div_placas").hide();
+      $("#div_responsable").hide();
+
+      $("#search_sitio").hide();
+      $("#search_responsable").hide();
+      $("#search_placas").hide();
+      $("#search_tarjeta").show();
+    }
+
+  });
+
+
+  $("#sea_sitio").click(function(){
+    var sitio = document.getElementById("sitio").value;
+    var status = document.getElementById("status_search").value;
+
+    swal({
+      title: "La busqueda sera para el sitio "+sitio+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/gasolina/busquedacontrolgasolina/status/"+status+"/sitio/"+sitio+"/op/1";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+  $("#sea_responsable").click(function(){
+    var responsable = document.getElementById("responsable").value;
+    var status = document.getElementById("status_search").value;
+
+    swal({
+      title: "La busqueda sera por el responsable "+responsable+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/gasolina/busquedacontrolgasolina/status/"+status+"/responsable/"+responsable+"/op/2";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+  $("#sea_placas").click(function(){
+    var placas = document.getElementById("placas").value;
+    var status = document.getElementById("status_search").value;
+
+    swal({
+      title: "La busqueda sera por placas "+placas+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/gasolina/busquedacontrolgasolina/status/"+status+"/placas/"+placas+"/op/3";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+
+  $("#sea_tarjeta").click(function(){
+    var tarjeta = document.getElementById("tarjeta").value;
+    var status = document.getElementById("status_search").value;
+
+    swal({
+      title: "La busqueda sera por el numero de tarjeta de efecticard, Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/gasolina/busquedacontrolgasolina/status/"+status+"/tarjeta/"+tarjeta+"/op/4";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+</script>

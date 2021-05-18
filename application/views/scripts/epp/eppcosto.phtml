@@ -1,0 +1,276 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+	if ($this->total >= 1 && $pagina <= $this->total) {
+
+		if (isset($_GET['pagina']) && $this->actpage != 1) {
+			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}else{
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}
+
+		$i = max(2, $pagina - 3);
+		if ($i > 2)
+			$links .= " <li><a>...</a></li> ";
+		for (; $i < min($pagina + 3, $this->total); $i++) {
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}
+		}
+		if ($i != $this->total)
+			$links .= " <li><a>...</a></li> ";
+		if($i ==$this->actpage){
+			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}else{
+			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}
+
+	}           
+}
+
+?>
+
+<style type="text/css">
+	.active_menu{
+		-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+ <?php 
+	$status =  $this->status_cobro;
+?>
+
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-right">
+        <!-- <a href="/epp/tipo" class="waves-effect green btn modal-trigger">Tipo de EPP</a> --> 
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cobro sobre Nómina EPP
+	</div>
+</div>
+<!-- End botones -->
+
+<!-- Menu Active -->
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 1){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/epp/eppcosto/status/1">
+	    			<h4>Pendientes
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/epp/eppcosto/status/1">
+	    			<h4>Pendientes
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu"><a href="/epp/eppcosto/status/2"><h4>Descontadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/epp/eppcosto/status/2"><h4>Descontadas</h4></a></li>
+  			<?php } ?>
+  		</ul>
+	</div>
+</div>
+<!-- End Menu Active -->
+
+
+<!-- buscador -->
+<div class="row" style="margin-top:20px;">
+	<div class="col m2 s12"></div>
+	<div class="col m8 s12"> 
+		<div class="col m12 s12" id="search_nombre">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa nombre" name="name" id="name" type="text" class="validate">
+				<label for="name">Buscar por nombre </label>
+		    </div>
+		    <input type="hidden" id="status_search" value="<?php echo $status; ?>">
+		    <div class="input-field col m2 s4">
+		    	<button tyle="submit" id="buscador" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+<!-- end buscador -->
+
+<!-- Table EPP-Personal-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Personal
+		</div>
+		<!-- <div class="col m6 s6 text-right">
+			<a href="/epp/excelepp"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+		</div> -->
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Apellido Paterno</th>
+					<th>Apellido Materno</th>
+					<th>Puesto</th>
+					<th></th>
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $eppcs) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $eppcs["nombre"]; ?></td>
+							<td><?php echo $eppcs["apellido_pa"]; ?></td>
+							<td><?php echo $eppcs["apellido_ma"]; ?></td>
+							<td><?php echo $eppcs["name_puesto"]; ?></td>
+							<td>
+								<?php if ($status == 1) { ?>
+								<a href="/epp/eppdetailcosto/id/<?php echo $eppcs["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								<?php } ?>
+								<?php if ($status == 2) { ?>
+								<a href="/epp/eppdetailcostop/id/<?php echo $eppcs["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								<?php } ?>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>Ningún Personal debe EPP</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table Epp -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+					<li class="page-item">
+						<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+					</li>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+ 	});
+
+ 	// Inicio Add epp
+
+	$("#buscador").click(function(){
+   		var name = document.getElementById("name").value;
+   		var status = document.getElementById("status_search").value;
+		swal({
+			title:  "¿Deseas buscar EPP a descontar de "+name+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+			window.location.href = "/epp/eppcostobuscador/status/"+status+"/nombre/"+name+"";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});	
+
+
+</script>
+

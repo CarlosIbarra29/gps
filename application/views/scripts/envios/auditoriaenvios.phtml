@@ -1,0 +1,449 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<style type="text/css">
+	.oculto{display: none;}
+	.active_menu{
+	-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+</style>
+
+<div class="row">
+	<div class="col m12 s12">
+		
+	</div>
+</div>
+
+<?php 
+	$status =  $this->opcion_status;
+?>
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/envios/auditoriaenvios/status/0">
+	    			<h4>Por enviar
+	  					<div class="chip">
+	    					<?php echo $this->en_proceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/envios/auditoriaenvios/status/0">
+	    			<h4>Por enviar
+	  					<div class="chip">
+	    					<?php echo $this->en_proceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 3){ ?>
+  				<li class="tab col s3 active_menu"><a href="/envios/auditoriaenvios/status/3"><h4>Logistica</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/auditoriaenvios/status/3"><h4>Logistica</h4></a></li>
+  			<?php } ?>
+
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/envios/auditoriaenvios/status/1"><h4>Enviadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/auditoriaenvios/status/1"><h4>Enviadas</h4></a></li>
+  			<?php } ?>
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu"><a href="/envios/auditoriaenvios/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/auditoriaenvios/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+  		</ul>
+	</div>
+</div>
+
+
+  
+<div class="row">
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12">
+		<div class="row">
+			<div class="col m5 s6">
+			  	<div class="input-field col s12">
+				    <select id="buscador_id">
+				      <option value="1" selected>Sitio</option>
+				      <option value="2">Usuario</option>
+				      <option value="3">Fecha envio</option>
+				      <option value="4">Prioridad</option>
+				      <option value="5">Tipo envío</option>
+				      <option value="6">Id de envio</option>
+				    </select>
+				    <label>Buscar por:</label>
+			  	</div>
+			</div>
+			<div class="col m5 s6">
+		        <div class="input-field col s12 op_sitio">
+		        	<input placeholder="Agrega el nombre del sitio" id="sitio_search" type="text" class="validate">
+		        	<label for="sitio_search">Sitio</label>
+		        </div>
+
+		        <div class="input-field col s12 oculto op_user">
+		        	<input placeholder="Agrega el nombre del usuario" id="user_search" type="text" class="validate">
+		        	<label for="user_search">Usuario</label>
+		        </div>
+
+		        <div class="input-field col s12 oculto op_fecha">
+		        	<input id="fechaenvio_search" type="text" class="datepicker">
+		        	<label for="fechaenvio_search">Fecha envio</label>
+		        </div>
+
+			  	<div class="input-field col s12 oculto op_prioridad">
+				    <select id="opcion_prioridad">
+				      <option value="0" selected>Selecciona una opción</option>
+				      <option value="1">Nomral</option>
+				      <option value="2">Alta</option>
+				    </select>
+				    <label>Prioridad:</label>
+			  	</div>
+
+			  	<div class="input-field col s12 oculto op_tipoenvio">
+				    <select id="opcion_envio">
+				      <option value="0" selected>Selecciona una opción</option>
+				      <option value="1">Local</option>
+				      <option value="2">Foranea</option>
+				    </select>
+				    <label>Tipo de Envío:</label>
+			  	</div>
+
+		        <div class="input-field col s12 oculto op_id">
+		        	<input placeholder="Agrega el id del envio" id="id_envio" type="number" class="validate">
+		        	<label for="id_envio">Id de envio</label>
+		        </div>
+			</div>
+			<div class="col m2 s12">
+				<a class="btn" id="search_op"><i class="material-icons right">search</i></a>
+			</div>
+		</div>	
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+
+
+<div class="row"> 
+	<div class="col m12 s12" style="margin-top: 15px;">
+		<div class="col m6 s6">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de envíos</span>
+		</div>
+		<div class="col m6 s6 text-right">
+
+		</div>
+	</div>
+
+	<div class="col m12 s12">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>Usuario</th>
+					<th>Sitio</th>	
+					<th>Fecha envio</th>
+					<th>Prioridad</th>
+					<th>Tipo envío</th>
+					<th>Descripción</th>
+					<th>Autorización</th>
+					<th>Detalle Solicitud</th>
+				</tr> 
+			</thead>
+			<?php
+			$total = 0;
+			if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<?php echo $usr['id']; ?>
+					</td>
+					<td>
+						<?php echo $usr['user_solicitud']; ?>
+					</td>
+					<td>
+						<span style="font-weight: bold;"><?php echo $usr['name_sitio']; ?> </span>
+					</td>
+					<td>
+						<?php echo $usr['fecha_solicitud']; ?>
+					</td>
+					<td>
+						<?php if($usr['prioridad'] == 1){?>
+							Normal
+						<?php }else{ ?>
+							Alta
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr['tipo_envio'] == 1){?>
+							Local
+						<?php }else{ ?>
+							Foraneo
+						<?php } ?>
+					</td>
+					<td>
+						<?php echo $usr['descripcion']; ?>
+					</td>
+					<td>
+						<?php if($usr['status_solicitud'] == 0){ ?>
+							<div class="chip" id="inactivo_personal">
+							    <img src="/img/gris.jpg" >
+							    En proceso
+							 </div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 3){ ?>
+							<div class="chip" id="inactivo_personal">
+							    <img src="/img/gris.jpg" >
+							    En Proceso
+							 </div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 1){ ?>
+							<div class="chip" id="activo_personal">
+						    	<img src="/img/correct.png" >
+						    	Enviada
+						  	</div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 2){ ?>
+							<div class="chip" id="inactivo_personal">
+						    	<img src="/img/rojo.png" >
+						    	Rechazada
+						  	</div>
+						<?php } ?>
+						
+					</td>
+					<td class="text-center">
+						<a href="/envios/enviodetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+				</tr>
+
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		        	<td></td>
+		        	<td></td>
+		        	<td></td>
+		            <td class="text-center" colspan=h4><h4>No hay solicitudes de envíos.</h4></td>
+		            <td></td>
+		            <td></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<input type="hidden" id="buscador" value="1">
+<input type="hidden" id="status_seach" value="<?php echo $this->opcion_status; ?>">
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	$('.timepicker').timepicker();
+
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+
+  	});
+
+	$("#buscador_id").on('change', function() {
+		var value = this.value;
+		document.getElementById("buscador").value= value;
+
+		if(value == 1){
+			$(".op_sitio").show();
+			$(".op_user").hide();
+			$(".op_fecha").hide();
+			$(".op_prioridad").hide();
+			$(".op_tipoenvio").hide();
+			$(".op_id").hide();
+		}
+
+		if(value == 2){
+			$(".op_user").show();
+			$(".op_sitio").hide();
+			$(".op_fecha").hide();
+			$(".op_prioridad").hide();
+			$(".op_tipoenvio").hide();
+			$(".op_id").hide();
+		}
+
+		if(value == 3){
+			$(".op_fecha").show();
+			$(".op_user").hide();
+			$(".op_sitio").hide();	
+			$(".op_prioridad").hide();
+			$(".op_tipoenvio").hide();
+			$(".op_id").hide();	
+		}
+
+		if(value == 4){
+			$(".op_prioridad").show();
+			$(".op_fecha").hide();
+			$(".op_user").hide();
+			$(".op_sitio").hide();	
+			$(".op_tipoenvio").hide();
+			$(".op_id").hide();
+		}
+
+		if(value == 5){
+			$(".op_tipoenvio").show();
+			$(".op_prioridad").hide();
+			$(".op_fecha").hide();
+			$(".op_user").hide();
+			$(".op_sitio").hide();	
+			$(".op_id").hide();
+		}
+
+		if(value == 6){
+			$(".op_id").show();
+			$(".op_tipoenvio").hide();
+			$(".op_prioridad").hide();
+			$(".op_fecha").hide();
+			$(".op_user").hide();
+			$(".op_sitio").hide();
+		}
+	});
+
+	$("#search_op").click(function(){
+		var op = document.getElementById("buscador").value;
+		var status = document.getElementById("status_seach").value;
+
+		if(op == 1){
+			sitio =	document.getElementById("sitio_search").value;
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/sitio/"+sitio+"/op/1";
+		}
+		if(op == 2){
+			user =	document.getElementById("user_search").value;
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/user/"+user+"/op/2";
+		}
+		if(op == 3){			
+			fecha =	document.getElementById("fechaenvio_search").value;
+			var dia = fecha.slice(0,-8);
+			var mes = fecha.slice(3,-5);
+			var year = fecha.slice(6);
+
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/3";	
+		}
+		if(op == 4){
+			prioridad =	document.getElementById("opcion_prioridad").value;
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/prioridad/"+prioridad+"/op/4";	
+		}
+		if(op == 5){
+			envio = document.getElementById("opcion_envio").value;
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/envio/"+envio+"/op/5";	
+		}
+
+		if(op == 6){
+			id = document.getElementById("id_envio").value;
+			window.location.href = "/envios/buscadorenvios/status/"+status+"/solicitud/"+id+"/op/6";
+		}
+		// buscadorenvios
+	});
+</script>

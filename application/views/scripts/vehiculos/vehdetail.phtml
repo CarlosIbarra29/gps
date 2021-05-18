@@ -1,0 +1,1154 @@
+
+<?php foreach ($this->vehiculosc as $veh) { $imagen = $veh['imagen'];   $nombre =$veh['marca']; $tarjeta = $veh['tarjeta_circulacion']; } ?>
+
+<input type="hidden" name="id_vh" id="id_vh" value="<?php echo $this->idvh; ?>">
+
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+
+	.oculto{
+		display: none;
+	}
+
+	.icon_style{
+        /*position: absolute;*/
+        /*right: 10px;*/
+        /*top: 10px;*/
+        font-size: 20px;
+        /*color: rgb(169,68,66);*/
+        cursor:pointer; 
+    }
+
+    .colorfont strong{
+        color: rgb(169,68,66);
+        font-weight: bold;
+    }
+
+    .colorfont span{
+        color: rgb(169,68,66);
+        font-weight: 350;
+    }
+</style>
+
+<!-- INICIO DETAIL--> 
+<div class="col m12 s12">
+	<div class="row" style="margin-top: 15px;">
+		<div class="col m12 s12">
+			<div class="col m12 s12">
+				<?php if($this->op_sel == 0){ ?>
+					<a href="/vehiculos/inventariov"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?> 
+				<?php if($this->op_sel == 1){ ?>
+					<a href="/vehiculos/buscarvehiculo?marca=<?php echo $this->marca; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 2){ ?>
+					<a href="/vehiculos/buscarvehiculo?placas=<?php echo $this->placas; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 3){ ?>
+					<a href="/vehiculos/buscarvehiculo?status=<?php echo $this->status; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+			</div>
+		</div>
+
+		<div class="col m12 s12" style="margin-top: 15px;">
+		    <div class="row">
+		        <div class="col m12 s12" id="alert_box">
+		            <?php if ($this->alertas) { ?>
+		                <?php foreach ($this->alertas as $not) { ?>
+		                    <div style="background: rgb(242,222,222);"  class="card darken-1">
+		                        <div style="padding: 10px;" class="card-content white-text colorfont">
+		                            <strong>¡Cuidado!</strong> 
+		                            <span>
+		                                Esté vehículo tiene el/la <b><?php echo $not['nombre_doc']; ?></b> por vencer el día: <?php echo $not['vigencia']; ?> Atiéndelo Pronto.
+		                            </span> &nbsp; 
+		                            <a href="/vehiculos/documentacion/id/<?php echo $not["id_vehiculo"] ?>">
+		                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+		                            </a>
+		                        </div>    
+		                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+		                    </div>              
+		                <?php } ?> 
+		            <?php } else { } ?>
+		        </div>
+		    </div>
+		</div>
+		
+		<div class="col m4 s12"></div>
+		
+		<div class="col m8 s12">
+			<div class="row text-center">
+				<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Vehículo</span>
+			</div>
+			<div class="row text-center">
+				<div class="col m3 s3">
+					<?php foreach ($this->vehiculosc as $veh) { ?>
+						<?php if($veh['id_status'] == 0){ ?>
+							<div class="chip">
+								<img src="/img/correct.png" >
+								Disponible
+							</div>
+						<?php }else{ ?>
+							<div class="chip">
+								<img src="/img/gris.jpg" >
+								Disponible
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->vehiculosc as $veh) { ?>
+						<?php if($veh['id_status'] == 1){ ?>
+							<div class="chip" >
+								<img src="/img/naranja.png" >
+								Ocupado
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Ocupado
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->vehiculosc as $veh) { ?>
+						<?php if($veh['id_status'] == 2){ ?>
+							<div class="chip" >
+								<img src="/img/azul.png" >
+								Reparación 
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Reparación
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->vehiculosc as $veh) { ?>
+						<?php if($veh['id_status'] == 3){ ?>
+							<div class="chip" >
+								<img src="/img/rojo.png" >
+								Baja
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Baja
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+			</div>
+
+			<div class="col m12 s12 text-center">
+			  	<?php foreach ($this->vehiculosc as $veh) { ?>
+			  		<span>Ultima fecha de actualizacion: <?php echo $veh['created_at'];  ?></span>
+			  	<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END INICIO DETAIL-->
+
+<?php foreach ($this->vehiculosc as $veh) { ?>
+	<input type="hidden" name="status_disponible" id="status_disponible" value="<?php echo $veh['id_status']; ?>">
+<?php } ?>
+
+<?php foreach ($this->vehiculosc as $veh) { 
+	$idv = $veh["id_vehiculos"];
+} ?>
+<input type="hidden" name="" id="vehiculo_id" value="<?php echo $idv; ?>">
+
+<!--Inicio Botones rep/baja-->
+<div class="col m12 s12">
+	<div class="col m4 s12 text-center"></div>
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->vehiculosc as $veh) { ?>
+			<?php if($veh['id_status'] == 3){ ?>
+				<div class="col m12 s12"></div>
+			<?php } elseif ($veh['id_status'] == 2){ ?>
+				<div class="col m12 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Pérdida Vehículo</a>
+					</div>
+				</div>
+			<?php } else {?>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalrepara">Reparación Vehículo</a>
+					</div>
+				</div>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Pérdida Vehículo</a>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+	</div>
+</div>
+<!--End Botones -->
+
+<!-- Inicio Panel Inicial-->
+<div class="row">
+	<div class="col m4 s12 text-center">
+		<?php if($imagen== null){ ?>
+			<img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+		<?php }else{ ?>
+			<a class="example-image-link" href="/<?php echo $veh['imagen']; ?>" data-lightbox="example-1"><img class="example-image " src="/<?php echo $veh['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+		<?php } ?>
+
+		<div class="col m12 s12 text-center">
+			<?php foreach ($this->vehiculosc as $veh) { ?>	
+		        <div class="card-content">
+		        	<div class="row">
+		          		<div class="col m12 s12 text-center">
+		          			<a title="Operadores" class="waves-effect darken-1 waves-light lighten-4" href="/vehiculos/operadores/id/<?php echo $veh["id_vehiculos"]; ?>"> <i class="small material-icons">people</i> </a>
+		          			
+		          			<a title="Incidentes" class="waves-effect darken-1 waves-light lighten-4" href="/vehiculos/incidentes/id/<?php echo $veh["id_vehiculos"]; ?>"> <i class="small material-icons">report_problem</i> </a>
+		          			
+		          			<a title="Mantenimiento" class="waves-effect darken-1 waves-light lighten-4" href="/vehiculos/mantenimiento/id/<?php echo $veh["id_vehiculos"]; ?>"> <i class="small material-icons">build</i> </a>
+		          			
+		          			<a title="Documentación" class="waves-effect darken-1 waves-light lighten-4" href="/vehiculos/documentacion/id/<?php echo $veh["id_vehiculos"]; ?>"> <i class="small material-icons">description</i> </a>	
+		          		</div>
+		          	</div>
+		        </div>
+			<?php }?>
+		</div>
+	</div>
+
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->vehiculosc as $veh) { ?>
+			<?php if($veh['id_status'] == 0){ ?>
+				<div class="card darken-1">
+					<div class="card-content">
+						<div class="row">
+							<div class="col m12 s12">
+			          			<h3 class="card-title">Asignar Vehículo:</h3>
+			          			<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<form action="/vehiculos/requestasignarveh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignavo">
+			          			<input type="hidden" name="idveh" id="idveh" value="<?php echo $this->idvh; ?>">
+			          			<div class="input-field col m6 s12">
+			          				<select name="responsable" id="responsable" required>
+			          					<option value="" disabled selected>Selecciona al Responsable:</option>
+						      			<?php foreach ($this->per as $personal) { ?>
+						      			<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+						      			<?php } ?>
+		
+			          				</select>
+			          				<label>Responsable</label>
+			          			</div>
+			          			<div class="file-field input-field col m6 s12 ">
+									<div class="btn">
+										<span>Archivo</span>
+										<input type="file" name="archivo" required>
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" id="archivo" type="text">
+									</div>
+								</div>
+							</form>
+		          			<div class="input-field col m12 s12 text-center">
+		          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="asignarveh">Asignar Vehículo</a>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+			<?php }?>
+
+			<?php if($veh['id_status'] == 1){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Regresar Vehículo</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+		          				<?php foreach ($this->pers as $perso) { ?>
+			          			<div class="input-field col m12 s12">
+			          				<h4 class="text-center">
+			          					<strong><span class="font_tittle text-center">A cargo de: </span></strong>
+			          				</h4>
+			          				<h5 class="text-center">
+			          					<?php echo $perso["nombrea"]; ?> <?php echo $perso["apellido_pa"]; ?> <?php echo $perso["apellido_ma"]; ?>
+		          					</h5>
+		          					<h4 class="text-center">
+		          						<strong><span class="font_tittle">Fecha de Asignación: </span></strong>
+		          							
+		          					</h4>
+		          					<h5 class="text-center">
+		          						<?php echo $perso["fecha"]; ?>
+		          					</h5>
+			          			</div>
+			          			<?php } ?>
+		          			</div>
+		          			<div class="col m6 s12">
+		          				<form action="/vehiculos/requestregresarv" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_regresarvo">
+				          			<input type="hidden" name="idveh" id="idveh" value="<?php echo $this->idvh; ?>">
+				          			<div class="file-field input-field col m12 s12 ">
+										<div class="btn">
+											<span>Archivo</span>
+											<input type="file" name="archivo2" required>
+										</div>
+										<div class="file-path-wrapper">
+											<input class="file-path validate" id="archivo2" type="text">
+										</div>
+									</div>
+								</form>
+			          			<div class="input-field col m12 s12">
+			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="liberarveh">Regresar Vehículo</a>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+
+	      	<?php if($veh['id_status'] == 2){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Vehículo en Reparación</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+		          					<?php foreach ($this->vehiculosc as $veh) { ?>
+		          						<h4 class="text-center">
+			          						<strong><span class="font_tittle text-center">Motivo de Reparación: </span></strong>
+			          					</h4>
+		          						<h4 class="text-center">
+		          							<?php echo $veh["comentarior"]; ?>
+		          						</h4>
+		          					<?php } ?>
+		          					<?php foreach ($this->pers as $perso) { ?>
+			          					<h5 class="text-center">
+				          					<strong><span class="font_tittle text-center">Último responsable: </span></strong>
+				          				</h5>
+			          					<h5 class="text-center">
+				          					<?php echo $perso["nombrea"]; ?> <?php echo $perso["apellido_pa"]; ?> <?php echo $perso["apellido_ma"]; ?>
+			          					</h5>
+			          				<?php } ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle">Fecha inicio reparación: </span></strong>
+			          							<?php echo $veh["fechar"]; ?>
+			          					</h5>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+			          			<div class="input-field col m12 s12">
+			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="lreparaveh">Vehículo Reparado</a>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+
+	      	<?php if($veh['id_status'] == 3){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Pérdida Total Vehículo</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+		          					<?php foreach ($this->vehiculosc as $veh) { ?>
+		          						<h4 class="text-center">
+			          						<strong><span class="font_tittle text-center">Motivo de Baja: </span></strong>
+			          					</h4>
+			          					<?php if($veh['comentariob'] == null){ ?>
+			          						<h4 class="text-center">
+		          							El Vehículo es pérdida total
+		          							</h4>
+		          						<?php } else { ?>
+		          						<h4 class="text-center">
+		          							<?php echo $veh["comentariob"]; ?>
+		          						</h4>
+		          					<?php } ?>
+		          					
+		          					<?php } ?>
+		          					<?php foreach ($this->pers as $perso) { ?>
+			          					<h5 class="text-center">
+				          					<strong><span class="font_tittle text-center">Último responsable: </span></strong>
+				          				</h5>
+			          					<h5 class="text-center">
+				          					<?php echo $perso["nombrea"]; ?> <?php echo $perso["apellido_pa"]; ?> <?php echo $perso["apellido_ma"]; ?>
+			          					</h5>
+			          				<?php } ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle">Fecha de baja: </span></strong>
+			          							<?php echo $veh["fechab"]; ?>
+			          					</h5>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+			          			<div class="input-field col m12 s12">
+			          				<?php foreach ($this->vehiculosc as $veh) { ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle text-center">Evidencia Baja: </span></strong>
+			          					</h5>
+			          					<?php if($veh["evidenciab"]== null){ ?>
+			          						<img src="/img/no_evidencia.png" class="responsive-img" style="width: 150px; margin-top: 5px;">
+			          					<?php }else{ ?>
+			          						<a class="example-image-link" href="/<?php echo $veh['evidenciab']; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $veh['evidenciab']; ?>" id="camara_div" alt="<?php echo $veh['modelo']; ?>" style="width:  150px;  margin-top: 5px;"/></a>
+			          						<h5>
+			          							<a href="/<?php echo $veh['evidenciab']; ?>" title="Descargar Archivo" class="waves-effect darken-1 waves-light lighten-4 btn" download="<?php echo substr(strrchr($veh["modelo"], "/"), 1); ?>">Descargar</a>
+			          						</h5>
+			          					<?php } ?>
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+		<?php }?>
+	</div>
+</div>
+<!-- End Panel Inicial-->
+
+<!-- Modal Baja Vehículos -->
+<div id="modalbaja" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pérdida de Vehículo
+		</div>
+
+		<div class="col m12 s12">
+			<form action="/vehiculos/requestbajav" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_bajav">
+				<?php foreach ($this->vehiculosc as $veh) { ?>
+					<input type="hidden" name="idh" value="<?php echo $veh["id_vehiculos"]; ?>">
+					<input type="hidden" name="idr" value="<?php echo $veh["id_responsable"]; ?>">
+				<?php } ?>
+			
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<textarea id="motivos" name="motivos" class="materialize-textarea"></textarea>
+						<label for="motivos">Motivo de baja:</label>
+					</div>
+					<div class="file-field input-field col m12 s12">
+				    	<div class="btn">
+				        	<span>Agregar Evidencia</span>
+				        	<input type="file" id="url" name="url" required>
+				        	<?php foreach ($this->vehiculosc as $veh) { ?>
+				        	<input type="hidden" name="imahidden" value="<?php echo $veh["evidenciab"]; ?>">   
+				        	<?php } ?>
+				      	</div>
+				      	<div class="file-path-wrapper">
+				        	<input class="file-path validate" type="text">
+				      	</div>
+				    </div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="bajaveh" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Baja Vehículos-->
+
+<!-- Modal Reparacion Vehículos -->
+<div id="modalrepara" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo a Reparación o Mantenimiento
+		</div>
+		<div class="col m12 s12 ">
+			<form action="/vehiculos/requestvehr" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_reparav">
+				<?php foreach ($this->vehiculosc as $veh) { ?>
+					<input type="hidden" name="idhs" value="<?php echo $veh["id_vehiculos"]; ?>">
+				<?php } ?>
+				<div class="row">
+					<div class="input-field col m12 s12">
+			          	<select name="accion" id="accion" required>
+			   				<option value="" disabled selected>Selecciona la Acción a Realizar:</option>
+			   				<option value="1">Mantenimiento</option>
+			   				<option value="2">Incidente</option>
+			          	</select>
+			          	<label>Acción a realizar</label>
+			        </div>
+
+
+					<div id="tm" class="input-field col m6 s12 oculto">
+			          	<select name="tipom" id="tipom" required>
+			   				<option value="0" disabled selected>Selecciona el tipo de Mantenimiento:</option>
+			   				<option value="1">Preventivo</option>
+			   				<option value="2">Correctivo</option>
+			          	</select>
+			          	<label>Tipo de Mantenimiento</label>
+			        </div>
+
+			        <div id="fm" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">today</i>
+						<input type="date" id="fecham" name="fecham"  class="validate">
+						<label for="fecham">*Fecha de mantenimiento:</label>
+					</div>
+
+					<div id="km" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">money</i>
+						<input type="text" id="kilometrajem" name="kilometrajem" class="validanumeros">
+						<label for="kilometrajem">*Kilometraje:</label>
+					</div>
+
+					<div id="cm" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">attach_money</i>
+						<input type="text" id="costom" name="costom" class="validanumeros">
+						<label for="costom">*Costo de Mantenimiento:</label>
+					</div>
+
+					<div id="sm" class="input-field col m12 s12 oculto">
+						<textarea id="serviciom" name="serviciom" class="materialize-textarea"></textarea>
+						<label for="serviciom">*Describe servicio a realizar: </label>
+					</div>
+
+					<div id="im" class="file-field input-field col m12 s12 oculto">
+						<div class="btn">
+							<span>Imagen pieza o lugar</span>
+							<input type="file" name="imagenm" required>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" id="imagenm" type="text">
+						</div>
+					</div>
+						
+						<!-- Para incidentes -->
+
+					<div id="ni" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">assignment</i>
+						<input type="text" id="nombrei" name="nombrei" class="validate">
+						<label for="nombrei">*Nombre Incidente:</label>
+					</div>
+
+					<div id="fi" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">today</i>
+						<input type="date" id="fechai" name="fechai"  class="validate">
+						<label for="fecham">*Fecha de Incidente:</label>
+					</div>
+				
+					<div id="pi" class="input-field col m12 s12 oculto">
+		          		<select name="personali" id="personali" required>
+		          			<option value="" disabled selected>Selecciona al Personal:</option>
+					      		<?php foreach ($this->per as $personal) { ?>
+					      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					      			<?php } ?>
+		          		</select>
+		          		<label>Personal que reporto:</label>
+		          	</div>
+
+		          	<div id="ivi" class="file-field input-field col m12 s12 oculto">
+						<div class="btn">
+							<span>Agregar Imagen vehículo completo</span>
+							<input type="file" name="imagenv" required>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" id="imagenv" type="text">
+						</div>
+					</div>
+
+					<div id="imi" class="file-field input-field col m12 s12 oculto">
+						<div class="btn">
+							<span>Agregar Imagen Incidente</span>
+							<input type="file"  name="imageni" required>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" id="imageni" type="text">
+						</div>
+					</div>
+
+					<div id="ai" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">assignment_late</i>
+						<input type="text" id="accioni" name="accioni" placeholder="Reparación Agencia, Talachas, Etc." class="validate">
+						<label for="accioni">*Acciones:</label>
+					</div>
+
+					<div id="ci" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">attach_money</i>
+						<input type="text" id="costoi" name="costoi" class="validanumeros">
+						<label for="costoi">*Costo de Incidente:</label>
+					</div>
+
+					<div id="cgi" class="input-field col m12 s12 oculto">
+						<textarea id="comentarioi" name="comentarioi" class="materialize-textarea"></textarea>
+						<label for="comentarioi">Cometarios Generales: </label>
+					</div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="reparaveh" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Reparacion Vehículos-->
+
+<!-- Inicio Datos Vehículos-->
+<div class="col m8 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Datos Generales Vehículo</h3>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->vehiculosc as $veh ) { ?>
+								<h3>
+									<strong><span class="font_tittle">Marca: </span></strong>
+									<?php echo $veh['marca']; ?>
+								</h3>
+								<h3>
+									<strong><span class="font_tittle">Submarca: </span> </strong>
+									<?php echo $veh['submarca']; ?>
+								</h3>
+								<h3>
+									<strong><span class="font_tittle">Modelo: </span> </strong>
+									<?php echo $veh['modelo']; ?>
+								</h3>
+								<h3>
+									<strong><span class="font_tittle">Color: </span> </strong>
+									<?php echo $veh['color']; ?>
+								</h3>
+							<?php } ?>
+						</div>
+
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->vehiculosc as $veh ) { ?>
+								<h3>
+									<strong><span class="font_tittle">Grupo: </span></strong>
+									<?php echo $veh['grupo']; ?>
+								</h3>
+								<?php if($veh['id_status'] == 0){ ?>
+								<h3>
+									<strong><span class="font_tittle">Status: </span> </strong>
+									Disponible
+								</h3>
+								<?php } ?>
+								<?php if($veh['id_status'] == 1){ ?>
+								<h3>
+									<strong><span class="font_tittle">Status: </span> </strong>
+									Ocupado
+								</h3>
+								<?php } ?>
+								<?php if($veh['id_status'] == 2){ ?>
+								<h3>
+									<strong><span class="font_tittle">Status: </span> </strong>
+									En reparación
+								</h3>
+								<?php } ?>
+								<?php if($veh['id_status'] == 3){ ?>
+								<h3>
+									<strong><span class="font_tittle">Status: </span> </strong>
+									Baja
+								</h3>
+								<?php } ?>
+								<h3>
+									<strong><span class="font_tittle">Placas: </span> </strong>
+									<?php echo $veh['placas']; ?>
+								</h3>
+								<h3>
+									<strong><span class="font_tittle">Comentarios: </span> </strong>
+									<?php echo $veh['comentarios']; ?>
+								</h3>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col m4 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Tarjeta Circulación</h3>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m12 s12 text-center">
+							<?php if($tarjeta== null){ ?>
+								<img src="/img/no_disponible1.png" class="responsive-img" style="width: 150px; height: 125px; margin-top: 3px;"><br/>
+
+								<a class="text-center modal-trigger info_mod" title="Modificar Archivo" href="#modaltjt"
+								 style="color: blue; font-size:18px;"><i class="small material-icons">library_add</i></a>
+
+							<?php }else{ ?>
+								<a class="example-image-link" href="/<?php echo $veh['tarjeta_circulacion']; ?>" data-lightbox="example-1"><img class="example-image " src="/<?php echo $veh['tarjeta_circulacion']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 200px; height: 125px;"/></a><br/>
+
+								<a title="Descargar Tarjeta" href="/<?php echo $veh["tarjeta_circulacion"]; ?>" download="<?php echo substr(strrchr($veh["tarjeta_circulacion"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="small material-icons">file_download</i> </a>
+
+								<a class="text-center modal-trigger info_mod" title="Modificar Archivo" href="#modalmodtarjeta"
+								 style="color: blue; font-size:18px;"><i class="small material-icons">refresh</i></a>
+
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Datos Vehículos-->
+
+<!-- Modal añadir Tarjeta -->
+<div id="modaltjt" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col m12 s12 text-left" style="margin-top: 5px;">
+                <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Añadir Tarjeta de Circulación
+            </div>
+        </div>
+        <div class="row">
+            <form action="/vehiculos/updatetarjeta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitadd">
+                 <?php foreach ($this->vehiculosc as $veh) { ?>
+                    <input type="hidden" name="idhs" value="<?php echo $veh["id_vehiculos"]; ?>">     
+                <?php } ?> 
+
+                <div class="row">
+                    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>Añadir Tarjeta</span>
+                            <input type="file" name="url" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="urlt" type="text">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="addtarjeta" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal añadir Tarjeta -->
+
+<!-- Modal Modificar Tarjeta -->
+<div id="modalmodtarjeta" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col m12 s12 text-left" style="margin-top: 5px;">
+                <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Actualizar Tarjeta
+            </div>
+        </div>
+        <div class="row">
+            <form action="/vehiculos/updatemodtarjeta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_tarjeta">
+                 <?php foreach ($this->vehiculosc as $veh) { ?>
+                    <input type="hidden" name="idhs" value="<?php echo $veh["id_vehiculos"]; ?>">     
+                <?php } ?> 
+                <div class="row">
+
+                    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>Actualizar Tarjeta</span>
+                            <input type="file" name="url2">
+                            <input type="hidden" name="imahidden" value="<?php echo $tarjeta; ?>">   
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="url2" type="text">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="modtarjeta" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Modificar Tarjeta -->
+
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	    $('.datepicker').datepicker();
+
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+	});
+
+ // 	$("#asignarveh").click(function(){
+ // 		swal({
+ // 			title: "¿Estás seguro que deseas asignar el vehículo?",
+	//   		icon: "warning",
+	//   		buttons: true,
+	//   		dangerMode: true,
+	//   	})
+	//   	.then((willDelete) => {
+	//   		if (willDelete) {
+	//   			swal("¡Bien! el vehículo fue asignado", {
+	//   				icon: "success",
+	//   				buttons: false,
+	//   			});
+
+	//   			var responsable =document.getElementById("responsable").value
+	//     		var	id = document.getElementById("id_vh").value;
+	//     		var archivo = document.getElementById("archivo").value;
+	//     		var request = $.ajax({
+	//     			url:"/vehiculos/requestasignarveh",
+ //                	method:"POST", 
+ //                	data: { responsable : responsable, id : id, archivo : archivo },
+ //                	processData: true,
+ //                // contentType: false,
+ //            	});
+	// 			//-------------------end de ajax---------------------------
+
+	// 			//-------------peticion de respuesta de ajax------------------
+
+	// 			request.done(function(response) {
+ //                console.log(response);//imprime lo que responde el ajax
+ //                // alert
+ //                window.location.reload(true);
+ //            	});
+	// 			//-------------------end de respuesta ajax---------------------
+ //             	return false;
+ //            } else {
+ //            	swal("¡Verifica antes de hacer el cambio!");
+ //            }
+ //        });
+	// }); // AJAX Asignar Vehículo
+
+	$("#asignarveh").click(function(){
+		var responsable = document.getElementById("responsable").value;
+
+		if(responsable == ""){
+			swal({
+				title: "Elige un responsable para asignar un vehículo.",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormAsigna, 500);     
+		}    });
+
+    function submitFormAsigna() {
+    	
+    	document.getElementById("submit_asignavo").submit()
+    
+    } 	//Validar Asignar Vehículo
+
+
+
+	// $("#liberarveh").click(function(){
+	//   	swal({
+	// 	  title: "¿Estás seguro que el vehículo se regresó?",
+	// 	  icon: "warning",
+	// 	  buttons: true,
+	// 	  dangerMode: true,
+	// 	})
+	// 	.then((willDelete) => {
+	// 		if (willDelete) {
+	// 			swal("¡Bien! El Vehículo ahora está disponible.", {
+	// 				icon: "success",
+	// 				buttons: false,
+	// 			});
+
+	// 			var	id = document.getElementById("id_vh").value;
+	//             var request = $.ajax({
+	//                 url:"/vehiculos/requestregresarv",
+	//                 method:"POST",
+	//                 data: { id: id },
+	//                 processData: true,
+	//                 // contentType: false,
+	//             });
+	// 		//-------------------end de ajax---------------------------
+
+	// 		//-------------peticion de respuesta de ajax------------------
+	//             request.done(function(response) {
+	//                 console.log(response);//imprime lo que responde el ajax
+	//                 // alert
+	//                 window.location.reload(true);
+	//             });
+	// 		//-------------------end de respuesta ajax---------------------
+ //             return false;
+
+
+	//   		} else {
+	//   			swal("¡Verifica antes de hacer el cambio!");
+	//   		}
+	//   	});
+	// }); // AJAX Regresar Vehículo
+
+	$("#liberarveh").click(function(){
+		var idveh = document.getElementById("idveh").value;
+
+		if(idveh == ""){
+			swal({
+				title: "LLena el campo para continuat.",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormRegresa, 500);     
+		}    });
+
+    function submitFormRegresa() {
+    	
+    	document.getElementById("submit_regresarvo").submit()
+    
+    } 	//Validar Asignar Vehículo
+
+
+
+	$("#bajaveh").click(function(){
+		var motivo = document.getElementById("motivos").value;
+		var url = document.getElementById("url").value;
+
+		if(motivo == "" || url == ""){
+			swal({
+				title: "Para dar de baja, llena todos los campos",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormB, 500);     
+		}    });
+
+    function submitFormB() {
+    	document.getElementById("submit_bajav").submit()
+    }
+    //Validar baja herramienta
+
+
+	$("#reparaveh").click(function(){
+		var nombrei = document.getElementById('nombrei').value;
+		var fechai = document.getElementById('fechai').value;
+		var personali = document.getElementById('personali').value;
+		var imagenv = document.getElementById('imagenv').value;
+		var imageni = document.getElementById('imageni').value;
+		var accioni = document.getElementById('accioni').value;
+		var costoi = document.getElementById('costoi').value;
+
+		var tipom = document.getElementById('tipom').value;
+		var fecham = document.getElementById('fecham').value;
+		var kilometrajem = document.getElementById('kilometrajem').value;
+		var costom = document.getElementById('costom').value;
+		var serviciom = document.getElementById('serviciom').value;
+		var imagenm = document.getElementById('imagenm').value;
+
+
+
+		if(tipom == 0 || kilometrajem == "" || costom == "" || serviciom == "" || imagenm == "" || nombrei == "" 
+			|| accioni == "" || costoi == "" || imagenv == "" || imageni == ""){
+			swal({
+				title: "Para mandar a reparación, llena los campos(*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormV, 500);     
+		}    
+	}); 
+
+    function submitFormV() {
+    	document.getElementById("submit_reparav").submit()
+    }
+    //Validar Reparar Vehiculo
+
+    $("#lreparaveh").click(function(){
+	  	swal({
+		  title: "¿Estás seguro que el vehículo esta reparado?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("¡Bien! El vehículo ya esta disponible", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var	id = document.getElementById("id_vh").value;
+	            var request = $.ajax({
+	                url:"/vehiculos/requestvehreparado",
+	                method:"POST",
+	                data: { id: id },
+	                processData: true,
+	                // contentType: false,
+	            });
+			//-------------------end de ajax---------------------------
+
+			//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+			//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  		} else {
+	  			swal("¡Verifica antes de hacer el cambio!");
+	  		}
+	  	});
+	}); // VEHICULO REPARADO
+
+
+	$('#accion').on('change', function() {
+		var value = $(this).val();
+		if(value==1){
+			$("#tm").show();
+			$("#fm").show();
+			$("#km").show();
+			$("#cm").show();
+			$("#sm").show();
+			$("#im").show();
+			
+			
+			$("#ni").hide();
+			$("#fi").hide();
+			$("#pi").hide();
+			$("#ivi").hide();
+			$("#imi").hide();
+			$("#ai").hide();
+			$("#ci").hide();
+			$("#cgi").hide();
+
+			document.getElementById('nombrei').value=' ';
+			document.getElementById('fechai').value=' ';
+			document.getElementById('personali').value='';
+			document.getElementById('imagenv').value=' ';
+			document.getElementById('imageni').value=' ';
+			document.getElementById('accioni').value=' ';
+			document.getElementById('costoi').value=' ';
+			document.getElementById('comentarioi').value=' ';
+
+		}
+
+		if(value==2){
+
+			$("#ni").show();
+			$("#fi").show();
+			$("#pi").show();
+			$("#ivi").show();
+			$("#imi").show();
+			$("#ai").show();
+			$("#ci").show();
+			$("#cgi").show();
+
+			$("#tm").hide();
+			$("#fm").hide();
+			$("#km").hide();
+			$("#cm").hide();
+			$("#sm").hide();
+			$("#im").hide();
+
+			document.getElementById('tipom').value=1;
+			document.getElementById('fecham').value=' ';
+			document.getElementById('kilometrajem').value=' ';
+			document.getElementById('costom').value=' ';
+			document.getElementById('serviciom').value=' ';
+			document.getElementById('imagenm').value=' ';
+		}
+	});
+
+	$('#alert_close').click(function(){
+	    $( "#alert_box" ).fadeOut( );
+	});
+
+	$("#addtarjeta").click(function(){
+        
+        var urlt =  document.getElementById("urlt").value;
+
+        if(urlt == ""){
+            swal({
+                title: "Añade un archivo, para continuar.",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitFormT, 500);     
+        }    
+    }); 
+
+    function submitFormT() {
+
+        document.getElementById("submitadd").submit()
+
+    }
+
+	$("#modtarjeta").click(function(){
+        
+        var url2 =  document.getElementById("url2").value;
+
+        if(url2 == ""){
+            swal({
+                title: "Añade un archivo, para continuar.",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitFormModT, 500);     
+        }    
+    }); 
+
+    function submitFormModT() {
+
+        document.getElementById("submit_tarjeta").submit()
+
+    }
+
+
+</script>

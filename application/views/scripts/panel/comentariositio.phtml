@@ -1,0 +1,55 @@
+<div class="row">
+	<div class="col m12 s12">
+		<h2>Editar comentario</h2>
+	</div>
+</div>
+
+
+	
+
+
+<div class="row">
+    <div class="row">
+    	<div class="input-field col m2 s12"> </div>
+        <div class="input-field col m8 s12">
+        	<form action="/panel/requestupdatecomentariositio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+        	<?php foreach ($this->comentario as $key){?>
+          	<textarea id="textarea1" class="materialize-textarea" name="comentario" value="<?php echo $key['comentario']; ?>"><?php echo $key['comentario']; ?></textarea>
+          	<label for="textarea1">Comentario</label>
+
+          	<input type="hidden" id="id" name="comentario_id" value="<?php echo $key['id']; ?>">
+          	<input type="hidden" name="id" value="<?php echo $this->id; ?>">
+          	<input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+          	<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
+          	<?php } ?>
+          	</form>
+         	<div>
+				<div class="row text-right">
+					<a href="/panel/asignardetalles/id/<?php echo $this->id; ?>/proyecto/<?php echo $this->proyecto; ?>/sitio/<?php echo $this->sitio; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+					<button id="addcomentario" class="waves-effect waves-light btn">Actualizar</button>
+				</div>
+         	</div>
+        </div>
+        <div class="input-field col m2 s12"> </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $("#addcomentario").click(function(){
+     	var comentario = document.getElementById("textarea1").value;
+
+        if(comentario == 3 ){
+            swal({
+                title: "Debes agregar un comentario para poder actualizarlo.",
+            });
+        }else{
+            swal("Felicidades!", "El comentario se edito de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_personal").submit()
+    } 
+</script>

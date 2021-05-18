@@ -1,0 +1,137 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/solicitud/comprobacionesresidente/id/<?php echo $this->user_id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar datos de la Factura</span>
+    </div>
+</div>
+
+<!-- <div class="row">
+	<div class="col m12 s12">
+		<h3>Editar comprobación de </h3>
+	</div>
+</div> -->
+
+  <div class="row">
+    <div class="col m12 s12" style="margin-top: 40px;">
+      <form action="/solicitud/requestupdatecomprobacionedit" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_altan">
+<?php foreach ($this->comprobacion as $key){ ?>
+      	<input type="hidden" name="ids" value="<?php echo $key['id']; ?>">
+
+      <div class="input-field col m6 s12">
+        <input id="fecha_requerida" name="fecha" type="text" value="<?php echo $key['fecha_del']; ?>" class="datepicker">
+        <label for="fecha_requerida">* Fecha de Factura</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input id="monto" name="monto" type="text" value="<?php echo $key['monto_solicitud']; ?>" class="validate">
+        <label for="monto">* Monto a comprobar</label>
+      </div>
+
+      <div class="input-field col s6">
+        <select id="no_factura" name="no_factura" required>
+            <?php foreach ($this->factura as $mar) { 
+              if ($mar['id']==$key['factura']) { ?>
+                      <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["no_factura"]; ?></option>
+            <?php } if ($mar['id']!=$key['factura']) { ?>
+                      <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["no_factura"]; ?></option>
+            <?php } } ?>  
+        </select>
+        <label>No. Factura</label>
+
+      </div>
+
+      <?php $facturable = $key['facturable']; ?>
+
+  		<div class="input-field col s6">
+    		<select name="facturable" id="facturable">
+    			<?php if($facturable == 1){ ?>
+      				<option value="1" selected>SI</option>
+      				<option value="2">NO</option>
+    			<?php }else{ ?>
+      				<option value="1">SI</option>
+      				<option value="2" selected>NO</option>
+    			<?php } ?>
+
+    		</select>
+    		<label>Facturable?</label>
+  		</div>
+
+		<div class="input-field col s6">
+			<select id="residente" name="residente">
+			    <?php foreach ($this->residentes as $mar) { 
+			     	if ($mar['id']==$key['id_residente']) { ?>
+			        	<option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?> <?php echo $mar['apellido_pa']; ?> <?php echo $mar['apellido_ma']; ?></option>
+			     <?php } if ($mar['id']!=$key['id_residente']) { ?>
+			        	<option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?> <?php echo $mar['apellido_pa']; ?> <?php echo $mar['apellido_ma']; ?></option>
+			     <?php } } ?>  
+			</select>
+			<label>Residentes</label>
+		</div>
+
+
+		<div class="input-field col s6">
+			<select id="servicio" name="servicio">
+			    <?php foreach ($this->servicio as $mar) { 
+			     	if ($mar['id']==$key['servicio']) { ?>
+			        	<option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_servicio"]; ?></option>
+			     <?php } if ($mar['id']!=$key['servicio']) { ?>
+			        	<option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_servicio"]; ?> </option>
+			     <?php } } ?>  
+			</select>
+			<label>Servicio</label>
+		</div>
+<?php } ?>
+      </form>
+
+      <div class="row">
+        <div class="col m12 s12 text-right">
+          <a class="btn" id="generar_comprobacion"><i class="material-icons right">arrow_forward</i>Editar información</a>
+        </div>
+      </div>
+	</div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+  	});
+
+    $("#generar_comprobacion").click(function(){
+      var fecha = document.getElementById("fecha_requerida").value;
+      var monto = document.getElementById("monto").value;
+      var facturable = document.getElementById("facturable").value;
+      var residente  = document.getElementById("residente").value;
+      var servicio = document.getElementById("servicio").value;
+
+        if(monto == "" || residente == "" || servicio == 0 || facturable == 0){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(submitaltan, 1500);
+
+
+        }
+
+    });
+
+    function submitaltan() { document.getElementById("submit_file_altan").submit() }
+</script>

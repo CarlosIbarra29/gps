@@ -1,0 +1,1272 @@
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m12 s12 text-left">
+		<a href="/panel/detallescolocacion/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>"><i class="fa fa-2x fa-reply-all"></i> Regresar</a>
+	</div>
+</div>
+	
+
+<!-- <div class="row">
+	<div class="col m4 s6">
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Nombre sitio:</span> <?php echo $key['nombre']; ?></h5>
+			<h5><span class="font_tittle">Id cliente:</span> <?php echo $key['id_cliente']; ?></h5>
+			<h5><span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+		<?php } ?>
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>	
+		<h5><span class="font_tittle">Tipo de torre:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s12">
+		<h5><span class="font_tittle">Id operador:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+			<h5><span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+		<?php } ?>
+	</div>
+</div> -->
+
+
+<!-- <div class="row">
+	<div class="col m6 s6">
+		<h5><span class="font_tittle">Proyecto:</span> </h5>
+		<h5><span class="font_tittle">Cliente:</span> 
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->statuscliente as $mar) { 
+					 		if ($mar['id']==$usr['status_cliente']) { ?>
+					     		<?php echo $mar["nombre_status"]; ?>
+				<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+				<?php } } ?>
+			<?php } ?>
+		</h5>
+		<h5><span class="font_tittle">Obra civil:</span> </h5>
+		<h5><span class="font_tittle">Torre:</span>
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->status as $mar) { 
+					if ($mar['id']==$usr['status_proyecto']) { ?>
+					    <?php echo $mar["nombre_status"]; ?>
+					<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+				<?php } } ?>
+			<?php } ?>
+
+		</h5>
+	</div>
+	<div class="col m6 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Coordinador:</span> <?php echo $value['nombre_coordinador'] ?></h5>
+			<h5><span class="font_tittle">Ingeniero Proyecto:</span> <?php echo $value['nombre_ingproyecto'] ?></h5>
+		<?php } ?>
+		<h5><span class="font_tittle">Residente: </span></h5>
+		<h5><span class="font_tittle">PM Cliente:</span></h5>
+	</div>
+</div> -->
+
+<!-- <div class="row">
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha requerida cliente:</span></h5>
+	</div>
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha cronograma:</span></h5>
+	</div>
+</div> -->
+
+<div class="row">
+	<div class="col m12 s12">
+		<h4>WK 1 (Editar evidencias fotograficas).</h4>
+	</div>
+</div>
+
+<div class="row">
+	<?php 
+		$excavacion = 0; $base_medicion = 0; $base_cuchillas = 0; $registros_fo = 0; $tuberia_electricos = 0; $tuberia_fo = 0; 
+		$tuberia_electrica = 0; $trayectoria_aerea = 0; $plancha_equipos = 0; $soporte_telescopio = 0; $sistema_tierras = 0;
+		$interruptores_gabiete = 0; $nicho_cargas = 0; $gabinete_soporte = 0; $instalacion_cable = 0; $interconexiones = 0;
+		$soportes_rf = 0; $cgo = 0; $barras_tierras = 0; $aterrizaje_barras =0; $porta_cablera = 0; $sistema_electrico = 0;
+		$fibra_optica =0; $sistemas_tierra = 0; $limpieza_detalles=0;
+		foreach ($this->wkuno as $key){ 
+			$excavacion = $key['status_excavacion'];
+			$base_medicion = $key['status_basemedicion'];
+			$base_cuchillas = $key['status_basecuchillas'];
+			$registros_fo = $key['status_registrosfo'];
+			$tuberia_electricos = $key['status_registroselectricos'];
+			$tuberia_fo = $key['status_tuberiafo'];
+			$tuberia_electrica = $key['status_tuberiaelectrica'];
+			$trayectoria_aerea = $key['status_trayectoriaaerea'];
+			$plancha_equipos = $key['status_planchaequipos'];
+			$soporte_telescopio = $key['status_telescopio'];
+			$sistema_tierras = $key['status_sistematierras'];
+			$interruptores_gabiete = $key['status_interruptores'];
+			$nicho_cargas = $key['status_nichocarga'];
+			$gabinete_soporte = $key['status_fuerzasoporte'];
+			$instalacion_cable= $key['status_instalacioncable'];
+			$interconexiones = $key['status_interconexiones'];
+			$soportes_rf = $key['status_orientacionrf'];
+			$cgo = $key['status_instalacioncgo'];
+			$barras_tierras= $key['status_instalacionbarras'];
+			$aterrizaje_barras = $key['status_aterrizajebarras'];
+			$porta_cablera = $key['status_portacablera'];
+			$sistema_electrico = $key['status_sistemaelectrico'];
+			$fibra_optica = $key['status_fibraoptica'];
+			$sistemas_tierra= $key['status_sistematierra'];
+			$limpieza_detalles= $key['status_limpieza'];
+
+		} 
+	?>
+
+
+	<?php foreach ($this->wkuno as $key ) { ?>
+		<input type="hidden" id="img_excavacion" value="<?php echo $key['status_excavacion']; ?>">
+		<input type="hidden" id="img_medicion" value="<?php echo $key['base_medicion']; ?>">
+		<input type="hidden" id="img_cuchillas" value="<?php echo $key['base_cuchillas']; ?>">
+		<input type="hidden" id="img_registrofo" value="<?php echo $key['registro_fo']; ?>">
+		<input type="hidden" id="img_registroselectricos" value="<?php echo $key['registros_electricos']; ?>">
+		<input type="hidden" id="img_tuberiafo" value="<?php echo $key['tuberia_fo']; ?>">
+		<input type="hidden" id="img_tuberiaelectrica" value="<?php echo $key['tuberia_electrica']; ?>">
+		<input type="hidden" id="img_aerea" value="<?php echo $key['trayectoria_aerea']; ?>">
+		<input type="hidden" id="img_plancha" value="<?php echo $key['plancha_equipos']; ?>">
+		<input type="hidden" id="img_telescopio" value="<?php echo $key['telescopio']; ?>">
+		<input type="hidden" id="img_sistematierras" value="<?php echo $key['sistema_tierras']; ?>">
+		<input type="hidden" id="img_interruptores" value="<?php echo $key['interruptores']; ?>">
+		<input type="hidden" id="img_nicho" value="<?php echo $key['nicho_carga']; ?>">
+		<input type="hidden" id="img_fuerza" value="<?php echo $key['fuerza_soporte']; ?>">
+		<input type="hidden" id="img_instalacioncable" value="<?php echo $key['instalacion_cable']; ?>">
+		<input type="hidden" id="img_interconexiones" value="<?php echo $key['interconexiones']; ?>">
+		<input type="hidden" id="img_orientacion" value="<?php echo $key['orientacion_rf']; ?>">
+		<input type="hidden" id="img_cgo" value="<?php echo $key['instalacion_cgo']; ?>">
+		<input type="hidden" id="img_barras" value="<?php echo $key['instalacion_barras']; ?>">
+		<input type="hidden" id="img_aterrizaje" value="<?php echo $key['aterrizaje_barras']; ?>">
+		<input type="hidden" id="img_portacables" value="<?php echo $key['porta_cablera']; ?>">
+		<input type="hidden" id="img_sistema" value="<?php echo $key['sistema_electrico']; ?>">
+		<input type="hidden" id="img_fibra" value="<?php echo $key['fibra_optica']; ?>">
+		<input type="hidden" id="img_sistematierra" value="<?php echo $key['sistema_tierra']; ?>">
+		<input type="hidden" id="img_limpieza" value="<?php echo $key['limpieza_detalles']; ?>">
+	<?php } ?>
+
+
+			<div class="col m3 s12">
+			    <p>
+			    	<?php if($excavacion == 0){ ?>
+				    	<label class="check_option">
+				        	<input type="checkbox" class="filled-in" disabled />
+				        	<span class="font-check">Excavación de Trayectorias</span>
+				    	</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+				    	<label>
+				        	<input type="checkbox" checked="checked" class="filled-in" disabled />
+				        	<span class="font-check">Excavación de Trayectorias</span>
+				    	</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($base_medicion == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Base de Medición</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label>
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Base de Medición</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($base_cuchillas == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Base de Interruptor de Cuchillas</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Base de Interruptor de Cuchillas</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($registros_fo == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Registros de FO</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Registros de FO</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($tuberia_electricos == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Registros de Electricos</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Registros de Electricos</span>
+			      		</label>
+			    	<?php } ?>
+
+			    </p>
+			    <p>
+			    	<?php if($tuberia_fo == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Tuberia FO</span>
+			      		</label>
+			    	<?php }else{ ?> 
+			    		 <!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Tuberia FO</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($tuberia_electrica == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Tuberia Electrica</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Tuberia Electrica</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($trayectoria_aerea == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Trayectoria Aérea</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Trayectoria Aérea</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($plancha_equipos == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Plancha para Equipos</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Plancha para Equipos</span>
+			      		</label>
+			    	<?php } ?>
+			    </p> 
+			    <p>
+			    	<?php if($soporte_telescopio == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Soporte Telescopio para Portacablera</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Soporte Telescopio para Portacablera</span>
+			      		</label>
+			    	<?php } ?>
+			    </p> 
+			    <p>
+			    	<?php if($sistema_tierras == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Sistema de Tierras</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Sistema de Tierras</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>  
+			    <p>
+			    	<?php if($interruptores_gabiete == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Interruptores en Gabinete de fuerzas</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Interruptores en Gabinete de fuerzas</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($nicho_cargas == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Nicho para centro de cargas</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Construcción de Nicho para centro de cargas</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($gabinete_soporte == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Colocación de Gabinete de fuerzas con soporte</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Colocación de Gabinete de fuerzas con soporte</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($instalacion_cable == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalacion de Cable</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalacion de Cable</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($interconexiones == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Colocación de Bases de Equipos e Interconexiones</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Colocación de Bases de Equipos e Interconexiones</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($soportes_rf == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación y Orientación de Soportes RF</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación y Orientación de Soportes RF</span>
+			      		</label>
+			    	<?php } ?>
+			    </p> 
+			    <p>
+			    	<?php if($cgo == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de CGO</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de CGO</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>    
+			    <p>
+			    	<?php if($barras_tierras == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Barras de Tierras</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Barras de Tierras</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($aterrizaje_barras == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Aterizaje de Barras de Tierras</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Aterizaje de Barras de Tierras</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($porta_cablera == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Porta Cablera Horizontal</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Instalación de Porta Cablera Horizontal</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>    
+			    <p>
+			    	<?php if($sistema_electrico == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Sistema Electrico</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Sistema Electrico</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>    
+			    <p>
+			    	<?php if($fibra_optica == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Fibra Optica</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Fibra Optica</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>   
+			    <p>
+			    	<?php if($sistemas_tierra == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Sistema de Tierras</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Sistema de Tierras</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>    
+			    <p>
+			    	<?php if($limpieza_detalles == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Limpieza y Detalles</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Limpieza y Detalles</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			</div>
+
+
+	<div class="col m9 s12">
+		<div class="row">
+			<form action="/colocacion/requestupdatevidenciassemanaunocolocacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_foto">
+  					<div class="input-field col m6 s12">
+    					<select id="actividad" name="actividad">
+      						<option value="" disabled selected>Selecciona una tarea</option>
+      						<?php if($excavacion != 0){ ?>
+      							<option value="1">Excavación de Trayectorias</option>
+      						<?php }else{ ?>
+      							<option value="1" disabled>Excavación de Trayectorias</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Excavación de Trayectorias -->
+      						<?php if($base_medicion != 0){ ?>
+      							<option value="2">Instalación de Base de Medición</option>
+      						<?php }else{ ?>
+      							<option value="2" disabled>Instalación de Base de Medición</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Base de Medición-->
+      						<?php if($base_cuchillas != 0){ ?>
+      							<option value="3">Instalacion de Base de Interruptor de cuchillas</option>
+      						<?php }else{ ?>
+      							<option value="3" disabled>Instalacion de Base de Interruptor de cuchillas</option>
+      						<?php } ?>	
+      					<!-- 	END OPTION Instalacion de Base de Interruptor de cuchillas -->	
+      						<?php if($registros_fo != 0){?>
+      							<option value="4">Construcción de Registros de FO</option>
+      						<?php }else{ ?>
+      							<option value="4" disabled>Construcción de Registros de FO</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Construcción de Registros de FO -->
+      						<?php if($tuberia_electricos != 0){ ?>
+      							<option value="5">Construcción de Registros de Electricos</option>
+      						<?php }else{ ?>
+      							<option value="5" disabled>Construcción de Registros de Electricos</option>
+      						<?php } ?>	
+      					<!-- 	END OPTION Construcción de Registros de Electricos -->
+      						<?php if($tuberia_fo != 0){ ?>
+      							<option value="6">Instalación de Tubería FO</option>
+      						<?php }else{ ?>
+      							<option value="6" disabled>Instalación de Tubería FO</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Tubería FO -->
+      						<?php if($tuberia_electrica != 0){ ?>
+      							<option value="7">Instalación de Tubería Electrica</option>
+      						<?php }else{ ?>
+      							<option value="7" disabled>Instalación de Tubería Electrica</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Tubería Electrica< -->
+      						<?php if($trayectoria_aerea != 0){ ?>
+      							<option value="8">Instalación de Trayectoria Aérea</option>
+      						<?php }else{ ?>
+      							<option value="8" disabled>Instalación de Trayectoria Aérea</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Trayectoria Aérea-->
+      						<?php if($plancha_equipos != 0){ ?>
+      							<option value="9">Construcción de Plancha para Equipos</option>
+      						<?php }else{ ?>
+      							<option value="9" disabled>Construcción de Plancha para Equipos</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Construcción de Plancha para Equipos-->
+      						<?php if($soporte_telescopio != 0){ ?>
+      							<option value="10">Instalación de Soporte Telescopio para Portacablera</option>
+      						<?php }else{ ?>
+      							<option value="10" disabled>Instalación de Soporte Telescopio para Portacablera</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Soporte Telescopio para Portacablera -->
+      						<?php if($sistemas_tierra != 0){ ?>
+      							<option value="11">Instalación de Sistema de Tierras</option>
+      						<?php }else{ ?>
+      							<option value="11" disabled>Instalación de Sistema de Tierras</option>
+      						<?php } ?>
+      					<!-- 	END OPTION EXCAVACION DE MURO / DALA PARAMETRAL -->
+      						<?php if($interruptores_gabiete != 0){ ?>
+      							<option value="12">Instalación de Interruptores en Gabinetes de fuerzas</option>
+      						<?php }else{ ?>
+      							<option value="12" disabled>Instalación de Interruptores en Gabinetes de fuerzas</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación de Interruptores en Gabinetes de fuerzas -->
+      						<?php if($nicho_cargas != 0){ ?>
+      							<option value="13">Construcción de Nicho para centro de cargas</option>
+      						<?php }else{ ?>
+      							<option value="13" disabled>Construcción de Nicho para centro de cargas</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Construcción de Nicho para centro de cargas -->
+      						<?php if($gabinete_soporte != 0){ ?>
+      							<option value="14">Colocación de Gabinete de fuerzas con Soporte</option>
+      						<?php }else{ ?>
+      							<option value="14" disabled>Colocación de Gabinete de fuerzas con Soporte</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Colocación de Gabinete de fuerzas con Soporte -->
+      						<?php if($instalacion_cable != 0){ ?>
+      							<option value="15">Instalacion de Cable</option>
+      						<?php }else{ ?>
+      							<option value="15" disabled>Instalacion de Cable</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalacion de Cable -->
+      						<?php if($interconexiones != 0){ ?>
+      							<option value="16">Colocación de Bases de Equipos e Interconexiones</option>
+      						<?php }else{ ?>
+      							<option value="16" disabled>Colocación de Bases de Equipos e Interconexiones</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Colocación de Bases de Equipos e Interconexiones -->
+      						<?php if($soportes_rf != 0){ ?>
+      							<option value="17">Instalación y Orientación de Soportes RF</option>
+      						<?php }else{ ?>
+      							<option value="17" disabled>Instalación y Orientación de Soportes RF</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalación y Orientación de Soportes RF-->
+      						<?php if($cgo != 0){ ?>
+      							<option value="18">Instalacion de CGO</option>
+      						<?php }else{ ?>
+      							<option value="18" disabled>Instalacion de CGO</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalaci{on de CGO-->
+      						<?php if($barras_tierras != 0){ ?>
+      							<option value="19">Instalacion de Barras de Tierras</option>
+      						<?php }else{ ?>
+      							<option value="19" disabled>Instalacion de Barras de Tierras</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalacion de Barras de Tierras -->
+      						<?php if($aterrizaje_barras != 0){ ?>
+      							<option value="20">Aterrizaje de Barras de Tierras</option>
+      						<?php }else{ ?>
+      							<option value="20" disabled>Aterrizaje de Barras de Tierras</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Aterrizaje de Barras de Tierras-->
+      						<?php if($porta_cablera != 0){ ?>
+      							<option value="21">Instalacion de Porta Cablera Horizontal</option>
+      						<?php }else{ ?>
+      							<option value="21" disabled>Instalacion de Porta Cablera Horizontal</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Instalacion de Porta Cablera Horizontal -->
+      						<?php if($sistema_electrico != 0){ ?>
+      							<option value="22">Sistema Electrico</option>
+      						<?php }else{ ?>
+      							<option value="22" disabled>Sistema Electrico</option>
+      						<?php } ?>
+      					<!-- 	END OPTIONSistema Electrico -->
+      						<?php if($fibra_optica != 0){ ?>
+      							<option value="23">Fibra Optica</option>
+      						<?php }else{ ?>
+      							<option value="23" disabled>Fibra Optica</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Fibra Optica -->
+      						<?php if($sistema_tierras != 0){ ?>
+      							<option value="24">Sistema de Tierras</option>
+      						<?php }else{ ?>
+      							<option value="24" disabled>Sistema de Tierras</option>
+      						<?php } ?>
+      					<!-- 	END OPTIONSistema de Tierras -->
+      						<?php if($limpieza_detalles != 0){ ?>
+      							<option value="25">Limpieza y Detalles</option>
+      						<?php }else{ ?>
+      							<option value="25" disabled>Limpieza y Detalles</option>
+      						<?php } ?>
+      					<!-- 	END OPTION Limpieza y Detalles-->
+    					</select>
+  					</div>
+
+  					<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+  					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+  					<input type="hidden" name="id" value="<?php echo $this->id_sitio; ?>">
+  					<input type="hidden" id="img_edit" name="imahidden">
+
+				    <div class="file-field input-field col m6 s12">
+				    	<div class="btn">
+				        	<span>Foto</span>
+				        	<input type="file" name="url">
+				      	</div>
+				      	<div class="file-path-wrapper">
+				        	<input class="file-path validate" id="imgvalidate" type="text">
+				      	</div>
+				    </div>
+				    </form>
+		</div>
+				
+		<div class="row">
+			<div class="col m12 s12 text-center">
+				<a class="waves-effect waves-light btn" id="btfoto">Editar</a>
+			</div>
+		</div>
+
+		<div clas="row">
+
+					<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($excavacion == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Excavacion de Trayecorias</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['excavacion_trayectoria']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion_trayectoria']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span></span>
+								<a class="img_download" data-img ="/<?php echo $key['excavacion_trayectoria']; ?>">Excavacion de Trayecorias <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+
+					<div class="col m4 s6 text-center">
+						<?php if($base_medicion == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Base de Medicion</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['base_medicion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['base_medicion']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['base_medicion']; ?>">Instalacion de Base de Medicion <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($base_cuchillas == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Base de Interruptor de cuchillas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['base_cuchillas']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['base_cuchillas']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['base_cuchillas']; ?>">Instalacion de Base de Interruptor de cuchillas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+
+					</div>
+					</div>
+
+					<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($registros_fo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de Registros de FO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['registro_fo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['registro_fo']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['registro_fo']; ?>">Construccion de Registros de FO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($tuberia_electricos == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de Registros Electricos</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['registros_electricos']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['registros_electricos']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['registros_electricos']; ?>">Construccion de Registros Electricos <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($tuberia_fo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Tuberia FO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['tuberia_fo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['tuberia_fo']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span></span>
+								<a class="img_download" data-img ="/<?php echo $key['tuberia_fo']; ?>">Instalacion de Tuberia FO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					</div>
+
+
+					<div class="row"> 
+					<div class="col m4 s12 text-center">
+						<?php if($tuberia_electrica == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Tuberia Electrica</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['tuberia_electrica']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['tuberia_electrica']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['tuberia_electrica']; ?>">Instalacion de Tuberia Electrica <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+
+
+					<div class="col m4 s12 text-center">
+						<?php if($trayectoria_aerea == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Trayectoria Aerea</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['trayectoria_aerea']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['trayectoria_aerea']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['trayectoria_aerea']; ?>">Instalacion de Trayectoria Aerea <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+
+					<div class="col m4 s12 text-center">
+						<?php if($plancha_equipos == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de Plancha para Equipos</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['plancha_equipos']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['plancha_equipos']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['plancha_equipos']; ?>">Construccion de Plancha para Equipos <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+
+					</div>
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($soporte_telescopio == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Soporte Telescopio para Portacablera</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['telescopio']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['telescopio']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['telescopio']; ?>">Instalacion de Soporte Telescopio para Portacablera <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+
+					<div class="col m4 s12 text-center">
+						<?php if($sistema_tierras == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Sistema de Tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistema_tierras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistema_tierras']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistema_tierras']; ?>">Instalacion de Sistema de Tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($interruptores_gabiete == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Interruptores en Gabinete de fuerzas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['interruptores']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['interruptores']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['interruptores']; ?>">Instalacion de Interruptores en Gabinete de fuerzas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($nicho_cargas == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de Nicho para centro de cargas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['nicho_carga']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['nicho_carga']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['nicho_carga']; ?>">Construccion de Nicho para centro de cargas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($gabinete_soporte == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Colocacion de Gabinete de fuerzas con Soporte</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['fuerza_soporte']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['fuerza_soporte']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['fuerza_soporte']; ?>">Colocacion de Gabinete de fuerzas con Soporte <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+
+					<div class="col m4 s12 text-center">
+						<?php if($instalacion_cable == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Cable</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_cable']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_cable']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_cable']; ?>">Instalacion de Cable <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($interconexiones == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Colocacion de Bases de Equipos e Interconexiones</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['interconexiones']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['interconexiones']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['interconexiones']; ?>">Colocacion de Bases de Equipos e Interconexiones <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($soportes_rf == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion y Orientacion de Soportes RF</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['orientacion_rf']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['orientacion_rf']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['orientacion_rf']; ?>">Instalacion y Orientacion de Soportes RF <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($cgo == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de CGO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_cgo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_cgo']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_cgo']; ?>">Instalacion de CGO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($barras_tierras == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Barras de Tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_barras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_barras']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_barras']; ?>">Instalacion de Barras de Tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($aterrizaje_barras == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Aterrizaje de Barras de Tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['aterrizaje_barras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['aterrizaje_barras']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['aterrizaje_barras']; ?>">Aterrizaje de Barras de Tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($porta_cablera == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de Porta Cablera Horizontal</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['porta_cablera']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['porta_cablera']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['porta_cablera']; ?>">Instalacion de Porta Cablera Horizontal <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($sistema_electrico == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Sistema Electrico</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistema_electrico']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistema_electrico']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistema_electrico']; ?>">Sistema Electrico <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($fibra_optica == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Fibra Optica</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['fibra_optica']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['fibra_optica']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['fibra_optica']; ?>">Fibra Optica <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($sistemas_tierra == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Sistema de Tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistema_tierra']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistema_tierra']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistema_tierra']; ?>">Sistema de Tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+					<div class="row">
+					<div class="col m4 s12 text-center">
+						<?php if($limpieza_detalles == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Limpieza y Detalles</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['limpieza_detalles']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['limpieza_detalles']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['limpieza_detalles']; ?>">Limpieza y Detalles <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					</div>
+
+		</div>
+	</div>
+</div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('select').formSelect();
+  	});
+
+    $("#btfoto").click(function(){
+        var actividad = document.getElementById("actividad").value;
+        var img = document.getElementById("imgvalidate").value;
+        	if(actividad == 1){
+        		var valor = document.getElementById("img_excavacion").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 2){
+        		var valor = document.getElementById("img_medicion").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 3){
+        		var valor = document.getElementById("img_cuchillas").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 4){
+        		var valor = document.getElementById("img_registrofo").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 5){
+        		var valor = document.getElementById("img_registroselectricos").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 6){
+        		var valor = document.getElementById("img_tuberiafo").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 7){
+        		var valor = document.getElementById("img_tuberiaelectrica").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 8){
+        		var valor = document.getElementById("img_aerea").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 9){
+        		var valor = document.getElementById("img_plancha").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 10){
+        		var valor = document.getElementById("img_telescopio").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 11){
+        		var valor = document.getElementById("img_sistematierras").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 12){
+        		var valor = document.getElementById("img_interruptores").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 13){
+        		var valor = document.getElementById("img_nicho").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 14){
+        		var valor = document.getElementById("img_fuerza").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 15){
+        		var valor = document.getElementById("img_instalacioncable").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 16){
+        		var valor = document.getElementById("img_interconexiones").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 17){
+        		var valor = document.getElementById("img_orientacion").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 18){
+        		var valor = document.getElementById("img_cgo").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 19){
+        		var valor = document.getElementById("img_barras").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 20){
+        		var valor = document.getElementById("img_aterrizaje").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 21){
+        		var valor = document.getElementById("img_portacables").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        	if(actividad == 22){
+        		var valor = document.getElementById("img_sistema").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 23){
+        		var valor = document.getElementById("img_fibra").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 24){
+        		var valor = document.getElementById("img_sistematierra").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 25){
+        		var valor = document.getElementById("img_limpieza").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+
+
+        if(actividad == "" || img == ""){
+            swal({
+              title: "Para editar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+            swal("Felicidades!", "La imagen se edito de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_foto").submit()
+    }
+
+    $(".check_option").click(function(){
+    	swal({title: "Debes seleccionar una tarea y subir una foto!" , });
+    });
+</script>

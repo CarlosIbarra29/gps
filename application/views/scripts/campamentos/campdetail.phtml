@@ -1,0 +1,825 @@
+
+
+<input type="hidden" name="idcamp" id="id_camp" value="<?php echo $this->idca; ?>">
+
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+<!-- INICIO DETAIL-->
+<div class="col m12 s12">
+	<div class="row" style="margin-top: 15px;">
+		<div class="col m12 s12">
+				<a href="/campamentos/addcampamento"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+		</div>
+		
+		<div class="col m4 s12"></div>
+		
+		<div class="col m8 s12">
+			<div class="row text-center">
+				<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Campamento</span>
+			</div>
+			<div class="row text-center">
+				<div class="col m4 s4">
+					<?php foreach ($this->campamentosc as $camp) { ?>
+						<?php if($camp['status_campamento'] == 1){ ?>
+							<div class="chip">
+								<img src="/img/correct.png" >
+								Por Rentar
+							</div>
+						<?php }else{ ?>
+							<div class="chip">
+								<img src="/img/gris.jpg" >
+								Por Rentar
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m4 s4">
+					<?php foreach ($this->campamentosc as $camp) { ?>
+						<?php if($camp['status_campamento'] == 2){ ?>
+							<div class="chip" >
+								<img src="/img/amarillo.png" >
+								En Renta
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								En Renta
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m4 s4">
+					<?php foreach ($this->campamentosc as $camp) { ?>
+						<?php if($camp['status_campamento'] == 3){ ?>
+							<div class="chip" >
+								<img src="/img/rojo.png" >
+								Cerrado
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Cerrado
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+			</div>
+
+			<div class="col m12 s12 text-center">
+			  	<?php foreach ($this->campamentosc as $camp) { ?>
+			  		<?php if ($camp['nstatus'] == null) { ?>
+			  			<span><b>STATUS DEPÓSITO: No Aplica</b></span>
+			  		<?php } else {?>
+			  			<span><b>STATUS DEPÓSITO: <?php echo $camp['nstatus'];  ?></b></span>
+			  	<?php } } ?>
+			</div>
+
+			<div class="col m12 s12 text-center">
+			  	<?php foreach ($this->campamentosc as $camp) { ?>
+			  		<span>Ultima fecha de actualizacion: <?php echo $camp['created_at'];  ?></span>
+			  	<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END INICIO DETAIL-->
+
+<?php foreach ($this->campamentosc as $camp) { ?>
+	<input type="hidden" name="status_c" id="status_c" value="<?php echo $camp['status_campamento']; ?>">
+<?php } ?>
+
+<?php foreach ($this->campamentosc as $camp) { 
+	$idcampamento = $camp["id_campamento"];
+} ?>
+<input type="hidden" name="" id="campamento_id" value="<?php echo $idcampamento; ?>">
+
+<!--Inicio Botones rep/baja-->
+<!-- <div class="col m12 s12">
+	<div class="col m4 s12 text-center"></div>
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->herramienta as $her) { ?>
+			<?php if($her['status_disponible'] == 3){ ?>
+				<div class="col m12 s12"></div>
+			<?php } elseif ($her['status_disponible'] == 2){ ?>
+				<div class="col m12 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Dar de baja</a>
+					</div>
+				</div>
+			<?php } else {?>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalrepara">Reparación</a>
+					</div>
+				</div>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Dar de baja</a>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+	</div>
+</div> -->
+
+<!--End Botones -->
+
+<!-- Inicio Panel Inicial-->
+<div class="row">
+	<div class="col m4 s12 text-center">
+		<a class="example-image-link" href="/img/gp_2.png" data-lightbox="example-1"><img class="example-image oculto" src="/img/gp_2.png" id="camara_div" alt="/img/gp_2.png" style="width: 200px;  margin-top: 5px;"/></a>
+	</div>
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->campamentosc as $camp) { ?>
+			<?php if($camp['status_campamento'] == 1){ ?>
+				<div class="card darken-1">
+					<div class="card-content">
+						<div class="row">
+							<div class="col m12 s12">
+		          			<h3 class="card-title">Campamento Por Renta</h3>
+		          			<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="input-field col m12 s12">
+		          				<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalrentar">Campamento en Renta</a>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+			<?php }?>
+			<?php if($camp['status_campamento'] == 2){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Campamento en Renta</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+			          				<h4 class="text-center">
+			          					<strong><span class="font_tittle text-center">A cargo de: </span></strong>
+			          				</h4>
+			          				<h5 class="text-center">
+			          					<?php echo $camp["nombrea"]; ?> <?php echo $camp["apellido_pa"]; ?> <?php echo $camp["apellido_ma"]; ?>
+		          					</h5>
+		          					<h5 class="text-center">
+		          						<strong><span class="font_tittle">Fecha Inicio Renta: </span></strong><br />
+		          							<?php echo $camp["inicio_renta"]; ?>
+		          					</h5>
+		          					<h5 class="text-center">
+		          						<strong><span class="font_tittle">Fecha Fin Renta: </span></strong><br />
+		          							<?php echo $camp["fin_renta"]; ?>
+		          					</h5>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+		          				<?php if($camp['status_anticipo'] == 2 || $camp['status_anticipo'] == 3){ ?>	
+			          				<br>
+				          			<div class="input-field col m12 s12">
+				          				<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalcerrar">Cerrar Campamento</a>
+				          			</div>
+								<?php } else {  ?>
+									<br>
+				          			<div class="input-field col m12 s12">
+				          				<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalcerrar2">Cerrar Campamento</a>
+				          			</div>
+								<?php } ?>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+	      	<?php if($camp['status_campamento'] == 3){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Campamento Cerrado</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+		          					<?php foreach ($this->campamentosc as $camp) { ?>
+		          						<?php if($camp['status_anticipo'] == 2 || $camp['status_anticipo'] == 3){ ?>	
+
+			          						<h4 class="text-center">
+				          						<strong><span class="font_tittle text-center">Comentarios de Cierre: </span></strong>
+				          					</h4>
+				          					<?php if($camp['comentarioscerrar'] == null){ ?>
+				          						<h4 class="text-center">
+			          							El Campamento ya fue cerrado
+			          							</h4>
+			          						<?php } else { ?>
+				          						<h4 class="text-center">
+				          							<?php echo $camp["comentarioscerrar"]; ?>
+				          						</h4>
+			          						<?php } ?>
+			          					
+			          						<?php if($camp['devolucion_img'] == null){ ?>
+				          						<h4 class="text-center">
+					          						<strong><span class="font_tittle">Monto Reembolsado: </span></strong><br />
+					          							Aún no se añade el monto.
+					          					</h4>
+
+					          					<h4 class="text-center">
+					          						<strong><span class="font_tittle">Fecha Reembolso: </span></strong><br />
+					          							Aún no se añade fecha de reembolso.
+					          					</h4>
+
+					          				<?php } else { ?>
+
+					          					<h4 class="text-center">
+					          						<strong><span class="font_tittle">Monto Reembolsado: </span></strong><br />
+					          							$ <?php echo $camp["montodev"]; ?>
+					          					</h4>
+
+					          					<h4 class="text-center">
+					          						<strong><span class="font_tittle">Fecha Reembolso: </span></strong><br />
+					          							<?php echo $camp["fecha_rem"]; ?>
+					          					</h4>
+
+					          					<h4 class="text-center">
+					          						<strong><span class="font_tittle">Fecha de Cierre: </span></strong><br />
+					          							<?php echo $camp["fecha_cierre"]; ?>
+					          					</h4>
+
+					          				<?php }  ?>	
+
+				          				<?php } else { ?>
+
+				          					<h4 class="text-center">
+				          						<strong>
+				          							<span class="font_tittle text-center">Comentarios de Cierre: </span>
+				          						</strong>
+				          					</h4>
+				          					<?php if($camp['comentarioscerrar'] == null){ ?>
+				          						<h4 class="text-center">
+			          							El Campamento ya fue cerrado
+			          							</h4>
+			          						<?php } else { ?>
+				          						<h4 class="text-center">
+				          							<?php echo $camp["comentarioscerrar"]; ?>
+				          						</h4>
+			          						<?php } ?>
+			          						
+			          						<?php if($camp['fecha_cierre'] == null){ ?>
+				          						<h4 class="text-center">
+					          						<strong>
+					          							<span class="font_tittle">Fecha Cierre: </span>
+					          						</strong><br />
+					          							<?php echo $camp["fin_renta"]; ?>
+					          					</h4>
+					          				<?php } else { ?>
+					          					<h4 class="text-center">
+					          						<strong>
+					          							<span class="font_tittle">Fecha Cierre: </span>
+					          						</strong><br />
+					          							<?php echo $camp["fecha_cierre"]; ?>
+					          					</h4>
+
+					          				<?php } ?>
+				          				
+				          				<?php } ?>
+
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+			          			<div class="input-field col m12 s12">
+			          				<?php foreach ($this->campamentosc as $camp) { ?>
+			          					<?php if($camp['status_anticipo'] == 2 || $camp['status_anticipo'] == 3){ ?>
+				          					<h4 class="text-center">
+				          						<strong><span class="font_tittle text-center">Evidencia Reembolso: </span></strong>
+				          					</h4>
+				          					<?php if($camp['devolucion_img']== null){ ?>
+				          						<img src="/img/no_evidencia.png" class="responsive-img" style="width: 75px; margin-top: 5px;">
+
+				          						<div class="input-field col m12 s12">
+							          				<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalcerrar">Añade Evidencia</a>
+							          			</div>
+
+				          					<?php }else{ ?>
+				          						<a class="example-image-link" href="/<?php echo $camp['devolucion_img']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $camp['devolucion_img']; ?>" id="camara_div" alt="<?php echo $camp['id_campamento']; ?>" style="width:  150px;  margin-top: 5px;"/></a>
+				          						<h5>
+				          							<a href="/<?php echo $camp['devolucion_img']; ?>" title="Descargar Archivo" class="waves-effect darken-1 waves-light lighten-4 btn" download="campamento<?php echo $camp["id_campamento"]; ?>">Descargar</a>
+				          						</h5>
+				          					<?php } ?>
+				          				<?php } else { ?>
+				          					<img src="/img/no_evidencia.png" class="responsive-img" style="width: 75px; margin-top: 5px;">
+				          					<h5 class="text-center">
+				          						<strong><span style="color: red;" class="font_tittle text-center">* En este campamento no se pago ningún depósito. </span></strong>
+				          					</h5>
+				          				<?php } ?>
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+		<?php } ?>
+	</div>
+</div>
+<!-- End Panel Inicial-->
+
+<!-- Modal Rentar Campamento   -->
+<div id="modalrentar" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 5px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Campamento a Renta
+        </div>
+		<div class="row">
+			<form action="/campamentos/requestrentar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_rentar">
+				<?php foreach ($this->campamentosc as $camp) { ?>
+					<input type="hidden" name="idc" value="<?php echo $camp["id_campamento"]; ?>">
+				
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+						<label for="comentarios">* Añade Comentarios:</label>
+					</div>
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+					        <span>Añadir Contrato</span>
+					        <input type="file" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $camp["contrato"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					</div>
+					<div class="file-field input-field col m12 s12">
+						<h4 class="text-left" style="color: red;">*En caso de contar con contrato, no es necesario agregar archivo.</h4>
+					</div>
+	      		</div>
+	      		<?php } ?>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="rentarc" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Rentar Campamento  -->
+
+<!-- Modal Cerrar Campamento   -->
+<div id="modalcerrar" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 5px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cerrar Campamento
+        </div>
+		<div class="row">
+			<form action="/campamentos/requestcerrarc" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cerrar">
+				<?php foreach ($this->campamentosc as $camp) { ?>
+					<input type="hidden" name="idc" value="<?php echo $camp["id_campamento"]; ?>">
+				
+				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+					        <span>Añadir Reembolso</span>
+					        <input type="file" id="imgurl" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $camp["devolucion_img"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate"  type="text">
+					    </div>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input type="date" id="fecha" name="fecha"  class="validate">
+						<label for="fecha">*Fecha de reembolso: dd/mm/yyyy</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">monetization_on</i>
+						<input id="monto" type="text" name="monto" class="validanumeros" required>
+						<label for="monto">* Monto Rembolsado:</label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+						<label for="comentarios">Añade Comentarios:</label>
+					</div>
+	      		</div>
+	      		<?php } ?>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="cerrarc" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Cerrar Campamento  -->
+
+<!-- Modal Cerrar Campamento Sin deposito   -->
+<div id="modalcerrar2" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 5px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cerrar Campamento Sin Reembolso
+        </div>
+		<div class="row">
+			<form action="/campamentos/requestcerrarcamp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cerrar2">
+				<?php foreach ($this->campamentosc as $camp) { ?>
+					<input type="hidden" name="idc" value="<?php echo $camp["id_campamento"]; ?>">
+				
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<textarea id="comentario" name="comentario" class="materialize-textarea"></textarea>
+						<label for="comentario">* Añade Comentarios:</label>
+					</div>
+	      		</div>
+	      		<?php } ?>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="cerrarc2" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Cerrar Campamento sin deposito -->
+
+<!-- Inicio Datos Campamentos-->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Datos Generales Campamento</h3>
+
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->campamentosc as $camp ) { ?>
+								<h4>
+									<strong><span class="font_tittle">Id Sitio: </span></strong>
+									<?php echo $camp['id_cliente']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Sitio: </span> </strong>
+									<?php echo $camp['nombre']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Proyecto: </span> </strong>
+									<?php echo $camp['nombre_proyecto']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Responsable: </span> </strong>
+									<?php echo $camp['nombrea']; ?> <?php echo $camp['apellido_pa']; ?> <?php echo $camp['apellido_ma']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Depósito Obliglatorio: </span></strong>
+									<?php echo $camp['pdeposito']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Pago Servicios: </span></strong>
+									<?php echo $camp['pservicios']; ?>
+								</h4>
+							<?php } ?>
+						</div>
+
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->campamentosc as $camp ) { ?>
+								<h4>
+									<strong><span class="font_tittle">Comentarios: </span></strong>
+									<?php echo $camp['comentarios']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Fecha Inicio Renta: </span></strong>
+									<?php echo $camp['inicio_renta']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Fecha Fin Renta: </span> </strong>
+									<?php echo $camp['fin_renta']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Monto Renta: </span> </strong>
+									$ <?php echo $camp['monto_renta']; ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Depósito: </span> </strong>
+									<?php if($camp['deposito'] == 0){ ?>
+									Sin Depósito Previo
+									<?php } else{ ?>
+									$ <?php echo $camp["deposito"]; ?>
+									<?php }  ?>
+								</h4>
+								<h4>
+									<strong><span class="font_tittle">Condiciones de Devolución: </span></strong>
+									<?php echo $camp['condiciones_dev']; ?>
+								</h4>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Datos Campamentos-->
+
+<!-- Inicio Tabla Contrato -->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Contrato Campamento</h3>
+							<hr>
+						</div>
+					</div>
+
+					<div class="row table_wrapper">
+						<table class="table text-center table-hover ">
+							<thead>
+								<tr>
+									<th class="text-center">Id Campamento</th>
+									<th class="text-center">Nombre Arrendador</th>
+									<th class="text-center">Telefono Arrendador</th>
+									<th class="text-center">Descargar Contrato</th>
+								</tr>
+							</thead>
+							<?php if ($this->campamentosc) { 
+								foreach ($this->campamentosc as $camp) { ?>
+									<tbody>
+										<tr>
+											<td class="text-center">
+												<?php echo $camp['id_campamento']; ?>
+											</td>
+											<td class="text-center">
+												<?php echo $camp['nombre_arrendador']; ?>
+											</td>
+											<td class="text-center">
+												<?php echo $camp['tel_arrendador']; ?>
+											</td>	
+											<?php if($camp["contrato"] != null){ ?>
+												<td class="text-center">
+
+													<a title="Descargar Archivo" href="/<?php echo $camp["contrato"]; ?>" download="<?php echo substr(strrchr($camp["contrato"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> <!-- <div id="div_name" onmouseover="showAnimated();" onblur="showStatic();"><img style="width: 25px;" src="/img/download.png"></div> --> </a>
+												</td>
+											<?php }else{ ?>
+												<td class="text-center">
+													No Existe Contrato
+												</td>
+											<?php } ?>
+										</tr>
+									</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td>No se Existen datos de Contrato</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+<!-- End Tabla Contrato-->
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	    $('.datepicker').datepicker();
+
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+	});
+
+	// function showAnimated(){
+	// 	document.getElementById("div_name").innerHTML = "<img style='width: 25px;' src='/img/download.gif'>";
+	// }
+	// function showStatic(){
+	// 	document.getElementById("div_name").innerHTML = "<img style='width: 25px;' src='/img/download.png'>";
+	// }
+
+	$("#rentarc").click(function(){
+		var comentarios = document.getElementById("comentarios").value;
+
+		if(comentarios == ""){
+			swal({
+				title: "LLena los campos necesarios. (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormC, 500);     
+		}    });
+
+    function submitFormC() {
+    	document.getElementById("submit_rentar").submit()
+    }
+    //Validar Rentar Campamento
+
+    $("#cerrarc").click(function(){
+		var fecha = document.getElementById("fecha").value;
+		var monto = document.getElementById("monto").value;
+		var url = document.getElementById("imgurl").value;
+
+		if(url == "" || monto == "" || fecha == ""){
+			swal({
+				title: "Llena los campos necesarios. (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormCC, 500);     
+		}    });
+
+    function submitFormCC() {
+    	document.getElementById("submit_cerrar").submit()
+    }
+    //Validar Cerrar Campamento
+
+
+    $("#cerrarc2").click(function(){
+		var comentario = document.getElementById("comentario").value;
+
+		if(comentario == ""){
+			swal({
+				title: "Añade un comentario. (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormCC2, 500);     
+		}    });
+
+    function submitFormCC2() {
+    	document.getElementById("submit_cerrar2").submit()
+    }
+    //Validar Cerrar Campamento
+
+
+
+
+
+
+    $(".getpdf").click(function(){
+    	pdf= $(this).data('id');
+    	name= $(this).data('name');
+		var fileURL = pdf;
+		var fileName = 'CertificadoMedico_'+name+'.pdf';
+		download_file(fileURL, fileName);
+    });
+
+	function download_file(fileURL, fileName) {
+	  	var link = document.createElement('a');
+	  	link.href = fileURL;
+	  	link.download = fileName;
+	  	document.body.appendChild(link);
+	  	link.click();
+	  	document.body.removeChild(link);
+	}
+
+
+    $("#activo_personal").click(function(){
+    	swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+			})
+    	.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "0";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+		//-------------------end de ajax---------------------------
+		//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#inactivo_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#baja_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "2";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+</script>

@@ -1,0 +1,102 @@
+<div class="jumbotron" style="background-color: #ffffff;">
+    <h1>Registro</h1>
+</div>
+
+<div class="col-lg-12">
+	<form action="/panel/requestadduser" method="POST" enctype="multipart/form-data">
+		<div>
+			<div class=""></div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Nombre(s): </h4></label>
+				<p><input type="text" name="name" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Apellido paterno: </h4></label>
+				<p><input type="text" name="apa" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Apellido materno: </h4></label>
+				<p><input type="text" name="ama" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Dirección: </h4></label>
+				<p><input type="text" name="dir" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Telefono: </h4></label>
+				<p><input type="text" name="phone" class="form-control" onkeypress="return numeros(event)" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Correo electronico: </h4></label>
+				<p><input type="text" name="mail" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Contraseña: </h4></label>
+				<p><input type="password" name="pword" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Confirme contraseña: </h4></label>
+				<p><input type="password" name="pwordc" class="form-control" required></p>
+			</div>
+		</div>
+		<!-- Boton -->
+		<div class="col-lg-12 text-center"><br>
+			<p><input type="submit" value="Enviar Datos" class="btn btn-primary"></p>
+		</div><br>
+		<!-- Boton -->
+	</form>
+</div>
+
+<?php foreach ($this->usuarios as $usr) { ?>
+<div class="row" style="border-bottom: 2px solid #ccc;">
+	<div class="col-lg-10 row" >
+		<div class="col-lg-3 text-left">
+			<label>Nombre: <?php echo $usr["nombre"]; ?></label>
+		</div>
+		<div class="col-lg-3 text-left">
+			<label>Apellido Paterno: <?php echo $usr["ap"]; ?></label>
+		</div>
+		<div class="col-lg-3 text-left">
+			<label>Apellido Materno: <?php echo $usr["am"]; ?></label>
+		</div>
+		<div class="col-lg-3 text-left">
+			<label>Telefono: <?php echo $usr["telefono"]; ?></label>
+		</div>
+		<div class="col-lg-12 text-left">
+			<label>Dirección: <?php echo $usr["direccion"]; ?></label>
+		</div>
+		<div class="col-lg-6 text-left">
+			<label>Correo electronico: <?php echo $usr["correo"]; ?></label>
+		</div>
+		<div class="col-lg-6 text-left">
+			<label>Rol: <?php echo $usr["rol"]; ?></label>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<label>Editar</label>
+		<a href="/panel/usuariosedit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a><br>
+		<label>Eliminar</label>
+		<a href="/panel/requestdeleteall/id/<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash"></i></span></a>	
+	</div>
+</div>
+<?php } ?>
+
+<script type="text/javascript">
+	function numeros(e){
+		key = e.keyCode || e.which;
+		tecla = String.fromCharCode(key).toLowerCase();
+		letras = " 0123456789";
+		especiales = [8,37,39,46];
+
+		tecla_especial = false
+		for(var i in especiales){
+			if(key == especiales[i]){
+				tecla_especial = true;
+				break;
+			} 
+		}
+
+		if(letras.indexOf(tecla)==-1 && !tecla_especial)
+			return false;
+	}
+</script>

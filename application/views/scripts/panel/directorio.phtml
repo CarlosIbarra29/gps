@@ -1,0 +1,242 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 19px;">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Directorio</span>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+
+  <div class="input-field col m2 s12"></div> <!-- espacio -->
+    <div class="input-field col m4 s12">  
+        <select id="mySelect">
+            <option value="1" selected>Nombre</option>
+            <!-- <option value="2">Puesto</option> -->
+        </select>
+        <label>Buscador</label>
+    </div>
+
+    <div class="col m4 s12" id="search_nombre">
+        <form action="/panel/searchdirectorio" enctype="multipart/form-data" class="form-horizontal form-material">
+            <div class="input-field col m10 s8">
+              <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate">
+              <label for="first_name">Buscar por Nombre</label>
+            </div>
+            <div class="input-field col m2 s4">
+                <!-- <a class="waves-effect waves-light btn"><i class="material-icons">search</i></a> -->
+                <button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col m4 s12 oculto" id="search_puesto">
+        <form action="/panel/searchdirectorio" enctype="multipart/form-data" class="form-horizontal form-material">
+            <div class="input-field col m10 s8">
+              <input placeholder="Ingresa puesto" id="puesto" name="puesto" type="text" class="validate">
+              <label for="puesto">Buscar por Puesto</label>
+            </div>
+            <div class="input-field col m2 s4">
+                <button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+            </div>  
+        </form>
+    </div>
+    <div class="col m4 s12 oculto" id="search_status">
+        <form action="/panel/searchdirectorio" enctype="multipart/form-data" class="form-horizontal form-material">
+            <div class="input-field col m10 s8">
+                <select name="status">
+                    <option value="" disabled selected>Selecciona una opcion</option>
+                    <option value="1">Expediente completo</option>
+                    <option value="0">Expediente Incompleto</option>
+                </select>
+                <label>Status Expediente</label>
+            </div>
+            <div class="input-field col m2 s4">
+                <button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+            </div>  
+
+        </form>
+    </div>
+
+    <div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+
+
+<div class="col m12 s12">
+    <div class="row">
+        <div class="col m6 s6">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del personal</span>
+        </div>
+        <div class="col m6 s6 text-right">
+            <div class="row">
+<!-- 
+                <div class="col m6 s6">
+                    <h4>
+                        <a href="/panel/papelerapersonal" style="color:red;">
+                            <i class="fa fa-ban"></i>
+                            Papelera
+                        </a>
+                    </h4>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <table class="table text-left table-hover">
+        <thead>
+            <tr>
+                <th>Apellido Paterno</th>   
+                <th>Apellido Materno</th>
+                <th>Nombre</th> 
+                <!-- <th>Puesto</th> -->
+                <th>Telefono</th>
+                <th>Correo Electronico</th>
+                <th>Status Personal</th>
+            </tr> 
+        </thead>
+        <?php if ($this->paginator) { 
+            foreach ($this->paginator as $usr) { ?>
+        <tbody>
+            <tr>
+                <td><?php echo $usr["apellido_pa"]; ?></td>
+                <td><?php echo $usr["apellido_ma"]; ?></td>
+                <td><?php echo $usr["nombre"]; ?></td>
+                <!-- <td><?php echo $usr["name_puesto"]; ?></td> -->
+                <td>
+                    <?php echo $usr['telefono']; ?>
+                </td>
+                <td>
+                    <?php echo $usr['email_personal']; ?>
+                </td>
+
+                <td>
+                    <?php if($usr['status_personal'] == 0){ ?>
+                        <div class="chip" id="activo_personal">
+                            <img src="/img/correct.png" >
+                            Activo
+                        </div>
+                    <?php } ?>
+
+                    <?php if($usr['status_personal'] == 1){ ?>
+                        <div class="chip" id="inactivo_personal">
+                            <img src="/img/naranja.png" >
+                            Inactivo
+                        </div>
+                    <?php } ?>
+
+                    <?php if($usr['status_personal'] == 2){ ?>
+                        <div class="chip" id="inactivo_personal">
+                            <img src="/img/rojo.png" >
+                            Inactivo
+                        </div>
+                    <?php } ?>
+                </td>
+            </tr>
+        </tbody>
+        <?php } }else{ ?>
+        <tbody>
+            <tr>
+                <td>No se ha agregado personal </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+        <?php } ?>
+    </table>
+</div>
+
+
+
+        
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Anterior</span>
+                        </li>
+                    <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                    <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                    <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+

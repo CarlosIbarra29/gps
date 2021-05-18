@@ -1,0 +1,368 @@
+
+<?php foreach ($this->info_solicitud as $key){
+  $id_solicitud = $key['id'];
+  $name_residente = $key['nombre_residente'];
+  $name_sitio = $key['nombre_sitio'];
+  $monto = $key['monto'];
+  $fecha_solicitud = $key['fecha_solicitud'];
+  $monto_anterior = $key['monto_anterior'];  
+
+  $total = $monto_anterior + $monto;
+}?>
+
+<style type="text/css">
+  .oculto{
+    display: none;
+  }
+</style>
+
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Comprobación</span>
+
+        <div class="row">
+          <div class="col m12 s12" style="margin-top:20px;">
+            <span class="titulo">Residente:</span> <span><?php echo $name_residente; ?></span> <br>
+            <span class="titulo">Sitio:</span> <span><?php echo $name_sitio; ?></span> <br>
+            <span class="titulo">Saldo anterior:</span> <span style="font-size: 20px; color: red;">$<?php echo number_format($monto_anterior, 2, '.', ','); ?></span><br>
+            <span class="titulo">Monto solicitado:</span> <span style="font-size: 20px; color: red;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="row"> 
+    <!-- <div></div> class="col m6 s6"></div> -->
+    <div class="col m6 s6 text-right">
+      <?php $suma = 0;
+        if ($this->solicitudes_anteriores) { 
+        foreach ($this->solicitudes_anteriores as $usr) { ?>
+          <?php $suma = $suma + $usr['monto_comprobacion']; ?>
+        <?php } }else{ ?>
+
+        <?php } ?>
+
+      <?php $factsi = 0;
+        if ($this->facturable_si) { 
+        foreach ($this->facturable_si as $usr) { ?>
+          <?php $factsi = $factsi + $usr['monto_comprobacion']; ?>
+        <?php } }else{ ?>
+
+        <?php } ?> 
+
+
+      <?php $factno = 0;
+        if ($this->facturable_no) { 
+        foreach ($this->facturable_no as $usr) { ?>
+          <?php $factno = $factno + $usr['monto_comprobacion']; ?>
+        <?php } }else{ ?>
+
+        <?php } ?>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="col m6 s6">
+              <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Facturas</span>
+            </div>
+
+            <div class="col m6 s6 text-right">
+              <div class="row">
+                <div class="col m6 s6 text-center">
+                  <a class="btn green" id="exportBtn1">Generar Excel</a>
+                </div>
+                <div class="col m6 s6">
+                  <a class="btn red" href="/comprobacion/pdfcomprobacion/id/<?php echo $id_solicitud; ?>/residente/<?php echo $this->id_residente; ?>/op/2">Generar PDF</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="row" style="margin-top: 20px;"> 
+            <div class="col m4 s12">
+                <span style="font-size: 19px;">Total comprobado <?php echo $this->nombre_sitio; ?>:</span>
+                <span style="font-size: 19px; font-weight: bold;">$<?php echo number_format($suma, 2, '.', ','); ?></span> 
+            </div>
+            <div class="col m4 s12">
+                <span style="font-size: 19px;">Facturable <?php echo $this->nombre_sitio; ?>:</span>
+                <span style="font-size: 19px; font-weight: bold;">$<?php echo number_format($factsi, 2, '.', ','); ?></span>   
+            </div>
+            <div class="col m4 s12">
+                <span style="font-size: 19px;">No facturable <?php echo $this->nombre_sitio; ?>:</span>
+                <span style="font-size: 19px; font-weight: bold;">$<?php echo number_format($factno, 2, '.', ','); ?></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col m12 s12" style="margin-top: 20px;">
+              <table class="table text-left table-hover" style="margin-top: 30px;">
+                <thead>
+                  <tr>
+                    <th>Id.</th>
+                    <th>Sitio</th> 
+                    <th>Monto</th>  
+                    <th>Monto comprobado</th>
+                    <th>Servicio</th>
+                    <th>Facturable</th>
+                    <th>Factura</th>
+                    <th>Autorización</th>
+                    <th></th>
+                  </tr> 
+                </thead>
+                <?php
+                $monto = 0;
+                if ($this->solicitudes_anteriores) { 
+                foreach ($this->solicitudes_anteriores as $usr) { ?>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <h5><?php echo $usr['id']; ?></h5>
+                    </td>
+                    <td>
+                      <h5><?php echo $usr['nombre']; ?> / <?php echo $usr['nombre_proyecto']; ?> </h5>
+                    </td>
+                    <td>
+                        <span style="font-weight: bold;">$<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?></span>
+                    </td>
+
+                    <td>
+                        <span style="font-weight: bold;">$<?php echo number_format($usr["monto_comprobacion"], 2, '.', ','); ?></span>
+                    </td>
+                    <td>
+                      <h5><?php echo $usr['nameservicio']; ?></h5>
+                    </td>
+                    <td>
+                      <?php if($usr['facturable'] == 1){ ?>
+                        <h5>Si</h5>
+                      <?php }else{ ?>
+                        <h5>No</h5>
+                      <?php } ?>
+                    </td>
+
+                    <td>
+                      <a title="Descargar Archivo" href="/<?php echo $usr["factura_file"]; ?>" download="<?php echo substr(strrchr($usr["factura_file"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+                    </td>
+                    <td>
+                      <a title="Descargar Archivo" href="/<?php echo $usr["autorizacion"]; ?>" download="<?php echo substr(strrchr($usr["autorizacion"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+                    </td>
+
+
+                     <?php if($this->status_documento != 0 ){ ?>
+                     <?php }else{ ?>
+                      <td>
+                        <a class="modal-trigger viewinfo" href="#modal2" data-id="<?php echo $usr['id']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-proyecto="<?php echo $usr['nombre_proyecto']; ?>" data-nofactura="<?php echo $usr['factura']; ?>" data-monto="<?php echo $usr['monto_solicitud']; ?>" data-montodos="<?php echo $usr['monto_comprobacion']; ?>" data-emisor="<?php echo $usr['rfc_emisor']; ?>" data-lugar="<?php echo $usr['lugar_expedicion'] ?>" data-forma="<?php echo $usr['forma_pago']; ?>" data-cliente="<?php echo $usr['id_cliente']; ?>" data-razon="<?php echo $usr['nombre_emisor']; ?>" data-fechauser="<?php echo $usr['fecha_user'] ?>" data-user="<?php echo $usr['user']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                      </td>
+                     <?php } ?> 
+                  </tr>
+
+                  <?php } }else{ ?>
+                  </tbody> 
+                  <tbody>
+                      <tr>
+                          <td class="text-center" colspan="6"><h4>No hay comprobaciones pendientes.</h4></td>
+                      </tr>
+                  </tbody>
+                              
+                  <?php } ?>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Factura</span> 
+        <div class="row" style="margin-top: 20px;">
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_sitio" value="">
+            <label for="modal_sitio">Sitio</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_proyecto" value="">
+            <label for="modal_proyecto">Proyecto</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_nofactura" value="">
+            <label for="modal_nofactura">No.Factura</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_razon" value="">
+            <label for="modal_razon">Razon social</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_rfc" value="">
+            <label for="modal_rfc">RFC emisor</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_lugar" value="">
+            <label for="modal_lugar">Lugar</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_fecha" value="">
+            <label for="modal_fecha">Fecha comprobación</label>
+          </div>
+
+          <div class="input-field col s6 m6">
+            <input type="text" placeholder="" id="modal_realizada" value="">
+            <label for="modal_realizada">Realizada por:</label>
+          </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div class="row oculto">
+<div class="row excel-div" id="tab1">
+  <table class="table text-left table-hover" >
+                <thead>
+                  <tr>
+                    <th>Id.</th>
+                    <th>Sitio</th> 
+                    <th>Monto</th>  
+                    <th>Monto comprobado</th>
+                    <th>Servicio</th>
+                    <th>Facturable</th>
+                    <th>Factura</th>
+                    <th></th>
+                  </tr> 
+                </thead>
+                <?php
+                $monto = 0;
+                $monto_comprobado = 0 ;
+                if ($this->solicitudes_anteriores) { 
+                foreach ($this->solicitudes_anteriores as $usr) { ?>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <h5><?php echo $usr['id']; ?></h5>
+                    </td>
+                    <td>
+                      <h5><?php echo $usr['nombre']; ?> / <?php echo $usr['nombre_proyecto']; ?> </h5>
+                    </td>
+                    <td>
+                        <span style="font-weight: bold;">$<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?></span>
+                    </td>
+
+                    <td>
+                        <span style="font-weight: bold;">$<?php echo number_format($usr["monto_comprobacion"], 2, '.', ','); ?></span>
+                    </td>
+                    <td>
+                      <h5><?php echo $usr['nameservicio']; ?></h5>
+                    </td>
+                    <td>
+                      <?php if($usr['facturable'] == 1){ ?>
+                        <h5>Si</h5>
+                      <?php }else{ ?>
+                        <h5>No</h5>
+                      <?php } ?>
+                    </td>
+                    <td>
+                      <?php echo $usr['factura']; ?>
+                    </td>
+                  </tr>
+                  <?php $monto = $monto + $usr['monto_solicitud']; ?>
+                  <?php $monto_comprobado = $monto_comprobado + $usr['monto_comprobacion']; ?>
+                  <?php } ?>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total: $<?php echo number_format($monto, 2, '.', ','); ?></td>
+                    <td>Total: $<?php echo number_format($monto_comprobado, 2, '.', ','); ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Facturable $<?php echo number_format($factsi, 2, '.', ','); ?></td>
+                    <td>No Facturable $<?php echo number_format($factno, 2, '.', ','); ?></td>
+                  </tr>
+
+
+                  <?php }else{ ?>
+                  </tbody> 
+                  <tbody>
+                      <tr>
+                          <td class="text-center" colspan="6"><h4>No hay comprobaciones pendientes.</h4></td>
+                      </tr>
+                  </tbody>
+                              
+                  <?php } ?>
+  </table>  
+</div>
+
+  </div>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  $(".viewinfo").click(function(){
+    var id =$(this).data('id');
+    var sitio =$(this).data('sitio');
+    var proyecto =$(this).data('proyecto');
+    var cliente =$(this).data('cliente');
+    var nofactura =$(this).data('nofactura');
+    var razon =$(this).data('razon');
+    var emisor =$(this).data('emisor');
+    var lugar =$(this).data('lugar');
+    var monto =$(this).data('monto');
+    var montodos =$(this).data('montodos');
+    var fechauser =$(this).data('fechauser');
+    var user =$(this).data('user');
+
+    document.getElementById("modal_sitio").value = sitio;
+    document.getElementById("modal_proyecto").value = proyecto + " / Cliente:" + cliente ;
+    document.getElementById("modal_nofactura").value = nofactura;
+    document.getElementById("modal_razon").value = razon;
+    document.getElementById("modal_rfc").value = emisor;
+    document.getElementById("modal_lugar").value = lugar;
+    document.getElementById("modal_fecha").value = fechauser;
+    document.getElementById("modal_realizada").value = user;
+    
+  });
+
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+
+<script type="text/javascript">
+      $("#exportBtn1").click(function(){
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Comprobacion.xlsx",
+            sheet: {
+              name: "Comprobacion"
+            }
+          });
+        });
+</script>

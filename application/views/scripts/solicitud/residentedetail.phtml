@@ -1,0 +1,77 @@
+
+  <?php foreach ($this->residente_info as $key){  
+    $nombre = $key['nombre'];
+    $ap = $key['apellido_pa'];
+    $am = $key['apellido_ma'];
+  } ?>
+
+<div class="row">
+	<div class="col m8 s8">
+		<h3>Lista de facturas</h3>
+	</div>
+
+	<div class="col m4 s4">
+		<h4><?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?></h4>
+	</div>
+</div>
+
+
+<div class="col m12 s12">
+
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id.</th>
+					<th>Razon social</th>
+					<th>Monto a comprobar</th>		
+          			<th>Monto comprobado</th>
+					<th>Servicio</th>
+					<th>Factura</th>
+					<th class="text-center">Detalle comprobacion</th>
+					<!-- <th>Eliminar</th> -->
+				</tr> 
+			</thead>
+			<?php
+			if ($this->comprobacion) { 
+			foreach ($this->comprobacion as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h5><?php echo $usr['id']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['razon_social']; ?></h5>
+					</td>
+					<td>
+						<h5>
+              $<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?>      
+            </h5>
+					</td>
+          <td>
+            <h5>
+              $<?php echo number_format($usr["monto_comprobacion"], 2, '.', ','); ?>  
+            </h5>
+          </td>
+					<td>
+						<h5><?php echo $usr['nombre_servicio']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['factura']; ?></h5>
+					</td>
+
+					<td class="text-center">
+						<a href="/solicitud/comprobaciondetailauditada/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay comprobaciones pendientes.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+</div>

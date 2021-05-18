@@ -1,0 +1,481 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+
+<div class="row mt-4">
+	<div class="col m4 s12 text-center">
+		<!-- <h2>Personal</h2> -->
+	</div>
+
+	<div class="col m8 s12 text-right" style="margin-top: 15px;">
+		<a class="green btn modal-trigger" href="#modal1">+ Agregar Personal</a>
+	</div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Personal</span>
+    </div>
+</div>
+
+
+
+<div class="row">
+
+  <div class="input-field col m2 s12"></div> <!-- espacio -->
+	<div class="input-field col m4 s12">  
+	    <select id="mySelect">
+	      	<option value="1" selected>Nombre</option>
+	      	<option value="2">Puesto</option>
+	      	<option value="3">Status expediente</option>
+	    </select>
+	    <label>Buscador</label>
+	</div>
+
+	<div class="col m4 s12" id="search_nombre">
+		<form action="/panel/searchpersonal" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate">
+	          <label for="first_name">Buscar por Nombre</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<!-- <a class="waves-effect waves-light btn"><i class="material-icons">search</i></a> -->
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>
+    	</form>
+	</div>
+	<div class="col m4 s12 oculto" id="search_puesto">
+		<form action="/panel/searchpersonal" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa puesto" id="puesto" name="puesto" type="text" class="validate">
+	          <label for="puesto">Buscar por Puesto</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>	
+        </form>
+	</div>
+	<div class="col m4 s12 oculto" id="search_status">
+	  	<form action="/panel/searchpersonal" enctype="multipart/form-data" class="form-horizontal form-material">
+	  		<div class="input-field col m10 s8">
+			    <select name="status">
+			    	<option value="" disabled selected>Selecciona una opcion</option>
+			      	<option value="1">Expediente completo</option>
+			      	<option value="0">Expediente Incompleto</option>
+			    </select>
+			    <label>Status Expediente</label>
+	  		</div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>	
+
+	    </form>
+	</div>
+
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+       <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Personal</span>
+		<div class="col m12 s12" style="margin-top: 19px;">
+			<form action="/panel/requestaddpersonalcampo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+				<div class="row">
+					<input type="hidden" name="rol" value="6">
+
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">group</i>
+			          <input id="name" type="text" name="name" class="validate">
+			          <label for="name">* Nombre(s):</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">account_circle</i>
+			          <input id="ap" type="text" name="apa" class="validate">
+			          <label for="ap">* Apellidos Paterno:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">account_circle</i>
+			          <input id="am" type="text" name="ama" class="validate">
+			          <label for="am">* Apellidos Materno:</label>
+			        </div>
+					<div class="input-field col m6 s12">
+					    <select id="puesto" name="puesto" required>
+					      	<option value="0" disabled selected>* Selecciona una opcion:</option>
+					      	<?php foreach ($this->puestos as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>* Puesto</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+					    <select name="status" id="status">
+					      <option value="3" disabled selected>* Selecciona una opcion</option>
+					      <option value="1">Expediente Completo</option>
+					      <option value="0">Expediente Incompleto</option>
+					    </select>
+					    <label>* Status Expediente</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+					    <select name="disponibilidad" id="disponibilidad">
+					      <option value="3" disabled selected>* Selecciona una opcion</option>
+					      <option value="Local">Local</option>
+					      <option value="Nacional">Nacional</option>
+					    </select>
+					    <label>Disponibilidad</label>
+					</div>
+
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">event_available</i>
+			          <input id="curp" type="text" name="curp" class="validate">
+			          <label for="curp">CURP:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">event_available</i>
+			          <input id="nss" type="text" name="nss" class="validate">
+			          <label for="nss">NSS:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">event_available</i>
+			          <input id="rfc" type="text" name="rfc" class="validate">
+			          <label for="rfc">RFC:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">phone</i>
+			          <input id="icon_telephone" type="text" name="phone" class="validate">
+			          <label for="icon_telephone">Telefono</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">email</i>
+			          <input id="mail" type="text" name="mail" class="validate">
+			          <label for="mail">Correo Electronico</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">attach_money</i>
+			          <input id="day_pay" type="text" name="dia_pago" class="validate">
+			          <label for="day_pay"> Pago por Dia</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">attach_money</i>
+			          <input id="hora_pay" type="text" name="hora_pago" class="validate">
+			          <label for="hora_pay"> Pago por Hora Extra</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">add_circle_outline</i>
+			          <input id="tarjeta" type="text" name="tarjeta" class="validate">
+			          <label for="tarjeta">No. Tarjeta</label>
+			        </div>
+		      	</div>
+			
+		</div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      	<button  id="addpersonal" class="waves-effect waves-light btn">Guardar</button>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= -->
+
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s6">
+			<!-- <h3></h3> -->
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
+		</div>
+		<div class="col m6 s6 text-right">
+			<div class="row">
+				<div class="col m6 s6">
+					<!-- <a href="/archivos/excelpersonal"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a> -->
+				</div>
+				<div class="col m6 s6">
+					<h4>
+						<a href="/panel/papelerapersonal" style="color:red;">
+							<i class="fa fa-ban"></i>
+							Papelera
+						</a>
+					</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Nombre</th>	
+				<th>Apellido Paterno</th>	
+				<th>Apellido Materno</th>
+				<th>Puesto</th>
+				<th>Status Expediente</th>
+				<th>Status Personal</th>
+				<th>Status Operativo</th>
+			</tr> 
+		</thead>
+		<?php if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><a href="/panel/informaciongeneral/id/<?php echo $usr["id"]; ?>"><?php echo $usr["nombre"]; ?></a></td>
+				<td><?php echo $usr["apellido_pa"]; ?></td>
+				<td><?php echo $usr["apellido_ma"]; ?></td>
+				<td><?php echo $usr["name_puesto"]; ?></td>
+				<?php if($usr["status_expediente"]== 1){ ?>
+					<td>Completo</td>
+				<?php }else{ ?>
+					<td>Incompleto</td>
+				<?php } ?>
+				<td>
+					<?php if($usr['status_personal'] == 0){ ?>
+						<div class="chip" id="activo_personal">
+					    	<img src="/img/correct.png" >
+					    	Activo
+					  	</div>
+					<?php } ?>
+
+					<?php if($usr['status_personal'] == 1){ ?>
+						<div class="chip" id="inactivo_personal">
+					    	<img src="/img/naranja.png" >
+					    	Inactivo
+					  	</div>
+					<?php } ?>
+
+					<?php if($usr['status_personal'] == 2){ ?>
+						<div class="chip" id="inactivo_personal">
+					    	<img src="/img/rojo.png" >
+					    	Baja
+					  	</div>
+					<?php } ?>
+				</td>
+				<td>
+					<?php if($usr['status_operativo'] == 0){ ?>
+						Sin Información
+					<?php } ?>
+					<?php if($usr['status_operativo'] == 1){ ?>
+						Taller
+					<?php } ?>
+					<?php if($usr['status_operativo'] == 2){ ?>
+						En sitio
+					<?php } ?>
+					<?php if($usr['status_operativo'] == 3){ ?>
+						Compensación
+					<?php } ?>
+				</td>
+				<td>
+					<a href="/panel/personaldetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+				</td>
+				<td>
+					<a href="/panel/personaledit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+				</td>
+				<td>
+					<a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+			</tr>
+		</tbody>
+		<?php } }else{ ?>
+		<tbody>
+			<tr>
+				<td>No se ha agregado personal </td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+
+
+		
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	});
+
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+    	apellido=$(this).data('apellido');
+		swal({
+			title: "Estas seguro de eliminar al personal "+nombre+" "+apellido+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+         icon: "success",
+         buttons: false,
+        }); 
+            var request = $.ajax({
+                url:"/panel/requestchangestatuspersonaldelete",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+	$('#mySelect').on('change', function() {
+  		var value = $(this).val();
+  		if(value==1){
+			$("#search_nombre").show();
+			$("#search_status").hide();
+			$("#search_puesto").hide();
+  		}
+
+  		if(value==2){
+  			$("#search_puesto").show();
+  			$("#search_nombre").hide();
+  			$("#search_status").hide();
+  		}
+
+  		if(value==3){
+  			$("#search_status").show();
+  			$("#search_nombre").hide();
+  			$("#search_puesto").hide();
+  		}
+  		// console.log(value);
+	});
+
+
+    $("#addpersonal").click(function(){
+     	var status = document.getElementById("status").value;
+        var name = document.getElementById("name").value;
+        var ap = document.getElementById("ap").value;
+        var am = document.getElementById("am").value;
+        var email = document.getElementById("mail").value;
+
+        if(status == 3 || name == "" || ap == "" || am == ""){
+            swal({
+                title: "Para agregar al personal debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+        swal("Espere un momento, la información esta siendo procesada", {
+         icon: "success",
+         buttons: false,
+        });   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_personal").submit()
+    } 
+
+</script>

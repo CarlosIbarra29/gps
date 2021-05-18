@@ -1,0 +1,140 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/usuarios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar usuario</span>
+    </div>
+</div>
+
+
+<div class="col m12 s12">
+	<div class="white-box">
+		<form action="/panel/requestupdateuser" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+			<?php foreach ($this->usuarios as $usr) { ?>
+			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+
+			<div class="input-field col s12">
+				<select id="tipo" name="rol" required>
+			    	<?php foreach ($this->rol as $mar) { 
+			     		if ($mar['id']==$usr['fkroles']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			     	<?php } if ($mar['id']!=$usr['fkroles']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			     	<?php } } ?>  
+				</select>
+				<label>Rol del usuario</label>
+			</div>
+
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="name" type="text" name="name" class="validate" value="<?php echo $usr["nombre"]; ?>" required>
+			    <label for="name">* Nombre(s):</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="apa" type="text" name="apa" class="validate" value="<?php echo $usr["ap"]; ?>" required>
+			    <label for="apa">* Apellido paterno:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="ama" type="text" name="ama" class="validate" value="<?php echo $usr["am"]; ?>" required>
+			    <label for="ama">* Apellido materno:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">event_available</i>
+			    <input id="curp" type="text" name="curp" class="validate">
+			    <label for="curp">CURP:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">phone</i>
+			    <input id="icon_telephone" type="text" name="phone" value="<?php echo $usr["telefono"]; ?>" class="validate">
+			    <label for="icon_telephone">Telefono:</label>
+			</div>
+
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">email</i>
+			    <input id="mail" type="text" name="mail" value="<?php echo $usr["correo"]; ?>" class="validate">
+			    <label for="mail">* Correo Electronico:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">vpn_key</i>
+			    <input id="pword" type="password" name="pword" class="validate">
+			    <label for="pword">Contraseña:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">vpn_key</i>
+			    <input id="pwordc" type="password" name="pwordc" class="validate">
+			    <label for="pwordc">Confirmar Contraseña:</label>
+			</div>
+			<?php } ?>
+		</div>
+	</form>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/panel/usuarios" class="waves-effect red waves-light btn">Cancelar</a>
+				<button  id="adduser" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+	function numeros(e){
+		key = e.keyCode || e.which;
+		tecla = String.fromCharCode(key).toLowerCase();
+		letras = " 0123456789";
+		especiales = [8,37,39,46];
+		tecla_especial = false
+		for(var i in especiales){
+			if(key == especiales[i]){
+				tecla_especial = true;
+				break;
+			} 
+		}
+
+		if(letras.indexOf(tecla)==-1 && !tecla_especial)
+			return false;
+	}
+
+
+    $("#adduser").click(function(){
+        var name = document.getElementById("name").value;
+        var ap = document.getElementById("apa").value;
+        var am = document.getElementById("ama").value;
+        var mail = document.getElementById("mail").value;
+
+        if(name == "" || ap == "" || am == "" || mail == ""){
+            swal({
+                title: "Para editar a un usuario debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+            });  
+            setTimeout(submitForm, 1500);     
+        }
+
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_usuario").submit()
+    }
+
+</script>

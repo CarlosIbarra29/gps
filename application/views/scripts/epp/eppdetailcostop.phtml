@@ -1,0 +1,116 @@
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<!-- INICIO DETAIL-->
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/epp/eppcosto/status/2" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+    </div>     
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP DESCONTADO</span>
+	</div>
+</div>
+
+<div class="row" >
+	<div class="col m12 s12 text-left" style="margin-top: 10px;">
+		<?php foreach ($this->personal_epp as $per) { ?>
+			<span>Personal <br><b><?php echo $per['nombre'];?> <?php echo $per['apellido_pa'];?> <?php echo $per['apellido_ma'];?></b></span>
+		<?php } ?>
+	</div>
+</div>
+
+<!-- END INICIO DETAIL-->
+
+
+<!-- Inicio Informacion General-->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Comprobantes de EPP Descontado</h3>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+		                    <div class="col m12 s12">
+		                        <table style="font-size:15px;">
+		                            <thead>
+		                                <tr>
+		                                    <th class="text-center"><span>Descuento No.</span></th>
+		                                    <th class="text-center"><span>Descripción</span></th>
+		                                    <th class="text-center"><span>Fecha</span></th>
+		                                    <th class="text-center"><span>Visualizar</span></th>
+		                                    <th class="text-center"><span>Descargar</span></th>
+		                                </tr>
+		                            </thead>
+		                            <?php if ($this->eppcobro) { ?>
+		                            <?php foreach ($this->eppcobro as $epp){ ?>
+		                            	<input type="hidden" name="idp" value="<?php echo $epp['id']; ?>">
+		                                <tbody>
+		                                    <tr>
+		                                        <td class="text-center"><?php echo @$contado+=1; ?></td>
+		                                        <td class="text-center"><?php echo $epp['detalle']; ?></td>
+		                                        <td class="text-center"><?php echo $epp['fecha']; ?></td>
+
+		                                        <td class="text-center">
+													<a  title="Visualizar" href="/<?php echo $epp["comprobante"]; ?>" target="_blank" style="color: blue; font-size:18px;"> <i class="material-icons center">gamepad</i> </a>
+												</td>
+
+		                                        <td class="text-center">
+													<a  title="Descargar Archivo" href="/<?php echo $epp["comprobante"]; ?>" download="<?php echo substr(strrchr($epp["comprobante"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+												</td>
+		                                    </tr>
+		                                </tbody>
+		                            <?php } }else{ ?>
+										<tbody>
+											<tr>
+												<td></td>
+												<td></td>
+												<td>No hay EPP a cobrar</td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									<?php } ?>
+		                        </table>
+		                    </div>
+		                </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Comprobantes-->
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+	}); 
+
+
+</script>

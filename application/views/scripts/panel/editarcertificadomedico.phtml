@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content ">
+          <span class="card-title">Editar Informacion Certificado Medico</span>
+          <?php foreach ($this->personal as $key){ 
+          		$personal = $key['nombre'];
+          		$apellido_pa = $key['apellido_pa'];
+          		$apellido_ma = $key['apellido_ma'];
+          		$puesto = $key['puesto'];
+
+           } ?>
+          <p>
+          		Nombre del personal: <?php echo $apellido_pa ?> <?php echo $apellido_ma; ?> <?php echo $personal; ?>
+          </p>
+          <p>
+          		Puesto: <?php echo $puesto; ?>
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+		<div class="col m12 s12">
+			<form action="/panel/requestupdateinfocertificadomedico" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+				<div class="row">
+					<input type="hidden" name="rol" value="6">
+					<?php foreach ($this->personal as $per) { ?>
+					<input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+					<?php } ?>
+				    <div class="file-field input-field col m12 s12">
+				    	<?php foreach ($this->certificado as $med) { ?>
+					    <div class="btn">
+					        <span>Documento pdf</span>
+					        <input type="file" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $med["pdf"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					    <?php } ?>
+				    </div>
+
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">group</i>
+			          	<?php foreach ($this->personal as $per) { ?>
+			          	<input id="icon_prefix" type="text" name="name" value="<?php echo $per["nombre"]; ?> <?php echo $per["apellido_pa"]; ?> <?php echo $per["apellido_ma"]; ?>" class="validate" required readonly>
+			          	<?php } ?>
+			          	<label for="icon_prefix">Nombre(s):</label>
+			        </div>
+
+
+			        <?php foreach ($this->certificado as $med) { ?>
+
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">event_available</i>
+					    <select name="status">
+					      	<option disabled selected>Selecciona una opcion</option>
+					      	<?php if($med['status'] == 0) {?>
+						      	<option value="0" selected>Expediente Completo</option>
+						      	<option value="1">Expediente Incompleto</option>
+					      	<?php }else{ ?>
+						      	<option value="0">Expediente Completo</option>
+						      	<option value="1" selected>Expediente Incompleto</option>
+					      	<?php } ?>
+
+					    </select>
+					    <label>Status</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">comment</i>
+			          <input id="comentario" type="text" name="comentario" value="<?php echo $med["comentario"]; ?>" class="validate">
+			          <label for="comentario">Comentario:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="lugar_capacitacion" type="text" name="lugar_capacitacion" value="<?php echo $med["lugar_capacitacion"]; ?>" class="validate">
+			          <label for="lugar_capacitacion">Lugar de Capacitación:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">today</i>
+			          <input id="fecha" type="text" name="fecha" value="<?php echo $med["fecha"]; ?>" class="validate">
+			          <label for="fecha">fecha: dd/mm/yyyy</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">local_hospital</i>
+			          <input id="medico" type="text" name="medico" value="<?php echo $med["medico"]; ?>" class="validate">
+			          <label for="medico">Médico</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">create</i>
+			          <input id="cedula" type="text" name="cedula" value="<?php echo $med["cedula"]; ?>" class="validate">
+			          <label for="cedula">Cedula</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">contacts</i>
+			          <input id="folio" type="text" name="folio" value="<?php echo $med["folio_documento"]; ?>" class="validate">
+			          <label for="folio">Folio del documento</label>
+			        </div>
+		      	</div>
+		      	<?php } ?>
+		</div>
+
+
+
+<div class="row">
+  <div class="col m12 s12 text-right">
+    <?php foreach ($this->personal as $per) { 
+      $user =  $per["id"];
+    } ?>
+
+    <a href="/panel/personaldetail/id/<?php echo $user; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+    <button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+  </div>  
+</div>
+
+<script type="text/javascript">
+  $("#addpersonal").click(function(){
+    var status = document.getElementById("folio").value;
+      if(status == ""){
+        swal({
+          title: "Para editar la informacion es necesario que se agregue el folio del documento",
+        });
+      }else{
+        swal("Felicidades!", "La información se edito de forma correcta!", "success");   
+        setTimeout(submitForm, 1500);     
+      }
+  });
+
+  function submitForm() {
+    document.getElementById("form_user").submit()
+  } 
+</script>

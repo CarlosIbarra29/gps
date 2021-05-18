@@ -1,0 +1,309 @@
+<?php $session = new Zend_Session_Namespace("current_session"); ?>
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content">
+        	<div class="row">
+        		<div class="col m6 s6">
+        			<!-- <h3 ></h3> -->
+        			<a href="/panel/sitiosdetail/id/<?php echo $this->id_sitio; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        		</div>
+        		<div class="col m6 s6 text-right">
+        			<a class='dropdown-trigger btn' href='#' style="width: 150px;" data-target='dropdown4'>Menú <i class="material-icons left">apps</i></a> 	
+        		</div>
+        	</div>
+
+			<div class="row">
+			    <div class="col m12 s12 text-center">
+			      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información general</span>
+			    </div>
+			</div>
+
+          <p>
+			<div class="row">
+				<div class="col m4 s12">
+				  <ul id='dropdown4' class='dropdown-content'>
+				  	<?php if($this->rol_user == 13 || $this->rol_user == 2){ ?>
+				  	<?php }else{ ?>
+				  		<li><a href="/panel/detallesproyecto/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>">Cambiar Status</a></li>
+				  	<?php } ?>
+				  	
+				  	<li class="divider" tabindex="-1"></li>
+				    <li><a id="asignar_cuadrilla">Asignar cuadrilla</a></li>
+				  </ul>
+				</div>
+			</div>
+
+          	<div class="row">
+				<div class="col m4 s6">
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5 class="font_tittle">Nombre sitio: <a href="/panel/sitiosdetail/id/<?php echo $this->id_sitio; ?>"><?php echo $key['nombre']; ?></a></h5>
+						<h5><span class="font_tittle">Id cliente:</span> <span><?php echo $key['id_cliente']; ?></span></h5>
+						<h5> <span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+					<?php } ?>
+<!-- 					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+					<?php } ?> -->
+				</div>
+
+				<div class="col m4 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>	
+						<h5> <span class="font_tittle">Tipo de torre:</span> </h5>
+					<?php } ?>
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5> <span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+					<?php } ?>
+				</div>
+
+				<div class="col m4 s12">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Id operador:</span> <?php echo $value['id_operador'] ?></h5>
+					<?php } ?>
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+						<h5> <span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col m6 s6">
+					<?php foreach ($this->nombreproyecto as $key){ ?>
+						<h5><span class="font_tittle">Proyecto:</span> <?php echo $key['nombre_proyecto']; ?></h5>	
+					<?php } ?>
+					<h5><span class="font_tittle">Cliente:</span> 
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->statuscliente as $mar) { 
+								 		if ($mar['id']==$usr['status_cliente']) { ?>
+								     		<?php echo $mar["nombre_status"]; ?>
+							<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+							<?php } } ?>
+						<?php } ?>
+					</h5>
+					
+					<h5> <span class="font_tittle">Status GPS:</span>
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->status as $mar) { 
+								if ($mar['id']==$usr['status_proyecto']) { ?>
+								    <?php echo $mar["nombre_status"]; ?>
+								<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+							<?php } } ?>
+						<?php } ?>
+
+					</h5>
+					<h5><span class="font_tittle">Obra civil:</span> </h5>
+				</div>
+				<div class="col m6 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5><span class="font_tittle">Coordinador:</span> <span><?php echo $value['nombre_coordinador'] ?></span></h5>
+						<h5><span class="font_tittle">Ingeniero Proyecto:</span><span><?php echo $value['nombre_ingproyecto'] ?></span></h5>
+						<h5><span class="font_tittle">Residente:</span> <span><?php echo $value['nombre_residente'] ?></span></h5>
+						<h5><span class="font_tittle">PM Cliente:</span> <span><?php echo $value['pm_cliente'] ?></span></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col m6 s12">
+					<h5> <span class="font_tittle">Fecha requerida cliente:</span></h5>
+				</div>
+<!-- 				<div class="col m6 s12">
+					<?php foreach ($this->detalles_bts as $value) { ?>
+					<h5><span class="font_tittle">Fecha cronograma:</span><span><?php echo $value['inicioobra_baseline'] ?></span> </h5>
+					<?php } ?>
+				</div> -->
+			</div>
+
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+<div class="row"> 
+	<div class="col m12 s12" style="margin-top: 10px;" id="div_asignar">
+		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignar Cuadrilla</span>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m2 s12"></div>
+	<div class="col m6 s8">
+
+    		<input type="hidden" id="id_sitio" name="id_sitio" value="<?php echo $this->id_sitio; ?>">
+    		<input type="hidden" id="id_tipoproyecto" name="id_tipoproyecto" value="<?php echo $this->proyecto_id; ?>">
+    		<input type="hidden" id="sitio_tipoproyecto" name="sitio_tipoproyecto" value="<?php echo $this->idtipo; ?>">
+    		<input type="hidden" id="nombre_sitio" name="nombre_sitio" value="<?php echo $this->nombre_sitio; ?>">
+
+    	<select name="personal" id="jspersonal">
+    		<option value="" disabled selected>Seleciona al personal</option>
+    		<?php foreach ($this->personal as $key){
+    			if($key["status_cuadrilla"]== 1) {?>
+    			<option disabled value="<?php echo $key['id'] ?>"><?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?> <?php echo $key['nombre']; ?> *Asignado a <?php echo $key['name_sitio']; ?></option>
+    			<?php }else{ ?>
+    			<option value="<?php echo $key['id'] ?>"><?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?> <?php echo $key['nombre']; ?></option>
+    		<?php } } ?>
+    	</select>
+    	<label>Personal</label>
+	</div>
+	<div class="col m2 s4">
+		<button id="personal_add" class="waves-effect waves-light btn">Asignar</button>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+
+
+<div class="row">
+	<div class="col m2 s12"></div>
+	<div class="col m8 s12">
+      	<table>
+        	<thead>
+          		<tr>
+              		<th>Id.</th>
+              		<th>Paterno</th>
+              		<th>Materno</th>
+              		<th>Nombre(s)</th>
+              		<th>Puesto</th>
+              		<th>Liberar</th>
+          		</tr>
+        	</thead>
+
+			<?php
+			if ($this->personal_proyecto) {
+			foreach ($this->personal_proyecto as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["id_personal"]; ?></td>
+					<td><?php echo $usr["apellido_pa"]; ?></td>
+					<td><?php echo $usr["apellido_ma"]; ?></td>
+					<td><?php echo $usr["nombre"]; ?></td>
+					<td><?php echo $usr["puesto"]; ?></td>
+					<td>
+						<a class="liberar_personal" data-id="<?php echo $usr["id_personal"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span></a>
+					</td>
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay personal asignado.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+      	</table>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+
+<script type="text/javascript">
+    $("#personal_add").click(function(){
+
+	swal({
+		title: "Estas seguro de agregarlo a la cuadrilla?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+	  	if (willDelete) {
+	    swal("Bien! El personal se asigno a la cuadrilla!", {
+	      icon: "success",
+	    });
+    		var personal = document.getElementById("jspersonal").value;
+    		var sitio = document.getElementById("id_sitio").value;
+    		var tipo_proyecto = document.getElementById("id_tipoproyecto").value;
+    		var sitio_tipoproyecto = document.getElementById("sitio_tipoproyecto").value;
+    		var nombre_sitio = document.getElementById("nombre_sitio").value;
+
+            var request = $.ajax({
+                url:"/panel/requestchangeaddcuadrilla",
+                method:"POST",
+                data: { personal : personal, id_sitio: sitio, id_tipoproyecto:tipo_proyecto, sitio_tipoproyecto:sitio_tipoproyecto, name_sitio: nombre_sitio },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La asignacion fue cancelada!");
+	  }
+	});
+
+  });
+
+    $(".liberar_personal").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+    	ap=$(this).data('ap');
+    	am =$(this).data('am');
+
+		swal({
+			title: "Estas seguro de liberar a "+ap+" "+nombre+" del sitio?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Bien!  "+ap+" "+nombre+"  fue liberado del sitio!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/panel/requestliberarpersonal",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+
+    $("#asignar_cuadrilla").click(function(){
+		var myElement = document.getElementById(''); 
+		$('html, body').animate({
+		scrollTop: $("#div_asignar").offset().top
+		}, 2000);
+    });
+</script>

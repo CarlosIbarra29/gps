@@ -1,0 +1,298 @@
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m12 s12 text-left">
+		<a href="/panel/asignardetalles/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>"><i class="fa fa-2x fa-reply-all"></i> Regresar</a>
+	</div>
+</div>
+	
+
+<!-- <div class="row">
+	<div class="col m4 s6">
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Nombre sitio:</span> <?php echo $key['nombre']; ?></h5>
+			<h5><span class="font_tittle">Id cliente:</span> <?php echo $key['id_cliente']; ?></h5>
+			<h5><span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+		<?php } ?>
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>	
+		<h5><span class="font_tittle">Tipo de torre:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s12">
+		<h5><span class="font_tittle">Id operador:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+			<h5><span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+		<?php } ?>
+	</div>
+</div> -->
+
+
+<!-- <div class="row">
+	<div class="col m6 s6">
+		<h5><span class="font_tittle">Proyecto:</span> </h5>
+		<h5><span class="font_tittle">Cliente:</span> 
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->statuscliente as $mar) { 
+					 		if ($mar['id']==$usr['status_cliente']) { ?>
+					     		<?php echo $mar["nombre_status"]; ?>
+				<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+				<?php } } ?>
+			<?php } ?>
+		</h5>
+		<h5><span class="font_tittle">Obra civil:</span> </h5>
+		<h5><span class="font_tittle">Torre:</span>
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->status as $mar) { 
+					if ($mar['id']==$usr['status_proyecto']) { ?>
+					    <?php echo $mar["nombre_status"]; ?>
+					<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+				<?php } } ?>
+			<?php } ?>
+
+		</h5>
+	</div>
+	<div class="col m6 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Coordinador:</span> <?php echo $value['nombre_coordinador'] ?></h5>
+			<h5><span class="font_tittle">Ingeniero Proyecto:</span> <?php echo $value['nombre_ingproyecto'] ?></h5>
+		<?php } ?>
+		<h5><span class="font_tittle">Residente: </span></h5>
+		<h5><span class="font_tittle">PM Cliente:</span></h5>
+	</div>
+</div> -->
+
+<!-- <div class="row">
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha requerida cliente:</span></h5>
+	</div>
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha cronograma:</span></h5>
+	</div>
+</div> -->
+
+<div class="row">
+	<div class="col m12 s12">
+		<h4>WK 4 (Editar evidencias fotograficas).</h4>
+	</div>
+</div>
+
+<div class="row">
+	<?php 
+	$montajetorre = 0; $camagrava = 0; $limpiezadetalle = 0; 
+	foreach ($this->wkcuatro as $key){ 
+		$montajetorre = $key['status_montajetorre'];
+		$camagrava = $key['status_camagrava'];
+		$limpiezadetalle = $key['status_limpiezadetalles'];
+	} ?>
+
+
+	<?php foreach ($this->wkcuatro as $key ){ ?>
+		<input type="hidden" id="img_montajetorre" value="<?php echo $key['montaje_torre']; ?>">
+		<input type="hidden" id="img_camagrava" value="<?php echo $key['cama_grava']; ?>">
+		<input type="hidden" id="img_limpiezadetalles" value="<?php echo $key['limpieza_detalles']; ?>">
+		<input type="hidden" id="img_edit" name="imahidden">
+	<?php } ?>
+</div>
+
+
+			 <div class="row">
+      			<div class="col m3 s12">
+      				<?php if($montajetorre == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox"  class="filled-in" disabled />
+						        <span class="font-check">Montaje de torre </span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Montaje de torre</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END MONTAJE DE TORRE -->
+      				<?php if($camagrava == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Antivegetal y cama de grava</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Antivegetal y cama de grava</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END ANTIVEGETAL Y CAMA DE GRAVA -->
+      				<?php if($limpiezadetalle == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Limpieza y detalle</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Limpieza y detalle</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END LIMPIEZA Y DETALLE -->
+      			</div>
+
+      			<div class="col m9 s12">
+					<div class="row">
+						<form action="/panel/requestupdatevidenciassemanacuatro" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotocuatro">
+							<span>* Solo estaran habilitadas las tareas que ya cuenten con registro fotografico.</span>
+	  					<div class="input-field col m6 s12">
+	    					<select id="actividadcuatro" name="actividad">
+	      						<option value="" disabled selected>Selecciona una tarea</option>
+	      						<?php if($montajetorre == 1){ ?>
+	      							<option value="1">Montaje de torre</option>
+	      						<?php }else{ ?>
+	      							<option value="1" disabled>Montaje de torre</option>
+	      						<?php } ?>
+	      					<!-- 	END OPTION MONTAJE DE TORRE -->
+	      						<?php if($camagrava == 1){ ?>
+	      							<option value="2">Antivegetal y cama de grava</option>
+	      						<?php }else{ ?>
+	      							<option value="2" disabled>Antivegetal y cama de grava</option>
+	      						<?php } ?>
+	      					<!-- 	END OPTION ANTIVEGETAL Y CAMA DE GRAVA -->
+	      						<?php if($limpiezadetalle == 1){ ?>
+	      							<option value="3">Limpieza y detalle</option>
+	      						<?php }else{ ?>
+	      							<option value="3" disabled>Limpieza y detalle</option>
+	      						<?php } ?>	
+	      					<!-- 	END OPTION LIMPIEZA Y DETALLE -->
+	    					</select>
+	  					</div>
+
+	  					<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+	  					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+	  					<input type="hidden" name="id" value="<?php echo $this->id_sitio; ?>">
+
+					    <div class="file-field input-field col m6 s12">
+					    	<div class="btn">
+					        	<span>Foto</span>
+					        	<input type="file" name="url">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate"  id="imgvalidate" type="text">
+					      	</div>
+					    </div>
+					    </form>
+					</div>
+					
+					<div class="row">
+						<div class="col m12 s12 text-center">
+							<a class="waves-effect waves-light btn" id="btfotowkcuatro">Subir</a>
+						</div>
+					</div>
+
+
+				<div clas="row">
+					<div class="col m4 s12 text-center">
+						<?php if($montajetorre == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Montaje de torre</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['montaje_torre']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['montaje_torre']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['montaje_torre']; ?>">Montaje de torre< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($camagrava == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Antivegetal y cama de grava</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['cama_grava']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['cama_grava']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span>Antivegetal y cama de grava</span>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($limpiezadetalle == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Limpieza y detalles</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['limpieza_detalles']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['limpieza_detalles']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span>Limpieza y detalles</span>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+				</div>
+      			</div>
+			 </div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('select').formSelect();
+  	});
+
+
+    $(".check_option").click(function(){
+    	swal({title: "Debes seleccionar una tarea y subir una foto!" , });
+    });
+
+    $("#btfotowkcuatro").click(function(){
+        var actividad = document.getElementById("actividadcuatro").value;
+
+        if(actividad == ""){
+            swal({
+              title: "Para agregar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+            swal("Felicidades!", "La imagen se subio de forma correcta!", "success");   
+            setTimeout(submitFormcuatro, 1500);     
+        }
+    });
+
+    function submitFormcuatro() {
+        document.getElementById("submit_fotocuatro").submit()
+    }
+</script>

@@ -1,0 +1,159 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+    	<?php if($this->op_sel == 0){ ?>
+			<a href="/vehiculos/inventariov"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?> 
+		
+		<?php if($this->op_sel == 1){ ?>
+			<a href="/vehiculos/buscarvehiculo?marca=<?php echo $this->marca; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+				
+		<?php if($this->op_sel == 2){ ?>
+			<a href="/vehiculos/buscarvehiculo?placas=<?php echo $this->placas; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+				
+		<?php if($this->op_sel == 3){ ?>
+			<a href="/vehiculos/buscarvehiculo?status=<?php echo $this->status; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+	</div>
+</div>
+<?php foreach ($this->vehiculos_act as $vh) { ?>
+<div class="row text-center">
+  <div class="col m12 s12 " style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo
+  </div>
+  <div class="col m12 s12">
+		<h2> <?php echo $vh["marca"]; ?> <?php echo $vh["modelo"]; ?></h2>
+	</div>
+</div>
+<?php } ?>
+
+		<div class="col m12 s12" style="margin-top: 12px;">
+			<div class="white-box">
+				<form action="/vehiculos/requestupdatevh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_vh">
+					<?php foreach ($this->vehiculos_act as $vh) { $imagen = $vh['imagen']; $nombre = $vh['modelo'];?> 
+					<input type="hidden" name="ids" value="<?php echo $vh["id_vehiculos"]; ?>">
+					<div class="file-field input-field col m8 s12">
+					    <div class="btn">
+					        <span>Añade Foto</span>
+					        <input type="file" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $vh["imagen"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					</div>
+
+					<div class="col m4 s12 text-center">
+						<?php if($imagen== null){ ?>
+							<img src="/img/no_disponible.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+							<h3>No Disponible</h3>
+						<?php }else{ ?>
+							<a class="example-image-link" href="/<?php echo $vh['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vh['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+						<?php } ?>
+					</div>
+
+					<div class="file-field input-field col m12 s12">
+					    <div class="btn">
+					        <span>Añade Tarjeta Circulación</span>
+					        <input type="file" name="url2">
+					        <input type="hidden" name="imatarjeta" value="<?php echo $vh["tarjeta_circulacion"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					</div> 
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">class</i>
+						<input id="marca" type="text" value="<?php echo $vh["marca"]; ?>" name="marca" class="validate" required>
+						<label for="marca">* Marca:</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">description</i>
+						<input id="submarca" type="text" value="<?php echo $vh["submarca"]; ?>" name="submarca" class="validate" required>
+						<label for="submarca">* Submarca: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">airplay</i>
+						<input id="modelo" type="text" name="modelo" value="<?php echo $vh["modelo"]; ?>" class="validate" required>
+						<label for="modelo">* Modelo: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">confirmation_number</i>
+						<input id="placas" type="text" name="placas" value="<?php echo $vh["placas"]; ?>" class="validate" required>
+						<label for="placas">* Placas: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">invert_colors</i>
+						<input id="color" type="text" name="color" value="<?php echo $vh["color"]; ?>" class="validate" required>
+						<label for="color"> Color: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="com" type="text" name="com" value="<?php echo $vh["comentarios"]; ?>" class="validate">
+						<label for="com">Comentarios: </label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">track_changes</i>
+						<select id="grupo" name="grupo" required>
+
+							<?php if ($vh['id_grupo'] == 0) { ?>
+								<option value="0" disabled selected>* Selecciona una opcion:</option>
+						      	<?php foreach ($this->grupov as $gv) { ?>
+						      		<option value="<?php echo $gv["id_grupo"]; ?>"><?php echo $gv["nombre"]; ?></option>
+						      	<?php } ?>
+							<?php } else { ?>
+						    	<?php foreach ($this->grupov as $gv) { 
+						     		if ($gv['id_grupo']==$vh['id_grupo']) { ?>
+						                <option value="<?php echo $gv["id_grupo"]; ?>" selected><?php echo $gv["nombre"]; ?></option>
+						     	<?php } if ($gv['id_grupo']!=$vh['id_grupo']) { ?>
+						                <option value="<?php echo $gv['id_grupo']; ?>" ><?php echo $gv["nombre"]; ?></option>
+						     	<?php } } ?>  
+							<?php } ?> 				
+						</select>
+						<label>Grupo</label>
+					</div>
+			</div>
+		     <?php } ?>
+		    </form>
+		</div>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/vehiculos/inventariov" class="waves-effect red waves-light btn">Cancelar</a>
+				<button  id="updvh" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+
+    $("#updvh").click(function(){
+        var marca = document.getElementById("marca").value;
+
+		if(marca == ""){
+			swal({
+				title: "Para editar, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+
+    });
+
+	lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    function submitForm() {
+        document.getElementById("submit_vh").submit()
+    }
+</script>

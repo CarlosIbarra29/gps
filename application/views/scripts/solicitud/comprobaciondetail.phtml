@@ -1,0 +1,628 @@
+
+
+
+
+
+<style type="text/css">
+	.title_info {
+		font-size: 18px;
+	}
+
+</style>
+
+
+<div class="row">
+  <div class="col m6 s6">
+    <?php if ($this->status == 0){?>
+      <div class="row" style="margin-top: 10px;">
+          <div class="col m12 s12">
+              <a href="/solicitud/comprobacionesresidente/id/<?php echo $this->user; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+          </div>
+      </div>  
+    <?php } ?>
+
+    <?php if ($this->status == 1){?>
+      <div class="row" style="margin-top: 10px;">
+          <div class="col m12 s12">
+              <a href="/solicitud/comprobacionresidenteauditada/id/<?php echo $this->user; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+          </div>
+      </div>  
+    <?php } ?>
+  </div>
+
+  <div class="col m6 s6">
+    <div class="row" style="margin-top: 10px;">
+      <div class="col m12 s12 text-right">
+        <a class="btn modal-trigger" href="#modal4">Comprobar Factura</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal4" class="modal modal-fixed-footer">
+    <div class="modal-content">
+       <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobar Factura</span>
+        <table class="table text-left table-hover" style="margin-top: 15px;">
+            <thead>
+                <tr>
+                  <th>Razon Social</th> 
+                  <th>Factura</th>  
+                  <th>Servicio</th>
+                  <th>Residente</th>
+                </tr> 
+            </thead>
+            <?php
+            if ($this->factura_repetida) { 
+            foreach ($this->factura_repetida as $usr) { ?>
+            <tbody>
+                <tr>
+                  <td><?php echo $usr['razon_social']; ?></td>
+                  <td><span style="font-weight: bold;"><?php echo $usr['factura']; ?></span></td>
+                  <td><?php echo $usr['nombre']; ?></td>
+                  <td><?php echo $usr['name_residente']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?></td>
+                </tr>
+            <?php } }else{ ?>
+            </tbody> 
+            <tbody>
+                <tr>
+                    <td class="text-center" colspan="6"><h3>El numero de la factura no se encontro en los registros anteriores.</h3></td>
+                </tr>
+            </tbody>
+                        
+            <?php } ?>
+        </table>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div class="row" style="margin-top: 10px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de la Comprobación</span>
+  </div>
+</div>
+
+<?php foreach ($this->comprobacion as $key){  
+  $id = $key['id'];
+  $factura = $key['factura'];
+  $razon_social = $key['razon_social'];
+  $monto = $key['monto_solicitud'];
+  $fecha = $key['fecha_del'];
+  $servicio = $key['nombre'];
+  $user = $key['user'];
+  $status_comprobacion = $key['status_comprobacion'];
+  $autorizacion = $key['autorizacion'];
+  $comentario = $key['comentarios'];
+
+} ?>
+
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de caja chica</span>
+
+        <div class="row">
+          <div class="col m12 s12">
+            <table>
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Sitio</th>
+                  <th>Monto</th>
+                  <th>Autorización</th>
+                  <th>Pago</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td><?php echo $this->id_sol; ?></td>
+                  <td><?php echo $this->sol_namesitio; ?></td>
+
+                <?php 
+                  if($this->monto_anterior == NULL){
+                    $total = $this->sol_monto;
+                  }else{
+                    $total = $this->sol_monto + $this->monto_anterior;
+                  }
+                ?>
+
+                  <td style="font-weight: bold;">$<?php echo number_format($total, 2, '.', ','); ?></td>
+                  <td>
+                    <?php if($this->autorizacion_status == 0){ ?>
+                      <div class="chip" id="inactivo_personal">
+                        <img src="/img/gris.jpg" >
+                          En proceso
+                      </div>
+                    <?php } ?>
+
+                    <?php if($this->autorizacion_status == 2){ ?>
+                      <div class="chip" id="activo_personal">
+                        <img src="/img/correct.png" >
+                        Autorizada
+                      </div>
+                    <?php } ?>
+                  </td>
+
+                  <td>
+                  <?php if($this->pago == 0){ ?>
+                    <div class="chip" id="inactivo_personal">
+                      <img src="/img/gris.jpg" >
+                        En proceso
+                    </div>
+                  <?php } ?>
+
+                  <?php if($this->pago == 1){ ?>
+                    <div class="chip" id="activo_personal">
+                      <img src="/img/correct.png" >
+                      Pagada
+                    </div>
+                  <?php } ?>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <?php if($this->if_proyecto == 0){ ?>
+        <input type="hidden" id="proyecto" name="proyecto" value="0">
+      <?php }else{ ?>
+       <form action="/solicitud/requestupdatecomprobaasignarproyecto" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+          <input type="hidden" name="comprobacion" value="<?php echo $this->id_comprobacion; ?>">
+          <input type="hidden" name="status" value="<?php echo $this->status; ?>">
+          <input type="hidden" name="user" value="<?php echo $this->user; ?>">
+        <div class="row">
+          <div class="col m12 s12">
+            <span style="font-size: 18px;">* Selecciona el tipo de Proyecto del Sitio</span>
+          </div>
+          <div class="col m8 s12">
+
+            <?php foreach ($this->comprobacion as $usr){ ?>
+              <div class="input-field col m6 s12">
+                <select id="proyecto" name="proyecto" required>
+                  <option value="">Selecciona una opcion</option>
+                    <?php foreach ($this->proyectos as $mar) { 
+                      if ($mar['id']==$usr['id_tipoproyecto']) { ?>
+                              <option value="<?php echo $mar["id"]; ?>" selected>Proyecto: <?php echo $mar["nombre_proyecto"]; ?> Id: <?php echo $mar["id"]; ?> </option>
+                    <?php } if ($mar['id']!=$usr['id_tipoproyecto']) { ?>
+                              <option value="<?php echo $mar["id"]; ?>" >Proyecto: <?php echo $mar["nombre_proyecto"]; ?> Id: <?php echo $mar["id"]; ?> </option>
+                    <?php } } ?>  
+                </select>
+                <label>Proyecto</label>
+              </div>  
+
+            <?php } ?>
+
+            <div class="input-field col m6 s12">
+              <a class="waves-effect waves-light btn parpadea" id="asignar_proyecto">Asignar Proyecto</a>
+            </div>
+
+          </div>
+
+          <?php 
+          $nombre = "";
+          foreach ($this->sitio as $key ) {
+             $nombre = $key['nombre'];
+          } ?>
+
+        </div>
+        </form> 
+
+      <?php } ?>
+
+
+<div class="row">
+	<div class="col m6 s12">
+      	<div class="card">
+        	<div class="card-content">
+              <span class="card-title" style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información</span>
+          		<div>
+          			<span class="title_info">Fecha de comprobación:</span> <span class="title_info"><?php echo $fecha; ?></span> <br>
+          			<span class="title_info">Razon social:</span> <span class="title_info"><?php echo $razon_social; ?></span><br>
+          			 
+                <?php if($this->repetido == 1){ ?>
+                  <span class="title_info">No. Factura:</span> <span class="title_info"><?php echo $factura; ?></span>
+                <?php }else{ ?>
+                  <span class="title_info">No. Factura:</span> <span class="title_info"><?php echo $factura; ?></span>
+                  <?php if($factura == "No Facturable"){ ?>
+                  <?php }else{ ?>
+                    <span style="color:red; font-size: 16px; font-weight: bold;"> Factura duplicada</span>
+                  <?php } ?>
+                  
+                <?php } ?>
+
+
+                <br>
+          			<span class="title_info">Servicio:</span> <span class="title_info"><?php echo $servicio; ?></span> <br>
+          			<span class="title_info">Monto a facturar:</span> <span class="title_info" style="font-weight: bold;">$<?php echo $monto; ?></span>
+                <input type="hidden" id="monto_facturar" value="<?php echo $monto; ?>">
+          		</div>
+        	</div>
+        	<div class="card-action">
+        		<!-- <p>Comprobación realizada por: <?php echo $user; ?></p> -->
+            Política:<p style="color:#d84315; font-size: 17px;"> <?php echo $comentario; ?></p>
+        	</div>
+      	</div>
+	</div>
+
+<?php if($status_comprobacion == 0){ ?>
+  <div class="col m6 s12">
+<form action="/solicitud/requestupdatecomprobacioncheck" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobar">
+    <input type="hidden" name="ids" value="<?php echo $id; ?>">
+    <input type="hidden" id="name_monto" name="montos" value="">
+    <input type="hidden" name="status" value="<?php echo $this->status; ?>">
+    <input type="hidden" name="user" value="<?php echo $this->user; ?>">
+
+      <div class="input-field col s12">
+        <select id="vo_bo" name="vo_bo">
+          <option value="0" disabled selected>* Selecciona una opcion</option>
+          <option value="Ok">Ok</option>
+          <option value="Rechazado">Rechazado</option>
+          <option value="Parcial">Parcial</option>
+        </select>
+        <label>* Vo. Bo. PMO</label>
+      </div>
+
+      <div class="input-field col s12">
+        <select name="sitios" id="sitios">
+          <option value="" disabled selected>Selecciona una opcion:</option>
+          <option value="0">Oficina</option>
+          <?php foreach ($this->sitios as $res) { ?>
+          <option value="<?php echo $res["id"]; ?>" class="load-material" data-id="<?php echo $res["id"]; ?>" data-material="nombre_proyecto"><?php echo $res["nombre"]; ?></option>
+          <?php } ?>                  
+        </select>
+        <label>* Sitios</label>
+      </div>
+
+        <div class="input-field col s12">
+          <input id="monto" name="monto" type="text"  disabled="disabled" placeholder=" ">
+          <label for="monto">* Monto a comprobar</label>
+        </div>
+
+        <div class="input-field col s12">
+            <textarea id="comentario" name="comentario" class="materialize-textarea"></textarea>
+            <label for="comentario">Comentario PMO</label>
+        </div>
+</form>
+        <div class="input-field col s12 text-center">
+          <a class="btn" id="comprobar"><i class="material-icons right">check</i>Comprobar</a>
+        </div>
+
+  </div>
+<?php }else{ ?>
+
+  <div class="col m6 s12">
+<form action="/solicitud/requestupdatecomprobacioncheck" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobar_edit">
+  <?php foreach ($this->comprobacion as $key){ ?>
+      <input type="hidden" name="ids" value="<?php echo $key['id']; ?>">
+      <input type="hidden" name="status" value="<?php echo $this->status; ?>">
+      <input type="hidden" name="user" value="<?php echo $this->user; ?>">
+      <input type="hidden" id="name_montoedit" name="montos" value="">
+
+        <div class="input-field col s12">
+          <select id="vo_bo_edit" name="vo_bo">
+            <?php if($key['vo_bo'] == "Ok") { ?>
+              <option value="Ok" selected>Ok</option>
+              <option value="Rechazado">Rechazado</option>
+              <option value="Parcial">Parcial</option>
+            <?php } ?>
+
+            <?php if($key['vo_bo'] == "Rechazado") { ?>
+              <option value="Ok">Ok</option>
+              <option value="Rechazado" selected>Rechazado</option>
+              <option value="Parcial">Parcial</option>
+            <?php } ?>
+
+            <?php if($key['vo_bo'] == "Parcial") { ?>
+              <option value="Ok">Ok</option>
+              <option value="Rechazado">Rechazado</option>
+              <option value="Parcial" selected>Parcial</option>
+            <?php } ?>
+
+          </select>
+          <label>* Vo. Bo. PMO</label>
+        </div>
+
+
+             <div class="input-field col m12 s12">
+              <select id="sitio_edit" name="sitios">
+                  <option value="0" disabled>* Selecciona un Sitio</option>
+                  <?php if($key['id_sitio'] == "0"){?>
+                    <option value="oficina" selected>Oficina</option>
+                  <?php }else{ ?>
+                    <option value="oficina">Oficina</option>
+                  <?php } ?>
+                <?php foreach ($this->sit as $mar) { 
+                  if ($mar['id']==$key['id_sitio']) { ?>
+                          <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                <?php } if ($mar['id']!=$key['sitio_id']) { ?>
+                          <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                <?php } } ?>  
+              </select>
+              <label>Sitio:</label>
+            </div>
+ 
+        <div class="input-field col s12">
+          <input id="monto_edit" name="monto" disabled="disabled" value="<?php echo $key['monto_comprobacion']; ?>" type="text" class="validate">
+          <!-- <label for="monto_edit">* Monto a comprobar</label> -->
+        </div>
+
+
+        <div class="input-field col s12">
+            <textarea id="comentario_edit" name="comentario"  class="materialize-textarea"><?php echo $key['comentarios_comprobacion']; ?></textarea>
+            <label for="comentario_edit">Comentario PMO</label>
+        </div>
+  <?php } ?>
+
+
+
+
+</form>
+        <div class="input-field col s12 text-center">
+          <a class="btn" id="comprobar_edit"><i class="material-icons right">check</i>Modificar</a>
+        </div>
+
+  </div>
+
+
+<?php } ?>
+
+</div>
+
+
+      <?php if($this->if_proyecto != 0){ ?>
+
+
+            <?php foreach ($this->sitios as $key ) {
+              $nombre = $key['nombre'];
+              $id=$key['id'];
+            } ?>
+
+
+            <?php foreach ($this->proyectos as $key) {
+              $name = $key['nombre_proyecto'];
+            } ?>
+
+        <div class="row">
+<!--           <div class="col m12 s12 text-center">
+            <span style="font-size: 18px;">La comprobación corresponde al sitio</span> 
+            <span style="font-size: 18px; font-weight: bold;"><?php echo $nombre; ?></span> 
+            <span style="font-size: 18px;">con el tipo de proyecto</span>
+            <span style="font-size: 18px; font-weight: bold;"><?php echo $name; ?></span> 
+            <span style="font-size: 18px;">/ Id sitio:</span>
+            <span style="font-size: 18px; font-weight: bold;"><?php echo $id; ?></span>
+          </div> -->
+        </div>
+
+
+      <?php }else{ ?>
+      <?php } ?>
+
+<div class="row" style="margin-top: 19px;">
+  <span>* Para los campos de Visualizar <i class="material-icons prefix" style="font-size: 20px;">open_with</i></span> solo se podra tener una vista previa en caso de ser PDF, de lo contrario se descargara el archivo.
+</div>
+
+
+<div class="row">
+
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Factura</span>
+      </div>
+      <div class="card-action">
+        <table>
+          <thead>
+            <tr>
+                <th class="text-center">Descargar</th>
+                <th class="text-center">Visualizar</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <?php foreach ($this->comprobacion as $usr){ ?>
+              <?php if($usr['factura_file'] == ""){?>
+                <tr>
+                  <td class="text-center"><h3>Sin Factura</h3></td>
+                  <td></td>
+                </tr>
+              <?php }else{ ?>
+              <tr>
+                <td class="text-center">
+            <a title="Descargar Archivo" href="/<?php echo $usr["factura_file"]; ?>" download="<?php echo substr(strrchr($usr["factura_file"], "/"), 1); ?>"> <i class="material-icons prefix" style="width: 42px;font-size: 31px;">file_download</i> </a>
+              </td>
+              <td class="text-center">
+                <a href="/<?php echo $usr["factura_file"]; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
+              </td>
+              </tr>
+              <?php } ?>
+
+            <?php } ?>
+          </tbody>
+        </table>  
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Autorización</span>
+      </div>
+      <div class="card-action">
+        <table>
+          <thead>
+            <tr>
+                <th class="text-center">Descargar</th>
+                <th class="text-center">Visualizar</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <?php foreach ($this->comprobacion as $usr){ ?>
+              <?php if($usr['autorizacion'] == ""){?>
+                <tr>
+                  <td class="text-center"><h3>Sin Autorización</h3></td>
+                  <td></td>
+                </tr>
+              <?php }else{ ?>
+              <tr>
+                <td class="text-center">
+            <a title="Descargar Archivo" href="/<?php echo $usr["autorizacion"]; ?>" download="<?php echo substr(strrchr($usr["autorizacion"], "/"), 1); ?>"> <i class="material-icons prefix" style="width: 42px;font-size: 31px;">file_download</i> </a>
+              </td>
+              <td class="text-center">
+                <a href="/<?php echo $usr["autorizacion"]; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
+              </td>
+              </tr>
+              <?php } ?>
+
+            <?php } ?>
+          </tbody>
+        </table>  
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  $("#comprobar").click(function(){
+    sitio = document.getElementById("sitios").value;
+    monto = document.getElementById("monto").value;
+    // alert(monto);
+    vo_bo = document.getElementById("vo_bo").value;
+
+        if(monto == "" || sitio == "" || vo_bo ==0 ){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(comprobar, 1500);
+        }
+
+  });
+
+
+ function comprobar() { document.getElementById("submit_comprobar").submit() }
+
+
+  $("#comprobar_edit").click(function(){
+    sitio = document.getElementById("sitio_edit").value;
+    monto = document.getElementById("monto_edit").value;
+    vo_bo = document.getElementById("vo_bo_edit").value;
+
+        if(monto == "" || sitio == "" || vo_bo ==0 ){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(comprobar_edit, 1500);
+        }
+
+  });
+
+ function comprobar_edit() { document.getElementById("submit_comprobar_edit").submit() }
+
+
+$("#asignar_proyecto").click(function(){
+  var proyecto = document.getElementById("proyecto").value;
+
+        if(proyecto == "" ){
+              swal({
+                title: "Para continuar desdes asignar un proyecto del sitio",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(file_asignar, 1500);
+        }
+
+});
+
+function file_asignar() { document.getElementById("submit_asignar").submit() }
+
+
+
+
+$('#vo_bo').on('change', function() {
+  var value = (this.value );
+  if(value == "Ok"){
+    document.getElementById('monto').disabled = true;
+    var monto = document.getElementById("monto_facturar").value;
+    document.getElementById("monto").value = monto;
+    document.getElementById("name_monto").value = monto;
+  }
+
+  if(value == "Rechazado"){
+    document.getElementById('monto').disabled = true;
+    var monto = 0;
+    document.getElementById("monto").value = monto;
+    document.getElementById("name_monto").value = monto;
+  }
+
+  if(value == "Parcial"){
+    var monto = document.getElementById('monto').value;
+    document.getElementById("monto").value = monto;
+    document.getElementById('monto').disabled = false;
+    document.getElementById("name_monto").value = monto;
+  }
+});
+
+$('#vo_bo_edit').on('change', function() {
+  var value = (this.value );
+  if(value == "Ok"){
+    document.getElementById('monto_edit').disabled = true;
+    var monto = document.getElementById("monto_facturar").value;
+    document.getElementById("monto_edit").value = monto;
+    document.getElementById("name_montoedit").value = monto;
+  }
+
+  if(value == "Rechazado"){
+    document.getElementById('monto_edit').disabled = true;
+    var monto = 0;
+    document.getElementById("monto_edit").value = monto;
+    document.getElementById("name_montoedit").value = monto;
+  }
+
+  if(value == "Parcial"){
+    var monto = " ";
+    document.getElementById("monto_edit").value = monto;
+    document.getElementById('monto_edit').disabled = false;
+    document.getElementById("name_montoedit").value = monto;
+  }
+});
+
+</script>
+

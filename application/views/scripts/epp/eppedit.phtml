@@ -1,0 +1,116 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/catalogo" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+</div>
+
+<?php foreach ($this->epp_inv as $epp) { ?>
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP: <?php echo $epp["nombre"]; ?>
+	</div>
+</div>
+<?php } ?>
+
+
+<div class="col m12 s12" style="margin-top: 12px;">
+	<div class="white-box">
+		<form action="/epp/requestupdateepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_epp">
+			<?php foreach ($this->epp_inv as $epp) { $nombre = $epp['nombre'];?> 
+			<input type="hidden" name="ids" value="<?php echo $epp["idepp"]; ?>">
+				<div class="input-field col m12 s12">
+					<select id="tipo" name="tipo" required>
+						<?php foreach ($this->eppt as $eppt) { 
+						if ($eppt['id_tipo']==$epp['tipo_epp']) { ?>
+					        <option value="<?php echo $eppt["id_tipo"]; ?>" selected><?php echo $eppt["nombre"]; ?></option>
+					    <?php } if ($eppt['id_tipo']==$epp['tipo_epp']) { ?>
+					            <option value="<?php echo $eppt['id_tipo']; ?>" ><?php echo $eppt["nombre"]; ?></option>
+					    <?php } } ?>  
+					</select>
+					<label>Categoria Herramienta</label>
+				</div>
+				<div class="input-field col m12 s12">
+			        <i class="material-icons prefix">account_circle</i>
+			        <input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" required>
+			        <label for="name">Nombre: </label>
+			    </div>
+			    <div class="input-field col m12 s12">
+			    	<i class="material-icons prefix">account_circle</i>
+			    	<input id="desc" type="text" name="desc" value="<?php echo $epp["descripcion"]; ?>" class="validate" required>
+			        <label for="desc">Descripción: </label>
+			    </div>
+			    <div class="input-field col m6 s12">
+			        <i class="material-icons prefix">account_circle</i>
+			        <input id="talla" type="text" name="talla" value="<?php echo $epp["talla"]; ?>" class="validate" required>
+			        <label for="talla">Talla: </label>
+			    </div>
+			    <div class="input-field col m6 s12">
+			    	<i class="material-icons prefix">account_circle</i>
+			    	<input id="stock" type="number" name="stock" value="<?php echo $epp["stock"]; ?>" class="validanumeros" min="1" required>
+			    	<label for="stock">*Stock: </label>
+				</div>
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">account_circle</i>
+					<input id="vida" placeholder="Días Aproximados" type="number" value="<?php echo $epp["tiempo_vida"]; ?>" min="1" name="vida" class="validanumeros" required>
+					<label for="vida">*Tiempo de vida: (En días) </label>
+				</div>
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">event_available</i>
+					<input type="text" id="costo" value="<?php echo $epp["costo_aprobado"]; ?>" name="costo" class="validanumeros">
+					<label for="costo">Costo de Aprobado: </label>
+				</div>
+			</div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/epp/catalogo" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="updepp" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
+
+
+<script src="/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+  		});
+
+
+    $("#updepp").click(function(){
+        var name = document.getElementById("name").value;
+
+        if(name == ""){
+            swal({
+                title: "Para editar una herramienta llena todos los datos",
+            });
+        }else{
+             swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+            setTimeout(submitForm, 500);     
+        }
+
+    });
+
+	lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    function submitForm() {
+        document.getElementById("submit_epp").submit()
+    }
+</script>

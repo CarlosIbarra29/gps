@@ -1,0 +1,102 @@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div class="col-md-12">
+    <div class="white-box"><!-- Mostrar datos -->
+        <div class="row">
+            <div class="jumbotron" style="background-image: url('/img/products.jpg'); background-size: cover;
+            background-position: top center; ">
+            <h1>Detalle de producto</h1>
+        </div>
+    </div>  
+
+    <div class="form-group">
+        <div class="col-md-12 text-right">
+            <?php $cont =1;  foreach ($this->productos as $key){ ?>
+            <a href="/panel/slider/id/<?php echo $key["id"]; ?>">Agregar Imagen</a>
+            <?php }?>
+        </div>
+        <table class="table text-left table-hover">                    
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $cont =1;  foreach ($this->productos as $key){ ?>
+                <tr>
+                    <td><?php echo $key["nombre"]; ?></td>
+                    <td><p><img src="/<?php echo $key["imagen"]; ?>" WIDTH = 'auto' HEIGHT = '200px' />
+                    </p></td>
+                    <td><?php echo $key["stock"]; ?></td>
+                    <td><?php echo $key["precio"]; ?></td>
+                    <td><a href="/panel/requestdeleteproduct/id/<?php echo $key["id"]; ?>"><i class="fa fa-2x fa-trash" style="color: red;"></i></a></td>
+                    <td><a href="/panel/productosedit/id/<?php echo $key["id"]; ?>"><i class="fa fa-2x fa-edit"></i></a></td>
+                </tr>    
+                <?php  }?>
+            </tbody>  
+        </table> 
+        </div> 
+    </div> 
+</div> 
+
+<div class="col-md-12">
+    <div class="white-box"><!-- Mostrar datos -->
+        <table class="table text-left table-hover">                    
+            <thead>
+                <tr>
+                    <th>Descripcion</th>
+                </tr>
+                </thead>
+            <tbody>
+                <?php foreach ($this->productos as $key){ ?>
+                <tr>
+                    <td><?php echo $key["descripcion"]; ?></td>
+                </tr>    
+                <?php  }?>
+            </tbody>  
+        </table>     
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="white-box">
+        <h3>Imagenes del producto</h3>
+        <div class="form-group">
+            <table class="table text-left table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th> 
+                        <th>Imagen</th>
+                        <th>Producto</th>
+                        <th>Editar</th> 
+                        <th>Eliminar</th>
+                    </tr> 
+                </thead>
+                <?php foreach ($this->imagenes as $img) { ?>
+                <tbody>
+                    <tr>
+                        <td><?php echo $img["nombre"]; ?></a></td>
+                        <td><img class="img-circle" src="/<?php echo $img["imagen"];  ?>" width="100" height="100"></td>
+                        <td>
+                            <?php foreach ($this->productos as $prod) { ?>
+                            <?php  
+                            if ($prod['id']==$img['fkpro']) { 
+                                echo $prod['nombre'];                   
+                            } ?>
+                            <?php } ?>
+                        </td>
+                        <td><a href="/panel/slideredit/id/<?php echo $img["id"] ?>"><i class="fa fa-2x fa-edit"></i></a></td>
+                        <td><a href="/panel/requestdeleteslider/id/<?php echo $img["id"]; ?>" ><span class="warning" style="color: red;"><i class="fa fa-2x fa-trash"></i></span></a></td>
+                    </tr>
+                </tbody>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
+</div>

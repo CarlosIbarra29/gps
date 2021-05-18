@@ -1,0 +1,41 @@
+<head>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+
+<div class="row mt-4">
+    <div class="col m3 s12 text-center">
+        <h2>Herramientas</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m2 s12"></div>
+    <div class="col m8 s12">
+        <h3>Escanea la herramienta</h3>
+
+        <form action="/herramienta/herramientaqr" method="post" enctype="multipart/form-data" class="form-horizontal form-material">
+            <div class="file-field input-field col m8 s8 text-center">
+                <div class="btn">
+                    <span>Añadir QR</span>
+                    <input type="file" name="qrimage" accept="image/*" id="qrimage" class="form-control" required>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div> 
+            </div>
+
+            <div class="file-field input-field col m4 s4 text-center">
+                <div>
+                    <input type="submit" id='add_qr' class="waves-effect waves-light btn" value="Escanear">
+                </div>
+            </div>
+        </form>
+
+        <div class="col m12 s8 text-center">
+            <img src="/img/QR/QR_Scan1.png" style="height: 200px;">
+        </div>
+    </div>
+    <div class="col m2 s12"></div>
+</div>

@@ -1,0 +1,173 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/envios/solicitudespendientes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 15px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Envíos</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-left" style="margin-top: 15px;">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Paso 1</span>
+    </div>
+</div>
+
+<!-- <?php echo $this->rol;?> -->
+
+<div class="row">
+	<div class="col m12 s12">
+			<form action="/envios/requestaddenviossteponeadmin" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
+
+		
+	  		<div class="input-field col m6 s12">
+	    		<select id="sitio" name="sitio">
+	      			<option value="0" disabled selected>* Selecciona un Sitio</option>
+	      			<option value="oficina" >Oficina</option>
+	      			<option value="almacen" >Stock Almacén</option>
+	      			<?php foreach ($this->sitios as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>Sitio:</label>
+	  		</div>
+
+	        <div class="input-field col m6 s12">
+	          <input placeholder="*selecciona una fecha" id="fecha_envio" name="fecha_envio" type="text" class="datepicker">
+	          <label for="fecha_envio">Fecha de envio</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          <input placeholder="*selecciona una hora" id="hora_envio" name="hora_envio" type="text" class="timepicker">
+	          <label for="hora_envio">Hora de envio</label>
+	        </div>
+
+			<div class="input-field col m6 s12">
+			    <select name="prioridad" id="prioridad">
+			      <option value="0" disabled selected>* Selecciona una opcion</option>
+			      <option value="1">Normal</option>
+			      <option value="2">Alta</option>
+			    </select>
+			    <label>Prioridad</label>
+			</div>
+
+
+			<?php if($this->rol == 2){ ?>
+				<div class="input-field col m6 s12">
+				    <select id="tipo_envio" name="tipo_envio">
+				      <option value="1" disabled selected>Local</option>
+				    </select>
+				    <label>Tipo de envío</label>
+				</div>
+			<?php }else{ ?>
+				<div class="input-field col m6 s12">
+				    <select id="tipo_envio" name="tipo_envio">
+				      <option value="0" disabled selected>* Selecciona una opcion</option>
+				      <option value="1">Local</option>
+				      <option value="2">Foraneo</option>
+				    </select>
+				    <label>Tipo de envío</label>
+				</div>
+			<?php } ?>
+
+
+			<div class="input-field col m6 s12">
+	    		<select id="vehiculo" name="vehiculo">
+	      			<option value="0" disabled selected>* Selecciona un vehículo</option>
+	      			<?php foreach ($this->vehiculo as $key){ ?>
+	      				<option value="<?php echo $key['id_vehiculos']; ?>"><?php echo $key['marca']; ?> <?php echo $key['submarca']; ?> placas:<?php echo $key['placas']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>Vehículos:</label>
+			</div>
+		</form>
+
+		<div class="row">
+			<div class="col m12 s12 text-right">
+				<a class="btn" id="send_step"><i class="material-icons right">send</i>Paso 2</a>
+			</div>
+		</div>
+	</div>	
+</div>
+
+	<div class="row"> 
+		<div class="col m12 s12">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Catalogo de Vehículos</span>
+
+			<div class="row">
+      			<?php foreach ($this->vehiculo as $key){ ?>
+      				<div class="col m4 s12">
+      					<div class="card">
+        					<div class="card-image text-center">
+        						<?php  if($key['imagen'] == NULL){ ?>
+        							<img src="/img/nodisponible.jpg" class="responsive-img" style="width: 240px;">
+        						<?php }else{ ?>
+          						<!-- <img src="/<?php echo $key['imagen']; ?>" class="responsive-img" style="width: 240px;"> -->
+          						<a class="example-image-link" href="/<?php echo $key['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['imagen']; ?>"  alt="image-1" style="width: 300px;"/></a>
+        						<?php } ?>
+          						
+        					</div>
+        					<div class="card-content">
+        						<!-- <span class="card-title">Card Title</span> -->
+        						<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Marca</span> <span><?php echo $key['marca']; ?></span> <br>
+
+        						<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Submarca</span> <span><?php echo $key['submarca']; ?></span>  <br>
+
+        						<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Modelo</span> <span><?php echo $key['modelo']; ?></span>  <br>
+
+        						<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Placas</span> <span><?php echo $key['placas']; ?></span>
+        					</div>
+
+      					</div>
+      				</div>
+      			<?php } ?>
+			</div>
+
+		</div>
+	</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script src="/js/materialize.min.js"></script>
+	<script type="text/javascript">
+  		$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    		$('select').formSelect();
+    		$('.modal').modal();
+    		$('.timepicker').timepicker();
+
+    	var currentDate = document.getElementById("today_picker").value; 
+    	// alert(currentDate);
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+
+  		});
+
+
+  		$("#send_step").click(function(){
+  			var sitio = document.getElementById("sitio").value;
+  			var prioridad = document.getElementById("prioridad").value;
+  			var fecha_envio = document.getElementById("fecha_envio").value;
+  			var	tipo_envio = document.getElementById("tipo_envio").value;
+  			var vehiculo = document.getElementById("vehiculo").value;
+  			var hora_envio = document.getElementById("hora_envio").value;
+
+
+	        if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
+	            swal({
+	              title: "Para continuar debes agregar la información marcada con un '*' ",
+	            });
+	        }else{
+	          swal("Espere un momento, la información esta siendo procesada", {
+	            icon: "success",
+	            buttons: false,
+	          }); 
+	          setTimeout(submitForm, 1500);     
+	        }
+
+  		});
+
+  		function submitForm() { document.getElementById("submit_gasolina").submit() }
+  </script>

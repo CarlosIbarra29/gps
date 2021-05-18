@@ -1,0 +1,730 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{display: none;}
+	.active_menu{
+		-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+
+</style>
+
+<?php foreach ($this->residente_info as $key){ 
+	$nombre = $key['nombre'];
+	$ap = $key['apellido_pa'];
+	$am = $key['apellido_ma'];
+} ?>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/solicitud/combrobaciones" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+      <?php if($this->pago == 3){ ?>
+        <a class="btn modal-trigger" href="#modal5">Generar otra Solicitud</a>
+      <?php } ?>       
+    </div>
+</div>
+
+  <div id="modal5" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Generar solicitud de caja chica</span>
+
+      <div class="row" style="margin-top: 20px;">
+        <form action="/comprobacion/requestaddsolicitudrechazada" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_solicitudnew">
+
+          <input type="hidden" name="id_sol" value="<?php echo $this->sol_id; ?>"> 
+          <input type="hidden" name="monto_anterior" value="<?php echo $this->monto_anterior; ?>">
+        <input type="hidden" id="sol_residente" name="id_residente" value="<?php echo $this->residente_id; ?>">
+        <input type="hidden" name="nombre_residente" value="<?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?>">
+
+        <div class="col m12 s12">
+          <div class="input-field col s6">
+            <input disabled id="sol_nombre"  type="text" value="<?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?>" class="validate">
+            <label for="sol_nombre">Nombre del Residente</label>
+          </div> 
+
+          <div class="input-field col m6 s12">
+            <select id="sitionew" name="sitio">
+                <option value="0" disabled selected>* Selecciona un Sitio</option>
+                <option value="oficina" >Oficina</option>
+                <option value="almacen" >Stock Almacén</option>
+                <?php foreach ($this->sitios as $key){ ?>
+                  <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+                <?php } ?>
+            </select>
+            <label>Sitio:</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="sol_montonew" type="text" name="monto" class="validate">
+            <label for="sol_montonew">* Monto</label>
+          </div> 
+
+          <div class="input-field col s6">
+            <input disabled id="sol_montoactual" type="text" name="monto_actual" value="<?php echo $this->monto_anterior; ?>">
+            <label for="sol_montoactual">Monto Actual</label>
+          </div> 
+
+          <div class="input-field col s6">
+            <textarea id="sol_comentarionew" name="comentario" class="materialize-textarea"></textarea>
+            <label for="sol_comentarionew">Comentario</label>
+          </div>
+
+        </div>
+      </form>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="add_newsolicitud" class="btn">Aceptar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitar Monto</span>
+      <form action="/comprobacion/requestaddnewsolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_solicitud">
+        <input type="hidden" id="sol_residente" name="id_residente" value="<?php echo $this->residente_id; ?>">
+        <input type="hidden" name="nombre_residente" value="<?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?>">
+        <div class="row" style="margin-top: 16px;">
+          <div class="input-field col s6">
+            <input disabled id="sol_nombre"  type="text" value="<?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?>" class="validate">
+            <label for="sol_nombre">Nombre del Residente</label>
+          </div> 
+
+          <div class="input-field col s6">
+            <input id="sol_monto" type="text" name="monto" class="validate">
+            <label for="sol_monto">* Monto</label>
+          </div> 
+
+<!--           <div class="input-field col s6">
+            <select id="sitio" name="sitio" required>
+              <option value="" disabled selected>* Selecciona una opcion:</option>
+              <option value="0">Oficina</option>
+                  <?php foreach ($this->sitios as $rl) { ?>
+              <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+                  <?php } ?>
+            </select>
+            <label>Sitios</label>
+          </div> -->
+
+<!--           <div class="input-field col s6">
+            <select id="proyecto" name="proyecto" required>
+              <option value="0" disabled selected>* Selecciona una opcion:</option>
+                  <?php foreach ($this->proyectos_tipo as $rl) { ?>
+              <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre_proyecto"]; ?>  Id:<?php echo $rl["id"]; ?></option>
+                  <?php } ?>
+            </select>
+            <label>Tipo Proyecto</label>
+          </div> -->
+
+          <div class="input-field col s6">
+            <textarea id="sol_comentario" name="comentario" class="materialize-textarea"></textarea>
+            <label for="sol_comentario">Comentario</label>
+          </div>
+
+        </div>
+
+        <?php foreach ($this->residente_comp as $key) { ?>
+          <input type="hidden" name="sitio" value="<?php echo $key['id_sitio'] ?>">
+        <?php } ?>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="add_solicitud" class="btn">Aceptar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 10px;">
+    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobación: <?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?></span>
+  </div>
+</div>
+
+  <div class="card darken-1">
+    <div class="card-content">
+      <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de caja chica</span>
+      <?php if($this->sol == 0){ ?>
+      <div class="row">
+        <div class="col m6 s12">
+            <?php if($this->residente_comprobacion == 0){ ?>
+              <div class="input-field col s8">
+                <select id="sitio_res" name="sitio" required>
+                  <option value="" disabled selected>* Selecciona una opcion:</option>
+                  <option value="0">Oficina</option>
+                    <?php foreach ($this->sitios as $rl) { ?>
+                      <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+                    <?php } ?>
+                </select>
+                <label>Sitios</label>
+              </div>              
+            <?php }else{ ?>
+              <div class="input-field col s8">
+                  <?php foreach ($this->residente_comp as $key) { ?>
+                    <select id="sitio_res" name="sitios" >
+                        <option value="0" disabled>* Selecciona un Sitio</option>
+                        <?php if($key['id_sitio'] == "0"){?>
+                          <option value="oficina" selected>Oficina</option>
+                        <?php }else{ ?>
+                          <option value="oficina">Oficina</option>
+                        <?php } ?>
+                      <?php foreach ($this->sitios as $mar) { 
+                        if ($mar['id']==$key['id_sitio']) { ?>
+                                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                      <?php } if ($mar['id']!=$key['sitio_id']) { ?>
+                                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                      <?php } } ?>  
+                    </select>
+                    <label>Sitio:</label>
+                  <?php } ?>  
+              </div>
+            <?php } ?>
+            <div class="input-field col s4">
+              <a class="waves-effect waves-light btn" id="mod_gps">Agregar</a>
+            </div>
+        </div>
+        <div class="col m6 s12 text-center">
+          <?php if($this->id_residente == 1){ ?>
+            <a class="btn modal-trigger parpadea" href="#modal1">Solicitar Monto</a>
+          <?php }else{?>
+            <p>Debes seleccionar un sitio para poder crear una solicitud</p>
+          <?php } ?>
+        </div>
+      </div>
+    <?php }else{ ?>
+      <div class="row">
+        <div class="col m12 s12">
+          <table>
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Sitio</th>
+                <th>Monto solicitud</th>
+                <th>Monto actual</th>
+                <th>Autorización</th>
+                <th>Pago</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td><?php echo $this->sol_id; ?></td>
+                <td><?php echo $this->nombre_sitio; ?></td>
+
+                <?php 
+                  if($this->pago == 1){
+                    $total = $this->monto_anterior + $this->sol_monto;
+                  }else{
+                    $total = $this->monto_anterior;
+                  }
+
+                ?>
+
+                
+                <td style="font-weight: bold;">$<?php echo number_format($this->sol_monto, 2, '.', ','); ?></td>
+                <td style="font-weight: bold;">$<?php echo number_format($total, 2, '.', ','); ?></td>
+                <td>
+                  <?php if($this->autorizacion == 0){ ?>
+                    <div class="chip" id="inactivo_personal">
+                      <img src="/img/gris.jpg" >
+                        En proceso
+                    </div>
+                  <?php } ?>
+
+                  <?php if($this->autorizacion == 1){ ?>
+                    <div class="chip" id="inactivo_personal">
+                        <img src="/img/rojo.png" >
+                        Rechazada
+                    </div>
+                  <?php } ?>
+
+                  <?php if($this->autorizacion == 2){ ?>
+                    <div class="chip" id="activo_personal">
+                      <img src="/img/correct.png" >
+                      Autorizada
+                    </div>
+                  <?php } ?>
+                </td>
+                <td>
+                  <?php if($this->pago == 0){ ?>
+                    <div class="chip" id="inactivo_personal">
+                      <img src="/img/gris.jpg" >
+                        En proceso
+                    </div>
+                  <?php } ?>
+
+                  <?php if($this->pago == 1){ ?>
+                    <div class="chip" id="activo_personal">
+                      <img src="/img/correct.png" >
+                      Pagada
+                    </div>
+                  <?php } ?>
+
+                  <?php if($this->pago == 3){ ?>
+                    <div class="chip" id="inactivo_personal">
+                        <img src="/img/rojo.png" >
+                        Rechazada
+                    </div>
+                  <?php } ?>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <?php } ?>
+    </div>
+  </div>
+
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m8 s8">
+  		<ul>
+          	<li class="tab col s3 active_menu">
+            	<h4>En Proceso
+              		<div class="chip">
+                		<?php echo $this->enproceso; ?>
+              		</div>
+            	</h4>
+          	</li>
+  			<li class="tab col s3"><a href="/solicitud/comprobacionresidenteauditada/id/<?php echo $this->residente_id; ?>"><h4>Auditadas</h4></a></li>
+
+        <li class="tab col s3">
+          <a class="" href="/solicitud/comprobaciones/id/<?php echo $this->residente_id; ?>">
+            <h4>Comprobaciones</h4>
+          </a>
+        </li>
+
+  		</ul>
+  	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="row">
+			<div class="col m8 s6">
+        <!-- <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de comprobaciones pendientes</span> -->
+			</div>
+			<div class="col m4 s6">
+          <!-- <input placeholder="Placeholder" id="ver_monto" type="text" class="validate" > -->
+          <!-- <label for="ver_monto">First Name</label> -->
+
+        <div class="input-field col s12">
+          <input placeholder="Placeholder" disabled id="ver_monto" type="text" class="validate" style="font-weight: bold;">
+          <label for="ver_monto">Monto a Comprobar</label>
+        </div>
+
+			</div>
+		</div>
+
+    <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de comprobaciones pendientes</span>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id.</th>
+					<th>Razon social</th>	
+					<th>Servicio</th>
+					<th>No. Factura</th>
+					<th>Monto</th>	
+          <th>Regresar</th>
+					<th class="text-center">Detalle comprobacion</th>
+					
+				</tr> 
+			</thead>
+			<?php
+      $monto = 0;
+			if ($this->comprobacion) { 
+			foreach ($this->comprobacion as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h5><?php echo $usr['id']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['razon_social']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['nombre']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['factura']; ?></h5>
+					</td>
+					<td>
+						<h5 style="font-weight: bold;">
+							$<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?>
+              <?php $monto = $monto + $usr["monto_solicitud"]; ?>
+						</h5>
+					</td>
+          <td>
+            <?php if($usr['facturable'] == 1){ ?>
+              <a class="back_fact modal-trigger" style="color: red;" data-id="<?php echo $this->user; ?>" data-factura="<?php echo $usr['factura']; ?>" data-razon ="<?php echo $usr['razon_social']; ?>" data-servicio="<?php echo $usr['nombre']; ?>" data-monto="<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?>" data-facturable="<?php echo $usr['facturable']; ?>" data-fact="<?php echo $usr['id']; ?>" href="#modal3"><i class="material-icons">backspace</i></a>
+            <?php }else{ ?>
+             <a class="back_fact modal-trigger" style="color: red;" data-id="<?php echo $this->user; ?>" data-factura="<?php echo $usr['factura']; ?>" data-razon ="<?php echo $usr['razon_social']; ?>" data-servicio="<?php echo $usr['nombre']; ?>" data-monto="<?php echo number_format($usr["monto_solicitud"], 2, '.', ','); ?>" data-facturable="<?php echo $usr['facturable']; ?>" data-fact="<?php echo $usr['id']; ?>" href="#modal3"><i class="material-icons">backspace</i></a>
+            <?php } ?>
+          </td>
+
+          <?php if($this->pago == 1){ ?>
+            <td class="text-center">
+              <a href="/solicitud/comprobaciondetail/id/<?php echo $usr["id"] ?>/status/0/user/<?php echo $this->user; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+            </td>
+          <?php } ?>
+<!-- 					<td>
+						<a href="/solicitud/comprobacionedit/id/<?php echo $usr["id"]?>/user/<?php echo $this->user; ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+ -->
+<!-- 
+					<td>
+						<a class="delete" data-id="<?php echo $usr["id"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td> -->
+
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay comprobaciones pendientes.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+
+	</div>
+</div>
+
+  <input type="hidden" id="monto_comprobado" value="$<?php echo number_format($monto, 2, '.', ','); ?>">
+
+  <!-- Modal Structure -->
+  <div id="modal3" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Regresar Factura</span>
+      <form action="/comprobacion/requestchangefacturaback" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_ttv">
+      <div class="row" style="margin-top: 20px;"> 
+        <input type="hidden" name="ids" id="id_inp">
+        <input type="hidden" name="factura" id="fact_form">
+        <input type="hidden" name="servicio" id="serv_form">
+        <input type="hidden" name="monto" id="monto_form">
+        <input type="hidden" name="razon_social" id="raz_form">
+        <input type="hidden" name="residente" value="<?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?>">
+        <input type="hidden" name="facturable" id="facturable_form">
+        <input type="hidden" name="id_factura" id="id_factura">
+
+        <div class="col m12 s12">
+          <div class="input-field col s6">
+            <input placeholder="" id="factura_inp" name="factura_inp" value="" disabled type="text" class="validate">
+            <label for="factura_inp">Factura</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input placeholder="" id="servicio_inp" name="servicio_inp" disabled type="text" class="validate">
+            <label for="servicio_inp">Servicio</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input placeholder="" id="razon_inp" name="razon_inp" disabled type="text" class="validate">
+            <label for="razon_inp">Razon Social</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input placeholder="" id="monto_inp" name="monto_inp" disabled type="text" class="validate">
+            <label for="monto_inp">Monto</label>
+          </div>
+
+          <div class="input-field col s12">
+            <input placeholder="" id="motivo_inp" name="motivo_inp" type="text" class="validate">
+            <label for="motivo_inp">Motivo del regreso</label>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+    <div class="modal-footer">
+      <button type="button" id="file_TTV" class="btn">Confirmar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('select').formSelect();
+
+    var monto = document.getElementById("monto_comprobado").value;
+    document.getElementById("ver_monto").value=monto;
+
+  	});
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+		swal({
+			title: "Estas seguro de eliminar la comprobación ?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+
+            var request = $.ajax({
+                url:"/solicitud/requestdeletecomprobacion",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+
+
+     $("#add_solicitud").click(function(){
+      // alert("ok");
+      var validate = document.getElementById("sol_monto").value;
+      var sitio = document.getElementById("sitio_res").value;
+
+      if(validate == "" || sitio == "" ){
+            swal({
+              title: "Para continuar con la solicitud debes agregar un monto y un sitio",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });
+        setTimeout(solicitudsubmit, 1500);   
+      }
+    });
+
+    function solicitudsubmit() { document.getElementById("submit_solicitud").submit() }
+
+
+    $("#mod_gps").click(function(){
+
+            var residente = document.getElementById("sol_residente").value;
+            var sitio = document.getElementById("sitio_res").value;
+            // alert(sitio);
+      swal({
+        title: "Estas seguro de agregar el sitio?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, el personal se esta asignando a la cuadrilla!!", {
+          icon: "success",
+          buttons: false,
+        });
+
+
+                var request = $.ajax({
+                    url:"/comprobacion/requestchangesitioresidente",
+                    method:"POST",
+                    data: { residente : residente, sitio: sitio },
+                    processData: true,
+                    // contentType: false,
+                });
+    //-------------------end de ajax---------------------------
+
+    //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+    //-------------------end de respuesta ajax---------------------
+                 return false;
+
+
+        } else {
+          swal("El cambio de status fue cancelado!");
+        }
+      });
+
+    });
+
+
+     $("#add_newsolicitud").click(function(){
+      // alert("ok");
+      var validate = document.getElementById("sol_montonew").value;
+      var sitio = document.getElementById("sitionew").value;
+
+      if(validate == "" || sitionew == "" ){
+            swal({
+              title: "Para continuar con la solicitud debes agregar un monto y un sitio",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });
+        setTimeout(solicitudnewsubmit, 1500);   
+      }
+    });
+
+    function solicitudnewsubmit() { document.getElementById("submit_solicitudnew").submit() }
+
+
+    $(".back_fact").click(function(){
+      var id = $(this).data("id");
+      var razon = $(this).data("razon");
+      var monto = $(this).data("monto");
+      var servicio = $(this).data("servicio");
+      var factura = $(this).data("factura");
+      var facturable = $(this).data("facturable");
+      var fact =  $(this).data("fact");
+      // alert(id);
+
+      document.getElementById("id_inp").value = id;
+      document.getElementById("factura_inp").value = factura;
+      document.getElementById("servicio_inp").value = servicio;
+      document.getElementById("razon_inp").value = razon;
+      document.getElementById("monto_inp").value ="$"+monto;
+
+
+      document.getElementById("fact_form").value=factura;
+      document.getElementById("serv_form").value=servicio;
+      document.getElementById("monto_form").value=monto;
+      document.getElementById("raz_form").value=razon;
+      document.getElementById("facturable_form").value=facturable;
+      document.getElementById("id_factura").value = fact;
+    });
+
+
+    $("#file_TTV").click(function(){
+      var validate = document.getElementById("id_inp").value;
+      // alert(validar);
+      if(validate == ""){
+            swal({
+              title: "Para continuar debes agregar correctamente los datos",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+        setTimeout(submitefilettv, 1500);   
+      }
+    });
+
+    function submitefilettv() { document.getElementById("submit_file_ttv").submit() }
+
+
+</script>

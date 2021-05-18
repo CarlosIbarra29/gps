@@ -1,0 +1,62 @@
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/detallesproyecto/id/<?php echo $this->id; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->sitio; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Comentario</span>
+    </div>
+</div>
+
+<div class="row">
+	<form action="/panel/requestupdatecomentarios" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_estructura">
+		<input type="hidden" name="id" value="<?php echo $this->id; ?>">
+		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
+		<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+		<?php foreach ($this->comentarios as $key){ ?>
+		<input type="hidden" name="ids" value="<?php echo $key["id"]; ?>">
+			<div class="input-field col m12 s12">
+				<i class="material-icons prefix">mode_edit</i>
+				<input id="comentario" type="text" name="comentario" class="validate" value="<?php echo $key["comentarios"]; ?>" required>
+				<label for="comentario">* Comentario:</label>
+			</div>
+		<?php } ?>
+	</form>
+
+<div class="row">
+	<div class="col m12 s12 text-right">
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/panel/estructurasitios" class="waves-effect red waves-light btn">Cancelar</a>
+				<button id="addestructura" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+	</div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+    $("#addestructura").click(function(){
+        var name = document.getElementById("comentario").value;
+        if(name == ""){
+            swal({
+              title: "Para editar el comentario es necesario escribir algo de lo contrario el registro quedara en blanco!",
+            });
+        }else{
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_estructura").submit()
+    }
+</script>

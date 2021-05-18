@@ -1,0 +1,148 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/proveedores" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Proveedor</span>
+    </div>
+</div>
+
+
+<div class="col m12 s12">
+	<div class="white-box">
+		<form action="/panel/requestupdateproveedor" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_proveedor">
+			<?php foreach ($this->proveedor as $usr) { ?>
+			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="name" type="text" name="name" class="validate" value="<?php echo $usr["nombre_prov"]; ?>" required>
+			    <label for="name">* Nombres:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">phone</i>
+			    <input id="phone" type="text" name="phone" value="<?php echo $usr["telefono"]; ?>" class="validate">
+			    <label for="phone">* Telefono:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">chrome_reader_mode</i>
+			    <input id="rfc" type="text" name="rfc" value="<?php echo $usr["rfc"]; ?>" class="validate">
+			    <label for="rfc">RFC:</label>
+			</div>
+
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">attach_money</i>
+			    <input id="bank" type="text" name="datos_banco" value="<?php echo $usr["datos_banco"]; ?>" class="validate">
+			    <label for="bank">* Banco:</label>
+			</div>
+
+            <div class="input-field col m6 s12">
+                <i class="material-icons prefix">add_circle</i>
+                <input id="cuenta" type="text" value="<?php echo $usr["cuenta"]; ?>" name="cuenta" class="validate">
+                <label for="cuenta">Cuenta de banco</label>
+            </div>
+            <div class="input-field col m6 s12">
+                <i class="material-icons prefix">add_circle</i>
+                <input id="tarjeta" type="text" value="<?php echo $usr["tarjeta"]; ?>" name="tarjeta" class="validate">
+                <label for="tarjeta">No. Tarjeta </label>
+            </div>
+            <div class="input-field col m6 s12">
+                <i class="material-icons prefix">contact_mail</i>
+                <input id="email" type="text" value="<?php echo $usr["email"]; ?>" name="email" class="validate">
+                <label for="email">Correo Electronico</label>
+            </div>
+
+            <div class="input-field col m6 s12">
+                <i class="material-icons prefix">person_add</i>
+                <input id="titular" type="text" value="<?php echo $usr["titular"]; ?>" name="titular" class="validate">
+                <label for="titular">Titular</label>
+            </div>
+
+            <div class="input-field col m6 s12">
+                <i class="material-icons prefix">today</i>
+                <input id="periodo_pago" type="text" name="periodo_pago"  value="<?php echo $usr["periodo_pago"]; ?>" class="validate">
+                <label for="periodo_pago">Periodo de Pago</label>
+            </div>
+
+              <div class="input-field col m6 s12">
+                <select id="clasificacion" name="clasificacion">
+                  <option value="" disabled >* Selecciona una opción</option>
+                  <?php if ($usr["tipo_proveedor"] == 0){ ?>
+                      <option value="0" selected>Todos</option>
+                  <?php }else{ ?>
+                    <option value="0">Todos</option>
+                  <?php } ?>
+                  <?php if ($usr["tipo_proveedor"] == 1){ ?>
+                      <option value="1" selected>VEHICULOS Y LOGISTICA</option>
+                  <?php }else{ ?>
+                    <option value="1">VEHICULOS Y LOGISTICA</option>
+                  <?php } ?>
+                  <?php if ($usr["tipo_proveedor"] == 2){ ?>
+                      <option value="2" selected>COMPRAS</option>
+                  <?php }else{ ?>
+                    <option value="2">COMPRAS</option>
+                  <?php } ?>
+                  <?php if ($usr["tipo_proveedor"] == 3){ ?>
+                      <option value="3" selected>ADMINISTRACION</option>
+                  <?php }else{ ?>
+                    <option value="3">ADMINISTRACION</option>
+                  <?php } ?>
+                  <?php if ($usr["tipo_proveedor"] == 4){ ?>
+                      <option value="4" selected>OPERACIONES Y FABRICACION</option>
+                  <?php }else{ ?>
+                    <option value="4">OPERACIONES Y FABRICACION</option>
+                  <?php } ?>                  
+                  <?php if ($usr["tipo_proveedor"] == 5){ ?>
+                      <option value="5" selected>CAMPAMENTOS</option>
+                  <?php }else{ ?>
+                    <option value="5">CAMPAMENTOS</option>
+                  <?php } ?>                   
+                </select>
+                <label>Clasificación de los proveedores</label>
+              </div>
+			<?php } ?>
+			</form>
+
+
+			<div class="input-field col m12 s12 text-right">
+				<div class="row">
+					<a href="/panel/proveedores" class="waves-effect red waves-light btn">Cancelar</a>
+					<button id="addproveedores" class="waves-effect waves-light btn">Actualizar</button>
+				</div>	
+			</div>
+		</div>
+	
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $("#addproveedores").click(function(){
+       var bank = document.getElementById("bank").value;
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+
+        if(bank == "" || name == ""){
+            swal({
+              title: "Para editar un proveedor debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+             icon: "success",
+             buttons: false,
+            });  
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_proveedor").submit()
+    }
+</script>

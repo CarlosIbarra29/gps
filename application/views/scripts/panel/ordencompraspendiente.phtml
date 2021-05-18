@@ -1,0 +1,139 @@
+<style type="text/css">
+	.oculto{display: none;}
+</style>
+
+<div class="row"> 
+	<div class="col m12 s12 text-center" style="margin-top: 30px;">
+		<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Orden de Compra</span>
+	</div>
+</div>
+
+
+<div class="row" style="margin-top: 30px;">
+	<div class="col m6 s6"> 
+		<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes pendientes</span>
+	</div>
+
+	<div class="col m6 s6 text-right"> 
+		<a class="btn" href="/panel/ordencompras"><i class="material-icons right">assignment</i>Crear Solicitud</a>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Usuario</th>
+					<th>Sitio</th>		
+					
+					<th>Proveedor</th>
+					<th>Servicio</th>
+					<th>Monto</th>
+					<!-- <th></th> -->
+				</tr> 
+			</thead>
+			<?php
+			if ($this->sitios) { 
+			foreach ($this->sitios as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h5><?php echo $usr['name_user']; ?></h5>
+					</td>
+					<td>
+						<?php if($usr["nombre_sitio"] == "oficina"){ ?>
+							<h5>Oficina</h5>
+						<?php } ?>
+						<?php if($usr["nombre_sitio"] == "Stock Almacen"){ ?>
+							<h5>Stock almacen</h5>
+						<?php } ?>
+
+						<?php if($usr["nombre_sitio"] != "Stock Almacen" && $usr["nombre_sitio"] != "oficina"){ ?>
+							<h5><?php echo $usr["nombre_sitio"]; ?></h5>
+						<?php } ?>					
+						
+					</td>
+					<td>
+						<h5>
+							<?php echo $usr['name_proveedor']; ?>
+						</h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['nombre_servicio']; ?></h5>
+					</td>
+					<td>
+						<h5 style="font-weight: bold;">
+							$<?php echo number_format($usr['total'], 2, '.', ','); ?>
+						</h5>
+					</td>
+					<td>
+						<a href="/panel/ordencompraspasodos/id/<?php echo $usr["id_solicitud"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+
+					<td>
+						<a class="delete" data-id="<?php echo $usr["id_solicitud"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td>
+
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay solicitudes de compra.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+
+  $(".delete").click(function(){
+	swal({
+	  title: "Estas seguro de eliminar el registro?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});  
+  			var	id = $(this).data('id')
+            var request = $.ajax({
+                url:"/panel/requestdeletependiente",
+                method:"POST",
+                data: { id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+
+  });
+ </script>

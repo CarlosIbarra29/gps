@@ -1,0 +1,146 @@
+
+<div class="row" style="margin-top: 10px;">
+  <div class="col m12 s12">
+      <a href="/comprobacion/cajachicacontabilidad/status/<?php echo $this->status_documento; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+  </div>
+</div>
+
+
+<?php foreach ($this->info_solicitud as $key) {
+	$residente = $key['nombre_residente'];
+	$sitio = "Reembolso";
+	$total = $key['monto'];
+} ?>
+
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	          <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Reembolso</span>
+
+	          <div class="row">
+	          	<div class="col m6 s6" style="margin-top: 20px;">
+		            <span class="titulo">Residente:</span> <span><?php echo $residente; ?></span> <br>
+		            <span class="titulo">Concepto:</span> <span><?php echo $sitio; ?></span> <br>
+		            <span class="titulo">Monto:</span> <span style="font-size: 20px; color: red;">$<?php echo number_format($total, 2, '.', ','); ?></span><br>
+	          	</div>
+
+              <div class="col m6 s6 text-center">
+                <a class="btn" href="/comprobacion/pdfreembolso/id/<?php echo $this->id_solicitud; ?>/status/<?php echo $this->status_documento; ?>">PDF Reembolso</a>
+              </div>
+	          </div> 
+	        </div>
+      	</div>
+    </div>
+</div>
+
+
+<?php 
+$pago = 0;
+foreach ($this->info_solicitud as $key) {
+  $pago = $key['status_caja'];
+} 
+?>
+
+
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobante Reembolso</span>
+        
+          <?php if($pago != 1){ ?>
+            <div class="row">
+              <div class="col m2 12"></div>
+              <div class="col m8 s12" style="margin-top: 20px;">
+                <form action="/comprobacion/requestaddreembolso" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago"> 
+                  <input type="hidden" name="actual_id" value="<?php echo $this->id_solicitud; ?>">
+                  <input type="hidden" name="status" value="<?php echo $this->status_documento; ?>">
+                  <div class="file-field input-field col s8">
+                    <div class="btn">
+                      <span>Comprobante</span>
+                      <input type="file" name="url">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" name="file_val" id="validation_url" type="text">
+                    </div>
+                  </div>
+                </form>
+                <div class="input-field col s4 text-left">
+                  <a class="btn" id="add_pagochica"><i class="material-icons right">send</i>Agregar</a>
+                </div>
+              </div>
+              <div class="col m2 12"></div>
+            </div>
+
+        <?php } ?>
+
+        <div class="row">
+          <div class="col m12 s12">
+            <table class="table text-left table-hover" style="margin-top: 30px;">
+              <thead>
+                <tr>
+                  <th>Fecha reembolso</th>
+                  <th>Realizado por:</th> 
+                  <th>Monto</th>  
+                  <th>Descargar</th>
+                </tr> 
+              </thead>
+              <?php
+              $monto = 0;
+              if ($this->pago_comprobante) { 
+              foreach ($this->pago_comprobante as $usr) { ?>
+
+              <tbody>
+                <tr>
+                  <td>
+                    <h5><?php echo $usr['fecha_pago']; ?></h5>
+                  </td>
+                  <td>
+                    <h5><?php echo $usr['user_pago']; ?> </h5>
+                  </td>
+                  <td>
+                     <span style="font-weight: bold;">$<?php echo number_format($usr["monto"], 2, '.', ','); ?></span>
+                  </td>
+                  <td>
+                    <a title="Descargar Archivo" href="/<?php echo $usr["file_pago"]; ?>" download="<?php echo substr(strrchr($usr["file_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+                  </td>
+                </tr>
+                <?php } }else{ ?>
+                </tbody> 
+                <tbody>
+                    <tr>
+                        <td class="text-center" colspan="6"><h4>No hay un comprobante agregado.</h4></td>
+                    </tr>
+                </tbody>
+                          
+                <?php } ?>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+   $("#add_pagochica").click(function(){
+        var actividad = document.getElementById("validation_url").value;
+
+        if(actividad == ""){
+            swal({
+              title: "Para agregar el pago es necesario adjuntar el archivo",
+            });
+        }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+            setTimeout(submitpago, 1500);     
+        }
+    });
+
+    function submitpago() { document.getElementById("submit_pago").submit() }
+</script>

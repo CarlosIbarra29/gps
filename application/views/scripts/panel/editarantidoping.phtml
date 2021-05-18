@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content ">
+          <span class="card-title">Editar Informacion Antidoping</span>
+          <?php foreach ($this->personal as $key){ 
+          		$personal = $key['nombre'];
+          		$apellido_pa = $key['apellido_pa'];
+          		$apellido_ma = $key['apellido_ma'];
+          		$puesto = $key['puesto'];
+
+           } ?>
+          <p>
+          		Nombre del personal: <?php echo $apellido_pa ?> <?php echo $apellido_ma; ?> <?php echo $personal; ?>
+          </p>
+          <p>
+          		Puesto: <?php echo $puesto; ?>
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="row">
+  <form action="/panel/requestupdateinfoantidopingpersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_infoantidoping">
+    <input type="hidden" name="rol" value="6">
+    <?php foreach ($this->personal as $per) { ?>
+      <input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+    <?php } ?>
+
+    <?php foreach ($this->antidoping as $ant){ ?>
+      <div class="file-field input-field col m12 s12">
+        <div class="btn">
+          <span>Formato Antidoping</span>
+          <input type="file" name="url"> 
+          <input type="hidden" name="imahidden" value="<?php echo $ant["file"]; ?>"> 
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" id="validate_antid" type="text">
+        </div>
+      </div>
+
+      <div class="input-field col m6 s12">
+        <i class="material-icons prefix">group</i>
+        <input id="laboratorio" type="text" name="laboratorio" value="<?php echo $ant['laboratorio'] ?>" class="validate">
+        <label for="laboratorio">Laboratorio:</label>
+      </div>
+      <div class="input-field col m6 s12">
+        <i class="material-icons prefix">comment</i>
+        <input id="resultado_ant" type="text" name="resultado" value="<?php echo $ant['resultado'] ?>" class="validate">
+        <label for="resultado_ant">Resultado:</label>
+      </div>
+      <div class="input-field col m6 s12">
+        <i class="material-icons prefix">place</i>
+        <input id="folio_ant" type="text" name="folio" value="<?php echo $ant['folio'] ?>" class="validate">
+        <label for="folio_ant">Folio Documento:</label>
+      </div>
+      <div class="input-field col m6 s12">
+        <i class="material-icons prefix">today</i>
+        <input id="date_ant" type="text" name="fecha" value="<?php echo $ant['fecha'] ?>" class="validate">
+        <label for="date_ant">fecha: dd/mm/yyyy</label>
+      </div>
+    <?php } ?>
+  </form>
+</div>
+
+<div class="row">
+  <div class="col m12 s12 text-right">
+    <?php foreach ($this->personal as $per) { 
+      $user =  $per["id"];
+    } ?>
+
+    <a href="/panel/personaldetail/id/<?php echo $user; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+    <button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+  </div>  
+</div>
+
+<script type="text/javascript">
+  $("#addpersonal").click(function(){
+    var status = document.getElementById("date_ant").value;
+      if(status == ""){
+        swal({
+          title: "Para editar la informacion es necesario que agreges el resultado de antidoping",
+        });
+      }else{
+        swal("Felicidades!", "La información se edito de forma correcta!", "success");   
+        setTimeout(submitForm, 1500);     
+      }
+  });
+
+  function submitForm() {
+    document.getElementById("form_infoantidoping").submit()
+  } 
+</script>

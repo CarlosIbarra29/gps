@@ -1,0 +1,112 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/envios/solicitudespendientes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 15px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Envíos</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-left" style="margin-top: 15px;">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Paso 2</span>
+    </div>
+</div>
+
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/envios/requestaddenviossteptwo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
+			<input type="hidden" name="ids" value="<?php echo $this->id_envio; ?>">
+
+			<?php if($this->if_proyecto != 1){ ?>
+				<input type="hidden" id="proyecto" name="proyecto" value="0">
+			<?php }else{ ?>
+				<!-- <div class="row"> -->
+					<!-- <div class="col m6 s12"> -->
+						<div class="input-field col m6 s6">
+						    <select id="proyecto" name="proyecto" required>
+						      	<option value="" disabled selected>* Selecciona una opcion:</option>
+						      	<?php foreach ($this->proyectos as $rl) { ?>
+						      	<option value="<?php echo $rl["id"]; ?>">Id: <?php echo $rl["id"]; ?> Proyecto: <?php echo $rl["nombre_proyecto"]; ?></option>
+						      	<?php } ?>
+						    </select>
+						    <label>Tipo de Proyecto</label>
+						</div>
+					<!-- </div> -->
+				<!-- </div>		 -->
+			<?php } ?>
+
+        <div class="input-field col s6">
+        	<input placeholder="Lugar exacto de entrega" name="direccion" id="direccion" type="text" class="validate">
+        	<label for="direccion">* Dirección</label>
+        </div>
+        <div class="input-field col s6">
+        	<input placeholder="Contacto" id="contacto" name="contacto" type="text" class="validate">
+        	<label for="contacto">Contacto</label>
+        </div>
+        <div class="input-field col s6">
+        	<input placeholder="Peso en KG" id="peso" name="peso" type="number" class="validate">
+        	<label for="peso">* Peso aproximado</label>
+        </div>
+
+        <div class="input-field col s6">
+        	<input placeholder="" id="dimension" name="dimension" type="text" class="validate">
+        	<label for="dimension">* Dimensiones</label>
+        </div>
+
+        <div class="input-field col s6">
+        	<input placeholder="" id="descripcion" name="descripcion" type="text" class="validate">
+        	<label for="descripcion">* Descripción</label>
+        </div>
+
+        <div class="input-field col s6">
+        	<input placeholder="comentario" id="comentario" name="comentario" type="text" class="validate">
+        	<label for="comentario">Comentario</label>
+        </div>
+       </form> 
+	</div>
+
+	<div class="row">
+		<div class="col m6 s6">
+			
+		</div>
+
+		<div class="col m6 s6 text-right">
+			<a class="btn" href="/envios/editarpasouno/id/<?php echo $this->id_envio; ?>" id="send_step">Editar paso 1</a>
+			<a class="btn green" id="finish"><i class="material-icons right">send</i>Terminar envio</a>
+		</div>
+	</div>
+
+</div>
+
+
+
+<script type="text/javascript">
+	$("#finish").click(function(){
+		var proyecto = document.getElementById("proyecto").value;
+		var direccion = document.getElementById("direccion").value;
+		var peso = document.getElementById("peso").value;
+		var dimension = document.getElementById("dimension").value;
+		var descripcion = document.getElementById("descripcion").vale;
+		var comentario = document.getElementById("comentario").value;
+
+	    if(proyecto == "" || direccion == "" || peso == "" || dimension == "" || descripcion == ""){
+	        swal({
+	            title: "Para continuar debes agregar la información marcada con un '*' ",
+	        });
+	    }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	            icon: "success",
+	            buttons: false,
+	        }); 
+	        setTimeout(submitForm, 1500);     
+	    }		
+	});
+
+	function submitForm() { document.getElementById("submit_gasolina").submit() }
+</script>

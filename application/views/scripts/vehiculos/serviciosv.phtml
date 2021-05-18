@@ -1,0 +1,512 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+ <style type="text/css">
+ 	.oculto{
+ 		display: none;
+ 	}
+
+ </style>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6"> </div>
+	<div class="col m6 s6 text-right">
+		<a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Servicio</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Servicios Vehículos
+	</div>
+</div>
+
+
+<!-- Modal Structure 1 -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12" style="margin-top: 10px;">
+      		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Servicio</span>
+    	</div>
+
+    	<div class="col m12 s12">
+    		<form action="/vehiculos/requesataddservicio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitservicio">
+
+    			<div class="row">
+	    			<div class="input-field col m12 s12">
+	    				<i class="material-icons prefix">assignment</i>
+	    				<input id="names" type="text" name="names" class="validate" required>
+	            		<label for="names">* Nombre del Servicio:</label>
+	          		</div>
+				</div>
+
+    			<div id="opuno" class="row">
+	    			<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="namecuno" type="text" name="namecuno" class="validate" required>
+	            		<label for="namecuno">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statusuno" name="statusuno" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato1: </label>
+					</div>
+				</div>
+				
+				<div id="ifuno" class="row">
+	    			<div class="col m12 s12 text-right">
+	    				<a id="addcampo">Agregar Campo</a>
+	    			</div>
+				</div>
+				
+				<div id="opdos" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="namecdos" type="text" name="namecdos" class="validate" required>
+	            		<label for="namecdos">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statusdos" name="statusdos" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato2: </label>
+					</div>
+				</div>
+
+				<div id="ifdos" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampo">Quitar Campo</a>
+	    			</div>
+	    			<div class="col m6 s6 text-right">
+	    				<a id="addcampod">Agregar Campo</a>
+	    			</div>
+				</div>
+
+				<div id="optres" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="namectres" type="text" name="namectres" class="validate" required>
+	            		<label for="namectres">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statustres" name="statustres" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato3: </label>
+					</div>
+				</div>
+
+				<div id="iftres" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampod">Quitar Campo</a>
+	    			</div>
+	    			<div class="col m6 s6 text-right">
+	    				<a id="addcampot">Agregar Campo</a>
+	    			</div>
+				</div>
+
+				<div id="opcuatro" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="nameccuatro" type="text" name="nameccuatro" class="validate" required>
+	            		<label for="nameccuatro">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statuscuatro" name="statuscuatro" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato4: </label>
+					</div>
+				</div>
+
+				<div id="ifcuatro" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampot">Quitar Campo</a>
+	    			</div>
+	    			<div class="col m6 s6 text-right">
+	    				<a id="addcampocu">Agregar Campo</a>
+	    			</div>
+				</div>
+
+				<div id="opcinco" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="nameccinco" type="text" name="nameccinco" class="validate" required>
+	            		<label for="nameccinco">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statuscinco" name="statuscinco" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato5: </label>
+					</div>
+				</div>
+
+				<div id="ifcinco" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampocu">Quitar Campo</a>
+	    			</div>
+	    			<div class="col m6 s6 text-right">
+	    				<a id="addcampoci">Agregar Campo</a>
+	    			</div>
+				</div>
+
+				<div id="opseis" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="namecseis" type="text" name="namecseis" class="validate" required>
+	            		<label for="namecseis">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statusseis" name="statusseis" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato6: </label>
+					</div>
+				</div>
+
+				<div id="ifseis" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampoci">Quitar Campo</a>
+	    			</div>
+	    			<div class="col m6 s6 text-right">
+	    				<a id="addcampose">Agregar Campo</a>
+	    			</div>
+				</div>
+
+				<div id="opsiete" class="row oculto">
+    				<div class="input-field col m6 s6">
+	    				<i class="material-icons prefix">add_circle</i>
+	    				<input id="namecsiete" type="text" name="namecsiete" class="validate" required>
+	            		<label for="namecsiete">* Nombre Campo:</label>
+	          		</div>
+	          		<div class="input-field col m6 s6">
+	          			<select id="statussiete" name="statussiete" required>
+	          				<option value="" disabled selected>Selecciona una opción: </option>
+	          				<option value="1">Imagen</option>
+	          				<option value="2">Texto</option>
+	          				<option value="3">Archivo</option>
+						</select>
+						<label>Tipo de dato7: </label>
+					</div>
+				</div>
+
+				<div id="ifsiete" class="row oculto">
+					<div class="col m6 s6 text-left">
+	    				<a id="delcampose">Quitar Campo</a>
+	    			</div>
+				</div>
+
+			</form>
+    	</div>
+	</div>
+
+	<div class="modal-footer">	
+		<button class=" btn" id="addservicio">Guardar</button>	
+    	<button  class="modal-close red btn">Cerrar</button>
+  	</div>
+</div>
+<!-- End Modal -->
+
+<div class="row">
+	<div class="col m8 s12">
+		<h3>Lista de Servicios</h3>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id Servicio</th>	
+					<th>Nombre Servicio</th>	
+					<th>Editar</th>
+					<th>Eliminar</th>
+				</tr> 
+			</thead>
+			<?php
+			if ($this->servicio) { 
+				foreach ($this->servicio as $serv) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $serv["id"]; ?></td>
+							<td><?php echo $serv["nombre_servicio"]; ?></td>
+							<td>
+								<a href="/vehiculos/servedit/id/<?php echo $serv["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+							</td>
+						<td>
+							<a class="delete" data-id="<?php echo $serv["id"]; ?>" data-nombre="<?php echo $serv["nombre_servicio"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+						</td>
+						</tr>
+				<?php } }else{ ?>
+				    </tbody> 
+				    <tbody>
+				        <tr>
+				            <td class="text-center" colspan="6"><h3>No hay servicios registrados.</h3></td>
+				        </tr>
+				    </tbody>    
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+	$("#addservicio").click(function(){
+	  	var names = document.getElementById("names").value;
+	  	var namecuno = document.getElementById("namecuno").value;
+	  	var statusuno = document.getElementById("statusuno").value;
+
+            if(names == "" || namecuno == "" || statusuno == ""){
+                swal({
+                  title: "Agrega un nombre de servicio y por lo menos un campo(*)",
+                });
+            }else{
+                 swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+                setTimeout(submitForm, 500);     
+            }
+    });
+
+    function submitForm() {
+        
+        document.getElementById("submitservicio").submit()
+    
+    } // AGREGAR SERVICIO
+        
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+		swal({
+			title: "Estas seguro de eliminar el servicio "+nombre+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("¡Bien! El servicio "+nombre+" fue eliminado!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/vehiculos/requestdeleteserviciov",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+    // Añadir Campos
+	    $("#addcampo").click(function(){
+	    	$("#opdos").show();
+	    	$("#ifuno").hide();
+	    	$("#ifdos").show();
+	    });
+
+	    $("#delcampo").click(function(){
+	    	$("#opdos").hide();
+	    	$("#ifuno").show();
+	    	$("#ifdos").hide();
+	    	document.getElementById('namecdos').value='';
+	    	document.getElementById('statusdos').value='';
+	    });
+
+	    $("#addcampod").click(function(){
+	    	$("#optres").show();
+	    	$("#ifdos").hide();
+	    	$("#iftres").show();
+	    });
+
+	    $("#delcampod").click(function(){
+	    	$("#optres").hide();
+	    	$("#ifdos").show();
+	    	$("#iftres").hide();
+	    	document.getElementById('namectres').value='';
+	    	document.getElementById('statustres').value='';
+	    });
+
+	    $("#addcampot").click(function(){
+	    	$("#opcuatro").show();
+	    	$("#iftres").hide();
+	    	$("#ifcuatro").show();
+	    });
+
+	    $("#delcampot").click(function(){
+	    	$("#opcuatro").hide();
+	    	$("#iftres").show();
+	    	$("#ifcuatro").hide();
+	    	document.getElementById('nameccuatro').value='';
+	    	document.getElementById('statuscuatro').value='';
+	    });
+
+	    $("#addcampocu").click(function(){
+	    	$("#opcinco").show();
+	    	$("#ifcuatro").hide();
+	    	$("#ifcinco").show();
+	    });
+
+	    $("#delcampocu").click(function(){
+	    	$("#opcinco").hide();
+	    	$("#ifcuatro").show();
+	    	$("#ifcinco").hide();
+	    	document.getElementById('nameccinco').value='';
+	    	document.getElementById('statuscinco').value='';
+	    });
+
+	    $("#addcampoci").click(function(){
+	    	$("#opseis").show();
+	    	$("#ifcinco").hide();
+	    	$("#ifseis").show();
+	    });
+
+	    $("#delcampoci").click(function(){
+	    	$("#opseis").hide();
+	    	$("#ifcinco").show();
+	    	$("#ifseis").hide();
+	    	document.getElementById('namecseis').value='';
+	    	document.getElementById('statusseis').value='';
+	    });
+
+	    $("#addcampose").click(function(){
+	    	$("#opsiete").show();
+	    	$("#ifseis").hide();
+	    	$("#ifsiete").show();
+	    });
+
+	    $("#delcampose").click(function(){
+	    	$("#opsiete").hide();
+	    	$("#ifseis").show();
+	    	$("#ifsiete").hide();
+	    	document.getElementById('namecsiete').value='';
+	    	document.getElementById('statussiete').value='';
+	    });
+	// End Añadir Campos
+
+</script>
+

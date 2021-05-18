@@ -1,0 +1,69 @@
+<?php $session = new Zend_Session_Namespace("current_session"); 
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PANEL ADMINISTRADOR: NET STORE</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+
+</head>
+<!-- NAVBAR -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/index/login">PANEL: NET STORE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/panel/flores">Flores</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/productos">Productos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/productosvendidos">Vendidos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/recomendaciones">Catalogo</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/panel/subrecomendaciones">Subrecomendaciones</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/tarjeta">Tarjeta</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/temporada">Temporada</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/usuarios">Usuarios</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/pedidos">Pedidos</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/panel/orden">Gestión de orden</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="/index/logout">Cerrar sesion</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- NAVBAR -->
+<!-- CONTENIDO -->
+<div class="container">
+<?php echo $this->layout()->content; ?>
+</div>
+<!-- CONTENIDO -->
+</body>
+</html>
+

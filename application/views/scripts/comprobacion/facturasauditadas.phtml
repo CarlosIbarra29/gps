@@ -1,0 +1,260 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/solicitud/generarcombrobaciones" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 30px;">
+  	<div class="col m12 s12 text-center">
+    	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Facturas Auditadas</span>
+  	</div>
+
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="row">
+			<div class="col m8 s8">
+				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de facturas</span>
+			</div>
+			<div class="col m4 s4 text-right">
+			  	<div class="input-field col s12">
+			    	<select id="search_tipo">
+			    		<?php if($this->op_status == 0){ ?>
+				      		<option value="0" selected>Todos</option>
+				      		<option value="1">Leídos</option>
+				      		<option value="2">No leídos</option>
+			    		<?php } ?>
+			    		<?php if($this->op_status == 1){ ?>
+				      		<option value="0">Todos</option>
+				      		<option value="1" selected>Leídos</option>
+				      		<option value="2">No leídos</option>
+			    		<?php } ?>
+			    		<?php if($this->op_status == 2){ ?>
+				      		<option value="0">Todos</option>
+				      		<option value="1">Leídos</option>
+				      		<option value="2" selected>No leídos</option>
+			    		<?php } ?>
+
+
+			    	</select>
+			  	</div>
+			</div>
+		</div>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>Factura</th>
+					<th>Razon Social</th>
+					<th>Servicio</th>		
+					<th>Residente</th>
+					<th>Monto</th>
+					<th>Motivo</th>
+				</tr> 
+			</thead>
+			<?php
+			if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h5><?php echo $usr['id']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['factura']; ?> </h5>
+					</td>
+					<td>
+						<h5>
+							<?php echo $usr['razon_social']; ?>
+						</h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['servicio']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['residente']; ?></h5>
+					</td>
+					<td>
+						<h5 style="font-weight: bold;">
+							<?php echo $usr['monto']; ?>
+						</h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['motivo_inp']; ?></h5>
+					</td>
+
+					<td>
+						<?php if($usr['status_back'] == 0){?>
+					    	<p>
+						      <label>
+						        <input type="checkbox" class="filled-in leido" data-id="<?php echo $usr['id']; ?>" />
+						        <span></span>
+						      </label>
+						    </p>
+						<?php }else{ ?>
+						    <p>
+						      <label>
+						        <input type="checkbox" disabled checked="checked" />
+						        <span></span>
+						      </label>
+						    </p>
+						<?php } ?>
+
+					</td>
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay Facturas pendientes.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguiente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<script type="text/javascript">
+	$(".leido").click(function(){
+		var id =$(this).data('id');
+		swal({
+			title: "El registro se marcara como leido",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+		.then((willDelete) => {
+	  		if (willDelete) {
+	    		swal("Bien! La solicitud se elimino!", {
+	      			icon: "success",
+	    		});
+
+            	var request = $.ajax({
+	                url:"/comprobacion/requestupdatebackfacturaleida",
+	                method:"POST",
+	                data: { id : id },
+	                processData: true,
+            	});
+
+		        request.done(function(response) {
+		            console.log(response);
+		            window.location.reload(true);
+		        });
+             	return false;
+	  		} else {
+	    		swal("La accion fue cancelada!");
+	  		}
+		});
+
+	});
+
+	$('#search_tipo').on('change', function() {
+		var value = this.value;
+
+		if(value == 0){
+			window.location.href = "/comprobacion/facturasauditadas/op/0";
+		}
+
+		if(value == 1){
+			window.location.href = "/comprobacion/facturasauditadas/op/1";
+		}
+		if(value == 2){
+			window.location.href = "/comprobacion/facturasauditadas/op/2";
+		}
+	});
+
+</script>

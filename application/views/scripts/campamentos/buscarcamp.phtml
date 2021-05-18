@@ -1,0 +1,641 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+?>
+<?php 
+	$links = "";
+	$url="";
+	if($this->option ==1){
+		$name=$this->name_sitio;
+		if($this->total== 1){
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&sitio={$name}\">1</a></li>";
+		}else{
+			if ($this->total >= 1 && $pagina <= $this->total) {
+
+				if (isset($_GET['pagina']) && $this->actpage != 1) {
+					$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&sitio={$name}\">1</a></li>";
+				}else{
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&sitio={$name}\">1</a></li>";
+				}
+
+				$i = max(2, $pagina - 3);
+				if ($i > 2)
+					$links .= " <li><a>...</a></li> ";
+				for (; $i < min($pagina + 3, $this->total); $i++) {
+					if($i ==$this->actpage){
+						$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&sitio={$name}\">{$i}</a></li>";
+					}else{
+						$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&sitio={$name}\">{$i}</a></li>";
+					}
+				}
+				if ($i != $this->total)
+					$links .= " <li><a>...</a></li> ";
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&sitio={$name}\">{$this->total}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&sitio={$name}\">{$this->total}</a></li>";
+				}
+
+			}           
+		}
+	}
+
+
+	if($this->option == 2){
+		$name=$this->status_c;
+		if($this->total== 1){
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+		}else{
+			if ($this->total >= 1 && $pagina <= $this->total) {
+
+				if (isset($_GET['pagina']) && $this->actpage != 1) {
+					$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+				}else{
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+				}
+
+				$i = max(2, $pagina - 3);
+				if ($i > 2)
+					$links .= " <li><a>...</a></li> ";
+				for (; $i < min($pagina + 3, $this->total); $i++) {
+					if($i ==$this->actpage){
+						$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&status={$name}\">{$i}</a></li>";
+					}else{
+						$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&status={$name}\">{$i}</a></li>";
+					}
+				}
+				if ($i != $this->total)
+					$links .= " <li><a>...</a></li> ";
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&status={$name}\">{$this->total}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&status={$name}\">{$this->total}</a></li>";
+				}
+
+			}           
+		}
+	}
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-right">
+        <a href="/campamentos/statusc" class="waves-effect green btn modal-trigger">Status</a>
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Crear Campamento </a>    
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Campamentos
+	</div>
+</div>
+<!-- End botones -->
+
+
+<!-- Buscador -->
+<div class="row">
+	<div class="col m2 s12">
+        <a href="/campamentos/addcampamento">Mostrar todos</a>
+    </div>
+    <div class="input-field col m4 s12">
+        <select id="mySelect">
+            <?php if($this->option == 1){ ?>
+            <option value="1" selected>Sitio</option>
+            <option value="2">Status</option>
+            <?php } ?>
+
+            <?php if($this->option == 2){ ?>
+              <option value="1">Sitio</option>
+              <option value="2" selected>Status</option>
+            <?php } ?>
+        </select>
+        <label>Buscador</label>
+    </div>
+    <?php if($this->option == 1){ ?>
+    	<div class="col m4 s12" id="buscar_sitio">
+			<form action="/campamentos/buscarcamp" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<input placeholder="Ingresa nombre sitio" name="sitio" value="<?php echo $this->name_sitio; ?>" id="first_name" type="text" class="validate" required>
+					<label for="first_name">Buscar por Sitio</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>
+			</form>
+		</div>
+
+    <?php }else{ ?>
+    	<div class="col m4 s12 oculto" id="buscar_sitio">
+			<form action="/campamentos/buscarcamp" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<input placeholder="Ingresa nombre sitio" name="sitio" id="first_name" type="text" class="validate" required>
+					<label for="first_name">Buscar por Sitio</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>
+			</form>
+		</div>
+    <?php } ?>
+
+    <?php if($this->option == 2){ ?>
+    	<div class="col m4 s12" id="buscar_status">
+			<form action="/campamentos/buscarcamp" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<select id="status" name="status" required>
+						<?php if($this->status_c == 1){ ?>
+							   	<option value="1" selected>Por Rentar </option>
+								<option value="2">En Renta</option>
+								<option value="3">Cerrado</option>
+				    		<?php }?>
+				    		<?php if($this->status_c == 2){ ?>
+							    <option value="1">Por Rentar</option>
+								<option value="2" selected>En Renta</option>
+								<option value="3">Cerrado</option>
+				    		<?php } ?>
+				    		<?php if($this->status_c == 3){ ?>
+							    <option value="1">Por Rentar</option>
+								<option value="2">En Renta</option>
+								<option value="3" selected>Cerrado</option>
+				    		<?php } ?>
+					</select>
+					<label>Status Campamento</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>	
+			</form> 
+		</div>
+    <?php }else{ ?>
+    	<div class="col m4 s12 oculto" id="buscar_status">
+			<form action="/campamentos/buscarcamp" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<select id="status" name="status" required>
+						<option value="" disabled selected>Selecciona una opcion</option>
+						<option value="1">Por Rentar</option>
+						<option value="2">En Renta</option>
+						<option value="3">Cerrado</option>
+					</select>
+					<label>Status Campamento</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>	
+			</form> 
+		</div>
+    <?php } ?>
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+<!-- End Buscador -->
+
+<!-- Inicio Modal Insertar Campamentos -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Campamento
+		</div>
+		<div class="col m12 s12">
+			<form action="/campamentos/requestaddcamp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cam">
+				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Contrato</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+
+					<div class="input-field col m6 s12">
+					    <select id="responsable" name="responsable" required>
+					      	<option value="0" disabled selected>* Selecciona una opcion:</option>
+					      	<?php foreach ($this->per as $personal) { ?>
+					      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>Responsable: </label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<select id="sitio" name="sitio" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->sitios as $si) { ?>
+								<option value="<?php echo $si["id"]; ?>"><?php echo $si['nombre']; ?> - <?php echo $si['id_cliente']; ?></option>
+							<?php } ?>
+						</select>
+						<label>Sitio</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<select id="proyecto" name="proyecto" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->proyectos as $pro) { ?>
+								<option value="<?php echo $pro["id"]; ?>"><?php echo $pro["nombre_proyecto"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Proyecto</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">store</i>
+						<select id="statusc" name="statusc" required>
+							<option value="" disabled selected>* Selecciona una opcion:</option>
+							<option value="1">Por Rentar</option>
+							<option value="2">En Renta</option>
+							<option value="3">Cerrado</option>
+						</select>
+						<label>Status Campamento</label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="fechasol" type="date" name="fechasol" class="validate">
+						<label for="fechasol">* Fecha Solicitud: dd/mm/yyyy</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="fechair" type="date" name="fechair" class="validate">
+						<label for="fechair">* Inicio Renta: dd/mm/yyyy</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="fechafr" type="date" name="fechafr" class="validate">
+						<label for="fechafr">* Fin Renta: dd/mm/yyyy</label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">monetization_on</i>
+						<input id="monto" type="text" name="monto" class="validanumeros" required>
+						<label for="monto">* Monto Renta:</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">attach_money</i>
+						<select id="pagos" name="pagos" required>
+							<option value="" disabled selected>Selecciona una opcion</option>
+							<option value="0">Incluidos en Renta</option>
+							<option value="1">Fuera de Renta</option>
+						</select>
+						<label>Pago de Servicios</label>
+					</div>
+					
+  					<div class="input-field col m6 s12 text-center ">
+						<div>
+							<label>Pago de Depósito</label>
+						</div>
+						<div>
+							<div class="switch">
+								<label>
+									No Aplica
+									<input type="checkbox" id="pagod" name="pagod">
+									<span class="lever"></span>
+								     Aplica
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="input-field col m6 s12 text-center "></div>
+					<!-- <div class="input-field col m6 s12">
+						<i class="material-icons prefix">payment</i>
+						<select id="pagod" name="pagod" required>
+							<option value="" disabled selected>Selecciona una opcion</option>
+							<option value="0">Aplica</option>
+							<option value="1">No Aplica</option>
+						</select>
+						<label>Pago Deposito</label>
+					</div> -->
+
+					<div id="dep" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">monetization_on</i>
+						<input id="deposito" type="text" name="deposito" class="validanumeros" required>
+						<label for="deposito">* Depósito:</label>
+					</div>
+
+					<div id="sta" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">store</i>
+						<select id="statusa" name="statusa" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->campamentos_s as $cs) { ?>
+								<option value="<?php echo $cs["id_status"]; ?>"><?php echo $cs["nombre"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Status Depósito</label>
+					</div>
+
+					<div id="cond" class="input-field col m12 s12 oculto">
+						<i class="material-icons prefix">description</i>
+						<input id="condiciones" type="text" name="condiciones" class="validate" required>
+						<label for="condiciones">Condiciones Devolución Depósito: </label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">perm_identity</i>
+						<input id="nombrear" type="text" name="nombrear" class="validate" required>
+						<label for="nombrear">* Nombre Arrendador: </label>
+					</div>
+
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">phone_iphone</i>
+						<input id="tel" type="text" name="tel" class="validanumeros" required>
+						<label for="tel">* Telefono Arrendador: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">description</i>
+						<input id="comen" type="text" name="comen" class="validate" required>
+						<label for="comen">Comentarios Generales: </label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		</form>
+		<button class=" btn" id="addcam">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+<!-- End Campamentos -->
+
+
+
+<!-- Table Campamentos-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Campamentos
+		</div>
+		<div class="col m6 s6 text-right">
+			<a href="/campamentos/excelcam/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Sitio</th>
+					<th>Nombre</th>
+					<th>Responsable</th>
+					<th>Status</th>
+					<th>Deposito</th>
+					<th>Inicio Renta</th>
+					<th>Fin Renta</th>
+					<th></th>
+					<th></th>
+					<th></th>	
+				</tr> 
+			</thead>
+			
+			<?php if ($this->paginator ) {
+				foreach ($this->paginator as $camp) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $camp["id_cliente"]; ?></td>
+							<td><?php echo $camp["nombre"]; ?></td>
+							<td><?php echo $camp["nombrea"]; ?> <?php echo $camp["apellido_pa"]; ?> </td>
+							<td>
+								<?php if($camp['status_campamento'] == 1){ ?>
+									<div class="chip" id="disponible">
+										<img src="/img/correct.png" >
+										Por Rentar
+									</div>
+								<?php } ?>
+
+								<?php if($camp['status_campamento'] == 2){ ?>
+									<div class="chip" id="ocupado">
+										<img src="/img/amarillo.png" >
+										Renta
+									</div>
+								<?php } ?>
+
+								<?php if($camp['status_campamento'] == 3){ ?>
+									<div class="chip" id="baja">
+										<img src="/img/rojo.png" >
+										Cerrado
+									</div>
+								<?php } ?>
+							</td>
+							<td>
+								<?php if($camp['deposito'] == 0){ ?>
+									Sin Deposito Previo
+								<?php } else{ ?>
+									$<?php echo $camp["deposito"]; ?>
+								<?php }  ?>
+							</td>
+							<td><?php echo $camp["inicio_renta"]; ?></td>
+							<td><?php echo $camp["fin_renta"]; ?></td>
+							
+							
+							<td>
+								<a href="/campamentos/campdetail/id/<?php echo $camp["id_campamento"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+							</td>
+							<td>
+								<a href="/campamentos/campedit/id/<?php echo $camp["id_campamento"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+							</td>
+							<td>
+								<a class="delete" data-id="<?php echo $camp["id_campamento"]; ?>" data-nombre="<?php echo $camp["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No se encontrarón campamentos</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table Campamentos -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+						<?php if($this->option == 1){ ?>
+                        	<li class="page-item">
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&sitio=<?php echo $this->name_sitio ?>"> Anterior </a>
+                        	</li>
+                        <?php } ?>
+                        <?php if($this->option == 2){ ?>
+                        	<li class="page-item">
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&status=<?php echo $this->status_c ?>"> Anterior </a>
+                        	</li>
+                        <?php } ?>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<?php if($this->option == 1){ ?>
+								<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&sitio=<?php echo $this->name_sitio ?>">Siguiente</a>
+		                    <?php } ?>
+		                    <?php if($this->option == 2){ ?>
+		                    	<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&status=<?php echo $this->status_c ?>">Siguiente</a>
+		                    <?php } ?>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+
+		$('#pagod').on('change',function(){
+			if (this.checked) {
+				$("#dep").show();
+				$("#sta").show();
+				$("#cond").show();
+			} else {
+				$("#dep").hide();
+				$("#sta").hide();
+				$("#cond").hide();
+				document.getElementById('deposito').value="";
+				document.getElementById('statusa').value=0;
+				document.getElementById('condiciones').value="";
+			}  
+		})
+ 	});
+
+ 	// Inicio Add epp
+
+	$("#addcam").click(function(){
+		var monto = document.getElementById("monto").value;
+		var responsable = document.getElementById("responsable").value;
+		var statusc = document.getElementById("statusc").value;
+
+		if(monto == "" || responsable == "" || statusc == 0){
+			swal({
+				title: "Para agregar un vehículo, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+	});
+
+	function submitForm() {
+		document.getElementById("submit_cam").submit()
+	}
+	// End Add epp
+
+	//Inicio Delete Ajax
+	$(".delete").click(function(){
+		id=$(this).data('id');
+		nombre=$(this).data('nombre');
+		swal({
+			title: "¿Estas seguro de eliminar el campamento del sitio "+nombre+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espera un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var request = $.ajax({
+					url:"/campamentos/requestdeletecamp",
+					method:"POST",
+					data: { id : id },
+					processData: true,
+				});
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+				request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+			return false;
+
+			} else {
+				swal("La accion fue cancelada!");
+			}
+		});
+	});
+	// End Delete Ajax
+
+
+	//Inicio Selected
+	$('#mySelect').on('change', function() {
+		var value = $(this).val();
+		if(value==1){
+			$("#buscar_sitio").show();
+			$("#buscar_status").hide();
+		}
+
+		if(value==2){
+			$("#buscar_sitio").hide();
+			$("#buscar_status").show();
+		}
+	});
+	// End Selected
+
+</script>
+

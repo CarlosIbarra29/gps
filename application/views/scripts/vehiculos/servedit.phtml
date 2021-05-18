@@ -1,0 +1,767 @@
+<style type="text/css">
+ 	.oculto{ display: none; }
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/vehiculos/serviciosv"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+</div>
+<?php foreach ($this->serviciosV as $servicio) { ?>
+<div class="row text-center">
+  <div class="col m12 s12 " style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Servicio
+  </div>
+  <div class="col m12 s12">
+		<h2> <?php echo $servicio["nombre_servicio"]; ?></h2>
+	</div>
+</div>
+<?php } ?>
+
+		<div class="col m12 s12" style="margin-top: 12px;">
+			<div class="white-box">
+				<form action="/vehiculos/requestupdateservicio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitups">
+				<?php foreach ($this->serviciosV as $servicio) { ?> 
+					
+					<input type="hidden" name="ids" value="<?php echo $servicio["id"]; ?>">
+
+					<div class="row">
+		    			<div class="input-field col m12 s12">
+		    				<i class="material-icons prefix">assignment</i>
+		    				<input id="names" type="text" name="names" class="validate" value="<?php echo $servicio["nombre_servicio"]; ?>" required>
+		            		<label for="names">* Nombre del Servicio:</label>
+		          		</div>
+					</div>
+
+					<?php if ($servicio['status_uno'] == 1) {?>
+						<div id="opuno" class="row">
+			    			<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecuno" type="text" name="namecuno" value="<?php echo $servicio["evidencia_uno"]; ?>" class="validate" required>
+			            		<label for="namecuno">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_uno'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+			          				<select id="statusuno" name="statusuno" required>
+			          					<option value="" disabled >Selecciona una opción: </option>
+			          					<option value="1" selected>Imagen</option>
+			          					<option value="2">Texto</option>
+			          					<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato1: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_uno'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+			          				<select id="statusuno" name="statusuno" required>
+			          					<option value="" disabled >Selecciona una opción: </option>
+			          					<option value="1">Imagen</option>
+			          					<option value="2" selected>Texto</option>
+			          					<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato1: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_uno'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+			          				<select id="statusuno" name="statusuno" required>
+			          					<option value="" disabled >Selecciona una opción: </option>
+			          					<option value="1">Imagen</option>
+			          					<option value="2">Texto</option>
+			          					<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato1: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opuno" class="row">
+			    			<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecuno" type="text" name="namecuno" class="validate" required>
+			            		<label for="namecuno">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statusuno" name="statusuno" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato1: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+					
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 0 && $servicio['status_tres'] == 0 && $servicio['status_cuatro'] == 0 && $servicio['status_cinco'] == 0 && $servicio['status_seis'] == 0 && $servicio['status_siete'] == 0 ) {?>
+						<div id="ifuno" class="row">
+			    			<div class="col m12 s12 text-right">
+			    				<a id="addcampo">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } else { ?>
+						<div id="ifuno" class="row oculto">
+			    			<div class="col m12 s12 text-right">
+			    				<a id="addcampo">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+
+					<?php if ($servicio['status_dos'] == 1) {?>
+						<div id="opdos" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecdos" type="text" name="namecdos" value="<?php echo $servicio["evidencia_dos"]; ?>" class="validate" required>
+			            		<label for="namecdos">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_dos'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusdos" name="statusdos" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato2: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_dos'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusdos" name="statusdos" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato2: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_dos'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusdos" name="statusdos" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" >Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato2: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opdos" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecdos" type="text" name="namecdos" class="validate" required>
+			            		<label for="namecdos">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statusdos" name="statusdos" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato2: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 0 && $servicio['status_cuatro'] == 0 && $servicio['status_cinco'] == 0 && $servicio['status_seis'] == 0 && $servicio['status_siete'] == 0 ) {?>
+						<div id="ifdos" class="row">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampo">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampod">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } else { ?>
+						<div id="ifdos" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampo">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampod">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+
+
+					<?php if ($servicio['status_tres'] == 1) {?>
+						<div id="optres" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namectres" type="text" name="namectres" value="<?php echo $servicio["evidencia_tres"]; ?>" class="validate" required>
+			            		<label for="namectres">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_tres'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statustres" name="statustres" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato3: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_tres'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statustres" name="statustres" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato3: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_tres'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statustres" name="statustres" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato3: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="optres" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namectres" type="text" name="namectres" class="validate" required>
+			            		<label for="namectres">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statustres" name="statustres" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato3: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 1 && $servicio['status_cuatro'] == 0 && $servicio['status_cinco'] == 0 && $servicio['status_seis'] == 0 && $servicio['status_siete'] == 0 ) {?>
+						<div id="iftres" class="row">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampod">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampot">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } else { ?>
+						<div id="iftres" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampod">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampot">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+
+
+					<?php if ($servicio['status_cuatro'] == 1) {?>
+						<div id="opcuatro" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="nameccuatro" type="text" name="nameccuatro" value="<?php echo $servicio["evidencia_cuatro"]; ?>" class="validate" required>
+			            		<label for="nameccuatro">* Nombre Campo:</label>
+			          		</div>
+
+			          		<?php if ($servicio['tipo_cuatro'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscuatro" name="statuscuatro" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato4: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_cuatro'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscuatro" name="statuscuatro" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato4: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_cuatro'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscuatro" name="statuscuatro" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato4: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opcuatro" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="nameccuatro" type="text" name="nameccuatro" class="validate" required>
+			            		<label for="nameccuatro">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statuscuatro" name="statuscuatro" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato4: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 1 && $servicio['status_cuatro'] == 1 && $servicio['status_cinco'] == 0 && $servicio['status_seis'] == 0 && $servicio['status_siete'] == 0 ) {?>
+						<div id="ifcuatro" class="row ">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampot">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampocu">Agregar Campo</a>
+			    			</div>
+						</div>
+
+					<?php  } else { ?>
+						<div id="ifcuatro" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampot">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampocu">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+		      
+					
+
+					<?php if ($servicio['status_cinco'] == 1) {?>
+						<div id="opcinco" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="nameccinco" type="text" name="nameccinco" value="<?php echo $servicio["evidencia_cinco"]; ?>" class="validate" required>
+			            		<label for="nameccinco">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_cinco'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscinco" name="statuscinco" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato5: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_cinco'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscinco" name="statuscinco" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato5: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_cinco'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statuscinco" name="statuscinco" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato5: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opcinco" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="nameccinco" type="text" name="nameccinco" class="validate" required>
+			            		<label for="nameccinco">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statuscinco" name="statuscinco" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato5: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 1 && $servicio['status_cuatro'] == 1 && $servicio['status_cinco'] == 1 && $servicio['status_seis'] == 0 && $servicio['status_siete'] == 0 ) {?>
+						<div id="ifcinco" class="row ">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampocu">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampoci">Agregar Campo</a>
+			    			</div>
+						</div>
+
+					<?php  } else { ?>
+						<div id="ifcinco" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampocu">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampoci">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+		      
+
+
+					<?php if ($servicio['status_seis'] == 1) {?>
+						<div id="opseis" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecseis" type="text" name="namecseis" value="<?php echo $servicio["evidencia_seis"]; ?>" class="validate" required>
+			            		<label for="namecseis">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_seis'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusseis" name="statusseis" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato6: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_seis'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusseis" name="statusseis" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato6: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_seis'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statusseis" name="statusseis" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato6: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opseis" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecseis" type="text" name="namecseis" class="validate" required>
+			            		<label for="namecseis">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statusseis" name="statusseis" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato6: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 1 && $servicio['status_cuatro'] == 1 && $servicio['status_cinco'] == 1 && $servicio['status_seis'] == 1 && $servicio['status_siete'] == 0 ) {?>
+
+						<div id="ifseis" class="row">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampoci">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampose">Agregar Campo</a>
+			    			</div>
+						</div>
+
+					<?php  } else { ?>
+
+						<div id="ifseis" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampoci">Quitar Campo</a>
+			    			</div>
+			    			<div class="col m6 s6 text-right">
+			    				<a id="addcampose">Agregar Campo</a>
+			    			</div>
+						</div>
+					<?php  } ?>
+
+
+					<?php if ($servicio['status_siete'] == 1) {?>
+						<div id="opsiete" class="row">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecsiete" type="text" name="namecsiete" value="<?php echo $servicio["evidencia_siete"]; ?>" class="validate" required>
+			            		<label for="namecsiete">* Nombre Campo:</label>
+			          		</div>
+			          		<?php if ($servicio['tipo_siete'] == 1) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statussiete" name="statussiete" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1" selected>Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato7: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_siete'] == 2) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statussiete" name="statussiete" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2" selected>Texto</option>
+				          				<option value="3">Archivo</option>
+									</select>
+									<label>Tipo de dato7: </label>
+								</div>
+							<?php  } ?>
+
+							<?php if ($servicio['tipo_siete'] == 3) {?>
+			          			<div class="input-field col m6 s6">
+				          			<select id="statussiete" name="statussiete" required>
+				          				<option value="" disabled>Selecciona una opción: </option>
+				          				<option value="1">Imagen</option>
+				          				<option value="2">Texto</option>
+				          				<option value="3" selected>Archivo</option>
+									</select>
+									<label>Tipo de dato7: </label>
+								</div>
+							<?php  } ?>
+
+						</div>
+					<?php  } else { ?>
+
+						<div id="opsiete" class="row oculto">
+		    				<div class="input-field col m6 s6">
+			    				<i class="material-icons prefix">add_circle</i>
+			    				<input id="namecsiete" type="text" name="namecsiete" class="validate" required>
+			            		<label for="namecsiete">* Nombre Campo:</label>
+			          		</div>
+			          		<div class="input-field col m6 s6">
+			          			<select id="statussiete" name="statussiete" required>
+			          				<option value="" disabled selected>Selecciona una opción: </option>
+			          				<option value="1">Imagen</option>
+			          				<option value="2">Texto</option>
+			          				<option value="3">Archivo</option>
+								</select>
+								<label>Tipo de dato7: </label>
+							</div>
+						</div>
+
+					<?php  } ?>
+
+					<?php if ($servicio['status_uno'] == 1 && $servicio['status_dos'] == 1 && $servicio['status_tres'] == 1 && $servicio['status_cuatro'] == 1 && $servicio['status_cinco'] == 1 && $servicio['status_seis'] == 1 && $servicio['status_siete'] == 1 ) {?>
+
+						<div id="ifsiete" class="row">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampose">Quitar Campo</a>
+			    			</div>
+						</div>
+
+					<?php  } else { ?>
+
+						<div id="ifsiete" class="row oculto">
+							<div class="col m6 s6 text-left">
+			    				<a id="delcampose">Quitar Campo</a>
+			    			</div>
+						</div>
+
+					<?php  } ?>
+			
+			</div>
+		     	<?php } ?>
+		    	</form>
+		</div>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/vehiculos/serviciosv" class="waves-effect red waves-light btn">Cancelar</a>
+				<button  id="updser" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+
+
+<script src="/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+
+    $("#updser").click(function(){
+        var names = document.getElementById("names").value;
+
+		if(names == ""){
+			swal({
+				title: "Para editar, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+
+    });
+
+	lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    function submitForm() {
+        document.getElementById("submitups").submit()
+    }
+
+     // Añadir Campos
+	    $("#addcampo").click(function(){
+	    	$("#opdos").show();
+	    	$("#ifuno").hide();
+	    	$("#ifdos").show();
+	    });
+
+	    $("#delcampo").click(function(){
+	    	$("#opdos").hide();
+	    	$("#ifuno").show();
+	    	$("#ifdos").hide();
+	    	document.getElementById('namecdos').value='';
+	    	document.getElementById('statusdos').value='';
+	    });
+
+	    $("#addcampod").click(function(){
+	    	$("#optres").show();
+	    	$("#ifdos").hide();
+	    	$("#iftres").show();
+	    });
+
+	    $("#delcampod").click(function(){
+	    	$("#optres").hide();
+	    	$("#ifdos").show();
+	    	$("#iftres").hide();
+	    	document.getElementById('namectres').value='';
+	    	document.getElementById('statustres').value='';
+	    });
+
+	    $("#addcampot").click(function(){
+	    	$("#opcuatro").show();
+	    	$("#iftres").hide();
+	    	$("#ifcuatro").show();
+	    });
+
+	    $("#delcampot").click(function(){
+	    	$("#opcuatro").hide();
+	    	$("#iftres").show();
+	    	$("#ifcuatro").hide();
+	    	document.getElementById('nameccuatro').value='';
+	    	document.getElementById('statuscuatro').value='';
+	    });
+
+	    $("#addcampocu").click(function(){
+	    	$("#opcinco").show();
+	    	$("#ifcuatro").hide();
+	    	$("#ifcinco").show();
+	    });
+
+	    $("#delcampocu").click(function(){
+	    	$("#opcinco").hide();
+	    	$("#ifcuatro").show();
+	    	$("#ifcinco").hide();
+	    	document.getElementById('nameccinco').value='';
+	    	document.getElementById('statuscinco').value='';
+	    });
+
+	    $("#addcampoci").click(function(){
+	    	$("#opseis").show();
+	    	$("#ifcinco").hide();
+	    	$("#ifseis").show();
+	    });
+
+	    $("#delcampoci").click(function(){
+	    	$("#opseis").hide();
+	    	$("#ifcinco").show();
+	    	$("#ifseis").hide();
+	    	document.getElementById('namecseis').value='';
+	    	document.getElementById('statusseis').value='';
+	    });
+
+	    $("#addcampose").click(function(){
+	    	$("#opsiete").show();
+	    	$("#ifseis").hide();
+	    	$("#ifsiete").show();
+	    });
+
+	    $("#delcampose").click(function(){
+	    	$("#opsiete").hide();
+	    	$("#ifseis").show();
+	    	$("#ifsiete").hide();
+	    	document.getElementById('namecsiete').value='';
+	    	document.getElementById('statussiete').value='';
+	    });
+	// End Añadir Campos
+
+</script>

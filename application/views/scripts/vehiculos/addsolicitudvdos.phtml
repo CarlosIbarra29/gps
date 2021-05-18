@@ -1,0 +1,411 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/vehiculos/updatesolveh/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar Paso 1</a>    
+    </div>
+</div> 
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+	<div class="col m12 s12 text-center">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Vehículos <br/>Paso 2</span>
+	</div>
+</div>
+
+
+<?php foreach ($this->servicios as $ser) { ?> 
+	<div class="col m12 s12">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em;">Servicio a solicitar: <?php echo $ser['nombre_servicio'] ?></span>
+	</div>
+<?php } ?>
+
+<div class="row" style="margin-top: 15px;"></div> 
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/vehiculos/requestaddsolvehdos" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitpasodosveh">
+			<input type="hidden" name="idserv" value="<?php echo $this->idserv; ?>">
+			<input type="hidden" name="idsol" value="<?php echo $this->id; ?>">
+			<?php foreach ($this->servicios as $ser) { ?>
+				<?php if($ser['status_uno'] == 1){ ?> 
+					<input type="hidden" name="statusuno" value="<?php echo $ser['status_uno'] ?>">
+					<?php if ($ser['tipo_uno'] == 1) { ?>
+
+						<input type="hidden" name="tipouno" value="<?php echo $ser['tipo_uno'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_uno'] ?></span>
+								<input type="file" name="datouno">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datouno" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_uno'] == 2) { ?>
+						
+						<input type="hidden" name="tipouno" value="<?php echo $ser['tipo_uno'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datouno" name="datouno" type="text" class="validate">
+	    					<label for="datouno"><?php echo $ser['evidencia_uno'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_uno'] == 3) { ?>
+						
+						<input type="hidden" name="tipouno" value="<?php echo $ser['tipo_uno'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_uno'] ?></span>
+								<input type="file" name="datouno">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datouno" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statusuno" value="0">
+					<input type="hidden" name="tipouno" value="0">
+					<input type="hidden" id="datouno" name="datouno" value=" ">
+				<?php } ?> 
+
+
+				<?php if($ser['status_dos'] == 1){ ?> 
+					<input type="hidden" name="statusdos" value="<?php echo $ser['status_dos'] ?>">
+					<?php if ($ser['tipo_dos'] == 1) { ?>
+
+						<input type="hidden" name="tipodos" value="<?php echo $ser['tipo_dos'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_dos'] ?></span>
+								<input type="file" name="datodos">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datodos" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_dos'] == 2) { ?>
+						
+						<input type="hidden" name="tipodos" value="<?php echo $ser['tipo_dos'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datodos" name="datodos" type="text" class="validate">
+	    					<label for="datodos"><?php echo $ser['evidencia_dos'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_dos'] == 3) { ?>
+						
+						<input type="hidden" name="tipodos" value="<?php echo $ser['tipo_dos'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_dos'] ?></span>
+								<input type="file" name="datodos">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datodos" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statusdos" value="0">
+					<input type="hidden" name="tipodos" value="0">
+					<input type="hidden" id="datodos" name="datodos" value=" ">
+				<?php } ?>
+
+
+				<?php if($ser['status_tres'] == 1){ ?> 
+					<input type="hidden" name="statustres" value="<?php echo $ser['status_tres'] ?>">
+					<?php if ($ser['tipo_tres'] == 1) { ?>
+
+						<input type="hidden" name="tipotres" value="<?php echo $ser['tipo_tres'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_tres'] ?></span>
+								<input type="file" name="datotres">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datotres" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_tres'] == 2) { ?>
+						
+						<input type="hidden" name="tipotres" value="<?php echo $ser['tipo_tres'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datotres" name="datotres" type="text" class="validate">
+	    					<label for="datotres"><?php echo $ser['evidencia_tres'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_tres'] == 3) { ?>
+						
+						<input type="hidden" name="tipotres" value="<?php echo $ser['tipo_tres'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_tres'] ?></span>
+								<input type="file" name="datotres">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datotres" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statustres" value="0">
+					<input type="hidden" name="tipotres" value="0">
+					<input type="hidden" id="datotres" name="datotres" value=" ">
+				<?php } ?>
+
+
+				<?php if($ser['status_cuatro'] == 1){ ?> 
+					<input type="hidden" name="statuscuatro" value="<?php echo $ser['status_cuatro'] ?>">
+					<?php if ($ser['tipo_cuatro'] == 1) { ?>
+
+						<input type="hidden" name="tipocuatro" value="<?php echo $ser['tipo_cuatro'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_cuatro'] ?></span>
+								<input type="file" name="datocuatro">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datocuatro" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_cuatro'] == 2) { ?>
+						
+						<input type="hidden" name="tipocuatro" value="<?php echo $ser['tipo_cuatro'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datocuatro" name="datocuatro" type="text" class="validate">
+	    					<label for="datocuatro"><?php echo $ser['evidencia_cuatro'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_cuatro'] == 3) { ?>
+						
+						<input type="hidden" name="tipocuatro" value="<?php echo $ser['tipo_cuatro'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_cuatro'] ?></span>
+								<input type="file" name="datocuatro">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datocuatro" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statuscuatro" value="0">
+					<input type="hidden" name="tipocuatro" value="0">
+					<input type="hidden" id="datocuatro" name="datocuatro" value=" ">
+				<?php } ?>
+
+
+				<?php if($ser['status_cinco'] == 1){ ?> 
+					<input type="hidden" name="statuscinco" value="<?php echo $ser['status_cinco'] ?>">
+					<?php if ($ser['tipo_cinco'] == 1) { ?>
+
+						<input type="hidden" name="tipocinco" value="<?php echo $ser['tipo_cinco'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_cinco'] ?></span>
+								<input type="file" name="datocinco">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datocinco" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_cinco'] == 2) { ?>
+						
+						<input type="hidden" name="tipocinco" value="<?php echo $ser['tipo_cinco'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datocinco" name="datocinco" type="text" class="validate">
+	    					<label for="datocinco"><?php echo $ser['evidencia_cinco'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_cinco'] == 3) { ?>
+						
+						<input type="hidden" name="tipocinco" value="<?php echo $ser['tipo_cinco'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_cinco'] ?></span>
+								<input type="file" name="datocinco">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datocinco" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statuscinco" value="0">
+					<input type="hidden" name="tipocinco" value="0">
+					<input type="hidden" id="datocinco" name="datocinco" value=" ">
+				<?php } ?>
+
+
+				<?php if($ser['status_seis'] == 1){ ?> 
+					<input type="hidden" name="statusseis" value="<?php echo $ser['status_seis'] ?>">
+					<?php if ($ser['tipo_cinco'] == 1) { ?>
+
+						<input type="hidden" name="tiposeis" value="<?php echo $ser['tipo_seis'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_seis'] ?></span>
+								<input type="file" name="datoseis">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datoseis" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_seis'] == 2) { ?>
+						
+						<input type="hidden" name="tiposeis" value="<?php echo $ser['tipo_seis'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datoseis" name="datoseis" type="text" class="validate">
+	    					<label for="datoseis"><?php echo $ser['evidencia_seis'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_seis'] == 3) { ?>
+						
+						<input type="hidden" name="tiposeis" value="<?php echo $ser['tipo_seis'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_seis'] ?></span>
+								<input type="file" name="datoseis">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datoseis" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statusseis" value="0">
+					<input type="hidden" name="tiposeis" value="0">
+					<input type="hidden" id="datoseis" name="datoseis" value=" ">
+				<?php } ?>
+
+
+				<?php if($ser['status_siete'] == 1){ ?> 
+					<input type="hidden" name="statussiete" value="<?php echo $ser['status_siete'] ?>">
+					<?php if ($ser['tipo_cinco'] == 1) { ?>
+
+						<input type="hidden" name="tiposiete" value="<?php echo $ser['tipo_siete'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_siete'] ?></span>
+								<input type="file" name="datosiete">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datosietes" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+					<?php if ($ser['tipo_siete'] == 2) { ?>
+						
+						<input type="hidden" name="tiposiete" value="<?php echo $ser['tipo_siete'] ?>">
+						
+						<div class="input-field col s6">
+	    					<input id="datosietes" name="datosiete" type="text" class="validate">
+	    					<label for="datosiete"><?php echo $ser['evidencia_siete'] ?></label>
+	  					</div>
+
+					<?php } ?> 
+
+					<?php if ($ser['tipo_siete'] == 3) { ?>
+						
+						<input type="hidden" name="tiposiete" value="<?php echo $ser['tipo_siete'] ?>">
+						<div class="file-field input-field col s6">
+							<div class="btn">
+								<span>Añadir <?php echo $ser['evidencia_siete'] ?></span>
+								<input type="file" name="datosiete">
+	      					</div>
+	      					<div class="file-path-wrapper">
+	      						<input class="file-path validate" id="datosietes" type="text">
+	      					</div>	
+	    				</div>
+
+					<?php } ?> 
+				<?php } else {?>
+					<input type="hidden" name="statussiete" value="0">
+					<input type="hidden" name="tiposiete" value="0">
+					<input type="hidden" id="datosiete" name="datosiete" value=" ">
+				<?php } ?>
+
+			<?php } ?>
+
+    	</form>
+
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/vehiculos/solservicio" class="red btn">Salir</a>
+				<button  id="sendpasodos" class="btn">Terminar Solicitud</button>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.datepicker').datepicker();
+    });
+
+    $("#sendpasodos").click(function(){
+        var datouno = document.getElementById("datouno").value;
+        var datodos = document.getElementById("datodos").value;
+        var datotres = document.getElementById("datotres").value;
+        var datocuatro = document.getElementById("datocuatro").value;
+        var datocinco = document.getElementById("datocinco").value;
+        var datoseis = document.getElementById("datoseis").value;
+        var datosiete = document.getElementById("datosiete").value;
+
+        if( datouno == "" || datodos == "" || datotres == "" || datocuatro == "" || datocinco == "" || datoseis == "" || datosiete == ""){
+            swal({
+              title: "Para continuar debes agregar toda la informacion requerida ",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { document.getElementById("submitpasodosveh").submit() }
+
+  </script>
+
+

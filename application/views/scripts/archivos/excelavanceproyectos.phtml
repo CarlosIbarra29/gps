@@ -1,0 +1,484 @@
+<?php 
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+    	<?php if($this->op_proyecto == 1){ ?>
+    		<a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+    	<?php } ?>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+    	<?php if($this->op_proyecto == 1){ ?>
+    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de BTS</span>
+    	<?php } ?>
+
+    	<?php if($this->op_proyecto == 2){ ?>
+    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de Colocacion</span>
+    	<?php } ?>
+
+    	<?php if($this->op_proyecto == 3){ ?>
+    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de Reforzamiento</span>
+    	<?php } ?>
+
+    	<?php if($this->op_proyecto == 4){ ?>
+    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de Cambio de torre</span>
+    	<?php } ?>
+        
+    	<?php if($this->op_proyecto == 5){ ?>
+    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Avances de Torre nueva</span>
+    	<?php } ?>
+
+    </div>
+</div>
+
+
+<!-- <div class="row">
+    <div class="col s12 m6">
+      	<div class="card blue-grey darken-1">
+	        <div class="card-content white-text">
+	        	<span class="card-title">Card Title</span>
+	          	<p>I am a very simple card. I am good at containing small bits of information.
+	          	I am convenient because I require little markup to use effectively.</p>
+	        </div>
+	        <div class="card-action">
+	          	<a href="#">This is a link</a>
+	          	<a href="#">This is a link</a>
+	        </div>
+      	</div>
+    </div>
+</div>
+ -->
+
+
+<?php if($this->op_proyecto == 1){ ?>
+<div class="row excel-div" id="tab1">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id sitio</th>		
+				<th>Sitio</th>
+				<th>Id cliente</th>
+				<th>Status proyecto</th>
+				<th>Id proyecto</th>
+				<th>Ttv baseline</th>
+				<th>Ttv forecast</th>
+        		<th>Ttv actual</th>
+
+        		<th>Muestreo MS/DE baseline</th>
+        		<th>Muestreo MS/DE forecast</th>
+        		<th>Muestreo MS/DE actual</th>
+        		<th>Proyecto preliminar AP baseline</th>
+        		<th>Proyecto preliminar AP forecast</th>
+
+        		<th>Proyecto preliminar AP actual</th>
+        		<th>RedLines</th>
+        		<th>MS / DE Preliminar baseline</th>
+        		<th>MS / DE Preliminar forecast</th>
+        		<th>MS / DE Preliminar actual</th>
+
+        		<th>MS / DE Final baseline</th>
+        		<th>MS / DE Final forecast</th>
+        		<th>MS / DE Final actual</th>
+        		<th>Proyecto Final baseline</th>
+        		<th>Proyecto Final forecast</th>
+
+        		<th>Proyecto Final actual</th>
+        		<th>Inicio de Obra (CoS) baseline</th>
+        		<th>Inicio de Obra (CoS) forecast</th>
+        		<th>Inicio de Obra (CoS) actual</th>
+        		<th>Termino de Obra (CoF) baseline</th>
+
+        		<th>Termino de Obra (CoF) forecast</th>
+        		<th>Termino de Obra (CoF) actual</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->detalle_bts as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre_status"]); ?></td>
+				<td><?php echo $usr["id_sitiotipo"]; ?></td>
+				<td><?php echo $usr["ttv_baseline"]; ?></td>
+				<td><?php echo $usr["ttv_forecast"]; ?></td>
+        		<td><?php echo $usr["ttv_actual"]; ?></td>
+
+        		<td><?php echo $usr["muestreo_baseline"]; ?></td>
+        		<td><?php echo $usr["muestreo_forecast"]; ?></td>
+        		<td><?php echo $usr['muestreo_actual']; ?></td>
+        		<td><?php echo $usr['proyectopreliminar_baseline']; ?></td>
+        		<td><?php echo $usr['proyectopreliminar_forecast']; ?></td>
+        		<td><?php echo $usr['proyectopreliminar_actual']; ?></td>
+
+        		<td><?php echo $usr['redlines']; ?></td>
+        		<td><?php echo $usr['mspreliminar_baseline']; ?></td>
+        		<td><?php echo $usr['mspreliminar_forecast']; ?></td>
+        		<td><?php echo $usr['mspreliminar_actual']; ?></td>
+        		<td><?php echo $usr['msfinal_baseline']; ?></td>
+
+        		<td><?php echo $usr['msfinal_forecast']; ?></td>
+        		<td><?php echo $usr['msfinal_actual']; ?></td>
+        		<td><?php echo $usr['proyectofinal_baseline']; ?></td>
+        		<td><?php echo $usr['proyectofinal_forecast']; ?></td>
+        		<td><?php echo $usr['proyectofinal_actual']; ?></td>
+
+        		<td><?php echo $usr['inicioobra_baseline']; ?></td>
+        		<td><?php echo $usr['inicioobra_forecast']; ?></td>
+        		<td><?php echo $usr['inicioobra_actual']; ?></td>
+        		<td><?php echo $usr['terminoobra_baseline']; ?></td>
+        		<td><?php echo $usr['terminoobra_forecast']; ?></td>
+
+        		<td><?php echo $usr['terminoobra_actual']; ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+<?php } ?>
+
+<?php if($this->op_proyecto == 5){ ?>
+	<div class="row">
+	    <div class="col s12 m4">
+	      	<div class="card" style="height: 200px;">
+		        <div class="card-content text-center">
+		          	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación de Torre</span>
+
+
+		          	<div class="row" style="margin-top: 20px;">
+		          		<div class="col m12 s12 text-center">
+		          			<a class="btn" id="exportBtn2"><i class="material-icons right">insert_drive_file</i>Excel</a>
+		          		</div>
+		          	</div>
+		        </div>
+	      	</div>
+	    </div>
+
+	    <div class="col s12 m4">
+	      	<div class="card" style="height: 200px;">
+		        <div class="card-content text-center">
+		          	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Factores de Diseño</span>
+
+
+		          	<div class="row" style="margin-top: 20px;">
+		          		<div class="col m12 s12 text-center">
+		          			<a class="btn" id="exportBtn3"><i class="material-icons right">insert_drive_file</i>Excel</a>
+		          		</div>
+		          	</div>
+		        </div>
+
+	      	</div>
+	    </div>
+
+	    <div class="col s12 m4">
+	      	<div class="card" style="height: 200px;">
+		        <div class="card-content text-center">
+		          	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Bitacora de Cambios</span>
+
+
+		          	<div class="row" style="margin-top: 20px;">
+		          		<div class="col m12 s12 text-center">
+		          			<a class="btn" id="exportBtn4"><i class="material-icons right">insert_drive_file</i>Excel</a>
+		          		</div>
+		          	</div>
+		        </div>
+	      	</div>
+	    </div>
+  	</div>
+
+
+<div class="row excel-div oculto" id="tab2">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id cliente</th>
+				<th>Sitio</th>
+				<th>Altura</th>		
+				<th>Tipo de Torre</th>
+				<th>Diseño de torre</th>
+				<th>User diseño torre</th>
+				<th>Fecha diseño de torre</th>
+				<th>Diseño de cimentacion</th>
+				<th>User diseño de cimentacion</th>
+				<th>Fecha diseño de cimentacion</th>
+				<th>Memoria de calculo de torre</th>
+				<th>User memoria de calculo de torre</th>
+				<th>Fecha memoria de calculo de torre</th>
+				<th>STAAD</th>
+				<th>User STAAD</th>
+				<th>Fecha STAAD</th>
+				<th>Modelo de Torre</th>
+				<th>User modelo de torre</th>
+				<th>Fecha modelo de torre</th>
+				<th>Mecanica de suelos/ Dictamen</th>
+				<th>User mecanica de suelos / dictamen</th>
+				<th>Fecha mecanica de suelos / dictamen</th>
+				<th>Certificado acero</th>
+				<th>User certificado acero</th>
+				<th>Fecha certificado acero</th>
+				<th>Certificado tornilleria</th>
+				<th>User certificado tornilleria</th>
+				<th>Fecha certificado tornilleria</th>
+				<th>Certificado galvanizado</th>
+				<th>User certificado galvanizado</th>
+				<th>Fecha certificado galvanizado</th>
+				<th>Reporte verticalidad</th>
+				<th>User reporte verticalidad</th>
+				<th>Fecha reporte verticalidad</th>
+				<th>Reporte tension</th>
+				<th>User reporte tension</th>
+				<th>Fecha reporte tension</th>
+				<th>Reporte fotografico</th>
+				<th>User reporte fotografico</th>
+				<th>Fecha reporte fotografico</th>
+				<th>Tornilleria</th>
+				<th>User tornilleria</th>
+				<th>Fecha tornilleria</th>
+				<th>Pesos de acero</th>
+				<th>User pesos de acero</th>
+				<th>Fecha pesos de acero</th>
+				<th>Catalogo de torre (PDF)</th>
+				<th>User catalogo de torre (PDF)</th>
+				<th>Fecha catalogo de torre (PDF)</th>
+				<th>Catalogo de torre (dwg)</th>
+				<th>User catalogo de torre (dwg)</th>
+				<th>Fecha catalogo de torre (dwg)</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->doc_torrenueva as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["altura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre_estructura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["torre_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_torre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_torre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["simentacion_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_simentacion"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_simentacion"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["calculo_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_calculo"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_calculo"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["staad_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_staad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_saad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["modelotorre_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_torrenueva"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_torrenueva"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["mecanica_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_mecanica"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_mecanica"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["acero_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_acero"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_acero"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["tornilleria_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_tornilleria"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_tornilleria"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["galvanizado_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_galvanizado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_galvanizado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["verticalidad_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_verticalidad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_verticalidad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["tension_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_tension"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_tension"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["foto_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_foto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_foto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["tor_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_tor"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_tor"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["pesoacero_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_pesoacero"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_pesoacero"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["torrepdf_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_torrepdf"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_torrepdf"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["torredwg_file"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_dwg"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_torredwg"]); ?></td>
+
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+   
+<div class="row excel-div oculto" id="tab3">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id cliente</th>
+				<th>Sitio</th>
+				<th>Altura</th>		
+				<th>Tipo de Torre</th>
+				<th>Velocidad Regional km/h</th>
+				<th>Categoria de Terreno (Exposicion)</th>
+				<th>Categoría de Rugosidad</th>
+				<th>Topography Category (FT)</th>
+				<th>Clasificacion de estructura</th>
+				<th>Altura sobre el nivel mar (ASNM)</th>
+				<th>Temp (°C)</th>
+				<th>Carga</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->factores as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["altura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre_estructura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["velocidad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["terreno"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["rugosidad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["topography"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estructura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["mar_asnm"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["temp"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["carga"]); ?></td>	
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>   
+
+
+
+<div class="row excel-div oculto" id="tab4">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Sitio</th>
+				<th>Altura</th>		
+				<th>Tipo de Torre</th>
+				<th>Version</th>
+				<th>Descripcion</th>
+				<th>Fecha de registro</th>
+				<th>Usuario</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->bitacora as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["altura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre_estructura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["version"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["usuario"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>     
+<?php } ?>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Documentacion BTS.xlsx",
+            sheet: {
+            	name: "Documentacion BTS",
+            }
+        });
+    });
+
+
+    $("#exportBtn2").click(function(){
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Documentacion de Torre Nueva.xlsx",
+            sheet: {
+            	name: "Documentacion de Torre Nueva",
+            }
+        });
+    });
+
+
+    $("#exportBtn3").click(function(){
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "Factores de Diseño Torre Nueva.xlsx",
+            sheet: {
+            	name: "Factores de Diseño Torre Nueva",
+            }
+        });
+    });
+
+    $("#exportBtn4").click(function(){
+        TableToExcel.convert(document.getElementById("tab4"), {
+            name: "Bitacora de cambios Torre Nueva.xlsx",
+            sheet: {
+            	name: "Bitacora de cambios Torre Nueva",
+            }
+        });
+    });
+</script>
+
+
+
+

@@ -1,0 +1,51 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/estructurasitios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar estructura</span>
+  </div>
+</div>
+<div class="row">
+	<form action="/panel/requestupdateestructuras" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_estructura">
+		<?php foreach ($this->estructura as $usr) { ?>
+		<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+		<div class="input-field col m6 s12">
+			<i class="material-icons prefix">account_circle</i>
+			<input id="name" type="text" name="name" class="validate" value="<?php echo $usr["nombre_estructura"]; ?>" required>
+			<label for="name">* Nombre:</label>
+		</div>
+		<?php } ?>
+	</form>
+	<div class="input-field col m6 s12 text-left">
+		<div class="row">
+			<a href="/panel/estructurasitios" class="waves-effect red waves-light btn">Cancelar</a>
+			<button id="addestructura" class="waves-effect waves-light btn">Actualizar</button>
+		</div>	
+	</div>
+</div>
+
+<script type="text/javascript">
+    $("#addestructura").click(function(){
+        var name = document.getElementById("name").value;
+        if(name == ""){
+            swal({
+              title: "Para editar una estructura debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_estructura").submit()
+    }
+</script>

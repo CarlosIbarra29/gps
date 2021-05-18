@@ -1,0 +1,391 @@
+<html>
+    <head>
+        <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+        <title>Multipage PDF Export with Chart and Grid</title>
+        <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+        <script src="http://kendo.cdn.telerik.com/2016.3.1118/js/kendo.all.min.js"></script>
+        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.common.min.css">
+        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.default.min.css">
+    </head>
+    <body>
+
+        <div id="example">
+
+            <div class="row" style="margin-top: 10px;">
+                <div class="col m6 s6">
+
+                    <?php if($this->op_back == 1){ ?>
+                        <a href="/envios/enviodetail/id/<?php echo $this->id_envio; ?>/status/<?php echo $this->status; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+                    <?php }else{ ?>
+                        <a href="/envios/detalleenvio/id/<?php echo $this->id_envio; ?>/status/<?php echo $this->status; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+                    <?php } ?>
+    
+                </div>
+
+                <div class="col m6 s6 text-right" id="download" style="display: none;" >
+                    <button class="export-pdf btn"  onclick="getPDF('.pdf-page')">Descargar Reporte</button>
+                </div>
+            </div>
+
+ <?php foreach ($this->envios as $key){
+  $id_env = $key['id'];
+  $sitio = $key['name_sitio'];
+  $cliente = $key['id_cliente'];
+  $pr = $key['prioridad']; if($pr == 1){$prioridad = "Normal";}else{$prioridad = "Alta";}
+  $en = $key['tipo_envio']; if($en == 1){$envio = "Local";}else{$envio = "Foraneo";}
+  $direccion = $key['direccion'];
+  $fecha_solicitud = $key['fecha_solicitud'];
+  $hora_entrega = $key['hora_entrega'];
+  $descripcion = $key['descripcion'];
+  $peso_aproximado = $key['peso_aproximado'];
+  $dimensiones = $key['dimensiones'];
+  $comentarios = $key['comentarios'];
+  $user_solicitud = $key['user_solicitud'];
+  $fecha_envio = $key['fecha_envio'];
+  $operador = $key['operador'];
+  $nombre_operador = $key['nombre_operador'];
+} ?>
+
+<?php foreach ($this->vehiculo as $value){
+  $marca = $value['marca'];
+  $submarca = $value['submarca'];
+  $modelo = $value['modelo'];
+  $placas = $value['placas'];
+  $imagen = $value['imagen'];
+  $id_vehic = $value['id_vehiculos'];
+} ?>
+
+
+<?php foreach ($this->user as $us){ 
+    $img_personal = $us['imagen']; 
+}?>
+
+    <?php 
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d/m/Y");
+     ?>
+
+
+
+
+            <div class="row">
+                <div class="col m1 s12"></div>
+                <div class="col m10 s12">
+                    <div class="page-container hidden-on-narrow">
+                        <div class="pdf-page size-a4">
+                            <div class="pdf-header">
+                                
+                                <span class="col m6 s6 company-logo">
+                                    <img src="/img/head.png" style="width: 130px;" />
+                                </span>
+
+                                <span class="col m6 s6 text-right invoice-number">
+                                    <img src="/img/logo-2.png" style="width: 220px;" />
+                                </span>
+
+                                <div class="row">
+                                    <div class="company-logo col m12 s12 text-center">
+                                        Logistica de Envíos 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m12 s12 text-right">
+                                            <span style="color:black;font-weight: bold;">Fecha: <?php echo $fecha_solicitud; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col m6 s6 for ">
+<!--                                       <div class="card">
+                                      <div class="card-content" style="height: 250px;">  
+                                        <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información general</span><br>
+                                        <div class="row" style="margin-top: 16px;">
+                                          <div class="col m12 s12">
+                                            <span class="titulo">Sitio:</span> <span><?php echo $sitio; ?></span> <br>
+                                            <span class="titulo">Cliente:</span> <span><?php echo $cliente; ?></span> <br>
+                                            <span class="titulo">Prioridad:</span> <span><?php echo $prioridad; ?></span> <br>
+                                            <span class="titulo">Tipo envío:</span> <span><?php echo $envio; ?></span> <br>
+                                            <span class="titulo">Dirección:</span> <span><?php echo $direccion; ?></span> <br>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div> -->
+
+                                        <div class="card">
+                                          <div class="card-content" style="height: 250px;">  
+                                            <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo</span><br>
+                                            <div class="row" style="margin-top: 16px;">
+                                              <div class="col m12 s12">
+                                                <span class="titulo">Sitio:</span> <span><?php echo $marca; ?></span> 
+                                                <span class="titulo">Submarca:</span> <span><?php echo $submarca; ?> </span> 
+                                                <br>
+                                                <span class="titulo">Modelo:</span> <span><?php echo $modelo; ?></span>
+                                                <span class="titulo">Placas:</span> <span><?php echo $placas; ?></span> 
+                                                <br>
+                                              </div>
+                                            <div class="row">
+                                                <div class="col m12 s12 text-center">
+                                                    <?php if($imagen ==  NULL || $imagen ==""){ ?>
+                                                        <img src="/img/no_disponible1.png" class="responsive-img" style="width: 120px; margin-top: 5px;">
+                                                    <?php }else{ ?>
+                                                        <img src="/<?php echo $imagen; ?>" style="width: 105px;">
+                                                    <?php } ?>
+                                                    
+                                                </div>
+                                            </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col m6 s6 from">
+                                        <div class="card">
+                                          <div class="card-content" style="height: 250px;">  
+                                            <div class="row">
+                                                <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Operador</span><br>
+                                                <?php if($operador == 0){ ?>
+                                                    <span class="titulo">Nombre:</span> <span style="color:red;">No se ha seleccionado operador</span>
+                                                <?php }else{ ?>
+                                                    <span class="titulo">Nombre:</span> <span><?php echo $nombre_operador; ?></span> 
+                                                <?php } ?>
+                                              </div>
+
+                                            <div class="row">
+                                                <div class="col m12 s12 text-center">
+                                                    <?php if($img_personal == NULL || $img_personal == ""){ ?>
+                                                        <img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+                                                    <?php }else{ ?>
+                                                        <img src="/<?php echo $img_personal; ?>" style="width: 105px;">
+                                                    <?php } ?>
+                                                    
+                                                </div>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="pdf-body">
+
+                                <div class="row">
+                                    <div class="col m6 12">
+                                        <div>
+                                            <span style="color:black;font-weight: bold;">Monto de Caja Chica a Solicitar: </span><span>_______________</span>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <span style="color:black;font-weight: bold; ">KMs a Recorrer: </span><span>_______________</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col m6 s12">
+                                        <div>
+                                            <span style="color:black;font-weight: bold; margin-top: 5px;">Monto en TAG a cargar: </span><span>_______________</span>
+                                        </div> 
+
+                                        <div style="margin-top: 10px;">
+                                            <span style="color:black;font-weight: bold; ">Monto en Efecticard a cargar: </span><span>_______________</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="grida" id="grid">
+                                  <input type="hidden" name="datos" id="datos" value="<?php echo $fecha_solicitud; ?>">
+                                  <input type="hidden" name="vehiculo_uno" id="vehiculo_uno" value="<?php echo $id_vehic; ?>">
+                                </div>
+                            </div>
+                    
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col m12 s12 ">
+                                    <span class="title-pdf">
+                                        Gps Constructivos      
+                                    </span><br> 
+                                    <span class="title-pdf">
+                                        Fecha de descarga: <?php echo $hoy; ?>     
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row signature">
+          <!--                       <div class="col m6 s6 text-center">
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Entregado por:</span><br><br><br>
+                                    <hr>
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
+                                </div>
+                                <div class="col m6 s6 text-center">
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Recibido por:</span><br><br>
+                                    <?php echo $nombrea; ?> <?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?>
+                                    <hr>
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m1 s12"></div>
+            </div>
+
+
+
+            <div class="responsive-message"></div>
+            <div id="pdfPageCopy"></div>
+
+
+            <!-- Load Pako ZLIB library to enable PDF compression -->
+            <script src="../content/shared/js/pako.min.js"></script>
+
+            <script>
+
+                $(document).ready(function(){
+                    cpAjax();
+                });
+
+                function getPDF(selector) {
+
+                    kendo.drawing.drawDOM($('.pdf-page'), {
+                        paperSize: "A4",
+                        scale: 0.7})          
+                    .then(function(group){
+                        return kendo.drawing.exportPDF(group, {
+                            margin: { left: "0.6cm", top: "0.6cm", right: "0.6cm", bottom: "0cm" }
+                        });
+                    })
+
+                    .done(function(data) {
+                        kendo.saveAs({
+                            dataURI: data,
+                            fileName: "Logistica de envios <?php echo $fecha_solicitud; ?>.pdf"
+                        });
+                    });
+                }
+
+                function herramientas(datost){
+                    var data = datost;
+                    var grid = $("#grid").kendoGrid({
+                        editable: false,
+                        sortable: false,
+                        dataSource: {
+                            data: data
+                        }
+                    });
+                }
+
+                function cpAjax(){ 
+                    var download = document.getElementById("download");
+                    fecha = document.getElementById("datos").value;
+                    vehiculo = document.getElementById("vehiculo_uno").value;
+                    variable = datos;
+
+                    $.ajax({
+                        url: "/envios/datosfecha",
+                        data: {
+                            fecha: fecha, vehiculo:vehiculo
+                        },
+
+                        type: "POST",
+
+                        success: function( data ) {
+                            download.style.display = "block";
+                            
+                            var aData = JSON.parse( data );
+                            herramientas(aData);
+                            console.log(aData);
+                        },
+
+                        error: function(a, b, c) {
+
+                            console.log(a);
+
+                            console.log(b);
+
+                            console.log(c);
+                        }
+                    });
+                }
+
+            </script>
+
+            <style>
+
+                .title-pdf {
+                    font-weight: bold;
+                    font-size: 13px;
+                }
+
+                .invoice-number {
+                    padding-top: .17in;
+                    float: right;
+                }
+                .pdf-footer {
+                    position: absolute;
+                    bottom: .5in;
+                    height: .6in;
+                    left: .5in;
+                    right: .5in;
+                    padding-top: 10px;
+                    border-top: 1px solid #e5e5e5;
+                    text-align: left;
+                    color: #787878;
+                    font-size: 12px;
+                }
+                .pdf-body {
+                    
+                    top: 3.5in;
+                    bottom: 13.2in;
+                    left: .5in;
+                    right: .5in;
+                }
+
+                 .grida {
+                     color: red;
+                     font-size: 12px;
+                }
+
+                .grida th{
+                    font-weight: bold;
+                    font-size: 16px;
+                    background-color: white;
+                }
+
+                .grida td{
+                  padding-top: 1px;
+                  padding-bottom: 1px;
+                  height: 25px;
+                }
+
+                .size-a5 { width: 8.3in; height: 5.8in; }
+                .size-a4 { width: 210mm; height: 310mm; }
+                .size-letter { width: 8.5in; height: 11in; }
+                .size-executive { width: 7.25in; height: 10.5in; }
+
+                .company-logo {
+                    font-size: 30px;
+                    font-weight: bold;
+                    color: #000080;
+                }
+                
+                .for {
+                    width: 3.5in;
+                }
+                
+                .from {
+                    width: 3.5in;
+                }
+                
+                .from p, .for p {
+                    color: #787878;
+                }
+                
+                .signature {
+                    padding-top: .3in;
+                }
+            </style>
+        </div>
+    </body>
+</html>

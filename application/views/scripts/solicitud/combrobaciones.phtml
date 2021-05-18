@@ -1,0 +1,63 @@
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobaciones</span>
+  </div>
+</div>
+
+<div class="row" style="margin-left: 10px; padding-right: 5px;">
+	<div class="col m12 s12">
+		<div class="row">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Residentes</span>
+		</div>
+		<div class="row">
+	 		<table class="table text-left table-hover">
+				<thead>
+					<tr>
+						<th>Nombre Residente</th>		
+						<th>Apellidos</th>
+						<th>Telefono</th>
+						<th>Email</th>
+						<th>Comprobaciones</th>
+					</tr> 
+				</thead>
+				<?php
+				if ($this->residentes) { 
+				foreach ($this->residentes as $usr) { ?>
+				<tbody>
+					<tr>
+						<td>
+							<?php echo $usr["nombre"]; ?>
+						</td>
+						<td>
+							<?php echo $usr["apellido_pa"]; ?> <?php echo $usr["apellido_ma"]; ?>
+						</td>
+						<td>
+							<?php echo $usr["telefono"]; ?>
+						</td>
+						<td>
+							<?php echo $usr["email_personal"]; ?>
+						</td>
+						<td class="text-center">
+							<a href="/solicitud/comprobacionesresidente/id/<?php echo $usr['id']; ?>"><i class="material-icons">account_balance</i></a>
+						</td> 
+
+						<td>
+							<?php if($usr['facturas_pendientes'] == 1){ ?>
+								<i class="material-icons" style="color: red">bookmark</i>
+							<?php }?>
+						</td>
+					</tr>
+			    <?php } }else{ ?>
+			    </tbody> 
+			    <tbody>
+			        <tr>
+			            <td class="text-center" colspan="6"><h4>No hay Personal.</h4></td>
+			        </tr>
+			    </tbody>
+			                
+			    <?php } ?>
+		</table> 
+		</div>
+	</div>
+</div>

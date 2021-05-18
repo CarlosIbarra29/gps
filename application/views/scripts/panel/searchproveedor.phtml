@@ -1,0 +1,348 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<div class="row mt-4">
+	<div class="col m4 s12 text-center">
+		<!-- <h2>Proveedores</h2> -->
+	</div>
+
+	<div class="col m8 s12 text-center" style="margin-top: 15px;">
+		<div class="row">
+			<div class="col m12 s12 text-right">
+				<a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Proveedor</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Proveedores</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m2 s12">
+		<a href="/panel/proveedores">Mostrar todos</a>
+	</div>
+	<div class="col m8 s12">
+		<form action="/panel/searchproveedor" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m8 s8">
+	          <input placeholder="Ingresa el nombre del proveedor" name="nombre" value="<?php echo $this->proveedor_seach; ?>" id="first_name" type="text" class="validate">
+	          <label for="first_name">Buscar proveedor</label>
+	        </div>
+	        <div class="input-field col m4 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
+	        </div>
+    	</form>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Provedores</span>
+		<div class="col m12 s12" style="margin-top: 20px;">
+			<form action="/panel/requestaddproveedor" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+        <div class="row">
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="name" type="text" name="name" class="validate" required>
+                <label for="name">* Nombre del proveedor:</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">event_available</i>
+                <input id="rfc" type="text" name="rfc" class="validate">
+                <label for="rfc">RFC:</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">phone</i>
+                <input id="phone" type="tel" name="phone" class="validate">
+                <label for="phone">* Telefono</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">attach_money</i>
+                <input id="bank" type="text" name="banco" class="validate">
+                <label for="bank">* Banco</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">add_circle</i>
+                <input id="cuenta" type="text" name="cuenta" class="validate">
+                <label for="cuenta"> Cuenta de banco</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">add_circle</i>
+                <input id="tarjeta" type="text" name="tarjeta" class="validate">
+                <label for="tarjeta"> No. Tarjeta</label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">contact_mail</i>
+                <input id="email" type="text" name="email" class="validate">
+                <label for="email">Correo Electronico</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">person_add</i>
+                <input id="titular" type="text" name="titular" class="validate">
+                <label for="titular">Titular</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <i class="material-icons prefix">today</i>
+                <input id="periodo_pago" type="text" name="periodo_pago" value="0" class="validate">
+                <label for="periodo_pago">Periodo de Pago</label>
+              </div>
+              <div class="input-field col m6 s12">
+                <select id="clasificacion" name="clasificacion">
+                  <option value="" disabled selected>* Selecciona una opción</option>
+                  <option value="0">Todos</option>
+                  <option value="1">VEHICULOS Y LOGISTICA</option>
+                  <option value="2">COMPRAS</option>
+                  <option value="3">ADMINISTRACION</option>
+                  <option value="4">OPERACIONES Y FABRICACION</option>
+                  <option value="5">CAMPAMENTOS</option>
+                </select>
+                <label>Clasificación de los proveedores</label>
+              </div>
+
+              
+            </div>
+			
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="addproveedores" class="waves-effect waves-light btn">Guardar</button>
+      </form>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= -->
+<div class="col m12 s12">
+	<!-- <h3></h3> -->
+  <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Provedores</span>
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Nombre</th>		
+				<th>Telefono</th>
+				<th>RFC</th>
+				<th>Datos Bancarios</th>
+			</tr> 
+		</thead>
+		<?php foreach ($this->paginator as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><a href="#modal2" class="modal-trigger info_prov" data-id="<?php echo $usr["id"] ?>" data-nombre="<?php echo $usr['nombre_prov']; ?>" data-telefono="<?php echo $usr["telefono"]; ?>" data-rfc="<?php echo $usr["rfc"]; ?>" data-banco="<?php echo $usr["datos_banco"]; ?>" data-cuenta="<?php echo $usr["cuenta"]; ?>" data-tarjeta="<?php echo $usr["tarjeta"]; ?>" data-titular="<?php echo $usr["titular"]; ?>" data-email="<?php echo $usr["email"]; ?>"><?php echo $usr["nombre_prov"]; ?></a></td>
+				<td><?php echo $usr["telefono"]; ?></td>
+				<td><?php echo $usr["rfc"]; ?></td>
+				<td><?php echo $usr["datos_banco"]; ?></td>
+				<td>
+					<a href="/panel/proveedoredit/id/<?php echo $usr["id"]?>"><i class="fa fa-2x fa-edit"></i></a>
+				</td>
+        <td>
+          <a class="delete" href="/panel/requestdeleteproveedor/id/<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+        </td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+		
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="/panel/searchproveedor/nombre/<?php echo $this->proveedor_seach ?><?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Informacion del Proveedor</h3>
+      <div class="row">
+        <div class="col m12 s12">
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="name_prov" type="text" class="validate">
+            <label for="name_prov">Nombre Proveedor</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="telefono_prov" type="text" class="validate">
+            <label for="telefono_prov">Telefono</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="rfc_prov" type="text" class="validate">
+            <label for="rfc_prov">RFC</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="email_prov" type="text" class="validate">
+            <label for="email_prov">Email</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="titular_prov" type="text" class="validate">
+            <label for="titular_prov">Titular</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="banco_prov" type="text" class="validate">
+            <label for="banco_prov">Banco</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="cuenta_prov" type="text" class="validate">
+            <label for="cuenta_prov">Cuenta</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Sin informacion" id="tarjeta_prov" type="text" class="validate">
+            <label for="tarjeta_prov">Tarjeta</label>
+          </div>
+
+        </div>
+      </div>  
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('select').formSelect();
+  	});
+
+    $(".delete").click(function(){
+        var confirmar=confirm("Esta seguro que deseas eliminar");
+        if(confirmar){
+          window.location.reload(true);
+        }else{
+            alert("cancelo la solicitud");
+            return false;
+        }
+    });
+
+    $("#addproveedores").click(function(){
+       var bank = document.getElementById("bank").value;
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+
+        if(bank == "" || name == ""){
+            swal({
+              title: "Para agregar un proveedor debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+           icon: "success",
+           buttons: false,
+          }); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_proveedor").submit()
+    }
+    
+    $(".info_prov").click(function(){
+      var id = $(this).data('id');
+      var nombre = $(this).data('nombre');
+      var telefono = $(this).data('telefono');
+      var rfc = $(this).data('rfc');
+      var titular = $(this).data('titular');
+      var cuenta = $(this).data('cuenta');
+      var tarjeta = $(this).data('tarjeta');
+      var email = $(this).data('email');
+      var banco = $(this).data('banco');
+
+      document.getElementById("name_prov").value = nombre;
+      document.getElementById("telefono_prov").value = telefono;
+      document.getElementById("rfc_prov").value = rfc; 
+      document.getElementById("titular_prov").value = titular;
+      document.getElementById("cuenta_prov").value = cuenta;
+      document.getElementById("tarjeta_prov").value = tarjeta;
+      document.getElementById("email_prov").value = email;
+      document.getElementById("banco_prov").value = banco;
+    }); 
+</script>

@@ -1,0 +1,180 @@
+<?php foreach ($this->usuarios as $usr) { 
+	$imagen = $usr['imagen'];   
+	$nombre =$usr['nombre'];  
+} ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/usuarios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div> 
+
+
+
+<div class="row">
+	<div class="col m4 s12 text-center">
+		<?php if($imagen== null){ ?>
+			<img src="/img/profile-default.png" class="responsive-img" style="width: 200px; margin-top: 20px;">
+		<?php }else{ ?>
+			<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 260px; margin-top: 20px;"/></a>
+		<?php } ?>
+		<div class="row">
+			<div class="col m12 s12 text-center">
+				<?php if($imagen == null){ ?>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal1foto">Subir Foto</a>
+				<?php }else{ ?>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal1fotoact">Actualizar</a>
+				<?php } ?>
+				
+			</div>
+		</div>
+	</div>
+
+	<div id="modal1foto" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<form action="/panel/requestaddfotousuario" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotopersonal">
+			    <h2>Agregar foto del usuario</h2>
+				<div class="file-field input-field col m12 s12">
+					<input type="hidden" name="id_personal" value="<?php echo $this->id_personal; ?>">
+					<div class="btn">
+					    <span>Foto</span>
+					    <input type="file" id="url" name="url">
+					</div>
+					<div class="file-path-wrapper">
+					    <input class="file-path validate" type="text">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button id="addfotopersonal" class="waves-effect waves-light btn">Guardar</button>
+			<button class="modal-close waves-effect waves-light red btn">Cerrar</button>
+		</div>
+	</div>
+
+	<div id="modal1fotoact" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<form action="/panel/requestupdatefotousuario" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotopersonal_request">
+			    <h2>Actualizar foto del usuario</h2>
+				<div class="file-field input-field col m12 s12">
+					<input type="hidden" name="id_personal" value="<?php echo $this->id_personal; ?>">
+				<?php foreach ($this->usuarios as $flw) { ?>
+					<div class="btn">
+					    <span>Foto</span>
+					    <input type="file" id="cover" name="cover">
+					    <input type="hidden" name="urlhidden" value="<?php echo $flw["imagen"]; ?>" class="form-control">
+					</div>
+				<?php } ?>
+					<div class="file-path-wrapper">
+					    <input class="file-path validate" type="text">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button id="requestfotopersonal" class="waves-effect waves-light btn">Guardar</button>
+			<button class="modal-close waves-effect waves-light red btn">Cerrar</button>
+		</div>
+	</div>
+	<div class="col m8 s12" style="margin-top: 20px;">
+		<div class="row">
+			<div class="col m6 s6">
+				<h3>Datos Generales</h3>
+			</div>
+			<div class="col m6 s6">
+				<!-- <button class="waves-effect waves-light red btn">Descargar PDF</button> -->
+			</div>
+		</div>
+      	<table class="responsive-table">
+	        <thead>
+	          <tr>
+	              <th>Nombre(s):</th>
+	              <th>Apellido Paterno:</th>
+	              <th>Apellido Materno:</th>
+	              <th>Telefono:</th>
+	              <th>Correo:</th>
+	          </tr>
+	        </thead>
+			<?php foreach ($this->usuarios as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $usr["nombre"]; ?></td>
+					<td><?php echo $usr["ap"]; ?></td>
+					<td><?php echo $usr["am"]; ?></td>
+					<td><?php echo $usr["telefono"]; ?></td>
+					<td><?php echo $usr["correo"]; ?></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+      	</table>
+	</div>
+</div>
+
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	    $('.datepicker').datepicker();
+	});
+    $(".getpdf").click(function(){
+    	pdf= $(this).data('id');
+    	name= $(this).data('name');
+		var fileURL = pdf;
+		var fileName = 'CertificadoMedico_'+name+'.pdf';
+		download_file(fileURL, fileName);
+    });
+
+	function download_file(fileURL, fileName) {
+	  	var link = document.createElement('a');
+	  	link.href = fileURL;
+	  	link.download = fileName;
+	  	document.body.appendChild(link);
+	  	link.click();
+	  	document.body.removeChild(link);
+	}
+
+
+    $("#addfotopersonal").click(function(){
+       var url = document.getElementById("url").value;
+
+        if(url == ""){
+            swal({
+              title: "Selecciona una foto para poder subirla.",
+            });
+        }else{
+            swal("Felicidades!", "La foto del usuario se subio de forma correcta!", "success");   
+            setTimeout(submitFormuser, 1500);     
+        }
+    });
+
+    $("#requestfotopersonal").click(function(){
+       var url = document.getElementById("cover").value;
+
+        if(url == ""){
+            swal({
+              title: "Selecciona una foto para poder subirla.",
+            });
+        }else{
+            swal("Felicidades!", "La foto del usuario se edito de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitFormuser() {
+        document.getElementById("submit_fotopersonal").submit()
+    }
+
+    function submitForm() {
+        document.getElementById("submit_fotopersonal_request").submit()
+    }
+</script>

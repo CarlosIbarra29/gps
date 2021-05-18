@@ -1,0 +1,1075 @@
+
+<?php foreach ($this->personal as $usr) { $imagen = $usr['imagen'];   $nombre =$usr['nombre'];  } ?>
+<!-- <div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+         
+    </div>
+</div> -->
+
+<div class="row" style="margin-top: 15px;">
+	<div class="col m6 s12">
+		<a href="/panel/personal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+
+		<?php if($this->rol_user == 12 || $this->rol_user == 1){ ?>
+
+			<?php foreach ($this->personal as $flw) { ?>
+				<?php if($flw['status_personal'] == 0){ ?>
+					<div class="row">
+						<?php if($flw['perfil'] == null){ ?>
+				        <div class="input-field col s12">
+				          <textarea id="perfil_text" name="perfil" class="materialize-textarea"></textarea>
+				          <label for="perfil_text">Perfil</label>
+				        </div>
+				    	<?php }else{ ?>
+				        <div class="input-field col s12">
+				          <textarea id="perfil_text" name="perfil" class="materialize-textarea"><?php echo $flw['perfil']; ?></textarea>
+				          <label for="perfil_text">Perfil</label>
+				        </div>
+				    	<?php } ?>
+
+				        <div class="input-field col s12 text-center">
+				        	<a class="btn" id="add_perfil">Guardar Perfil</a>
+				        </div>
+					</div>
+				<?php } ?>
+			<?php } ?>
+
+		<?php } ?>
+	</div>
+	<div class="col m6 s12">
+		<div class="row text-center">
+			<h4>Status Personal</h4>
+		</div>
+		<div class="row">
+			<div class="col m4 s4">
+				<?php foreach ($this->personal as $flw) { ?>
+				<?php if($flw['status_personal'] == 0){ ?>
+					<div class="chip" id="activo_personal">
+				    	<img src="/img/correct.png" >
+				    	Activo
+				  	</div>
+				<?php }else{ ?>
+					<div class="chip">
+				    	<img src="/img/gris.jpg" id="activo_personal">
+				    	Activo
+				  	</div>
+				<?php } ?>
+			  	<?php } ?>
+			</div>
+			<div class="col m4 s4">
+				<?php foreach ($this->personal as $flw) { ?>
+				<?php if($flw['status_personal'] == 1){ ?>
+					<div class="chip" id="inactivo_personal">
+				    	<img src="/img/naranja.png" >
+				    	Inactivo
+				  	</div>
+				<?php }else{ ?>
+					<div class="chip" id="inactivo_personal">
+				    	<img src="/img/gris.jpg" >
+				    	Inactivo
+				  	</div>
+				<?php } ?>
+			  	<?php } ?>
+			</div>
+			<div class="col m4 s4">
+				<?php foreach ($this->personal as $flw) { ?>
+				<?php if($flw['status_personal'] == 2){ ?>
+					<div class="chip" id="baja_personal">
+				    	<img src="/img/rojo.png" >
+				    	Baja
+				  	</div>
+				<?php }else{ ?>
+					<div class="chip" id="baja_personal">
+				    	<img src="/img/gris.jpg" >
+				    	Baja
+				  	</div>
+				<?php } ?>
+			  	<?php } ?>
+			</div>
+		</div>
+
+		<div class="row">
+			<?php foreach ($this->personal as $flw) { ?>
+				<span>Ultima fecha de actualizacion de status: <?php echo $flw['fecha_personal'];  ?></span>
+			<?php } ?>
+		</div>
+
+
+		<?php if($this->rol_user == 12 || $this->rol_user == 1){ ?>
+		<div class="row">
+			<?php if($flw['status_personal'] == 0){ ?>
+				<?php if($flw['status_operativo'] == 1){ ?>
+					<div class="col m3 s3">
+						<div class="chip">
+					    	<img src="/img/correct.png">
+					    	Taller
+					  	</div>
+					</div>
+				<?php }else{ ?>
+					<div class="col m3 s3">
+						<div class="chip">
+					    	<img src="/img/gris.jpg" id="taller">
+					    	Taller
+					  	</div>
+					</div>		
+				<?php } ?>
+
+				<?php if($flw['status_operativo'] == 2){ ?>
+					<div class="col m4 s4">
+						<div class="chip">
+					    	<img src="/img/correct.png">
+					    	En Sitio
+					  	</div>
+					</div>
+				<?php }else{ ?>
+					<div class="col m4 s4">
+						<div class="chip">
+					    	<img src="/img/gris.jpg" id="en_sitio">
+					    	En Sitio
+					  	</div>
+					</div>
+				<?php } ?>
+
+
+				<?php if($flw['status_operativo'] == 3){ ?>
+					<div class="col m5 s5">
+						<div class="chip">
+					    	<img src="/img/correct.png">
+					    	Compensación
+					  	</div>
+					</div>
+				<?php }else{ ?>
+					<div class="col m5 s5">
+						<div class="chip">
+					    	<img src="/img/gris.jpg" id="compensacion">
+					    	Compensación
+					  	</div>
+					</div>
+				<?php } ?>
+
+			<?php } ?>
+		</div>
+		<?php } ?>
+
+
+	</div>
+</div>
+<?php foreach ($this->personal as $flw) { ?>
+	<input type="hidden" name="status_personal_id" id="status_personal_id" value="<?php echo $flw['status_personal']; ?>">
+<?php } ?>
+
+					<?php foreach ($this->personal as $per) { 
+						$user = $per["id"];
+					} ?>
+	<input type="hidden" name="" id="usuario_id" value="<?php echo $user; ?>">
+
+<div class="row">
+	<div class="col m4 s12 text-center">
+		<?php if($imagen== null){ ?>
+			<img src="/img/profile-default.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+		<?php }else{ ?>
+			<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+		<?php } ?>
+		<div class="row">
+			<div class="col m12 s12 text-center">
+				<?php if($imagen == null){ ?>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal1foto">Subir Foto</a>
+				<?php }else{ ?>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal1fotoact">Actualizar</a>
+				<?php } ?>
+				
+			</div>
+		</div>
+	</div>
+
+	<div id="modal1foto" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<form action="/panel/requestaddfotopersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotopersonal">
+			    <h2>Agregar foto al personal</h2>
+				<div class="file-field input-field col m12 s12">
+					<input type="hidden" name="id_personal" value="<?php echo $this->id_personal; ?>">
+					<div class="btn">
+					    <span>Foto</span>
+					    <input type="file" id="url" name="url">
+					</div>
+					<div class="file-path-wrapper">
+					    <input class="file-path validate" type="text">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button id="addfotopersonal" class="waves-effect waves-light btn">Guardar</button>
+			<button class="modal-close waves-effect waves-light red btn">Cerrar</button>
+		</div>
+	</div>
+
+	<div id="modal1fotoact" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<form action="/panel/requestupdatefotopersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotopersonal_request">
+			    <h2>Actualizar foto al personal</h2>
+				<div class="file-field input-field col m12 s12">
+					<input type="hidden" name="id_personal" value="<?php echo $this->id_personal; ?>">
+				<?php foreach ($this->personal as $flw) { ?>
+					<div class="btn">
+					    <span>Foto</span>
+					    <input type="file" id="cover" name="cover">
+					    <input type="hidden" name="urlhidden" value="<?php echo $flw["imagen"]; ?>" class="form-control">
+					</div>
+				<?php } ?>
+					<div class="file-path-wrapper">
+					    <input class="file-path validate" type="text">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button id="requestfotopersonal" class="waves-effect waves-light btn">Guardar</button>
+			<button class="modal-close waves-effect waves-light red btn">Cerrar</button>
+		</div>
+	</div>
+
+
+	<div class="col m8 s12" style="margin-top: 5px;">
+		<div class="row">
+			<div class="col m6 s6">
+				<h3>Datos Generales</h3>
+			</div>
+			<div class="col m6 s6">
+				<!-- <button class="waves-effect waves-light red btn">Descargar PDF</button> -->
+			</div>
+		</div>
+      	<table class="responsive-table">
+	        <thead>
+	          <tr>
+	              <th>Nombre(s):</th>
+	              <th>Apellido Paterno:</th>
+	              <th>Apellido Materno:</th>
+	              <th>Puesto:</th>
+	              <th>Telefono:</th>
+	          </tr>
+	        </thead>
+			<?php foreach ($this->personaldetail as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $usr["nombre"]; ?></td>
+					<td><?php echo $usr["apellido_pa"]; ?></td>
+					<td><?php echo $usr["apellido_ma"]; ?></td>
+					<td><?php echo $usr["name_puesto"]; ?></td>
+					<td><?php echo $usr["telefono"]; ?></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+      	</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="row">
+			<div class="col m6 s12">
+				<h3>Certificado Medico</h3>
+			</div>
+			<div class="col m6 s12">
+			<?php if($this->validation_med == "vacio"){ ?>
+				<a class="waves-effect red btn modal-trigger" href="#modal1">+ Agregar Certificado Medico</a>
+			<?php }else{ ?>
+			<?php } ?>
+			</div>
+		</div>
+      	<table class="responsive-table">
+	        <thead>
+	          	<tr>
+	              	<!-- <th>Lugar de Capacitación</th> -->
+	              	<th>Fecha</th>
+	              	<th>Médico</th>
+	              	<th>Cedula</th>
+	              	<th>Folio</th>
+	              	<th>Documento</th>
+	              	<th>Editar</th>
+	          	</tr>
+	        </thead>
+	        <?php if ($this->medico) {
+			 foreach ($this->medico as $usr) { ?>
+			<tbody>
+				<tr>
+					<!-- <td><?php echo $usr["lugar_capacitacion"]; ?></td> -->
+					<td><?php echo $usr["fecha"]; ?></td>
+					<td><?php echo $usr["medico"]; ?></td>
+					<td><?php echo $usr["cedula"]; ?></td>
+					<td><?php echo $usr["folio_documento"]; ?></td>
+					<td class="">
+
+
+						<a title="Descargar Archivo" href="/<?php echo $usr["pdf"]; ?>" download="<?php echo substr(strrchr($usr["pdf"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+
+						<!-- <a class="waves-effect waves-light btn getpdf" data-id="/<?php echo $usr["pdf"]; ?>" data-name="<?php echo $usr["nombre"]; ?>" download><i class="material-icons left">get_app</i>Pdf</a> -->
+					</td>
+
+					<?php foreach ($this->personal as $per) { 
+						$user = $per["id"];
+					} ?>
+					<td>
+						<a href="/panel/editarcertificadomedico/id/<?php echo $usr['id']; ?>/user/<?php echo $user; ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+				</tr>
+			</tbody>
+			<?php } }else{ ?>
+			<tbody>
+				<tr>
+					<td>
+						No se ha agregado informacion
+					</td>
+				</tr>				
+			</tbody>
+			<?php } ?>
+      	</table>	
+	</div>
+
+
+	<div class="col m12 s12" style="margin-top: 25px;">
+		<div class="row">
+			<div class="col m6 s6">
+				<h3>Antidoping</h3>
+			</div>
+
+			<?php if ($this->info_antidoping) {
+				foreach ($this->info_antidoping as $ant){?>
+				<?php }}else{ ?>
+					<div class="col m6 s12">
+							<a class="waves-effect red btn modal-trigger" href="#modal3">+ Agregar Antidoping</a>
+					</div>
+				<?php } ?>
+
+		</div>
+
+		<div class="row">
+	      	<table class="responsive-table">
+		        <thead>
+		          	<tr>
+		            	<th>Laboratorio</th>
+		            	<th>Fecha</th>
+		              	<th>Resultado</th>
+		              	<th>Folio documento</th>
+		              	<th>Formato Antidoping</th>
+		              	<th>Editar</th>
+		          	</tr>
+		        </thead>
+		        <?php if ($this->info_antidoping) {
+		         foreach ($this->info_antidoping as $key){ ?>
+			        <tbody>
+			        	<tr>
+			        		<td>
+			        			<?php echo $key['laboratorio']; ?>
+			        		</td>
+			        		<td>
+			        			<?php echo $key['fecha']; ?>
+			        		</td>
+			        		<td>
+			        			<?php echo $key['resultado']; ?>
+			        		</td>
+			        		<td>
+			        			<?php echo $key['folio'] ?>
+			        		</td>
+			        		<td>
+			        			<a title="Descargar Archivo" href="/<?php echo $key["file"]; ?>" download="<?php echo substr(strrchr($key["file"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+			        		</td>
+
+
+					<?php foreach ($this->personal as $per) { 
+						$user = $per["id"];
+					} ?>	
+			        		<td>
+			        			<a href="/panel/editarantidoping/id/<?php echo $key['id']; ?>/user/<?php echo $user; ?>"><i class="fa fa-2x fa-edit"></i></a>
+			        		</td>
+			        	</tr>
+			        	
+			        </tbody>	
+		        <?php }}else{ ?>
+		        	<tbody>
+			        	<tr>
+			        		<td>
+			        			No se ha agregado informacion
+			        		</td>
+			        	</tr>
+			    	</tbody>
+		        <?php } ?>
+
+		     </table>
+		</div>
+	</div>
+
+	<div class="col m12 s12">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col m6 s12">
+				<h3>DC3</h3>
+			</div>
+			<?php if ($this->antidoping) {
+				foreach ($this->antidoping as $ant){?>
+					<?php if($ant['status_altura'] == 1 && $ant['status_electrico'] == 1 && $ant['status_auxilio'] == 1){ ?>
+
+					<?php }else{ ?>
+						<div class="col m6 s12">
+							<a class="waves-effect red btn modal-trigger" href="#modal2">+ Agregar DC3</a>
+						</div>
+					<?php } ?>
+				<?php }}else{ ?>
+					<div class="col m6 s12">
+							<a class="waves-effect red btn modal-trigger" href="#modal2">+ Agregar DC3</a>
+					</div>
+				<?php } ?>
+		</div>
+      	<table class="responsive-table">
+	        <thead>
+	          	<tr>
+	            	<th>Trabajos en Alturas:</th>
+	              	<th>Riesgo Electrico:</th>
+	              	<th>Primeros Auxilios:</th>
+	              	<th>Editar</th>
+	          	</tr>
+	        </thead>
+	        <?php if ($this->antidoping) {
+			foreach ($this->antidoping as $ant) { ?>
+			<tbody>
+				<tr>
+					<?php if($ant['status_altura'] == 0){ ?>
+						<td>
+    						<div class="chip">
+    							<img src="/img/incorrect.png" alt="Contact Person">
+    							No disponible
+  							</div>
+						</td>
+					<?php }else{ ?>
+						<td>
+							<a title="Descargar Archivo" href="/<?php echo $ant["tr_alturas"]; ?>" download="<?php echo substr(strrchr($ant["tr_alturas"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Trabajo en Alturas </a>	
+						</td>
+					<?php } ?>
+
+					<?php if($ant['status_electrico']==0){ ?>
+						<td>
+    						<div class="chip">
+    							<img src="/img/incorrect.png" alt="Contact Person">
+    							No disponible
+  							</div>
+						</td>
+					<?php }else{ ?>
+						<td>
+							<a title="Descargar Archivo" href="/<?php echo $ant["tr_electrico"]; ?>" download="<?php echo substr(strrchr($ant["tr_electrico"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Riesgo Electrico </a>
+						</td>
+					<?php } ?>
+
+					<?php if($ant['status_auxilio'] == 0){ ?>
+						<td>
+    						<div class="chip">
+    							<img src="/img/incorrect.png" alt="Contact Person">
+    							No disponible
+  							</div>
+						</td>
+					<?php }else{ ?>
+						<td>
+							<a title="Descargar Archivo" href="/<?php echo $ant["tr_auxilio"]; ?>" download="<?php echo substr(strrchr($ant["tr_auxilio"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Primeros Auxilios </a>	
+						</td>
+					<?php } ?>
+
+					<?php foreach ($this->personal as $per) { 
+						$user = $per["id"];
+					} ?>
+
+					<td>
+						<a href="/panel/editardctres/id/<?php echo $ant['id']; ?>/user/<?php echo $user; ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+				</tr>
+			</tbody>
+			<?php }}else{ ?>
+				<tbody>
+					<tr>
+						<td>
+							No se ha agregado Informacion
+						</td>
+					</tr>
+				</tbody>
+			<?php } ?>
+      	</table>		
+	</div>
+
+<div class="col m12 s12">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col m6 s12">
+				<h3>Epp Asignado</h3>
+			</div>
+			<?php foreach ($this->personal as $usr) { ?>
+			<div class="col m6 s12">
+				<a class="waves-effect red btn modal-trigger" href="/epp/asignarepp/id/<?php echo $usr["id"] ?>">Actualizar</a>
+			</div>
+			<?php } ?>
+		</div>
+      	<table class="responsive-table">
+	        <thead>
+	          	<tr>
+	          		<th>Id</th>
+	            	<th>Cantidad</th>
+	              	<th>Descripcion</th>
+	              	<th>Talla</th>
+	              	<th>Fecha de Entrega</th>
+	              	<th>Reposición</th>
+	          	</tr>
+	        </thead>
+	        <?php if ($this->eppasignado) {
+			foreach ($this->eppasignado as $asignado) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<?php echo $asignado["id"] ?>
+					</td>
+					<td>
+						<?php echo $asignado["cantidad"] ?>
+					</td>
+					<td>
+						<?php echo $asignado["descripcion"] ?>
+					</td>
+					<td>
+						<?php echo $asignado["t_e"] ?>
+					</td>
+					<td>
+						<?php echo $asignado["fecha_entrega"] ?>
+					</td>
+					<td>
+						<?php echo $asignado["reposicion"] ?>
+					</td>
+				</tr>
+			</tbody>
+			<?php }}else{ ?>
+				<tbody>
+					<tr>
+						<td>
+							No se ha agregado Informacion
+						</td>
+					</tr>
+				</tbody>
+			<?php } ?>
+      	</table>		
+	</div>
+</div>
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h2>Agregar Certificado Medico</h2>
+		<div class="col m12 s12">
+			<form action="/panel/requestaddcertificadomedicopersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+				<div class="row">
+
+					<input type="hidden" name="rol" value="6">
+					<?php foreach ($this->personal as $per) { ?>
+					<input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+					<?php } ?>
+				    <div class="file-field input-field col m12 s12">
+					    <div class="btn">
+					        <span>Documento pdf</span>
+					        <input type="file" name="url">
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+				    </div>
+
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">group</i>
+			          	<?php foreach ($this->personal as $per) { ?>
+			          	<input id="icon_prefix" type="text" name="name" value="<?php echo $per["nombre"]; ?> <?php echo $per["apellido_pa"]; ?> <?php echo $per["apellido_ma"]; ?>" class="validate" required>
+			          	<?php } ?>
+			          	<label for="icon_prefix">Nombre(s):</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">comment</i>
+			          	<input id="comentario" type="text" name="comentario" class="validate">
+			          	<label for="comentario">Comentario:</label>
+			        </div>
+<!-- 			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">place</i>
+			          	<input id="lugar_capacitacion" type="text" name="lugar_capacitacion" class="validate">
+			          	<label for="lugar_capacitacion">Lugar de Capacitación:</label>
+			        </div> -->
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">today</i>
+			          	<input id="fecha" type="date" name="fecha">
+			          	<label for="fecha">fecha: dd/mm/yyyy</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">local_hospital</i>
+			          	<input id="medico" type="text" name="medico" class="validate">
+			          	<label for="medico">Médico</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">create</i>
+			          	<input id="cedula" type="text" name="cedula" class="validate">
+			          	<label for="cedula">Cedula</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">contacts</i>
+			          	<input id="folio" type="text" name="folio" class="validate">
+			          	<label for="folio">Folio del documento</label>
+			        </div>
+		      	</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
+    	</form>
+    	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h2>DC3</h2>
+		<div class="col m12 s12">
+			<form action="/panel/requestaddantidopingpersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="row">
+					<input type="hidden" name="rol" value="6">
+					<?php foreach ($this->personal as $per) { ?>
+					<input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+					<?php } ?>
+
+					<?php foreach ($this->antidoping as $ant) { 
+						$alturas_st = $ant['status_altura'];
+						$electrico_st = $ant['status_electrico'];
+						$auxilio_st = $ant['status_auxilio'];
+					} ?>
+	  					<div class="input-field col m6 s12">
+	    					<select id="actividadcuatro" name="actividad">
+	      						<option value="" disabled selected>Selecciona un Documento</option>
+	      						<?php if($alturas_st == 0){ ?>
+	      							<option value="1">NOM-009-STPS-2011 Trabajos en Alturas</option>
+	      						<?php }else{ ?>
+	      							<option value="1" disabled>NOM-009-STPS-2011 Trabajos en Alturas</option>
+	      						<?php } ?>
+
+	      						<?php if($electrico_st == 0){ ?>
+	      							<option value="2">NOM-029-STPS- Riesgo Electrico</option>
+	      						<?php }else{ ?>
+	      							<option value="2" disabled>NOM-029-STPS- Riesgo Electrico</option>
+	      						<?php } ?>
+
+	      						<?php if($auxilio_st == 0){ ?>
+	      							<option value="3">NOM-030-STPS-2009 Primeros Auxilios</option>
+	      						<?php }else{ ?>
+	      							<option value="3" disabled>NOM-030-STPS-2009 Primeros Auxilios</option>
+	      						<?php } ?>	
+	    					</select>
+	  					</div>
+					    <div class="file-field input-field col m6 s12">
+					    	<div class="btn">
+					        	<span>Documento</span>
+					        	<input type="file" name="url">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate" type="text">
+					      	</div>
+					    </div>
+		      	</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
+    	</form>
+    	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="modal3" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h2>Agregar Antidoping</h2>
+
+			<form action="/panel/requestaddinfoantidopingpersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_infoantidoping">
+				<div class="row">
+					<input type="hidden" name="rol" value="6">
+					<?php foreach ($this->personal as $per) { ?>
+					<input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+					<?php } ?>
+				    <div class="file-field input-field col m12 s12">
+					    <div class="btn">
+					        <span>Antidoping</span>
+					        <input type="file" name="url">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" id="validate_antid" type="text">
+					    </div>
+				    </div>
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">group</i>
+			          	<input id="laboratorio" type="text" name="laboratorio" class="validate">
+			          	<label for="laboratorio">Laboratorio:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">comment</i>
+			          <input id="resultado_ant" type="text" name="resultado" class="validate">
+			          <label for="resultado_ant">Resultado:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="folio_ant" type="text" name="folio" class="validate">
+			          <label for="folio_ant">Folio Documento:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">today</i>
+			          <input id="date_ant" type="date" name="fecha" class="validate">
+			          <label for="date_ant">fecha: dd/mm/yyyy</label>
+			        </div>
+			</form>
+
+    </div>
+    <div class="modal-footer">
+		<button tyle="submit" id="add_infoantidoping" class="waves-effect waves-light btn">Guardar</button>
+    	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	    $('.datepicker').datepicker();
+	});
+    $(".getpdf").click(function(){
+    	pdf= $(this).data('id');
+    	name= $(this).data('name');
+		var fileURL = pdf;
+		var fileName = 'CertificadoMedico_'+name+'.pdf';
+		download_file(fileURL, fileName);
+    });
+
+	function download_file(fileURL, fileName) {
+	  	var link = document.createElement('a');
+	  	link.href = fileURL;
+	  	link.download = fileName;
+	  	document.body.appendChild(link);
+	  	link.click();
+	  	document.body.removeChild(link);
+	}
+
+
+    $("#addfotopersonal").click(function(){
+       var url = document.getElementById("url").value;
+
+        if(url == ""){
+            swal({
+              title: "Selecciona una foto para poder subirla.",
+            });
+        }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        });   
+            setTimeout(submitFormuser, 1500);     
+        }
+    });
+
+    $("#requestfotopersonal").click(function(){
+       var url = document.getElementById("cover").value;
+
+        if(url == ""){
+            swal({
+              title: "Selecciona una foto para poder subirla.",
+            });
+        }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        });  
+            setTimeout(actfotopersonal, 1500);     
+        }
+    });
+
+    function submitFormuser() {
+        document.getElementById("submit_fotopersonal").submit()
+    }
+
+    function actfotopersonal() {
+        document.getElementById("submit_fotopersonal_request").submit()
+    }
+
+
+    $("#add_infoantidoping").click(function(){
+     	var status = document.getElementById("validate_antid").value;
+
+        if(status == ""){
+            swal({
+                title: "Para editar la informacion es necesario que selecciones un archivo",
+            });
+        }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        });  
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("form_infoantidoping").submit()
+    }
+
+
+    $("#activo_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "0";
+	    		var operativo = "0";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato, operativo:operativo},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#inactivo_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "1";
+	    		var operativo = "0";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato, operativo:operativo},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#baja_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "2";
+	    		var operativo = "0";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato, operativo:operativo},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+    $("#taller").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonaldos",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#en_sitio").click(function(){
+    	
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "2";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonaldos",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+    $("#compensacion").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "3";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonaldos",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#add_perfil").click(function(){
+    	var perfil_text = document.getElementById("perfil_text").value;
+		swal({
+			title: "Estas seguro de agregar el perfil del personal?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        }); 
+	    		var user = document.getElementById("usuario_id").value;
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddperfilpersonal",
+	                method:"POST",
+	                data: { user:user, perfil_text:perfil_text},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+</script>

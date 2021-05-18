@@ -1,0 +1,93 @@
+<script type="text/javascript">
+	window.onload = function() {
+  		showItemsTMP();
+	};
+</script>
+<style type="text/css">
+	.display-items{ display: none; }
+</style>
+<div class="row">
+	<div class="col-lg-12">
+		<h2></h2>
+	</div>
+	<div class="col-lg-12">
+		<div class="alert alert-red display-items" role="alert">
+			<p>Vaya al parecer no tienes productos</p>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-3">
+				<h4>Nombre Producto</h4>
+			</div>
+			<div class="col-md-2">
+				<h4>Cantidad</h4>
+			</div>
+			<div class="col-md-2">
+				<h4>Precio</h4>
+			</div>
+			<div class="col-md-2">
+				<h4>Subtotal</h4>
+			</div>
+			<div class="col-md-2">
+				<h4>Eliminar</h4>
+			</div>
+		</div>
+		<div class="row" id="textDiv"></div><br>
+	</div>
+	
+	<div class="col-lg-12">
+		<p><a href="/shopping/itemdeleteall"  class="form-control btn btn-primary" >Eliminar todo</a></p>
+		<p><a href="/orden" class="form-control btn btn-primary" >Continuar compra</a></p>
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+	function showItemsTMP(){
+		$.get( "/shopping/itemsget", function( data ) {
+			var res = JSON.parse(data);
+			var htm="";
+			if (res!=null) {
+			for(var i =0 ; i < res.length ; i++ ){
+				 if (res[i].offer==1) {var relprice=res[i].priceoffer; } else {var relprice=res[i].price;}
+
+				htm += 
+				'<div class="col-lg-3">'+
+					'<label>'+res[i].name+'</label>'+
+				'</div>'+
+				'<div class="col-lg-2">'+
+					'<label>'+res[i].quantity+'</label>'+
+				'</div>'+
+				'<div class="col-lg-2">'+
+					'<label>'+relprice+'</label>'+
+				'</div>'+
+				'<div class="col-lg-2">'+
+					'<label>'+(relprice*res[i].quantity)+'</label>'+
+				'</div>'+
+				'<div class="col-lg-2">'+
+				'<a href="#" onclick="delToCar('+i+'); "><span class="warning" style="color: red;"><i class="fa fa-2x fa-trash"></i></span></i></a>'+
+				'</div>';
+			}
+			if(htm == ""){
+				$(".display-items").fadeIn(400);
+			} else {
+				$("#textDiv").html(htm);
+			}
+		} else {
+			$("#textDiv").html('<h1>Vaya! parece que no tienes articulos en tu carrtio.</h1>');
+		}
+		});
+	}
+
+    function delToCar(id){
+        $.post("/shopping/itemdelete",{ 
+            id: id,//id producto, 
+        }).done(function( data ) { 
+            console.log(data); 
+            showItemsTMP();
+        });
+        return false;
+	}
+</script>
+
+

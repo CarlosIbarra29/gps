@@ -1,0 +1,1504 @@
+
+<?php $session = new Zend_Session_Namespace("current_session"); 
+   
+        $instance = new Application_Model_SeasonPanelModel();
+        $id = $session->id;
+        $wh ="id";
+        $table = "usuario";
+        $usuarios = $instance->GetSpecific($table,$wh,$id);
+
+        $rol = $usuarios[0]['fkroles'];
+        $wh = "id";
+        $table = "roles";
+        $rol_name = $instance->GetSpecific($table,$wh,$rol);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="/img/gp.png"/>
+    <title>GPS Constructivos</title>   
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/chart/dist/Chart.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    <script type="text/javascript" src="/js/jquery.v3.js"></script>
+    <script type="text/javascript" src="/js/chart/Chart.min.js"></script>
+    <script src ="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.js"></script>
+    <!-- <script type="text/javascript" src="/js/materialize.min.js"></script> -->
+    <script src="/js/select2.min.js"></script>
+    <link href="/css/lightbox.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"> </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+
+<style type="text/css">
+
+body{
+    background-color: white;
+}
+
+header, main, footer {
+  padding-left: 300px; }
+
+nav .bread {
+  /*background-color: #B11C1C;*/
+  padding-left: 20px; }
+
+nav.top-nav h1.header {
+  margin: 0;
+  padding-top: 22px; }
+
+.sidenav{
+    height: calc(100% + 0px);
+}
+.sidenav li.active {
+  background-color: #cccccc;
+  color: #fff; }
+
+.sidenav li.active a, .sidenav li.active a i {
+  color: #fff; }
+
+nav.top-nav {
+  height: 70px; }
+
+table.striped > tbody > tr:nth-child(2n+1) {
+  background-color: rgba(234, 234, 234, 0.7); }
+
+a.sidenav-trigger.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  top: 5px;
+  float: none;
+  margin-left: 1.5rem;
+  color: #fff;
+  font-size: 36px;
+  z-index: 2;
+  left: 0; 
+}
+
+/*.oculto{
+    display: none;
+}
+*/
+
+.img-responsive{ max-width: 100%; }
+.img-240{ width:120px; }
+
+@media only screen and (max-width: 992px){header,main,footer{padding-left:0}}
+
+body{
+    background-color: white;
+}
+
+header, main, footer {
+  padding-left: 300px; }
+
+nav .bread {
+  /*background-color: #B11C1C;*/
+  padding-left: 20px; }
+
+nav.top-nav h1.header {
+  margin: 0;
+  padding-top: 22px; }
+
+.sidenav{
+    height: calc(100% + 0px);
+}
+
+.sidenav::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.sidenav::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+.sidenav::-webkit-scrollbar-button:increment,.sidenav::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.sidenav::-webkit-scrollbar:horizontal {
+    display: none;/*height: 10px;*/
+}
+
+.sidenav::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.sidenav::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
+.sidenav li.active {
+  background-color: #cccccc;
+  color: #fff; }
+
+.sidenav li.active a, .sidenav li.active a i {
+  color: #fff; }
+
+/* .sidenav li:hover a{
+  background-color: #66BB6A;
+  color: white;
+
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+ /* border-radius: 15px 0px 15px 0px;
+  box-shadow: inset 0 0 0 3px #555953;
+}
+
+.sidenav li:hover a i{
+  background-color: #66BB6A;
+  color: white;
+
+}*/
+
+
+nav.top-nav {
+  height: 70px; }
+
+table.striped > tbody > tr:nth-child(2n+1) {
+  background-color: rgba(234, 234, 234, 0.7); }
+
+a.sidenav-trigger.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  top: 5px;
+  float: none;
+  margin-left: 1.5rem;
+  color: #fff;
+  font-size: 36px;
+  z-index: 2;
+  left: 0; 
+}
+
+.single-icon i:hover {
+        /*transform: scale(1.5);*/
+        /*color: #1813e4;*/
+        color: blue;
+    }
+/*
+.moves:hover {
+    animation: moves 1s cubic-bezier(.36,.07,.57,.99) infinite;
+}
+
+@keyframes moves {
+    0% {
+        transform: scale(1) translateX(0);
+    }
+    15% {
+        transform: scale(1) translateX(5px);
+    }
+    30% {
+        transform: scale(1) translateX(-5px);
+    }
+    45% {
+        transform: scale(1) translateX(3px);
+    }
+    60% {
+        transform: scale(1) translateX(-3px);
+    }
+    75% {
+        transform: scale(1) translateX(0);
+    }
+    100% {
+        transform: scale(1) translateX(0);
+    }
+}*/
+
+
+.img-responsive{ max-width: 100%; }
+.img-240{ width:120px; }
+
+@media only screen and (max-width: 992px){header,main,footer{padding-left:0}}
+
+</style>
+
+<!--  <script type="text/javascript">
+var time = new Date().getTime();
+$(document.body).bind("mousemove keypress", function () {
+    time = new Date().getTime();
+});
+
+setInterval(function() {
+    if (new Date().getTime() - time >= 80000) {
+        window.location.reload(true);
+    }
+}, 1000);
+</script> -->
+
+
+<script type="text/javascript">
+        
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            var instances = M.Dropdown.init(elems, options);
+            var sidenav = document.querySelectorAll('.sidenav');
+            var snIns = M.Sidenav.init(sidenav);            
+        });
+
+        $(window).on("load",function(){
+            $(".fade-screen").delay(700).fadeOut(400);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+             var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, { });
+        });         
+</script>
+
+    <body>
+
+<body>
+    <style type="text/css">
+        .active-menu{background-color: rgba(0,0,0,0.05);}
+        .p20{ padding:20px;}
+        .text-right{ text-align: right; }
+        .text-left{ text-align: left; }
+        .text-center{ text-align: center; }
+        .inner-padding{ padding-top: 30px; }
+    </style>
+    <header>    
+        <nav class="top-nav indigo darken-3">
+            <div class="row">
+                <div class="col m6 s6">
+                    <h2 style="color:white;"><?php echo $rol_name[0]['nombre'];?> </h2>
+                </div>
+                <div class="col m6 s6 text-right">
+                    <h2 style="color:white;" id="MyClockDisplay" class="clock" onload="showTime()"></h2>
+                </div>
+            </div>
+
+        </nav>
+
+<?php 
+
+    $actual_link = "$_SERVER[REQUEST_URI]";
+    // var_dump($actual_link);exit;
+    $filename = substr(strrchr($actual_link, "/"), 1);
+
+
+    function getUrl($nameBtn,$urlname){
+        if($nameBtn == 1 && $urlname == null){ return "active"; }
+        return ($nameBtn == $urlname)?"active":"";
+
+    }
+
+    function getSitios($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $urldetail = "/panel/sitiosdetail/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; } // detalle sitios
+
+        $urledit = "/panel/sitiosedit/id/".$filename."";
+        if($actual_link == $urledit){ return "active"; } //editar sitio
+
+
+        $searchname = substr(strrchr($actual_link, "="), 1);
+        $urlname= "/panel/searchsitios?nombre=".$searchname.""; // buscador por nombre 
+        if($actual_link == $urlname){ return "active"; }
+
+        $urlcliente = "/panel/searchsitios?cliente=".$searchname.""; // buscador id del cliente 
+        if($actual_link == $urlcliente){ return "active"; }
+
+        $urlregion="/panel/searchsitios?region=".$searchname.""; // bucador de regions
+        if($actual_link == $urlregion){ return "active"; }
+
+
+        $urlcity="/panel/searchsitios?ciudad=".$searchname.""; // buscador por ciudad
+        if($actual_link == $urlcity){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchsitios/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $getsearch = "/panel/searchsitios/cliente/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $getsearch = "/panel/searchsitios/region/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $getsearch = "/panel/searchsitios/ciudad/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $getpag="/panel/sitios?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }   
+    }
+
+    function getmapasitio($actual_link){
+        // $actual_link = "$_SERVER[REQUEST_URI]";
+        // $urldetail = "/panel/mapasitio";
+        // if($actual_link == $urldetail){ return "active"; } // mapa sitios        
+    }
+
+    function getsolicitudcompra($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $urldetail = "/panel/successsolicitudordencompras";
+        if($actual_link == $urldetail){ return "active"; }   
+        
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $urldetail = "/solicitud/listaordencompra";
+        if($actual_link == $urldetail){ return "active"; } 
+
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/panel/ordencompraspasodos/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+    }
+
+    function getlistasolicitud($actual_link){
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/listarolsolicitudes/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicituddetailencargado/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/successsolicitud/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }     
+
+    }
+
+    function getlistasolicitudcontabilidad($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/successsolicitudcontabilidad/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicituddetailencargado/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/successsolicitud/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/listarolsolicitudescontabilidad/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/missolicitudescontabilidad/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);     
+        $urlname="/solicitud/detallesolicitudcreada/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+    }
+
+
+    function getlistasolicitudadmin($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/listaordencompra/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicituddetailencargado/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicituddetail/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/missolicitudes/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; } 
+
+    }
+
+    function getcajachica($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/comprobacion/solicitudescajachica/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+        $urlname="/comprobacion/consolicitudescajachica/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+    }
+
+
+    function getcajachicaconta($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/comprobacion/cajachicacontabilidad/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }   
+
+ 
+    }
+
+    function getlistasolicitudcoord($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicituddetailcoordinador/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $getpag="/solicitud/listaordencompracoordinador?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/listaordencompracoordinador/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $urlname="/solicitud/listaordencompracoordinadorauditoria/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $urlname="/solicitud/listaordencompracoordinadoraceptadas/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $urlname="/solicitud/listaordencompracoordinadorpagadas/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }    
+    } 
+
+
+    function getUsuarios($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/panel/usuariodetail/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }
+
+        $urledit = "/panel/usuariosedit/id/".$filename."";
+        if($actual_link == $urledit){ return "active"; }
+
+        $urlrol = "/panel/userrol";
+        if($actual_link == $urlrol){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $searchname="/panel/searchusuarios?nombre=".$namebus."";
+        if($actual_link == $searchname){ return "active"; }
+
+        $getpag="/panel/usuarios?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchusuarios/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+    }
+
+    function getPersonal($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+
+        $namePer = "/panel/papelerapersonal";
+        if($actual_link == $namePer){ return "active"; }
+
+        $namePer = "/panel/personaldetail/id/".$filename."";
+        if($actual_link == $namePer){ return "active"; }
+
+        $namePer = "/panel/informaciongeneral/id/".$filename."";
+        if($actual_link == $namePer){ return "active"; }
+
+        $urledit = "/panel/personaledit/id/".$filename."";
+        if($actual_link == $urledit){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $busname = "/panel/searchpersonal?nombre=".$namebus."";
+        if($actual_link == $busname){ return "active"; }
+
+        $buspuesto = "/panel/searchpersonal?puesto=".$namebus."";
+        if($actual_link == $buspuesto){ return "active"; }
+
+        $busstatus = "/panel/searchpersonal?status=".$namebus."";
+        if($actual_link == $busstatus){ return "active"; }
+
+        $getpag="/panel/personal?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchpersonal/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $getpuesto="/panel/searchpersonal/puesto/".$name."?pagina=".$namebus."";
+        if($actual_link == $getpuesto){ return "active"; }
+
+        $getstatus="/panel/searchpersonal/status/".$name."?pagina=".$namebus."";
+        if($actual_link == $getstatus){ return "active"; }
+    }
+
+    function getTipoproyecto($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/panel/statusproyecto/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+
+        $urlstatus = "/panel/statustipo/id/".$filename."";
+        if($actual_link == $urlstatus){ return "active"; }
+
+        $urlstatus = "/panel/tipoproyectoedit/id/".$filename."";
+        if($actual_link == $urlstatus){ return "active"; }
+
+        $getpag="/panel/tipoproyecto?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $busname = "/panel/searchtipoproyecto?nombre=".$namebus."";
+        if($actual_link == $busname){ return "active"; }
+
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchtipoproyecto/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+    }
+
+    function getEstructura($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/panel/estructurasitiosedit/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $busname = "/panel/searchestructura?nombre=".$namebus."";
+        if($actual_link == $busname){ return "active"; }
+
+        $getpag="/panel/searchestructura?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchestructura/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+    }
+
+
+    function getSttipo($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/panel/statustipo/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+
+    function getProveedor($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1); 
+
+        $getpag="/panel/proveedores?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $urldetail = "/panel/proveedoredit/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; } 
+
+        $busname = "/panel/searchproveedor?nombre=".$namebus."";
+        if($actual_link == $busname){ return "active"; } 
+
+        $name = strstr($filename, '?', true);
+        $getsearch = "/panel/searchproveedor/nombre/".$name."?pagina=".$namebus."";
+        if($actual_link == $getsearch){ return "active"; }
+
+        $getpag="/archivos/excelproveedores";
+        if($actual_link == $getpag){ return "active"; }
+    }
+
+    function getherramienta($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $getpag="/herramienta/inventario?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $getpag="/herramienta/categoria";
+        if($actual_link == $getpag){ return "active"; }
+
+        $getpag="/herramienta/categoria?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+    }
+
+    function getgasolina($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $getpag="/gasolina/addcontrolgasolina";
+        if($actual_link == $getpag){ return "active"; }
+
+        $urldetail = "/gasolina/addcontrolgasolinados/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+
+    }
+
+    function getauditorigasolina($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/gasolina/auditoriagasolina/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getefecticard($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/gasolina/efecticarddetail/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getServicio($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/panel/servicioedit/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getdirectorio($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/panel/directorio/";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getenvio($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $getpag="/envios/crearenvio";
+        if($actual_link == $getpag){ return "active"; }
+
+    }
+
+    function getenvioaud($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $name = strstr($filename, '?', true);
+
+        $urldetail = "/envios/auditoriaenvios/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getenvioauddos($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $name = strstr($filename, '?', true);
+
+        $urldetail = "/envios/statusenvios/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
+    function getcomprobaciones($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/solicitud/comprobaciones/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+
+        $urldetail = "/solicitud/comprobacionresidenteauditada/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+
+        $urldetail = "/solicitud/comprobacionesresidente/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+?>
+    <?php $year=date("Y"); ?>
+        <div class="container">
+            <a href="#" data-target="slide-out" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a>
+        </div>
+        <ul id="slide-out" class="sidenav sidenav-fixed">
+            <li class="logo text-center center" style="margin-bottom: 40px; margin-top: 20px;">
+                <a href="/panel/index/year/<?php echo $year; ?>">
+                    <img src="/img/logo-2.png" style="width: 240px;">
+                </a>
+                
+                
+            </li>
+            <li class="bold moves">
+                <a href="/index/logout" style="color:red;">Cerrar Sesion <i class="material-icons" style="color:red;">highlight_off</i></a>
+            </li>
+                
+                <li class="bold moves <?php echo getUrl('/panel',$actual_link);?>">
+                    <a href="/panel/index/year/<?php echo $year; ?>">Dashboard <i class="material-icons">extension</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/directorio',$actual_link); ?>">
+                    <a href="/panel/directorio">Directorio <i class="material-icons">assignment_ind</i></a>
+                </li>
+
+
+
+            <?php if ($usuarios[0]['fkroles'] == 1) { ?>
+<!--                 <li class="bold <?php echo getUrl('/panel/asignaractividad',$actual_link); ?>">
+                    <a href="/panel/asignaractividad">Asignar Actividades <i class="material-icons">assignment_ind</i></a>
+                </li> -->
+                <li class="bold moves <?php echo getUrl('/clientes/especificaciones',$actual_link);?>">
+                    <a href="/clientes/especificaciones">Especificaciones<i class="material-icons">domain</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/usuarios',$actual_link); echo getUsuarios($actual_link);?>">
+                    <a href="/panel/usuarios">Usuarios <i class="material-icons">person</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
+                    <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/mapasitio',$actual_link); echo getmapasitio($actual_link);?>">
+                    <a href="/panel/mapasitio">Mapa Sitios<i class="material-icons">location_on</i></a>
+                </li>
+
+                <!-- solicitudes orden compra -->
+                <li class="divider" tabindex="-1"></li>
+                    <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                        <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                    </li>
+
+                    <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                        <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                    <!-- <p>Orden</p> -->
+                    <!-- <li class="bold">Solicitudes orden compra</li> -->
+                <li class="divider" tabindex="-1"></li>
+                <!-- solicitudes orden compra -->
+                <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                    <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
+                    <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
+                </li>
+
+                <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
+                    <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/combrobaciones',$actual_link); echo getcomprobaciones($actual_link)?>">
+                    <a href="/solicitud/combrobaciones">Comprobaciones<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+<!--                 <li class="bold <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">format_list_numbered</i></a>
+                </li>
+                 -->
+<!-- 
+                <li class="bold <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica contabilidad<i class="material-icons">format_list_numbered</i></a>
+                </li> -->
+
+                <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
+                    <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
+                </li>
+
+
+<!--                 <li class="bold <?php echo getUrl('/panel/listapersonal',$actual_link);?>">
+                    <a href="/panel/listapersonal">Lista Personal<i class="material-icons">person_outline</i></a>
+                </li> -->
+
+                <li class="">
+                    <a class='dropdown-trigger' href='#' data-target='dropdown1'>Catalogos <i class="material-icons">art_track</i></a>
+
+                </li>
+                <li class="divider" tabindex="-1"></li>
+
+                <ul id='dropdown1' class='dropdown-content' style="background-color: #F5F5F5;">
+                    <li class="bold <?php echo getUrl('/panel/tipoproyecto',$actual_link); echo getTipoproyecto($actual_link);?>">
+                        <a href="/panel/tipoproyecto">Tipo de Proyecto
+                            <i class="material-icons">create_new_folder</i>
+                        </a>
+                    </li>
+
+                    <li class="divider" tabindex="-1"></li>
+
+                    <li class="bold <?php echo getUrl('/panel/estructurasitios',$actual_link); echo getEstructura($actual_link);?>">
+                        <a href="/panel/estructurasitios">Estructura Sitios 
+                            <i class="material-icons">apps</i>
+                        </a>
+                    </li>
+
+                    <li class="divider" tabindex="-1"></li>
+
+                    <li class="bold <?php echo getUrl('/panel/statusproyecto',$actual_link); echo getSttipo($actual_link);?>">
+                        <a href="/panel/statusproyecto">Status Proyecto
+                            <i class="material-icons">clear_all</i>
+                        </a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+
+                    <li class="bold <?php echo getUrl('/panel/statuscliente',$actual_link);?>">
+                         <a href="/panel/statuscliente">Status Cliente
+                            <i class="material-icons">accessibility</i>
+                        </a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li class="bold <?php echo getUrl('/panel/puestos',$actual_link);?>">
+                         <a href="/panel/puestos">Puestos personal
+                            <i class="material-icons">build</i>
+                        </a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li class="bold <?php echo getUrl('/panel/servicios',$actual_link);?>">
+                         <a href="/panel/servicios">Servicios
+                            <i class="material-icons">assignment_late</i>
+                        </a>
+                    </li> 
+                    <li class="divider" tabindex="-1"></li>
+                    <li class="bold <?php echo getUrl('/gasolina/efecticard',$actual_link); echo getefecticard($actual_link);?>">
+                        <a href="/gasolina/efecticard">Efecticard<i class="material-icons">call_to_action</i></a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li class="bold <?php echo getUrl('/vehiculos/serviciosv',$actual_link);?>">
+                    <a href="/vehiculos/serviciosv">Servicios Vehículos<i class="material-icons">directions_car</i></a>
+                    </li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
+                        <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
+                    </li>
+                    <!-- <li class="divider" tabindex="-1"></li> -->
+                    <li class="bold <?php echo getUrl('/vehiculos/tpodocumento',$actual_link);?>">
+                        <a href="/vehiculos/tpodocumento">Doc. Vehículos<i class="material-icons">perm_media</i></a>
+                    </li>
+                </ul>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
+                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+<!--                 <li class="bold <?php echo getUrl('/envios/logisticaenvios',$actual_link);?>">
+                    <a href="/envios/logisticaenvios">Logistica de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li> -->
+
+                <li class="divider" tabindex="-1"></li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                    <a href="/vehiculos/listasolicitudes/status/0">Auditoria Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/solservicio',$actual_link);?>">
+                    <a href="/vehiculos/solservicio">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
+                    <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
+                    <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
+                    <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
+                    <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/materiales',$actual_link);?>">
+                    <a href="/materiales/materiales">Solicitud Materiales<i class="material-icons">business_center</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a>
+                </li>
+            <?php } ?>
+
+            <?php if ($usuarios[0]['fkroles'] == 7 || $usuarios[0]['fkroles'] == 2) { ?>
+                <li class="bold moves <?php echo getUrl('/panel/sitiosingeniero',$actual_link);?>">
+                    <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+            <?php } ?>
+
+
+            <?php if ($usuarios[0]['fkroles'] == 2) { ?>
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/envios/statusenvios',$actual_link);echo getenvioauddos($actual_link);?>">
+                    <a href="/envios/statusenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
+                </li>
+
+            <?php } ?>
+
+
+
+            <?php if ($usuarios[0]['fkroles'] == 12) { ?>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
+                    <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/epp/catalogo',$actual_link);?>">
+                    <a href="/epp/catalogo">Epp<i class="material-icons">accessibility</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
+                </li>
+<!--                 <li class="bold <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
+                    <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
+                </li> -->
+                <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
+                    <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+
+
+
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
+                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+
+            <?php } ?> 
+
+            <?php if ($usuarios[0]['fkroles'] == 9) { ?>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
+                    <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
+                    <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
+                    <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+                <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
+                    <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
+                    <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
+                    <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
+                </li>
+
+                <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
+                    <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/gasolina/efecticard',$actual_link); echo getefecticard($actual_link);?>">
+                    <a href="/gasolina/efecticard">Efecticard<i class="material-icons">call_to_action</i></a>
+                </li>
+
+            <?php } ?>
+
+            <!-- TODOS LOS MODULOS -->
+            <?php if ($usuarios[0]['fkroles'] == 12 || $usuarios[0]['fkroles'] == 11 || $usuarios[0]['fkroles'] == 7) { ?>
+                <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                    <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                </li>
+                <?php } ?>
+            <!-- END TODOS LOS MODULOS -->
+
+
+            <!-- ROL DE COMPRAS Y OFICINA DE PROYECTOS -->
+            <?php if ($usuarios[0]['fkroles'] == 12 || $usuarios[0]['fkroles'] == 11) { ?>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
+                </li>
+
+
+            <?php } ?>
+            <!-- END ROL DE COMPRAS Y OFICINA DE PROYECTOS -->
+
+            <!-- ROL DE CONTABILIDAD -->
+            <?php if ($usuarios[0]['fkroles'] == 4 ) { ?>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                    <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidad',$actual_link); echo getlistasolicitudcontabilidad($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudescontabilidad/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+<!--                 <li class="bold <?php echo getUrl('/comprobacion/consolicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                    <a href="/comprobacion/consolicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">format_list_numbered</i></a>
+                </li> -->
+
+                <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
+                    <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
+                    <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
+                </li>
+<!--                 <li class="bold <?php echo getUrl('/panel/servicios',$actual_link); echo getServicio($actual_link);?>">
+                    <a href="/panel/servicios">Servicios <i class="material-icons">assignment_late</i></a>
+                </li> --> 
+                <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
+                    <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
+                    <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
+                    <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
+                    <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
+                    <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
+                    <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+<!--                 <li class="bold <?php echo getauditorigasolina($actual_link);?>">
+                    <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+                 -->
+            <?php } ?>
+            <!-- END ROL DE COMNTABILIDAD-->
+
+            <?php if($usuarios[0]['fkroles'] == 13){ ?>
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitios">Sitios<i class="material-icons">assignment_late</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                    <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/solicitud/listaordencompracoordinador',$actual_link); echo getlistasolicitudcoord($actual_link);?>">
+                    <a href="/solicitud/listaordencompracoordinador/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
+                    <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
+                </li>
+            <?php } ?>    
+
+
+            <!-- Auxiliar de facturacion -->
+            <?php if($usuarios[0]['fkroles'] == 14){ ?>
+
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
+                    <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
+                </li>
+<!--                <li class="bold <?php echo getUrl('/solicitud/listarolsolicitudescontabilidad',$actual_link); echo getlistasolicitudcontabilidad($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudescontabilidad/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+                 -->
+                <li class="bold moves <?php echo getUrl('/solicitud/solicitudespagadas',$actual_link);?>">
+                    <a href="/solicitud/solicitudespagadas">Solicitudes Pagadas<i class="material-icons">assignment</i></a>
+                </li>
+
+            <?php } ?> 
+            <?php if($usuarios[0]['fkroles'] == 10){ ?>
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
+                    <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
+                    <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
+                </li>
+            <?php } ?> 
+
+            <?php if($usuarios[0]['fkroles'] == 8){ ?>
+
+                <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
+                    <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+
+
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                    <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                    <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                    <a href="/vehiculos/listasolicitudes/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
+                    <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li>
+                
+                <li class="bold moves <?php echo getUrl('/solicitud/combrobaciones',$actual_link); echo getcomprobaciones($actual_link)?>">
+                    <a href="/solicitud/combrobaciones">Comprobaciones<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
+                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a>
+                </li>
+            <?php } ?>
+
+
+            <?php if($usuarios[0]['fkroles'] == 7){ ?>
+                <li class="bold moves <?php echo getUrl('/solicitud/listaordencompracoordinador',$actual_link); echo getlistasolicitudcoord($actual_link);?>">
+                    <a href="/solicitud/listaordencompracoordinador/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/vehiculos/solservicio',$actual_link);?>">
+                    <a href="/vehiculos/solservicio">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
+                    <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
+                </li>       
+
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/envios/statusenvios',$actual_link);echo getenvioauddos($actual_link);?>">
+                    <a href="/envios/statusenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/materiales/materiales',$actual_link);?>"> 
+                    <a href="/materiales/materiales">Solicitud Materiales<i class="material-icons">business_center</i></a> 
+                </li> 
+
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
+                </li>
+            <?php } ?>
+
+            <?php if($usuarios[0]['fkroles'] == 13){ ?>
+<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li> -->
+            <?php } ?>
+
+            <?php if($usuarios[0]['fkroles'] == 17){ ?>
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
+                </li>
+
+            <?php } ?>
+
+            <?php if($usuarios[0]['fkroles'] == 18){ ?>
+                <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
+                    <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
+                
+                <li class="bold moves <?php echo getUrl('/vehiculos/solservicio',$actual_link);?>">
+                    <a href="/vehiculos/solservicio">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
+                    <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
+                </li>
+            <?php } ?>            
+
+<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li> -->
+                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
+                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+        </ul>                  
+
+</header>
+
+<main>
+    <nav class="">
+        <div class="row nav-wrapper bread green lighten-1" style="width: 101%">
+
+            <div class="col m12 s12">
+                <?php if ($usuarios[0]['fkroles'] == 1 || $usuarios[0]['fkroles'] == 12 || $usuarios[0]['fkroles'] == 8 || $usuarios[0]['fkroles'] == 7 || $usuarios[0]['fkroles'] == 2 || $usuarios[0]['fkroles'] == 17) { ?>
+                <form action="/panel/searchsitios" enctype="multipart/form-data" class="form-horizontal form-material">
+                    <div class="input-field col m8 s8">
+                      <input placeholder="Ingresa nombre del sitio" id="sit_nav" name="nombre" type="text" class="validate" style="background-color: white;">
+                    </div>
+                    <div class="input-field col m4 s4">
+                        <button tyle="submit" id="add_user" class="waves-effect waves-light btn">buscar</button>
+                    </div>  
+                </form>
+
+
+
+                <?php } ?>
+
+    <!--             <?php if($usuarios[0]['fkroles'] == 11 || $usuarios[0]['fkroles'] == 4){ ?>
+                    <h3 style="color:white;">Área: <?php echo $rol_name[0]['nombre'];?> </h3>
+                <?php } ?> -->
+            </div>
+        </div>      
+    </nav>  
+    <div class="container-fluid">         
+        <div class="row">
+            <div class="col m12 s12">
+                <div class="row">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+        </div>
+    </div>      
+</main>
+
+
+<!--         <footer style="background-color:#66BB6A !important;  
+                    grid-template-columns: repeat(3, 1fr);
+                    bottom: 0;">
+          <div class="container">
+            <div class="row">
+              <div class="col l12 s12 text-center">
+                <img src="/img/logo-2.png" style="width: 290px;">
+              </div>
+            </div>
+          </div>
+        </footer> -->
+
+<meta name="__token" content="{!! csrf_token() !!}" />  
+<script type="text/javascript" src="/js/script.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+$('.dropdown-trigger').dropdown();
+
+    function destroyIt(formulario){
+        swal({
+            title: "Borrar registro",
+            text: "¿Deseas eliminar el elemento seleccionado?\nEsta acción ya no se puede deshacer",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                /*
+                swal("Poof! Your imaginary file has been deleted!", {
+                    icon: "success",
+                });
+                */
+                document.getElementById(formulario).submit();   
+            } else {
+                //swal("Se ha cancelado la elimininación");
+            }
+        });
+
+    }
+    
+    function destroyImages(){
+
+
+        var atLeastOneIsChecked = $('input[name="checkImg[]"]:checked').length;
+        var ArryCheck = $('input[name="checkImg[]"]:checked');
+        if(atLeastOneIsChecked > 0 ){
+
+        swal({
+            title: "Borrar imágenes",
+            text: "¿Deseas eliminar los elementos seleccionado(s)?\nEsta acción ya no se puede deshacer",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                /*
+                swal("Poof! Your imaginary file has been deleted!", {
+                    icon: "success",
+                });
+                */
+                var dataArray = [];
+                ArryCheck.each(function(index, element){
+                    //console.log(element);
+                    dataArray[index] = $(element).data('id');
+                    console.log($(element).data('id'));
+                });
+
+                $.post( "/panel/vehiculos/eraseimages", { 'items[]': dataArray })
+                    .done(function( data ) {
+                        console.log(data);
+                        window.location.reload();
+                });
+
+
+            } else {
+                //swal("Se ha cancelado la elimininación");
+            }
+        });         
+
+        } else {
+
+        swal({
+            title: "",
+            text: "No has seleccionado ninguna imagen",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        });
+
+        }
+
+        return false;
+
+    }
+
+</script>
+
+<script type="text/javascript">
+function showTime(){
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    // s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+    
+}
+
+showTime();
+</script>
+
+</body>
+    </body>
+    </html>

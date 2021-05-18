@@ -1,0 +1,130 @@
+<style type="text/css">
+body, input {
+  font-size: 14pt;
+}
+input, label {
+  vertical-align: middle;
+}
+.qrcode-text {
+  padding-right: 1.7em;
+  margin-right: 0;
+}
+
+.qrcode-text-btn {
+  display: inline-block;
+  
+  background: url(https://cdn.xgqfrms.xyz/qrcode/qrcode-icon.svg) 50% 50% no-repeat;
+/*   background: url(//dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg) 50% 50% no-repeat; */
+  height: 1em;
+  width: 1.7em;
+  margin-left: -1.7em;
+  cursor: pointer;
+}
+.qrcode-text-btn > input[type=file] {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+</style>
+
+<h1>HTML5 & Bare QRCode Reader</h1>
+
+<!-- 显示 -->
+<input type="text" placeholder="Tracking Code" class="qrcode-text" size=16 >
+
+<!-- 计算 -->
+<label class="qrcode-text-btn">
+  <input type="file" accept="image/*" capture="environment" onchange="openQRCamera(this);" tabindex=-1 draggable="true">
+</label>
+<!-- 跳转 -->
+<input type="button" value="Go">
+
+<!-- <input type=button value="Go" disabled> -->
+
+<div>
+  <img src="https://cdn.xgqfrms.xyz/logo/icon.png" srcset="https://cdn.xgqfrms.xyz/logo/icon.png, https://cdn.xgqfrms.xyz/logo/icon.png 2x" alt="qr code">
+</div>
+
+
+
+<script type="text/javascript">
+// https://dmla.github.io/jsqrcode/src/qr_packed.js
+
+// https://www.sitepoint.com/create-qr-code-reader-mobile-website/
+
+const log = console.log;
+
+window.QRcodeURL = window.QRcodeURL || ``;
+
+
+const autoGo = (url = ``) => {
+  const btn = document.querySelector(`[type="button"]`);
+  if(btn && url) {
+    const once = btn.dataset.flag || false;
+    if(!once) {
+      btn.dataset.flag = true;
+      btn.addEventListener(`click`, () => {
+        window.open(url, `_blank`);
+      })
+    }
+  } else {
+    alert("No QRCode URL be found!");
+  }
+}
+// autoGo();
+
+function openQRCamera(node) {
+  const reader = new FileReader();
+  reader.onload = function() {
+    node.value = "";
+    qrcode.callback = function(res) {
+      if(res instanceof Error) {
+        alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+      } else {
+        // qrcode-text
+        log(`res`, res);
+        // "https://www.xgqfrms.xyz/"
+        // window.QRcodeURL = res;
+        window.QRcodeURL = res.replace(/http\:/i, `https:`);
+        node.parentNode.previousElementSibling.value = res.replace(/http\:/i, `https:`);
+        autoGo(window.QRcodeURL)
+      }
+    };
+    const qr = qrcode.decode(reader.result);
+    log(`qr`, qr);
+    // undefined
+    log(`reader.result`, reader.result)
+  };
+  log(`node.files[0]`, node.files[0])
+  reader.readAsDataURL(node.files[0]);
+}
+
+
+const input = document.querySelector(`input[type="text"]`);
+//hidden input
+// const input = document.querySelector(`input[type="file"]`);
+
+log(`input`, input)
+
+// addEventListener
+input.addEventListener(`drop`, function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  log(`e.target`, e, e.target)
+  let uid = e.dataTransfer.getData("text/plain");
+});
+
+// draggable="false"
+// https://codepen.io/xgqfrms/pen/wxyrjv?editors=1010
+
+
+// # qrcode-icon
+
+// https://github.com/xgqfrms/cdn/blob/gh-pages/qrcode/qrcode-icon.svg
+
+// https://cdn.xgqfrms.xyz/qrcode/qrcode-icon.svg
+
+</script>

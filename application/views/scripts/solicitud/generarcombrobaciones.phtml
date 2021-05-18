@@ -1,0 +1,247 @@
+<style type="text/css">
+  .oculto{
+    display: none;
+  }
+</style>
+
+<div class="row">
+  <div class="col m6 s6" style="margin-top: 20px;">
+    <a class="btn orange" href="/comprobacion/facturasauditadas/op/0">Facturas auditadas / <span style="font-weight: bold;"> <?php echo $this->count_solicitud; ?></span></a>
+
+  </div>
+  <div class="col m6 s6 text-right" style="margin-top: 20px;">
+    <div class="row">
+      <div class="col m6 s6">
+        <a class="green btn modal-trigger" href="#modal2">Buscar Factura</a>
+      </div>
+      <div class="col m6 s6">
+        <a class="green btn modal-trigger" href="#modal1">Cargar facturas SAT</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row" style="margin-top: 10px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Generar comprobación de gastos</span>
+  </div>
+</div>
+
+
+  <div class="row">
+    <div class="col m12 s12" style="margin-top: 30px;">
+      <form action="/solicitud/requestaddcomprobacionresidente" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_altan">
+<!--       <div class="input-field col m6 s12">
+        <input id="razon_social" name="razon_social" type="text" class="validate">
+        <label for="razon_social">Razon Social</label>
+      </div> -->
+
+      <div class="input-field col m6 s12">
+        <select name="facturable" id="facturable">
+          <option value="0" disabled>* Selecciona una opción</option>
+          <option value="1" selected>SI</option>
+          <option value="2">NO</option>
+        </select>
+        <label>Facturable?</label>
+      </div>
+
+
+      <div class="input-field col m6 s12 factura_no oculto">
+        <input id="fecha_requerida" name="fecha" type="text" class="datepicker">
+        <label for="fecha_requerida">* Fecha de emisión</label>
+      </div>
+
+      <div class="input-field col m6 s12 factura_no oculto">
+        <input id="monto" name="monto" type="text" class="validate">
+        <label for="monto">* Monto a comprobar</label>
+      </div>
+
+      <div class="input-field col m6 s12 factura_no oculto">
+        <input id="razon_socialsi" name="razon_socialsi" type="text" class="validate">
+        <label for="razon_socialsi">* Razon Social</label>
+      </div>
+
+
+      <div class="input-field col m6 s12" id="si_fact">
+        <select id="no_factura" name="no_factura" required>
+          <option value="0" disabled selected>* Selecciona una opcion:</option>
+          <?php foreach ($this->factura as $rl) { ?>
+          <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["no_factura"]; ?></option>
+          <?php } ?>
+        </select>
+        <label>No. Factura</label>
+      </div>
+
+      <div class="file-field input-field col m6 s12">
+        <div class="btn">
+          <span>Factura</span>
+          <input type="file" name="factura">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+
+      <div class="file-field input-field col m6 s12">
+        <div class="btn">
+          <span>Autorización</span>
+          <input type="file" name="url">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+
+
+  		<div class="input-field col m6 s12">
+  			<select name="residentes" id="residentes">
+  				<option value="0" disabled selected>Selecciona una opcion:</option>
+  				<?php foreach ($this->residentes as $res) { ?>
+  				<option value="<?php echo $res["id"]; ?>"><?php echo $res["nombre"]; ?> <?php echo $res['apellido_pa']; ?> <?php echo $res['apellido_ma']; ?></option>
+  				<?php } ?>					      	
+  			</select>
+  			<label>* Personal</label>
+  		</div>
+
+      <div class="input-field col m6 s12">
+        <select name="servicio" id="servicio">
+          <option value="0" disabled selected>Selecciona una opcion:</option>
+          <?php foreach ($this->servicios as $res) { ?>
+          <option value="<?php echo $res["id"]; ?>"><?php echo $res["nombre"]; ?></option>
+          <?php } ?>                  
+        </select>
+        <label>* Servicio</label>
+      </div>
+
+      </form>
+
+      <div class="input-field col s12 text-right">
+        <a class="btn green darken-3" id="generar_comprobacion"><i class="material-icons right">arrow_forward</i>Guardar</a>
+      </div>
+	</div>
+</div>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Carga masiva de información</span>
+      
+      <div class="row">
+        <div class="col m12 s12" style="margin-top: 20px;">
+          <span>* Para realizar la carga masiva de forma adecuada es importante que se haga con el siguiente formato, el archivo debe tener la extensión csv!</span> <br>
+          <a title="Descargar Archivo" href="/img/Cargamasiva_facturas.csv" download="/img/Cargamasiva_facturas.csv" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Formato Facturas </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col m12 s12">
+          <form action="/comprobacion/cargamasivafacturas" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cargamasiva">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Agregar archivo</span>
+              <input type="file" name="archivo">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" id="file_validatemasiva" type="text">
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="file_carga" class="btn">Guardar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Buscar Factura</span>
+      
+      <div class="row">
+        <div class="col m12 s12">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">search</i>
+              <input id="fact_search" type="text" class="validate">
+              <label for="fact_search">Ingresa el No. de factura</label>
+            </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="buscar_factura" class="btn">Buscar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+  	});
+
+    $("#generar_comprobacion").click(function(){
+      var facturable = document.getElementById("facturable").value;
+      var residente  = document.getElementById("residentes").value;
+      var servicio = document.getElementById("servicio").value;
+
+        if(residente == "" || servicio == 0 || facturable == 0){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(submitaltan, 1500);
+        }
+
+    });
+
+    function submitaltan() { document.getElementById("submit_file_altan").submit() }
+
+
+    $("#file_carga").click(function(){
+      var validate = document.getElementById("file_validatemasiva").value;
+      if(validate == ""){
+            swal({
+              title: "Para continuar debes agregar un archivo",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+        setTimeout(submitcarga, 1500);   
+      }
+    });
+
+    function submitcarga() { document.getElementById("submit_cargamasiva").submit() }
+
+
+  $('#facturable').change(function() {
+    var value = this.value;
+    if(value == 2){
+      $(".factura_no").show();
+      $("#si_fact").hide();
+    }else{
+      $(".factura_no").hide();
+      $("#si_fact").show();
+    }
+
+  });
+
+  $("#buscar_factura").click(function(){
+    var factura = document.getElementById("fact_search").value;
+    window.location.href = "/comprobacion/buscarfactura/factura/"+factura+"";
+  }); 
+</script>

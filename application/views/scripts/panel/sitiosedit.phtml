@@ -1,0 +1,191 @@
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/sitios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar sitio</span>
+    </div>
+</div>
+
+
+<div class="col m12 s12">
+	<div class="white-box">
+		<form action="/panel/requestupdatesitios" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_sitios">
+			<?php foreach ($this->sitiosedit as $usr) { ?>
+			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+				<div class="row">
+			        <div class="input-field col m12 s12">
+			          <i class="material-icons prefix">account_circle</i>
+			          <input id="name" type="text" name="nombre" value="<?php echo $usr["nombre"]; ?>" class="validate" required>
+			          <label for="name">* Nombre:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">chevron_right</i>
+			          <input id="id_cliente" type="text" name="id_cliente" value="<?php echo $usr["id_cliente"]; ?>" class="validate" required>
+			          <label for="id_cliente">* Id cliente:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="direccion" type="text" name="direccion" class="validate" value="<?php echo $usr["direccion"]; ?>" required>
+			          <label for="direccion">Dirección:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">account_circle</i>
+			          <input id="cliente" type="text" name="cliente" class="validate" value="<?php echo $usr["cliente"]; ?>" required>
+			          <label for="cliente">Cliente:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="ciudad" type="text" name="ciudad" class="validate" value="<?php echo $usr["ciudad"]; ?>" required>
+			          <label for="ciudad">Ciudad:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="estado" type="text" name="estado" class="validate" value="<?php echo $usr["estado"]; ?>">
+			          <label for="estado">Estado:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="region" type="text" name="region" class="validate" value="<?php echo $usr["region"]; ?>">
+			          <label for="region">Region:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+					    <select name="estructura">
+			               <?php foreach ($this->estructura as $mar) { 
+			                if ($mar['id']==$usr['estructura']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_estructura"]; ?></option>
+			                <?php } if ($mar['id']!=$usr['estructura']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_estructura"]; ?></option>
+			                <?php } } ?>  
+					    </select>
+					    <label>Estructura del sitio</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">business</i>
+			          	<input id="edificio" type="text" name="edificio" value="<?php echo $usr["edificio"]; ?>" class="validate">
+			          	<label for="edificio">Edificio:</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+					    <select name="tipo_sitio">
+					    	<?php if($usr["tipo_sitio"] == "Rooftop"){ ?>
+						    	<option value="Rooftop" selected>Rooftop</option>
+						    	<option value="Rawland">Rawland</option>
+					    	<?php }else{ ?>
+						    	<option value="Rooftop">Rooftop</option>
+						    	<option value="Rawland" selected>Rawland</option>
+					    	<?php } ?>
+					    </select>
+					    <label>Tipo de Sitio</label>
+			        </div>
+
+
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">place</i>
+			          <input id="altura" type="text" name="altura" class="validate" value="<?php echo $usr["altura"]; ?>">
+			          <label for="altura">Altura:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+
+			        	<h4>Latitud:</h4>
+			        	<div class="row">
+			        		<div class="col m3 s3">
+			        			<input id="grados_lat" type="text" name="grados_lat" placeholder="Grados" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="min_lat" type="text" name="min_lat" placeholder="Minutos" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="seg_lat" type="text" name="seg_lat" placeholder="Segundos" class="validate">
+			        		</div>
+
+			        		<div class="col m3 s3">
+							    <select name="coordenada1">
+							    	<?php if($usr["coor_lat"] == "n"){ ?>
+								      <option value="n" selected>N</option>
+								      <option value="s">S</option>
+							    	<?php }else{ ?>
+								      <option value="n">N</option>
+								      <option value="s" selected>S</option>
+							    	<?php } ?>
+							    </select>
+			        		</div>
+			        	</div>
+
+			        		<input id="latitude" type="text" name="latitude" class="validate" value="<?php echo $usr["latitude"]; ?>">
+			        </div>
+
+
+			        <div class="input-field col m6 s12">
+			        	<h4>Longitud:</h4>
+			        	<div class="row">
+			        		<div class="col m3 s3">
+			        			<input id="grados_lon" type="text" name="grados_lon" placeholder="Grados" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="min_lon" type="text" name="min_lon" placeholder="Minutos" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="seg_lon" type="text" name="seg_lon" placeholder="Segundos" class="validate">
+			        		</div>
+
+			        		<div class="col m3 s3">
+							    <select name="coordenada2">
+							    	<?php if($usr["coor_lon"] == "e"){ ?>
+								      <option value="e" selected>E</option>
+								      <option value="o">O</option>
+							    	<?php }else{ ?>
+								      <option value="e">E</option>
+								      <option value="o" selected>O</option>
+							    	<?php } ?>
+							    </select>
+			        		</div>
+			        	</div>
+
+			          		<input id="longitude" type="text" name="longitude" class="validate" value="<?php echo $usr["longitude"]; ?>">
+			        </div>
+		      	</div>
+
+			<?php } ?>
+
+			</form>
+			<div class="input-field col m12 s12 text-right">
+				<div class="row">
+					<a href="/panel/sitios" class="waves-effect red waves-light btn">Cancelar</a>
+					<button id="addsitios" class="waves-effect waves-light btn">Actualizar</button>
+				</div>	
+			</div>
+		</div>
+	
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $("#addsitios").click(function(){
+       var cliente = document.getElementById("id_cliente").value;
+        var name = document.getElementById("name").value;
+
+        if(cliente == "" || name == ""){
+            swal({
+              title: "Para editar un sitio debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_sitios").submit()
+    }
+</script>

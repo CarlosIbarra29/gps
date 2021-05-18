@@ -1,0 +1,40 @@
+ <div class="col-md-12">
+ 	<!-- <?php foreach ($this->orden as $key) {
+ 		echo $key['nombre'];
+ 	} ?> -->
+    <table class="table">                    
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>nombre producto</th>
+                <th>cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $total=0 ?>
+            <?php $cont =1;
+            if ($this->pedidos) {
+                foreach ($this->pedidos as $key){ ?>
+                    <tr>
+                        <th scope="row"><?php echo $cont++; ?></th>
+                        <td><p><?php echo $key["nombre"]; ?></p></td>
+                        <td><p><?php echo $key["cantidad"];?></p></td>
+                        <td><p><?php echo $key["precio"];?></p></td>
+                        <td><p><?php echo $key["subtotal"];?></p></td>
+                        <?php $total=($total)+($key["cantidad"]*$key["precio"]); ?>
+                    </tr>    
+            <?php  } }else{ ?>
+            <tbody>
+                <tr>
+                    <td colspan="5"><h3>No hay ningun pedido.</h3></td>
+                </tr>
+            </tbody> 
+            <?php } ?>
+        </tbody>  
+    </table>
+</div> 
+<?php
+echo "Total Pedido= $".$total;
+?>

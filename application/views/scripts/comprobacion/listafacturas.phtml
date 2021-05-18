@@ -1,0 +1,487 @@
+<?php 
+  function isActhref($nameBtn,$urlname){
+      if($nameBtn==1 && $urlname==null){
+        return "active"; 
+      }
+      return ($nameBtn == $urlname)?"active":"";
+  }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+  .oculto{
+    display: none;
+  }   
+</style>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Facturas SAT</span>
+    </div>
+</div>
+
+
+<div class="row">
+  <div class="col m2 s12"></div>
+  <div class="col m8 s12">
+    <div class="row">
+      <div class="col m4 s6">
+        <div class="input-field col s12">
+          <select id="select_op">
+            <option value="1" selected>No. Factura</option>
+            <option value="2">Nombre emisor</option>
+            <option value="3">Fecha Comprobante</option>
+            <option value="4">Id factura</option>
+            <option value="5">Status</option>
+          </select>
+          <label>Buscar por</label>
+        </div>
+      </div>
+      <div class="col m6 s6">
+        <div class="input-field col s12" id="div_nofact">
+          <input placeholder="Ingresa la factura" id="no_fact" type="text" class="validate">
+          <label for="no_fact">No. Factura</label>
+        </div>
+        <div class="input-field col s12 oculto" id="div_nameemisor">
+          <input placeholder="Ingresa el nombre del emisor" id="name_emisor" type="text" class="validate">
+          <label for="name_emisor">Nombre Emisor</label>
+        </div>
+        <div class="input-field col s12 oculto" id="div_fechacomprobante">
+          <input placeholder="Ingresa la Fecha" id="fecha_comprobante" type="text" class="datepicker">
+          <label for="fecha_comprobante">Fecha Comprobante</label>
+        </div>
+        <div class="input-field col s12 oculto" id="div_idfactura">
+          <input placeholder="Ingresa la factura" id="id_factura" type="number" class="validate">
+          <label for="id_factura">Id Factura</label>
+        </div>
+
+        <div class="input-field col s12 oculto" id="div_status">
+          <select id="status_op">
+            <option value="1" selected>Asignada</option>
+            <option value="0">En proceso</option>
+          </select>
+          <label>Status</label>
+        </div>
+
+      </div>
+      <div class="col m2 s12 text-center">
+        <div class="input-field col s12" id="search_nofact">
+          <a class="btn" id="search_opuno">Buscar</a>
+        </div>
+        <div class="input-field col s12 oculto" id="search_nameemisor">
+          <a class="btn" id="search_opdos">Buscar</a>
+        </div>
+        <div class="input-field col s12 oculto" id="search_fechacomprobante">
+          <a class="btn" id="search_optres">Buscar</a>
+        </div>
+        <div class="input-field col s12 oculto" id="search_idfactura">
+          <a class="btn" id="search_opcuatros">Buscar</a>
+        </div>
+        <div class="input-field col s12 oculto" id="search_status">
+          <a class="btn" id="search_opcinco">Buscar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col m2 s12"></div>
+</div>
+
+
+<div class="row">
+  <div class="col m12 s12">
+    <div class="row">
+      <div class="col m8 s8">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Facturas</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m12 s12">
+        <table class="table text-left table-hover">
+          <thead>
+            <tr>
+              <th>Id.</th>
+              <th>No. Factura</th>  
+              <th>RFC Emisor</th>
+              <th>Nombre emisor</th>
+              <th>Fecha Comprobante</th>
+              <th>Total Factura</th>
+              <th>Forma Pago</th>
+              <th>Lugar Expedicion</th>
+              <th>Status factura</th>
+              <th></th>
+            </tr> 
+          </thead>
+          <?php
+          if ($this->paginator) { 
+          foreach ($this->paginator as $usr) { ?>
+          <tbody>
+            <tr>
+              <td><?php echo $usr['id']; ?></td>
+              <td>
+                <?php if($usr['status_factura'] == 0){ ?>
+                  <a href="/comprobacion/editfactura/id/<?php echo $usr["id"] ?>">
+                    <?php echo $usr['no_factura']; ?>
+                  </a> 
+                <?php }else{ ?>
+                  <?php echo $usr['no_factura']; ?>
+                <?php } ?>
+              </td>
+              <td><?php echo $usr['rfc_emisor']; ?></td>
+              <td><?php echo $usr['nombre_emisor']; ?></td>
+              <td><?php echo $usr['fecha_comprobante']; ?></td>
+              <td>
+                <h5 style="font-weight: bold;">
+                  $<?php echo number_format($usr['total_factura'], 2, '.', ','); ?>
+                </h5>
+              </td>
+              <td><?php echo $usr['forma_pago']; ?></td>
+              <td><?php echo $usr['lugar_expedicion']; ?></td>
+              <td>
+                <?php if($usr['status_factura'] == 1){?>
+                  <h5 style="font-weight: bold; color:green;">
+                    Asignada
+                  </h5>
+                <?php }else{ ?>
+                  <h5 style="font-weight: bold; color:orange;">
+                    En proceso
+                  </h5>
+                <?php } ?>
+              </td>
+
+              <?php if($usr['status_factura'] == 0){ ?>
+                <td>
+                  <a class="delete" data-id="<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                </td>
+              <?php } ?>
+            </tr>
+            <?php } }else{ ?>
+            </tbody> 
+            <tbody>
+                <tr>
+                    <td class="text-center" colspan="6"><h4>No hay Facturas.</h4></td>
+                </tr>
+            </tbody>
+                        
+            <?php } ?>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<input type="hidden" id="buscador" value="1">
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+      $('select').formSelect();
+      $('.modal').modal();
+      $('.timepicker').timepicker();
+
+      var currentDate = document.getElementById("today_picker").value; 
+      $('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+
+  });
+
+  $('#select_op').on('change', function() {
+    var val = this.value;
+    document.getElementById("buscador").value= val;
+    if(val == 1){
+      $("#div_nofact").show();
+      $("#div_nameemisor").hide();
+      $("#div_fechacomprobante").hide();
+      $("#div_idfactura").hide();
+      $("#div_status").hide(); 
+
+      $("#search_nofact").show();
+      $("#search_nameemisor").hide();
+      $("#search_fechacomprobante").hide();
+      $("#search_idfactura").hide();
+      $("#search_status").hide();
+    }
+
+    if(val == 2){
+      $("#div_nofact").hide();
+      $("#div_nameemisor").show();
+      $("#div_fechacomprobante").hide();
+      $("#div_idfactura").hide();
+      $("#div_status").hide();
+
+      $("#search_nofact").hide();
+      $("#search_nameemisor").show();
+      $("#search_fechacomprobante").hide();
+      $("#search_idfactura").hide();
+      $("#search_status").hide();
+    }
+
+    if(val == 3){
+      $("#div_nofact").hide();
+      $("#div_nameemisor").hide();
+      $("#div_fechacomprobante").show();
+      $("#div_idfactura").hide();
+      $("#div_status").hide();
+
+      $("#search_nofact").hide();
+      $("#search_nameemisor").hide();
+      $("#search_fechacomprobante").show();
+      $("#search_idfactura").hide();
+      $("#search_status").hide();
+    }
+
+    if(val == 4){
+      $("#div_nofact").hide();
+      $("#div_nameemisor").hide();
+      $("#div_fechacomprobante").hide();
+      $("#div_idfactura").show();
+      $("#div_status").hide();
+
+      $("#search_nofact").hide();
+      $("#search_nameemisor").hide();
+      $("#search_fechacomprobante").hide();
+      $("#search_idfactura").show();
+      $("#search_status").hide();
+    }
+
+    if(val == 5){
+      $("#div_nofact").hide();
+      $("#div_nameemisor").hide();
+      $("#div_fechacomprobante").hide();
+      $("#div_idfactura").hide();
+      $("#div_status").show();
+
+      $("#search_nofact").hide();
+      $("#search_nameemisor").hide();
+      $("#search_fechacomprobante").hide();
+      $("#search_idfactura").hide();
+      $("#search_status").show();
+    }
+  });
+
+
+  $("#search_nofact").click(function(){
+    var no = document.getElementById("no_fact").value;
+
+    swal({
+      title: "La busqueda sera por No. Factura: "+no+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/comprobacion/busquedafactura/factura/"+no+"/op/1";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+
+  });
+
+  $("#search_nameemisor").click(function(){
+    var name = document.getElementById("name_emisor").value;
+    swal({
+      title: "La busqueda sera por nombre del emisor: "+name+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/comprobacion/busquedafactura/name/"+name+"/op/2";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+  $("#search_fechacomprobante").click(function(){
+    var date = document.getElementById("fecha_comprobante").value;
+    swal({
+      title: "La busqueda sera por la fecha: "+date+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/comprobacion/busquedafactura/fecha/"+date+"/op/3";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+  $("#search_idfactura").click(function(){
+    var id = document.getElementById("id_factura").value;
+    swal({
+      title: "La busqueda sera por el Id factura: "+id+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/comprobacion/busquedafactura/id/"+id+"/op/4";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+  $("#search_status").click(function(){
+    var status = document.getElementById("status_op").value;
+    swal({
+      title: "La busqueda sera por el status de la factura: "+status+", Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/comprobacion/busquedafactura/status/"+status+"/op/5";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+
+  $(".delete").click(function(){
+  swal({
+    title: "Estas seguro de eliminar el registro?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });  
+        var id = $(this).data('id')
+            var request = $.ajax({
+                url:"/comprobacion/requestdeletefacturasat",
+                method:"POST",
+                data: { id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+    } else {
+      swal("El cambio de status fue cancelado!");
+    }
+  });
+
+  });
+
+</script>

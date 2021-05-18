@@ -1,0 +1,286 @@
+<style type="text/css">
+  .oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/vehiculos/solservicio" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Servicios de Vehículos Paso 1</span>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 19px;">
+    <div class="col m12 s12"> 
+        <form action="/vehiculos/requestupdatesolveh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitudp">
+          <input type="hidden" name="ids" value="<?php echo $this->ids; ?>">
+          <?php foreach ($this->solicitudes as $solv){ ?>
+              <!-- <div class="input-field col m6 s12"></div> -->
+             
+
+              <div class="input-field col m6 s12">
+                  <input id="fecha_requerida" name="fecha_requerida" value="<?php echo $solv['fecha_sol']; ?>" type="text" class="datepicker">
+                  <label for="fecha_requerida">* Fecha Requerida</label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                  <select id="servicio" name="servicio"> 
+                      <option value="0" disabled selected>Selecciona un Servicio</option>
+                      <?php foreach ($this->servicios as $key){ 
+                          if ($key['id']==$solv['id_servicios']) { ?>
+                              <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre_servicio']; ?></option>
+                          <?php } if ($key['id']!=$solv['id_servicios']) { ?>
+                              <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_servicio']; ?></option>
+                      <?php } } ?>
+                  </select>
+                  <label>* Servicio:</label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                  <select id="vehiculo" name="vehiculo"> 
+                      <option value="" disabled selected>Selecciona un Vehículo</option>
+                      <?php if ($solv['id_vehiculo']==0) { ?>
+                            <option value="0" selected>Oficina</option>
+                      <?php } else { ?>
+                            <option value="0">Oficina</option>
+                      <?php } ?>
+                      <?php foreach ($this->vehiculos as $key){ 
+                          if ($key['id_vehiculos']==$solv['id_vehiculo']) { ?>
+                              <option value="<?php echo $key['id_vehiculos']; ?>" selected><?php echo $key['marca']; ?> <?php echo $key['submarca']; ?> <?php echo $key['modelo']; ?>/ Placas: <?php echo $key['placas']; ?></option>
+                          <?php } if ($key['id_vehiculos']!=$solv['id_vehiculo']) { ?>
+                              <option value="<?php echo $key['id_vehiculos']; ?>"><?php echo $key['marca']; ?> <?php echo $key['submarca']; ?> <?php echo $key['modelo']; ?>/ Placas: <?php echo $key['placas']; ?></option>
+                      <?php } } ?>
+                  </select>
+                  <label>* Vehículo:</label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                  <select id="proveedor" name="proveedor">
+                      <option value="0" disabled selected>* Selecciona un Proveedor</option>
+                      <?php foreach ($this->proveedores as $key){ 
+                          if ($key['id']==$solv['id_proveedor']) { ?>
+                              <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre_prov']; ?></option>
+                          <?php } if ($key['id']!=$solv['id_proveedor']) { ?>
+                              <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_prov']; ?></option>
+                      <?php } } ?>
+                  </select>
+                  <label>Proveedor: </label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                  <i class="material-icons prefix">swap_vertical_circle</i>
+                  <input id="referencia" type="text" value="<?php echo $solv['referencia']; ?>" name="referencia" class="validate">
+                  <label for="referencia">Referencia: *En caso de ser necesaria*</label>
+              </div>
+
+               <div class="input-field col m6 s12">
+                  <i class="material-icons prefix">mode_edit</i>
+                  <textarea id="motivo" name="motivo" value="<?php echo $solv['motivos']; ?>" class="materialize-textarea"><?php echo $solv['motivos']; ?></textarea>
+                  <label for="motivo">* Motivo de servicio: </label>
+              </div>
+
+              <!-- <div class="input-field col m6 s12">
+                  <i class="material-icons prefix">attach_money</i>
+                  <input id="monto" type="number" name="monto" value="<?php echo $solv['monto']; ?>" class="validanumeros">
+                  <label for="monto">* Monto:</label>
+              </div> -->
+              <!--  -->
+
+              <?php if ($solv['id_responsable'] == 0) { ?>
+              
+                  <div class="input-field col m6 s12">
+                      <div id="add" class="col m12 s12">
+                          <a id="addcampo">¿Requieres un Responsable?</a>
+                      </div>
+                      <div id="selres" class="input-field col m12 s12 oculto">
+                          <select id="responsable" name="responsable">
+                              <option value="0" disabled selected>* Selecciona un Responsable</option>
+                              <?php foreach ($this->personal as $key){ ?>
+                                  <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                              <?php } ?>
+                          </select>
+                          <label>Responsable: </label>
+                      </div>
+                      <div id="elimina" class="col m12 s12 oculto text-right">
+                          <a id="eliminar">¿Eliminar Responsable?</a>
+                      </div>
+                  </div>
+              
+              <?php } else { ?>
+                  <div class="input-field col m6 s12">
+                      <div id="add" class="col m12 s12 oculto">
+                          <a id="addcampo">¿Requieres un Responsable?</a>
+                      </div>
+                      <div id="selres" class="input-field col m12 s12 ">
+                          <select id="responsable" name="responsable">
+                              <option value="0" disabled selected>* Selecciona un Responsable</option>
+                              <?php foreach ($this->personal as $key){ 
+                                  if ($key['id']==$solv['id_responsable']) { ?>
+                                      <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                                  <?php } if ($key['id']!=$solv['id_responsable']) { ?>
+                                      <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                              <?php } } ?>
+                          </select>
+                          <label>Responsable: </label>
+                      </div>
+                      <div id="elimina" class="col m12 s12 text-right">
+                          <a id="eliminar">¿Eliminar Responsable?</a>
+                      </div>
+                  </div>
+              <?php }  ?> 
+
+              <?php if ($solv['facturable'] == 1) { ?>
+
+              <div class="row">
+                <div class="col m6 s12">
+                  <div class="input-field col s12">
+                      <select name="facturable" id="facturable">
+                        <option value="" disabled >Seleciona una opción</option>
+                          <option value="1" selected>Facturable</option>
+                          <option value="2">No facturable</option>
+                      </select>
+                      <label>* ¿Es Facturable?</label>
+                  </div>
+                     <div class="input-field col s12 siempre facturable">
+                      <i class="material-icons prefix">attach_money</i>
+                      <input id="monto" type="number" value="<?php echo $solv['monto']; ?>" name="monto" class="validanumeros">
+                      <label for="monto">* Monto:</label>
+                  </div>
+                   
+                  <div class="input-field col s12 nofacturable">
+                      <i class="material-icons prefix">assignment</i>
+                      <input id="iva" placeholder="Ingresa el IVA" value="<?php echo $solv['iva']; ?>" type="text" name="iva" class="validanumeros">
+                      <label for="iva">IVA:</label>
+                  </div>
+                   
+                  <div class="input-field col s12 siempre facturable">
+                      <i class="material-icons prefix">attach_money</i>
+                      <input id="total" placeholder="total" type="number"  value="<?php echo $solv['total']; ?>" name="total" class="validanumeros">
+                      <label for="total">* Total:</label>
+                  </div>
+                </div>
+              </div>
+
+              <?php } else { ?>
+
+                <div class="row">
+                  <div class="col m6 s12">
+                    <div class="input-field col s12">
+                        <select name="facturable" id="facturable">
+                          <option value="" disabled >Seleciona una opción</option>
+                            <option value="1">Facturable</option>
+                            <option value="2" selected>No facturable</option>
+                        </select>
+                        <label>* ¿Es Facturable?</label>
+                    </div>
+                       <div class="input-field col s12 siempre facturable">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="monto" type="number" name="monto" value="<?php echo $solv['monto']; ?>" class="validanumeros">
+                        <label for="monto">* Monto:</label>
+                    </div>
+                     
+                    <div class="input-field col s12 oculto nofacturable">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="iva" placeholder="Ingresa el IVA" value="<?php echo $solv['iva']; ?>" type="text" name="iva" class="validanumeros">
+                        <label for="iva">IVA:</label>
+                    </div>
+                     
+                    <div class="input-field col s12 siempre facturable">
+                        <i class="material-icons prefix">attach_money</i>
+                        <input id="total" placeholder="Total" value="<?php echo $solv['total']; ?>" type="number" name="total" class="validanumeros">
+                        <label for="total">* Total:</label>
+                    </div>
+                  </div>
+                </div>
+
+              <?php }  ?> 
+            <?php } ?>
+        </form>
+
+        <div class="input-field col m12 s12 text-right">
+            <div class="row">
+                <a href="/vehiculos/addsolicitudvdos/id/<?php echo $this->ids; ?>" class="red btn">Paso 2</a>
+                <button  id="updatesolicitud" class="btn">Actualizar</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+        $('select').formSelect();
+        $('.modal').modal();
+        $('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+            })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+    });
+
+
+    $("#updatesolicitud").click(function(){
+        var fecha = document.getElementById("fecha_requerida").value;
+        var servicio = document.getElementById("servicio").value;
+        var vehiculo = document.getElementById("vehiculo").value;
+        var monto = document.getElementById("monto").value;
+        var motivo = document.getElementById("motivo").value;
+        var proveedor = document.getElementById("proveedor").value;
+
+
+        if(fecha == "" || servicio == 0 || proveedor == 0 || vehiculo == "" || motivo == "" || monto == ""){
+            swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+            });
+
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_ser, 1000);   
+        }
+    });
+
+    function submit_ser() { 
+        document.getElementById("submitudp").submit() 
+    }
+
+
+    $("#addcampo").click(function(){
+        $("#selres").show();
+        $("#add").hide();
+        $("#elimina").show();
+    });
+
+    $("#eliminar").click(function(){
+        $("#selres").hide();
+        $("#add").show();
+        $("#elimina").hide();
+        document.getElementById('responsable').value=0;
+    });
+
+
+    $('#facturable').on('change', function() {
+      $opcion = this.value;
+      if($opcion == 2){
+        $(".siempre").show();
+        $(".facturable").show();
+        $(".nofacturable").hide();
+      }else{
+        $(".siempre").show();
+        $(".nofacturable").show();
+      }
+      
+    });
+
+</script>

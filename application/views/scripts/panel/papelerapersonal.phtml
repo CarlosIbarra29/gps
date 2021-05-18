@@ -1,0 +1,294 @@
+<div class="row">
+	<div class="col m12 s12">
+		<h3>
+			<a style="color:red;">
+				<i class="fa fa-ban"></i>
+				Papelera
+			</a>
+		</h3>
+	</div>
+</div>
+
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+<div class="col m12 s12">
+	<div class="row">
+		<h3>Lista del Personal Eliminado</h3>
+	</div>
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Nombre</th>	
+				<th>Apellido Paterno</th>	
+				<th>Apellido Materno</th>
+				<th>Puesto</th>
+				<th>Status</th>
+				<th>Restaurar</th>
+				<th>Eliminar</th>
+			</tr> 
+		</thead>
+		<?php if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><a href="/panel/informaciongeneral/id/<?php echo $usr["id"]; ?>"><?php echo $usr["nombre"]; ?></a></td>
+				<td><?php echo $usr["apellido_pa"]; ?></td>
+				<td><?php echo $usr["apellido_ma"]; ?></td>
+				<td><?php echo $usr["name_puesto"]; ?></td>
+				<?php if($usr["status_expediente"]== 1){ ?>
+					<td>Completo</td>
+				<?php }else{ ?>
+					<td>Incompleto</td>
+				<?php } ?>
+				<td>
+					<a class="change" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-refresh" style="color: red"></i></span></a>
+				</td>
+				<td>
+					<a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+			</tr>
+		</tbody>
+		<?php } }else{ ?>
+		<tbody>
+			<tr>
+				<td>No hay personal eliminado </td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+
+
+		
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	});
+
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+    	apellido=$(this).data('apellido');
+		swal({
+			title: "Estas seguro de eliminar al personal "+nombre+" "+apellido+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Bien! El personal "+nombre+" "+apellido+" fue eliminado!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/panel/requestdeletepersonal",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+    $(".change").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+    	apellido=$(this).data('apellido');
+		swal({
+			title: "Estas seguro de restaurar al personal "+nombre+" "+apellido+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Bien! El personal "+nombre+" "+apellido+" fue restaurado!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/panel/requestchangestatuspersonalrestaurar",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+	$('#mySelect').on('change', function() {
+  		var value = $(this).val();
+  		if(value==1){
+			$("#search_nombre").show();
+			$("#search_status").hide();
+			$("#search_puesto").hide();
+  		}
+
+  		if(value==2){
+  			$("#search_puesto").show();
+  			$("#search_nombre").hide();
+  			$("#search_status").hide();
+  		}
+
+  		if(value==3){
+  			$("#search_status").show();
+  			$("#search_nombre").hide();
+  			$("#search_puesto").hide();
+  		}
+  		// console.log(value);
+	});
+
+
+    $("#addpersonal").click(function(){
+     	var status = document.getElementById("status").value;
+        var name = document.getElementById("name").value;
+        var ap = document.getElementById("ap").value;
+        var am = document.getElementById("am").value;
+        var email = document.getElementById("mail").value;
+
+        if(status == 3 || name == "" || ap == "" || am == ""){
+            swal({
+                title: "Para agregar al personal debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Felicidades!", "El personal se creo de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_personal").submit()
+    } 
+
+</script>

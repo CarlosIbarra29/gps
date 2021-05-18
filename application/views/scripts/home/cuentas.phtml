@@ -1,0 +1,39 @@
+
+<h1>Tarjetas bancarias</h1>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-12 text-right">
+			<?php foreach ($this->usuario as $usr) { ?>
+				<a href="/home/cuentanueva/id/<?php echo $usr['id']; ?>">Agregar cuenta</a>
+			<?php } ?>
+		</div>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Nombre del tarjetahabiente</th>
+					<th>No.Cuenta</th>	
+					<th>Vence en</th>
+					<th>Eliminar</th>
+				</tr> 
+			</thead>
+			<?php if ($this->cuentas) {
+			 foreach ($this->cuentas as $key=>$value) { $str=substr($value['ncuenta'], -4);?>
+			<tbody>
+				<tr>
+					<td><?php echo $value["nombrecuenta"];; ?></td>
+					<td>xxxx-xxxx-xxxx-<?php echo $str; ?></a></td>
+					<td><?php echo $value["vencemm"]; ?>/<?php echo $value["venceyy"]; ?></td>
+					<td><a href="/home/requestdeletecard/id/<?php echo $value["id"]; ?>" ><span class="warning" style="color: red;"><i class="fa fa-2x fa-trash"></i></span></a></td>
+				</tr>
+			</tbody>
+			<?php }}else{ ?>
+			<tbody>
+				<tr>
+					<td colspan="4"><h3>No hay cuentas, agrega una nueva.</h3></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>
+		<p><a href="/home/pedidospendientes">Regresar a pedidos para terminar su compra.</a></p>	
+	</div>	
+</div>

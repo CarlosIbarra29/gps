@@ -1,0 +1,91 @@
+
+<div class="input-field col m12 s12">
+
+    <i class="material-icons prefix">event_available</i>
+
+        <select id="epp" name="epp" required  onchange="tallas()">
+
+            <option value="0" disabled selected>* Selecciona una opcion:</option>
+
+            <?php foreach($this->eppn as $epp):?>
+
+             <option value="<?php print $epp["nombre"]; ?>"><?php print $epp["nombre"]; ?></option>
+
+            <?php endforeach; ?>
+
+        </select>
+        <label>EPP</label>
+</div>
+
+<div class="input-field col m6 s12">
+    
+    <i class="material-icons prefix">event_available</i>
+
+    <input type="text" id="input-tallas" list="tallas_lista" name="">
+
+    <datalist id="tallas_lista"></datalist> 
+
+      
+</div>
+
+  
+
+<script type="text/javascript">
+
+   
+
+function tallas() {
+
+      document.getElementById('input-tallas').value='';
+
+      epp = document.getElementById("epp").value;
+
+      $.ajax({
+
+        url: "/epp/gettallas/",
+
+        data: {
+
+          epp: epp
+
+        },
+
+        type: "POST",
+
+        success: function(data) {
+
+         $("#id-talla").find('option').remove();
+
+          var aData = JSON.parse(data);
+
+          console.log(aData);
+
+          var sOptions = '';
+           
+          $.each(aData, function(i, v) {
+
+            sOptions += '<option data-value="' + v.idepp + '">' + v.talla + '</option>';
+
+            console.log(v.idepp);
+
+          });
+
+          $('#tallas_lista').html( sOptions );
+
+       }
+       ,
+       error: function(a, b, c) {
+
+        console.log(a);
+        
+        console.log(b);
+        
+        console.log(c);
+
+      }
+
+      });
+    
+  }
+
+</script>

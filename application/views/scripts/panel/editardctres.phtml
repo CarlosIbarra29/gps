@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content ">
+          <span class="card-title">Editar Informacion de DC3</span>
+          <?php foreach ($this->personal as $key){ 
+          		$personal = $key['nombre'];
+          		$apellido_pa = $key['apellido_pa'];
+          		$apellido_ma = $key['apellido_ma'];
+          		$puesto = $key['puesto'];
+
+           } ?>
+          <p>
+          		Nombre del personal: <?php echo $apellido_pa ?> <?php echo $apellido_ma; ?> <?php echo $personal; ?>
+          </p>
+          <p>
+          		Puesto: <?php echo $puesto; ?>
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+		<div class="col m12 s12">
+			<form action="/panel/requestaddantidopingpersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="personaledit">
+				<div class="row">
+					<input type="hidden" name="rol" value="6">
+					<?php foreach ($this->personal as $per) { ?>
+					<input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+					<?php } ?>
+
+					<?php foreach ($this->antidoping as $ant) { 
+						$alturas_st = $ant['status_altura'];
+						$electrico_st = $ant['status_electrico'];
+						$auxilio_st = $ant['status_auxilio'];
+					} ?>
+	  					<div class="input-field col m6 s12">
+	    					<select id="actividadcuatro" name="actividad">
+	      						<option value="" disabled selected>Selecciona un Documento</option>
+	      						<?php if($alturas_st == 1){ ?>
+	      							<option value="1">NOM-009-STPS-2011 Trabajos en Alturas</option>
+	      						<?php }else{ ?>
+	      							<option value="1" disabled>NOM-009-STPS-2011 Trabajos en Alturas</option>
+	      						<?php } ?>
+
+	      						<?php if($electrico_st == 1){ ?>
+	      							<option value="2">NOM-029-STPS- Riesgo Electrico</option>
+	      						<?php }else{ ?>
+	      							<option value="2" disabled>NOM-029-STPS- Riesgo Electrico</option>
+	      						<?php } ?>
+
+	      						<?php if($auxilio_st == 1){ ?>
+	      							<option value="3">NOM-030-STPS-2009 Primeros Auxilios</option>
+	      						<?php }else{ ?>
+	      							<option value="3" disabled>NOM-030-STPS-2009 Primeros Auxilios</option>
+	      						<?php } ?>	
+	    					</select>
+	  					</div>
+					    <div class="file-field input-field col m6 s12">
+					    	<div class="btn">
+					        	<span>Documento</span>
+					        	<input type="file" name="url">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate" id="validate_file" type="text">
+					      	</div>
+					    </div>
+		      	</div>
+		    </form>
+		</div>
+
+<div class="row">
+	<div class="col m12 s12 text-right">
+		<?php foreach ($this->personal as $per) { 
+			$user =  $per["id"];
+		} ?>
+
+		<a href="/panel/personaldetail/id/<?php echo $user; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+		<button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
+
+<script type="text/javascript">
+    $("#addpersonal").click(function(){
+     	var status = document.getElementById("validate_file").value;
+
+        if(status == ""){
+            swal({
+                title: "Para editar la informacion es necesario que selecciones un archivo",
+            });
+        }else{
+            swal("Felicidades!", "La información se edito de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("personaledit").submit()
+    } 
+</script>

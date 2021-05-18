@@ -1,0 +1,393 @@
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+</style>
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/sitiosdetail/id/<?php echo $this->id_sitio;?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+    	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle del Sitio</span>
+    </div>
+</div>
+
+
+
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header">
+      <h4><i class="material-icons">apps</i>
+      	<?php foreach ($this->sitio as $key ) { ?>
+      		<?php echo $key['nombre']; ?></h4>
+      	<?php } ?>
+      	<div>
+      		<!-- <h5 class="">Da clic para ver la información</h5> -->
+      	</div>
+  	</div>
+    <div class="collapsible-body">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col m4 s6">
+				<?php foreach ($this->sitio as $key ) { ?>
+					<h5><span class="font_tittle">Nombre sitio:</span> <?php echo $key['nombre']; ?></h5>
+					<h5><span class="font_tittle">Id cliente:</span> <?php echo $key['id_cliente']; ?></h5>
+					<h5><span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+				<?php } ?>
+
+			</div>
+
+			<div class="col m4 s6">
+				<?php foreach ($this->tipo_sitio as $value) { ?>
+					<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+				<?php } ?>	
+				<h5><span class="font_tittle">Tipo de torre:</span></h5>
+				<?php foreach ($this->sitio as $key ) { ?>
+					<h5><span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+				<?php } ?>
+			</div>
+
+			<div class="col m4 s12">
+				<?php foreach ($this->tipo_sitio as $value) { ?>
+					<h5> <span class="font_tittle">Id operador:</span> <?php echo $value['id_operador'] ?></h5>
+				<?php } ?>
+				<?php foreach ($this->sitio as $key ) { ?>
+					<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+					<h5><span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+				<?php } ?>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col m6 s6">
+				<?php foreach ($this->nombreproyecto as $key){ ?>
+					<h5><span class="font_tittle">Proyecto:</span> <?php echo $key['nombre_proyecto']; ?></h5>	
+				<?php } ?>
+				<h5><span class="font_tittle">Cliente:</span> 
+					<?php foreach ($this->tipo_sitio as $usr){ ?>
+						<?php foreach ($this->statuscliente as $mar) { 
+							 		if ($mar['id']==$usr['status_cliente']) { ?>
+							     		<?php echo $mar["nombre_status"]; ?>
+						<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+						<?php } } ?>
+					<?php } ?>
+				</h5>
+				<h5><span class="font_tittle">Obra civil:</span> </h5>
+				<h5><span class="font_tittle">Torre:</span>
+					<?php foreach ($this->tipo_sitio as $usr){ ?>
+						<?php foreach ($this->status as $mar) { 
+							if ($mar['id']==$usr['status_proyecto']) { ?>
+							    <?php echo $mar["nombre_status"]; ?>
+							<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+						<?php } } ?>
+					<?php } ?>
+
+				</h5>
+			</div>
+			<div class="col m6 s6">
+				<?php foreach ($this->tipo_sitio as $value) { ?>
+					<h5><span class="font_tittle">Coordinador:</span> <span><?php echo $value['nombre_coordinador'] ?></span></h5>
+					<h5><span class="font_tittle">Ingeniero Proyecto:</span> <span><?php echo $value['nombre_ingproyecto'] ?></span></h5>
+					<h5><span class="font_tittle">Residente:</span> <span><?php echo $value['nombre_residente'] ?></span></h5>
+					<h5><span class="font_tittle">PM Cliente:</span> <span><?php echo $value['pm_cliente'] ?></span></h5>
+				<?php } ?>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col m6 s12">
+				<h5><span class="font_tittle">Fecha requerida cliente:</span></h5>
+			</div>
+			<div class="col m6 s12">
+				<h5><span class="font_tittle">Fecha cronograma:</span></h5>
+			</div>
+		</div>
+    </div>
+  </li>
+</ul>
+
+
+
+
+
+<div class="row">
+	<div class="col m6 s12">
+		<div class="row">
+			<div class="input-field col m8 s6">
+				<select name="status_gps" id="status_gps">
+				    <?php foreach ($this->tipo_sitio as $usr){ ?>
+					    <?php foreach ($this->status as $mar) { 
+					        if ($mar['id']==$usr['status_proyecto']) { ?>
+					            <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_status"]; ?></option>
+					    <?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+					            <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_status"]; ?></option>
+					    <?php } } ?>
+				    <?php } ?>
+				</select>
+				<label>Status del Gps</label>
+			</div>
+			<div class="input-field col m4 s6">
+				  	<a class="waves-effect red darken-1 waves-light lighten-4 btn" id="mod_gps">Modificar</a>
+			</div>		
+		</div>
+
+	<div class="row">
+		<div class="input-field col m8 s6">
+			<select name="status_cli" id="status_cli">
+				    <?php foreach ($this->tipo_sitio as $usr){ ?>
+					    <?php foreach ($this->statuscliente as $mar) { 
+					        if ($mar['id']==$usr['status_cliente']) { ?>
+					            <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_status"]; ?></option>
+					    <?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+					            <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_status"]; ?></option>
+					    <?php } } ?>
+					    <?php } ?>			
+			</select>
+			    <label>Status del Cliente</label>
+		</div>
+
+		<div class="input-field col m4 s6">
+			<a class="waves-effect red darken-1 waves-light btn" id="mod_cli">Modificar</a>
+		</div>
+	</div>
+
+	<div class="row">
+        <div class="input-field col m8 s6">
+        	<?php foreach ($this->tipo_sitio as $usr){ ?>
+	          <input id="id_issue" type="text" value="<?php echo $usr['issue']; ?>" class="validate">
+	          <label for="id_issue">ISSUE</label>
+        	<?php }  ?>
+
+        </div>
+		<div class="input-field col m4 s6">
+			<a class="waves-effect red darken-1 waves-light btn" id="issue">Agregar</a>
+		</div>
+	</div>
+
+
+	</div>
+
+	<div class="col m6 s12">
+		<div class="row text-center">
+			<div class="input-field col m6 s6">
+				<?php if($this->proyecto_id == 1){ ?>
+					<a class="btn" href="/panel/asignardetalles/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>">Detalle Proyecto</a>
+				<?php } ?>
+				<?php if($this->proyecto_id == 5){ ?>
+					<a class="btn" href="/panel/detallestorrenueva/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>">Detalle Proyecto</a>
+				<?php } ?>
+				
+			</div>
+			<div class="input-field col m6 s6">
+				<a class="btn" href="/panel/cotizaciones/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>">Cotización</a>
+			</div>			
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m8 s6"></div>
+	<div class="col m4 s6">
+		<a class="green btn modal-trigger" href="#modal1">+ Agregar Comentario</a>
+	</div>
+</div>
+<div class="col m12 s12">
+	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Comentarios</span>
+			<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Comentario</th>		
+				</tr> 
+			</thead>
+			<?php
+			if ($this->comentarios) {
+			foreach ($this->comentarios as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["created_at"]; ?></td>
+					<td><?php echo $usr["comentarios"]; ?></td>
+					<td>
+						<a href="/panel/comentariosedit/comentario/<?php echo $usr["id"]; ?>/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+					<td>
+						<a href="/panel/requestdeletecomentarioproyecto/comentario/<?php echo $usr["id"]; ?>/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td>
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay comentarios.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+		</table>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Comentario</span>
+		<div class="col m12 s12">
+			<form action="/panel/requestaddcomentario" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+				<div class="row">
+					<input type="hidden" name="sitio"  value="<?php echo $this->idtipo; ?>">
+					<input type="hidden" name="id" value="<?php echo $this->id_sitio; ?>">
+					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+			        <div class="input-field col m12 s12">
+			          <i class="material-icons prefix">mode_edit</i>
+			          <textarea id="icon_prefix2" name="comentario" class="materialize-textarea"></textarea>
+			          <label for="icon_prefix2">Comentario</label>
+			        </div>
+		      	</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
+      	</form>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= -->
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+    $('.collapsible').collapsible();
+  });
+
+  $("#mod_gps").click(function(){
+	swal({
+	  title: "Estas seguro de cambiar el status?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+	    var gps = document.getElementById("status_gps").value;
+	    var	id = document.getElementById("id_proyecto").value;
+            var request = $.ajax({
+                url:"/panel/requestchangestatusgps",
+                method:"POST",
+                data: { status : gps, id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+  });
+
+
+  $("#mod_cli").click(function(){
+	swal({
+	  title: "Estas seguro de cambiar el status?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+  			var cli = document.getElementById("status_cli").value;
+  			var	id = document.getElementById("id_proyecto").value;
+            var request = $.ajax({
+                url:"/panel/requestchangestatuscliente",
+                method:"POST",
+                data: { status : cli, id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+
+  });
+
+
+  $("#issue").click(function(){
+	swal({
+	  title: "Estas seguro de agregar la información?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+  			var issue = document.getElementById("id_issue").value;
+  			var	id = document.getElementById("id_proyecto").value;
+            var request = $.ajax({
+                url:"/panel/requestchangeisuesitio",
+                method:"POST",
+                data: { issue : issue, id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+
+  });
+</script>

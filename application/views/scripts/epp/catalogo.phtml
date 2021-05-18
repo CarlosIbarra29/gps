@@ -1,0 +1,376 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+	if ($this->total >= 1 && $pagina <= $this->total) {
+
+		if (isset($_GET['pagina']) && $this->actpage != 1) {
+			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}else{
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}
+
+		$i = max(2, $pagina - 3);
+		if ($i > 2)
+			$links .= " <li><a>...</a></li> ";
+		for (; $i < min($pagina + 3, $this->total); $i++) {
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}
+		}
+		if ($i != $this->total)
+			$links .= " <li><a>...</a></li> ";
+		if($i ==$this->actpage){
+			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}else{
+			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}
+
+	}           
+}
+
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-right">
+        <a href="/epp/tipo" class="waves-effect green btn modal-trigger">Tipo de EPP</a>
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Epp</a>    
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP
+	</div>
+</div>
+<!-- End botones -->
+
+<!-- Buscador -->
+<div class="row">
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+	<div class="input-field col m4 s12">  
+		<select id="mySelect">
+			<option value="1" selected>Nombre EPP</option>
+			<option value="2">Talla</option>
+		</select>
+		<label>Buscador</label>
+	</div>
+
+	<div class="col m4 s12" id="buscar_nombre">
+		<form action="/epp/buscarepp" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
+				<label for="first_name">Buscar por nombre de Epp</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<!-- <a class="waves-effect waves-light btn"><i class="material-icons">search</i></a> -->
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>
+		</form>
+	</div>
+	<div class="col m4 s12 oculto" id="buscar_talla">
+		<form action="/epp/buscarepp" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa talla" id="tallas" name="tallas" type="text" class="validate" required>
+				<label for="tallas">Buscar por talla</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+		</form>
+	</div>
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+<!-- End Buscador -->
+
+
+<!-- Inicio Modal Insertar Epp -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="row">
+			<div class="col m12 s12 text-left" style="margin-top: 10px;">
+				<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar EPP
+			</div>
+		</div>
+		<div class="col m12 s12">
+			<form action="/epp/requestaddepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_epp">
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<select id="tipo" name="tipo" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->eppt as $epptipo) { ?>
+								<option value="<?php echo $epptipo["id_tipo"]; ?>"><?php echo $epptipo["nombre"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Tipo de EPP</label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="name" type="text" name="name" class="validate" required>
+						<label for="name">*Nombre: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="desc" type="text" name="desc" class="validate">
+						<label for="desc">Descripción: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="talla" type="text" name="talla" class="validate" required>
+						<label for="talla">*Talla: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="stock" type="number" name="stock" class="validanumeros" min="1" required>
+						<label for="stock">*Stock: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="vida" placeholder="Días Aproximados" type="number" min="1" name="vida" class="validanumeros" required>
+						<label for="vida">*Tiempo de vida: (En días) </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input type="text" id="costo" name="costo" class="validanumeros">
+						<label for="costo">Costo de Aprobado: </label>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+			</form>
+		<button class=" btn" id="addepp">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+<!-- End Module -->
+
+
+<!-- Table Epp-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Catálogo EPP
+		</div>
+		<div class="col m6 s6 text-right">
+			<a href="/epp/excelepp/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Talla</th>
+					<th>Costo Aprobado</th>
+					<th>Stock</th>
+					<th></th>
+					<th></th>
+					<th></th>	
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $eppinv) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $eppinv["nombre"]; ?></td>
+							<td><?php echo $eppinv["talla"]; ?></td>
+							<td>$<?php echo $eppinv["costoa"]; ?></td>
+							<td><?php echo $eppinv["stock"]; ?></td>
+							<td>
+								<a href="/epp/eppdetail/id/<?php echo $eppinv["idepp"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+							</td>
+							<td>
+								<a href="/epp/eppedit/id/<?php echo $eppinv["idepp"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+							</td>
+							<td>
+								<a class="delete" data-id="<?php echo $eppinv["idepp"]; ?>" data-nombre="<?php echo $eppinv["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No se encontró EPP</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table Epp -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+					<li class="page-item">
+						<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+					</li>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+ 	});
+
+ 	// Inicio Add epp
+
+	$("#addepp").click(function(){
+		var name = document.getElementById("name").value;
+		var talla = document.getElementById("talla").value;
+		var stock = document.getElementById("stock").value;
+		var vida = document.getElementById("vida").value;
+
+		if(name == "" || talla == "" || stock == "" || vida == ""){
+			swal({
+				title: "Para agregar una epp, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+	});
+
+	function submitForm() {
+		document.getElementById("submit_epp").submit()
+	}
+	// End Add epp
+
+	//Inicio Delete Ajax
+	$(".delete").click(function(){
+		id=$(this).data('id');
+		nombre=$(this).data('nombre');
+		swal({
+			title: "Estas seguro de eliminar el EPP "+nombre+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espera un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var request = $.ajax({
+					url:"/epp/requestdeleteepp",
+					method:"POST",
+					data: { id : id },
+					processData: true,
+				});
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+				request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+			return false;
+
+			} else {
+				swal("La accion fue cancelada!");
+			}
+		});
+	});
+	// End Delete Ajax
+
+
+	//Inicio Selected
+	$('#mySelect').on('change', function() {
+		var value = $(this).val();
+		if(value==1){
+			$("#buscar_nombre").show();
+			$("#buscar_talla").hide();
+		}
+
+		if(value==2){
+			$("#buscar_nombre").hide();
+			$("#buscar_talla").show();
+		}
+	});
+	// End Selected
+
+</script>
+

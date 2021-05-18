@@ -1,0 +1,177 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/personal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar personal</span>
+    </div>
+</div>
+
+
+<div class="col m12 s12" style="margin-top: 12px;">
+	<div class="white-box">
+		<form action="/panel/requestuodatepersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+			<?php foreach ($this->usuarios as $usr) { ?>
+			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="name" type="text" name="name" class="validate" value="<?php echo $usr["nombre"]; ?>" required>
+			    <label for="name">* Nombre(s):</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="apa" type="text" name="apellido_pa" class="validate" value="<?php echo $usr["apellido_pa"]; ?>" required>
+			    <label for="apa">* Apellido paterno:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">account_circle</i>
+			    <input id="ama" type="text" name="ampellido_ma" class="validate" value="<?php echo $usr["apellido_ma"]; ?>" required>
+			    <label for="ama">* Apellido materno:</label>
+			</div>
+			<div class="input-field col m6 s12">
+				<select id="puesto" name="puesto" required>
+			    	<?php foreach ($this->puestos as $mar) { 
+			     		if ($mar['id']==$usr['puesto']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			     	<?php } if ($mar['id']!=$usr['puesto']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			     	<?php } } ?>  
+				</select>
+				<label>Puesto personal</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+				<select name="status" id="status">
+					<?php if($usr["status_expediente"] == 1){ ?>
+						<option value="1" selected>Expediente Completo</option>
+						<option value="0">Expediente Incompleto</option>
+					<?php }else{ ?>
+						<option value="1">Expediente Completo</option>
+						<option value="0" selected>Expediente Incompleto</option>
+					<?php } ?>
+				</select>
+				<label>* Status Expediente</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+				<select name="disponibilidad" id="disponibilidad">
+					<?php if($usr["disponibilidad"] == "Local"){ ?>
+					      <option value="Local" selected>Local</option>
+					      <option value="Nacional">Nacional</option>
+					<?php } ?>
+
+					<?php if($usr["disponibilidad"] == "Nacional"){ ?>
+					      <option value="Local">Local</option>
+					      <option value="Nacional" selected>Nacional</option>
+					<?php } ?>
+
+					<?php if($usr["disponibilidad"] == NULL){ ?>
+						<option value ="0" selected>Selecciona una opcion</option>
+					      <option value="Local">Local</option>
+					      <option value="Nacional" >Nacional</option>
+					<?php } ?>
+				</select>
+				<label>* Disponibilidad</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">event_available</i>
+			    <input id="curp" type="text" name="curp" value="<?php echo $usr["curp"]; ?>" class="validate">
+			    <label for="curp">CURP:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">event_available</i>
+			    <input id="nss" type="text" name="nss" value="<?php echo $usr["nss"]; ?>" class="validate">
+			    <label for="nss">NSS:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">event_available</i>
+			    <input id="rfc" type="text" name="rfc" value="<?php echo $usr["rfc"]; ?>" class="validate">
+			    <label for="rfc">RFC:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">phone</i>
+			    <input id="icon_telephone" type="text" name="phone" value="<?php echo $usr["telefono"]; ?>" class="validate">
+			    <label for="icon_telephone">Telefono:</label>
+			</div>
+
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">email</i>
+			    <input id="mail" type="text" name="mail" value="<?php echo $usr["email_personal"]; ?>" class="validate">
+			    <label for="mail">Correo Electronico:</label>
+			</div>
+
+			<?php if($this->rol_user == 1 || $this->rol_user == 4){ ?>
+				<div class="input-field col m6 s12">
+				    <i class="material-icons prefix">attach_money</i>
+				    <input id="day_pay" type="text" name="dia_pago" value="<?php echo $usr['dia_pago']; ?>" class="validate">
+				    <label for="day_pay">Pago por Dia</label>
+				</div>
+				<div class="input-field col m6 s12">
+				    <i class="material-icons prefix">attach_money</i>
+				    <input id="hora_pay" type="text" name="hora_pago" value="<?php echo $usr['hora_pago']; ?>" class="validate">
+				    <label for="hora_pay">Pago por Hora Extra</label>
+				</div>
+
+			    <div class="input-field col m6 s12">
+			        <i class="material-icons prefix">add_circle_outline</i>
+			        <input id="tarjeta" type="text" name="tarjeta" value="<?php echo $usr['tarjeta']; ?>" class="validate">
+			        <label for="tarjeta">No. Tarjeta</label>
+			    </div>
+
+			<?php } ?>
+
+
+
+			<?php } ?>
+			<!-- Boton -->
+			<!-- Boton -->
+		</div>
+		</form>
+
+			<div class="input-field col m12 s12 text-right">
+				<div class="row">
+					<a href="/panel/personal" class="waves-effect red waves-light btn">Cancelar</a>
+					<button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+				</div>	
+			</div>
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $("#addpersonal").click(function(){
+     	var status = document.getElementById("status").value;
+        var name = document.getElementById("name").value;
+        var ap = document.getElementById("apa").value;
+        var am = document.getElementById("ama").value;
+        var puesto = document.getElementById("puesto").value;
+        var email = document.getElementById("mail").value;
+
+        if(status == 3 || name == "" || ap == "" || am == "" || puesto == "" ){
+            swal({
+                title: "Para agregar al personal debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        });    
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_personal").submit()
+    } 
+</script>

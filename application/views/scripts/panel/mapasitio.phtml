@@ -1,0 +1,154 @@
+
+<style>
+    #map {
+        height: 550px;
+        width: 100%;
+    }
+</style>
+
+<div class="row">
+    <div class="col m12 s12">
+        <h2></h2>
+        <div id="map"></div>
+    </div>
+</div>
+
+    <?php 
+        $coordenadas = array();
+        foreach ($this->coordenadas as $key ) {
+           $coordenadas[] = ["latitude" => $key['latitude'], "longitude"=>$key['longitude'], "nombre"=>$key['nombre'], 
+                            "cliente"=>$key['cliente']];
+        }
+
+        
+
+        $coor = array();
+        foreach ($this->coordenadas as $key ) {
+           $coor[] = ["placeName"=>$coordenadas[0]['nombre'], "LatLng"=>["lat"=>$coordenadas[0]['latitude']], "lng"=>$coordenadas[0]['longitude']];
+        }
+       
+
+        $count_coor = count($coordenadas);
+
+    ?>
+
+        <script>
+
+            var map;
+            var InforObj = [];
+            var centerCords = {
+                lat: 21.7603861,
+                lng: -102.2769411
+            };
+
+            var markersOnMap = [
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[0]['nombre']; ?>  Cliente: <?php echo $coordenadas[0]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[0]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[0]['longitude']; ?>
+                    }]
+                }, 
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[1]['nombre']; ?>  Cliente: <?php echo $coordenadas[1]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[1]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[1]['longitude']; ?>
+                    }]
+                },
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[2]['nombre']; ?>  Cliente: <?php echo $coordenadas[2]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[2]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[2]['longitude']; ?>
+                    }]
+                },
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[3]['nombre']; ?>  Cliente: <?php echo $coordenadas[3]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[3]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[3]['longitude']; ?>
+                    }]
+                },
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[4]['nombre']; ?>  Cliente: <?php echo $coordenadas[4]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[4]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[4]['longitude']; ?>
+                    }]
+                },
+                {
+                    placeName: "Sitio: <?php echo $coordenadas[5]['nombre']; ?>  Cliente: <?php echo $coordenadas[5]['cliente']; ?>",
+                    LatLng: [{
+                        lat: <?php echo $coordenadas[5]['latitude']; ?>,
+                        lng: <?php echo $coordenadas[5]['longitude']; ?>
+                    }]
+                },
+
+
+
+
+
+            ];
+
+
+            window.onload = function () {
+                initMap();
+            };
+
+            function addMarkerInfo() {
+                for (var i = 0; i < markersOnMap.length; i++) {
+                    var contentString = '<div id="content">Sitio<h3> <a href="">' + markersOnMap[i].placeName +
+                        '</a></h3>';
+
+                    const marker = new google.maps.Marker({
+                        position: markersOnMap[i].LatLng[0],
+                        map: map
+                    });
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 200
+                    });
+
+                    marker.addListener('click', function () {
+                        closeOtherInfo();
+                        infowindow.open(marker.get('map'), marker);
+                        InforObj[0] = infowindow;
+                    });
+                    // marker.addListener('mouseover', function () {
+                    //     closeOtherInfo();
+                    //     infowindow.open(marker.get('map'), marker);
+                    //     InforObj[0] = infowindow;
+                    // });
+                    // marker.addListener('mouseout', function () {
+                    //     closeOtherInfo();
+                    //     infowindow.close();
+                    //     InforObj[0] = infowindow;
+                    // });
+                }
+            }
+
+            function closeOtherInfo() {
+                if (InforObj.length > 0) {
+                    /* detach the info-window from the marker ... undocumented in the API docs */
+                    InforObj[0].set("marker", null);
+                    /* and close it */
+                    InforObj[0].close();
+                    /* blank the array */
+                    InforObj.length = 0;
+                }
+            }
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 5,
+                    center: centerCords
+                });
+                addMarkerInfo();
+            }
+        </script>
+
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATUo4TcyPlXnq2ry_FWKIqT-KN5K4jVbU&callback=initMap"> </script>
+
+ 

@@ -1,0 +1,106 @@
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+
+<div class="col-md-12">
+    <div class="white-box">
+        <div class="jumbotron" style="background-image: url('/img/products.jpg'); background-size: cover;
+        background-position: top center; ">
+        <h1>Gestion de productos</h1>
+    </div>
+    <?php $session = new Zend_Session_Namespace("current_session"); 
+    echo $session->nombre; ?>
+</div>
+</div>
+
+<div class="col-md-12">
+    <div class="white-box">
+        <form method="POST" enctype="multipart/form-data" action="/panel/requestproductoadd" class="form-horizontal form-material">
+            <div class="form-group">
+                <div class="col-md-12"><label>Catalogo</label></div>
+                <?php foreach ($this->recomendation as $key){ ?>
+                <div class="col-md-4">
+                    <input type="checkbox" name="<?php echo $key['id']; ?>" value="<?php echo $key['id']; ?>" >
+                    <label for="text"><?php echo $key["nombre"];  ?></label>
+                </div>
+                <?php } ?>
+            </div>
+            <div class="form-group">
+                <label for="text">Nombre</label>
+                <small>*El nombre es obligatorio para visualizar detalles.</small>
+                <input class="form-control" type="text" id="name" name="name" placeholder="Ingrese el nombre" required>       
+            </div>
+            <div class="form-group">
+                <label for="text">Imagen</label>
+                <small>*La imagen no debe superar el tamaño de 1.9 Mb.</small>
+                <input class="form-control" name="url" type="file" required>
+            </div>
+            <div class="form-group">
+                <label for="text">Descripcion</label>
+                <textarea class="" id="descr" rows="100" cols="100"  name="desc" ></textarea>
+                <script type="text/javascript">CKEDITOR.replace( 'descr',{ height : 100, });</script>
+            </div>
+            <div class="form-group">
+                <label for="text">Stock</label>
+                <input class="form-control" type="text" name="stock" placeholder="Ingrese el numero de Stock">
+            </div>
+            <div class="form-group">
+                <label for="text">Precio</label>
+                <input type="text" name="precio" class="form-control" placeholder="Ingrese el precio del producto $">
+            </div>  
+            <div class="form-group">
+                <div class="col-md-12">
+                <label for="text">En oferta?</label>
+                </div>
+                <div class="col-md-12"><input type="radio" name="ofert" value="1"><label>Si</label></div>
+                <div class="col-md-12"><input type="radio" name="ofert" value="0" checked><label>No</label></div>
+            </div> 
+            <div class="form-group">
+                <input type="hidden" name="tofer" class="form-control" value="23">
+            </div>  
+            <div class="form-group">
+                <label for="text">Inicio del periodo de oferta</label>
+                <input type="Date" name="beig" class="form-control" min="2018-04-01">
+            </div> 
+            <div class="form-group">
+                <label for="text">Fin del periodo de oferta</label>
+                <input type="Date" name="end" class="form-control" min="2018-04-01">
+            </div>   
+            <div class="form-group">
+                <label for="text">Precio en foerta</label><br>
+                <small>si no incluye oferta solo colocar 0 (cero)</small>
+                <input type="text" name="preciooff" class="form-control" placeholder="Ingrese el precio del producto si esta en oferta $">
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 text-center"><br>
+                    <input type="submit" class="btn btn-primary" value="Enviar">
+                </div>
+            </div>
+        </form><!-- end form -->
+    </div>
+</div><!-- end row -->
+
+<div class="col-md-12">
+    <div class="white-box">
+        <small>*Da click en el nombre del producto para ver detalles.</small>
+        <table class="table text-left table-hover">                    
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $cont =1;  foreach ($this->productos as $key){ ?>
+                <tr>
+                    <td><a href="/panel/productosdetail/id/<?php echo $key["id"]; ?>"><?php echo $key["nombre"]; ?></a></td>
+                    <td><p><img src="/<?php echo $key["imagen"]; ?>" WIDTH = 'auto' HEIGHT = '200px' />
+                    </p></td>
+                    <td><a href="/panel/requestdeleteproduct/id/<?php echo $key["id"]; ?>"><i class="fa fa-2x fa-trash" style="color: red;"></i></a></td>
+                    <td><a href="/panel/productosedit/id/<?php echo $key["id"]; ?>"><i class="fa fa-2x fa-edit"></i></a></td>
+                </tr>    
+                <?php  }?>
+            </tbody>  
+        </table>
+    </div>      
+</div>

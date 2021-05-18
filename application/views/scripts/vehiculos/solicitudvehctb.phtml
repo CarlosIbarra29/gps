@@ -1,0 +1,414 @@
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.common.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+</head>
+<body>
+<div id="example">
+<!--     <div class="box wide hidden-on-narrow">
+        <div class="box-col">
+            <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
+        </div>
+    </div>
+ -->
+<?php foreach ($this->solicitud as $key){
+        $ids= $key ['id'];
+}?>
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/vehiculos/solicituddetailctb/id/<?php echo $ids; ?>/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+    <div class="col m6 s6 text-right">
+        <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
+    </div>
+</div> 
+
+        <?php foreach ($this->solicitud as $key){
+                $idsol = $key ['id'];
+                $status_sol = $key['status_solicitud'];
+        }?>
+
+        <?php foreach ($this->detalle as $key){
+            
+        $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; 
+        $id_responsable = $key ['id_responsable']; $id_usuario = $key ['id_usuario']; 
+        $id_vehiculo = $key ['id_vehiculo']; $id_servicios = $key ['id_servicios']; $referencia = $key ['referencia'];
+        $id_proveedor = $key ['id_proveedor']; $step_veh = $key ['step_veh']; $fecha_sol = $key ['fecha_sol']; 
+        $fecha_pagada = $key ['fecha_pagada']; $monto = $key ['monto']; $motivos = $key ['motivos']; 
+        $datouno = $key ['datouno']; $statusuno = $key ['statusuno']; $tipouno = $key ['tipouno'];
+        $datodos = $key ['datodos']; $statusdos = $key ['statusdos']; $tipodos = $key ['tipodos']; 
+        $datotres = $key ['datotres']; $statustres = $key ['statustres']; $tipotres = $key ['tipotres']; 
+        $datocuatro = $key ['datocuatro']; $statuscuatro = $key ['statuscuatro']; $tipocuatro = $key ['tipocuatro']; 
+        $datocinco = $key ['datocinco']; $statuscinco = $key ['statuscinco']; $tipocinco = $key ['tipocinco']; 
+        $datoseis = $key ['datoseis']; $statusseis = $key ['statusseis']; $tiposeis = $key ['tiposeis']; 
+        $datosiete = $key ['datosiete']; $statussiete = $key ['statussiete']; $tiposiete = $key ['tiposiete'];  
+        $status_comprobante = $key ['status_comprobante']; $user_val = $key ['user_val']; 
+        $fecha_validacion = $key ['fecha_validacion']; $fecha_cancelacion = $key ['fecha_cancelacion']; 
+        $motivo_rechazo = $key ['motivo_rechazo']; $fecha_creacion = $key ['fecha_creacion']; 
+        $iva = $key ['iva']; $total = $key ['total'];
+
+        $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
+
+        $nombre_user = $key ['nombre'];  $ap = $key ['ap'];  $am = $key ['am'];  
+        $nombreap = $key ['nombreap']; $apap = $key ['apap']; $amap = $key ['amap'];
+        $nombrep = $key ['nombrep']; $app = $key ['app']; $amp = $key ['amp'];
+
+        $marca = $key ['marca']; $submarca = $key ['submarca']; $modelo = $key ['modelo']; 
+        $color = $key ['color']; $placas = $key ['placas']; $imagen = $key ['imagen'];
+
+        $nombre_servicio = $key ['nombre_servicio']; $evidencia_uno = $key ['evidencia_uno']; 
+        $evidencia_dos = $key ['evidencia_dos']; $evidencia_tres = $key ['evidencia_tres']; 
+        $evidencia_cuatro = $key ['evidencia_cuatro']; $evidencia_cinco = $key ['evidencia_cinco'];
+        $evidencia_seis = $key ['evidencia_seis']; $evidencia_siete = $key ['evidencia_siete'];
+
+        $nombre_prov = $key ['nombre_prov'];  $telefono = $key ['telefono'];  $rfc = $key ['rfc']; 
+        $datos_banco = $key ['datos_banco'];  $cuenta = $key ['cuenta'];  $titular = $key ['titular'];  
+        $email = $key ['email']; 
+        
+        }?>
+
+        <?php 
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d/m/Y");
+        ?>
+
+
+        <div class="page-container hidden-on-narrow">
+                <div class="pdf-page size-a4">
+                        <div class="pdf-header">
+                                <span class="company-logo">
+                                        <img src="/img/head.png" style="width: 120px;" />
+                                </span>
+
+                                <span class="invoice-number">
+                                        <img src="/img/logo-2.png" style="width: 125px;" /><br/>
+                                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
+                                </span>
+
+                                <div class="row">
+                                        <div class="company-logo col m12 s12 text-center">
+                                                Pago de Servicios a Vehículos
+                                        </div>
+                                </div>
+                        </div>
+
+                        <div class="pdf-footer">
+                                <p>Gps Constructivos<br />Fecha de descarga: <?php echo $hoy; ?><br /></p>
+                        </div>
+
+                        <div class="for" style="margin-top: 60px;">
+                                <h3>Fecha Requerida : <?php echo $fecha_sol; ?></h3>
+
+                                <?php if ($id_vehiculo == 0) { ?>
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos</span>
+                                    <p>
+                                        <span class="title-pdf">Unidad de Pago: </span> <span style="font-size: 14px;">Oficina</span><br />
+                                        <span class="title-pdf">Usuario: </span> <span style="font-size: 14px;"><?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br />
+
+                                        <?php if ($id_responsable != 0) { ?>
+                                            <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
+                            
+                                        <?php } else {  ?>
+                                        <?php } ?>
+                                    </p>
+                                <?php } else { ?>
+                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos de vehículo</span>
+                                     <p>
+                                        <span class="title-pdf">Marca:</span> <span style="font-size: 14px;"><?php echo $marca; ?></span><br />
+                                        <span class="title-pdf">Submarca:</span> <?php echo $submarca; ?><br />
+                                        <span class="title-pdf">Modelo:</span><?php echo $modelo; ?><br />
+                                        <span class="title-pdf">Placas:</span> <span style="font-size: 14px;"><?php echo $placas; ?></span><br />
+                                        <span class="title-pdf">Color:</span> <?php echo $color; ?><br />
+                                        <?php if ($id_responsable != 0) { ?>
+                                            <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
+                            
+                                        <?php } else {  ?>
+                                        <?php } ?>
+                                    </p>
+                                <?php } ?>
+                        </div>
+
+                        <div class="from" style="margin-top: 60px;">
+                                <br/><br/>
+                                <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Proveedor</span>
+
+                                <p style="padding-bottom: 20px;">
+                                        <span class="title-pdf">Nombre:</span> <?php echo $nombre_prov; ?> <br />
+                                        <span class="title-pdf">Telefono:</span> <?php echo $telefono; ?><br />
+                                        <span class="title-pdf">RFC:</span> <?php echo $rfc; ?><br />
+                                        <span class="title-pdf">Datos Banco:</span> <?php echo $datos_banco; ?><br />
+                                        <span class="title-pdf">Cuenta: </span><?php echo $cuenta; ?> </br>
+                                         <span class="title-pdf">Tarjeta: </span<?php echo $titular; ?>></br>
+                                        <span class="title-pdf">Titular: </span<?php echo $titular; ?>></br>
+                                        <span class="title-pdf">Email:</span> <?php echo $email; ?></br>
+
+                                        <?php if($referencia == ""){ ?>
+
+                                        <?php } else { ?>
+                                                <span class="title-pdf">Referencia:</span> <?php echo $referencia; ?><br />
+                                        <?php } ?>
+                                </p>
+                        </div>
+
+                        <div class="pdf-body">
+
+                                <div class="row">
+                                        <!-- <div class="col m12 s12"  style="margin-top: 50px;">
+                                                <table>
+                                                        <thead>
+                                                                <tr>
+                                                                        <th><span class="title-pdf">Condiciones de Compra</span></th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td class="text-center"><?php echo $condiciones_compra; ?></td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div> -->
+
+                                        <div class="col m12 s12" style="margin-top: 60px;">
+                                                <table>
+                                                        <thead>
+                                                                <tr>
+                                                                        <th><span class="title-pdf">Motivo de Solicitud</span></th>
+                                                                </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td class="text-center"><?php echo $motivos; ?></td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+
+                                        <div class="col m12 s12">
+                                                <table>
+                                                        <thead>
+                                                                <tr>
+                                                                    <th class="text-center"><span class="title-pdf">Servicio</span></th>
+                                                                    <th class="text-center"><span class="title-pdf">Monto</span></th>
+                                                                    <th class="text-center"><span class="title-pdf">IVA</span></th>
+                                                                    <th class="text-center"><span class="title-pdf">Total</span></th>
+                                                                </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                                <tr>
+                                                                    <td class="text-center"><?php echo $nombre_servicio; ?></td>
+                                                                    <td class="text-center">$ <?php echo $monto; ?></td>
+                                                                    <td class="text-center">
+                                                                        <?php if ($iva == null) { ?>
+                                                                            Servicio NO facturable.
+                                                                        <?php } else { ?>
+                                                                            $ <?php echo $iva; ?>
+                                                                        <?php } ?>
+                                                                    </td>
+                                                                    <td class="text-center">$ <?php echo $total; ?></td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                </div>
+
+
+                                <div class="row">
+                                        <span><b>Solicito:</b> <?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br/>
+                                        <span><b>Autorizó:</b> <?php echo $nombreap; ?> <?php echo $apap; ?> <?php echo $amap; ?></span>
+                                </div>
+
+                                <?php if ($status_comprobante == 1) { ?>
+                                        <div class="row">
+                                                <span><b>Pagada por:</b> <?php echo $nombrep; ?> <?php echo $app; ?> <?php echo $amp; ?></span>
+                                        </div>
+                                <?php } else {  ?>
+                                <?php } ?>       
+                                <div class="row signature">
+                                        <div class="col m12 s12 text-center">
+                                                <img src="/img/logo-2.png" style="width: 190px;"><br>
+                                                Aprobado: ING. Rubén García Guzmán<br /><br />
+                                                <?php echo $hoy; ?>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <div class="responsive-message"></div>
+
+
+        <style>
+
+                .pdf-page {
+                        font-family: "DejaVu Sans", "Arial", sans-serif;
+                }
+        </style>
+
+        <script>
+                kendo.pdf.defineFont({
+                        "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+                        "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+                        "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+                        "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+                });
+        </script>
+
+        <script src="../content/shared/js/pako.min.js"></script>
+
+        <script>
+                function getPDF(selector) {
+                        kendo.drawing.drawDOM($(selector)).then(function(group){
+                                kendo.drawing.pdf.saveAs(group, "Solicitud NO <?php echo $idsol; ?>.pdf");
+                        });
+                }
+
+
+                $(document).ready(function() {
+                        var data = [
+                        { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
+                        { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
+                        { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
+                        { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
+                        { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
+                        { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
+                        ];
+
+                                var schema = {
+                                        model: {
+                                        productName: { type: "string" },
+                                        unitPrice: { type: "number", editable: false },
+                                        qty: { type: "number" }
+                                },
+
+                                parse: function (data) {
+                                        $.each(data, function(){
+                                                this.total = this.qty * this.unitPrice;
+                                        });
+
+                                        return data;
+                                }
+                        };
+
+
+                        var aggregate = [
+                        { field: "qty", aggregate: "sum" },
+                        { field: "total", aggregate: "sum" }
+                        ];
+
+                        var columns = [
+                        { field: "productName", title: "Product", footerTemplate: "Total"},
+                        { field: "unitPrice", title: "Price", width: 120},
+                        { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
+                        { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
+                        ];
+
+
+                        var grid = $("#grid").kendoGrid({
+                                editable: false,
+                                sortable: true,
+
+                                dataSource: {
+                                        data: data,
+                                        aggregate: aggregate,
+                                        schema: schema,
+                                },
+                                columns: columns
+                        });
+
+
+                        $("#paper").kendoDropDownList({
+                                change: function() {
+                                        $(".pdf-page")
+                                        .removeClass("size-a4")
+                                        .removeClass("size-letter")
+                                        .removeClass("size-executive")
+                                        .addClass(this.value());
+                                }
+                        });
+                });
+        </script>
+
+        <style>
+
+                .title-pdf{
+                        font-weight: bold;
+                        font-size: 13px;
+                }
+                .pdf-page {
+                        margin: 0 auto;
+                        box-sizing: border-box;
+                        box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+                        background-color: #fff;
+                        color: #333;
+                        position: relative;
+                }
+                .pdf-header {
+                        position: absolute;
+                        top: .5in;
+                        height: .6in;
+                        left: .5in;
+                        right: .5in;
+                        /*border-bottom: 1px solid #e5e5e5;*/
+                }
+                .invoice-number {
+                        padding-top: .17in;
+                        float: right;
+                }
+                .pdf-footer {
+                        position: absolute;
+                        bottom: .5in;
+                        height: .6in;
+                        left: .5in;
+                        right: .5in;
+                        padding-top: 10px;
+                        border-top: 1px solid #e5e5e5;
+                        text-align: left;
+                        color: #787878;
+                        font-size: 12px;
+                }
+                .pdf-body {
+                        position: absolute;
+                        top: 4.3in;
+                        bottom: 1.2in;
+                        left: .5in;
+                        right: .5in;
+                }
+
+                .size-a4 { width: 8.3in; height: 11.7in; }
+                .size-letter { width: 8.5in; height: 11in; }
+                .size-executive { width: 7.25in; height: 10.5in; }
+
+                .company-logo {
+                        font-size: 34px;
+                        font-weight: bold;
+                        color: orange;
+                }
+                .for {
+                        position: absolute;
+                        top: 1.5in;
+                        left: .5in;
+                        width: 3.5in;
+                }
+                .from {
+                        position: absolute;
+                        top: 1.5in;
+                        right: .5in;
+                        width: 3.5in;
+                }
+                .from p, .for p {
+                        color: #787878;
+                }
+                .signature {
+                        padding-top: .5in;
+                }
+        </style>
+
+</div>
+
+
+</body>

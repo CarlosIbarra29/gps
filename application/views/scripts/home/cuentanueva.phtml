@@ -1,0 +1,78 @@
+<h1>Nueva cuenta</h1><br>
+<div class="row">
+	<div class="col-md-12">
+		<form action="/home/requestcountsadd" method="POST" enctype="multipart/form-data">
+			<div class="row text-left"> 
+				<div class="col-md-12">
+					<label>Nombre: </label>
+				</div>
+				<div class="col-md-12">
+					<input class="form-control" type="text" name="nomcuenta" required>
+				</div>
+				<div class="col-md-12">
+					<label for="text">Numero de tarjeta: </label>
+				</div>
+				<p>
+				<div class="col-md-1"><input class="inputCard form-control" type="text" name="Card1" maxlength="4"/></div>
+				-
+				<div class="col-md-1"><input class="inputCard form-control" type="text" name="Card2" maxlength="4"/></div>
+				-
+				<div class="col-md-1"><input class="inputCard form-control" type="text" name="Card3" maxlength="4"/></div>
+				-
+				<div class="col-md-1"><input class="inputCard form-control" type="text" name="Card4" maxlength="4"/></div>
+				</p>
+			</div>
+			<div class="row text-left">
+				<div class="col-md-12">
+					<label for="text"><br>Vence: </label>
+				</div>
+				<div class="col-md-2">
+					<select name='expireMM' id='expireMM' class="form-control">
+					    <option value=''>Mes</option>
+					    <option value='01'>Enero</option>
+					    <option value='02'>Febrero</option>
+					    <option value='03'>Marzo</option>
+					    <option value='04'>Abril</option>
+					    <option value='05'>Mayo</option>
+					    <option value='06'>Junio</option>
+					    <option value='07'>Julio</option>
+					    <option value='08'>Agosto</option>
+					    <option value='09'>Septiembre</option>
+					    <option value='10'>Octubre</option>
+					    <option value='11'>Noviembre</option>
+					    <option value='12'>Diciembre</option>
+					</select> 
+				</div>
+				<div class="col-md-2">
+					<select name='expireYY' id='expireYY' class="form-control">
+					    <option value=''>Año</option>
+					    <option value='2019'>2019</option>
+					    <option value='2020'>2020</option>
+					    <option value='2021'>2021</option>
+					    <option value='2022'>2022</option>
+					    <option value='2023'>2023</option>
+					    <option value='2024'>2024</option>
+					    <option value='2025'>2025</option>
+					    <option value='2026'>2026</option>
+					    <option value='2027'>2027</option>
+					    <option value='2028'>2028</option>
+					    <option value='2029'>2029</option>
+					</select> 
+					</div>
+				<input class="" type="hidden" name="expiry" id="expiry" maxlength="4"/>
+			</div>
+			<div class="col-md-12 text-center"><br>
+				<p><input type="submit" value="Guardar" class="btn btn-primary"></p>
+			</div><br>
+		</form>
+	</div>	
+</div>
+<script type="text/javascript">
+	Conekta.getPublicKey('key_Id6uUdm4trqHbupb1S8sBPA');
+	Conekta.setLanguage("es");
+	
+	console.log("Validado: "+Conekta.card.validateNumber(5555555555554444)); 
+	console.log("Validado fecha: "+Conekta.card.validateExpirationDate(12,2020));
+	console.log("Validado CVC: "+Conekta.card.validateCVC(123));
+	console.log("Validado Brand: "+Conekta.card.getBrand(5555555555554444));
+</script>

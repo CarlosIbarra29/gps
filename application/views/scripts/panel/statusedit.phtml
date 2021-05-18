@@ -1,0 +1,55 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/statustipocliente/id/<?php echo $this->tipo; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar status</span>
+    </div>
+</div>
+
+<div class="col m12 s12">
+	<div class="white-box">
+		<form action="/panel/requestupdatestatusedit" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+			<?php foreach ($this->estructura as $usr) { ?>
+			<input type="hidden" name="tipo" value="<?php echo $this->tipo; ?>">
+			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+				<div class="row">
+			        <div class="input-field col m6 s12">
+			          <!-- <i class="material-icons prefix">account_circle</i> -->
+			          <input id="name" type="text" name="nombre" value="<?php echo $usr["nombre_status"]; ?>" class="validate" required>
+			          <label for="name">Nombre:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">chevron_right</i>
+			          <input id="prioridad" type="text" name="prioridad" value="<?php echo $usr["prioridad"]; ?>" class="validate" required>
+			          <label for="prioridad">Prioridad:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+					    <select name="tipo_proyecto">
+			               <?php foreach ($this->status as $mar) { 
+			                if ($mar['id']==$usr['tipo_proyecto']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_proyecto"]; ?></option>
+			                <?php } if ($mar['id']!=$usr['tipo_proyecto']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_proyecto"]; ?></option>
+			                <?php } } ?>  
+					    </select>
+					    <label>Tipo de proyecto</label>
+			        </div>
+		      	</div>
+
+			<?php } ?>
+			<div class="input-field col m12 s12 text-right">
+				<div class="row">
+					<a href="/panel/personal" class="waves-effect red waves-light btn">Cancelar</a>
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Actualizar</button>
+				</div>	
+			</div>
+		</div>
+	</form>
+</div>
+</div>

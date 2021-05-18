@@ -1,0 +1,135 @@
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/gasolina/efecticard" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<?php foreach ($this->tarjeta as $key){
+	$tarjeta = $key['no_tarjeta'];
+	$status_tarjeta = $key['status_tarjeta'];
+	$fecha_asignacion = $key['fecha_asignacion'];
+} ?>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tarjeta No. <?php echo $tarjeta; ?></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+        	<div class="card-content">
+        		<form action="/gasolina/requestupdatepersonalefecticard" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+          		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información de la tarjeta</span>
+          		<?php foreach ($this->tarjeta as $usr){ ?>
+          			<input type="hidden" name="ids" value="<?php echo $usr['id']; ?>">
+          		<div class="row" style="margin-top: 20px;">
+					<div class="input-field col s6">
+						<select id="responsable" name="responsable">
+					    	<?php foreach ($this->personal as $mar) { 
+					     		if ($mar['id']==$usr['id_responsable']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?> <?php echo $mar["apellido_pa"]; ?> <?php echo $mar["apellido_ma"]; ?></option>
+					     	<?php } if ($mar['id']!=$usr['id_responsable']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?> <?php echo $mar["apellido_pa"]; ?> <?php echo $mar["apellido_ma"]; ?></option>
+					     	<?php } } ?>  
+						</select>
+						<label>Personal responsable</label>
+					</div>
+				</form>
+					<div class="input-field col s6 text-center">
+						<a class="waves-effect waves-light btn" id="modificar_personal">Modificar personal</a>
+					</div>
+          		</div>
+          		<?php } ?>
+        	</div>
+        	<div class="card-action">
+        		<div class="row">
+        			<div class="col m6 s6">
+<!--         				<div class="row text-center">
+        					<h4>Status tarjeta</h4>
+        					<div class="col m4 s4">
+        						<?php if($status_tarjeta == 0){ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/correct.png" >
+										Activa
+									</div>
+								<?php }else{ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/gris.jpg" >
+										Activa
+									</div>
+								<?php } ?>
+        					</div>	
+        					<div class="col m4 s4">
+        						<?php if($status_tarjeta == 1){ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/naranja.png" >
+										Inactiva
+									</div>
+        						<?php }else{ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/gris.jpg" >
+										Inactiva
+									</div>
+        						<?php } ?>
+
+        					</div>
+        					<div class="col m4 s4">
+        						<?php if($status_tarjeta == 2){ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/rojo.png" >
+										Baja
+									</div>
+        						<?php }else{ ?>
+									<div class="chip" id="activo_personal">
+										<img src="/img/gris.jpg" >
+										Baja
+									</div>
+        						<?php } ?>
+
+        					</div>	
+
+        				</div> -->
+        			</div>
+
+        			<div class="col m6 s6" style="margin-top: 10px;">
+        				<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fecha ultima actualización: <?php echo $fecha_asignacion; ?></span>
+        			</div>
+
+        		</div>
+        	</div>
+      	</div>
+    </div>
+</div>
+<!-- <img src="/img/gris.jpg" > -->
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('select').formSelect();
+  	});
+
+  	$("#modificar_personal").click(function(){
+  		var responsable = document.getElementById("responsable").value;
+
+        if(responsable == 0){
+            swal({
+            	title: "Para agregar una tarjeta es necesario llenar ambos datos solicitados",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });    
+            setTimeout(submitForm, 1500);     
+        }
+  	});
+
+    function submitForm() {
+        document.getElementById("submit_usuario").submit()
+    }
+
+</script>

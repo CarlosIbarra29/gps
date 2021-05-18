@@ -1,0 +1,681 @@
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/asignardetalles/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<!-- <div class="row">
+	<div class="col m4 s6">
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Nombre sitio:</span> <?php echo $key['nombre']; ?></h5>
+			<h5><span class="font_tittle">Id cliente:</span> <?php echo $key['id_cliente']; ?></h5>
+			<h5><span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+		<?php } ?>
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>	
+		<h5><span class="font_tittle">Tipo de torre:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s12">
+		<h5><span class="font_tittle">Id operador:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+			<h5><span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+		<?php } ?>
+	</div>
+</div> -->
+
+
+<!-- <div class="row">
+	<div class="col m6 s6">
+		<h5><span class="font_tittle">Proyecto:</span> </h5>
+		<h5><span class="font_tittle">Cliente:</span> 
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->statuscliente as $mar) { 
+					 		if ($mar['id']==$usr['status_cliente']) { ?>
+					     		<?php echo $mar["nombre_status"]; ?>
+				<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+				<?php } } ?>
+			<?php } ?>
+		</h5>
+		<h5><span class="font_tittle">Obra civil:</span> </h5>
+		<h5><span class="font_tittle">Torre:</span>
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->status as $mar) { 
+					if ($mar['id']==$usr['status_proyecto']) { ?>
+					    <?php echo $mar["nombre_status"]; ?>
+					<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+				<?php } } ?>
+			<?php } ?>
+
+		</h5>
+	</div>
+	<div class="col m6 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Coordinador:</span> <?php echo $value['nombre_coordinador'] ?></h5>
+			<h5><span class="font_tittle">Ingeniero Proyecto:</span> <?php echo $value['nombre_ingproyecto'] ?></h5>
+		<?php } ?>
+		<h5><span class="font_tittle">Residente: </span></h5>
+		<h5><span class="font_tittle">PM Cliente:</span></h5>
+	</div>
+</div> -->
+
+<!-- <div class="row">
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha requerida cliente:</span></h5>
+	</div>
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha cronograma:</span></h5>
+	</div>
+</div> -->
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">WK 1 (Editar evidencias fotograficas).</span>
+    </div>
+</div>
+
+<div class="row">
+	<?php 
+	$preliminares = 0; $trazo = 0; $excavacion = 0; $plantilla = 0; $translado = 0; $armado = 0; $muro = 0;
+	$arena = 0; $cemento = 0; $block = 0; $varilla = 0; $madera = 0;
+	foreach ($this->wkuno as $key){ 
+		$preliminares = $key['status_preliminares'];
+		$trazo = $key['status_trazo'];
+		$excavacion = $key['status_excavacion'];
+		$plantilla = $key['status_plantilla'];
+		$translado = $key['status_translado'];
+		$armado = $key['status_armado'];
+		$muro = $key['status_muro'];
+
+		$arena = $key['status_arena'];
+		$cemento = $key['status_cemento'];
+		$block = $key['status_block'];
+		$varilla = $key['status_varilla'];
+		$madera = $key['madera'];
+
+	} ?>
+
+
+	<?php foreach ($this->wkuno as $key ) { ?>
+		<input type="hidden" name="img_preliminares" id="img_preliminares" value="<?php echo $key['preliminares']; ?>">
+		<input type="hidden" name="img_trazolimpieza" id="img_trazolimpieza" value="<?php echo $key['trazo_limpieza']; ?>">
+		<input type="hidden" name="img_excavacion" id="img_excavacion" value="<?php echo $key['excavacion']; ?>">
+		<input type="hidden" name="img_plantilla" id="img_plantilla" value="<?php echo $key['plantilla']; ?>">
+		<input type="hidden" name="img_translado" id="img_translado" value="<?php echo $key['translado']; ?>">
+		<input type="hidden" name="img_armado" id="img_armado" value="<?php echo $key['armado']; ?>">
+		<input type="hidden" name="img_muro" id="img_muro" value="<?php echo $key['excavacion_muro']; ?>">
+
+		<input type="hidden" name="img_arena" id="img_arena" value="<?php echo $key['arena']; ?>">
+		<input type="hidden" name="img_cemento" id="img_cemento" value="<?php echo $key['cemento']; ?>">
+		<input type="hidden" name="img_block" id="img_block" value="<?php echo $key['block']; ?>">
+		<input type="hidden" name="img_varilla" id="img_varilla" value="<?php echo $key['varilla']; ?>">
+		<input type="hidden" name="img_madera" id="img_madera" value="<?php echo $key['madera']; ?>">
+	<?php } ?>
+
+
+	<div class="col m3 s12">
+		<p>
+			<?php if($preliminares == 0){ ?>
+				<label class="check_option">
+				    <input type="checkbox" class="filled-in" disabled />
+				    <span class="font-check">Preliminares</span>
+				</label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+				<label>
+				    <input type="checkbox" checked="checked" class="filled-in" disabled />
+				    <span class="font-check">Preliminares</span>
+				</label>
+			<?php } ?>
+		</p>
+		<p>
+			<?php if($trazo == 0){ ?>
+			    <label class="check_option">
+			      	<input type="checkbox" class="filled-in" disabled/>
+			      	<span class="font-check">Trazo y limpieza</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label>
+			      	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			      	<span class="font-check">Trazo y limpieza</span>
+			    </label>
+			<?php } ?>
+		</p>
+		<p>
+			<?php if($excavacion == 0){ ?>
+			    <label class="check_option">
+			       	<input type="checkbox" class="filled-in" disabled/>
+			       	<span class="font-check">Excavacion</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			       	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			       	<span class="font-check">Excavacion</span>
+			    </label>
+			<?php } ?>
+		</p>
+		<p>
+			<?php if($plantilla == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Plantilla</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			      	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			      	<span class="font-check">Plantilla</span>
+			    </label>
+			<?php } ?>
+		</p>
+		<p>
+			<?php if($translado == 0){ ?>
+			   	<label class="check_option">
+			     	<input type="checkbox" class="filled-in" disabled/>
+			     	<span class="font-check">Traslado de Materiales y Agregados</span>
+			   	</label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			   	<label class="check_option">
+			     	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			     	<span class="font-check">Traslado de Materiales y Agregados</span>
+			   	</label>
+			<?php } ?>
+
+		</p>
+		<p>
+			<?php if($armado == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Habilitado y armado de acero</span>
+			    </label>
+			<?php }else{ ?> 
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Habilitado y armado de acero</span>
+			    </label>
+			<?php } ?>
+		</p>
+		<p>
+			<?php if($muro == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Excavacion Muro / Dala parametral</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Excavacion Muro / Dala parametral</span>
+			    </label>
+			<?php } ?>
+		</p>
+
+			    <div class="row">
+			    	<h3>Cotización de Materiales</h3>
+			    </div>
+
+		<p>
+			<?php if($arena == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Arena</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Arena</span>
+			    </label>
+			<?php } ?>
+		</p>
+
+		<p>
+			<?php if($cemento == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Cemento</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Cemento</span>
+			    </label>
+			<?php } ?>
+		</p>
+
+		<p>
+			<?php if($block == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Block</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Block</span>
+			    </label>
+			<?php } ?>
+		</p>
+
+		<p>
+			<?php if($varilla == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Varilla</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Varilla</span>
+			    </label>
+			<?php } ?>
+		</p>
+
+		<p>
+			<?php if($madera == 0){ ?>
+			    <label class="check_option">
+			    	<input type="checkbox" class="filled-in" disabled/>
+			    	<span class="font-check">Madera</span>
+			    </label>
+			<?php }else{ ?>
+			<!-- opcion seleccionada  -->
+			    <label class="check_option">
+			    	<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			    	<span class="font-check">Madera</span>
+			    </label>
+			<?php } ?>
+		</p>
+	</div>
+
+	<div class="col m9 s12">
+		<div class="row">
+			<form action="/panel/requestupdatevidenciassemanauno" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_foto">
+				<span>* Solo estaran habilitadas las tareas que ya cuenten con registro fotografico.</span>
+  				<div class="input-field col m6 s12">
+    				<select id="actividad" name="actividad">
+      					<option value="" disabled selected>Selecciona una tarea</option>
+      					<?php if($preliminares == 1){ ?>
+      						<option value="1">Preliminares</option>
+      					<?php }else{ ?>
+      						<option value="1" disabled>Preliminares</option>
+      					<?php } ?>
+      				<!-- 	END OPTION PRELIMINARES -->
+      					<?php if($trazo == 1){ ?>
+      						<option value="2">Trazo y limpieza</option>
+      					<?php }else{ ?>
+      						<option value="2" disabled>Trazo y limpieza</option>
+      					<?php } ?>
+      				<!-- 	END OPTION TRAZO Y LIMPIEZA -->
+      					<?php if($excavacion == 1){ ?>
+      						<option value="3">Excavacion</option>
+      					<?php }else{ ?>
+      						<option value="3" disabled>Excavacion</option>
+      					<?php } ?>	
+      				<!-- 	END OPTION EXCAVACION -->	
+      					<?php if($plantilla == 1){?>
+      						<option value="4">Plantilla</option>
+      					<?php }else{ ?>
+      						<option value="4" disabled>Plantilla</option>
+      					<?php } ?>
+      				<!-- 	END OPTION PLANTILLA -->
+      					<?php if($translado == 1){ ?>
+      						<option value="5">Traslado de materiales y agregados</option>
+      					<?php }else{ ?>
+      						<option value="5" disabled>Traslado de materiales y agregados</option>
+      					<?php } ?>	
+      				<!-- 	END OPTION TRANSLADO DE MATERIALES Y AGREGADOS -->
+      					<?php if($armado == 1){ ?>
+      						<option value="6">Habilitado y armado de acero</option>
+      					<?php }else{ ?>
+      						<option value="6" disabled>Habilitado y armado de acero</option>
+      					<?php } ?>
+      				<!-- 	END OPTION HABILITADO Y ARMADO DE ACERO -->
+      					<?php if($muro == 1){ ?>
+      						<option value="7">Excavacion muro / dala parametral</option>
+      					<?php }else{ ?>
+      						<option value="7" disabled>Excavacion muro / dala parametral</option>
+      					<?php } ?>
+      				<!-- 	END OPTION EXCAVACION DE MURO / DALA PARAMETRAL -->
+      						<option value="" disabled="">Cotización de Materiales</option>
+      					<?php if($arena == 1){ ?>
+      						<option value="8">Arena</option>
+      					<?php }else{ ?>
+      						<option value="8" disabled>Arena</option>
+      					<?php } ?>
+      				<!-- 	END OPTION ARENA -->
+      					<?php if($cemento == 1){ ?>
+      						<option value="9">Cemento</option>
+      					<?php }else{ ?>
+      						<option value="9" disabled>Cemento</option>
+      					<?php } ?>
+      				<!-- 	END OPTION CEMENTO -->
+      					<?php if($block == 1){ ?>
+      						<option value="10">Block</option>
+      					<?php }else{ ?>
+      						<option value="10" disabled>Block</option>
+      					<?php } ?>
+      				<!-- 	END OPTION BLOCK -->
+      					<?php if($varilla == 1){ ?>
+      						<option value="11">Varilla</option>
+      					<?php }else{ ?>
+      						<option value="11" disabled>Varilla</option>
+      					<?php } ?>
+      				<!-- 	END OPTION Varilla -->
+      					<?php if($madera == 1){ ?>
+      						<option value="11">Madera</option>
+      					<?php }else{ ?>
+      						<option value="11" disabled>Madera</option>
+      					<?php } ?>
+      				<!-- 	END OPTION MADERA -->
+    				</select>
+  				</div>
+
+  					<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+  					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+  					<input type="hidden" name="id" value="<?php echo $this->id_sitio; ?>">
+  					<input type="hidden" id="img_edit" name="imahidden">
+
+				<div class="file-field input-field col m6 s12">
+				  	<div class="btn">
+				        <span>Foto</span>
+				        <input type="file" name="url">
+				    </div>
+				    <div class="file-path-wrapper">
+				        <input class="file-path validate" id="imgvalidate" type="text">
+				    </div>
+				</div>
+			</form>
+		</div>
+				
+		<div class="row">
+			<div class="col m12 s12 text-center">
+				<a class="waves-effect waves-light btn" id="btfoto">Editar</a>
+			</div>
+		</div>
+
+		<div clas="row">
+
+			<div class="col m4 s6 text-center">
+				<?php if($preliminares == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Preliminares</span>
+					</div>
+				<?php }else{ ?>
+				<?php foreach ($this->wkuno as $key){ ?>
+					<a class="example-image-link" href="/<?php echo $key['preliminares']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['preliminares']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Preliminares</span>
+					</div>
+				<?php } ?>
+				<?php } ?>
+			</div>
+
+			<div class="col m4 s6 text-center">
+				<?php if($trazo == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Trazo y limpieza</span>
+					</div>
+				<?php }else{ ?>
+				<?php foreach ($this->wkuno as $key){ ?>
+					<a class="example-image-link" href="/<?php echo $key['trazo_limpieza']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['trazo_limpieza']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Trazo y limpieza</span>
+					</div>
+				<?php } ?>
+				<?php } ?>
+			</div>
+			<div class="col m4 s6 text-center">
+				<?php if($excavacion == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Excavacion</span>
+					</div>
+				<?php }else{ ?>
+				<?php foreach ($this->wkuno as $key){ ?>
+					<a class="example-image-link" href="/<?php echo $key['excavacion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Excavacion</span>
+					</div>
+					<?php } ?>
+				<?php } ?>
+			</div>
+
+			<div class="col m4 s6 text-center">
+				<?php if($plantilla == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Plantilla</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['plantilla']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['plantilla']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Plantilla</span>
+					</div>
+					<?php } ?>
+				<?php } ?>
+			</div>
+			<div class="col m4 s6 text-center">
+				<?php if($translado == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Traslado de materiales</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['translado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['translado']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Traslado de materiales</span>
+					</div>
+					<?php } ?>
+				<?php } ?>
+			</div>
+			<div class="col m4 s6 text-center">
+				<?php if($armado == 0){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Habilitado y armado de acero</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['armado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['armado']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Habilitado y armado de acero</span>
+					</div>
+					<?php } ?>
+				<?php } ?>
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($muro == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Excavacion Muro /	Dala parametral</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['excavacion_muro']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion_muro']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Excavacion Muro /	Dala parametral</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($arena == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Arena</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['arena']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['arena']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Arena</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($cemento == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Cemento</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['cemento']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['cemento']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Cemento</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($block == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Block</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['block']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['block']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Block</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($varilla == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Varilla</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['varilla']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['varilla']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Varilla</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+			<div class="col m4 s12 text-center">
+				<?php if($madera == 0 ){ ?>
+					<i class="large material-icons">photo_camera</i>
+					<div class="row">
+						<span>Madera</span>
+					</div>
+				<?php }else{ ?>
+					<?php foreach ($this->wkuno as $key){ ?>
+						<a class="example-image-link" href="/<?php echo $key['madera']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['madera']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+					<div class="row">
+						<span>Madera</span>
+					</div>
+					<?php } ?>
+				<?php } ?>						
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('select').formSelect();
+  	});
+
+    $("#btfoto").click(function(){
+        var actividad = document.getElementById("actividad").value;
+        var img = document.getElementById("imgvalidate").value;
+        	if(actividad == 1){
+        		var valor = document.getElementById("img_preliminares").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 2){
+        		var valor = document.getElementById("img_trazolimpieza").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 3){
+        		var valor = document.getElementById("img_excavacion").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 4){
+        		var valor = document.getElementById("img_plantilla").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 5){
+        		var valor = document.getElementById("img_translado").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 6){
+        		var valor = document.getElementById("img_armado").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 7){
+        		var valor = document.getElementById("img_muro").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        if(actividad == "" || img == ""){
+            swal({
+              title: "Para editar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_foto").submit()
+    }
+
+    $(".check_option").click(function(){
+    	swal({title: "Debes seleccionar una tarea y subir una foto!" , });
+    });
+</script>

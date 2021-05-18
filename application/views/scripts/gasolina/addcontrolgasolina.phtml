@@ -1,0 +1,113 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/gasolina/controlgasolina" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Control de Gasolina</span>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col s12 m1"></div>
+    <div class="col s12 m10">
+        <div class="card">
+          <div class="card-content">
+              <div class="row">
+                <form action="/gasolina/requestaddcontrolgasolina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
+                <div class="col m12 s12">
+                  <div class="input-field col m6 s12">
+                    <input id="importe" name="importe" type="number">
+                    <label for="importe">Importe</label>
+                  </div>
+
+                  <div class="input-field col m6 s12">
+                    <select id="sitio" name="sitio">
+                      <option value="0" disabled selected>* Selecciona un Sitio</option>
+                      <option value="oficina" >Oficina</option>
+                      <?php foreach ($this->sitios as $key){ ?>
+                        <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?> </option>
+                      <?php } ?>
+                    </select>
+                    <label>Sitio:</label>
+                  </div>
+                  <div class="input-field col m6 s12">
+                    <select id="responsable" name="responsable">
+                      <option value="0" disabled selected>* Selecciona a un responsable</option>
+                        <?php foreach ($this->usuarios as $key){ ?>
+                          <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa'] ?> <?php echo $key['apellido_ma'] ?> </option>
+                        <?php } ?>
+                    </select>
+                    <label>Responsable:</label>
+                  </div>
+
+                  <div class="input-field col m6 s12">
+                    <input id="fecha_requerida" name="fecha" type="date">
+                    <label for="fecha_requerida">* Fecha de Ticket</label>
+                  </div>
+
+                  <div class="input-field col m6 s12">
+                    <select id="vehiculo" name="vehiculo">
+                      <option value="0" disabled selected>* Selecciona a un vehiculo</option>
+                        <?php foreach ($this->vehiculos as $ve){ ?>
+                          <option value="<?php echo $ve['id_vehiculos']; ?>"> <?php echo $ve['marca']; ?> <?php echo $ve['submarca'] ?> <?php echo $ve['modelo'] ?>/ Placas: <?php echo $ve['placas']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <label>Vehiculo:</label>
+                  </div>
+
+                <div class="input-field col m6 s12">
+                  <input id="estacion" name="estacion" type="text" class="validate">
+                  <label for="estacion">Estación</label>
+                </div>
+
+                </div>
+                </form>
+              </div>
+          </div>
+          <div class="card-action">
+        <div class="row">
+          <div class="col m12 s12 text-right">
+            <a class="btn" id="send_paso"><i class="material-icons right">send</i>Paso 2</a>
+          </div>
+        </div>
+          </div>
+        </div>
+    </div>
+    <div class="col s12 m1"></div>
+</div>
+
+
+<script src="/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.datepicker').datepicker();
+    });
+
+    $("#send_paso").click(function(){
+        var sitio = document.getElementById("sitio").value;
+        var responsable = document.getElementById("responsable").value;
+        var vehiculo = document.getElementById("vehiculo").value;
+        var fecha = document.getElementById("fecha_requerida").value;
+        var importe = document.getElementById("importe").value;
+
+        if(importe== ""|| sitio == 0 || responsable == 0 || vehiculo == 0 || fecha == "" ){
+            swal({
+              title: "Para continuar debes agregar la información marcada con un '*' ",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { document.getElementById("submit_gasolina").submit() }
+
+  </script>

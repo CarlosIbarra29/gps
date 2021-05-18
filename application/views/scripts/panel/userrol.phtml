@@ -1,0 +1,92 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/usuarios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+    	<a class="waves-effect red btn green modal-trigger" href="#modal1">+ Agregar Rol</a>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Roles</span>
+    </div>
+</div>
+
+<!-- Modal Structure ADD MODAL-->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Rol</span>
+		<div class="col m12 s12">
+			<form action="/panel/requestaddrol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_rol">
+				<div class="row">
+			        <div class="input-field col m12 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="name" type="text" name="name" class="validate" required>
+			          	<label for="name">* Nombre(s):</label>
+			        </div>
+		      	</div>
+		    </form>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button  id="addrol" class="waves-effect waves-light btn">Guardar</button>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= END MODAL ADD ROL -->
+
+<div class="col m6 s12">
+	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de roles</span>
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Nombre</th>	
+				<th>Editar</th>
+			</tr> 
+		</thead>
+		<?php foreach ($this->roles as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["nombre"]; ?></td>
+				<td>
+					<a href="/panel/rolesedit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+				</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+<!-- ================================================================================================= END TABLE USER ROL -->
+
+
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+    $("#addrol").click(function(){
+        var name = document.getElementById("name").value;
+
+        if(name == ""){
+            swal({
+              title: "Para agregar un rol debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+            });    
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_rol").submit()
+    }
+</script>

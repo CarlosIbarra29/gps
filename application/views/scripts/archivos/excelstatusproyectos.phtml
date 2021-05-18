@@ -1,0 +1,1673 @@
+<?php 
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+		<a class=" btn" id="exportBtn2"><i class="material-icons right">file_download</i>Status proyecto</a>
+
+
+
+		<a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Comentarios</a>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Sitios</span>
+    </div>
+</div>
+
+
+<div class="row excel-div" id="tab1">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id sitio</th>		
+				<th>Id cliente</th>
+				<th>Nombre sitio</th>
+				<th>Cliente</th>
+        		<th>Ciudad</th>
+        		<th>Estado</th>
+        		<th>Region</th>
+        		<th>Proyecto</th>
+        		<th>Status Proyecto</th>
+        		<th>Status Cliente</th>
+        		<th>ISSUE</th>
+        		<th>Porcentaje Proyecto</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->bts_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_seis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_siete as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->bts_ocho as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->bts_nuevo as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_diez as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_once as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_doce as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->bts_trece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_catorece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_quince as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->bts_diesiseis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<!-- S T A T U S   P R O Y E C T O    B T S -->
+
+		<?php 
+		foreach ($this->colo_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_seis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_siete as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->colo_ocho as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->colo_nuevo as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_diez as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_once as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_doce as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->colo_trece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_catorece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->colo_quince as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+		<!-- S T A T U S   P R O Y E C T O    C O L O C A C I O N -->
+
+
+		<?php 
+		foreach ($this->refo_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_seis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_siete as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->refo_ocho as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->refo_nuevo as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_diez as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_once as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_doce as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->refo_trece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_catorece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_quince as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->refo_diesiseis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+		<!-- S T A T U S   P R O Y E C T O    R E F O R Z A M I E N T O -->
+
+
+
+		<?php 
+		foreach ($this->cambio_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->cambio_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->cambio_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->cambio_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->cambio_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+	
+
+		<!-- S T A T U S   P R O Y E C T O    C A M B I O  D E  T O R R E -->
+
+
+		<?php 
+		foreach ($this->nueva_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_seis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_siete as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->nueva_ocho as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->nueva_nuevo as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_diez as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_once as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_doce as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+		<?php 
+		foreach ($this->nueva_trece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->nueva_catorece as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<!-- S T A T U S   P R O Y E C T O    T O R R E   N U E V A -->	
+
+		<?php 
+		foreach ($this->mapeo_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->mapeo_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->mapeo_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->mapeo_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+
+		<!-- S T A T U S   P R O Y E C T O    M A P E O  D E  T O R R E  -->	
+
+		<?php 
+		foreach ($this->torque_uno as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->torque_dos as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->torque_tres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->torque_cuatro as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+		<?php 
+		foreach ($this->torque_cinco as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+
+
+
+		<!-- S T A T U S   P R O Y E C T O    T O R Q U E   Y  V E R T I C A L I D A D -->		
+
+		<?php 
+		foreach ($this->issue as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+
+	</table>
+</div>
+
+
+<div class="row oculto">
+	<div class="row excel-div" id="tab2">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id Sitio</th>
+					<th>Nombre sitio</th>
+					<th>ID_cliente</th>
+					<th>Comentario</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->comentarios as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["comentarios"]); ?></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+
+
+<!-- <script type="text/javascript">
+	function exportTableToCSV(html, filename) {
+	    var csv = [];
+	    var rows = document.querySelectorAll("table tr");
+	    for(var i = 0; i < rows.length; i++){
+	        var row = [], cols = rows[i].querySelectorAll("td, th");
+	        for(var j = 0; j < cols.length; j++){
+	            row.push(cols[j].innerText);
+	        }
+	        csv.push(row.join(","));
+	    }
+	    downloadCSV(csv.join("\n"), filename);
+	}
+
+	function downloadCSV(csv, filename) {
+	    var csvFile;
+	    var downloadLink;
+		if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+			alert("Your browser doesn't support Blobs");
+			return;
+		}
+		
+	    csvFile = new Blob([csv], {type:"text/csvcsv"});
+	    downloadLink = document.createElement("a");
+	    downloadLink.download = filename;
+	    downloadLink.href = window.URL.createObjectURL(csvFile);
+	    downloadLink.style.display = "none";
+	    document.body.appendChild(downloadLink);
+	    downloadLink.click();
+	}
+</script>
+
+ -->
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Comentarios sitios.xlsx",
+            sheet: {
+            	name: "Comentarios sitios"
+            }
+        });
+    });
+
+
+    $("#exportBtn2").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Status Proyecto sitios.xlsx",
+            sheet: {
+            	name: "status proyecto sitios"
+            }
+        });
+    });
+</script>

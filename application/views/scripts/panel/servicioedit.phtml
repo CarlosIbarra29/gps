@@ -1,0 +1,95 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/serviciossolicitudes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Servicio</span>
+    </div>
+</div>
+
+<div class="row">
+	<div class="co m12 s12">
+		<?php foreach ($this->servicios as $key){ ?>		
+        <div class="input-field col 12 s12">
+          	<input value="<?php echo $key['nombre_servicio']; ?>" id="servicio" type="text" class="validate">
+          	<label for="servicio">Servicio</label>
+        </div>
+        <input type="hidden" id="servicio_id" value="<?php echo $key['id']; ?>">
+
+        <div class="input-field col m12 s12">
+				<select id="encargado" name="rol">
+			    	<?php foreach ($this->rol as $mar) { 
+			     		if ($mar['id']==$key['encargado_rol']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			     	<?php } if ($mar['id']!=$key['encargado_rol']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			     	<?php } } ?>  
+				</select>
+			<label>Auditor:</label>
+        </div>
+        <?php } ?>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/panel/servicios" class="red btn">Cancelar</a>
+				<button  id="servicio_update" class="btn">Actualizar</button>
+			</div>	
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$("#servicio_update").click(function(){
+		var servicio = document.getElementById("servicio").value;
+		var id = document.getElementById("servicio_id").value;
+		var encargado = document.getElementById("encargado").value;
+        if(servicio == ""){
+            swal({
+            	title: "Para editar un servicio debes agregar una nombre",
+            });
+        }else{
+			swal({
+				title: "Estas seguro de agregar la informacion",
+			  	icon: "warning",
+			  	buttons: true,
+			  	dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+		            var request = $.ajax({
+		                url:"/panel/requestupdateserviciocatalogo",
+		                method:"POST",
+		                data: { servicio:servicio, id:id, encargado:encargado },
+		                processData: true,
+		                // contentType: false,
+		            });
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+		            request.done(function(response) {
+		                console.log(response);//imprime lo que responde el ajax
+		                // alert
+		                window.location.reload(true);
+		            });
+		//-------------------end de respuesta ajax---------------------
+		             return false;
+
+
+			  } else {
+			    swal("La accion fue cancelada!");
+			  }
+			});   
+        }
+
+	});
+
+</script>

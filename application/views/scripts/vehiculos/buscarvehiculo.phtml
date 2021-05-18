@@ -1,0 +1,669 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+?>
+<?php 
+	$links = "";
+	$url="";
+	if($this->option ==1){
+		$name=$this->name_marca;
+		if($this->total== 1){
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&marca={$name}\">1</a></li>";
+		}else{
+			if ($this->total >= 1 && $pagina <= $this->total) {
+
+				if (isset($_GET['pagina']) && $this->actpage != 1) {
+					$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&marca={$name}\">1</a></li>";
+				}else{
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&marca={$name}\">1</a></li>";
+				}
+
+				$i = max(2, $pagina - 3);
+				if ($i > 2)
+					$links .= " <li><a>...</a></li> ";
+				for (; $i < min($pagina + 3, $this->total); $i++) {
+					if($i ==$this->actpage){
+						$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&marca={$name}\">{$i}</a></li>";
+					}else{
+						$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&marca={$name}\">{$i}</a></li>";
+					}
+				}
+				if ($i != $this->total)
+					$links .= " <li><a>...</a></li> ";
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&marca={$name}\">{$this->total}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&marca={$name}\">{$this->total}</a></li>";
+				}
+
+			}           
+		}
+	}
+
+
+	if($this->option == 2){
+		$name=$this->placas_v;
+		if($this->total== 1){
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&placas={$name}\">1</a></li>";
+		}else{
+			if ($this->total >= 1 && $pagina <= $this->total) {
+
+				if (isset($_GET['pagina']) && $this->actpage != 1) {
+					$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&placas={$name}\">1</a></li>";
+				}else{
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&placas={$name}\">1</a></li>";
+				}
+
+				$i = max(2, $pagina - 3);
+				if ($i > 2)
+					$links .= " <li><a>...</a></li> ";
+				for (; $i < min($pagina + 3, $this->total); $i++) {
+					if($i ==$this->actpage){
+						$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&placas={$name}\">{$i}</a></li>";
+					}else{
+						$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&placas={$name}\">{$i}</a></li>";
+					}
+				}
+				if ($i != $this->total)
+					$links .= " <li><a>...</a></li> ";
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&placas={$name}\">{$this->total}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&placas={$name}\">{$this->total}</a></li>";
+				}
+
+			}           
+		}
+	}
+
+
+	if($this->option == 3){
+		$name=$this->status_v;
+		if($this->total== 1){
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+		}else{
+			if ($this->total >= 1 && $pagina <= $this->total) {
+
+				if (isset($_GET['pagina']) && $this->actpage != 1) {
+					$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+				}else{
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&status={$name}\">1</a></li>";
+				}
+
+				$i = max(2, $pagina - 3);
+				if ($i > 2)
+					$links .= " <li><a>...</a></li> ";
+				for (; $i < min($pagina + 3, $this->total); $i++) {
+					if($i ==$this->actpage){
+						$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&status={$name}\">{$i}</a></li>";
+					}else{
+						$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&status={$name}\">{$i}</a></li>";
+					}
+				}
+				if ($i != $this->total)
+					$links .= " <li><a>...</a></li> ";
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&status={$name}\">{$this->total}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&status={$name}\">{$this->total}</a></li>";
+				}
+
+			}           
+		}
+	}
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<?php foreach ($this->user as $value) {
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+
+<!-- Inicio Botones --> 
+<div class="row" style="margin-top: 10px;">
+	<?php if($rol_user != 9){ ?>
+	    <div class="col m12 s12 text-right">
+	        <a href="/vehiculos/catalogos" class="waves-effect green btn modal-trigger">Grupos</a>
+	        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Vehículo</a>    
+	    </div>
+	<?php } else { ?>
+	<?php } ?>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículos
+	</div>
+</div>
+<!-- End botones -->
+
+<!-- Buscador -->
+<div class="row">
+	<div class="col m2 s12">
+        <a href="/vehiculos/inventariov">Mostrar todos</a>
+    </div>
+    <div class="input-field col m4 s12">
+        <select id="mySelect">
+            <?php if($this->option == 1){ ?>
+            <option value="1" selected>Marca</option>
+            <option value="2">Placas</option>
+            <option value="3">Status</option>
+            <?php } ?>
+
+            <?php if($this->option == 2){ ?>
+              <option value="1">Marca</option>
+              <option value="2" selected>Placas</option>
+              <option value="3">Status</option>
+            <?php } ?>
+
+            <?php if($this->option == 3){ ?>
+              <option value="1">Marca</option>
+              <option value="2">Placas</option>
+              <option value="3" selected>Status</option>
+            <?php } ?>
+        </select>
+        <label>Buscador</label>
+    </div>
+    <?php if($this->option == 1){ ?>
+    	<div class="col m4 s12" id="buscar_marca">
+    		<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+    			<div class="input-field col m10 s8">
+    				<input placeholder="Ingresa marca" name="marca" value="<?php echo $this->name_marca; ?>" id="first_name" type="text" class="validate" required>
+    				<label for="first_name">Buscar por Marca</label>
+    			</div>
+    			<div class="input-field col m2 s4">
+    				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+    			</div>
+    		</form>
+    	</div>
+    <?php }else{ ?>
+    	<div class="col m4 s12 oculto"  id="buscar_marca">
+    		<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+    			<div class="input-field col m10 s8">
+    				<input placeholder="Ingresa marca" name="marca" id="first_name" type="text" class="validate" required>
+    				<label for="first_name">Buscar por Marca</label>
+    			</div>
+    			<div class="input-field col m2 s4">
+    				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+    			</div>
+    		</form>
+    	</div>
+    <?php } ?>
+
+    <?php if($this->option == 2){ ?>
+    	<div class="col m4 s12" id="buscar_placas">
+			<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<input placeholder="Ingresa placas" id="placas" value="<?php echo $this->placas_v; ?>" name="placas" type="text" class="validate" required>
+					<label for="placas">Buscar por Placas</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>	
+			</form>
+		</div>
+    <?php }else{ ?>
+    	<div class="col m4 s12 oculto" id="buscar_placas">
+			<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<input placeholder="Ingresa placas" id="placas" name="placas" type="text" class="validate" required>
+					<label for="placas">Buscar por Placas</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>	
+			</form>
+		</div>
+    <?php } ?>
+
+    <?php if($this->option == 3){ ?>
+    	<div class="col m4 s12" id="buscar_status">
+			<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+				<div class="input-field col m10 s8">
+					<select id="status" name="status" required>
+						<?php if($this->status_v == 0){ ?>
+							    <option value="0" selected>Disponible</option>
+							    <option value="1">Ocupado</option>
+							    <option value="2">En Reparación</option>
+							    <option value="3">Baja</option>
+				    		<?php }?>
+				    		<?php if($this->status_v == 1){ ?>
+							    <option value="0">Disponible</option>
+							    <option value="1" selected>Ocupado</option>
+							    <option value="2">En Reparación</option>
+							    <option value="3">Baja</option>
+				    		<?php } ?>
+				    		<?php if($this->status_v == 2){ ?>
+							    <option value="0">Disponible</option>
+							    <option value="1">Ocupado</option>
+							    <option value="2" selected>En Reparación</option>
+							    <option value="3">Baja</option>
+				    		<?php } ?>
+				    		<?php if($this->status_v == 3){ ?>
+							    <option value="0">Disponible</option>
+							    <option value="1">Ocupado</option>
+							    <option value="2">En Reparación</option>
+							    <option value="3" selected>Baja</option>
+				    		<?php } ?>
+					</select>
+					<label>Status Vehículo</label>
+				</div>
+				<div class="input-field col m2 s4">
+					<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+				</div>	
+			</form> 
+		</div>
+    <?php }else{ ?>
+    	<div class="col m4 s12 oculto" id="buscar_status">
+		<form action="/vehiculos/buscarvehiculo" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<select name="status" required>
+					<option value="" disabled selected>Selecciona una opcion</option>
+					<option value="0">Disponible</option>
+					<option value="1">Ocupado</option>
+					<option value="2">En Reparación</option>
+					<option value="3">Baja</option>
+				</select>
+				<label>Status Vehículo</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+		</form> 
+	</div>
+    <?php } ?>
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+<!-- End Buscador -->
+
+
+<!-- Inicio Modal Insertar Vehículos -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Vehículo
+		</div>
+		<div class="col m12 s12">
+			<form action="/vehiculos/requestaddveh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_veh">
+				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Foto</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Tarjeta Circulación</span>
+							<input type="file" name="url2">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">class</i>
+						<input id="marca" type="text" name="marca" class="validate" required>
+						<label for="marca">* Marca:</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">description</i>
+						<input id="submarca" type="text" name="submarca" class="validate" required>
+						<label for="submarca">* Submarca: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">airplay</i>
+						<input id="modelos" type="text" name="modelo" class="validate" required>
+						<label for="modelos">* Modelo: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">confirmation_number</i>
+						<input id="placa" type="text" name="placas" class="validate" required>
+						<label for="placa">* Placas: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">invert_colors</i>
+						<input id="color" type="text" name="color" class="validate" required>
+						<label for="color"> Color: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="com" type="text" name="com" class="validate">
+						<label for="com">Comentarios: </label>
+					</div>
+					<div class="input-field col m12 s12">
+						<select id="grupo" name="grupo" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->grupov as $gv) { ?>
+								<option value="<?php echo $gv["id_grupo"]; ?>"><?php echo $gv["nombre"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Grupo</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		</form>
+		<button class=" btn" id="addveh">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+<!-- End Vehículos -->
+
+
+<!-- Table Vehículos-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Inventario Vehículos
+		</div>
+		<div class="col m6 s6 text-right">
+			<a href="/vehiculos/excelv/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Marca</th>
+					<th>Submarca</th>
+					<th>Modelo</th>
+					<!-- <th>Color</th> -->
+					<th>Placas</th>
+					<th>Grupo</th>
+					<th>Asignado a:</th>
+					<th>Status</th>
+					<th></th>
+					<th></th>
+					<th></th>	
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $veh) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $veh["marca"]; ?></td>
+							<td><?php echo $veh["submarca"]; ?></td>
+							<td><?php echo $veh["modelo"]; ?></td>
+							<!-- <td><?php echo $veh["color"]; ?></td> -->
+							<td><?php echo $veh["placas"]; ?></td>
+							<td><?php echo $veh["grupo"]; ?></td>
+							<td>
+								<?php if($veh['id_responsable'] == 0){ ?>
+									Sin Asignar
+								<?php } else { ?>
+									<?php echo $veh["nombrea"]; ?> <?php echo $veh["apellido_pa"]; ?>
+								<?php } ?>
+							<td>
+								<?php if($veh['id_status'] == 0){ ?>
+									<div class="chip" id="disponible">
+										<img src="/img/correct.png" >
+										Disponible
+									</div>
+								<?php } ?>
+
+								<?php if($veh['id_status'] == 1){ ?>
+									<div class="chip" id="ocupado">
+										<img src="/img/naranja.png" >
+										Ocupado
+									</div>
+								<?php } ?>
+
+								<?php if($veh['id_status'] == 2){ ?>
+									<div class="chip" id="manto">
+					    				<img src="/img/azul.png" >
+					    				Reparación
+					  				</div>
+								<?php } ?>
+								<?php if($veh['id_status'] == 3){ ?>
+									<div class="chip" id="baja">
+										<img src="/img/rojo.png" >
+										Baja
+									</div>
+								<?php } ?>
+							</td>
+							
+							<td>
+								<?php if($rol_user != 9){ ?> 
+									<?php if($this->option == 1){ ?>
+										<a href="/vehiculos/vehdetail/id/<?php echo $veh["id_vehiculos"] ?>/marca/<?php echo $this->name_marca; ?>/op/1"><i class="fa fa-2x fa-id-card-o"></i></a>
+									<?php } ?>
+									<?php if($this->option == 2){ ?>
+										<a href="/vehiculos/vehdetail/id/<?php echo $veh["id_vehiculos"] ?>/placas/<?php echo $this->placas_v; ?>/op/2"><i class="fa fa-2x fa-id-card-o"></i></a>
+									<?php } ?>
+									<?php if($this->option == 3){ ?>
+										<a href="/vehiculos/vehdetail/id/<?php echo $veh["id_vehiculos"] ?>/status/<?php echo $this->status_v; ?>/op/3"><i class="fa fa-2x fa-id-card-o"></i></a>
+									<?php } ?>
+								<?php } else { ?>
+								<?php } ?>
+
+								<!-- <a href="/vehiculos/vehdetail/id/<?php echo $veh["id_vehiculos"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	 -->
+							</td>
+							<td>
+								<?php if($rol_user != 9){ ?> 
+									<?php if($this->option == 1){ ?>
+										<a href="/vehiculos/vehiculoedit/id/<?php echo $veh["id_vehiculos"] ?>/marca/<?php echo $this->name_marca; ?>/op/1"><i class="fa fa-2x fa-edit"></i></a>
+									<?php } ?>
+									<?php if($this->option == 2){ ?>
+										<a href="/vehiculos/vehiculoedit/id/<?php echo $veh["id_vehiculos"] ?>/placas/<?php echo $this->placas_v; ?>/op/2"><i class="fa fa-2x fa-edit"></i></a>
+									<?php } ?>
+									<?php if($this->option == 3){ ?>
+										<a href="/vehiculos/vehiculoedit/id/<?php echo $veh["id_vehiculos"] ?>/status/<?php echo $this->status_v; ?>/op/3"><i class="fa fa-2x fa-edit"></i></a>
+									<?php } ?>
+								<?php } else { ?>
+								<?php } ?>
+								<!-- <a href="/vehiculos/vehiculoedit/id/<?php echo $veh["id_vehiculos"] ?>"><i class="fa fa-2x fa-edit"></i></a> -->
+							</td>
+							<td>
+								<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+									<a class="delete" data-id="<?php echo $veh["id_vehiculos"]; ?>" data-nombre="<?php echo $veh["placas"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								<?php } else { ?>
+								<?php } ?>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No se encontrarón Vehículos</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table Vehículos -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+						<?php if($this->option == 1){ ?>
+                        	<li class="page-item">
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&marca=<?php echo $this->name_marca ?>"> Anterior </a>
+                        	</li>
+                        <?php } ?>
+                        <?php if($this->option == 2){ ?>
+                        	<li class="page-item">
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&placas=<?php echo $this->placas_v ?>"> Anterior </a>
+                        	</li>
+                        <?php } ?>
+                        <?php if($this->option == 3){ ?>
+                        	<li class="page-item">
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&status=<?php echo $this->status_v ?>"> Anterior </a>
+                        	</li>
+                        <?php } ?>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<?php if($this->option == 1){ ?>
+								<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&marca=<?php echo $this->name_marca ?>">Siguiente</a>
+		                    <?php } ?>
+		                    <?php if($this->option == 2){ ?>
+		                    	<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&placas=<?php echo $this->placas_v ?>">Siguiente</a>
+		                    <?php } ?>
+		                    <?php if($this->option == 3){ ?>
+		                    	<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&status=<?php echo $this->status_v ?>">Siguiente</a>
+		                    <?php } ?>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+ 	});
+
+ 	// Inicio Add vehiculo
+
+	$("#addveh").click(function(){
+		var marca = document.getElementById("marca").value;
+	
+
+		if(marca == ""){
+			swal({
+				title: "Para agregar un vehículo, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+	});
+
+	function submitForm() {
+		document.getElementById("submit_veh").submit()
+	}
+	// End Add vehiculo
+
+	//Inicio Delete Ajax
+	$(".delete").click(function(){
+		id=$(this).data('id');
+		nombre=$(this).data('nombre');
+		swal({
+			title: "¿Estas seguro de eliminar el vehículo con placas "+nombre+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espera un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var request = $.ajax({
+					url:"/vehiculos/requestdeleteveh",
+					method:"POST",
+					data: { id : id },
+					processData: true,
+				});
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+				request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+			return false;
+
+			} else {
+				swal("La accion fue cancelada!");
+			}
+		});
+	});
+	// End Delete Ajax
+
+
+	//Inicio Selected
+	$('#mySelect').on('change', function() {
+		var value = $(this).val();
+		if(value==1){
+			$("#buscar_marca").show();
+			$("#buscar_placas").hide();
+			$("#buscar_status").hide();
+		}
+
+		if(value==2){
+			$("#buscar_marca").hide();
+			$("#buscar_placas").show();
+			$("#buscar_status").hide();
+		}
+		if(value==3){
+			$("#buscar_marca").hide();
+			$("#buscar_placas").hide();
+			$("#buscar_status").show();
+
+		}
+	});
+	// End Selected
+
+</script>
+

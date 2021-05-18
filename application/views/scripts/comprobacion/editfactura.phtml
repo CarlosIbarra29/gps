@@ -1,0 +1,91 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/comprobacion/listafacturas" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Modificar Factura</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/comprobacion/requestupdatefacturasat" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+		<?php foreach ($this->solicitud as $key) { ?>
+
+			<input type="hidden" name="ids" value="<?php echo $key['id']; ?>">
+	        <div class="input-field col m6 s12">
+	        	<input id="no_factura" type="text" name="factura" value="<?php echo $key['no_factura']; ?>" class="validate">
+	          	<label for="no_factura">Factura</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="rfc" type="text" name="rfc" value="<?php echo $key['rfc_emisor']; ?>" class="validate">
+	          	<label for="rfc">RFC emisor</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="emisor" type="text" name="emisor" value="<?php echo $key['nombre_emisor']; ?>" class="validate">
+	          	<label for="emisor">Nombre emisor</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="fecha" type="text" name="fecha" value="<?php echo $key['fecha_comprobante']; ?>" class="validate">
+	          	<label for="fecha">Fecha Factura</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="total" type="number" name="total" value="<?php echo $key['total_factura']; ?>" class="validate">
+	          	<label for="total">Total</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="pago" type="text" name="forma_pago" value="<?php echo $key['forma_pago']; ?>" class="validate">
+	          	<label for="pago">Forma Pago</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          	<input id="lugar" type="text" name="lugar" value="<?php echo $key['lugar_expedicion']; ?>" class="validate">
+	          	<label for="lugar">Lugar de expedicion</label>
+	        </div>
+    	<?php } ?>
+    </form>
+		<div class="input-field col m6 s12 text-right">
+			<div class="row">
+				<a href="/comprobacion/listafacturas" class="waves-effect red waves-light btn">Cancelar</a>
+				<button  id="adduser" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+    $("#adduser").click(function(){
+        var no_factura = document.getElementById("no_factura").value;
+        var fecha = document.getElementById("fecha").value;
+        var total = document.getElementById("total").value;
+
+        if(no_factura == "" || fecha == "" || total == ""){
+            swal({
+                title: "Para editar una factura es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+            });  
+            setTimeout(submitForm, 1500);     
+        }
+
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_usuario").submit()
+    }
+
+</script>

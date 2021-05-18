@@ -1,0 +1,41 @@
+<div class="col-md-12">
+    <h2>Mis Pedidos</h2>
+    <table class="table table-bordered table-striped">                    
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>direccion</th>
+                <th>Detalles</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($this->orden) { ?>
+            <?php $cont =1;
+                foreach ($this->orden as $key){ ?>
+                    <tr>
+                        
+                        <td><p><?php echo $key["nombre"]; ?></p></td>
+                        <td><p><?php echo $key["name"]; ?></p></td>
+                        <td><p><?php echo $key["direccion"];?></p></td>
+                        <td>
+                            <a href="/home/detallespedidos/id/<?php echo $key["idusuario"]; ?>/idorden/<?php echo $key["idorden"]; ?>"><i class="fa fa-info" style="color: blue;">Detalles</i></a>
+                        </td>
+                        <?php if ($key['iscomplete']==1){ ?>
+                            <td><?php echo "Entregado"; ?></td>
+                        <?php }else{ ?>
+                            <td><?php echo "Pendiente"; ?></td>
+                        <?php } ?>
+                        
+                    </tr>   
+            <?php  }  }else{ ?>
+                <tr>
+                    <td colspan="6"><h1>Aun no tienes pedidos.</h1></td>
+                </tr>
+                
+            </tbody> 
+            <?php } ?>
+        </tbody>  
+    </table>
+</div> 

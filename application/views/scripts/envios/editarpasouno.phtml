@@ -1,0 +1,186 @@
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 15px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Envíos</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12" style="margin-top: 15px;">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Paso 1</span>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+
+			<form action="/envios/requestupdatepasounoenvioadmin" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
+	
+			<input type="hidden" name="ids" value="<?php echo $this->id_envio; ?>">
+
+		<?php foreach ($this->informacion as $key){ ?>
+			
+	  		<div class="input-field col m6 s12">
+                <select id="sitio_res" name="sitios" >
+                    <option value="0" disabled>* Selecciona un Sitio</option>
+                    <?php if($key['id_sitio'] == "0"){?>
+                        <option value="oficina" selected>Stock Almacen</option>
+                    <?php }else{ ?>
+                        <option value="oficina">Stock Almacen</option>
+                    <?php } ?>
+                      	<?php foreach ($this->sitios as $mar) { 
+                    if ($mar['id']==$key['id_sitio']) { ?>
+                        <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                   	<?php } if ($mar['id']!=$key['id_sitio']) { ?>
+                        <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                   	<?php } } ?>  
+                </select>
+                <label>Sitio:</label>  
+	  		</div>
+
+	        <div class="input-field col m6 s12">
+	          <input placeholder="*selecciona una fecha" id="fecha_envio" name="fecha_envio" type="text" class="datepicker" value="<?php echo $key['fecha_solicitud'] ?>">
+	          <label for="fecha_envio">Fecha de envio</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	          <input placeholder="*selecciona una hora" id="hora_envio" name="hora_envio" type="text" class="timepicker" value="<?php echo $key['hora_entrega'] ?>">
+	          <label for="hora_envio">Hora de envio</label>
+	        </div>
+
+			<div class="input-field col m6 s12">
+			    <select name="prioridad" id="prioridad">
+			    	<?php if($key['prioridad'] == 1){ ?>
+				    	<option value="0" disabled>* Selecciona una opcion</option>
+				    	<option value="1" selected>Normal</option>
+				      	<option value="2">Alta</option>
+			    	<?php }else{ ?>
+				    	<option value="0" disabled>* Selecciona una opcion</option>
+				      	<option value="1">Normal</option>
+				      	<option value="2" selected>Alta</option>
+			    	<?php } ?>
+
+			    </select>
+			    <label>Prioridad</label>
+			</div>
+
+
+
+			<?php if($this->rol == 2){ ?>
+
+				<div class="input-field col m6 s12">
+				    <select id="tipo_envio" name="tipo_envio">
+					    <option value="1" selected>Local</option>
+				    </select>
+				    <label>Tipo de envío</label>
+				</div>
+
+			<?php }else{ ?>
+				<div class="input-field col m6 s12">
+				    <select id="tipo_envio" name="tipo_envio">
+				    	<?php if($key['tipo_envio'] == 1){ ?>
+					    	<option value="0" disabled>* Selecciona una opcion</option>
+					      	<option value="1" selected>Local</option>
+					      	<option value="2">Foraneo</option>
+				    	<?php }else{ ?>
+					    	<option value="0" disabled>* Selecciona una opcion</option>
+					      	<option value="1">Local</option>
+					      	<option value="2" selected>Foraneo</option>
+				    	<?php } ?>
+
+				    </select>
+				    <label>Tipo de envío</label>
+				</div>
+			<?php } ?>
+
+			<div class="input-field col m6 s12">
+	    		<select id="vehiculo" name="vehiculo">
+			    	<?php foreach ($this->vehiculo as $mar) { 
+			     		if ($mar['id_vehiculos']==$key['vehiculo']) { ?>
+			                <option value="<?php echo $mar["id_vehiculos"]; ?>" selected><?php echo $mar['marca']; ?> <?php echo $mar['submarca']; ?> placas:<?php echo $mar['placas']; ?></option>
+			     	<?php } if ($mar['id_vehiculos']!=$key['vehiculo']) { ?>
+			                <option value="<?php echo $mar["id_vehiculos"]; ?>" ><?php echo $mar['marca']; ?> <?php echo $mar['submarca']; ?> placas:<?php echo $mar['placas']; ?></option>
+			     	<?php } } ?>  
+				</select>
+				<label>Vehículos</label>
+			</div>
+
+
+			<?php } ?>
+			<div class="input-field col m6 s12">
+	    		<select id="materiales" name="materiales">
+	      			<option value="0" disabled selected>Selecciona una solicitud</option>
+	      			<?php foreach ($this->materiales as $key){ ?>
+	      				<?php if($key['id_sitio'] == 0){ ?>
+	      					<option value="<?php echo $key['id']; ?>">No. <?php echo $key['id']; ?> / Sitio: Stock Almacen / Fecha envio: <?php echo $key['fecha_solicitada']; ?> </option>
+	      				<?php }else{ ?>
+	      					<option value="<?php echo $key['id']; ?>">No. <?php echo $key['id']; ?> / Sitio: <?php echo $key['name_sitio']; ?> / Fecha envio: <?php echo $key['fecha_solicitada']; ?> </option>
+	      				<?php } ?>
+	      			<?php } ?>
+	    		</select>
+	    		<label>Solicitud de Materiales:</label>
+			</div>
+
+			<div class="input-field col m6 12">
+				<?php if($this->sol_mat == 1){ ?>
+					<span style="font-size:15px;">No se selecciono una solicitud de material</span>
+					<input type="hidden" name="id_mat" value="0">
+				<?php }else{ ?>
+					<?php foreach ($this->select_material as $key) {
+						$id = $key['id'];
+						$name = $key['name_sitio'];
+						$fecha = $key['fecha_solicitada'];
+					} ?>
+
+					<span style="font-size:15px;">Solicitud materiales No. <?php echo $id; ?> / Sitio: <?php echo $name; ?> / Fecha envio: <?php echo $fecha; ?> </span>
+					<input type="hidden" name="id_mat" value="<?php echo $id; ?>">
+				<?php } ?>
+			</div>
+		</form>
+
+		<div class="row">
+			<div class="col m12 s12 text-right">
+				<a class="btn" id="send_step"><i class="material-icons right">send</i>Paso 2</a>
+			</div>
+		</div>
+	</div>	
+</div>
+
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	$('.timepicker').timepicker();
+
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+  	});
+
+  		$("#send_step").click(function(){
+  			var sitio = document.getElementById("sitio_res").value;
+  			var prioridad = document.getElementById("prioridad").value;
+  			var fecha_envio = document.getElementById("fecha_envio").value;
+  			var	tipo_envio = document.getElementById("tipo_envio").value;
+  			var vehiculo = document.getElementById("vehiculo").value;
+  			var hora_envio = document.getElementById("hora_envio").value;
+
+
+	        if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
+	            swal({
+	              title: "Para continuar debes agregar la información marcada con un '*' ",
+	            });
+	        }else{
+	          swal("Espere un momento, la información esta siendo procesada", {
+	            icon: "success",
+	            buttons: false,
+	          }); 
+	          setTimeout(submitForm, 1500);     
+	        }
+
+  		});
+
+  		function submitForm() { document.getElementById("submit_gasolina").submit() }
+
+</script>

@@ -1,0 +1,179 @@
+<?php 
+	
+	$sitio = $this->sitio; $nombre = $this->nombre; $ap = $this->ap; $am = $this->am; $curp = $this->curp; 
+	$rfc = $this->rfc; $nss = $this->nss; $telefono = $this->telefono; $email = $this->email; $personales = $this->personales;
+	$namesitio = $this->namesitio; $operativo = $this->operativo; $puesto = $this->puesto;
+
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+
+
+
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+		<a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte del Personal</span>
+    </div>
+</div>
+
+
+<div class="row excel-div" id="tab1">
+	<table class="table text-left table-hover" >
+		<thead>
+			<tr>
+				<?php if ($nombre != 0){ ?><th>Nombre</th><?php } ?>
+				<?php if($ap != 0){ ?><th>Apellido Paterno</th><?php } ?>
+				<?php if($am != 0){ ?><th>Apellido Materno</th> <?php } ?>
+				<?php if($curp != 0){ ?> <th>Curp</th> <?php } ?>
+				<?php if($rfc != 0){ ?> <th>RFC</th> <?php } ?>
+        		<?php if($nss != 0){ ?><th>NSS</th> <?php } ?>
+				<?php if($telefono != 0){ ?><th>Telefono</th> <?php } ?>
+				<?php if($email != 0){ ?> <th>Email</th> <?php } ?>
+				<?php if($puesto != 0){ ?> <th>Puesto</th><?php } ?>
+				<?php if($namesitio != 0){ ?> <th>Nombre sitio</th> <?php } ?>
+				<?php if($personales != 0){ ?><th>Status</th> <?php } ?>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->personal as $usr) { ?>
+		<tbody>
+			<tr>
+				<?php if ($nombre != 0){ ?> <td><?php echo eliminar_acentos($usr["nombre"]); ?></td> <?php } ?>
+				<?php if($ap != 0){ ?> <td><?php echo eliminar_acentos($usr["apellido_pa"]); ?></td> <?php } ?>
+				<?php if($am != 0){ ?> <td><?php echo eliminar_acentos($usr["apellido_ma"]); ?></td> <?php } ?>
+				<?php if($curp != 0){ ?> <td><?php echo $usr["curp"]; ?></td> <?php } ?>
+				<?php if($rfc != 0){ ?><td><?php echo $usr['rfc']; ?></td> <?php } ?>		
+				<?php if($nss != 0){ ?> <td><?php echo $usr["nss"]; ?></td> <?php } ?>
+				<?php if($telefono != 0){ ?> <td><?php echo $usr["telefono"]; ?></td> <?php } ?>
+				<?php if($email != 0){ ?> <td><?php echo $usr["email_personal"]; ?></td> <?php } ?>
+        		<?php if($puesto != 0){ ?> <td><?php echo $usr['puesto']; ?></td> <?php } ?>
+        		<?php if($namesitio != 0){ ?> <td><?php echo $usr['name_sitio'] ?></td> <?php } ?>
+        		<?php if($personales != 0){ ?>
+	        		<?php if ($usr['status_personal'] == 0){ ?>
+	        			<td>
+	        				Activo	
+	        			</td>
+	        		<?php } ?>
+	        		<?php if ($usr['status_personal'] == 1){ ?>
+	        			<td>
+	        				Inactivo	
+	        			</td>
+	        		<?php } ?>
+	        		<?php if ($usr['status_personal'] == 2){ ?>
+	        			<td>
+	        				Baja	
+	        			</td>
+	        		<?php } ?>
+        		<?php } ?>
+        		
+	
+        		<!-- <td></td> -->
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>	
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+
+<script type="text/javascript">
+      $("#exportBtn1").click(function(){
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Personal.xlsx",
+            sheet: {
+            	name: "Personal"
+            }
+          });
+        });
+</script>
+
+
+<!-- <script type="text/javascript">
+	function exportTableToCSV(html, filename) {
+	    var csv = [];
+	    var rows = document.querySelectorAll("table tr");
+	    for(var i = 0; i < rows.length; i++){	
+	        var row = [], cols = rows[i].querySelectorAll("td, th");
+	        for(var j = 0; j < cols.length; j++){
+	            row.push(cols[j].innerText);
+	        }
+	        csv.push(row.join(","));
+	    }
+	    downloadCSV(csv.join("\n"), filename);
+	}
+
+	function downloadCSV(csv, filename) {
+	    var csvFile;
+	    var downloadLink;
+		if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+			alert("Your browser doesn't support Blobs");
+			return;
+		}
+		
+	    csvFile = new Blob([csv], {type:"text/csv"});
+	    downloadLink = document.createElement("a");
+	    downloadLink.download = filename;
+	    downloadLink.href = window.URL.createObjectURL(csvFile);
+	    downloadLink.style.display = "none";
+	    document.body.appendChild(downloadLink);
+	    downloadLink.click();
+	}
+</script> -->

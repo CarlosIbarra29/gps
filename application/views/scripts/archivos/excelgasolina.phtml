@@ -1,0 +1,125 @@
+<?php 
+
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+
+
+
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+		<a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte cargas de Gasolina</span>
+    </div>
+</div>
+
+
+<div class="row excel-div" id="tab1">
+	<table class="table text-left table-hover" >
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Sitio</th>
+				<th>Responsable</th>
+				<th>Fecha carga</th>
+				<th>Vehiculo</th>
+				<th>Placas</th>
+				<th>Estacion</th>
+				<th>Efecticard</th>
+				<th>Importe</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->gasolina as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["marca"]); ?> <?php echo eliminar_acentos($usr["submarca"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["placas"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["tarjeta"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["importe"]); ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>	
+</div>
+
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("d-m-Y");
+?>
+
+	<input type="hidden" id="hoy" value="<?php echo $hoy; ?>">
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+
+<script type="text/javascript">
+      $("#exportBtn1").click(function(){
+      	var hoy = document.getElementById("hoy").value;
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Reporte Gasolina.xlsx",
+            sheet: {
+            	name: "Reporte Gasolina"
+            }
+          });
+        });
+</script>

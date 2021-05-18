@@ -1,0 +1,24 @@
+<?php foreach ($this->usuario as $usr) { ?>
+<h1>Bienvenido <?php echo $usr['nombre']; ?></h1><br><br>
+
+<div class="row">
+	<div class="col-lg-6 text-left">
+		<h3>Datos</h3>
+	</div>
+	<div class="col-lg-6 text-right">
+		<a href="/home/editarperfil/id/<?php echo $usr['id']; ?> ">Editar datos</a>
+	</div>
+	<div class="col-lg-12"><br>
+		<div>
+			<strong>Nombre: </strong><label><?php echo $usr['nombre']; ?></label><br>
+		</div>
+		<div>
+			<strong>Apellidos: </strong><label><?php echo $usr['ap']; ?> <?php echo $usr['am']; ?></label><br>
+			<strong>Direccion: </strong><label><?php echo $usr['direccion']; ?></label><br>
+			<strong>Telefono: </strong><label><?php echo $usr['telefono']; ?></label><br>
+			<strong>Correo: </strong><label><?php echo $usr['correo']; ?> </label><br>
+			<strong>Contraseña: </strong><label>Password <a href="/home/cambiocontrasena/id/<?php echo $usr['id']; ?>">Cambiar contraseña</a></label>
+		</div>
+	</div>
+</div>
+<?php } ?>

@@ -1,0 +1,636 @@
+
+  <div class="row" style="margin-top:20px;">
+    <div class="col m6 s12">
+      <a href="/materiales/auditoriamateriales/status/<?php echo $this->opcion_status; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+    <div class="col m6 s12 text-right">
+      <!-- <a class="btn" href="/materiales/pdfmateriales/id/<?php echo $this->id_material; ?>/status/<?php echo $this->opcion_status; ?>"><i class="material-icons right">insert_drive_file</i>Solicitud PDF</a> -->
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 15px;">
+    <div class="col m12 s12">
+      <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la solicitud</span>
+    </div>
+  </div>
+</div> 
+
+<?php foreach ($this->info as $key) {
+    $id_sol = $key['id'];
+    $fecha_solicitada = $key['fecha_solicitada'];
+    $sitio = $key['name_sitio'];
+    $proyecto = $key['nombre_proyecto'];
+    $user = $key['user_solicitud'];
+    $fecha_user =$key['fecha_user'];
+
+    $comentario =$key['comentario'];
+    $file = $key['file'];
+    $status_solicitud = $key['status_solicitud'];
+    $status_check = $key['status_check'];
+
+    $fecha_cambio = $key['fecha_cambio'];
+    $motivo_date = $key['motivo_date'];
+    $user_fechacambio = $key['user_fechacambio'];
+    $fecha_actfecha = $key['fecha_actfecha'];
+    
+} ?>
+
+<input type="hidden" id="id_fechacambio" name="status_check" value="<?php echo $id_sol; ?>">
+<input type="hidden" id="check_select" name="status_check" value="<?php echo $status_check; ?>">
+<div class="row">
+  <div class="col m6 s6">
+    <?php if($status_solicitud == 0 || $status_solicitud == 1){ ?>
+      <div class="row">
+        <div class="col m12 s12 text-center">
+          <?php if($status_check == 1){ ?>
+            <label>
+              <input type="checkbox" checked id="check_if"/>
+              <span>Proyección </span>
+            </label>
+          <?php }else{ ?>
+            <label>
+              <input type="checkbox" id="check_if"/>
+              <span>Proyección </span>
+            </label>
+          <?php } ?>
+        </div>
+      </div>
+    <?php } ?>
+  </div>
+
+  <div class="col m6 s12 center">
+    <?php if($status_solicitud == 0){ ?>
+      <span>Status Actual: En Proceso</span>
+    <?php } ?>
+
+    <?php if($status_solicitud == 1){ ?>
+      <span>Status Actual: Surtiendo</span>
+    <?php } ?>
+
+    <?php if($status_solicitud == 2){ ?>
+      <span>Status Actual: Listo para enviar</span>
+    <?php } ?>
+
+    <?php if($this->rol_user == 1 || $this->rol_user == 12){ ?>
+      <div class="row" style="margin-top: 10px;">
+        <div class="col m6 s6">
+          <?php if($status_solicitud == 3){ ?>
+            <div class="chip modal-trigger">
+              <img src="/img/rojo.png" >
+              Rechazada
+            </div>
+          <?php }else{ ?>
+            <div class="chip modal-trigger" href="#modal1">
+              <img src="/img/gris.jpg" >
+              Rechazar
+            </div>
+          <?php } ?>
+        </div>
+
+        <?php if($status_solicitud == 0){ ?>
+          <div class="col m6 s6">
+            <div class="chip" id="surtiendo_status" data-dato ="1">
+              <img src="/img/gris.jpg" >
+              Surtiendo
+            </div>
+          </div>
+        <?php } ?>
+
+        <?php if($status_solicitud == 1){ ?>
+          <div class="col m6 s6">
+            <div class="chip" id="surtiendo_status" data-dato ="2">
+              <img src="/img/correct.png" >
+              Listo para enviar
+            </div>
+          </div>
+        <?php } ?>
+      </div>
+    <?php } ?>
+
+  </div>
+</div>
+
+
+<form action="/materiales/requestupdatestatuscheck" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_prede">
+  <input type="hidden" name="ids" value="<?php echo $id_sol; ?>">
+  <input type="hidden" name="dato" id="dato_comprobacion" value="<?php echo $status_check; ?>">
+  <input type="hidden" name="status" value="<?php echo $status_solicitud; ?>">
+</form>
+
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card" style="height: 290px;">
+      <div class="card-content">
+        <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información General</span>
+
+        <div class="row">
+          <div class="col m12 s12" style="margin: 30px;">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No. <?php echo $id_sol; ?></span><br>
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fecha solicitada: </span> <span><?php echo $fecha_solicitada; ?></span> 
+            <?php if($status_solicitud == 1 || $status_solicitud == 0){ ?>
+              <a class="modal-trigger" href="#modal4"><i class="fa fa-2x fa-edit"></i></a>
+            <?php }else{ ?>
+            <?php } ?>
+            
+            <br>
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sitio: </span> <span><?php echo $sitio; ?> / <?php echo $proyecto; ?></span>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col m6 s6">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Usuario: </span><br>
+             <span><?php echo $user; ?></span>
+          </div>
+          <div class="col m6 s6">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fecha solicitud: </span><br> 
+            <span><?php echo $fecha_user; ?></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m6">
+    <div class="card" style="height: 290px;">
+      <div class="card-content">
+        <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información de la Solicitud</span>
+
+        <div class="row" style="margin: 15px;">
+          <div class="col m12 s12 text-center">
+            <a class="btn" href="/<?php echo $file; ?>" download="<?php echo substr(strrchr($file, "/"), 1); ?>"><i class="material-icons right">file_download</i>Documento</a>
+
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col m12 s12" style="margin: 5px;">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentario: </span><br>
+
+            <?php if($comentario != NULL || $comentario != ""){ ?>
+              <div class="row">
+                <div class="col m12 s12">
+                  <span><?php echo $comentario; ?></span>
+                </div>
+              </div>
+            <?php }else{ ?>
+              <div class="row">
+                <div class="col m12 s12">
+                  <span  style="font-size:15px; color: rgb(74,79,84);">No hay un comentario agregado</span>
+                </div>
+              </div>
+            <?php } ?>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php if($fecha_cambio == NULL || $fecha_cambio == ""){ ?>
+<?php }else{ ?>
+  <div class="row">
+      <div class="col s12 m12">
+        <div class="card">
+          <div class="card-content">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nueva Fecha</span>
+
+            <div class="row">
+              <div class="col m12 s12">
+                <table>
+                  <thead>
+                    <tr>
+                        <th>Nueva fecha</th>
+                        <th>Motivo</th>
+                        <th>Usuario</th>
+                        <th>Fecha Usuario</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><?php echo $fecha_cambio; ?></td>
+                      <td><?php echo $motivo_date; ?></td>
+                      <td><?php echo $user_fechacambio; ?></td>
+                      <td><?php echo $fecha_actfecha; ?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> 
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+<?php } ?>        
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentarios</span>
+
+        <div class="row"> 
+          <div class="col m2 s12"></div>
+          <div class="col m8 s12">
+            <div class="row">
+              <div class="col m8 s8">
+                <div class="input-field col s12">
+                  <input placeholder="Agregar comentario" id="coment_form" type="text" class="validate">
+                  <label for="coment_form">Comentario</label>
+                </div>
+              </div>
+              <div class="col m4 s4">
+                <div class="input-field col s12">
+                  <a class="btn" id="add_coment"><i class="material-icons right">forum</i>Agregar</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col m2 s12"></div>
+        </div>
+
+
+        <div class="row">
+          <div class="col m12 s12" style="margin-top: 19px;">
+            <table>
+              <thead>
+                <tr>
+                    <th>Comentario</th>
+                    <th>Personal</th>
+                    <th>Fecha</th>
+                </tr>
+              </thead>
+                <?php
+                $total = 0;
+                if ($this->comentario) { 
+                foreach ($this->comentario as $usr) { ?>
+                <tbody>
+                  <tr>
+                    <td>
+                      <?php echo $usr['comentario']; ?>
+                    </td>
+                    <td>
+                      <?php echo $usr['fecha_comentario']; ?>
+                    </td>
+                    <td>
+                      <?php echo $usr['nombre_usuario']; ?>
+                    </td>
+                    <td class="text-center">
+                      <a class="edit_coment modal-trigger" href="#modal5" data-id="<?php echo $usr['id']; ?>" data-comentario="<?php echo $usr['comentario']; ?>"><i class="fa fa-2x fa-edit"></i></a>
+                    </td>
+                  </tr>
+
+                  <?php } }else{ ?>
+                  </tbody> 
+                  <tbody>
+                      <tr>
+                        <td></td>
+                          <td class="text-center" colspan=h4><h4>No hay comentarios.</h4></td>
+                          <td></td>
+                      </tr>
+                  </tbody>
+                              
+                  <?php } ?>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar Solicitud</span>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="comentarios" class="materialize-textarea"></textarea>
+            <label for="comentarios">Comentarios:</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="rech_gasolina" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+  <div id="modal5" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Comentario</span>
+
+      <div class="row">
+        <div class="col m12 s12">
+          <div class="input-field col s12">
+            <input id="coment_edit" name="comentario" type="text" class="validate">
+            <input type="hidden" id="ids_comentario" name="id" value="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal-footer">
+      <button type="button" id="edit_com" class="btn">Guardar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+<input type="hidden" id="id_solicitud" value="<?php echo $this->id_material; ?>">
+
+
+
+
+ <div id="modal4" class="modal">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Modificar Fecha</span>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col m12 s12">
+          <div class="input-field col s12">
+            <input id="date_cambio" name="fecha_cambio" type="date" class="validate">
+            <label for="date_cambio">Fecha cambio</label>
+          </div>
+
+        </div>
+        <div class="col m12 s12">
+          <div class="input-field col s12">
+            <input id="motivo_date" name="motivo_date" type="text" class="validate">
+            <label for="motivo_date">Motivo cambio Fecha</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="nueva_fecha" class="btn">Guardar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+          
+
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  $("#surtiendo_status").click(function(){
+      var id = document.getElementById("id_solicitud").value;
+      var dato  =$(this).data('dato');
+      var comentario = document.getElementById("comentarios").value;
+    swal({
+      title: "Estas seguro de cambiar el status de la solicitud?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+              var request = $.ajax({
+                  url:"/materiales/requestupdatechangestatus",
+                  method:"POST",
+                  data: {dato:dato, id:id, comentario:comentario},
+                  processData: true,
+              });
+  //-------------------end de ajax---------------------------
+  //-------------peticion de respuesta de ajax------------------
+              request.done(function(response) {
+                  console.log(response);//imprime lo que responde el ajax
+                  // alert
+                  window.location.reload(true);
+              });
+  //-------------------end de respuesta ajax---------------------
+               return false;
+
+
+      } else {
+        swal("Accion cancelada!");
+      }
+      });
+
+  });
+
+  $("#rech_gasolina").click(function(){
+      var id = document.getElementById("id_solicitud").value;
+      var comentario = document.getElementById("comentarios").value;
+    swal({
+      title: "Estas seguro de cambiar el status de la solicitud?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+          var dato = "3";
+              var request = $.ajax({
+                  url:"/materiales/requestupdatechangestatus",
+                  method:"POST",
+                  data: {dato:dato, id:id, comentario:comentario},
+                  processData: true,
+              });
+  //-------------------end de ajax---------------------------
+  //-------------peticion de respuesta de ajax------------------
+              request.done(function(response) {
+                  console.log(response);//imprime lo que responde el ajax
+                  // alert
+                  window.location.reload(true);
+              });
+  //-------------------end de respuesta ajax---------------------
+               return false;
+
+
+      } else {
+        swal("Accion cancelada!");
+      }
+      });
+  });
+
+  $("#add_coment").click(function(){
+      var id = document.getElementById("id_solicitud").value;
+      var comentario = document.getElementById("coment_form").value;
+    swal({
+      title: "Estas seguro de agregar el comentario?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+        
+              var request = $.ajax({
+                  url:"/materiales/addcomentariosolicitud",
+                  method:"POST",
+                  data: {id:id, comentario:comentario},
+                  processData: true,
+              });
+  //-------------------end de ajax---------------------------
+  //-------------peticion de respuesta de ajax------------------
+              request.done(function(response) {
+                  console.log(response);//imprime lo que responde el ajax
+                  // alert
+                  window.location.reload(true);
+              });
+  //-------------------end de respuesta ajax---------------------
+               return false;
+
+
+      } else {
+        swal("Accion cancelada!");
+      }
+      });
+  });
+
+  $(".edit_coment").click(function(){
+    var id =$(this).data('id');
+    var comentario = $(this).data('comentario');
+    
+     document.getElementById("coment_edit").value = comentario;
+     document.getElementById("ids_comentario").value = id;
+  });
+
+
+  $("#edit_com").click(function(){
+      var id = document.getElementById("ids_comentario").value;
+      var comentario = document.getElementById("coment_edit").value;
+    swal({
+      title: "Estas seguro de agregar el comentario?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+        
+              var request = $.ajax({
+                  url:"/materiales/requestupdatecomentariosolicitud",
+                  method:"POST",
+                  data: {id:id, comentario:comentario},
+                  processData: true,
+              });
+  //-------------------end de ajax---------------------------
+  //-------------peticion de respuesta de ajax------------------
+              request.done(function(response) {
+                  console.log(response);//imprime lo que responde el ajax
+                  // alert
+                  window.location.reload(true);
+              });
+  //-------------------end de respuesta ajax---------------------
+               return false;
+
+
+      } else {
+        swal("Accion cancelada!");
+      }
+      });
+  });
+
+
+  $("#check_if").click(function(){
+    var num = document.getElementById("check_select").value;
+
+    if(num == 0){
+      document.getElementById("check_select").value= 1;
+      document.getElementById("dato_comprobacion").value = 1;
+    }
+
+    if(num == 1){
+      document.getElementById("check_select").value= 0;
+      document.getElementById("dato_comprobacion").value = 0;
+    }
+
+
+        if(num ==""){
+            swal({
+                title: "Para agregar la foto de un documento es necesario que seleciones el tipo de documento",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+           icon: "success",
+           buttons: false,
+          });  
+            setTimeout(submitcomprobacion, 1500);     
+        }
+  });
+
+    function submitcomprobacion() {
+        document.getElementById("submit_file_prede").submit()
+    }
+
+    $("#nueva_fecha").click(function(){
+      var id = document.getElementById("id_fechacambio").value;
+      var date_cambio = document.getElementById("date_cambio").value;
+      var motivo_date = document.getElementById("motivo_date").value;
+      swal({
+        title: "Estas seguro de cambiar la fecha?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+          if (willDelete) {
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          });  
+
+          
+                var request = $.ajax({
+                    url:"/materiales/requestupdatefechaolicitud",
+                    method:"POST",
+                    data: {id:id, date_cambio:date_cambio,motivo_date:motivo_date},
+                    processData: true,
+                });
+    //-------------------end de ajax---------------------------
+    //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+    //-------------------end de respuesta ajax---------------------
+                 return false;
+
+
+        } else {
+          swal("Accion cancelada!");
+        }
+        });
+    });
+</script>

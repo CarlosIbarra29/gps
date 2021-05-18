@@ -1,0 +1,246 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+
+<div class="row mt-4">
+	<div class="col m4 s12 text-center">
+		<!-- <h2>Usuarios</h2> -->
+	</div>
+
+	<div class="col m8 s12 text-center" style="margin-top: 15px;">
+		<div class="row">
+			<div class="col m8 s6 text-right">
+				<a class="green btn modal-trigger" href="#modal1">+ Agregar Usuario</a>
+			</div>
+			<div class="col m4 s6 text-right">
+				<a href="/panel/userrol" class="green waves-light btn">+ Agregar Rol</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Usuarios</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m2 s12">
+		<a href="/panel/usuarios">Mostrar todos</a>
+	</div>
+	<div class="col m8 s12">
+		<form action="/panel/searchusuarios" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m8 s8">
+	          <input placeholder="Ingresa nombre" name="nombre" value="<?php echo $this->name_search; ?>" id="first_name" type="text" class="validate">
+	          <label for="first_name">Buscar por Nombre</label>
+	        </div>
+	        <div class="input-field col m4 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
+	        </div>
+    	</form>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Usuario</span>
+		<div class="col m12 s12" style="margin-top: 20px;">
+			<form action="/panel/requestadduser" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+				<div class="row">
+					<div class="input-field col s12">
+					    <select name="rol">
+					      	<option value="" disabled selected>Selecciona una opcion:</option>
+					      	<?php foreach ($this->rol as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>Rol del usuario</label>
+					</div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="icon_prefix" type="text" name="name" class="validate" required>
+			          	<label for="icon_prefix">Nombre(s):</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="ap" type="text" name="apa" class="validate">
+			          	<label for="ap">Apellidos Paterno:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="am" type="text" name="ama" class="validate">
+			          	<label for="am">Apellidos Materno:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">event_available</i>
+			          	<input id="curp" type="text" name="curp" class="validate">
+			          	<label for="curp">CURP:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">phone</i>
+			          	<input id="icon_telephone" type="text" name="phone" class="validate">
+			          	<label for="icon_telephone">Telefono</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">email</i>
+			          	<input id="mail" type="text" name="mail" class="validate">
+			          	<label for="mail">Correo Electronico</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">vpn_key</i>
+			          	<input id="pword" type="password" name="pword" class="validate">
+			          	<label for="pword">Contraseña</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">vpn_key</i>
+			          	<input id="pwordc" type="password" name="pwordc" class="validate">
+			          	<label for="pwordc">Confirmar Contraseña</label>
+			        </div>
+		      	</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
+      	</form>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= -->
+<div class="col m12 s12" style="margin-top: 20px;">
+		<h3></h3>
+		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Usuarios</span>
+			<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>	
+					<th>Apellido Paterno</th>	
+					<th>Telefono</th>
+					<th>Correo</th>
+					<th>Rol</th>
+				</tr> 
+			</thead>
+			<?php foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $usr["nombre"]; ?></td>
+					<td><?php echo $usr["ap"]; ?></td>
+					<td><?php echo $usr["telefono"]; ?></td>
+					<td><?php echo $usr["correo"]; ?></td>
+					<td><?php echo $usr["fkroles"]; ?></td>
+					<td>
+						<a href="/panel/usuariodetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+					</td>
+					<td>
+						<a href="/panel/usuariosedit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+					<td>
+						<a href="/panel/requestdeleteall/id/<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td>
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="/panel/searchusuarios/nombre/<?php echo $this->name_search; ?><?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+		
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+     $('select').formSelect();
+  });
+</script>

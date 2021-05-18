@@ -1,0 +1,36 @@
+<h1>Direcciones guardadas</h1>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-12 text-right">
+			<?php foreach ($this->usuario as $usr) { ?>
+				<a href="/home/nuevadireccion/id/<?php echo $usr['id']; ?>">Agregar direccion</a>
+			<?php } ?>
+		</div>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Direccion</th>
+					<th>Codigo Postal</th>
+					<th>Eliminar</th>
+				</tr> 
+			</thead>
+			<?php if ($this->direcciones) {
+			foreach ($this->direcciones as $key) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $key["direccion"]; ?></td>
+					<td><?php echo $key["cp"]; ?></td>
+					<td><a href="/home/requestdeletedireccion/id/<?php echo $key["id"]; ?>" ><span class="warning" style="color: red;"><i class="fa fa-2x fa-trash"></i></span></a></td>
+				</tr>
+			</tbody>
+			<?php } }else{ ?>
+			<tbody>
+				<tr>
+					<td colspan="3"><h3>No hay direcciones, agrega una nueva direccion.</h3></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+		<p><a href="/orden/index">Regresar y continua con tu orden.</a></p>	
+	</div>	
+</div>

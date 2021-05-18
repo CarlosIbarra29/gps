@@ -1,0 +1,126 @@
+
+
+<div class="row">
+	<div class="col m12 s12" style="margin-top: 20px;">
+		<a href="/solicitud/generarcombrobaciones" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 15px;">
+		<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Busqueda: <?php echo $this->op; ?></span>
+	</div>
+</div>
+
+
+<?php if($this->busqueda == 1){ ?>
+	<div class="row">
+		<div class="col m12 s12"> 
+	      <table>
+	        <thead>
+	          <tr>
+		            <th>Id</th>
+		            <th>Fecha factura</th>
+		            <th>Razon social</th>
+		            <th>Monto</th>
+		            <th>Residente</th>
+		            <th>Solicitud caja chica</th>
+	          </tr>
+	        </thead>
+
+	        <tbody>
+	          <tr>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	          </tr>
+	        </tbody>
+	      </table>
+		</div>
+		<div class="col m12 s12 text-center">
+			<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">No se encontro ningun resultado</span>
+		</div>
+	</div>
+<?php }else{ ?>
+
+	<?php foreach ($this->factura as $key ) {
+		$id= $key['id'];
+		$fecha = $key['fecha_del'];
+		$monto = $key['monto_solicitud'];
+		$id_comprobacion = $key['id_comprobacion'];
+		$razon_social = $key['razon_social'];
+		$facturable = $key['facturable'];
+		$status_comprobacion = $key['status_comprobacion'];
+		$nombre = $key['nombre'];
+		$apellido_pa = $key['apellido_pa'];
+		$apellido_ma = $key['apellido_ma'];
+	} ?>
+
+	<div class="row"> 
+		<div class="col m12 s12">
+		    <table>
+		        <thead>
+		          <tr>
+		              <th>Id</th>
+		              <th>Factura</th>
+		              <th>Fecha factura</th>
+		              <th>Razon social</th>
+		              <th>Monto</th>
+		              <th>Residente</th>
+		              <th>Solicitud caja chica</th>
+		          </tr>
+		        </thead>
+
+              <?php
+              $monto = 0;
+              if ($this->factura) { 
+              foreach ($this->factura as $usr) { ?>
+
+
+
+              <tbody>
+                <tr>
+                  <td>
+                    <?php echo $usr['id']; ?>
+                  </td>
+                  <td>
+                  	<?php echo $usr['factura']; ?>
+                  </td>
+                  <td>
+                  	<?php echo $usr['fecha_del'] ?>
+                  </td>
+                  <td>
+                  	<?php echo $usr['razon_social'] ?>
+                  </td>
+                  <td>
+                  	<?php echo $usr['monto_solicitud'] ?>
+                  </td>
+                  <td>
+                  	<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+                  </td>
+                  <td>
+                  	<?php echo $usr['id_comprobacion'] ?>
+                  </td>
+                </tr>
+
+                <?php } }else{ ?>
+                </tbody> 
+                <tbody>
+                    <tr>
+                        <td class="text-center" colspan="6"><h4>No hay comprobaciones pendientes.</h4></td>
+                    </tr>
+                </tbody>
+                            
+                <?php } ?>
+	      </table>
+		</div>
+
+		<div class="col m12 s12">
+			<span style="font-weight: bold;">Nota:</span> <span>Si en la columna "Solicitud caja chica" el valor es 0, quiere decir que la factura aun no ha sido comprobada.</span>
+		</div>
+	</div>
+<?php } ?>

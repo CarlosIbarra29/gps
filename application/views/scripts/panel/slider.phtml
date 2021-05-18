@@ -1,0 +1,42 @@
+<div class="col-md-12">
+    <div class="white-box">
+        <div class="jumbotron" style="background-image: url('/img/products.jpg'); background-size: cover;
+        background-position: top center; ">
+        <h1>Imagenes para productos</h1>
+        </div>
+            <?php $session = new Zend_Session_Namespace("current_session"); 
+                // echo $session->id;
+                echo $session->nombre;
+            ?>
+    </div>
+</div>
+
+<div class="col-md-12">
+	<div class="white-box">
+		<form action="/panel/requestslideradd" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="form-group">
+				<label for="text">Nombre:</label><br>
+				<small>*El nombre solo es para referenciar el registro. La imagen debe tener ya el nombre con el cual se guardará.</small>
+				<p><input type="text" name="name" class="form-control" placeholder="Ingrese el nombre" required></p>
+			</div>
+			<div class="form-group">
+				<label for="text">Imagen descriptiva:</label><br>
+				<small><i>*Nota: Procure que la imagen debe tener el nombre rastreable y sin espacios, en su defecto remplazarlos por guion bajo. El tamaño de la imagen debe ser menor a 1.9 MB.</i></small><br>
+				<p><input type="file" name="cover" class="form-control" required></p>
+			</div>
+			<div class="form-group">
+				<select id="view-select" class="form-control" name="prod" required>
+					<?php foreach ($this->productos as $prod) { ?>
+					<option value="<?php echo $prod['id']; ?>"><?php echo $prod['nombre']; ?></option>
+					<input type="hidden" name="id" value="<?php echo $prod['id']; ?>">
+					<?php } ?>
+				</select>
+			</div>
+			<!-- Boton -->
+			<div class="form-group text-center"><br>
+				<p><input type="submit" value="Enviar Datos" class="btn btn-primary"></p>
+			</div><br>
+			<!-- Boton -->
+		</form>
+	</div>
+</div>

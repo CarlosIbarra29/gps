@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col m12 s12">
+		<h2>Status de </h2>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s 12">
+		<?php foreach ($this->estructura as $per) { ?>
+			<h3 style="color: red;"><?php echo $per["nombre_proyecto"]; ?></h3>
+
+			<?php foreach ($this->status as $st) { ?>
+			<?php if($per["id_tipoproyecto"] == $st["tipo_proyecto"]){ ?>
+				<h3><?php echo $st["nombre_status"]; ?></h3>
+			<?php }else{ ?>
+			<?php } ?>
+
+			<?php } ?>
+
+
+		<?php } ?>
+	</div>
+</div>
+
+
+
+
+<div class="row">
+	<div class="col m12 s 12">
+
+	</div>
+</div>

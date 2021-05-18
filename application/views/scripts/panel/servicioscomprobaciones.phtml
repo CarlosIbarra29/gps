@@ -1,0 +1,366 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/servicios" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Servicios</span>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m6 s6 text-center">
+		<a href="#modal1" class="btn modal-trigger"><i class="material-icons left">add</i>Agregar Servicio</a>
+	</div>
+	<div class="col m6 s6 text-center">
+		<a href="#modal2" class="btn modal-trigger"><i class="material-icons left">search</i>Buscar Servicio</a>
+	</div>
+</div>
+
+
+  <!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Servicio</span>
+
+    	<form action="/panel/requestaddserviciocomprobacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+    	<div class="row" style="margin-top: 20px;">
+			<div class="input-field col m6 s12">
+				<input id="name" type="text" name="name" class="validate">
+				<label for="name">* Nombre servicio:</label>
+			</div>	
+
+			<div class="input-field col m6 s12">
+				<select name="status_politica" id="status_politica">
+					<option value="" disabled selected>* Selecciona una opcion</option>
+					<option value="0">Dentro de Política</option>
+					<option value="1">Limitado</option>
+					<option value="2">Fuera de Política</option>
+				</select>
+				<label>* Status política</label>
+			</div>	
+
+			<div class="input-field col m6 s12 oculto" id="monto">
+				<input id="monto_limite" type="text" name="monto_limite" class="validate">
+				<label for="monto_limite">* Monto limite:</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+				<select name="status_excepcion" id="status_excepcion">
+					<option value="" disabled selected>* Selecciona una opcion</option>
+					<option value="0">Autorización requerida</option>
+					<option value="1">Autorización no requerida</option>
+				</select>
+				<label>* Status Excepción</label>
+			</div>
+
+			<div class="input-field col m6 s12 oculto" id="autorizacion_status">
+				<select name="autorizacion" id="status_autorizacion">
+					<option value="0" disabled selected>* Selecciona una opcion</option>
+					    <?php foreach ($this->roles as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+					    <?php } ?>
+				</select>
+				<label>* Autorización</label>
+			</div>
+
+	        <div class="input-field col m6 s12">
+	          	<textarea id="textarea1" name="comentario" class="materialize-textarea"></textarea>
+	          	<label for="textarea1">Comentarios</label>
+	        </div>
+	    </form>
+    	</div>
+    </div>
+    <div class="modal-footer">
+    	<button  class="modal-close red btn">Cerrar</button>
+    	<button type="button" id="add_servicio" class="btn">Guardar</button>
+    </div>
+</div>
+
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Buscar Servicio</span>
+    	<p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Servicios de Comprobaciones</span>
+        <table class="table text-left table-hover" style="margin-top: 5px;">
+            <thead>
+                <tr>
+                    <th>Nombre del Servico</th> 
+                    <th>Politicas</th>  
+                    <th>Excepción</th>
+                    <th>Autorización</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr> 
+            </thead>
+            <?php
+            if ($this->servicios) { 
+            foreach ($this->servicios as $usr) { ?>
+            <tbody>
+                <tr>
+                    <td>
+                    	<a class="modal-trigger servicio_info" data-id="<?php echo $usr['id']; ?>" data-comentario="<?php echo $usr['comentarios']; ?>" data-nombre="<?php echo $usr['nombre']; ?>" href="#modal3"><?php echo $usr["nombre"]; ?></a>		
+                    </td>
+                    <td>
+                    	<?php if($usr['status_monto'] == 0){ ?>
+                    		Dentro de Política
+                    	<?php } ?>
+
+                    	<?php if($usr['status_monto'] == 1){ ?>
+                    		Limitado a $<?php echo number_format($usr['monto'], 2, '.', ','); ?>
+                    	<?php } ?>
+
+                    	<?php if($usr['status_monto'] == 2){ ?>
+                    		Fuera de  Política
+                    	<?php } ?>
+                    </td>
+                    <td>
+                    	<?php if($usr['status_excepcion'] == 0){ ?>
+                    		Autorización requerida
+                    	<?php } ?>
+
+                    	<?php if($usr['status_excepcion'] == 1){ ?>
+                    		Autorización no requerida
+                    	<?php } ?>
+                    </td>
+                    <td>
+                    	<?php echo $usr['nombre_rol']; ?>
+                    </td>
+                    <td>
+                        <a href="/panel/servicioeditcomprobacion/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                    </td>
+                <td>
+                    <a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                </td>
+                </tr>
+            <?php } }else{ ?>
+            </tbody> 
+            <tbody>
+                <tr>
+                    <td class="text-center" colspan="6"><h3>No hay servicios registrados.</h3></td>
+                </tr>
+            </tbody>
+                        
+            <?php } ?>
+        </table>
+	</div>
+</div>
+
+
+<div id="modal3" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información Servicio</span>
+
+    	<div class="input-field col s12">
+    		<span>Comentario</span>
+    	</div>
+        <div class="input-field col s12">
+          	<textarea id="comentario_area"  class="materialize-textarea"></textarea>
+          	<!-- <label for="comentario_area">Comentario</label> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+    	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Anterior</span>
+                        </li>
+                    <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                    <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                    <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+	$('#status_politica').on('change', function() {
+		valor = this.value;
+
+		if(valor == 1){
+			$("#monto").show();
+		}else{
+			$("#monto").hide();
+		}
+	});
+
+	$('#status_excepcion').on('change', function() {
+		valor = this.value;
+
+		if(valor == 0){
+			$("#autorizacion_status").show();
+		}else{
+			$("#autorizacion_status").hide();
+		}
+	});
+	
+
+	$("#add_servicio").click(function(){
+		var nombre = document.getElementById("name").value;
+		var status_politica = document.getElementById("status_politica").value;
+		var status_excepcion = document.getElementById("status_excepcion").value;
+
+            if(status_excepcion == ""){
+                swal({
+                  title: "Para agregar un servicio debes llenar todos los campos marcados con un '*'",
+                });
+            }else{
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+                setTimeout(submitForm, 1500);     
+            }
+
+        });
+
+
+        function submitForm() {
+            document.getElementById("submit_usuario").submit()
+        }
+
+    $(".servicio_info").click(function(){
+    	var id = $(this).data('id');
+      	var comentario = $(this).data('comentario');
+      	var nombre = $(this).data('nombre');
+
+      	document.getElementById("comentario_area").value = comentario;
+    });
+
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de eliminar el servicio "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    	.then((willDelete) => {
+      		if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+	            var request = $.ajax({
+	                url:"/panel/requestdeleteserviciocatalogo",
+	                method:"POST",
+	                data: { id : id },
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	            return false;
+      		} else {
+        		swal("La accion fue cancelada!");
+      		}
+    	});
+
+    });
+
+</script>

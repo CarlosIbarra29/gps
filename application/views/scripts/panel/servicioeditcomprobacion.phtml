@@ -1,0 +1,174 @@
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/servicioscomprobaciones" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Servicio</span>
+    </div>
+</div>
+
+<form action="/panel/requestupdateserviciocomprobacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+<?php foreach ($this->servicios as $key){ ?>
+<input type="hidden" name="id" value="<?php echo $key['id']; ?>">	
+<div class="row">
+	<div class="col m12 s12">
+		<div class="input-field col m6 s12">
+			<input id="name" type="text" name="name" value="<?php echo $key['nombre'];  ?>" class="validate">
+			<label for="name">* Nombre servicio:</label>
+		</div>	
+
+		<div class="input-field col m6 s12">
+			<select name="status_politica" id="status_politica">
+				<?php if ($key['status_monto'] == 0){ ?>
+					<option value="0" selected>Dentro de Política</option>
+					<option value="1">Limitado</option>
+					<option value="2">Fuera de Política</option>	
+				<?php } ?>
+
+				<?php if ($key['status_monto'] == 1){ ?>
+					<option value="0">Dentro de Política</option>
+					<option value="1" selected>Limitado</option>
+					<option value="2">Fuera de Política</option>	
+				<?php } ?>
+
+				<?php if ($key['status_monto'] == 2){ ?>
+					<option value="0">Dentro de Política</option>
+					<option value="1">Limitado</option>
+					<option value="2" selected>Fuera de Política</option>	
+				<?php } ?>
+			</select>
+			<label>* Status política</label>
+		</div>
+
+		<?php if ($key['status_monto'] == 1){ ?>
+			<div class="input-field col m6 s12" id="monto">
+				<input id="monto_limite" type="text" value="<?php echo $key['monto'] ?>" name="monto_limite" class="validate">
+				<label for="monto_limite">* Monto limite:</label>
+			</div>
+		<?php }else{ ?>
+			<div class="input-field col m6 s12 oculto" id="monto">
+				<input id="monto_limite" type="text" name="monto_limite" class="validate">
+				<label for="monto_limite">* Monto limite:</label>
+			</div>
+		<?php } ?>
+
+
+		<div class="input-field col m6 s12">
+			<select name="status_excepcion" id="status_excepcion">
+				<?php if ($key['status_excepcion'] == 0){ ?>
+					<option value="0" selected>Autorización requerida</option>
+					<option value="1">Autorización no requerida</option>
+				<?php } ?>
+
+				<?php if ($key['status_excepcion'] == 1){ ?>
+					<option value="0">Autorización requerida</option>
+					<option value="1" selected>Autorización no requerida</option>
+				<?php } ?>
+			</select>
+			<label>* Status Excepción</label>
+		</div>
+
+		<?php if ($key['autorizacion'] != 0){ ?>
+			<div class="input-field col m6 s12" id="autorizacion_status">
+				<select name="autorizacion" id="status_autorizacion">
+					<option value="0" disabled selected>* Selecciona una opcion</option>
+			    	<?php foreach ($this->rol as $mar) { 
+			     		if ($mar['id']==$key['autorizacion']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			     	<?php } if ($mar['id']!=$key['autorizacion']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			     	<?php } } ?> 
+				</select>
+				<label>* Autorización</label>
+			</div>
+		<?php }else{ ?>
+			<div class="input-field col m6 s12 oculto" id="autorizacion_status">
+				<select name="autorizacion" id="status_autorizacion">
+					<option value="0" disabled selected>* Selecciona una opcion</option>
+						<?php foreach ($this->rol as $rl) { ?>
+						    <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+						<?php } ?>
+				</select>
+				<label>* Autorización</label>
+			</div>
+		<?php } ?>
+
+	    <div class="input-field col m6 s12">
+	        <textarea id="textarea1" name="comentario" class="materialize-textarea"><?php echo $key['comentarios']; ?></textarea>
+	        <label for="textarea1">Comentarios</label>
+	    </div>
+
+	</div>
+</div>
+</form>
+
+	<div class="input-field col m12 s12 text-right">
+		<div class="row">
+			<a href="/panel/servicioscomprobaciones" class="red btn">Cancelar</a>
+			<button id="add_servicio" class="btn">Actualizar</button>
+		</div>	
+	</div>
+<?php } ?>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+	$('#status_politica').on('change', function() {
+		valor = this.value;
+
+		if(valor == 1){
+			$("#monto").show();
+		}else{
+			$("#monto").hide();
+		}
+	});
+
+	$('#status_excepcion').on('change', function() {
+		valor = this.value;
+
+		if(valor == 0){
+			$("#autorizacion_status").show();
+		}else{
+			$("#autorizacion_status").hide();
+		}
+	});
+	
+
+	$("#add_servicio").click(function(){
+		var nombre = document.getElementById("name").value;
+		var status_politica = document.getElementById("status_politica").value;
+		var status_excepcion = document.getElementById("status_excepcion").value;
+
+            if(status_excepcion == ""){
+                swal({
+                  title: "Para agregar un servicio debes llenar todos los campos marcados con un '*'",
+                });
+            }else{
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+                setTimeout(submitForm, 1500);     
+            }
+
+        });
+
+
+        function submitForm() {
+            document.getElementById("submit_usuario").submit()
+        }
+
+
+</script>

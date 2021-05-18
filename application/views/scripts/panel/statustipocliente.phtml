@@ -1,0 +1,133 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/statuscliente" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+    	<a class="green btn modal-trigger" href="#modal1">+ Agregar status</a>
+    </div>
+</div>
+
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status del Cliente</span>
+    </div>
+</div>
+
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Status</span>
+		<div class="col m12 s12" style="margin-top: 19px;">
+			<form action="/panel/requestaddstatuscliente" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="form_user">
+				<input type="hidden" name="id_proyecto" value="<?php echo $this->id_proyecto; ?>">
+				<div class="row">
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">assignment</i>
+			          	<input id="icon_prefix" type="text" name="name" class="validate" required>
+			          	<label for="icon_prefix">Nombre status:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">assignment</i>
+			          	<input id="prioridad" type="text" name="prioridad" class="validate" required>
+			          	<label for="prioridad">Prioridad:</label>
+			        </div>
+		      	</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
+      	</form>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+</div>
+<!-- ================================================================================================= -->
+
+<div class="col m10 s12" style="margin-top: 19px;">
+	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Proyectos</span>
+	<table class="table text-left table-hover" >
+		<thead>
+			<tr>
+				<th>Tipo proyecto</th>		
+				<th>Prioridad</th>
+			</tr> 
+		</thead>
+		<?php
+		if ($this->proyecto) { 
+		foreach ($this->proyecto as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["nombre_status"]; ?></td>
+				<td><?php echo $usr["prioridad"]; ?></td>
+				<td>
+					<a href="/panel/statusedit/id/<?php echo $usr["id"]?>/tipo/<?php echo $this->id_proyecto ?>">
+						<i class="fa fa-2x fa-edit"></i>
+					</a>
+				</td>
+				<td>
+					<a class="delete" data-id="<?php echo $usr["id"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+			</tr>
+	    <?php } }else{ ?>
+	    </tbody> 
+	    <tbody>
+	        <tr>
+	            <td class="text-center" colspan="6"><h3>No hay status registrados.</h3></td>
+	        </tr>
+	    </tbody>
+	                
+	    <?php } ?>
+	</table>
+</div>
+
+
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('select').formSelect();
+  	});
+
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro el status?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    .then((willDelete) => {
+      if (willDelete) {
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            var request = $.ajax({
+                url:"/panel/requestdeletestatuscliente",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+      } else {
+        swal("La accion fue cancelada!");
+      }
+    });
+
+    });
+
+</script>

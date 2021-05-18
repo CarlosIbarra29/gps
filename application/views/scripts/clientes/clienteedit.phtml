@@ -1,0 +1,94 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/clientes/especificaciones" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+</div>
+
+<div class="row">
+	<?php foreach ($this->cliente_edit as $cliente) { ?>
+		<div class="col m12 s12 text-center" style="margin-top: 10px;">
+			<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Cliente <br/><?php echo $cliente["nombre_cliente"]; ?>
+			</span>
+		</div>
+	<?php } ?>
+</div>
+
+
+<div class="col m9 s9">
+	<form action="/clientes/requestupdateclt" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_clt">
+		<?php foreach ($this->cliente_edit as $cliente) { ?>
+			<input type="hidden" name="ids" value="<?php echo $cliente["id"]; ?>">
+
+			<div class="file-field input-field col m12 s12">
+				<div class="btn">
+					<span>Logo Cliente</span>
+					<input type="file" name="url">
+					<input type="hidden" name="imahidden" value="<?php echo $cliente["logo"]; ?>">   
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+				
+			</div>
+
+				<div class="row">
+			        <div class="input-field col m12 s12">
+			          	<i class="material-icons prefix">group_add</i>
+			          	<input id="name" type="text" name="name" value="<?php echo $cliente["nombre_cliente"]; ?>" class="validate" required>
+			          	<label for="name">* Nombre:</label>
+			        </div> 
+		      	</div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="col m3 s3 text-center">
+	<?php foreach ($this->cliente_edit as $cliente) { ?>
+		<?php if($cliente["logo"]== null){ ?>
+			<img src="/img/no_disponible1.png" class="responsive-img" style="width: 150px; margin-top: 5px;">
+        <?php }else{ ?>
+            <a class="example-image-link" href="/<?php echo $cliente['logo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $cliente['logo']; ?>" id="camara_div" alt="<?php echo $cliente["nombre_cliente"]; ?>" style="width: 100px; height: 100px;  margin-top: 5px;"/></a>
+        <?php } ?>
+	<?php } ?>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/clientes/especificaciones" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="updcliente" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    $("#updcliente").click(function(){
+        var name = document.getElementById("name").value;
+
+        if(name == ""){
+            swal({
+                title: "Para editar un cliente debes agregarle un nombre.",
+            });
+        }else{
+             swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+            setTimeout(submitForm, 500);     
+        }
+
+    });
+
+    function submitForm() {
+
+        document.getElementById("submit_clt").submit()
+
+    }
+
+</script>

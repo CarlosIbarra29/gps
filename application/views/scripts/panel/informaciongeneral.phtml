@@ -1,0 +1,415 @@
+<?php foreach ($this->personal as $usr) { 
+  $imagen = $usr['imagen'];   $nombre =$usr['nombre'];  $id =$usr['id']; 
+  $status_comprobacion =$usr['status_comprobacion']; 
+} ?>
+<style type="text/css">
+  .font_tittle{ 
+    font-weight: bold;
+  }
+  .font-check{
+    font-size: 11px;
+  }
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/personal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+      <?php if($status_comprobacion == 0){ ?>
+        <label>
+          <input type="checkbox" id="comprobar_gasto" value="<?php echo $id; ?>"/>
+          <span>Comprobar Gastos</span>
+        </label>
+      <?php }else{ ?>
+        <label>
+          <input type="checkbox" checked="checked" id="comprobar_gastodos" value="<?php echo $id; ?>"/>
+          <span>Comprobar Gastos</span>
+        </label>
+      <?php } ?>
+    </div>
+</div>
+
+<form action="/panel/requestupdatestatuscomprobacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_prede">
+  <input type="hidden" name="ids" value="<?php echo $id; ?>">
+  <input type="hidden" name="dato" id="dato_comprobacion" value="">
+</form>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Informacion General</span>
+    </div>
+</div>
+
+
+<!-- <div class="row">
+    <div class="col s12 m12" style="margin-top:25px;"> 
+          <div class="row">
+            <div class="col m8 s6">
+              <h3></h3>
+            </div>
+            <div class="col m4 s6">
+              <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Agregar Documentacion</a>
+            </div>
+          </div>
+    </div>
+</div> -->
+
+<div class="row">
+  <div class="col m12 s12 text-center">
+    <div class="row">
+      <h3>Fotografía Personal</h3>
+    </div>
+    <?php if($imagen== null){ ?>
+      <img src="/img/profile-default.png" class="responsive-img" style="width: 200px; margin-top: 15px;">
+    <?php }else{ ?>
+      <a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 320px;  margin-top: 15px;"/></a>
+    <?php } ?>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12" style="margin-top: 20px;">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+                <th>Nombre(s):</th>
+                <th>Apellido Paterno:</th>
+                <th>Apellido Materno:</th>
+                <th>Puesto:</th>
+                <th>Telefono:</th>
+            </tr>
+          </thead>
+      <?php foreach ($this->personal as $usr) { ?>
+      <tbody>
+        <tr>
+          <td><?php echo $usr["nombre"]; ?></td>
+          <td><?php echo $usr["apellido_pa"]; ?></td>
+          <td><?php echo $usr["apellido_ma"]; ?></td>
+          <td><?php echo $usr["name_puesto"]; ?></td>
+          <?php if($usr["telefono"] != ""){ ?>
+            <td><?php echo $usr["telefono"]; ?></td>
+          <?php }else{ ?>
+            <td>No disponible</td>
+          <?php } ?>
+        </tr>
+      </tbody>
+      <?php } ?>
+        </table>
+  </div>
+</div>
+
+
+<div class="row">
+
+  <div class="col m12 s12" style="margin-top: 20px;">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+                <th>CURP:</th>
+                <th>NSS:</th>
+                <th>RFC:</th>
+                <th>Status personal:</th>
+            </tr>
+          </thead>
+      <?php foreach ($this->personal as $usr) { ?>
+      <tbody>
+        <tr>
+          <?php if($usr["curp"] != ""){ ?>
+            <td><?php echo $usr["curp"]; ?></td>
+          <?php }else{ ?>
+            <td>No disponible</td>
+          <?php } ?>
+
+          <?php if($usr["nss"] != ""){ ?>
+            <td><?php echo $usr["nss"]; ?></td>
+          <?php }else{ ?>
+            <td>No disponible</td>
+          <?php } ?>
+          
+          <?php if($usr["rfc"] != ""){ ?>
+            <td><?php echo $usr["rfc"]; ?></td>
+          <?php }else{ ?>
+            <td>No disponible</td>
+          <?php } ?>
+          
+
+          <?php if($usr['status_personal'] == 0){ ?>
+          <td>
+            <div class="chip" id="activo_personal">
+              <img src="/img/correct.png" >
+              Activo
+            </div>
+          </td>
+          <?php } ?>
+
+          <?php if($usr['status_personal'] == 1){ ?>
+          <td>
+            <div class="chip" id="inactivo_personal">
+              <img src="/img/naranja.png" >
+              Inactivo
+            </div>
+          </td>
+          <?php } ?>
+        
+
+          <?php if($usr['status_personal'] == 2){ ?>
+          <td>
+            <div class="chip" id="baja_personal">
+              <img src="/img/rojo.png" >
+              Baja
+            </div>
+          </td>
+          <?php } ?>
+        </tr>
+      </tbody>
+      <?php } ?>
+        </table>
+  </div>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Agregar Documentacion</h3>
+
+      <div class="row">
+      <form action="/panel/requestaddfotodocumentopersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+        <div class="row">
+          <input type="hidden" name="rol" value="6">
+          <?php foreach ($this->personal as $per) { ?>
+          <input type="hidden" name="user_id" value="<?php echo $per["id"]; ?>">
+          <?php } ?>
+
+          <?php 
+          $ine_status = 0;
+          $nss_status = 0;
+          $curp_status=0;
+          $rfc_status=0;
+          $domicilio_status = 0;
+          $acta = 0;
+          foreach ($this->doc as $key){
+            $ine_status = $key['ine_status'];
+            $nss_status = $key['nss_status'];
+            $curp_status = $key['curp_status'];
+            $rfc_status = $key['rfc_status'];
+            $domicilio_status = $key['domicilio_status'];
+          } ?>
+              <div class="input-field col m6 s12">
+                <select id="actividadcuatro" name="documento">
+                  <option value="0" disabled selected>Selecciona un Documento</option>
+                  <option value="1">Fotografia INE</option>
+                  <option value="2">Fotografia NSS</option>
+                  <option value="3">Fotografia CURP</option>
+                  <option value="4">Fotografia RFC</option>
+                  <option value="5">Comprobante de Domicilio</option>
+                  <option value="6">Acta de Nacimiento</option>
+                </select>
+              </div>
+
+              <div class="file-field input-field col m6 s12">
+                <div class="btn">
+                    <span>Documento</span>
+                    <input type="file" name="url">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" id="validate_foto" type="text">
+                  </div>
+              </div>
+            </div>
+      </div>
+    </form>
+    </div>
+    <div class="modal-footer">
+      <button  id="add_documento" class="waves-effect waves-light btn">Guardar</button>
+      <button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div class="row">
+  <div class="col m6 s6">
+    <h3>Documentacion</h3>
+  </div>
+
+  <div class="col m6 s6">
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Agregar Documentacion</a>
+  </div>
+</div>
+
+  <div class="col m12 s12">
+        <table class="responsive-table">
+          <thead>
+              <tr>
+                <th>INE:</th>
+                  <th>NSS:</th>
+                  <th>CURP:</th>
+                  <th>RFC</th>
+                  <th>Comprobante de Domicilio</th>
+                  <th>Acta de Nacimiento</th>
+              </tr>
+          </thead>
+          <?php if ($this->doc) {
+      foreach ($this->doc as $ant) { ?>
+      <tbody>
+        <tr>
+          <?php if($ant['ine_status'] == 0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["ine_documento"]; ?>" download="<?php echo substr(strrchr($ant["ine_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> INE </a> 
+            </td>
+          <?php } ?>
+
+          <?php if($ant['nss_status']==0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["nss_documento"]; ?>" download="<?php echo substr(strrchr($ant["nss_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> NSS </a>
+            </td>
+          <?php } ?>
+
+          <?php if($ant['curp_status'] == 0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["curp_documento"]; ?>" download="<?php echo substr(strrchr($ant["curp_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> CURP </a>  
+            </td>
+          <?php } ?>
+
+          <?php if($ant['rfc_status'] == 0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["rfc_documento"]; ?>" download="<?php echo substr(strrchr($ant["rfc_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> RFC </a>  
+            </td>
+          <?php } ?>
+
+          <?php if($ant['domicilio_status'] == 0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["domicilio_documento"]; ?>" download="<?php echo substr(strrchr($ant["domicilio_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Comprobante de Domicilio </a>  
+            </td>
+          <?php } ?>
+
+          <?php if($ant['acta_status'] == 0){ ?>
+            <td>
+                <div class="chip">
+                  <img src="/img/incorrect.png" alt="Contact Person">
+                  No disponible
+                </div>
+            </td>
+          <?php }else{ ?>
+            <td>
+              <a title="Descargar Archivo" href="/<?php echo $ant["acta_documento"]; ?>" download="<?php echo substr(strrchr($ant["acta_documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Acta de Domicilio </a>  
+            </td>
+          <?php } ?>
+
+        </tr>
+      </tbody>
+      <?php }}else{ ?>
+        <tbody>
+          <tr>
+            <td>
+              No se ha agregado Informacion
+            </td>
+          </tr>
+        </tbody>
+      <?php } ?>
+        </table>    
+  </div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('.modal').modal();
+      $('select').formSelect();
+      $('.datepicker').datepicker();
+  });
+
+    $("#add_documento").click(function(){
+      var status = document.getElementById("actividadcuatro").value;
+      var validate = document.getElementById("validate_foto").value;
+        if(status ==0 || validate ==""){
+            swal({
+                title: "Para agregar la foto de un documento es necesario que seleciones el tipo de documento",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+           icon: "success",
+           buttons: false,
+          });  
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_personal").submit()
+    } 
+
+
+    $("#comprobar_gasto").click(function(){
+      var id = document.getElementById("comprobar_gasto").value;
+      document.getElementById("dato_comprobacion").value= 1;
+        if(id ==""){
+            swal({
+                title: "Para agregar la foto de un documento es necesario que seleciones el tipo de documento",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+           icon: "success",
+           buttons: false,
+          });  
+            setTimeout(submitcomprobacion, 1500);     
+        }
+
+    });
+
+    function submitcomprobacion() {
+        document.getElementById("submit_file_prede").submit()
+    }
+
+    $("#comprobar_gastodos").click(function(){
+      var id = document.getElementById("comprobar_gastodos").value;
+      document.getElementById("dato_comprobacion").value= 0;
+        if(id ==""){
+            swal({
+                title: "Para agregar la foto de un documento es necesario que seleciones el tipo de documento",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+           icon: "success",
+           buttons: false,
+          });  
+            setTimeout(submitcomprobacion, 1500);     
+        }
+    });
+
+</script>

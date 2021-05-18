@@ -1,0 +1,157 @@
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<!-- INICIO DETAIL-->
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <?php foreach  ($this->personal as $regresar) { ?>
+        <a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        <?php } ?>    
+    </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 10px;">
+    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de EPP
+  </div>
+</div>
+
+<div class="row" >
+	<div class="col m12 s12 text-right" style="margin-top: 10px;">
+		<?php foreach ($this->detalles as $detail) { ?>
+			<span>Fecha de entrega del EPR <br><b><?php echo $detail['fecha_entrega'];  ?></b></span>
+		<?php } ?>
+	</div>
+</div>
+
+<!-- END INICIO DETAIL-->
+
+
+<!-- Inicio Informacion General-->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Informacion General</h3>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->detalles as $data ) { ?>
+								<h5>
+									<strong><span class="font_tittle">Personal: </span></strong>
+									<?php echo $data['nombrep']; ?> <?php echo $data['apellido_pa']; ?> 
+									<?php echo $data['apellido_ma']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Epp Asignado: </span> </strong>
+									<?php echo $data['nombre']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Talla: </span> </strong>
+									<?php echo $data['talla']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Cantidad: </span> </strong>
+									<?php echo $data['cantidad']; ?>
+								</h5>
+							<?php } ?>
+						</div>
+
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->detalles as $data ) { ?>
+								<h5>
+									<strong><span class="font_tittle">Tipo EPP: </span></strong>
+									<?php echo $data['eppt']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Costo Aprobado: </span> </strong>
+									$<?php echo $data['costo_aprobado']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Fecha Reposición: </span> </strong>
+									<?php echo $data['reposicion']; ?>
+								</h5>
+								<h4>
+									<strong><span class="font_tittle">Comentarios: </span> </strong>
+									<?php echo $data['comentario']; ?>
+								</h4>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Datos Herramientas-->
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+	});
+
+ 	$("#asignar_h").click(function(){
+ 		swal({
+ 			title: "¿Estas seguro que deseas asignar la herramienta ?",
+	  		icon: "warning",
+	  		buttons: true,
+	  		dangerMode: true,
+	  	})
+	  	.then((willDelete) => {
+	  		if (willDelete) {
+	  			swal("Bien! la herramienta fue asignada", {
+	  				icon: "success",
+	  				buttons: false,
+	  			});
+
+	  			var responsable =document.getElementById("responsable").value
+	    		var	id = document.getElementById("id_herr").value;
+	    		var request = $.ajax({
+	    			url:"/herramienta/requestasignarherramienta",
+                	method:"POST",
+                	data: { responsable : responsable, id: id },
+                	processData: true,
+                // contentType: false,
+            	});
+				//-------------------end de ajax---------------------------
+
+				//-------------peticion de respuesta de ajax------------------
+
+				request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            	});
+				//-------------------end de respuesta ajax---------------------
+             	return false;
+            } else {
+            	swal("¡Verifica antes de hacer el cambio!");
+            }
+        });
+	});
+
+
+</script>

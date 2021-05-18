@@ -1,0 +1,38 @@
+<h1>Nueva direccion</h1><br>
+<div class="row">
+	<div class="col-lg-12">
+		<form action="/home/requestdireccionadd" method="POST" enctype="multipart/form-data">
+			<div class="row text-left">
+				<div class="col-lg-12">
+					<label for="text"><h4>Direccion: </h4></label>
+					<p><input type="text" name="dir" class="form-control"></p>
+				</div>
+				<div class="col-lg-12">
+					<label for="text"><h4>Codigo Postal: </h4></label>
+					<p><input type="text" name="cp" class="form-control"></p>
+				</div>
+			</div>
+			<h4>Delegacion</h4>
+			<select name="delegacion" class="form-control">
+				<option>Escoge un delegacion o ciudad disponibles:</option>
+				<option>Coyoacán.</option>
+				<option>Iztapalapa.</option>
+				<option>Álvaro Obregón.</option>
+				<option>Benito Juaréz.</option>
+				<option>Iztacalco.</option>
+				<option>Cuauhtémoc.</option>
+				<option>Venustiano Carranza.</option>
+				<option>Miguel Hidalgo.</option>
+				<option>Azcapotzalco.</option>
+				<option>Gustavo A. Madero.</option>
+				<option>Tlalpan.</option>
+				<option>Santa Fe.</option>
+				<option>Ciudad Satélite.</option>
+				<option>Ciudad Nezahualcóyotl.</option>
+			</select>
+			<div class="col-lg-12 text-center"><br>
+				<p><input type="submit" value="Guardar" class="btn btn-primary"></p>
+			</div><br>
+		</form>
+	</div>	
+</div>

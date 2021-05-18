@@ -1,0 +1,816 @@
+
+<?php 
+
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+  	.colorbar{
+		background-color: white !important;
+	}
+	.progress{
+        width: 130px; height: 130px; line-height: 120px; background: none; margin: 0 auto; box-shadow: none; 
+        position: relative;
+    }
+	.progress:after{
+	    content: ""; width: 100%; height: 100%; border-radius: 50%; border: 12px solid #fff; position: absolute;
+	    top: 0; left: 0;
+	}
+	.progress > span{
+	    width: 50%; height: 100%; overflow: hidden; position: absolute; top: 0; z-index: 1;
+	}
+
+	.numero{
+		font-size: 29px !important; margin-left: 25px; height: 90px !important;
+	}
+	.texto{
+		border: 0px !important; width: 165px; margin-top: 50px !important;
+	}	
+	.progress .progress-left{
+	    left: 0;
+	}
+	.progress .progress-bar{
+	    width: 100%; height: 100%; background: none; border-width: 20px; border-style: solid; position: absolute; top: 0;
+	}
+	.progress .progress-left .progress-bar{
+	    left: 100%; border-top-right-radius: 290px; border-bottom-right-radius: 290px; border-left: 0;
+	    -webkit-transform-origin: center left; transform-origin: center left;
+	}
+	.progress .progress-right{
+	    right: 0;
+	}
+	.progress .progress-right .progress-bar{
+	    left: -100%; border-top-left-radius: 160px; border-bottom-left-radius: 160px; border-right: 0;
+	    -webkit-transform-origin: center right; transform-origin: center right; animation: loading-1 1.8s linear forwards;
+	}
+
+	.progress .progress-value{
+	    width: 90%; height: 90%; border-radius: 50%; font-size: 24px; color: #fff; line-height: 135px;
+	    text-align: center; position: absolute; top: 5%;left: 5%;
+	}
+	.progress.blue .progress-bar{
+	    border-color: #049dff;
+	}
+	.progress.blue .progress-left .progress-bar{
+	    animation: loading-1 1.8s linear forwards 1.8s;
+	}
+	.progress.yellow .progress-bar{
+	    border-color: yellow;
+	}
+	.progress.yellow .progress-left .progress-bar{
+	    animation: loading-1 1.8s linear forwards 1.8s;
+	}
+	.progress.red .progress-bar{
+	    border-color: red;
+	}
+	.progress.red .progress-left .progress-bar{
+	    animation: loading-1 1.8s linear forwards 1.8s;
+	}
+	.progress.orange .progress-bar{
+	    border-color: orange;
+	}
+	.progress.orange .progress-left .progress-bar{
+	    animation: loading-1 1.8s linear forwards 1.8s;
+	}
+	.progress.pink .progress-bar{
+	    border-color: #ed687c;
+	}
+	.progress.pink .progress-left .progress-bar{
+	    animation: loading-4 1.8s linear forwards 1.8s;
+	}
+	.progress.green .progress-bar{
+	    border-color: #1abc9c;
+	}
+	.progress.green .progress-left .progress-bar{
+	    animation: loading-1 1.8s linear forwards 1.8s;
+	}
+
+	.numero{
+	    background-color: transparent !important; border: 0px !important; width: 145px !important;
+	}
+
+	@keyframes loading-1{
+	    0%{
+	        -webkit-transform: rotate(0deg); transform: rotate(0deg);
+	    }
+	    100%{
+	        -webkit-transform: rotate(180deg); transform: rotate(180deg);
+	    }
+	}
+	@keyframes loading-2{
+	    0%{
+	        -webkit-transform: rotate(0deg); transform: rotate(0deg);
+	    }
+	    100%{
+	        -webkit-transform: rotate(144deg); transform: rotate(144deg);
+	    }
+	}
+	@keyframes loading-3{
+	    0%{
+	        -webkit-transform: rotate(0deg); transform: rotate(0deg);
+	    }
+	    100%{
+	        -webkit-transform: rotate(90deg); transform: rotate(90deg);
+	    }
+	}
+	@keyframes loading-4{
+	    0%{
+	        -webkit-transform: rotate(0deg); transform: rotate(0deg);
+	    }
+	    100%{
+	        -webkit-transform: rotate(36deg); transform: rotate(36deg);
+	    }
+	}
+	@keyframes loading-5{
+	    0%{
+	        -webkit-transform: rotate(0deg); transform: rotate(0deg);
+	    }
+	    100%{
+	        -webkit-transform: rotate(126deg); transform: rotate(126deg);
+	    }
+	}
+	@media only screen and (max-width: 990px){
+	    .progress{ margin-bottom: 20px; }.footer{margin-top: 200px;}
+	}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+  <div class="col m12 s12">
+      <a href="/panel/index/year/<?php echo $this->year_op; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+        	<?php if($this->month == 1){ ?> ENERO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 2){ ?> FEBRERO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 3){ ?> MARZO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 4){ ?> ABRIL / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 5){ ?> MAYO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 6){ ?> JUNIO / <?php echo $this->year_op; ?> <?php } ?>
+
+        	<?php if($this->month == 7){ ?> JULIO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 8){ ?> AGOSTO / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 9){ ?> SEPTIEMBRE / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 10){ ?> OCTUBRE / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 11){ ?> NOVIEMBRE / <?php echo $this->year_op; ?> <?php } ?>
+        	<?php if($this->month == 12){ ?> DICIEMBRE / <?php echo $this->year_op; ?> <?php } ?>
+    	</span>
+    </div>
+</div>
+    <?php 
+        $solicitud = 0;
+        foreach ($this->solicitudes as $key){ 
+        	$solicitud = $solicitud + $key['total'];
+        }
+    ?>
+
+    <?php 
+        $gasolina = 0;
+        foreach ($this->gasolina as $key){ 
+        	$gasolina = $gasolina + $key['importe'];
+        }
+    ?>
+
+    <?php 
+        $cajachica = 0;
+        foreach ($this->sol_cajachica as $key){ 
+        	$cajachica = $cajachica + $key['monto'];
+        }
+    ?>
+
+    <?php 
+        $vehiculo = 0;
+        foreach ($this->vehiculos as $key){ 
+        	$vehiculo = $vehiculo + $key['monto'];
+        }
+    ?>
+
+
+    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo; ?>
+
+<div class="row">
+    <div class="col m12 s12 text-right" style="margin-top: 20px;">
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+        	Total del mes: $<?php echo number_format($total_mes, 2, '.', ','); ?> 
+    	</span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes orden compra</span>
+
+          <div class="row">
+          	<div class="col m12 s12">
+
+
+          		<div class="row" style="margin-top: 20px;">
+          			<div class="col m6 s12 text-center">
+		          		<div style=" margin-top: 20px;">
+			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 $<?php echo number_format($solicitud, 2, '.', ','); ?> 
+			          		</span>
+		          		</div>
+
+		          		<div class="row" style="margin-top: 20px;">
+		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn1">Excel</a><br>
+		          				<span>Solicitudes</span>
+		          			</div>
+<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn red">PDF</a>
+		          			</div> -->
+		          		</div>
+          			</div>
+
+          			<div class="col m6 s12 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 40px">
+				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->solicitudes); ?>" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+				        	<h4>Total de Solicitudes</h4>
+          			</div>
+          		</div>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gasolina</span>
+          <div class="row">
+          	<div class="col m12 s12">
+          		<div class="row" style="margin-top: 20px;">
+          			<div class="col m6 s12 text-center">
+		          		<div style=" margin-top: 20px;">
+			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 $<?php echo number_format($gasolina, 2, '.', ','); ?> 
+			          		</span>
+		          		</div>
+
+		          		<div class="row" style="margin-top: 20px;">
+		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn2">Excel</a><br>
+		          				<span>Cargas de gasolina</span>
+		          			</div>
+<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn red">PDF</a>
+		          			</div> -->
+		          		</div>
+          			</div>
+
+          			<div class="col m6 s12 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 40px">
+				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->gasolina); ?>" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+				        	<h4>Total de Gasolina</h4>
+          			</div>
+          		</div>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobaciones Caja chica </span>
+          <div class="row">
+          	<div class="col m12 s12">
+
+
+          		<div class="row" style="margin-top: 20px;">
+          			<div class="col m6 s12 text-center">
+		          		<div style=" margin-top: 20px;">
+			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 $<?php echo number_format($cajachica, 2, '.', ','); ?> 
+			          		</span>
+		          		</div>
+
+		          		<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn3">Excel</a>
+		          				<span>Solicitudes</span>
+		          			</div>
+		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn4">Excel</a>
+		          				<span>Facturas</span>
+		          			</div>
+		          		</div>
+          			</div>
+
+          			<div class="col m6 s12 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 40px">
+				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->sol_cajachica); ?>" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+				        	<h4>Total de Caja chica</h4>
+          			</div>
+          		</div>
+          	</div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Solicitudes de Vehículos </span>
+          <div class="row">
+          	<div class="col m12 s12">
+
+
+          		<div class="row" style="margin-top: 20px;">
+          			<div class="col m6 s12 text-center">
+		          		<div style=" margin-top: 20px;">
+			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 $<?php echo number_format($vehiculo, 2, '.', ','); ?> 
+			          		</span>
+		          		</div>
+
+		          		<div class="row" style="margin-top: 20px;">
+		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn5">Excel</a><br>
+		          				<span>Solicitudes</span>
+		          			</div>
+		          		</div>
+          			</div>
+
+          			<div class="col m6 s12 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 40px">
+				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->vehiculos); ?>" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+				        	<h4>Total de solicitudes</h4>
+          			</div>
+          		</div>
+          	</div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+<!-- E X C E L  S O L I C I T U D E S   O R D E N   C O M P R A -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab1">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id Solicitud</th>
+					<th>Id cliente</th>
+					<th>Nombre sitio</th>
+					<th>Proveedor</th>
+					<th>Servicio</th>
+					<th>Nombre solicitante</th>
+					<th>Importe</th>
+					<th>IVA</th>
+					<th>Retencion IVA</th>
+					<th>Retencion ISR</th>
+					<th>Total</th>
+					<th>Descripcion</th>
+					<th>Condicion de compra</th>
+					<th>Referencia</th>
+					<th>Fecha Creacion</th>
+					<th>Fecha Auditoria</th>
+					<th>Fecha Direccion</th>
+					<th>Fecha Pago</th>
+					<th>Status Auditoria</th>
+					<th>Status Direccion</th>
+					<th>Status Pago</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->solicitudes as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?> <?php echo eliminar_acentos($usr["apellido"]); ?></td>
+					<td><?php echo $usr['importe']; ?></td>
+					<td><?php echo $usr['iva']; ?></td>
+					<td><?php echo $usr['retencion_iva']; ?></td>
+					<td><?php echo $usr['retencion_isr']; ?></td>
+					<td><?php echo $usr['total']; ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>				
+					<td><?php echo $usr['fecha_creacion']; ?></td>
+					<td><?php echo $usr['fecha_auditoria']; ?></td>
+					<td><?php echo $usr['fecha_direccion']; ?></td>
+					<td><?php echo $usr['fecha_pago'] ?></td>
+					<td>
+						<?php if($usr['auditoria'] == 0){ ?>
+							En Proceso
+						<?php } ?>
+
+						<?php if($usr['auditoria'] == 1){ ?>
+							Autorizada
+						<?php } ?>	
+
+						<?php if($usr['auditoria'] == 2){ ?>
+							Rechazada
+						<?php } ?>			
+					</td>
+					
+					<td>
+						<?php if($usr['direccion'] == 0){ ?>
+							En Proceso
+						<?php }?>
+
+						<?php if($usr['direccion'] == 1){ ?>
+							Autorizada
+						<?php }?>
+
+
+						<?php if($usr['direccion'] == 2){ ?>
+							Rechazada
+						<?php }?>
+					</td>
+
+					<td>
+						<?php if($usr['status_pago'] == 0){ ?>
+							No Pagada
+						<?php } ?>
+
+						<?php if($usr['status_pago'] == 1){ ?>
+							Pagada
+						<?php } ?>
+
+						<?php if($usr['status_pago'] == 2){ ?>
+							En pagos / No liquidada
+						<?php } ?>
+					</td>
+					
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+<!-- E N D    E X C E L  S O L I C I T U D E S   O R D E N   C O M P R A -->
+
+
+<!-- E X C E L  G A S O L I N A -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab2">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id carga</th>
+					<th>Sitio</th>
+					<th>Responsable</th>
+					<th>Fecha Carga</th>
+					<th>Placas Vehiculo</th>
+					<th>Estacion</th>
+					<th>Forma Pago</th>
+					<th>Importe</th>
+					<th>Consumo</th>
+					<th>Odometro Inicial</th>
+					<th>Odometro Final</th>
+					<th>Tarjeta Efecticard</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->gasolina as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_responsable"]); ?></td>
+					<td><?php echo $usr['fecha_requerida']; ?></td>	
+					<td><?php echo $usr['placas']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["estacion"]); ?></td>
+					<td>
+						<?php if($usr['forma_pago']== 1){ ?> Efecticard <?php } ?>
+						<?php if($usr['forma_pago']== 2){ ?> Tarjeta de Debito <?php } ?>
+						<?php if($usr['forma_pago']== 3){ ?> Otra... <?php } ?>
+					</td>
+					<td><?php echo $usr['importe']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["consumo"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_inicial"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["odometro_final"]); ?></td>
+					<td><?php echo $usr['tarjeta']; ?></td>					
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+
+<!-- E N D   E X C E L  G A S O L I N A -->
+
+<div class="row oculto">
+	<div class="row excel-div" id="tab3">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id solicitud</th>
+					<th>Nombre Residente</th>
+					<th>Sitio</th>
+					<th>User Solicitud</th>
+					<th>Fecha solicitud</th>
+					<th>User Autorizacion</th>
+					<th>Fecha Autorizacion</th>
+					<th>User Pago</th>
+					<th>Fecha Pago</th>
+					<th>Monto</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->sol_cajachica as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_residente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo $usr['user_solicitud']; ?></td>	
+					<td><?php echo $usr['fecha_solicitud']; ?></td>	
+					<td><?php echo $usr['user_autorizacion']; ?></td>	
+					<td><?php echo $usr['fecha_autorizacion']; ?></td>	
+					<td><?php echo $usr['user_pago']; ?></td>	
+					<td><?php echo $usr['fecha_pago']; ?></td>	
+					<td><?php echo $usr['monto']; ?></td>						
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+ <!-- E N D   E X C E L  S O L I C I T U D E S   C O M P R O B A C I O N E S  -->
+
+<div class="row oculto">
+	<div class="row excel-div" id="tab4">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id Factura</th>
+					<th>Id Solicitud</th>
+					<th>Sitio</th>
+					<th>Cliente</th>
+					<th>Proyecto</th>
+					<th>Residente</th>
+					<th>Razon social</th>
+					<th>Monto Factura</th>
+					<th>Factura</th>
+					<th>Monto comprobacion</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->cajachica as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_comprobacion"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["sitio"]); ?></td>
+					<td><?php echo $usr['id_cliente']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td>
+						<?php echo eliminar_acentos($usr["nombre"]); ?> 
+						<?php echo eliminar_acentos($usr["apellido_pa"]); ?>
+						<?php echo eliminar_acentos($usr["apellido_ma"]); ?>
+					</td>	
+					<td><?php echo eliminar_acentos($usr["razon_social"]); ?></td>	
+					<td><?php echo $usr['monto_solicitud']; ?></td>	
+					<td><?php echo $usr['factura']; ?></td>	
+					<td><?php echo $usr['monto_comprobacion']; ?></td>		
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+
+  	<!-- E N D   E X C E L   F A C T U R A S   S O L I C I T U D E S  -->
+
+	<!--  E X C E L    S O L I C I T U D E S   V E H I C U L O S -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab5">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id solicitud</th>
+					<th>Usuario</th>
+					<th>Fecha solicitud</th>
+					<th>Referencia</th>
+					<th>Servicio</th>
+					<th>Proveedor</th>
+					<th>Vehiculo marca</th>
+					<th>Submarca</th>
+					<th>Modelo</th>
+					<th>Placas</th>
+					<th>Fecha direccion</th>
+					<th>Fecha pago</th>
+					<th>Monto</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->vehiculos as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td>
+						<?php echo eliminar_acentos($usr["name_user"]); ?> <?php echo eliminar_acentos($usr["ap"]); ?>
+						<?php echo eliminar_acentos($usr["am"]); ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_sol"]); ?></td>
+					<td><?php echo $usr['referencia']; ?></td>	
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["marca"]); ?></td>	
+					<td><?php echo eliminar_acentos($usr["submarca"]); ?></td>	
+					<td><?php echo eliminar_acentos($usr["modelo"]); ?></td>	
+					<td><?php echo eliminar_acentos($usr["placas"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_validacion"]); ?></td>	
+					<td><?php echo eliminar_acentos($usr["fecha_pago"]); ?></td>	
+					<td>$<?php echo number_format($usr["monto"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+
+	<!-- E N D    E X C E L    S O L I C I T U D E S   V E H I C U L O S -->
+
+
+<input type="hidden" id="op_year" value="<?php echo $this->year_op; ?>">
+
+
+<?php if($this->month == 1){ ?> <input type="hidden" id="op_month" value="Enero"> <?php } ?>
+<?php if($this->month == 2){ ?> <input type="hidden" id="op_month" value="Febrero"> <?php } ?>
+<?php if($this->month == 3){ ?> <input type="hidden" id="op_month" value="Marzo"> <?php } ?>
+<?php if($this->month == 4){ ?> <input type="hidden" id="op_month" value="Abril"> <?php } ?>
+<?php if($this->month == 5){ ?> <input type="hidden" id="op_month" value="Mayo"> <?php } ?>
+<?php if($this->month == 6){ ?> <input type="hidden" id="op_month" value="Junio"> <?php } ?>
+
+<?php if($this->month == 7){ ?> <input type="hidden" id="op_month" value="Julio"> <?php } ?>
+<?php if($this->month == 8){ ?> <input type="hidden" id="op_month" value="Agosto"> <?php } ?>
+<?php if($this->month == 9){ ?> <input type="hidden" id="op_month" value="Septiembre"> <?php } ?>
+<?php if($this->month == 10){ ?> <input type="hidden" id="op_month" value="Octubre"> <?php } ?>
+<?php if($this->month == 11){ ?> <input type="hidden" id="op_month" value="Noviembre"> <?php } ?>
+<?php if($this->month == 12){ ?> <input type="hidden" id="op_month" value="Diciembre"> <?php } ?>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Solicitudes orden de compra "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Solicitudes orden de compra "+mes+" "+year+" "
+            }
+        });
+    });
+
+    $("#exportBtn2").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Carga de gasolina "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Carga de gasolina "+mes+" "+year+" "
+            }
+        });
+    });
+
+
+    $("#exportBtn3").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "Comprobaciones"+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Comprobaciones "+mes+" "+year+" "
+            }
+        });
+    });
+
+    $("#exportBtn4").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab4"), {
+            name: "Facturas "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Facturas "+mes+" "+year+" "
+            }
+        });
+    });
+
+
+    $("#exportBtn5").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab5"), {
+            name: "Solicitudes vehiculos "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Solicitudes vehiculos "+mes+" "+year+" "
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,274 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<style type="text/css">
+	.oculto{display: none;}
+	.active_menu{
+	-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+</style>
+
+<div class="row">
+	<div class="col m12 s12">
+		
+	</div>
+</div>
+
+<?php 
+	$status =  $this->opcion_status;
+?>
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/envios/statusenvios/status/0">
+	    			<h4>Por enviar
+	  					<div class="chip">
+	    					<?php echo $this->en_proceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/envios/statusenvios/status/0">
+	    			<h4>Por enviar
+	  					<div class="chip">
+	    					<?php echo $this->en_proceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 3){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/envios/statusenvios/status/3"><h4>Logistica</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/statusenvios/status/3"><h4>Logistica</h4></a></li>
+  			<?php } ?>
+
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/envios/statusenvios/status/1"><h4>Enviadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/statusenvios/status/1"><h4>Enviadas</h4></a></li>
+  			<?php } ?>
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu"><a href="/envios/statusenvios/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/envios/statusenvios/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+  		</ul>
+	</div>
+</div>
+
+
+<div class="row"> 
+	<div class="col m12 s12" style="margin-top: 15px;">
+		<div class="col m6 s6">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de envíos</span>
+		</div>
+		<div class="col m6 s6 text-right">
+
+		</div>
+	</div>
+
+	<div class="col m12 s12">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>Usuario</th>
+					<th>Sitio</th>	
+					<th>Fecha envio</th>
+					<th>Prioridad</th>
+					<th>Tipo envío</th>
+					<th>Descripción</th>
+					<th>Autorización</th>
+					<th>Detalle Solicitud</th>
+				</tr> 
+			</thead>
+			<?php
+			$total = 0;
+			if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<?php echo $usr['id']; ?>
+					</td>
+					<td>
+						<?php echo $usr['user_solicitud']; ?>
+					</td>
+					<td>
+						<span style="font-weight: bold;"><?php echo $usr['name_sitio']; ?> </span>
+					</td>
+					<td>
+						<?php echo $usr['fecha_solicitud']; ?>
+					</td>
+					<td>
+						<?php if($usr['prioridad'] == 1){?>
+							Normal
+						<?php }else{ ?>
+							Alta
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr['tipo_envio'] == 1){?>
+							Local
+						<?php }else{ ?>
+							Foraneo
+						<?php } ?>
+					</td>
+					<td>
+						<?php echo $usr['descripcion']; ?>
+					</td>
+
+					<td>
+						<?php if($usr['status_solicitud'] == 0){ ?>
+							<div class="chip" id="inactivo_personal">
+							    <img src="/img/gris.jpg" >
+							    En proceso
+							 </div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 1){ ?>
+							<div class="chip" id="activo_personal">
+						    	<img src="/img/correct.png" >
+						    	Enviada
+						  	</div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 2){ ?>
+							<div class="chip" id="inactivo_personal">
+						    	<img src="/img/rojo.png" >
+						    	Rechazada
+						  	</div>
+						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 3){ ?>
+							<div class="chip" id="inactivo_personal">
+							    <img src="/img/gris.jpg" >
+							    Logistica
+							 </div>
+						<?php } ?>
+					</td>
+					<td class="text-center">
+						<a href="/envios/detalleenvio/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+				</tr>
+
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		        	<td></td>
+		        	<td></td>
+		        	<td></td>
+		            <td class="text-center" colspan=h4><h4>No hay solicitudes de envíos.</h4></td>
+		            <td></td>
+		            <td></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>

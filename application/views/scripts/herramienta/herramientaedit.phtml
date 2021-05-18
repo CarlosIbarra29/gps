@@ -1,0 +1,237 @@
+<div class="row" style="margin-top: 10px;">
+	<div class="col m12 s12">
+		<?php if($this->op_sel == 0){ ?>
+			<a href="/herramienta/inventario"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?> 
+		<?php if($this->op_sel == 1){ ?>
+			<a href="/herramienta/buscarherramienta?nombre=<?php echo $this->nombre; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+		<?php if($this->op_sel == 2){ ?>
+			<a href="/herramienta/buscarherramienta?codigo=<?php echo $this->codigo; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+		<?php if($this->op_sel == 3){ ?>
+			<a href="/herramienta/buscarherramienta?status=<?php echo $this->status; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+		<?php if($this->op_sel == 4){ ?>
+			<a href="/herramienta/buscarherramienta?nombreh=<?php echo $this->nombreh; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?>
+		<?php if($this->op_sel == 5){ ?>
+			<a href="/herramienta/buscarherramienta?hid=<?php echo $this->hid; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?> 
+		<?php if($this->op_sel == 6){ ?>
+			<a href="/herramienta/buscarherramienta?cate=<?php echo $this->cate_h; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php } ?> 
+	</div>
+</div>
+<?php foreach ($this->herramientas_inv as $inv) { ?>
+<div class="row text-center">
+  <div class="col m12 s12 " style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta
+  </div>
+  <div class="col m12 s12">
+		<h2><?php echo $inv["nombre"]; ?></h2>
+	</div>
+</div>
+<?php } ?>
+
+		<div class="col m12 s12" style="margin-top: 12px;">
+			<div class="white-box">
+				<form action="/herramienta/requestupdateherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_heramienta">
+					<?php foreach ($this->herramientas_inv as $inv) { $imagen = $inv['imagen']; $nombre = $inv['nombre']; ?> 
+					<input type="hidden" name="ids" value="<?php echo $inv["id_herramienta"]; ?>">
+					<div class="file-field input-field col m8 s12">
+					    <div class="btn">
+					        <span>Imagen Herramienta</span>
+					        <input type="file" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $inv["imagen"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($imagen== null){ ?>
+							<img src="/img/no_disponible.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+							<h3>No Disponible</h3>
+						<?php }else{ ?>
+							<a class="example-image-link" href="/<?php echo $inv['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $inv['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+						<?php } ?>
+					</div> 
+					<div class="input-field col m12 s12">
+						<select id="cat" name="cat" required>
+							<?php if ($inv['id_cat_herramienta'] == 0) { ?>
+								<option value="0" disabled selected>* Selecciona una opcion:</option>
+						      	<?php foreach ($this->categorias as $cat) {  ?>
+						      		<option value="<?php echo $cat["id_cat"]; ?>"><?php echo $cat["nombre"]; ?></option>
+						      	<?php } ?>
+							<?php } else { ?>
+						    	<?php foreach ($this->categorias as $cat) { 
+						     		if ($cat['id_cat']==$inv['id_cat_herramienta']) { ?>
+						                <option value="<?php echo $cat["id_cat"]; ?>" selected><?php echo $cat["nombre"]; ?></option>
+						     	<?php } if ($cat['id_cat']!=$inv['id_cat_herramienta']) { ?>
+						                <option value="<?php echo $cat['id_cat']; ?>" ><?php echo $cat["nombre"]; ?></option>
+						     	<?php } } ?>
+						    <?php } ?>   
+						</select>
+						<label>Categoria Herramienta</label>
+					</div>
+					<div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="cod" type="text" name="cod" value="<?php echo $inv["codigo"]; ?>" class="validate" required>
+			          	<label for="cod">Codigo: </label>
+			        </div> 
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="name" type="text" name="name" value="<?php echo $inv["nombre"]; ?>" class="validate" required>
+			          	<label for="name">Nombre: </label>
+			        </div>
+					<div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="marca" type="text" name="marca" value="<?php echo $inv["marca"]; ?>" class="validate" required>
+			          	<label for="marca">Marca: </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="modelo" type="text" name="modelo" value="<?php echo $inv["modelo"]; ?>" class="validate" required>
+			          	<label for="modelo">Modelo: </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="serie" type="text" name="serie" value="<?php echo $inv["no_serie"]; ?>" class="validate" required>
+			          	<label for="serie">Número de serie: </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="uni" type="text" name="uni" value="<?php echo $inv["unidad"]; ?>" class="validate" required>
+			          	<label for="uni">Unidad: (Pza/tramo) </label>
+			        </div>
+			        <div class="input-field col m12 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="desc" type="text" name="desc" value="<?php echo $inv["descripcion"]; ?>" class="validate" required>
+			          	<label for="desc">Descripción: </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="fcompra" type="text" name="fcompra" value="<?php echo $inv["fecha_compra"]; ?>" class="datepicker" required>
+			          	<label for="fcompra">Fecha Compra: dd/mm/yyyy </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="vida" type="text" name="vida" value="<?php echo $inv["tiempo_vida"]; ?>" class="validate" required>
+			          	<label for="vida">Tiempo de vida: </label>
+			        </div>
+			        <div class="file-field input-field col m12 s12">
+					    <div class="btn">
+					        <span>Actualiza Factura</span>
+					        <input type="file" name="factura">
+					        <input type="hidden" name="imafactura" value="<?php echo $inv["factura_imagen"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+					</div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="factura_no" type="text" name="factura_no" value="<?php echo $inv["factura_numero"]; ?>" class="validate" required>
+			          	<label for="factura_no">Número de Factura: </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="vencimiento" type="text" name="vencimiento" value="<?php echo $inv["vencimiento_gar"]; ?>" class="datepicker" required>
+			          	<label for="vencimiento">Vencimiento Garantia: dd/mm/yyyy </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="fecha_salida" type="text" name="fecha_salida" value="<?php echo $inv["fecha_salida"]; ?>" class="datepicker" required>
+			          	<label for="fecha_salida">Fecha salida: dd/mm/yyyy </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="fecha_entrega" type="text" name="fecha_entrega" value="<?php echo $inv["fecha_entrega"]; ?>" class="datepicker" required>
+			          	<label for="fecha_entrega">Fecha entrega: dd/mm/yyyy </label>
+			        </div>
+			        <div class="input-field col m6 s12">
+						<select id="responsable" name="responsable" required>
+							<?php if ($inv['id_responsable'] == 0) { ?>
+								<option value="0" disabled selected>* Selecciona una opcion:</option>
+						      	<?php foreach ($this->per as $personal) { ?>
+						      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?></option>
+						      	<?php } ?>
+							<?php } else { ?>
+						    	<?php foreach ($this->per as $personal) { 
+						     		if ($personal['id'] == $inv['id_responsable']) { ?>
+						                <option value="<?php echo $personal['id']; ?>" selected><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+						     	<?php } if ($personal['id']!=$inv['id_responsable']) { ?>
+						                <option value="<?php echo $personal['id']; ?>" ><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+						     	<?php } } ?> 
+						    <?php } ?> 
+						</select>
+						<label>Responsable</label>
+					</div>
+
+					<div class="input-field col m6 s12">
+						<select id="sitio" name="sitio" required>
+							<?php if ($inv['id_sitio'] == 0) { ?>
+								<option value="0" disabled selected>* Selecciona una opcion:</option>
+								<?php foreach ($this->sitio as $sitioa) { ?>
+									<option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+								<?php } ?>
+							<?php } else { ?>
+						    	<?php foreach ($this->sitio as $sitioa) { 
+						     		if ($sitioa['id']== $inv['id_sitio']) { ?>
+						                <option value="<?php echo $sitioa['id']; ?>" selected><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+						     	<?php } if ($sitioa['id']!= $inv['id_sitio']) { ?>
+						     			<!-- <option value="0" disabled selected>* Selecciona una opcion:</option> -->
+						                <option value="<?php echo $sitioa['id']; ?>" ><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+						     	<?php } } ?>  
+						    <?php } ?>
+						</select>
+						<label>Sitio</label>
+					</div>
+			        
+			</div>
+		     <?php } ?>
+		    </form>
+		</div>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/herramienta/inventario" class="waves-effect red waves-light btn">Cancelar</a>
+				<button  id="updher" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+  		});
+
+
+    $("#updher").click(function(){
+        var name = document.getElementById("name").value;
+
+        if(name == ""){
+            swal({
+                title: "Para editar una herramienta llena todos los datos",
+            });
+        }else{
+             swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+            setTimeout(submitForm, 500);     
+        }
+
+    });
+
+	lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    function submitForm() {
+        document.getElementById("submit_heramienta").submit()
+    }
+</script>

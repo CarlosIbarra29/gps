@@ -1,0 +1,105 @@
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+
+<div class="col-md-12">
+    <div class="white-box">
+        <div class="jumbotron" style="background-image: url('/img/products.jpg'); background-size: cover;
+            background-position: top center; ">
+            <h1>Modificar Producto</h1>
+        </div>
+        <?php $session = new Zend_Session_Namespace("current_session"); 
+                // echo $session->id;
+                echo $session->nombre;
+            ?>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="white-box">
+        <form method="POST" enctype="multipart/form-data" action="/panel/requestupdateproducto" class="form-horizontal form-material">
+            <?php foreach ($this->productos as $key ) {  ?>
+            <div class="form-group">
+                <div class="col-md-12"><label>Recomendacion</label></div>
+                <?php foreach ($this->recomendation as $tmpk) { ?>
+                <div class="checkbox col-md-4">
+                    <input type="checkbox" name="<?php echo $tmpk['id']; ?>" value="<?php echo $tmpk["id"];?>" <?php if(in_array($tmpk["id"],$this->productorecomendacion )){
+                        echo "checked='checked'"; } ?>><label><?php echo $tmpk["nombre"];?></label>
+                </div>                                
+                    <?php } ?> 
+                </div>
+            <div class="form-group">
+
+                <input type="hidden" name="id" id="id" value="<?php echo $key["id"]; ?>">
+                <label for="name">Nombre</label>
+                <input class="form-control" type="text" id="name" name="name" value="<?php echo $key["nombre"]; ?>">
+            </div>
+            <div class="form-group">
+                <label for="text">Imagen</label>
+                <input class="form-control" name="url" type="file" >
+                <input type="hidden" name="imahidden" value="<?php echo $key["imagen"]; ?>">
+            </div>
+            <div class="form-group">
+                <label for="desc">Descripcion</label>
+                <textarea class="" id="descr" rows="100" cols="100"  name="desc"><?php echo $key["descripcion"]; ?></textarea>
+                <script type="text/javascript">CKEDITOR.replace( 'descr',{ height : 100, });</script>                 
+            </div>
+            <div class="form-group">
+                <label for="stock">stock</label>
+                <input class="form-control" type="text" id="stock" name="stock" value="<?php echo $key["stock"]; ?>"> 
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input class="form-control" type="text" id="meta" name="precio" value="<?php echo $key["precio"]; ?>">
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                <label for="text">En oferta?</label>
+                </div>
+                <div class="col-md-12"><input type="radio" name="ofert" value="1"><label>Si</label></div>
+                <div class="col-md-12"><input type="radio" name="ofert" value="0" checked=""><label>No</label></div>
+            </div> 
+            <div class="form-group">
+                <input type="hidden" name="tofer" class="form-control" value="23">
+            </div> 
+            <div class="form-group">
+                <label for="text">Inicio del periodo de oferta</label>
+                <input type="Date" name="beig" class="form-control" value="<?php echo $key["inicio"]; ?>">
+            </div> 
+            <div class="form-group">
+                <label for="text">Fin del periodo de oferta</label>
+                <input type="Date" name="end" class="form-control" value="<?php echo $key["final"]; ?>">
+            </div>            
+            <div class="form-group">
+                <label for="text">Precio en foerta</label>
+                <input type="text" name="preciooff" class="form-control" placeholder="Ingrese el precio del producto si esta en oferta $" value="<?php echo $key['precioofer'] ?> ">
+            </div>       
+            <?php } ?>
+        </form>
+
+            <div class="form-group text-center"><br>
+                <p><input id= value="Modificar" class="btn btn-primary"></p>
+            </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#addproveedores").click(function(){
+       var bank = document.getElementById("bank").value;
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+
+        if(bank == "" || name == ""){
+            swal({
+              title: "Para agregar un proveedor debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Felicidades!", "El proveedor se creo de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_proveedor").submit()
+    }
+</script>

@@ -1,0 +1,278 @@
+<div class="row">
+	<div class="col m12 s12">
+		<h3>
+			<a style="color:red;">
+				<i class="fa fa-ban"></i>
+				Papelera
+			</a>
+		</h3>
+	</div>
+</div>
+
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m8 s8">
+			<h3>Lista de solicitudes de orden de compra eliminadas</h3>
+		</div>
+		<div class="col m4 s4 text-right">
+			<h4>
+				<a href="/solicitud/listaordencompra">
+					Lista de solicitudes
+				</a>
+			</h4>
+		</div>
+	</div>
+
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Usuario</th>
+				<th>Sitio</th>		
+				<th>Fecha Requerida</th>
+				<th>Condiciones Compra</th>
+				<th>Status </th>
+				<!-- <th>Detalle Solicitud</th> -->
+				<th>Restaurar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<?php if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+		<tbody>
+				<tr>
+					<td>
+						<h5><?php echo $usr['nombre']; ?> <?php echo $usr['ap']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr["sitio_id"]; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['fecha_requerida']; ?></h5>
+					</td>
+					<td>
+						<h5><?php echo $usr['condiciones_compra']; ?></h5>
+					</td>
+					<td>
+						<?php if($usr['status_documento'] == 1){ ?>
+							<div class="chip" id="activo_personal">
+						    	<img src="/img/correct.png" >
+						    	Aceptada
+						  	</div>
+						<?php } ?>
+
+						<?php if($usr['status_documento'] == 0){ ?>
+							<div class="chip" id="inactivo_personal">
+						    	<img src="/img/rojo.png" >
+						    	Rechazada
+						  	</div>
+						<?php } ?>
+					</td>
+<!-- 					<td class="text-center">
+						<a href="/panel/personaldetail/id/<?php echo $usr["id_solicitud"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td> -->
+					<td class="text-center">
+						<a class="change" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-refresh" style="color: red"></i></span></a>
+					</td>
+					<td class="text-center">
+						<a class="delete" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td>
+				</tr>
+		</tbody>
+		<?php } }else{ ?>
+		<tbody>
+			<tr>
+				<td>No hay solicitudes eliminadas </td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+
+
+		
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	});
+
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+		swal({
+			title: "Estas seguro de eliminar la solicitud?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Bien! La solicitud fue eliminada!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/solicitud/requestdeletesolicitudcompra",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+    $(".change").click(function(){
+    	id=$(this).data('id');
+		swal({
+			title: "Estas seguro de restaurar la solicitud?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+		.then((willDelete) => {
+	  		if (willDelete) {
+	    		swal("Bien! La solicitud fue restaurado!", {
+	      		icon: "success",
+	    	});
+
+            var request = $.ajax({
+                url:"/solicitud/requestchangerestaurarstautsdelete",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  		} else {
+	    		swal("La accion fue cancelada!");
+	  		}
+		});
+
+    });
+
+</script>

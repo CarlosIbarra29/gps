@@ -1,0 +1,12 @@
+<h1>Los Productos de este Catalogo son:</h1>			
+
+<div class="row">
+	<?php foreach ($this->produc as $key){ ?>
+	<div class="col-md-3 ">
+		<center>
+			<a href="/home/detalleproducto/id/<?php echo $key["id"]; ?>"><img src="/<?php echo $key["imagen"]; ?>" WIDTH = '250' HEIGHT = '250' />
+				<?php echo $key["nombre"]; ?></h1></a><br>
+		</center>
+	</div>
+	<?php  } ?>
+</div> 

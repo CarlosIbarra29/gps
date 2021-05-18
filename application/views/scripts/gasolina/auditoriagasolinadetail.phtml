@@ -1,0 +1,304 @@
+
+<style type="text/css">
+	.titulo_info {
+		font-size: 17px;
+		font-weight: bold;
+	}
+
+	.titulo_dato{
+		font-size: 17px;
+	}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/gasolina/auditoriagasolina/status/<?php echo $this->status; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<?php foreach ($this->add_gasolina as $key) {
+	$odometro = $key['odometro_file'];
+	$bomba = $key['bomba_file'];
+	$ticket = $key['ticket_file'];
+
+	$sitio = $key['name_sitio'];
+	$responsable = $key['name_responsable'];
+	$fecha_requerida = $key['fecha_requerida'];
+	$forma_pago = $key['forma_pago'];
+	$importe = $key['importe'];
+	$odometro_inicial = $key['odometro_inicial'];
+	$odometro_final = $key['odometro_final'];
+	$estacion = $key['estacion'];
+	$forma_pago = $key['forma_pago'];
+
+	$status_gasolina = $key['status_gasolina'];
+	$id_solicitud = $key['id'];
+	$tarjeta_no = $key['tarjeta'];
+} ?>
+
+<?php foreach ($this->vehiculo as $value) {
+	$marca = $value['marca'];
+	$submarca = $value['submarca'];
+	$modelo = $value['modelo'];
+	$placas = $value['placas'];
+	$imagen = $value['imagen'];
+} ?>
+
+<input type="hidden" name="id_solicitud" id="id_solicitud" value="<?php echo $id_solicitud; ?>">
+	
+<div class="row">
+    <div class="col s12 m12">
+	   	<div class="card">
+	        <div class="card-content">
+
+	        	<div class="row">
+	        		<div class="col m6 s12"></div>
+	        		<div class="col m6 s12 text-right">
+	        			<div class="row">
+        					<?php if($status_gasolina == 0){ ?>
+        						<div class="col m6 s6 text-center">
+									<div class="chip" id="auto_gasolina">
+										<img src="/img/gris.jpg" >
+										Autorizar
+									</div>
+        						</div>
+        						<div class="col m6 s6 text-center">
+									<div class="chip modal-trigger" href="#modal1">
+										<img src="/img/gris.jpg" >
+										Rechazar
+									</div>
+        						</div>
+							<?php }?>
+
+							<?php if($status_gasolina == 1){ ?>
+        						<div class="col m6 s6 text-center">
+									<div class="chip" id="auto_gasolina">
+										<img src="/img/correct.png" >
+										Autorizada
+									</div>
+        						</div>
+        						<div class="col m6 s6 text-center">
+									<div>
+										<a class="btn" href="/gasolina/informacionauditoriagasolina/id/<?php echo $id_solicitud; ?>/status/<?php echo $this->status; ?>"><i class="material-icons right">insert_drive_file</i>Documento</a>
+									</div>
+        						</div>
+							<?php }?>
+
+
+							<?php if($status_gasolina == 2){ ?>
+        						<div class="col m6 s6 text-center">
+									<div class="chip" id="auto_gasolina">
+										<img src="/img/rojo.png">
+										Rechazada
+									</div>
+        						</div>
+        						<div class="col m6 s6 text-center">
+									<div>
+										<a class="btn" href="/gasolina/informacionauditoriagasolina/id/<?php echo $id_solicitud; ?>/status/<?php echo $this->status; ?>"><i class="material-icons right">insert_drive_file</i>Documento</a>
+									</div>
+        						</div>
+							<?php }?>
+
+	        			</div>
+	        		</div>
+	        	</div>
+
+
+			    <div class="col m12 s12 text-center">
+			        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Solicitud</span>
+			    </div>
+	          	<div class="row">
+	          		<div class="col m4 s12 text-center">
+	          			<div class="text-center" style="margin-top: 30px;">
+	          				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Odometro</span>
+	          			</div>
+	          			<div>
+							<a class="example-image-link" href="/<?php echo $odometro; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $odometro ?>"  alt="image-1" style="width: 250px; height: 150px;"/></a>	          				
+	          			</div>
+	          		</div>
+	          		<div class="col m4 s12 text-center">
+	          			<div class="text-center" style="margin-top: 30px;">
+	          				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Bomba</span>
+	          			</div>
+	          			<div>
+							<a class="example-image-link" href="/<?php echo $bomba; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $bomba ?>"  alt="image-1" style="width: 250px; height: 150px;"/></a>	          				
+	          			</div>
+	          		</div>
+	          		<div class="col m4 s12 text-center">
+	          			<div class="text-center" style="margin-top: 30px;">
+	          				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Ticket</span>
+	          			</div>
+	          			<div>
+							<a class="example-image-link" href="/<?php echo $ticket; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $ticket ?>"  alt="image-1" style="width: 250px; height: 150px;"/></a>	          				
+	          			</div>
+	          		</div>
+	          	</div>
+
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top: 23px;">
+	          			<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información</span>
+	          		</div>
+	          	</div>
+
+	          	<div class="row">
+	          		<div class="col m6 s12">
+	          			<span class="titulo_info">Sitio: </span><span class="titulo_dato"><?php echo $sitio; ?></span><br>
+	          			<span class="titulo_info">Responsable: </span><span class="titulo_dato"><?php echo $responsable; ?></span><br>
+	          			<span class="titulo_info">Fecha de Ticket: </span><span class="titulo_dato"><?php echo $fecha_requerida; ?></span><br>
+	          			<span class="titulo_info">Importe: </span><span class="titulo_dato">$<?php echo number_format($importe, 2, '.', ','); ?></span><br>
+	          		</div>
+	          		<div class="col m6 s12">
+	          			<span class="titulo_info">Odometro Inicial: </span><span class="titulo_dato"><?php echo $odometro_inicial; ?></span><br>
+	          			<span class="titulo_info">Odometro Final: </span><span class="titulo_dato"><?php echo $odometro_final; ?></span><br>
+	          			<span class="titulo_info">Estación: </span><span class="titulo_dato"><?php echo $estacion; ?></span><br>
+	          			<?php if($forma_pago == 1){ ?>
+	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Efecticard</span><br>
+	          				<span class="titulo_info">Tarjeta No: </span><span class="titulo_dato"><?php echo $tarjeta_no; ?></span><br>
+	          			<?php } ?>
+
+	          			<?php if($forma_pago == 2){ ?>
+	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Tarjeta de Debito</span><br>
+	          			<?php } ?>
+
+	          			<?php if($forma_pago == 3){ ?>
+	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Otra...</span><br>
+	          			<?php } ?>
+	          		</div>
+	          	</div>
+
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top: 23px;">
+	          			<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo</span>
+	          		</div>
+	          	</div>
+
+	          	<div class="row">
+	          		<div class="col m6 s12">
+	          			<span class="titulo_info">Marca: </span><span class="titulo_dato"><?php echo $marca; ?></span><br>
+	          			<span class="titulo_info">Submarca: </span><span class="titulo_dato"><?php echo $submarca; ?></span><br>
+	          			<span class="titulo_info">Modelo: </span><span class="titulo_dato"><?php echo $modelo; ?></span><br>
+	          			<span class="titulo_info">placas: </span><span class="titulo_dato"><?php echo $placas; ?></span><br>
+	          		</div>
+	          		<div class="col m6 s12 text-center">
+	          			<a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen ?>"  alt="image-1" style="width: 250px; height: 150px;"/></a>	  
+	          		</div>
+	          	</div>
+
+	        </div>
+	    </div>
+    </div>
+</div>
+
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar Solicitud</span>
+	  <div class="row">
+	    <form class="col s12">
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea id="comentarios" class="materialize-textarea"></textarea>
+	          <label for="comentarios">Comentarios:</label>
+	        </div>
+	      </div>
+	    </form>
+	  </div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="rech_gasolina" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.modal').modal();
+	});
+
+	$("#auto_gasolina").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var	comentario = document.getElementById("comentarios").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/gasolina/requestupdateauditoriagasolina",
+	                method:"POST",
+	                data: {dato:dato, id:id, comentario:comentario},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+
+	});
+
+
+	$("#rech_gasolina").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var	comentario = document.getElementById("comentarios").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+	    		var dato = "2";
+	            var request = $.ajax({
+	                url:"/gasolina/requestupdateauditoriagasolina",
+	                method:"POST",
+	                data: {dato:dato, id:id, comentario:comentario},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+	});
+</script>

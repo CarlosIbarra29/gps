@@ -1,0 +1,12 @@
+<?php
+header('Content-Description: File Transfer');
+header("Content-type: application/pdf");
+	require '../library/FPDF/fpdf.php';
+
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(40,10,'GPSConstructivos');
+    $pdf->Output();
+
+?>

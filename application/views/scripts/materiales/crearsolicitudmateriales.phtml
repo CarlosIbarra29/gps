@@ -1,0 +1,116 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/materiales/materiales" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Materiales</span>
+  </div>
+</div>
+
+
+<div class="row">
+	<div class="col s12 m1"></div>
+    <div class="col s12 m10">
+      	<div class="card">
+        	<div class="card-content">
+          		<div class="row">
+
+                <div class="col m12 s12 text-right">
+                  <label>
+                    <input type="checkbox" id="check_if"/>
+                    <span>Proyección </span>
+                  </label>
+                </div>
+
+                <form action="/materiales/requestaddsolicitudmaterial" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_materiales">
+          			<div class="col m12 s12">
+    		  				<div class="input-field col m6 s12">
+    				    		<select id="sitio" name="sitio">
+    				      			<option value="0" disabled selected>* Selecciona un Sitio</option>    				      			
+                        <option value="almacen" >Stock Almacén</option>
+    				      			<?php foreach ($this->sitios as $key){ ?>
+    				      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+    				      			<?php } ?>
+    				    		</select>
+    				    		<label>Sitio:</label>
+    				  		</div>
+
+  				        <div class="input-field col s6">
+  				          <input id="fecha_entrega" name="fecha_entrega" type="text" class="datepicker">
+  				          <label for="fecha_entrega">Fecha solicitada entrega</label>
+  				        </div>
+
+  				        <div class="input-field col s12">
+  				          <textarea id="comentario" name="comentario" class="materialize-textarea"></textarea>
+  				          <label for="comentario">Comentario</label>
+  				        </div>
+
+                    <input type="hidden" id="check_select" name="status_check" value="0">
+          			</div>
+                </form>
+          		</div>
+        	</div>
+        	<div class="card-action">
+    				<div class="row">
+    					<div class="col m12 s12 text-right">
+    						<a class="btn" id="send_form"><i class="material-icons right">send</i>Paso 2</a>
+    					</div>
+    				</div>
+        	</div>
+      	</div>
+    </div>
+    <div class="col s12 m1"></div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    $('select').formSelect();
+    $('.modal').modal();
+
+    var currentDate = document.getElementById("today_picker").value; 
+    $('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+  });
+
+  $("#check_if").click(function(){
+    var num = document.getElementById("check_select").value;
+
+    if(num == 0){
+      document.getElementById("check_select").value= 1;
+    }
+
+    if(num == 1){
+      document.getElementById("check_select").value= 0;
+    }
+
+  });
+
+
+  $("#send_form").click(function(){
+    var sitio = document.getElementById("sitio").value;
+    var fecha_entrega = document.getElementById("fecha_entrega").value;
+
+      if(sitio == 0 ||  fecha_entrega == ""){
+        swal({
+          title: "Para continuar debes agregar la información marcada con un '*' ",
+        });
+      }else{
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+        setTimeout(submitForm, 1500);     
+      }
+  });
+
+  function submitForm() { document.getElementById("submit_materiales").submit() }
+
+</script>
+
+
+

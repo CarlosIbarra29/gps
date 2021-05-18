@@ -1,0 +1,1021 @@
+<?php 
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none
+	}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+
+    <?php if($this->modulo == 1){ ?>
+
+    	<?php if($this->opcion_search == 1){ ?>
+    		<a href="/solicitud/listaordencomprasitio/status/<?php echo $this->status_documento ?>/sitio/<?php echo $this->nombre_sitio; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>
+    	<?php if($this->opcion_search == 2){?>
+    		<a href="/solicitud/listaordencomprasitio/status/<?php echo $this->status_documento ?>/proveedor/<?php echo $this->nombre_prov; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>
+    	<?php if($this->opcion_search == 4){?>
+    		<a href="/solicitud/listaordencomprasitio/status/<?php echo $this->status_documento ?>/usuario/<?php echo $this->user_search; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>  
+
+    	<?php if($this->opcion_search == 5){?>
+    		<a href="/solicitud/listaordencomprasitio/status/<?php echo $this->status_documento ?>/servicio/<?php echo $this->servicio_search; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>  
+    <?php } ?>
+
+
+    <?php if($this->modulo == 2){ ?>
+    	<?php if($this->opcion_search == 1){ ?>
+    		<a href="/solicitud/listarolsolicitudescontabilidadsitio/status/<?php echo $this->status_documento ?>/sitio/<?php echo $this->nombre_sitio; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>
+    	<?php if($this->opcion_search == 2){?>
+    		<a href="/solicitud/listarolsolicitudescontabilidadsitio/status/<?php echo $this->status_documento ?>/proveedor/<?php echo $this->nombre_prov; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>
+    	<?php if($this->opcion_search == 4){?>
+    		<a href="/solicitud/listarolsolicitudescontabilidadsitio/status/<?php echo $this->status_documento ?>/usuario/<?php echo $this->user_search; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>  
+
+    	<?php if($this->opcion_search == 5){?>
+    		<a href="/solicitud/listarolsolicitudescontabilidadsitio/status/<?php echo $this->status_documento ?>/servicio/<?php echo $this->servicio_search; ?>/op/<?php echo $this->opcion_search; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php } ?>  
+    <?php } ?>
+
+    </div>
+
+    <div class="col m6 s6 text-right">
+    	<?php if($this->status_documento == 1){ ?>
+    		<a class="btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+    	<?php }else{ ?>
+    		<a class="btn" id="exportBtn2"><i class="material-icons right">file_download</i>Descargar</a>
+    	<?php } ?>
+    	
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col s12 m12">
+	    <div class="card">
+	        <div class="card-content">
+
+					<div class="row">
+					    <div class="col m12 s12 text-center">
+					    	<?php if($this->opcion_search == 1){ ?>
+					    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        	Gráfica de Solicitudes del sitio: <?php echo $this->nombre_sitio; ?></span> 
+					    	<?php } ?>
+
+					    	<?php if($this->opcion_search == 2){ ?>
+					    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        	Gráfica de Solicitudes del proveedor: <?php echo $this->nombre_prov; ?></span> 
+					    	<?php } ?>
+
+					    	<?php if($this->opcion_search == 4){ ?>
+					    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        	Gráfica de Solicitudes del usuario: <?php echo $this->user_search; ?></span> 
+					    	<?php } ?>
+
+					    	
+					    	<?php if($this->opcion_search == 5){ ?>
+
+					    		<?php foreach ($this->info as $key => $value) {
+					    			$nombre = $value['nombre_servicio'];
+					    		} ?>
+
+					    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        	Gráfica de Solicitudes del servicio: <?php echo $nombre; ?></span> 
+					    	<?php } ?>
+
+					        <div>
+						    	<?php if($this->status_documento == 1){ ?>
+						    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        		Modulo de Dirección</span>  
+						    	<?php } ?>
+
+						    	<?php if($this->status_documento == 3){ ?>
+						    		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        		Modulo de Pagadas</span>  
+						    	<?php } ?>
+					        </div>
+					    </div>
+					</div>
+
+		        	<div class="row">
+		          		<div class="col m12 s12" style="margin-top: 20px;">
+		          			<canvas id="myChartpedidos" style="width: 100px;"></canvas>	
+		          		</div>	
+		        	</div>
+
+<?php  $suma_enero = 0; foreach ($this->enero as $usr) { $suma_enero = $suma_enero + $usr['total']; } ?>
+<?php  $suma_febrero = 0; foreach ($this->febrero as $usr) { $suma_febrero = $suma_febrero + $usr['total']; } ?>
+<?php  $suma_marzo = 0; foreach ($this->marzo as $usr) { $suma_marzo = $suma_marzo + $usr['total']; } ?>
+<?php  $suma_abril = 0; foreach ($this->abril as $usr) { $suma_abril = $suma_abril + $usr['total']; } ?>
+<?php  $suma_mayo = 0; foreach ($this->mayo as $usr) { $suma_mayo = $suma_mayo + $usr['total']; } ?>
+<?php  $suma_junio = 0; foreach ($this->junio as $usr) { $suma_junio = $suma_junio + $usr['total']; } ?>
+
+<?php  $suma_julio = 0; foreach ($this->julio as $usr) { $suma_julio = $suma_julio + $usr['total']; } ?>
+<?php  $suma_agosto = 0; foreach ($this->agosto as $usr) { $suma_agosto = $suma_agosto + $usr['total']; } ?>
+<?php  $suma_septiembre = 0; foreach ($this->septiembre as $usr) { $suma_septiembre = $suma_septiembre + $usr['total']; } ?>
+<?php  $suma_octubre = 0; foreach ($this->octubre as $usr) { $suma_octubre = $suma_octubre + $usr['total']; } ?>
+<?php  $suma_noviembre = 0; foreach ($this->noviembre as $usr) { $suma_noviembre = $suma_noviembre + $usr['total']; } ?>
+<?php  $suma_diciembre = 0; foreach ($this->diciembre as $usr) { $suma_diciembre = $suma_diciembre + $usr['total']; } ?>
+
+<?php $suma_total = $suma_enero+ $suma_febrero+ $suma_marzo+ $suma_abril+ $suma_mayo+ $suma_junio+ $suma_julio+ $suma_agosto+$suma_septiembre+ $suma_octubre + $suma_noviembre +$suma_diciembre ;
+ ?>
+
+	        		<div class="row">
+	          			<div class="col m6 s12">
+					      	<table>
+						        <thead>
+						          <tr>
+						              <th>Mes</th>
+						              <th>Cantidad Solicitudes</th>
+						              <th>Total</th>
+						          </tr>
+						        </thead>
+
+						        <tbody>
+						          <tr>
+						            <td>Enero</td>
+						            <td><?php echo $this->count_enero; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_enero, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Febrero</td>
+						            <td><?php echo $this->count_febrero; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_febrero, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Marzo</td>
+						            <td><?php echo $this->count_marzo; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_marzo, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Abril</td>
+						            <td><?php echo $this->count_abril; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_abril, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Mayo</td>
+						            <td><?php echo $this->count_mayo; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_mayo, 2, '.', ','); ?></td>
+						          </tr>						      
+						          <tr>
+						            <td>Junio</td>
+						            <td><?php echo $this->count_junio; ?></td>
+						           	<td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_junio, 2, '.', ','); ?></td>
+						          </tr>
+
+						        </tbody>
+					      	</table>
+	          			</div>
+
+	          			<div class="col m6 s12">
+					      	<table>
+						        <thead>
+						          <tr>
+						              <th>Mes</th>
+						              <th>Cantidad Solicitudes</th>
+						              <th>Total</th>
+						          </tr>
+						        </thead>
+
+						        <tbody>
+						          <tr>
+						            <td>Julio</td>
+						            <td><?php echo $this->count_julio; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_julio, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Agosto</td>
+						            <td><?php echo $this->count_agosto; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_agosto, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Septiembre</td>
+						            <td><?php echo $this->count_septiembre; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_septiembre, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Octubre</td>
+						            <td><?php echo $this->count_octubre; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_octubre, 2, '.', ','); ?></td>
+						          </tr>
+						          <tr>
+						            <td>Noviembre</td>
+						            <td><?php echo $this->count_noviembre; ?></td>
+						            <td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_noviembre, 2, '.', ','); ?></td>
+						          </tr>						      
+						          <tr>
+						            <td>Diciembre</td>
+						            <td><?php echo $this->count_diciembre; ?></td>
+						           	<td style="font-size: 16px; font-weight: bold;">$<?php echo number_format($suma_diciembre, 2, '.', ','); ?></td>
+						          </tr>
+
+						        </tbody>
+					      	</table>
+	          			</div>
+
+	        		</div>
+
+	        		<div class="row">
+	        			<div class="col m12 s12 text-right">
+	        				<span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        					Total: $<?php echo number_format($suma_total , 2, '.', ','); ?>
+	        				</span>
+	        			</div>
+	        		</div>
+
+	        </div>
+	    </div>
+    </div>
+</div>
+
+	<input type="hidden" id="enero" value="<?php echo $suma_enero; ?>">
+	<input type="hidden" id="febrero" value="<?php echo $suma_febrero; ?>">
+	<input type="hidden" id="marzo" value="<?php echo $suma_marzo; ?>">
+	<input type="hidden" id="abril" value="<?php echo $suma_abril; ?>">
+	<input type="hidden" id="mayo" value="<?php echo $suma_mayo; ?>">
+	<input type="hidden" id="junio" value="<?php echo $suma_junio; ?>">
+	<input type="hidden" id="julio" value="<?php echo $suma_julio; ?>">
+	<input type="hidden" id="agosto" value="<?php echo $suma_agosto; ?>">
+	<input type="hidden" id="septiembre" value="<?php echo $suma_septiembre; ?>">
+	<input type="hidden" id="octubre" value="<?php echo $suma_octubre; ?>">
+	<input type="hidden" id="noviembre" value="<?php echo $suma_noviembre ?>">
+	<input type="hidden" id="diciembre" value="<?php echo $suma_diciembre; ?>">
+
+
+
+	<div class="row excel-div oculto" id="tab1">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id solicitud</th>
+					<th>Nombre sitio</th>
+					<th>Proyecto</th>
+					<th>Usuario</th>
+					<th>Servicio</th>
+					<th>Proveedor</th>
+					<th>Fecha Requerida</th>
+					<th>Condicion de compra</th>
+					<th>Referencia</th>
+					<th>Descripcion</th>
+					<th>Importe</th>
+					<th>IVA</th>
+					<th>Retencion ISR</th>
+					<th>Retencion IVA</th>
+					<th>Total</th>
+					<th>Fecha Dirección</th>
+					<th>Mes</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Enero</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // ENERO -->
+
+			<?php 
+			foreach ($this->febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Febrero</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Febrero -->
+
+			<?php 
+			foreach ($this->marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?> </td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Marzo</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Febrero -->
+
+			<?php 
+			foreach ($this->abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Abril</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Abril -->
+
+			<?php 
+			foreach ($this->mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Abril</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Mayo -->
+		</table>	
+	</div>
+
+
+
+	<div class="row excel-div oculto" id="tab2">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id solicitud</th>
+					<th>Nombre sitio</th>
+					<th>Proyecto</th>
+					<th>Usuario</th>
+					<th>Servicio</th>
+					<th>Proveedor</th>
+					<th>Fecha Requerida</th>
+					<th>Condicion de compra</th>
+					<th>Referencia</th>
+					<th>Descripcion</th>
+					<th>Importe</th>
+					<th>IVA</th>
+					<th>Retencion ISR</th>
+					<th>Retencion IVA</th>
+					<th>Total</th>
+					<th>Fecha Dirección</th>
+					<th>Fecha Pago</th>
+					<th>Mes</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_pago"]); ?></td>
+					<td>Enero</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // ENERO -->
+
+			<?php 
+			foreach ($this->febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_pago"]); ?></td>
+					<td>Febrero</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Febrero -->
+
+			<?php 
+			foreach ($this->marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_pago"]); ?></td>
+					<td>Marzo</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Febrero -->
+
+			<?php 
+			foreach ($this->abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_pago"]); ?></td>
+					<td>Abril</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Abril -->
+
+			<?php 
+			foreach ($this->mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id_solicitud"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha_requerida"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["referencia"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+					<td>
+						<?php if($usr["importe"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["importe"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["iva"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_isr"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_isr"], 2, '.', ','); ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($usr["retencion_iva"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["retencion_iva"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr["total"] == NULL){ ?>
+							$0.00
+						<?php }else{ ?>
+							$<?php echo number_format($usr["total"], 2, '.', ','); ?>
+						<?php } ?>
+					</td>
+					<td><?php echo eliminar_acentos($usr["fecha_validaciondos"]); ?></td>
+					<td>Abril</td>
+				</tr>
+			</tbody>
+			<?php } ?> <!-- // Mayo -->
+		</table>	
+	</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script type="text/javascript">
+	var enero = document.getElementById("enero").value;
+	var febrero = document.getElementById("febrero").value;
+	var marzo = document.getElementById("marzo").value;
+	var abril = document.getElementById("abril").value;
+	var mayo = document.getElementById("mayo").value;
+	var junio = document.getElementById("junio").value;
+	var julio = document.getElementById("julio").value;
+	var agosto = document.getElementById("agosto").value;
+	var septiembre = document.getElementById("septiembre").value;
+	var octubre = document.getElementById("octubre").value;
+	var noviembre = document.getElementById("noviembre").value;
+	var diciembre = document.getElementById("diciembre").value;
+
+	var ctx = document.getElementById('myChartpedidos').getContext('2d');
+	var myChartpedidos = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	        datasets: [{
+	            label: 'Documentación',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Solicitudes de compra en Direccion.xlsx",
+            sheet: {
+            	name: "Solicitudes de compra en Direccion"
+            }
+        });
+    });
+
+    $("#exportBtn2").click(function(){
+
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Solicitudes de compra Pagadas.xlsx",
+            sheet: {
+            	name: "Solicitudes de compra Pagadas"
+            }
+        });
+    });
+
+</script>

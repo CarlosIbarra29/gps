@@ -1,0 +1,202 @@
+<style type="text/css">
+	.oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/vehiculos/solservicio" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Solicitud de Servicios de Vehículos</span>
+  </div>
+</div>
+
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/vehiculos/requestaddsolicitudservicio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_servicio">
+
+			<!-- <div class="input-field col m6 s12"></div> -->
+			
+			<div class="input-field col m6 s12">
+	        	<input id="fecha_requerida" name="fecha_requerida" type="text" class="datepicker">
+	        	<label for="fecha_requerida">* Fecha Requerida</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	    		<select id="servicio" name="servicio"> 
+	      			<option value="0" disabled selected>Selecciona un Servicio</option>
+	      			<?php foreach ($this->servicios as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_servicio']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>* Servicio:</label>
+	  		</div>
+
+	  		<div class="input-field col m6 s12">
+	    		<select id="vehiculo" name="vehiculo"> 
+	      			<option value="" disabled selected>Selecciona un Vehículo</option>
+	      			<option value="0">Oficina</option>
+	      			<?php foreach ($this->vehiculos as $key){ ?>
+	      				<option value="<?php echo $key['id_vehiculos']; ?>"><?php echo $key['marca']; ?> <?php echo $key['submarca']; ?> <?php echo $key['modelo']; ?>/ Placas: <?php echo $key['placas']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>* Vehículo:</label>
+	  		</div>
+
+			<div class="input-field col m6 s12">
+	    		<select id="proveedor" name="proveedor">
+	      			<option value="0" disabled selected>* Selecciona un Proveedor</option>
+	      			<?php foreach ($this->proveedores as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_prov']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>Proveedor: </label>
+	  		</div>
+
+	  		<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">swap_vertical_circle</i>
+			    <input id="referencia" type="text" name="referencia" class="validate">
+			    <label for="referencia">Referencia: *En caso de ser necesaria*</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <i class="material-icons prefix">mode_edit</i>
+			    <textarea id="motivo" name="motivo" class="materialize-textarea"></textarea>
+			    <label for="motivo">* Motivo de servicio: </label>
+			</div>
+
+			<div class="input-field col m6 s12">
+				<div id="add" class="col m12 s12">
+	    			<a id="addcampo">¿Requieres un Responsable?</a>
+	    		</div>
+	    		<div id="selres" class="input-field col m12 s12 oculto">
+		    		<select id="responsable" name="responsable">
+		      			<option value="0" disabled selected>* Selecciona un Responsable</option>
+		      			<?php foreach ($this->personal as $key){ ?>
+		      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+		      			<?php } ?>
+		    		</select>
+		    		<label>Responsable: </label>
+		  		</div>
+				<div id="elimina" class="col m12 s12 oculto text-right">
+	    			<a id="eliminar">¿Eliminar Responsable?</a>
+	    		</div>
+			</div>
+
+			<div class="row">
+		  		<div class="col m6 s12">
+					<div class="input-field col s12">
+					    <select name="facturable" id="facturable">
+					    	<option value="" disabled selected>Seleciona una opción</option>
+					      	<option value="1">Facturable</option>
+					      	<option value="2">No facturable</option>
+					    </select>
+					    <label>* ¿Es Facturable?</label>
+					</div>
+			       	<div class="input-field col s12 siempre oculto facturable">
+					    <i class="material-icons prefix">attach_money</i>
+					    <input id="monto" type="number" name="monto" class="validanumeros">
+					    <label for="monto">* Monto:</label>
+					</div>
+			       
+			        <div class="input-field col s12 oculto nofacturable">
+			          	<i class="material-icons prefix">assignment</i>
+			          	<input id="iva" placeholder="Ingresa el IVA" type="text" name="iva" class="validanumeros">
+			          	<label for="iva">IVA:</label>
+			        </div>
+			       
+			        <div class="input-field col s12 siempre oculto facturable">
+			          	<i class="material-icons prefix">attach_money</i>
+			          	<input id="total" placeholder="Total" type="number" name="total" class="validanumeros">
+			          	<label for="total">* Total:</label>
+			        </div>
+			    </div>
+	  		</div>
+		</form>
+
+		<div class="row">
+			<div class="col m12 s12 text-right" style="margin-top: 20px;">
+				<a class="btn" id="enviar_solicitud"><i class="material-icons right">arrow_forward</i>Paso 2</a>
+			</div>
+	  	</div>
+	</div>
+</div>
+
+
+	<script type="text/javascript">
+  		$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    		$('select').formSelect();
+    		$('.modal').modal();
+    		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+  		});
+
+
+		$("#enviar_solicitud").click(function(){
+
+			var fecha = document.getElementById("fecha_requerida").value;
+			var servicio = document.getElementById("servicio").value;
+			var vehiculo = document.getElementById("vehiculo").value;
+			var monto = document.getElementById("monto").value;
+			var motivo = document.getElementById("motivo").value;
+			var proveedor = document.getElementById("proveedor").value;
+			var total = document.getElementById("total").value;
+			
+
+			if(fecha == "" || servicio == 0 || proveedor == 0 || vehiculo == "" || motivo == "" || monto == "" || total == ""){
+	            swal({
+	             	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+	            });
+
+	    	}else{
+	    		swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+	    		setTimeout(submit_ser, 1000);   
+	    	}
+		});
+
+		function submit_ser() { 
+			document.getElementById("submit_servicio").submit() 
+		}
+
+
+		$("#addcampo").click(function(){
+	    	$("#selres").show();
+	    	$("#add").hide();
+	    	$("#elimina").show();
+	    });
+
+	    $("#eliminar").click(function(){
+	    	$("#selres").hide();
+	    	$("#add").show();
+	    	$("#elimina").hide();
+	    	document.getElementById('responsable').value=0;
+	    });
+
+	    $('#facturable').on('change', function() {
+			$opcion = this.value;
+			if($opcion == 2){
+				$(".siempre").show();
+				$(".facturable").show();
+				$(".nofacturable").hide();
+			}else{
+				$(".siempre").show();
+				$(".nofacturable").show();
+			}
+			
+		});
+
+	</script>

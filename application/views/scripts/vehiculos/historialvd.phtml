@@ -1,0 +1,308 @@
+<?php foreach ($this->vehiculosc as $veh) { $idv = $veh['id_vehiculos']; }?>
+
+<?php 
+function isActhref($nameBtn,$urlname){
+    if($nameBtn==1 && $urlname==null){
+        return "active"; 
+    }
+    return ($nameBtn == $urlname)?"active":"";
+}
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+    if ($this->total >= 1 && $pagina <= $this->total) {
+
+        if (isset($_GET['pagina']) && $this->actpage != 1) {
+            $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }
+
+        $i = max(2, $pagina - 3);
+        if ($i > 2)
+            $links .= " <li><a>...</a></li> ";
+        for (; $i < min($pagina + 3, $this->total); $i++) {
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+            }
+        }
+        if ($i != $this->total)
+            $links .= " <li><a>...</a></li> ";
+        if($i ==$this->actpage){
+            $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+        }else{
+            $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+        }
+
+    }           
+}
+
+?>
+
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("d/m/Y");
+?>
+
+<input type="hidden" name="idvh" id="idvh" value="<?php echo $this->idvh; ?>">
+
+<style type="text/css">
+    .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+<!-- INICIO DETAIL-->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-left">
+        <?php foreach ($this->vehiculosc as $veh) { ?>
+        <a href="/vehiculos/documentacion/id/<?php echo $veh['id_vehiculos']; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        <?php } ?>    
+    </div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación Histórica
+  </div>
+</div>
+
+<!-- END INICIO DETAIL-->
+
+
+<!-- Inicio Tabla Vehiculo -->
+<div class="col m8 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="row table_wrapper">
+                <table class="table text-center table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Submarca</th>
+                            <th>Modelo</th>
+                            <th>Color</th>
+                            <th>Placas</th>
+                        </tr>
+                    </thead>
+                    <?php if ($this->vehiculosc) { 
+                    foreach ($this->vehiculosc as $veh) { ?>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <?php echo $veh['marca']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['submarca']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['modelo']; ?>
+                                </td>   
+                                <td>
+                                    <?php echo $veh['color']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['placas']; ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <?php } }else{ ?>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>No existe este vehículo.</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col m4 s12 text-center">
+    <?php if($veh['imagen'] == null){ ?>
+            <img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+    <?php }else{ ?>
+            <a class="example-image-link" href="/<?php echo $veh['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $veh['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+        <?php } ?>
+</div>
+<!-- End Tabla Vehiculo-->
+
+
+<!-- Inicio Tabla Documentacion -->
+<div class="col m12 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card darken-1">
+                <div class="card-content">
+
+                    <div class="row">
+                        <div style="padding: 1rem 1rem 1rem 1rem;" class="col m6 s6 text-left">
+                            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de documentos  
+                        </div>
+                    </div>
+
+                    <div class="row table_wrapper">
+                        <table class="table text-center table-hover ">
+                            <thead>
+                                <tr>
+                                    <!-- <th>Fecha</th> -->
+                                    <th>Tipo Documento</th>
+                                    <th>Vigencia</th>
+                                    <th>Status</th>
+                                    <th>Solicitud Asignada</th>
+                                    <th>Comentarios</th>
+                                    <th>Pago</th>
+                                    <th>Documento</th>
+                                </tr>
+                            </thead>
+                            <?php if ($this->paginator) { 
+                            foreach ($this->paginator as $vehd) { ?>
+                                <tbody>
+                                    <tr>
+                                        <!-- <td>
+                                            <?php echo $vehd['fecha']; ?>
+                                        </td> -->
+                                        <td>
+                                            <?php echo $vehd['nombre_doc']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehd['vigencia']; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo $vehd['statusd']; ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($vehd["id_sol"] == 0) { ?>
+                                                <b>Sin Solicitud Asignada</b>
+                                            <?php } else { ?>
+                                                <b>Solicutud No.<?php echo $vehd['id_sol']; ?></b>
+                                            <?php } ?>
+                                        </td> 
+                                         <td>
+                                            <?php echo $vehd['comentarios']; ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($vehd["comprobante_pago"] == null) { ?>
+                                                Aún no se ha pagado.
+                                            <?php } else { ?>
+                                                <a title="Descargar Archivo" href="/<?php echo $vehd["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehd["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                            <?php } ?>
+                                        </td> 
+                                        <td>
+                                            <a title="Descargar Archivo" href="/<?php echo $vehd["documento"]; ?>" download="<?php echo substr(strrchr($vehd["documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                       
+                                            <a title="Visualizar" href="/<?php echo $vehd["documento"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td> No existe documentación este vehículo.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<!-- End Tabla Documentacion-->
+
+
+<!-- Paginador -->
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">Anterior</span>
+                    </li>
+                    <?php }else{ ?>
+                    <li class="page-item">
+                        <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                    </li>
+                    <?php } ?>
+                    <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                        <?php echo $links; ?>
+                    </li>
+                    <?php if($pagina >= $this->total): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">Siguente</span>
+                    </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+<!-- End Paginator -->
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+    $(document).ready(function(){
+        $('.modal').modal();
+        $('select').formSelect();
+        $('.datepicker').datepicker();
+
+        $('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+        })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+       
+    });
+
+
+    $(".info_res").click(function(){
+        var id = $(this).data('id');     
+        document.getElementById("id").value = id;
+
+        var tpo = $(this).data('tpo');
+        document.getElementById("tpo").value = tpo; 
+
+        var nombre = $(this).data('nombre');
+        document.getElementById("nombre").value = nombre;
+    }); 
+
+</script>
+

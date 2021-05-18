@@ -1,0 +1,588 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+	if ($this->total >= 1 && $pagina <= $this->total) {
+
+		if (isset($_GET['pagina']) && $this->actpage != 1) {
+			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}else{
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}
+
+		$i = max(2, $pagina - 3);
+		if ($i > 2)
+			$links .= " <li><a>...</a></li> ";
+		for (; $i < min($pagina + 3, $this->total); $i++) {
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}
+		}
+		if ($i != $this->total)
+			$links .= " <li><a>...</a></li> ";
+		if($i ==$this->actpage){
+			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}else{
+			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}
+
+	}           
+}
+
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-right">
+        <a href="/herramienta/categoria" class="waves-effect green waves-light btn"> Categorias</a>
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Herramienta</a>   
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramientas
+	</div>
+</div>
+
+<!-- End botones -->
+
+<!-- Buscador -->
+<div class="row">
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+	<div class="input-field col m4 s12">  
+		<select id="mySelect">
+			<option value="1" selected>Responsable</option>
+			<option value="2">Código</option>
+			<option value="3">Status</option>
+			<option value="4">Herramienta</option>
+			<option value="5">ID</option>
+			<option value="6">Categoría</option>
+		</select>
+		<label>Buscador</label>
+	</div>
+
+	<div class="col m4 s12" id="buscar_nombre">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
+				<label for="first_name">Buscar por Responsable</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<!-- <a class="waves-effect waves-light btn"><i class="material-icons">search</i></a> -->
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>
+		</form>
+	</div>
+	<div class="col m4 s12 oculto" id="buscar_codigo">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa código" id="codigo" name="codigo" type="text" class="validate" required>
+				<label for="codigo">Buscar por Código</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+		</form>
+	</div>
+
+	<div class="col m4 s12 oculto" id="buscar_status">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<select name="status" required>
+					<option value="" disabled selected>Selecciona una opcion</option>
+					<option value="0">Disponible</option>
+					<option value="1">Ocupado</option>
+					<option value="2">En Reparación</option>
+					<option value="3">Baja</option>
+				</select>
+				<label>Status Herramienta</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+
+		</form> 
+	</div>
+
+	<div class="col m4 s12 oculto" id="buscar_herramienta">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa nombre de herramienta" id="nombreh" name="nombreh" type="text" class="validate" required>
+				<label for="nombreh">Buscar por Herramienta</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+		</form>
+	</div>
+
+	<div class="col m4 s12 oculto" id="buscar_id">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<input placeholder="Ingresa el id de la herramienta" id="hid" name="hid" type="number" class="validate" required>
+				<label for="hid">Buscar por Id</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+		</form>
+	</div>
+
+	<div class="col m4 s12 oculto" id="buscar_cat">
+		<form action="/herramienta/buscarherramienta" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="input-field col m10 s8">
+				<select id="cate" name="cate" required>
+					<option value="0" disabled selected>* Selecciona una opcion:</option>
+					<?php foreach ($this->cat as $cate) { ?>
+						<option value="<?php echo $cate["id_cat"]; ?>"><?php echo $cate["nombre"]; ?></option>
+					<?php } ?>
+				</select>
+				<label>Categoria Herramienta</label>
+			</div>
+			<div class="input-field col m2 s4">
+				<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+			</div>	
+
+		</form> 
+	</div>
+	<div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+<!-- End Buscador -->
+
+
+<!-- Inicio Modal -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="col m12 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Herramienta
+		</div>
+		<div class="col m12 s12">
+			<form action="/herramienta/requestaddherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_herramienta">
+				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Imagen</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="input-field col s12">
+						<select id="cat" name="cat" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->cat as $cate) { ?>
+								<option value="<?php echo $cate["id_cat"]; ?>"><?php echo $cate["nombre"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Categoria Herramienta</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="cod" type="text" name="cod" class="validate" required>
+						<label for="cod">Código Herramienta:</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="name" type="text" name="name" class="validate" required>
+						<label for="name">*Nombre: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="marca" type="text" name="marca" class="validate" required>
+						<label for="marca">Marca: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="modelo" type="text" name="modelo" class="validate" required>
+						<label for="modelo">Modelo: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="serie" type="text" name="serie" class="validate" required>
+						<label for="serie">Número de serie: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="uni" type="text" name="uni" class="validate" required>
+						<label for="uni">Unidad: (Pza/tramo)</label>
+					</div>
+					<div class="input-field col m12 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="desc" type="text" name="desc" class="validate">
+						<label for="desc">Descripción:</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input id="fcompra" type="date" name="fcompra" class="validate">
+						<label for="fcompra">Fecha Compra: dd/mm/yyyy</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input id="vida" type="text" name="vida" class="validate">
+						<label for="vida">Tiempo de vida:</label>
+					</div>
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Factura</span>
+							<input type="file" name="factura">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input id="factura_no" type="text" name="factura_no" class="validate">
+						<label for="factura_no">Número de Factura:</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input id="vencimiento" type="date" name="vencimiento" class="validate">
+						<label for="vencimiento">Vencimiento Garantia: dd/mm/yyyy</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input id="fecha_salida" type="date" name="fecha_salida" class="validate">
+						<label for="fecha_salida">Fecha salida: dd/mm/yyyy</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input id="fecha_entrega" type="date" name="fecha_entrega" class="validate">
+						<label for="fecha_entrega">Fecha entrega: dd/mm/yyyy</label>
+					</div>
+					<div class="input-field col s12">
+						<select id="responsable" name="responsable" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->per as $personal) { ?>
+								<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Responsable</label>
+					</div>
+					<div class="input-field col s12">
+						<select id="sitio" name="sitio" required>
+							<option value="0" disabled selected>* Selecciona una opcion:</option>
+							<?php foreach ($this->sitio as $sitioa) { ?>
+								<option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Sitio</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		</form>
+		<button class=" btn" id="addherramienta">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+<!-- End Module -->
+
+
+<!-- Table Herramientas -->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s6 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Inventario Herramientas
+		</div>
+		<div class="col m6 s6 text-right">
+			<a href="/herramienta/excelherramienta/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+			<a href="/herramienta/regresarh" class="waves-effect green waves-light btn">Por responsable</a>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Código</th>
+					<th>Imagen</th>
+					<th>Nombre</th>
+					<th>A cargo de:</th>
+					<th>Marca</th>
+					<th>Status</th>
+					<th></th>	
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $inventario) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $inventario["id_herramienta"]; ?></td>
+							<td><?php echo $inventario["codigo"]; ?></td>
+							<td>
+								<?php if($inventario['imagen'] == null){ ?>
+									<img src="/img/no_disponible.png" style="width: 100px;">
+								<?php } else { ?>
+									<img src="/<?php echo $inventario["imagen"]; ?>" style="width: 100px;">
+								<?php } ?>
+
+							</td>
+							<td><?php echo $inventario["nombre"]; ?></td>
+							<td>
+								<?php if($inventario['id_responsable'] == 0){ ?>
+									<?php echo $inventario["nombrea"]; ?> <?php echo $inventario["apellido_pa"]; ?>
+								<?php } else { ?>
+									<a href="/herramienta/bresponsable?responsable=<?php echo $inventario["id_responsable"]; ?>"><?php echo $inventario["nombrea"]; ?> <?php echo $inventario["apellido_pa"]; ?></a>
+								<?php } ?>
+							</td>
+							<td><?php echo $inventario["marca"]; ?></td>
+							<td>
+								<?php if($inventario['status_disponible'] == 0){ ?>
+									<div class="chip" id="disponible">
+										<img src="/img/correct.png" >
+										Disponible
+									</div>
+								<?php } ?>
+
+								<?php if($inventario['status_disponible'] == 1){ ?>
+									<div class="chip" id="ocupado">
+										<img src="/img/naranja.png" >
+										Ocupado
+									</div>
+								<?php } ?>
+
+								<?php if($inventario['status_disponible'] == 2){ ?>
+									<div class="chip" id="manto">
+					    				<img src="/img/azul.png" >
+					    				Reparación
+					  				</div>
+								<?php } ?>
+								<?php if($inventario['status_disponible'] == 3){ ?>
+									<div class="chip" id="baja">
+										<img src="/img/rojo.png" >
+										Baja
+									</div>
+								<?php } ?>
+							</td>
+							<td>
+								<a href="/herramienta/herramientadetail/id/<?php echo $inventario["id_herramienta"] ?>/op/0"><i class="fa fa-2x fa-id-card-o"></i></a>	
+							</td>
+							<td>
+								<a href="/herramienta/herramientaedit/id/<?php echo $inventario["id_herramienta"] ?>/op/0"><i class="fa fa-2x fa-edit"></i></a>
+							</td>
+							<td>
+								<a class="delete" data-id="<?php echo $inventario["id_herramienta"]; ?>" data-nombre="<?php echo $inventario["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No se encontraron Herramientas</h4>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table Herramientas -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+					<li class="page-item">
+						<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+					</li>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+     // $('.datepicker').datepicker();
+ 	});
+
+// Inicio Add Herramienta
+	$("#addherramienta").click(function(){
+		var name = document.getElementById("name").value;
+
+		if(name == ""){
+			swal({
+				title: "Para agregar una herramienta, llena los campos",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+	});
+
+	function submitForm() {
+		document.getElementById("submit_herramienta").submit()
+	}
+// End Add Herramienta
+
+//Inicio Delete Ajax
+	$(".delete").click(function(){
+		id=$(this).data('id');
+		nombre=$(this).data('nombre');
+		swal({
+			title: "Estas seguro de eliminar la herramienta "+nombre+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espera un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var request = $.ajax({
+					url:"/herramienta/requestdeleteherramienta",
+					method:"POST",
+					data: { id : id },
+					processData: true,
+				});
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+				request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+			return false;
+
+			} else {
+				swal("La accion fue cancelada!");
+			}
+		});
+	});
+// End Delete Ajax
+
+
+//Inicio Selected
+$('#mySelect').on('change', function() {
+  		var value = $(this).val();
+  		if(value==1){
+			$("#buscar_nombre").show();
+			$("#buscar_codigo").hide();
+			$("#buscar_status").hide();
+			$("#buscar_herramienta").hide();
+			$("#buscar_id").hide();
+			$("#buscar_cat").hide();
+  		}
+
+  		if(value==2){
+  			$("#buscar_codigo").show();
+  			$("#buscar_nombre").hide();
+  			$("#buscar_status").hide();
+  			$("#buscar_herramienta").hide();
+  			$("#buscar_id").hide();
+  			$("#buscar_cat").hide();
+  		}
+
+  		if(value==3){
+  			$("#buscar_status").show();
+  			$("#buscar_nombre").hide();
+  			$("#buscar_codigo").hide();
+  			$("#buscar_herramienta").hide();
+  			$("#buscar_id").hide();
+  			$("#buscar_cat").hide();
+  		}
+  		if(value==4){
+  			$("#buscar_status").hide();
+  			$("#buscar_nombre").hide();
+  			$("#buscar_codigo").hide();
+  			$("#buscar_herramienta").show();
+  			$("#buscar_id").hide();
+  			$("#buscar_cat").hide();
+  		}
+  		if(value==5){
+  			$("#buscar_status").hide();
+  			$("#buscar_nombre").hide();
+  			$("#buscar_codigo").hide();
+  			$("#buscar_herramienta").hide();
+  			$("#buscar_id").show();
+  			$("#buscar_cat").hide();
+  		}
+  		if(value==6){
+  			$("#buscar_status").hide();
+  			$("#buscar_nombre").hide();
+  			$("#buscar_codigo").hide();
+  			$("#buscar_herramienta").hide();
+  			$("#buscar_id").hide();
+  			$("#buscar_cat").show();
+  		}
+	});	// End Selected
+
+</script>
+

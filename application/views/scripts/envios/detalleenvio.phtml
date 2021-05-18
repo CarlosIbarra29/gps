@@ -1,0 +1,507 @@
+<style type="text/css">
+  .titulo{
+    font-size: 17px;
+    font-weight: bold;
+  }
+</style>
+
+<?php foreach ($this->envios as $key){
+  $id_env = $key['id'];
+  $sitio = $key['name_sitio'];
+  $cliente = $key['id_cliente'];
+  $pr = $key['prioridad']; if($pr == 1){$prioridad = "Normal";}else{$prioridad = "Alta";}
+  $en = $key['tipo_envio']; if($en == 1){$envio = "Local";}else{$envio = "Foraneo";}
+  $direccion = $key['direccion'];
+  $fecha_solicitud = $key['fecha_solicitud'];
+  $hora_entrega = $key['hora_entrega'];
+  $descripcion = $key['descripcion'];
+  $peso_aproximado = $key['peso_aproximado'];
+  $dimensiones = $key['dimensiones'];
+  $comentarios = $key['comentarios'];
+  $operador = $key['operador'];
+  $nombre_operador = $key['nombre_operador'];
+  $acuse = $key['acuse'];
+  $vehiculo_final = $key['vehiculo_final'];
+  $status_solicitud = $key['status_solicitud'];
+  $user_auditoria = $key['user_auditoria'];
+  $fecha_auditoria = $key['fecha_auditoria'];
+  $rechazada_com = $key['comentario_auditoria'];
+} ?>
+
+<?php foreach ($this->vehiculo as $value){
+  $marca = $value['marca'];
+  $submarca = $value['submarca'];
+  $modelo = $value['modelo'];
+  $placas = $value['placas'];
+  $imagen = $value['imagen'];
+} ?>
+  
+
+<div class="row">
+  <div class="col m6 s6" style="margin-top: 20px;">
+    <a href="/envios/auditoriaenvios/status/<?php echo $this->status; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+  </div>
+
+  <div class="col m6 s6 text-right" style="margin-top: 20px;">
+    <?php if($status_solicitud == 1 || $status_solicitud == 2 || $status_solicitud == 3){ ?>
+      <a class="btn" href="/envios/pdfenvio/id/<?php echo $id_env; ?>/status/<?php echo $this->status; ?>/op/1"><i class="material-icons right">insert_drive_file</i>Formato PDF</a>
+    <?php } ?>
+
+    <?php if ($status_solicitud == 1 || $status_solicitud == 3) { ?>
+      <a class="btn green" href="/envios/pdflogistica/id/<?php echo $id_env; ?>/status/<?php echo $this->status; ?>/op/1"><i class="material-icons right">insert_drive_file</i>Logistica PDF</a>
+    <?php } ?>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col m12 s6 text-center">
+    <span style="font-size:32px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle del envío</span>
+  </div>
+  <div class="col m12 s6 text-center" style="margin-top: 20px;"> 
+    <div class="row">
+      <div class="col m6 s12">
+        <?php if($status_solicitud == 1){ ?>
+          <span style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">Solicitud envíada por:</span><br>
+          <span><?php echo $user_auditoria; ?></span><br>
+          <span><?php echo $fecha_auditoria; ?></span><br>
+        <?php } ?>
+
+        <?php if($status_solicitud == 2){ ?>
+          <span style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: bold;">Solicitud rechazada por:</span><br>
+          <span><?php echo $user_auditoria; ?></span><br>
+          <span><?php echo $fecha_auditoria; ?></span><br>
+          <span>Motivo: <?php echo $rechazada_com; ?></span>
+        <?php } ?>
+
+      </div>
+      <div class="col m3 s12">
+        <span class="titulo" style="color:red;">Fecha entrega:</span><br> <span><?php echo $fecha_solicitud; ?></span>
+      </div>
+      <div class="col m3 s12">
+        <span class="titulo" style="color:red;">Hora entrega:</span><br> <span><?php echo $hora_entrega; ?></span>
+      </div>
+    </div>
+
+
+    <?php if($status_solicitud == 0 || $status_solicitud == 3){ ?>
+      <div class="row">
+        <div class="col m6 s6">
+        </div>
+        <div class="col m6 s6">
+<!--           <div class="chip" id="enviar_solicitud">
+            <img src="/img/gris.jpg" >
+            Enviar
+          </div> -->
+          <div class="chip modal-trigger" href="#modal1">
+            <img src="/img/gris.jpg" >
+            Rechazar
+          </div>
+          </a>
+        </div>
+      </div>
+
+
+    <form action="/envios/requestauditoriaenvio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_auditoria">
+        <input type="hidden" name="ids" value="<?php echo $this->id_envio; ?>">
+        <input type="hidden" name="status" value="<?php echo $this->status; ?>">
+        <input type="hidden" name="op_auditoria" id="op_auditoria">
+        <input type="hidden" name="motivo" id="motivo">
+    </form>
+
+    <?php }else{ ?>
+
+    <?php } ?>
+
+
+  </div>
+</div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud de envío</span>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="input-field col s12 m12">
+          <input placeholder="Describe el motivo por el cual se rechaza la solicitud" id="first_name" type="text" class="validate">
+          <label for="first_name">Motivo</label>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="rechazar_solicitud" class="btn">Guardar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+          
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content" style="height: 300px;">  
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información general</span><br>
+        <div class="row" style="margin-top: 30px;">
+          <div class="col m12 s12">
+            <span class="titulo">Sitio:</span> <span><?php echo $sitio; ?></span> <br>
+            <span class="titulo">Cliente:</span> <span><?php echo $cliente; ?></span> <br>
+            <span class="titulo">Prioridad:</span> <span><?php echo $prioridad; ?></span> <br>
+            <span class="titulo">Tipo envío:</span> <span><?php echo $envio; ?></span> <br>
+            <span class="titulo">Dirección:</span> <span><?php echo $direccion; ?></span> <br>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content" style="height: 300px;">  
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo sugerido</span><br>
+        <div class="row" style="margin-top: 30px;">
+          <div class="col m6 s12">
+            <span class="titulo">Sitio:</span> <span><?php echo $marca; ?></span> <br>
+            <span class="titulo">Submarca:</span> <span><?php echo $submarca; ?> </span> <br>
+            <span class="titulo">Modelo:</span> <span><?php echo $modelo; ?></span> <br>
+            <span class="titulo">Placas:</span> <span><?php echo $placas; ?></span> <br>
+          </div>
+
+          <div class="col m6 s12 text-center">
+            <a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>"  alt="image-1" style="width: 185px;"/></a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Descripción del envío</span><br>
+          <table style="margin-top: 20px;">
+            <thead>
+              <tr>
+                  <th>Descripción</th>
+                  <th>Peso Aproximado</th>
+                  <th>Dimensiones</th>
+                  <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $descripcion; ?></td>
+                <td><?php echo $peso_aproximado; ?> kg</td>
+                <td><?php echo $dimensiones; ?></td>
+                <td><?php echo $comentarios; ?></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card">
+      <div class="card-content">
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehículo Definitivo</span><br>
+
+    <?php if($this->op_vehiculo == 1){ ?>
+      <?php foreach ($this->imgvehiculo as $key ){
+        $imagen_vehiculo = $key['imagen'];
+        $marca_img = $key['marca'];
+        $submarca_img = $key['submarca'];
+        $modelo_img = $key['modelo'];
+        $placas_img = $key['placas'];
+      } ?>
+    <?php } ?>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col m12 s12">
+            <table>
+              <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Submarca</th>
+                    <th>Modelo</th>
+                    <th>Placas</th>
+                    <th>Imagen</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if($vehiculo_final == 0){ ?>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                <?php }else{ ?>
+                  <tr>
+                    <td><?php echo $marca_img; ?></td>
+                    <td><?php echo $submarca_img; ?></td>
+                    <td><?php echo $modelo_img; ?></td>
+                    <td><?php echo $placas_img; ?></td>
+                    <?php if($imagen_vehiculo == NULL){ ?>
+                      <td>
+                        <a class="example-image-link" href="/img/nodisponible.jpg" data-lightbox="example-1"><img class="example-image oculto" src="/img/nodisponible.jpg"  alt="image-1" style="width: 105px;"/></a>
+                      </td>
+                    <?php }else{ ?>
+                      <td>
+                        <a class="example-image-link" href="/<?php echo $imagen_vehiculo; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen_vehiculo; ?>"  alt="image-1" style="width: 105px;"/></a>
+                      </td>
+                    <?php } ?>
+                  </tr>
+                <?php } ?>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <?php if($status_solicitud == 1 || $status_solicitud == 2){ ?>
+      <div class="card"  style="height: 250px;">
+    <?php }else{ ?>
+      <div class="card"  style="height: 480px;">
+    <?php } ?>
+      <div class="card-content">
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Operador</span><br>
+
+    <?php if($this->op_img == 1){ ?>
+      <?php foreach ($this->imgchofer as $key ){
+        $imgane = $key['imagen'];
+      } ?>
+    <?php } ?>
+        <div class="row">
+          <div class="col m12 s12">
+            <table>
+              <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Operador</th>
+                    <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if($operador == 0){ ?>
+                  <tr>
+                    <td>#</td>
+                    <td>No se ha seleccionada un operador</td>
+                  </tr>
+                <?php }else{ ?>
+                  <tr>
+                    <td><?php echo $operador; ?></td>
+                    <td><?php echo $nombre_operador; ?></td>
+                    <?php if($imgane == NULL){ ?>
+                      <td>
+                        <a class="example-image-link" href="/img/nodisponible.jpg" data-lightbox="example-1"><img class="example-image oculto" src="/img/nodisponible.jpg"  alt="image-1" style="width: 105px;"/></a>
+                      </td>
+                    <?php }else{ ?>
+                      <td>
+                        <a class="example-image-link" href="/<?php echo $imgane; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imgane; ?>"  alt="image-1" style="width: 105px;"/></a>
+                      </td>
+                    <?php } ?>
+                    
+                  </tr>
+                <?php } ?>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col s12 m6">
+    <?php if($status_solicitud == 1 || $status_solicitud == 2){ ?>
+      <div class="card"  style="height: 250px;">
+    <?php }else{ ?>
+      <div class="card"  style="height: 480px;">
+    <?php } ?>
+
+      <div class="card-content">
+        <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Acuse</span><br>
+        <?php if($status_solicitud == 0 ||$status_solicitud == 1 || $status_solicitud == 2 ){ ?>
+          <div class="row">
+            <div class="col m12 s12">
+              <span>* La sección de Acuse solo estara habilitada cuando la solicitud este en el proceso de Logistica</span>
+            </div>
+          </div>
+        <?php }else{ ?>
+
+      <?php } ?>
+
+        <div class="row">
+          <div class="col m12 s12">
+            <table>
+              <thead>
+                <tr>
+                    <th>Descargar</th>
+                    <th>Visualizar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if($acuse == NULL){ ?>
+                  <tr>
+                    <td>Sin Documento</td>
+                    <td>Sin Documento</td>
+                  </tr>
+                <?php }else{ ?>
+                  <tr>
+                    <td>
+                      <a title="Descargar Archivo" href="/<?php echo $acuse; ?>" download="<?php echo substr(strrchr($acuse, "/"), 1); ?>" style="color: blue; font-size:31px;">
+                        <div class="chip" id="inactivo_personal">
+                            <img src="/img/correct.png" >
+                            Descargar
+                         </div>
+                      </a>
+                       <!-- <i class="material-icons left">get_app</i>  -->
+                    </td>
+                    <td>
+                      <a href="/<?php echo $acuse; ?>" target="_blank">
+                        <div class="chip" id="inactivo_personal">
+                              <img src="/img/correct.png" >
+                              Visualizar
+                        </div>
+                      </a>
+                    </td>
+                  </tr>
+                <?php } ?>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+      
+  $("#operador_id").click(function(){
+    var operador = document.getElementById("op_select").value;
+    
+    if(operador == 0){
+      swal({
+        title: "Para continuar debes seleccionar un operador ",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submitoperador, 1500);     
+    }
+
+  });
+  function submitoperador() { document.getElementById("submit_operador").submit() }
+
+
+  $("#acuse_id").click(function(){
+    var acuse = document.getElementById("url_id").value;
+    if(acuse == 0){
+      swal({
+        title: "Para continuar debes seleccionar un archivo",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submitacuse, 1500);     
+    }
+  });
+  function submitacuse() { document.getElementById("submit_acuse").submit() }
+
+
+
+  $("#car_id").click(function(){
+    var car = document.getElementById("op_car").value;
+    if(car == 0){
+      swal({
+        title: "Para continuar debes seleccionar un vehículo",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submitvehiculo, 1500);     
+    }
+  });
+  function submitvehiculo() { document.getElementById("submit_car").submit() }
+
+
+  $("#enviar_solicitud").click(function(){
+    op = 1;
+    document.getElementById("op_auditoria").value = op;
+
+    if(op == ""){
+      swal({
+        title: "Para continuar debes seleccionar un vehículo",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submityes, 1500);     
+    }
+  }); 
+  function submityes() { document.getElementById("submit_auditoria").submit() }
+
+  $("#rechazar_solicitud").click(function(){
+    op = 2;
+    document.getElementById("op_auditoria").value = op;
+
+    var motivo = document.getElementById("first_name").value;
+    document.getElementById("motivo").value = motivo;
+
+    if(op == "" || motivo == ""){
+      swal({
+        title: "Para continuar debes agregar el motivo por el cual se cancelara la solicitud",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submitno, 1500);     
+    }
+
+  });
+  function submitno() { document.getElementById("submit_auditoria").submit() }
+</script>

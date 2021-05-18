@@ -1,0 +1,806 @@
+<style type="text/css">
+  .oculto{display: none;}
+</style>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reportes</span>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col m1 s12"></div>
+  <div class="col m10 s12">
+
+    <div class="card">
+      <div class="card-content">
+    <table>
+            <thead>
+                <tr>
+                  <th>Módulo</th>
+                    <th>Excel</th>
+                </tr>
+            </thead>
+
+            <tbody>
+<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 8 || $this->rol_user == 12){ ?>
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Sitios</td>
+                  <td>
+                    <!-- <a href="/archivos/excelsitios">Generar Excel</a> -->
+                    <a class="modal-trigger" href="#modal3">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Personal</td>
+                    <td>
+                      <a class="modal-trigger" href="#modal1">Generar Excel</a>
+                    </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Solicitudes de orden de compra</td>
+                  <td>
+                    <!-- <a href="/archivos/excelsolicitudescompra">Generar Excel</a> -->
+                    <a class="modal-trigger" href="#modal2">Generar Excel</a>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Proveedores</td>
+                  <td>
+                    <a href="/archivos/excelproveedores">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Herramientas</td>
+                  <td>
+                    <a href="/herramienta/excelherramienta/status/0">Generar Excel</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">EPP</td>
+                  <td>
+                    <a href="/epp/excelepp/status/0">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Vehiculos</td>
+                  <td>
+                    <a href="/vehiculos/excelv/status/0">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Gasolina</td>
+                  <td>
+                    <a href="/archivos/excelgasolina">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Facturas</td>
+                  <td>
+                    <a href="/archivos/excelcomprobaciones">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Envios</td>
+                  <td>
+                    <a href="/archivos/excelenvios">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Solicitudes Materiales</td>
+                  <td>
+                    <a href="/archivos/excelmateriales">Generar Excel</a>
+                  </td>
+                </tr>
+
+<?php } ?>
+
+<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 9){ ?>
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Facturas Comprobadas</td>
+                  <td>
+                    <a href="/archivos/excelcomprobaciones">Generar Excel</a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Facturas XML</td>
+                  <td>
+                    <a href="/archivos/facturasxml">Generar Excel</a>
+                  </td>
+                </tr>
+<?php } ?>
+
+<?php if($this->rol_user == 14 ){ ?>
+                <tr>
+                  <td style="font-size: 15px; font-weight: bold;">Facturas XML</td>
+                  <td>
+                    <a href="/archivos/facturasxml">Generar Excel</a>
+                  </td>
+                </tr>
+<?php } ?>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  <div class="col m1 s12"></div>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Personal</span>
+
+<!--       <div class="row" style="margin-top: 15px;">
+        <div class="col m12 s12">
+          <h4>Pasos para crear reporte</h4>
+          <h5>1.- Seleccionar un sitio para filtrar al personal por cuadrilla o selecciona la opcion "Todos" para traer la informacion de todo el personal.</h5>
+          <h5>2.- Elige los campos que necesites en el reporte.</h5>
+          <h5>3.- Da clic en el boton con el texto "Crear reporte".</h5>
+        </div>
+      </div> -->
+      <div class="row selected_classinfouno" style="margin-top: 35px;">
+        <div class="col m6 s6 text-center">
+          <div class="chip">
+            <img src="/img/gris.jpg" id="selected_generalinfo">
+            <img src="/img/correct.png" id="selected_generalinfouno" class="oculto">
+            Información General
+          </div>
+        </div>
+
+        <div class="col m6 s6 text-center">
+          <div class="chip ">
+            <img src="/img/gris.jpg" id="selected_docuno">
+            <img src="/img/correct.png" id="selected_docdos" class="oculto">
+            Documentacion personal
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row oculto" style="margin-top: 20px;" id="doc_pseronal">
+        <div class="row">
+          <div class="col m2 s12"></div>
+          <div class="col m8 s12">
+            <span>El documento mostrara si el personal cuenta con Certificado Medico, Antidoping y DC3</span>
+          </div>
+          <div class="col m2 s12"></div>
+        </div>
+      </div>
+
+      <div class="row oculto" style="margin-top: 20px;" id="general_pers">
+        <div class="row">
+          <div class="col m12 s12">
+        <div class="col m6 s6">
+          <div class="row">
+            <div class="input-field col s12">
+              <select id="sitio_personal">
+                <option value="0" selected>Todos</option>
+                <?php foreach ($this->sitios as $key){ ?>
+                  <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?></option>
+                <?php } ?>
+              </select>
+              <label>Sitios</label>
+            </div>
+          </div>
+
+          <input type="hidden" id="check_allreporte" value="0">
+
+        </div>
+        <div class="col m6 s6">
+          <div>
+            <label>
+              <input type="checkbox" id="all_check"/>
+              <span>Seleccionar todo</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="nombre_check" />
+              <span>Nombre</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="ap_check"/>
+              <span>Apellido paterno</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="am_check"/>
+              <span>Apellido materno</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="curp_check"/>
+              <span>Curp</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="rfc_check"/>
+              <span>RFC</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="nss_check"/>
+              <span>NSS</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="telefono_check"/>
+              <span>Telefono</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="email_check"/>
+              <span>Email</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="puesto_check"/>
+              <span>Puesto</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="statuspersonal_check"/>
+              <span>Status personal</span>
+            </label>
+          </div>        
+          <div>
+            <label>
+              <input type="checkbox" id="namesitio_check"/>
+              <span>Nombre sitio</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" id="statusoperativo_check"/>
+              <span>Status Operativo</span>
+            </label>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+      <button type="button" id="reporte_personal" class="btn oculto">Crear Reporte</button>
+      <button type="button" id="reporte_personaldos" class="btn oculto">Crear Reporte</button>
+    </div>
+  </div>
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Orden de Compra</span>
+
+      <div class="row" style="margin-top: 15px;">
+        <div class="col m12 s12 text-justify">
+          <h4>Pasos para crear reporte</h4>
+          <h5>1.- Seleccionar la opcion para el reporte, la opcion de filtrar información traera los resultados especificos del filto y la opcion de generar reporte completo traera toda la informacion de las solicitudes creadas.</h5>
+        </div>
+      </div>
+
+      <div class="col m12 s12 text-center" id="opcion_solicitude">
+        <div class="row">
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/gris.jpg" id="op_filtrar">
+              Filtrar información
+            </div>
+          </div>
+
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/gris.jpg" id="reporte_completo">
+              Reporte Completo
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m12 s12 text-center oculto" id="opcion_uno">
+        <div class="row">
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/correct.png">
+              Filtrar información
+            </div>
+          </div>
+
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/gris.jpg" id="opcion_uno_reporte">
+              Reporte Completo
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col m6 s6">
+            <div class="input-field col s12">
+              <select id="sitio_busqueda">
+                <option value="1" selected>Sitio</option>
+                <option value="2">Proveedor</option>
+                <option value="3">Usuario</option>
+              </select>
+              <label>Filtrar información</label>
+            </div>
+          </div>
+
+          <div class="col m6 s6">
+            <div class="input-field col s12" id="bus_sitio">
+              <input placeholder="Escribe el nombre del sitio" id="sitio_sol" type="text" class="validate">
+              <label for="sitio_sol">Sitio</label>
+            </div>
+
+            <div class="input-field col s12 oculto" id="bus_proveedor">
+              <input placeholder="Escribe el nombre del proveedor" id="proveedor_sol" type="text" class="validate">
+              <label for="proveedor_sol">Proveedor</label>
+            </div>
+
+            <div class="input-field col s12 oculto" id="bus_usuario">
+              <input placeholder="Escribe el nombre del usuario" id="user_sol" type="text" class="validate">
+              <label for="user_sol">Usuario</label>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12 s12 text-center">
+            <button type="button" id="reporte_filtrado" class="btn">Crear Reporte</button>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+      <div class="col m12 s12 text-center oculto" id="opcion_dos">
+        <div class="row">
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/gris.jpg" id="opcion_dos_reporte">
+              Filtrar información
+            </div>
+          </div>
+
+          <div class="col m6 s6">
+            <div class="chip">
+              <img src="/img/correct.png">
+              Reporte Completo
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12 s12 text-center">
+            <button type="button" id="reporte_completo_bus" class="btn">Crear Reporte</button>
+            <input type="hidden" id="rep_ol" value="1">
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal3" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sitios</span>
+
+      <div class="row" style="margin-top: 40px;" id="div_opcionesuno">
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_general">
+            Información General
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_avances">
+            Detalle de Proyectos
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_status">
+            Status de Proyectos
+          </div>
+        </div>
+      </div>
+      
+      <div class="row oculto" style="margin-top: 40px;" id="div_infogeneral">
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/correct.png" class="inf_general">
+            Información General
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_avances">
+            Detalle de Proyectos
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_status">
+            Status de Proyectos
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12 s12" style="margin-top: 30px;">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+              Información General
+            </span>
+          </div>
+
+          <div class="col m12 s12" style="margin-top: 20px;">
+            El excel que se generara traera los siguientes campos:
+            <div class="row">
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">Id sitio</li>
+                  <li class="">id cliente</li>
+                  <li class="">Nombre del sitio</li>
+                  <li class="">Cliente</li>
+                  <li class="">Direccion</li>
+                  <li class="">Ciudad</li>
+                  <li class="">Estado</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">Region</li>
+                  <li class="">Estructura</li>
+                  <li class="">Altura</li>
+                  <li class="">Edificio</li>
+                  <li class="">Tipo sitio</li>
+                  <li class="">Latitude</li>
+                  <li class="">Longitude</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6 text-center" style="margin-top: 30px;">
+                <a class="btn" href="/archivos/excelsitios"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row oculto" style="margin-top: 40px;" id="div_avancepro">
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_general">
+            Información General
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/correct.png" class="inf_avances">
+            Detalle de Proyectos
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_status">
+            Status de Proyectos
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12 s12" style="margin-top: 30px;">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+              Detalle de proyectos
+            </span>
+          </div>
+
+          <div class="col m8 s12 text-center" style="margin-top: 30px;">
+            
+            <div class="input-field col m12 s12">
+              <select id="tipo_proyecto" name="tipo_proyecto">
+                  <option value="" disabled selected>* Selecciona un tipo de proyecto</option>
+                  <?php foreach ($this->tipo_proyecto as $key){ ?>
+                    <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_proyecto']; ?></option>
+                  <?php } ?>
+              </select>
+              <label>Tipo de Proyecto:</label>
+            </div>
+
+            <div class="input-field col m12 s12 text-center">
+              <a class="btn" id="view_avance"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row oculto" style="margin-top: 40px;" id="div_statuspro">
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_general">
+            Información General
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inf_avances">
+            Detalle de Proyectos
+          </div>
+        </div>
+
+        <div class="col m4 s12">
+          <div class="chip">
+            <img src="/img/correct.png" class="inf_status">
+            Status de Proyectos
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col m12 s12" style="margin-top: 30px;">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+              Status de proyectos
+            </span>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col m8 s12">
+            <span>El reporte no contiene los proyectos que tienen status de Carta de Liberacion y status de Cancelado</span>
+          </div>
+
+          <div class="col m4 s12 text-center">
+            <a class="btn" href="/archivos/excelstatusproyectos"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+        
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+
+
+  $("#all_check").click(function(){
+    var reporte = document.getElementById("check_allreporte").value;
+    if(reporte == 0){
+      document.getElementById("check_allreporte").value = 1;
+
+      document.getElementById("nombre_check").checked = true;
+      document.getElementById("ap_check").checked = true;
+      document.getElementById("am_check").checked = true;
+      document.getElementById("curp_check").checked = true;
+      document.getElementById("rfc_check").checked = true;
+      document.getElementById("nss_check").checked = true;
+      document.getElementById("telefono_check").checked = true;
+      document.getElementById("email_check").checked = true;
+      document.getElementById("statuspersonal_check").checked = true;
+      document.getElementById("namesitio_check").checked = true;
+      document.getElementById("statusoperativo_check").checked = true;
+      document.getElementById("puesto_check").checked = true;
+    }else{
+      document.getElementById("check_allreporte").value = 0;    
+
+      document.getElementById("nombre_check").checked = false;
+      document.getElementById("ap_check").checked = false;
+      document.getElementById("am_check").checked = false;
+      document.getElementById("curp_check").checked = false;
+      document.getElementById("rfc_check").checked = false;
+      document.getElementById("nss_check").checked = false;
+      document.getElementById("telefono_check").checked = false;
+      document.getElementById("email_check").checked = false;
+      document.getElementById("statuspersonal_check").checked = false;
+      document.getElementById("namesitio_check").checked = false;
+      document.getElementById("statusoperativo_check").checked = false;
+      document.getElementById("puesto_check").checked = false;
+    }  
+  });
+
+  $("#reporte_personal").click(function(){
+    var sitio = document.getElementById("sitio_personal").value;
+    check_nombre = $("#nombre_check").is(":checked"); if(check_nombre) { nombre = 1; } else { nombre = 0; }
+    check_ap = $("#ap_check").is(":checked"); if(check_ap) { ap = 1; } else { ap = 0; }
+    check_am = $("#am_check").is(":checked"); if(check_am) { am = 1; } else { am = 0; }
+    check_curp = $("#curp_check").is(":checked"); if(check_curp) { curp = 1; } else { curp = 0; }
+    check_rfc = $("#rfc_check").is(":checked"); if(check_rfc) { rfc = 1; } else { rfc = 0; }
+    check_nss = $("#nss_check").is(":checked"); if(check_nss) { nss = 1; } else { nss = 0; }
+    check_telefono = $("#telefono_check").is(":checked"); if(check_telefono) { telefono = 1; } else { telefono = 0; }
+    check_email = $("#email_check").is(":checked"); if(check_email) { email = 1; } else { email = 0; }
+    check_personal = $("#statuspersonal_check").is(":checked"); if(check_personal) { personal = 1; } else { personal = 0; }
+    check_namesitio = $("#namesitio_check").is(":checked"); if(check_namesitio) { namesitio = 1; } else { namesitio = 0; }
+    check_operativo = $("#statusoperativo_check").is(":checked"); if(check_operativo) { operativo = 1; } else { operativo = 0; }
+    check_puesto = $("#puesto_check").is(":checked"); if(check_puesto) { puesto = 1; } else { puesto = 0; }
+
+    window.location.href = "/archivos/excelpersonal/sitio/"+sitio+"/nombre/"+nombre+"/ap/"+ap+"/am/"+am+"/curp/"+curp+"/rfc/"+rfc+"/nss/"+nss+"/telefono/"+telefono+"/email/"+email+"/personal/"+personal+"/namesitio/"+namesitio+"/operativo/"+operativo+"/puesto/"+puesto+"";
+  });
+
+  $("#reporte_personaldos").click(function(){
+    window.location.href = "/archivos/excelpersonaldoc";
+  });
+
+  $("#reporte_completo").click(function(){
+    $("#opcion_solicitude").hide();
+    $("#opcion_dos").show();
+  });
+
+
+  $("#op_filtrar").click(function(){
+    $("#opcion_solicitude").hide();
+    $("#opcion_uno").show();
+  });
+
+  $("#opcion_uno_reporte").click(function(){
+    $("#opcion_dos").show();
+    $("#opcion_uno").hide();
+  });
+
+  $("#opcion_dos_reporte").click(function(){
+    $("#opcion_dos").hide();
+    $("#opcion_uno").show();
+  });
+
+
+  $('#sitio_busqueda').on('change', function() {
+    var value = this.value;
+    if(value == 1){
+      $("#bus_sitio").show();
+      $("#bus_proveedor").hide();
+      $("#bus_usuario").hide();
+    }
+
+    if(value == 2){
+      $("#bus_sitio").hide();
+      $("#bus_proveedor").show();
+      $("#bus_usuario").hide();
+    }
+
+    if(value == 3){
+      $("#bus_sitio").hide();
+      $("#bus_proveedor").hide();
+      $("#bus_usuario").show();
+    }
+  });
+
+  $("#reporte_filtrado").click(function(){
+    alert("Esta accion por el momento esta en desarrollo");
+  });
+
+
+  $("#reporte_completo_bus").click(function(){
+
+    swal({
+      title: "La opcion seleccionada traera todas las solicitudes creadas, Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/archivos/excelsolicitudescompra";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
+  });
+
+
+  // S I T I O S    R E P O R T E S
+  $(".inf_general").click(function(){
+    $("#div_opcionesuno").hide();
+    $("#div_infogeneral").show();
+    $("#div_statuspro").hide();
+    $("#div_avancepro").hide();
+  });
+
+  $(".inf_avances").click(function(){
+    $("#div_opcionesuno").hide();
+    $("#div_infogeneral").hide();
+    $("#div_avancepro").show();
+    $("#div_statuspro").hide();
+  });
+
+  $(".inf_status").click(function(){
+    $("#div_opcionesuno").hide();
+    $("#div_statuspro").show();
+    $("#div_avancepro").hide();
+    $("#div_infogeneral").hide();
+  });
+
+
+  $("#view_avance").click(function(){
+    var tipo = document.getElementById("tipo_proyecto").value;
+    window.location.href = "/archivos/excelavanceproyectos/tipo/"+tipo+"";
+  });
+
+
+  $("#selected_generalinfo").click(function(){
+    $("#selected_generalinfo").hide();
+    $("#selected_generalinfouno").show();
+    $("#selected_docuno").show();
+    $("#selected_docdos").hide();
+
+    $("#general_pers").show();
+    $("#doc_pseronal").hide();
+
+    $("#reporte_personal").show();
+    $("#reporte_personaldos").hide();
+    
+  });
+
+  $("#selected_docuno").click(function(){
+    $("#selected_docuno").hide();
+    $("#selected_docdos").show();
+    $("#selected_generalinfo").show();
+    $("#selected_generalinfouno").hide();
+
+    $("#general_pers").hide();
+    $("#doc_pseronal").show();
+
+    $("#reporte_personal").hide();
+    $("#reporte_personaldos").show();
+  });
+
+</script>

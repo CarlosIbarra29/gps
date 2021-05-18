@@ -1,0 +1,85 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/materiales/materiales" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Materiales</span>
+  </div>
+</div>
+
+
+<div class="row">
+	<div class="col m1 s12"></div>
+    <div class="col s12 m10">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<form action="/materiales/requestaddsolicitudmaterialdos" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_materiales">
+	        				<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
+	        				<?php if($this->opp == 0){ ?>
+	        					<input type="hidden" id="proyecto" name="proyecto" value="0">
+	        				<?php }else{ ?>
+								<div class="input-field col m6 s12">
+									<select id="proyecto" name="proyecto" required>
+										<option value="" disabled selected>Selecciona una opcion:</option>
+										<?php foreach ($this->proyectos as $rl) { ?>
+										<option value="<?php echo $rl["id"]; ?>">Id: <?php echo $rl["id"]; ?> Proyecto: <?php echo $rl["nombre_proyecto"]; ?></option>
+										<?php } ?>
+									</select>
+									<label>Tipo de Proyecto</label>
+								</div>
+	        				<?php } ?>
+
+
+						    <div class="file-field input-field col m6 s12">
+						      <div class="btn">
+						        <span>Documento</span>
+						        <input type="file" name="url">
+						      </div>
+						      <div class="file-path-wrapper">
+						        <input class="file-path validate" id="file_material" type="text">
+						      </div>
+						    </div>
+	        			</form>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+    			<div class="row">
+    				<div class="col m12 s12 text-right">
+    					<a class="btn" href="/materiales/editpasounomateriales/id/<?php echo $this->sitio; ?>"><i class="material-icons right">edit</i>Paso 1</a>
+    					<a class="btn green" id="send_form"><i class="material-icons right">send</i>Terminar solicitud</a>
+    				</div>
+    			</div>
+	        </div>
+	    </div>
+    </div>
+    <div class="col m1 s12"></div>
+</div>
+
+
+<script type="text/javascript">
+  $("#send_form").click(function(){
+    var proyecto = document.getElementById("proyecto").value;
+    var file_material = document.getElementById("file_material").value;
+
+      if(proyecto == "" ||  file_material == ""){
+        swal({
+          title: "Para continuar debes agregar la información marcada con un '*' ",
+        });
+      }else{
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+        setTimeout(submitForm, 1500);     
+      }
+  });
+
+  function submitForm() { document.getElementById("submit_materiales").submit() }
+</script>

@@ -1,0 +1,1367 @@
+<style type="text/css">
+	.titulo_info {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.titulo_dato{
+		font-size: 16px;
+	}
+
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*font-family: "Open Sans";*/
+}
+/* Form Progress */
+
+.progress {
+
+  margin: 20px auto;
+  text-align: center;
+  padding-bottom: 80px;
+  background-color: white;
+}
+.progress .circle,
+.progress .bar {
+  display: inline-block;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #d5d5da;
+  vertical-align:top;
+}
+.progress .bar {
+  position: relative;
+  width: 80px;
+  height: 6px;
+  margin: 0 -5px 17px -5px;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  top:16px;
+  vertical-align:top
+}
+.progress .circle .label {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 27px;
+  border-radius: 32px;
+  margin-top: 1px;
+  color: #b5b5ba;
+  font-size: 15px;
+}
+.progress .circle .title {
+  color: #b5b5ba;
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: -30px;
+  display: block;
+  width: 100px;
+  margin-top: 5px;
+}
+/* Done / Active */
+
+.progress .bar.done,
+.progress .circle.done {
+  background: #eee;
+}
+.progress .bar.active {
+  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+}
+.progress .circle.done .label {
+  color: #FFF;
+  background: #8bc435;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.done .title {
+  color: #444;
+}
+.progress .circle.active .label {
+  color: #FFF;
+  background: #0c95be;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.active .title {
+  color: #0c95be;
+}
+</style>
+
+<div class="row">
+	<div class="col m12 s12">
+		
+	</div>
+</div>
+	<?php 
+	foreach ($this->solicitud as $key){
+	    $sitio = $key['nombre_sitio']; $proveedor = $key['nombre_prov']; $usuario = $key['nombre']; $apellido = $key['ap']; 
+	    $fecha = $key['fecha_requerida']; $importe = $key['importe']; $iva = $key['iva']; $retencion_isr =$key['retencion_isr']; 
+	    $retencion_iva = $key['retencion_iva']; $total = $key['total']; $condiciones_compra = $key['condiciones_compra']; 
+	    $referencia = $key['referencia']; $descripcion = $key['descripcion']; $servicio = $key['nombre_servicio'];
+	    $status_documento = $key['status_documento']; $comentario = $key['comentario']; $id_user = $key['id_usuario'];
+	    $id_solicituddoc =$key['id_solicitud']; $status_documentouno = $key['status_documentouno']; $fecha_creacion =$key['fecha_creacion']; $fecha_validacion = $key['fecha_validacion']; $fecha_validaciondos = $key['fecha_validaciondos'];
+	}?>
+
+    <?php 
+    $name_val = "";
+    $ape_val = "";
+    $fecha_val = "";
+    foreach ($this->validacionuser as $val) {
+        $name_val = $val['nombre'];
+        $ape_val = $val['ap']; 
+        $fecha_val = $val['fecha_validacion'];  
+    } ?>
+
+    <?php 
+    $name_jefe = "";
+    $ape_jefe = "";
+    $fecha_jefe= "";
+    foreach ($this->validacionjefe as $jefe) {
+        $name_jefe = $jefe['nombre'];
+        $ape_jefe = $jefe['ap'];
+        $fecha_jefe = $jefe["fecha_validaciondos"];
+    } ?>
+
+   <?php 
+	$documento_opuno = "";
+	$documento_opdos = "";
+	$documento_optres = "";
+foreach ($this->documentos as $key ){
+	$documento_opuno = $key['doc_opuno'];
+	$documento_opdos = $key['doc_opdos'];
+	$documento_optres = $key['doc_optres'];
+} ?>	
+
+
+<?php foreach ($this->informacion as $key ) {
+	$status_pago = $key['status_pago'];
+} ?>
+
+<!-- <div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/solicitud/listaordencompra/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div> -->
+
+
+	<input type="hidden" id="id_solicitud" value="<?php echo $this->id_solicitud; ?>">
+	<input type="hidden" id="id_user" name="id_user" value="<?php echo $this->usuario; ?>">
+<!-- <div class="row">
+    <div class="col s12 m12">
+      	<div class="card darken-1">
+	        <div class="card-content">
+	          	<div class="row">
+	          		<div class="col m6 s12">
+	          			<h3 class="card-title">Información de la Solicitud</h3>
+	          		</div>
+	          		<div class="col m6 s12">
+	          			<div class="row">	
+	          				<?php if($status_documento == 0){ ?>
+	          					<div class="col m6 s6">
+	          						<form action="/solicitud/requestchangeaddstattusdocumentosolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_aprobar">
+	          								<input type="hidden" name="id" value="<?php echo $this->id_solicitud; ?>">
+											<input type="hidden" name="id_user" value="<?php echo $this->usuario; ?>">
+	          						</form>
+										<div class="chip">
+									    	<img src="/img/gris.jpg" id="activo_personal">
+									    	Autorizado
+									  	</div>
+								</div>	
+								<div class="col m6 s6">
+									<div class="chip modal-trigger" href="#modal1">
+								    	<img src="/img/gris.jpg">
+								    	Rechazado
+								  	</div>
+								</div>
+	          					<?php } ?>
+
+	          					<?php if($status_documento== 1){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/correct.png" >
+									    	Autorizado
+									  	</div>
+									</div>
+
+									<div class="col m8 s6">
+										<div class="row">
+											<div class="col m6 s12">
+												<a  href="/solicitud/successsolicitud/id/<?php echo $id_solicituddoc; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+
+											<div class="col m6 s12">
+										        <?php if($documento_opuno != ""){ ?>
+								    				<div class="">
+														<?php foreach ($this->documentos as $key) { ?>
+														 
+								    					<a  title="Descargar Archivo" href="/<?php echo $key["doc_opuno"]; ?>" download="<?php echo substr(strrchr($key["doc_opuno"], "/"), 1); ?>" class="waves-effect waves-light btn"> Cotización </a>
+								    					<?php } ?>
+								    				</div>
+							    				<?php }else{ ?>
+
+							    				<?php } ?>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+	          					<?php if($status_documento== 3){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/naranja.png" >
+									    	Rechazada
+									  	</div>
+									</div>
+
+									<div class="col m8 s6">
+										<div class="row">
+											<div class="col m6 s12">
+												<a  href="/solicitud/successsolicitud/id/<?php echo $id_solicituddoc; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+
+											<div class="col m6 s12">
+										        <?php if($documento_opuno != ""){ ?>
+								    				<div class="">
+														<?php foreach ($this->documentos as $key) { ?>
+														 
+								    					<a  title="Descargar Archivo" href="/<?php echo $key["doc_opuno"]; ?>" download="<?php echo substr(strrchr($key["doc_opuno"], "/"), 1); ?>" class="waves-effect waves-light btn"> Cotización </a>
+								    					<?php } ?>
+								    				</div>
+							    				<?php }else{ ?>
+
+							    				<?php } ?>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+
+								<div class="col m6 s6">
+									<?php if($status_documento == 2){ ?>
+										<div class="chip modal-trigger">
+									    	<img src="/img/rojo.png" >
+									    	Rechazado
+									  	</div>
+									<?php }?>
+								</div>
+	          				</div>
+	          			</div>
+	          		</div>
+	          	</div>
+	          	<div class="row" style="margin-left: 10px;">
+	          		<div class="col m4 s12">
+	          			<h4>Sitio: <?php echo $sitio; ?></h4>
+	          			<h4>Proveedor: <?php echo $proveedor; ?></h4>
+	          			<h4>Servicio: <?php echo $servicio; ?></h4>
+	          			<h4>Usuario: <?php echo $usuario; ?> <?php echo $apellido; ?></h4>
+	          			<h4>Fecha requerida: <?php echo $fecha; ?></h4>
+	          		</div>
+	          		<div class="col m4 s12">
+	          			<h4>Importe: $<?php echo number_format($importe, 2, '.', ','); ?> </h4>
+	          			<?php if($iva == ""){ ?>
+	          				<h4>IVA: $0</h4>
+	          			<?php }else{ ?>
+	          				<h4>IVA: $<?php echo number_format($iva, 2, '.', ','); ?></h4>
+	          			<?php } ?>
+	          			<h4>Total: $<?php echo number_format($total, 2, '.', ','); ?></h4>
+	          			<h4>Retencion ISR: $<?php echo number_format($retencion_isr, 2, '.', ','); ?></h4>
+	          			<h4>Retencion IVA: $<?php echo number_format($retencion_iva, 2, '.', ','); ?></h4>
+	          		</div>
+
+	          		<div class="col m4 s12">
+	          			<?php if($status_documento == 1 && $status_pago == 0){ ?>
+	          			
+	          				<div>
+	          					<span>* Esta opción solo esta disponible si el pago no se ha realizado</span>
+	          				</div>
+	          				<div style="margin-top: 5px;">
+	          					<a class="btn modal-trigger orange darken-3" href="#modal6">Cancelar Solicitd</a>	u
+	          				</div>
+	          				
+  							<div id="modal6" class="modal modal-fixed-footer">
+    							<div class="modal-content">
+      								<h2>Cancelar Solicitud</h2>
+
+      								<input type="hidden" name="dato" value="3">
+      								<input type="hidden" id="id_rechazada" name="id" value="<?php echo $this->id_solicitud; ?>">
+					        		<div class="input-field col s12">
+					          			<i class="material-icons prefix">assignment</i>
+					          			<textarea id="desc_rechazada" name="descripcion" class="materialize-textarea"></textarea>
+					          			<label for="desc_rechazada">Motivo</label>
+					        		</div>
+    							</div>
+    							<div class="modal-footer">
+							    	<button type="button" id="rechazada_form" class="btn">Guardar</button>
+							      	<button  class="modal-close red btn">Cerrar</button>
+    							</div>
+  							</div>
+	          			<?php }else{ ?>
+
+	          			<?php } ?>
+	          		</div>
+
+	          	</div>
+
+
+	          	<div class="row">
+	          		<div class="col m4 s12">
+	          			<?php foreach ($this->validacion as $key){ ?>
+		          			<h4>Datos de Autorización</h4>
+		          			<h4>Auditor: <?php echo $key['nombre']; ?> <?php echo $key['ap']; ?></h4>
+		          			<h4>Fecha y Hora: <?php echo $key["fecha_validacion"]; ?></h4>	          				
+	          			<?php } ?>
+	          		</div>
+	          	</div>
+
+	          	<div class="row" style="margin-left: 10px;">
+	          		<div class="col m12 s12">
+	          			<div class="text-justify">
+	          				<h4>Condiciones de compra: <?php echo $condiciones_compra; ?></h4>
+	          			</div>
+	          			<div class="text-justify">
+	          				<h4>Referencia: <?php echo $referencia; ?></h4>
+	          			</div>
+	          			<div class="text-justify">
+	          				<h4>Descripción: <?php echo $descripcion; ?></h4>
+	          			</div>
+	          		</div>
+
+	          		<div class="col m12 s12">
+						<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+						<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+						<?php if($status_documentouno == 0 && $status_documento == 0){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle" > <span class="label">2</span>
+							    <span class="title">Auditoria:</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle"> <span class="label">3</span>
+							    <span class="title">Aprobada / Rechazada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+						<?php if($status_documentouno == 1 && $status_documento == 0){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle done" > <span class="label">2</span>
+							    <span class="title">Auditoria:</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle"> <span class="label">3</span>
+							    <span class="title">Aprobada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+						<?php if($status_documentouno == 1 && $status_documento == 1){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle done" > <span class="label">2</span>
+							    <span class="title">Auditoria</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle done"> <span class="label">3</span>
+							    <span class="title">Aprobada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+	          		</div>
+	          	</div>
+
+	          	<div class="row" style="margin-left: 10px;">
+	          		<div class="col m5 s6">
+	          			<h4>1.-Solicitud Creada: <?php echo $fecha_creacion; ?></h4>
+	          			<h4>2.-Auditoria: <?php echo $fecha_validacion; ?> </h4>
+	          			<h4>3.-Aprobada: <?php echo $fecha_validaciondos; ?></h4>
+	          		</div>
+
+	          		<div class="col m7 s6">
+	          			<h4>Usuario: <?php echo $usuario; ?> <?php echo $apellido; ?></h4>
+	          			<?php if($status_documento == 0){ ?>
+	          				<h4>Usuario:</h4>
+	          			<?php }else{ ?>
+	          				<h4>Usuario: <?php echo $name_val; ?></h4>
+	          			<?php } ?>
+	          			
+	          			<h4>Usuario: <?php echo $name_jefe; ?></h4>
+	          		</div>
+	          	</div>
+
+	        </div>
+      	</div>
+    </div>
+</div>
+ -->
+
+	          	<div class="row">
+	          		<div class="col m12 s12 text-center">
+	          			<span style="font-size:29px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información Solicitud</span>
+
+	          		</div>
+	          		<div class="col m6 s12 right" style="margin-top:20px; ">
+	          			<div class="row">	
+	          				<?php if($status_documento == 0){ ?>
+	          					<div class="col m6 s6">
+	          						<form action="/solicitud/requestchangeaddstattusdocumentosolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_aprobar">
+	          								<input type="hidden" name="id" value="<?php echo $this->id_solicitud; ?>">
+											<input type="hidden" name="id_user" value="<?php echo $this->usuario; ?>">
+	          						</form>
+										<div class="chip">
+									    	<img src="/img/gris.jpg" id="activo_personal">
+									    	Autorizado
+									  	</div>
+								</div>	
+								<div class="col m6 s6">
+									<div class="chip modal-trigger" href="#modal1">
+								    	<img src="/img/gris.jpg">
+								    	Rechazado
+								  	</div>
+								</div>
+	          					<?php } ?>
+
+	          					<?php if($status_documento== 1){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/correct.png" >
+									    	Autorizado
+									  	</div>
+									</div>
+
+									<div class="col m8 s6" >
+										<div class="row">
+											<div class="col m6 s12" style="margin-top: 3px;">
+												<a  href="/solicitud/successsolicitud/id/<?php echo $id_solicituddoc; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+
+											<div class="col m6 s12" style="margin-top: 3px;">
+										        <?php if($documento_opuno != ""){ ?>
+								    				<div class="">
+														<?php foreach ($this->documentos as $key) { ?>
+														 
+								    					<a  title="Descargar Archivo" href="/<?php echo $key["doc_opuno"]; ?>" download="<?php echo substr(strrchr($key["doc_opuno"], "/"), 1); ?>" class="waves-effect waves-light btn"> Cotización </a>
+								    					<?php } ?>
+								    				</div>
+							    				<?php }else{ ?>
+
+							    				<?php } ?>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+	          					<?php if($status_documento== 3){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/naranja.png" >
+									    	Rechazada
+									  	</div>
+									</div>
+
+									<div class="col m8 s6">
+										<div class="row">
+											<div class="col m6 s12" style="margin-top: 3px;">
+												<a  href="/solicitud/successsolicitud/id/<?php echo $id_solicituddoc; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+
+											<div class="col m6 s12" style="margin-top: 3px;">
+										        <?php if($documento_opuno != ""){ ?>
+								    				<div class="">
+														<?php foreach ($this->documentos as $key) { ?>
+														 
+								    					<a  title="Descargar Archivo" href="/<?php echo $key["doc_opuno"]; ?>" download="<?php echo substr(strrchr($key["doc_opuno"], "/"), 1); ?>" class="waves-effect waves-light btn"> Cotización </a>
+								    					<?php } ?>
+								    				</div>
+							    				<?php }else{ ?>
+
+							    				<?php } ?>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+
+								<div class="col m6 s6">
+									<?php if($status_documento == 2){ ?>
+										<div class="chip modal-trigger">
+									    	<img src="/img/rojo.png" >
+									    	Rechazado
+									  	</div>
+									<?php }?>
+								</div>
+	          				</div>
+	          			</div>
+	          		</div>
+
+
+
+<div class="row">
+	<div class="col m8 s12"></div>
+	          		<div class="col m4 s12">
+	          			<?php if($status_documento == 1 && $status_pago == 0){ ?>
+	          			
+	          				<div>
+	          					<span>* Esta opción solo esta disponible si el pago no se ha realizado</span>
+	          				</div>
+	          				<div style="margin-top: 5px;">
+	          					<a class="btn modal-trigger orange darken-3" href="#modal6">Cancelar Solicitd</a>	
+	          				</div>
+	          				
+  							<div id="modal6" class="modal modal-fixed-footer">
+    							<div class="modal-content">
+      								<h2>Cancelar Solicitud</h2>
+
+      								<input type="hidden" name="dato" value="3">
+      								<input type="hidden" id="id_rechazada" name="id" value="<?php echo $this->id_solicitud; ?>">
+					        		<div class="input-field col s12">
+					          			<i class="material-icons prefix">assignment</i>
+					          			<textarea id="desc_rechazada" name="descripcion" class="materialize-textarea"></textarea>
+					          			<label for="desc_rechazada">Motivo</label>
+					        		</div>
+    							</div>
+    							<div class="modal-footer">
+							    	<button type="button" id="rechazada_form" class="btn">Guardar</button>
+							      	<button  class="modal-close red btn">Cerrar</button>
+    							</div>
+  							</div>
+	          			<?php }else{ ?>
+
+	          			<?php } ?>
+	          		</div>
+</div>
+
+<div class="row">
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información General</span>
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top:15px;">
+	          			<span class="titulo_info">Sitio: </span><span class="titulo_dato"><?php echo $sitio; ?></span><br>
+	          			<span class="titulo_info">Proveedor: </span><span class="titulo_dato"><?php echo $proveedor; ?></span><br>
+	          			<span class="titulo_info">Servicio: </span><span class="titulo_dato"><?php echo $servicio; ?></span><br>
+	          			<span class="titulo_info">Usuario: </span><span class="titulo_dato"><?php echo $usuario; ?> <?php echo $apellido; ?></span><br>
+	          			<span class="titulo_info">Fecha requerida: </span><span class="titulo_dato"><?php echo $fecha; ?></span>
+	          		</div>
+	          	</div>
+	        </div>
+      	</div>
+ 	</div>
+
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Monto de la Solicitud</span>
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top:15px;">
+	          			<span class="titulo_info">Importe: </span><span class="titulo_dato"> $<?php echo number_format($importe, 2, '.', ','); ?></span><br>
+	          			<?php if($iva == ""){ ?>
+	          				<span class="titulo_info">IVA: </span><span class="titulo_dato"> $0</span><br>
+	          			<?php }else{ ?>
+	          				<span class="titulo_info">IVA: </span><span class="titulo_dato"> $<?php echo number_format($iva, 2, '.', ','); ?></span><br>
+	          			<?php } ?>
+	          			
+
+	          			<?php if($retencion_isr == ""){ ?>
+	          				<span class="titulo_info">Retencion ISR: </span><span class="titulo_dato"> $0</span><br>
+	          			<?php }else{ ?>
+	          				<span class="titulo_info">Retencion ISR: </span><span class="titulo_dato"> $<?php echo number_format($retencion_isr, 2, '.', ','); ?></span><br>
+	          			<?php } ?>
+
+	          			<?php if($retencion_isr == ""){ ?>
+	          				<span class="titulo_info">Retencion IVA: </span><span class="titulo_dato"> $0</span><br>
+	          			<?php }else{ ?>
+	          				<span class="titulo_info">Retencion IVA: </span><span class="titulo_dato"> $<?php echo number_format($retencion_iva, 2, '.', ','); ?></span><br>
+	          			<?php } ?>	
+
+	          			<span class="titulo_info">Total: </span><span class="titulo_dato"> $<?php echo number_format($total, 2, '.', ','); ?></span>
+	          			
+	          		</div>
+	          	</div>
+	        </div>
+      	</div>
+ 	</div>
+</div>
+
+
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card ">
+        <div class="card-content ">
+        	<div class="row">
+	          		<div class="col m12 s12">
+	          			<div class="text-justify">
+	          				<span class="titulo_info">Condiciones de compra: </span><span class="titulo_dato"> <?php echo $condiciones_compra; ?></span><br>
+	          			</div>
+	          			<div class="text-justify">
+	          				<span class="titulo_info">Referencia: </span><span class="titulo_dato"> <?php echo $referencia; ?></span><br>
+	          			</div>
+	          			<div class="text-justify">
+	          				<span class="titulo_info">Descripción: </span><span class="titulo_dato"> <?php echo $descripcion; ?></span><br>
+	          			</div>
+	          		</div>
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+	          	<div class="row" style="margin-left: 10px;">
+
+
+	          		<div class="col m12 s12">
+						<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+						<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+						<?php if($status_documentouno == 0 && $status_documento == 0){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle" > <span class="label">2</span>
+							    <span class="title">Auditoria:</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle"> <span class="label">3</span>
+							    <span class="title">Aprobada / Rechazada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+						<?php if($status_documentouno == 1 && $status_documento == 0){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle done" > <span class="label">2</span>
+							    <span class="title">Auditoria:</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle"> <span class="label">3</span>
+							    <span class="title">Aprobada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+						<?php if($status_documentouno == 1 && $status_documento == 1){ ?>
+							<div class="progress">
+							  <div class="circle done"> <span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+
+							  </div> <span class="bar active"></span>
+
+							  <div class="circle done" > <span class="label">2</span>
+							    <span class="title">Auditoria</span>
+
+							  </div> <span class="bar"></span>
+
+							  <div class="circle done"> <span class="label">3</span>
+							    <span class="title">Aprobada</span>
+
+							  </div>
+							</div>
+						<?php } ?>
+
+	          		</div>
+	          	</div>
+
+
+
+
+
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Auditoria</span>
+
+	          	<div class="row" >
+	          		<div class="col m6 s6" style="margin-top: 25px;">
+	          			<span class="titulo_info">1.- Solicitud Creada: </span><span class="titulo_dato"> <?php echo $fecha_creacion; ?></span><br>
+	          			<span class="titulo_info">2.- Auditoria: </span><span class="titulo_dato"> <?php echo $fecha_validacion; ?></span><br>
+	          			<span class="titulo_info">3.- Aprobada: </span><span class="titulo_dato"> <?php echo $fecha_validaciondos; ?></span>
+	          		</div>
+
+	          		<div class="col m6 s6" style="margin-top: 25px;">
+
+	          			<span class="titulo_info">Usuario: </span><span class="titulo_dato"> <?php echo $usuario; ?> <?php echo $apellido; ?></span><br>
+
+
+	          			<span class="titulo_info">Usuario: </span><span class="titulo_dato">Sin auditoria</span><br>
+	          			<?php if($status_documento == 0){ ?>
+	          			<?php }else{ ?>
+	          				<span class="titulo_info">Usuario: </span><span class="titulo_dato"> <?php echo $name_val; ?></span>
+	          			<?php } ?>
+	          			
+	          			<span class="titulo_info">Usuario: </span><span class="titulo_dato"> <?php echo $name_jefe; ?></span>
+	          		</div>
+	          	</div>
+
+
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<?php 
+	$documento_opuno = "";
+	$documento_opdos= "";
+	$documento_optres="";
+foreach ($this->documentos as $key ){
+	$documento_opuno = $key['doc_opuno'];
+	$documento_opdos = $key['doc_opdos'];
+	$documento_optres = $key['doc_optres'];
+} ?>
+
+
+<div class="row">
+	<div class="col m12 s12">
+      <div class="card  darken-1">
+        <div class="card-content">
+<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cotización</span>
+
+			<div class="row">
+				<form action="/solicitud/requestadddocumentacionsolicitudordencompra" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_doc">
+					<input type="hidden" name="id_solicitud" value="<?php echo $this->orden_id; ?>">
+					<div class="col m4 s12 text-center">
+						<?php foreach ($this->documentos as $key){ ?>
+					        <div class="input-field col s12">
+					        	<input placeholder="Nombre Proveedor" value="<?php echo $key['proveedor_opuno']; ?>" id="proveedor_opuno" name="proveedor_opuno" type="text">	
+					        </div>
+					        <div class="input-field col s12">
+					        	<input placeholder="Alcance op1" value="<?php echo $key['alcance_opuno']; ?>" id="alcance_opuno" name="alcance_opuno" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					        	<input placeholder="Tiempo op1" value="<?php echo $key['tiempo_opuno']; ?>" id="tiempo_uno" name="tiempo_uno" type="text">
+					        </div>
+				    	
+					        <div class="input-field col s12">
+					        	<input placeholder="Costo op1" id="costo_uno" name="costo_uno" value="<?php echo $key['costo_opuno']; ?>" type="text">
+					        </div>
+				        <?php } ?>
+
+				        <?php if($documento_opuno != ""){ ?>
+		    				<div class="file-field input-field col s12">
+								<?php foreach ($this->documentos as $key) { ?>
+								 
+		    					<h4>
+		    						<a title="Descargar Archivo" href="/<?php echo $key["doc_opuno"]; ?>" download="<?php echo substr(strrchr($key["doc_opuno"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Descargar Documento 
+		    						</a>
+		    					</h4>
+		    					<?php } ?>
+		    				</div>
+	    				<?php }else{ ?>
+	    					<div class="file-field input-field col s12">
+	    						
+	    					</div>
+	    				<?php } ?>
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php foreach ($this->documentos as $key){ ?>
+					        <div class="input-field col s12">
+					        	<input placeholder="Nombre Proveedor" value="<?php echo $key['proveedor_opdos']; ?>" id="proveedor_opdos" name="proveedor_opdos"type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Alcance op2" value="<?php echo $key['alcance_opdos']; ?>" id="alcance_opdos" name="alcance_opdos" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Tiempo op2" value="<?php echo $key['tiempo_opdos']; ?>" id="tiempo_dos" name="tiempo_dos" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Costo op2" value="<?php echo $key['costo_opdos']; ?>" id="costo_dos" name="costo_dos" type="text">
+					        </div>
+				        <?php } ?>
+
+				        <?php if($documento_opdos != ""){ ?>
+		    				<div class="file-field input-field col s12">
+								<?php foreach ($this->documentos as $key) { ?>
+								 
+		    					<h4>
+		    						<a title="Descargar Archivo" href="/<?php echo $key["doc_opdos"]; ?>" download="<?php echo substr(strrchr($key["doc_opdos"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Descargar Documento 
+		    						</a>
+		    					</h4>
+		    					<?php } ?>
+		    				</div>
+	    				<?php }else{ ?>
+	    					<div class="file-field input-field col s12">
+	    						
+	    					</div>
+	    				<?php } ?>
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php foreach ($this->documentos as $key){ ?>
+					        <div class="input-field col s12">
+					        	<input placeholder="Nombre Proveedor" value="<?php echo $key['proveedor_optres']; ?>" id="proveedor_optres" name="proveedor_optres" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Alcance op3" value="<?php echo $key['alcance_optres']; ?>" id="alcance_optres" name="alcance_optres" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Tiempo op3" value="<?php echo $key['tiempo_optres']; ?>" id="tiempo_tres" name="tiempo_tres" type="text">
+					        </div>
+					        <div class="input-field col s12">
+					          	<input placeholder="Costo op3" value="<?php echo $key['costo_optres']; ?>" id="costo_tres" name="costo_tres" type="text">
+					        </div>
+				        <?php } ?>
+
+				        <?php if($documento_optres != ""){ ?>
+		    				<div class="file-field input-field col s12">
+								<?php foreach ($this->documentos as $key) { ?>
+								 
+		    					<h4>
+		    						<a title="Descargar Archivo" href="/<?php echo $key["doc_optres"]; ?>" download="<?php echo substr(strrchr($key["doc_optres"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Descargar Documento 
+		    						</a>
+		    					</h4>
+		    					<?php } ?>
+		    				</div>
+	    				<?php }else{ ?>
+	    					<div class="file-field input-field col s12">
+	    						
+	    					</div>
+	    				<?php } ?>
+					</div>
+				</form>
+			</div>
+
+<!-- 		<div class="row">
+			<div class="col m8 s6">
+				<h4>Cotizaciones</h4>
+			</div>
+		</div> -->
+<!-- 		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Tipo de Documento</th>		
+					<th>Documento</th>
+				</tr> 
+			</thead>
+			<?php
+			if ($this->cotizacion) { 
+			foreach ($this->cotizacion as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h4><?php echo $usr["titulo_cotizacion"]; ?></h4>
+					</td>
+					<td>
+						<a title="Descargar Archivo" href="/<?php echo $usr["documento_cotizacion"]; ?>" download="/<?php echo $usr["documento_cotizacion"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+					</td>
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay cotizaciones agregadas.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table> -->
+        </div>
+      </div>
+
+
+	</div>
+
+<!-- 	<div class="col m6 s12">
+
+      <div class="card  darken-1">
+        <div class="card-content ">
+
+		<div class="row">
+			<div class="col m8 s6">
+				<h4>Comparativas</h4>
+			</div>
+		</div>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Tipo de Documento</th>		
+					<th>Documento</th>
+				</tr> 
+			</thead>
+			<?php
+			if ($this->comparativa) { 
+			foreach ($this->comparativa as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<h4><?php echo $usr["titulo_comparativa"]; ?></h4>
+					</td>
+					<td>
+						<a title="Descargar Archivo" href="/<?php echo $usr["documento_comparativa"]; ?>" download="/<?php echo $usr["documento_comparativa"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+					</td>
+				</tr>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay comparativas agregadas.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+        </div>
+      </div>
+
+	</div> -->
+</div>
+
+	<div class="row">
+	    <div class="col s12 m12">
+	      	<div class="card darken-1">
+		        <div class="card-content">
+		          	<div class="row">
+		          		<div class="col m6 s12">
+		          			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentarios</span>
+		          		</div>
+		          	</div>
+		          	<div class="row">
+		          		<h4>
+		          			<?php echo $comentario; ?>
+		          		</h4>
+		          	</div>
+		        </div>
+	      	</div>
+	    </div>
+	</div>
+	
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Status cancelado de la solicitud de compra</h4>
+	  <div class="row">
+	    <form class="col s12">
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea id="comentarios" class="materialize-textarea"></textarea>
+	          <label for="comentarios">Comentarios:</label>
+	        </div>
+	      </div>
+	    </form>
+	  </div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="baja_personal" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+<?php foreach ($this->user as $value) {
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+
+<?php if($rol_user == 4 || $rol_user == 1){ ?>
+<div class="row">
+	<div class="col m12 s12">
+      	<div class="card  darken-1">
+        	<div class="card-content">
+        		<div class="row">
+        			<div class="col m6 s6">
+        				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobante Pago</span>
+        			</div>
+        			<div class="col m6 s6">
+        				<?php if($status_pago == 1){?>
+        				<?php }else{ ?>
+						  	<div class="input-field col s12">
+						    	<select id="pago_conta">
+						      		<option value="0" disabled selected>Selecciona una opción</option>
+						      		<option value="1">Pago Completo</option>
+						      		<option value="2">Pendiente</option>
+						    	</select>
+						    	<label>Status Pago</label>
+						  	</div>
+        				<?php } ?>
+        			</div>
+        		</div>
+
+        		<?php foreach ($this->user as $key) {
+        			$rol = $key['fkroles'];
+        		} ?>
+
+        		<?php if($rol == 1 && $status_pago == 1){ ?>
+        			<div class="row">
+        				<div class="col m12 s12 text-right">
+        					<a class="red btn" id="back_direct"><i class="material-icons right">assignment</i>Regresar a Dirección</a>
+        				</div>
+        			</div>
+
+        			<form action="/solicitud/requestbackdireccion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_backdirect">
+        				<input type="hidden" id="id_back" name="solicitud" value="<?php echo $this->id_solicitud; ?>">
+        			</form>
+        		<?php } ?>
+
+        		<?php if($status_documento == 1){ ?>
+        		<div class="row">
+        			<?php if($status_pago == 1){?>
+        			<?php }else{ ?>
+	        			<div class="col m12 s12 text-center">
+		        			<div class="row">
+		        				<div class="col m6 s12">
+							        <div class="input-field col m12 s12">
+							          	<i class="material-icons prefix">event_available</i>
+							          	<input id="monto" type="text" name="monto" class="validate">
+							          	<label for="monto">Monto</label>
+							        </div>
+		        				</div>
+		        				<div class="col m6 s12">
+		        					<form action="/solicitud/requestaddcomprobantedepago" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
+		        						<input type="hidden" name="monto" id="monto_form">
+		        						<input type="hidden" name="status_pago" id="status_form">
+							    	<div class="file-field col m12 s12 input-field text-center">
+							      		<div class="btn">
+							        		<span>Comprobante Pago</span>
+							        		<input type="file" name="url">
+							      		</div>
+							      		<div class="file-path-wrapper">
+							        		<input class="file-path validate" id="file_comprobante" type="text">
+							      		</div>
+							    	</div>
+							    	<?php foreach ($this->informacion as $key){ ?>
+							    		<input type="hidden" name="id_solicitud" value="<?php echo $key['id']; ?>">
+							    	<?php } ?>
+
+							   		</form> 	
+		        				</div>
+		        				<!-- <div class="col m6 s12"></div> -->
+		        			</div>
+	        			</div>
+        			<?php } ?>
+
+        		</div>
+
+        			<?php if($status_pago==1){ ?>
+        			<?php }else{ ?>
+	        			<div class="row text-center">
+							<div class="col m12 s12 text-center">
+								<a class="btn" id="btcomprobante">Subir Pago</a>
+							</div>
+		        		</div>
+        			<?php } ?>
+
+
+        		<?php }else{ ?>
+        		<?php } ?>
+
+        		<div class="row">
+      				<table>
+        				<thead>
+          					<tr>
+              					<th>Fecha de Pago</th>
+              					<th>Realizado por:</th>
+              					<th>Monto</th>
+              					<th>Descargar</th>
+          					</tr>
+        				</thead>
+        				<?php 
+        				$total= 0;
+        				if ($this->pagos) { 
+        				foreach ($this->pagos as $usr) { ?>
+									<tbody>
+										<tr>
+											<td>
+												<?php echo $usr['fecha_pago']; ?>
+											</td>
+											<td>
+												<?php echo $usr['user_pago']; ?>
+											</td>	
+											<td>
+												<h5 style="font-weight: bold;">
+													$<?php echo number_format($usr['monto'], 2, '.', ','); ?>
+													<?php $total = $total+ $usr['monto']; ?>
+												</h5>
+											</td>
+											<td>
+												<a title="Descargar Archivo" href="/<?php echo $usr["file_pago"]; ?>" download="<?php echo substr(strrchr($key["file_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+											</td>
+										</tr>
+									</tbody>
+						<?php } }else{ ?>
+						<tbody>
+							<tr>
+								<td>No se ha agregado el pago </td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+						<?php } ?>
+      				</table>
+        		</div>
+
+        		<div class="row">
+        			<div class="col m12 s12 text-right">
+        				<h4 style="font-weight: bold;">
+        					Total: $<?php echo number_format($total, 2, '.', ','); ?>
+        				</h4>
+        			</div>
+        		</div>
+
+        	</div>
+        </div>
+    </div>
+</div>
+<?php }else{ ?>
+<?php } ?>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('.tooltipped').tooltip();
+ 	});
+
+    $("#activo_personal").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });  
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/solicitud/requestchangeaddstattusdocumentosolicitud",
+	                method:"POST",
+	                data: {dato:dato, id:id, id_user:id_user},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+        // var id = document.getElementById("id_solicitud").value;
+        // if(id == ""){
+        //     swal({
+        //         title: "Para editar a un usuario debes llenar todos los campos marcados con un '*'",
+        //     });
+        // }else{
+        // swal("Espere un momento, la información esta siendo procesada", {
+        //   icon: "success",
+        //   buttons: false,
+        // });  
+        //     setTimeout(submitactivado, 1500);     
+        // }
+
+    });
+
+    // function submitactivado() {
+    //     document.getElementById("submit_aprobar").submit()
+    // }
+
+
+
+    $("#baja_personal").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "2";
+	    		var	comentario = document.getElementById("comentarios").value;
+	            var request = $.ajax({
+	                url:"/solicitud/requestchangeaddstattusdocumentosolicitud",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario, id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+    $("#send_email").click(function(){
+        var id = document.getElementById("id_solicitud").value;
+        if(id == ""){
+            swal({
+                title: "Para editar a un usuario debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Bien!", "Se ha enviado un correo electronico al area de Contabilidad!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_usuario").submit()
+    }
+
+
+    $("#rechazada_form").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "3";
+	    		var	comentario = document.getElementById("desc_rechazada").value;
+	            var request = $.ajax({
+	                url:"/solicitud/requestchangerechazadosolicitudd",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+
+		  });
+
+        // var id = document.getElementById("id_solicitud").value;
+        // if(id == ""){
+        //     swal({
+        //         title: "Para editar a un usuario debes llenar todos los campos marcados con un '*'",
+        //     });
+        // }else{
+        // swal("Espere un momento, la información esta siendo procesada", {
+        //   icon: "success",
+        //   buttons: false,
+        // });  
+        //     setTimeout(rechazar, 1500);     
+        // }
+
+
+    });
+    $("#back_direct").click(function(){
+
+
+	swal({
+		title: "Estas seguro de eliminar el pago?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+	  	if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+
+    		var solicitud = document.getElementById("id_back").value;
+
+            var request = $.ajax({
+                url:"/solicitud/requestbackdireccion",
+                method:"POST",
+                data: { solicitud : solicitud,},
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La asignacion fue cancelada!");
+	  }
+	});
+
+   	});
+
+
+
+</script>

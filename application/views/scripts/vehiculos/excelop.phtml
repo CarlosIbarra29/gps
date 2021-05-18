@@ -1,0 +1,126 @@
+<?php foreach ($this->vehasignado as $veh) { $idv = $veh['id_vehiculo']; }?>
+
+<?php 
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+<style> 
+ .table_wrapper{
+    overflow-x: auto;
+}
+</style>
+
+	<div class="row" style="margin-top: 10px;">
+		<div class="col m6 s12 text-left">
+			<a href="/vehiculos/operadores/id/<?php echo $idv ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>			
+		</div>
+		<div class="col m6 s12 text-right">
+			<a class=" btn" onclick="exportTableToCSV(null,'asignacionvehiculo.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col m12 s12 text-center" style="margin-top: 20px;">
+        	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de asignaciones por vehículo</span>
+    	</div>
+	</div>
+<div class="col m12 s12 text-right table_wrapper">
+	<table class="table text-left table-hover ">
+		<thead>
+			<tr>	
+				<th>Marca</th>
+				<th>Submarca</th>
+				<th>Modelo</th>
+        		<th>Placas</th>
+        		<th>Color</th>
+        		<th>Responsable</th>
+        		<th>Efecticard</th>
+        		<th>Status Actual</th>
+        		<th>Fecha Asignacion</th>
+        		<th>Fecha Entrega</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->vehasignado as $vehiculo) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos( $vehiculo["marca"]); ?></td>
+				<td><?php echo eliminar_acentos( $vehiculo["submarca"]); ?></td>
+				<td><?php echo eliminar_acentos( $vehiculo["modelo"]); ?></td>
+				<td><?php echo $vehiculo["placas"]; ?></td>
+				<td><?php echo $vehiculo["color"]; ?></td>
+				<td><?php echo eliminar_acentos( $vehiculo["nombre"]); ?> <?php echo eliminar_acentos( $vehiculo["apellido_pa"]); ?> <?php echo eliminar_acentos( $vehiculo["apellido_ma"]); ?></td>
+				<td><?php echo $vehiculo["efecticard"]; ?></td>
+				<td><?php echo $vehiculo["statusv"]; ?></td>
+				<td><?php echo $vehiculo["fecha_asignacion"]; ?></td>
+				<td><?php echo $vehiculo["fentrega"]; ?></td>
+				
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+<script type="text/javascript">
+	function exportTableToCSV(html, filename) {
+	    var csv = [];
+	    var rows = document.querySelectorAll("table tr");
+	    for(var i = 0; i < rows.length; i++){
+	        var row = [], cols = rows[i].querySelectorAll("td, th");
+	        for(var j = 0; j < cols.length; j++){
+	            row.push(cols[j].innerText);
+	        }
+	        csv.push(row.join(","));
+	    }
+	    downloadCSV(csv.join("\n"), filename);
+	}
+
+	function downloadCSV(csv, filename) {
+	    var csvFile;
+	    var downloadLink;
+		if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+			alert("Your browser doesn't support Blobs");
+			return;
+		}
+		
+	    csvFile = new Blob([csv], {type:"text/csv"});
+	    downloadLink = document.createElement("a");
+	    downloadLink.download = filename;
+	    downloadLink.href = window.URL.createObjectURL(csvFile);
+	    downloadLink.style.display = "none";
+	    document.body.appendChild(downloadLink);
+	    downloadLink.click();
+	}
+</script>

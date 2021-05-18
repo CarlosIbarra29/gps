@@ -1,0 +1,35 @@
+<?php function setDate($date){
+	$dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+	$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+	$year = date("Y", strtotime($date));
+	$month = $meses[intval(date("m", strtotime($date)))-1];
+	$day = $dias[date("w", strtotime($date))];
+	return $day.' '.date("d", strtotime($date)).' de '.$month.' '.$year;
+} ?>
+<?php foreach ($this->temporadasesp as $tmp) { 
+    $ini=$tmp['fechainicial']; 
+    $fin=$tmp['fechafinal']; 
+	date_default_timezone_set('America/Mexico_City'); 
+	$timer = date('Y-m-d'); ?>
+    <!-- CUERPO -->
+    <?php if ($timer>=$ini&&$timer<=$fin): ?>
+        <div>
+            <div>
+                <label><h2><?php echo $tmp['nombre']; ?></h2></label>
+            </div>
+            <div>
+                <h4>En esta temporada...</h4>
+                <p><?php echo $tmp['descripcion']; ?></p>
+            </div>
+            <div>
+                <label>Estas recomendaciones estan disponibles hasta: <?php echo setDate($fin); ?></label>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="col-md-12 text-center">
+            <H1>Espera!! Aun no es tiempo =( </H1>
+            <h3>PROXIMAMENTE TENDREMOS RECOMENDACIONES PARA ESTA TEMPORADA</h3>
+        </div>
+    <?php endif ?>
+	<!-- CUERPO -->
+<?php } ?>

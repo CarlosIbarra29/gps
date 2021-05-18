@@ -1,0 +1,501 @@
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/panel/asignardetalles/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<!-- <div class="row">
+	<div class="col m4 s6">
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Nombre sitio:</span> <?php echo $key['nombre']; ?></h5>
+			<h5><span class="font_tittle">Id cliente:</span> <?php echo $key['id_cliente']; ?></h5>
+			<h5><span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+		<?php } ?>
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+		<?php } ?>	
+		<h5><span class="font_tittle">Tipo de torre:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+		<?php } ?>
+	</div>
+
+	<div class="col m4 s12">
+		<h5><span class="font_tittle">Id operador:</span></h5>
+		<?php foreach ($this->sitio as $key ) { ?>
+			<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+			<h5><span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+		<?php } ?>
+	</div>
+</div> -->
+
+<!-- 
+<div class="row">
+	<div class="col m6 s6">
+		<h5><span class="font_tittle">Proyecto:</span> </h5>
+		<h5><span class="font_tittle">Cliente:</span> 
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->statuscliente as $mar) { 
+					 		if ($mar['id']==$usr['status_cliente']) { ?>
+					     		<?php echo $mar["nombre_status"]; ?>
+				<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+				<?php } } ?>
+			<?php } ?>
+		</h5>
+		<h5><span class="font_tittle">Obra civil:</span> </h5>
+		<h5><span class="font_tittle">Torre:</span>
+			<?php foreach ($this->tipo_sitio as $usr){ ?>
+				<?php foreach ($this->status as $mar) { 
+					if ($mar['id']==$usr['status_proyecto']) { ?>
+					    <?php echo $mar["nombre_status"]; ?>
+					<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+				<?php } } ?>
+			<?php } ?>
+
+		</h5>
+	</div>
+	<div class="col m6 s6">
+		<?php foreach ($this->tipo_sitio as $value) { ?>
+			<h5><span class="font_tittle">Coordinador:</span> <?php echo $value['nombre_coordinador'] ?></h5>
+			<h5><span class="font_tittle">Ingeniero Proyecto:</span> <?php echo $value['nombre_ingproyecto'] ?></h5>
+		<?php } ?>
+		<h5><span class="font_tittle">Residente: </span></h5>
+		<h5><span class="font_tittle">PM Cliente:</span></h5>
+	</div>
+</div> -->
+
+<!-- <div class="row">
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha requerida cliente:</span></h5>
+	</div>
+	<div class="col m6 s12">
+		<h5><span class="font_tittle">Fecha cronograma:</span></h5>
+	</div>
+</div> -->
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">WK 2 (Editar evidencias fotograficas).</span>
+    </div>
+</div>
+
+<div class="row">
+	<?php 
+	$colocacion = 0; $vaciado = 0; $relleno = 0; $nicho = 0; $muro = 0; $tuberiapvc = 0 ; $laboratorio = 0;
+	foreach ($this->wkdos as $key){ 
+		$colocacion = $key['status_colocacion'];
+		$vaciado = $key['status_vaciado'];
+		$relleno = $key['status_relleno'];
+		$nicho = $key['status_nicho'];
+		$muro = $key['status_muro'];
+
+		$tuberiapvc = $key['status_tuberiapvc'];
+		$laboratorio = $key['status_laboratorio'];
+	} ?>
+
+	<?php foreach ($this->wkdos as $key ) { ?>
+		<input type="hidden" name="img_colocacion" id="img_colocacion" value="<?php echo $key['colocacion']; ?>">
+		<input type="hidden" name="img_vaciado" id="img_vaciado" value="<?php echo $key['vaciado']; ?>">
+		<input type="hidden" name="img_relleno" id="img_relleno" value="<?php echo $key['relleno']; ?>">
+		<input type="hidden" name="img_nicho" id="img_nicho" value="<?php echo $key['nicho']; ?>">
+		<input type="hidden" name="img_muro" id="img_translado" value="<?php echo $key['muro']; ?>">	
+
+		<input type="hidden" name="img_tuberiapvc" id="img_tuberiapvc" value="<?php echo $key['tuberiapvc']; ?>">
+		<input type="hidden" name="img_laboratorio" id="img_laboratorio" value="<?php echo $key['laboratorio']; ?>">
+	<?php } ?>
+
+</div>
+      		<div class="row">
+      			<div class="col m3 s12">
+      				<?php if($colocacion == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox"  class="filled-in" disabled />
+						        <span class="font-check">Colocación de anclas</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Colocación de anclas</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END COLOCACION DE ANCLAS -->
+      				<?php if($vaciado == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Vaciado de concreto</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Vaciado de concreto</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END VACIADO DE CONCRETO -->
+      				<?php if($relleno == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Desimbrado y relleno con tepetate</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Desimbrado y relleno con tepetate</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END DESIMBRADO Y RELLENO CON TEPETATE -->
+      				<?php if($nicho == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Nicho / Acometida electrica</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Nicho / Acometida electrica</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END NICHO / ACOMETIDA ELECTRICA -->
+      				<?php if($muro == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Muro perimetral / malla</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Muro perimetral / malla</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END MURO PERIMETRAL / MALLA -->
+
+      				<?php if($tuberiapvc == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Tuberia PVC</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Tuberia PVC</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END TUBERIA PVC -->
+
+      				<?php if($laboratorio == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Pruebas de laboratorio</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Pruebas de laboratorio</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END PRUEBAS DE LABORATORIO -->
+      			</div>
+
+      			<div class="col m9 s12">
+					<div class="row">
+						<form action="/panel/requestupdatevidenciassemanados" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fotodos">
+							<span>* Solo estaran habilitadas las tareas que ya cuenten con registro fotografico.</span>
+	  					<div class="input-field col m6 s12">
+	    					<select id="actividaddos" name="actividad">
+	      						<option value="" disabled selected>Selecciona una tarea</option>
+	      						<?php if($colocacion == 1){ ?>
+	      							<option value="1">Colocación de anclas</option>
+	      						<?php }else{ ?>
+	      							<option value="1" disabled>Colocación de anclas</option>
+	      						<?php } ?>
+	      					<!-- 	END OPTION COLOCACION DE ANCLAS -->
+	      						<?php if($vaciado == 1){ ?>
+	      							<option value="2">Vaciado de concreto</option>
+	      						<?php }else{ ?>
+	      							<option value="2" disabled>Vaciado de concreto</option>
+	      						<?php } ?>
+	      					<!-- 	END OPTION VACIADO  DE CONCRETOS -->
+	      						<?php if($relleno == 1){ ?>
+	      							<option value="3">Desimbrado y relleno con tepetate</option>
+	      						<?php }else{ ?>
+	      							<option value="3" disabled>Desimbrado y relleno con tepetate</option>
+	      						<?php } ?>	
+	      					<!-- 	END OPTION DESIMBRADO Y RELLENO CON TEPETATE -->	
+	      						<?php if($nicho == 1){?>
+	      							<option value="4">Nicho / Acometida electrica</option>
+	      						<?php }else{ ?>
+	      							<option value="4" disabled>Nicho / Acometida electrica</option>
+	      						<?php } ?>
+	      					<!-- 	END OPTION NICHO / ACOMETIDA ELECTRICA -->
+	      						<?php if($muro == 1){ ?>
+	      							<option value="5">Muro perimetral / malla</option>
+	      						<?php }else{ ?>
+	      							<option value="5" disabled>Muro perimetral / malla</option>
+	      						<?php } ?>	
+	      					<!-- 	END OPTION MURO PERIMETRAL / MALLA -->
+	      						<?php if($tuberiapvc == 1){ ?>
+	      							<option value="6">Tuberia PVC</option>
+	      						<?php }else{ ?>
+	      							<option value="6" disabled>Tuberia PVC</option>
+	      						<?php } ?>	
+	      					<!-- 	END OPTION TUBERIA PVC -->
+	      						<?php if($laboratorio == 1){ ?>
+	      							<option value="7">Pruebas de laboratorio</option>
+	      						<?php }else{ ?>
+	      							<option value="7" disabled>Pruebas de laboratorio</option>
+	      						<?php } ?>	
+	      					<!-- 	END OPTION MURO PERIMETRAL / MALLA -->
+	    					</select>
+	  					</div>
+
+	  					<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+	  					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto_id; ?>">
+	  					<input type="hidden" name="id" value="<?php echo $this->id_sitio; ?>">
+	  					<input type="hidden" id="img_edit" name="imahidden">
+
+					    <div class="file-field input-field col m6 s12">
+					    	<div class="btn">
+					        	<span>Foto</span>
+					        	<input type="file" name="url">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate" id="imgvalidate" type="text">
+					      	</div>
+					    </div>
+					    </form>
+					</div>
+					
+					<div class="row">
+						<div class="col m12 s12 text-center">
+							<a class="waves-effect waves-light btn" id="btfotowkdos">Editar</a>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col m4 s6 text-center">
+							<?php if($colocacion == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Colocación de anclas</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['colocacion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['colocacion']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Colocación de anclas</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END COLOCACION DE ANCLAS -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($vaciado == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Vaciado de concreto</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['vaciado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['vaciado']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Vaciado de concreto</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END VACIADO DE CONCRETO -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($relleno == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Desimbrado y relleno con tepetate</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['relleno']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['relleno']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Desimbrado y relleno con tepetate</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END DESIMBRADO Y RELLENO CON TEPETATE -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($nicho == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Nicho / Acometida electrica</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['nicho']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['nicho']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Nicho / Acometida electrica </span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END NICHO / ELECTRICA -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($muro == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Muro perimetral / malla</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['muro']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['muro']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Muro perimetral / malla</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END MURO PERIMETRAL / MALLA -->
+
+
+						<div class="col m4 s6 text-center">
+							<?php if($tuberiapvc == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Tuberia PVC</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['tuberiapvc']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['tuberiapvc']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Tuberia PVC</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END TUBERIA PVC -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($laboratorio == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Pruebas de laboratorio</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['laboratorio']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['laboratorio']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span>Pruebas de laboratorio</span>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END TUBERIA PVC -->
+
+					</div>
+      			</div>	
+      		</div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+    $(".check_option").click(function(){
+    	swal({title: "Debes seleccionar una tarea y subir una foto!" , });
+    });
+
+
+    $("#btfotowkdos").click(function(){
+        var actividad = document.getElementById("actividaddos").value;
+        var img = document.getElementById("imgvalidate").value;
+
+        	if(actividad == 1){
+        		var valor = document.getElementById("img_colocacion").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 2){
+        		var valor = document.getElementById("img_vaciado").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 3){
+        		var valor = document.getElementById("img_relleno").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 4){
+        		var valor = document.getElementById("img_nicho").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 5){
+        		var valor = document.getElementById("img_muro").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 6){
+        		var valor = document.getElementById("img_tuberiapvc").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+        	if(actividad == 7){
+        		var valor = document.getElementById("img_laboratorio").value;
+        		document.getElementById("img_edit").value = valor;
+        	}
+
+        if(actividad == "" || img == ""){
+            swal({
+              title: "Para agregar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});   
+            setTimeout(submitFormdos, 1500);     
+        }
+    });
+
+    function submitFormdos() {
+        document.getElementById("submit_fotodos").submit()
+    }
+</script>

@@ -1,0 +1,50 @@
+<div class="col-md-12">
+    <div class="white-box">
+        <div class="jumbotron" style="background-image: url('/img/products.jpg'); background-size: cover;
+        background-position: top center; ">
+        <h1>Editar Imagen del producto</h1>
+        </div>
+            <?php $session = new Zend_Session_Namespace("current_session"); 
+                // echo $session->id;
+                echo $session->nombre;
+            ?>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="white-box">
+		<form action='/panel/requestupdateslider' method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+			<div class="form-group">
+				<?php foreach ($this->imagenes as $img) { ?>
+				<input type="hidden" name="id" value="<?php echo $img['id']; ?> ">
+				<div class="col-md-12">
+					<label for="text"><h4>Nombre: </h4></label><br>
+					<small>*El nombre solo es para referenciar el registro. La imagen debe tener ya el nombre con el cual se guardará.</small>
+					<p><input type="text" name="name" class="form-control" value="<?php echo $img['nombre']; ?> "></p>
+				</div>
+				<div class="col-md-12">
+					<label for="text"><h4>Imagen descriptiva: </h4></label><br>
+					<small><i>*Nota: Procure que la imagen debe tener el nombre rastreable y sin espacios, en su defecto remplazarlos por guion bajo. El tamaño de la imagen debe ser menor a 1.9 MB.</i></small><br>
+					<p><input type="file" name="cover" class="form-control" ></p>
+					<input type="hidden" name="urlhidden" value="<?php echo $img['imagen']; ?> " >
+				</div>
+				<div class="col-md-12">
+					<select id="view-select" class="form-control" name="prod" >
+						<?php foreach ($this->productos as $prod) { ?>
+							<?php if ($img['fkpro']==$prod['id']) { ?>
+								<option value="<?php echo $prod['id']; ?>"><?php echo $prod['nombre']; ?></option>
+								<input type="hidden" name="idprod" value="<?php echo $prod['id']; ?>" >
+							<?php } ?>
+						<?php } ?>
+					</select>
+				</div>
+				<?php } ?>
+				<!-- Boton -->
+				<div class="col-md-12"><br>
+					<p><input type="submit" value="Enviar Datos" class="btn btn-primary"></p>
+				</div><br>
+				<!-- Boton -->
+			</div>
+		</form>
+	</div>
+</div>

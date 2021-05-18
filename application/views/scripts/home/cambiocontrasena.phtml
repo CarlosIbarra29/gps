@@ -1,0 +1,26 @@
+<div class="jumbotron" style="background-color: #ffffff;">
+    <h1>Ingresa Nueva contraseña</h1>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form action="/home/requestrefreshpass" method="POST" enctype="multipart/form-data">
+			<?php foreach ($this->usuario as $usr) { ?>
+				<input type="hidden" name="id" value="<?php echo $usr['id']; ?> >
+			<?php } ?>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Contraseña nueva: </h4></label>
+				<p><input type="password" name="pword" class="form-control" required></p>
+			</div>
+			<div class="col-lg-12 text-left">
+				<label for="text"><h4>Confirme contraseña: </h4></label>
+				<p><input type="password" name="pwordc" class="form-control" required></p>
+			</div>
+			<!-- Boton -->
+			<div class="col-lg-12 text-center"><br>
+				<p><input type="submit" value="Guardar" class="btn btn-primary"></p>
+			</div><br>
+			<!-- Boton -->
+		</form>
+	</div>
+</div>

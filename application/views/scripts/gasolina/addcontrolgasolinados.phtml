@@ -1,0 +1,165 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/gasolina/updatecontrolgasolina/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar Paso 1</a>    
+    </div>
+</div>
+
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Control de Gasolina Paso 2</span>
+  </div>
+</div>
+
+
+<div class="row">
+	<div class="col s12 m1"></div>
+    <div class="col s12 m10">
+      	<div class="card">
+        	<div class="card-content">
+          		<div class="row">
+                <form action="/gasolina/requestaddcontrolgasolinados" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
+          			<div class="col m12 s12">
+			<input type="hidden" name="ids" value="<?php echo $this->id; ?>">
+			<?php if($this->id_sitio == 0){ ?>
+				<input type="hidden" id="proyecto" name="proyecto" value="0">
+			<?php }else{ ?>
+				<div class="input-field col m6 s12">
+					<select id="proyecto" name="proyecto" required>
+						<option value="" disabled selected>Selecciona una opcion:</option>
+						<?php foreach ($this->proyectos as $rl) { ?>
+						<option value="<?php echo $rl["id"]; ?>">Id: <?php echo $rl["id"]; ?> Proyecto: <?php echo $rl["nombre_proyecto"]; ?></option>
+						<?php } ?>
+					</select>
+					<label>Tipo de Proyecto</label>
+				</div>
+			<?php } ?>
+
+			<?php if($this->forma_pago == 1){ ?>	
+
+				<?php if($this->if_datos == 0){ ?>
+					
+				<?php }else{ ?>
+					<div class="input-field col m6 s12">
+						<select id="tarjeta" name="tarjeta" required>
+							<option value="" disabled selected>Selecciona una opcion:</option>
+							<?php foreach ($this->tarjetas as $rl) { ?>
+							<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["name_responsable"]; ?> No. tarjeta: <?php echo $rl["no_tarjeta"]; ?></option>
+							<?php } ?>
+						</select>
+						<label>Tarjeta de Efecticard</label>
+					</div>
+				<?php } ?>
+
+			<?php } else{?>
+				<input type="hidden" name="tarjeta" id="tarjeta" value="0">
+			<?php } ?>
+
+	  		<div class="input-field col m6 s12">
+	    		<input id="consumo" name="consumo" type="text" class="validate">
+	    		<label for="consumo">Consumo</label>
+	  		</div>
+
+	  		<div class="input-field col m6 s12">
+	    		<input id="inicial" name="inicial" type="text" class="validate">
+	    		<label for="inicial">Odometro Inicial</label>
+	  		</div>
+
+	  		<div class="input-field col m6 s12">
+	    		<input id="final" name="final" type="text" class="validate">
+	    		<label for="final">Odometro Final</label>
+	  		</div>
+
+	    	<div class="file-field input-field col m6 s12">
+	      		<div class="btn">
+	        		<span>Odometro</span>
+	        		<input type="file" name="odometro">
+	      		</div>
+	      		<div class="file-path-wrapper">
+	        		<input class="file-path validate" id="validate_odometro" type="text">
+	      		</div>
+	    	</div>
+
+	    	<div class="file-field input-field col m6 s12">
+	      		<div class="btn">
+	        		<span>Bomba</span>
+	        		<input type="file" name="bomba">
+	      		</div>
+	      		<div class="file-path-wrapper">
+	        		<input class="file-path validate" id="validate_bomba" type="text">
+	      		</div>
+	    	</div>
+
+	    	<div class="file-field input-field col m6 s12">
+	      		<div class="btn">
+	        		<span>Ticket</span>
+	        		<input type="file" name="ticket">
+	      		</div>
+	      		<div class="file-path-wrapper">
+	        		<input class="file-path validate" id="validate_ticket" type="text">
+	      		</div>
+	    	</div>
+
+          			</div>
+                </form>
+          		</div>
+
+		<?php if($this->if_datos == 0 && $this->forma_pago == 1){ ?>
+			<div class="row">
+				<span>El usuario asignado no tiene efecticard asignada, notificar al area de control de proyectos para asignarle una tarjeta y poder continuar con el registro.</span>
+			</div>
+		<?php }else{ ?>
+		<?php } ?>
+
+        	</div>
+        	<div class="card-action">
+				<div class="row">
+					<div class="col m12 s12 text-right">
+						<a href="/gasolina/controlgasolina" class="red btn">Salir</a>
+						<?php if($this->if_datos == 0 && $this->forma_pago == 1){ ?>
+						<?php }else{ ?>
+							<button  id="sendpasodos" class="btn">Terminar Control</button>
+						<?php } ?>
+					</div>
+				</div>	
+        	</div>
+      	</div>
+    </div>
+    <div class="col s12 m1"></div>
+</div>
+
+
+<script src="/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.datepicker').datepicker();
+    });
+
+    $("#sendpasodos").click(function(){
+        var proyecto = document.getElementById("proyecto").value;
+
+        var consumo = document.getElementById("consumo").value;
+        var inicial = document.getElementById("inicial").value;
+        var final = document.getElementById("final").value;
+        var validate_odometro = document.getElementById("validate_odometro").value;
+        var validate_bomba = document.getElementById("validate_bomba").value;
+        var validate_ticket = document.getElementById("validate_ticket").value;
+        var tarjeta = document.getElementById("tarjeta").value;
+        if( proyecto == "" || consumo == "" || inicial == "" || final == "" || validate_odometro == "" || validate_bomba == "" || validate_ticket == "" || tarjeta == ""){
+            swal({
+              title: "Para continuar debes agregar toda la informacion requerida ",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { document.getElementById("submit_gasolina").submit() }
+
+  </script>

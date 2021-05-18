@@ -1,0 +1,151 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1> Descripcion del Producto</h1>
+	</div>
+</div>
+			
+<div class="row">
+	<?php foreach ($this->productos as $key){ ?>
+	<?php $oferta = $key["ofer"]; ?>
+	<input type="hidden" name="canq" id="catiti" value="<?php echo $key['stock']; ?>">
+		<div class="col-md-12 text-center">
+			<center>
+				<a href=""></a><img src="/<?php echo $key["imagen"]; ?>" WIDTH = '250' HEIGHT = '250' />
+			</center>
+		</div>
+		<div class="col-md-12 ">
+			<center>
+				<h3>Imagenes</h3>
+			</center>
+		</div>
+		<div class="col-md-12">
+			<center>
+			<div id="swiper-container2" class="swiper-container">
+				<div class="swiper-wrapper">
+					<?php $i=0; foreach ($this->sli as $k) { ?>
+						<div class="swiper-slide">
+							<img src="/<?php echo $k['imagen']; ?>">
+						</div>
+					<?php  } ?>	
+				</div>
+			</div>
+			</center>
+		</div>
+
+		<div class="col-md-12 ">
+			<center>
+				<h3>Nombre:</h3>
+				<h5><?php echo $key["nombre"]; ?></h5>
+			</center>
+		</div>
+		
+		<div class="col-md-12">
+			<center>
+				<h3>Descripcion</h3>
+				<h5><?php echo $key["descripcion"]; ?></h5>
+			</center>
+		</div>
+		<div class="col-md-12">
+			<center>
+				<h3>Contamos con la cantidad de:</h3>
+				<h5><?php echo $key["stock"]; ?></h5>
+			</center>
+		</div>
+		
+		<?php date_default_timezone_set('America/Mexico_City'); 
+		$timer = date('Y-m-d'); ?>
+		<?php if ($key["ofer"]==1): ?>
+			<input type="hidden" id="offert" name="" value="1">
+			<input type="hidden" id="fini" name="" value="<?php echo $key['inicio']; ?>">
+			<input type="hidden" id="ffin" name="" value="<?php echo $key['final']; ?>">
+			<?php if ($timer>=$key['inicio']&&$timer<=$key['final']): ?>
+				
+				<div class="col-md-12">
+					<center>
+						<h3>Precio en oferta:</h3>
+						<h5><?php echo $key["precioofer"]; ?></h5>
+
+						<input type="hidden" name="pri" id="priceoffer" value="<?php echo $key["precioofer"]; ?>">
+						<input type="hidden" name="pri" id="price" value="<?php echo $key["precio"]; ?>">
+					</center>
+				</div>
+				<div class="col-md-12">
+					<input type="hidden" id="time" name="horas" value="<?php echo $key['timeofer'] ?>">
+					<h1>La oferta finaliza en:</h1>
+					<h2 id='CuentaAtras'></h2>
+				</div>
+
+			<?php else: ?>
+
+				<div class="col-md-12">
+					<center>
+						<h3>Su precio es:</h3>
+						<h5><?php echo $key["precio"]; ?></h5>
+						<input type="hidden" id="offert" name="" value="0">
+						<input type="hidden" name="pri" id="priceoffer" value="0">
+						<input type="hidden" name="pri" id="price" value="<?php echo $key["precio"]; ?>">
+					</center>
+				</div>
+			<?php endif ?>
+
+		<?php else: ?>
+			<div class="col-md-12">
+				<center>
+					<h3>Su precio es:</h3>
+					<h5><?php echo $key["precio"]; ?></h5>
+					<input type="hidden" id="offert" name="" value="0">
+					<input type="hidden" name="pri" id="priceoffer" value="0">
+					<input type="hidden" name="pri" id="price" value="<?php echo $key["precio"]; ?>">
+				</center>
+			</div>
+		<?php endif; ?>
+		
+		<div class="col-lg-3">
+			<label><h3>Cantidad: </h3></label>
+		</div>
+		<div class="col-lg-9">
+			<select name="cantidad" id="qnty" class="form-control" required>
+				<option value="0">Seleccione cantidad</option>
+				<?php for ($i=1; $i <= $key['stock']; $i++) { ?>
+				<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+				<?php } ?>
+			</select>
+		</div>
+		<div class="col-lg-12"><br>
+			
+			<a href="#" onclick="addToCar(<?php echo $key["id"]; ?>,'<?php echo $key["nombre"]; ?>'); 
+				return false;" class="form-control btn btn-primary">Agregar al carrito: 
+			</a><br><br>
+		</div>
+	<?php } ?>
+</div> 
+
+<script language="JavaScript">
+<?php if ($oferta==1): ?>
+	
+	inicio = document.getElementById("fini").value;
+	final = document.getElementById("ffin").value;
+	updateReloj();
+<?php endif; ?>
+function updateReloj() {
+	var fecha1 = moment(inicio);
+	var fecha2 = moment(final);
+	var tiempo = new Date();
+	var dleft=fecha2.diff(fecha1, 'days');
+	var dias=fecha2.diff(moment().format('L'), 'days');
+	
+    var hora = 23-tiempo.getHours();
+    var minutos = 59-tiempo.getMinutes();
+    var segundos = 59-tiempo.getSeconds();
+    
+    tiempoAtras=  (dias <= 1) ? dias+" Días " : "0 Días";
+    tiempoAtras+= (hora < 10) ? "0"+hora :hora;
+    tiempoAtras+= ((minutos < 10) ? ":0" : ":") + minutos;
+    tiempoAtras+= ((segundos < 10) ? ":0" : ":") + segundos;
+
+    document.getElementById('CuentaAtras').innerHTML = tiempoAtras;
+
+    setTimeout("updateReloj()",1000);
+}
+
+</script>

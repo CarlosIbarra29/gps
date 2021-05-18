@@ -1,0 +1,220 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<div class="row mt-4">
+	<div class="col m12 s12 text-center" style="margin-top: 15px;">
+		<div class="row">
+			<div class="col m12 s12 text-right">
+				<a class=" green btn modal-trigger" href="#modal1">+ Agregar Tarjeta</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tarjetas Efecticard</span>
+    </div>
+</div>
+
+
+<div class="row">
+  <div class="col m12 s12">
+	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de tarjetas</span>
+    <table class="table text-left table-hover">
+      <thead>
+        <tr>
+          <th>NO. Tarjeta</th>
+          <th>Responsable</th>
+          <th>Fecha Vigencia</th>
+          <th>Status</th>
+        </tr> 
+      </thead>
+      <?php
+      if ($this->paginator) { 
+      foreach ($this->paginator as $usr) { ?>
+      <tbody>
+        <tr>
+          <td><?php echo $usr['no_tarjeta']; ?></td>
+          <td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?></td>
+          <td><?php echo $usr['vigencia']; ?></td>
+          <td>
+            <?php if($usr['status_tarjeta'] == 0){ ?>
+              <div class="chip" id="activo_personal">
+                <img src="/img/correct.png" >
+                Activa
+              </div>
+                      
+            <?php } ?>
+          </td>
+      		<td>
+      			<a href="/gasolina/efecticarddetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+      		</td>
+
+        </tr>
+        <?php } }else{ ?>
+        </tbody> 
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="6"><h4>No hay tarjetas agregadas.</h4></td>
+            </tr>
+        </tbody>
+                    
+        <?php } ?>
+    </table>
+  </div>
+</div>
+
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar tarjeta de efecticard</span>
+		<div class="col m12 s12" style="margin-top: 19px;">
+			<form action="/gasolina/requestaddtarjetaefecticard" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_usuario">
+				<div class="row">
+					<div class="input-field col s6">
+					    <select id="personal" name="personal" required>
+					      	<option value="0" disabled selected>* Selecciona una opcion:</option>
+					      	<?php foreach ($this->personal as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?> </option>
+					      	<?php } ?>
+					    </select>
+					    <label>Personal</label>
+					</div>
+			        <div class="input-field col s6">
+			          	<input id="no_tarjeta" type="text" name="no_tarjeta" class="validate" required>
+			          	<label for="no_tarjeta">* NO. Tarjeta:</label>
+			        </div>
+
+              <div class="input-field col s6">
+                  <input id="vigencia" type="date" name="vigencia" class="validate" required>
+                  <label for="vigencia">* Vigencia de la tarjeta:</label>
+              </div>
+
+		  </div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      	</form>
+      	<button class=" btn" id="adduser">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+    $("#adduser").click(function(){
+        var personal = document.getElementById("personal").value;
+        var no_tarjeta = document.getElementById("no_tarjeta").value;
+        // var vigencia = document.getElementById("vigencia").value;
+
+        if(personal == 0 || no_tarjeta == "" ){
+            swal({
+            	title: "Para agregar una tarjeta es necesario llenar ambos datos solicitados",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });    
+            setTimeout(submitForm, 1500);     
+        }
+
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_usuario").submit()
+    }
+</script>

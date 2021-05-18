@@ -1,0 +1,49 @@
+<div class="jumbotron" style="background-color: #ffffff;">
+    <h1>Ingresa Nueva contraseña</h1>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form action="/home/requestupdateuserpass" method="POST" enctype="multipart/form-data">
+			<div>
+				<?php //echo $this->correo[0]['correo'];?>
+				<div class="col-md-12">
+					<input type="hidden" name="correo" value="<?php echo $this->correo[0]['correo'];?>">
+				</div>
+				<div class="col-lg-12 text-left">
+					<label for="text"><h4>Contraseña: </h4></label>
+					<p><input type="password" name="pass" class="form-control" required></p>
+				</div>
+				<div class="col-lg-12 text-left">
+					<label for="text"><h4>Confirme contraseña: </h4></label>
+					<p><input type="password" name="passw" class="form-control" required></p>
+				</div>
+			</div>
+
+		</div>
+		<!-- Boton -->
+		<div class="col-lg-12 text-center"><br>
+			<p><input type="submit" value="Enviar Datos" class="btn btn-primary"></p>
+		</div><br>
+		<!-- Boton -->
+	</form>
+</div>
+
+<script>
+
+	var pword, pwordc;
+
+	pword = document.getElementById('pass');
+	pwordc = document.getElementById('passw');
+
+	pword.onchange = pwordc.onkeyup = passwordMatch;
+
+	function passwordMatch() {
+	    if(pword.value !== pwordc.value)
+	        pwordc.setCustomValidity('Las contraseñas no coinciden. Verifique que las contraseñas que ingreso sean las mismas.');
+	    else
+	        pwordc.setCustomValidity('');
+	}
+
+</script>
+

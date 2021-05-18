@@ -1,0 +1,258 @@
+<?php 
+  
+  function isActhref($nameBtn,$urlname){
+    if($nameBtn==1 && $urlname==null){
+      return "active"; 
+    }
+    return ($nameBtn == $urlname)?"active":"";
+  }
+
+  if (isset($_GET['pagina'])) {
+    $pagina = $_GET['pagina'];
+  } else {
+    $pagina = 1;
+  }
+
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+?>
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+  <div class="col m6 s6">
+    <!-- <a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> -->  
+  </div>
+  <div class="col m6 s6 text-right">
+    <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Tipo Documento</a>
+  </div>
+</div>
+ 
+<div class="row">
+  <div class="col m12 s12 text-center" style="margin-top: 10px;">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tipo Documentos Vehículos
+  </div>
+</div>
+<!-- End Inicio Botones -->
+
+
+<!-- Modal Structure 1 -->
+<div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    
+    <div class="col m12 s12" style="margin-top: 10px;">
+      <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Tipo de Documento
+    </div>
+
+    <div class="col m12 s12">
+      <form action="/vehiculos/requesttipod" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_tpod">
+        <div class="row">
+          
+          <div class="input-field col m12 s12">
+            <i class="material-icons prefix">assignment</i>
+            <input id="name" type="text" name="name" class="validate" required>
+            <label for="name">* Nombre:</label>
+          </div>
+        
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class=" btn" id="addtpodoc">Guardar</button> 
+    <button  class="modal-close red btn">Cerrar</button>
+  </div>
+</div>
+<!-- End Modal -->
+
+  
+  <!-- Table Categorías -->
+ <div class="col m10 s10">
+  <h3>Tipos de Documento</h3>
+  <table class="table text-left table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th> 
+        <th>Editar</th>
+        <th>Eliminar</th>
+      </tr> 
+    </thead>
+
+    <?php if ($this->paginator) {
+    foreach ($this->paginator as $tipodoc) { ?>
+    <tbody>
+      <tr>
+        <td><?php echo $tipodoc["id"]; ?></td>
+        <td><?php echo $tipodoc["nombredoc"]; ?></td>
+        <td>
+          <a href="/vehiculos/tpodocedit/id/<?php echo $tipodoc["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+        </td>
+        <td>
+          <a class="delete" data-id="<?php echo $tipodoc["id"]; ?>" data-nombre="<?php echo $tipodoc["nombredoc"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+        </td>
+      </tr>
+    </tbody>
+    <?php } } else{ ?>
+      <tbody>
+        <td></td>
+        <td></td>
+        <td>
+          <h4>No se encontraron tipos de Documento</h4>
+        </td>
+        <td></td>
+        <td></td>
+      </tbody>
+
+    <?php }?>
+  </table>
+</div>
+  <!-- End Table Categorías -->
+
+<!-- Paginación  -->
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<!-- End Paginacion  -->
+<!-- Scripts -->
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+    //Modal script//
+
+    $("#addtpodoc").click(function(){
+      var name = document.getElementById("name").value;
+
+            if(name == ""){
+                swal({
+                  title: "Para agregar un tipo de documento, debes añadir un nombre.",
+                });
+            }else{
+                 swal("Espera un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });
+                setTimeout(submitForm, 500);     
+            }
+        });
+
+        function submitForm() {
+            document.getElementById("submit_tpod").submit()
+        }
+        //Agregar Categoría Script
+
+//Inicio Delete Ajax
+
+        $(".delete").click(function(){
+      id=$(this).data('id');
+      nombre=$(this).data('nombre');
+    swal({
+      title: "¿Estas seguro de eliminar el tipo de documento  "+nombre+"?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+
+    .then((willDelete) => {
+      if (willDelete) {
+         swal("Espera un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });
+
+            var request = $.ajax({
+              url:"/vehiculos/requestdeletetipodoc",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+              } else {
+                swal("La accion fue cancelada!");
+              }
+          });
+  });
+ // End Ajax
+
+
+
+</script>

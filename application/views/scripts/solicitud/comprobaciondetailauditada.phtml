@@ -1,0 +1,271 @@
+<style type="text/css">
+  .title_info {
+    font-size: 18px;
+  }
+</style>
+
+<div class="row">
+  <div class="col m12 s12">
+    <h2>Detalles de la Comprobación</h2>
+  </div>
+</div>
+
+<?php foreach ($this->comprobacion as $key){  
+  $id = $key['id'];
+  $factura = $key['factura'];
+  $razon_social = $key['razon_social'];
+  $monto = $key['monto_solicitud'];
+  $fecha = $key['fecha_del'];
+  $servicio = $key['nombre_servicio'];
+  $user = $key['user'];
+  $status_comprobacion = $key['status_comprobacion'];
+
+} ?>
+
+<div class="row">
+
+  <div class="col m6 s12">
+        <div class="card">
+          <div class="card-content">
+              <span class="card-title">Información</span>
+              <div>
+                <span class="title_info">Fecha de comprobación:</span> <span class="title_info"><?php echo $fecha; ?></span> <br>
+                <span class="title_info">Razon social:</span> <span class="title_info"><?php echo $razon_social; ?></span><br>
+                <span class="title_info">No. Factura:</span> <span class="title_info"><?php echo $factura; ?></span> <br>
+                <span class="title_info">Servicio:</span> <span class="title_info"><?php echo $servicio; ?></span> <br>
+                <span class="title_info">Monto a facturar:</span> <span class="title_info" style="font-weight: bold;">$<?php echo $monto; ?></span>
+              </div>
+          </div>
+          <div class="card-action">
+            <p>Comprobación realizada por: <?php echo $user; ?></p>
+          </div>
+        </div>
+  </div>
+
+<?php if($status_comprobacion == 0){ ?>
+  <div class="col m6 s12">
+<form action="/solicitud/requestupdatecomprobacioncheck" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobar">
+    <input type="hidden" name="ids" value="<?php echo $id; ?>">
+
+      <div class="input-field col s12">
+        <select name="sitios" id="sitios">
+          <option value="" disabled selected>Selecciona una opcion:</option>
+          <option value="0">Oficina</option>
+          <?php foreach ($this->sitios as $res) { ?>
+          <option value="<?php echo $res["id"]; ?>"><?php echo $res["nombre"]; ?></option>
+          <?php } ?>                  
+        </select>
+        <label>* Sitios</label>
+      </div>
+
+        <div class="input-field col s12">
+          <input id="monto" name="monto" type="text" class="validate">
+          <label for="monto">* Monto a comprobar</label>
+        </div>
+
+      <div class="input-field col s12">
+        <select id="vo_bo" name="vo_bo">
+          <option value="0" disabled selected>* Selecciona una opcion</option>
+          <option value="Ok">Ok</option>
+          <option value="Rechazado">Rechazado</option>
+          <option value="Parcial">Parcial</option>
+        </select>
+        <label>* Vo. Bo. PMO</label>
+      </div>
+
+
+
+        <div class="input-field col s12">
+            <textarea id="comentario" name="comentario" class="materialize-textarea"></textarea>
+            <label for="comentario">Comentario PMO</label>
+        </div>
+</form>
+        <div class="input-field col s12 text-center">
+          <a class="btn" id="comprobar"><i class="material-icons right">check</i>Comprobar</a>
+        </div>
+
+  </div>
+<?php }else{ ?>
+
+  <div class="col m6 s12">
+<form action="/solicitud/requestupdatecomprobacioncheck" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobar_edit">
+  <?php foreach ($this->comprobacion as $key){ ?>
+      <input type="hidden" name="ids" value="<?php echo $key['id']; ?>">
+
+            <div class="input-field col m12 s12">
+              <select id="sitio_edit" name="sitios" disabled>
+                  <option value="0" disabled>* Selecciona un Sitio</option>
+                  <?php if($key['id_sitio'] == "0"){?>
+                    <option value="oficina" selected>Oficina</option>
+                  <?php }else{ ?>
+                    <option value="oficina">Oficina</option>
+                  <?php } ?>
+                <?php foreach ($this->sitios as $mar) { 
+                  if ($mar['id']==$key['id_sitio']) { ?>
+                          <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                <?php } if ($mar['id']!=$key['sitio_id']) { ?>
+                          <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                <?php } } ?>  
+              </select>
+              <label>Sitio:</label>
+            </div>
+
+        <div class="input-field col s12">
+          <input id="monto_edit" name="monto" disabled value="<?php echo $key['monto_comprobacion']; ?>" type="text" class="validate">
+          <label for="monto_edit">* Monto a comprobar</label>
+        </div>
+
+
+        <div class="input-field col s12">
+          <select id="vo_bo_edit" name="vo_bo" disabled>
+            <?php if($key['vo_bo'] == "Ok") { ?>
+              <option value="Ok" selected>Ok</option>
+              <option value="Rechazado">Rechazado</option>
+              <option value="Parcial">Parcial</option>
+            <?php } ?>
+
+            <?php if($key['vo_bo'] == "Rechazado") { ?>
+              <option value="Ok">Ok</option>
+              <option value="Rechazado" selected>Rechazado</option>
+              <option value="Parcial">Parcial</option>
+            <?php } ?>
+
+            <?php if($key['vo_bo'] == "Parcial") { ?>
+              <option value="Ok">Ok</option>
+              <option value="Rechazado">Rechazado</option>
+              <option value="Parcial" selected>Parcial</option>
+            <?php } ?>
+
+          </select>
+          <label>* Vo. Bo. PMO</label>
+        </div>
+
+        <div class="input-field col s12">
+            <textarea id="comentario_edit" name="comentario" disabled class="materialize-textarea"><?php echo $key['comentarios_comprobacion']; ?></textarea>
+            <label for="comentario_edit">Comentario PMO</label>
+        </div>
+  <?php } ?>
+
+
+
+
+</form>
+
+
+  </div>
+
+
+<?php } ?>
+
+
+
+</div>
+
+
+<div class="row">
+  <div class="col m6 s12">
+    <h2>Factura</h2>
+      <table>
+        <thead>
+          <tr>
+              <th class="text-center">Descargar</th>
+              <th class="text-center">Visualizar</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <?php foreach ($this->comprobacion as $usr){ ?>
+            <?php if($usr['factura_file'] == ""){?>
+              <tr>
+                <td class="text-center"><h3>Sin Factura</h3></td>
+                <td></td>
+              </tr>
+            <?php }else{ ?>
+            <tr>
+              <td class="text-center">
+          <a title="Descargar Archivo" href="/<?php echo $usr["factura_file"]; ?>" download="<?php echo substr(strrchr($usr["factura_file"], "/"), 1); ?>"> <i class="material-icons prefix" style="width: 42px;font-size: 31px;">file_download</i> </a>
+            </td>
+            <td class="text-center">
+              <a href="/<?php echo $usr["factura_file"]; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
+            </td>
+            </tr>
+            <?php } ?>
+
+          <?php } ?>
+        </tbody>
+      </table>
+              
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#comprobar").click(function(){
+    sitio = document.getElementById("sitios").value;
+    monto = document.getElementById("monto").value;
+    vo_bo = document.getElementById("vo_bo").value;
+
+        if(monto == "" || sitio == "" || vo_bo ==0 ){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(comprobar, 1500);
+        }
+
+  });
+
+
+ function comprobar() { document.getElementById("submit_comprobar").submit() }
+
+
+  $("#comprobar_edit").click(function(){
+    sitio = document.getElementById("sitio_edit").value;
+    monto = document.getElementById("monto_edit").value;
+    vo_bo = document.getElementById("vo_bo_edit").value;
+
+        if(monto == "" || sitio == "" || vo_bo ==0 ){
+              swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(comprobar_edit, 1500);
+        }
+
+  });
+
+ function comprobar_edit() { document.getElementById("submit_comprobar_edit").submit() }
+
+
+ $("#add_file").click(function(){
+  var file = document.getElementById("url_edit").value;
+  var id = document.getElementById("id_file").value;
+
+        if(file == "" ){
+              swal({
+                title: "Para continuar debes agregar un documento PDF",
+              });
+
+        }else{
+          // swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+          setTimeout(file_sumbit, 1500);
+        }
+ });
+
+  function file_sumbit() { document.getElementById("submit_file").submit() }
+</script>

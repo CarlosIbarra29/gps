@@ -1,0 +1,430 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<style type="text/css">
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  /*background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;*/
+  background: url("/img/inicio.jpg") 50% fixed;
+  background-opacity: 0.1;
+  background-size: cover;
+}
+
+.container-login100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.login100-form {  
+  padding: 45px 15px 45px 15px;
+}
+
+.login100-form-title {
+  width: 100%;
+  display: block;
+  font-family: "Poppins", sans-serif;
+  font-size: 35px;
+  /*color: #333333;*/
+  line-height: 1.2;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.wrap-login100 {
+  /*width: 100%;*/
+  background: #fff;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: row-reverse;
+
+}
+
+.wrap-input100 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  width: 100%;
+  height: 75px;
+  position: relative;
+  /*border: 1px solid #e6e6e6;
+  border-radius: 10px;*/
+  margin-bottom: 10px;
+}
+
+
+.input100 {
+  display: block;
+  width: 100%;
+  background: transparent;
+  font-size: 15px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 26px;
+}
+
+input.input100 {
+  height: 100%;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.focus-input100 {
+  position: absolute;
+  display: block;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  top: -2px;
+  left: -2px;
+  pointer-events: none;
+  /*border: 1px solid #6675df;*/
+  /*border-radius: 10px;*/
+
+  visibility: hidden;
+  opacity: 0;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+
+  -webkit-transform: scaleX(1.1) scaleY(1.3);
+  -moz-transform: scaleX(1.1) scaleY(1.3);
+  -ms-transform: scaleX(1.1) scaleY(1.3);
+  -o-transform: scaleX(1.1) scaleY(1.3);
+  transform: scaleX(1.1) scaleY(1.3);
+}
+
+.input100:focus + .focus-input100 {
+  visibility: visible;
+  opacity: 1;
+
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+
+.eff-focus-selection {
+  visibility: visible;
+  opacity: 1;
+
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+
+.input100:focus {
+  height: 30px;
+}
+
+.input100:focus + .focus-input100 + .label-input100 {
+  top: 14px;
+  font-size: 13px;
+}
+
+.has-val {
+  height: 48px !important;
+}
+
+.has-val + .focus-input100 + .label-input100 {
+  top: 14px;
+  font-size: 13px;
+}
+
+.label-input100 {
+  /*font-family: Montserrat-Regular;*/
+  font-size: 15px;
+  color: #999999;
+  line-height: 1.2;
+
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  padding-left: 24px;
+  left: 0;
+  top: 30px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+
+.container-login100-form-btn {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5%;
+}
+
+.login100-form-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 40%;
+  height: 40px;
+  border-radius: 10px;
+  background: #00236e;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.login100-form-btn:hover {
+  background: #333333;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.login {
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px 20px 20px 20px;
+  width: 90%;
+  max-width: 500px;
+  background: #ffffff;
+  position: relative;
+  padding-bottom: 110px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+}
+.login.loading button {
+  max-height: 100%;
+  padding-top: 50px;
+}
+.login.loading button .spinner {
+  opacity: 1;
+  top: 40%;
+}
+.login.ok button {
+  background-color: #8bc34a;
+}
+.login.ok button .spinner {
+  border-radius: 0;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  height: 20px;
+  animation: none;
+  transform: rotateZ(-45deg);
+}
+.login input {
+  display: block;
+  padding: 15px 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  transition: border-width 0.2s ease;
+  border-radius: 2px;
+  color: #ccc;
+}
+.login input + i.fa {
+  color: #fff;
+  font-size: 1em;
+  position: absolute;
+  margin-top: -47px;
+  opacity: 0;
+  left: 0;
+  transition: all 0.1s ease-in;
+}
+.login input:focus {
+  outline: none;
+  color: #444;
+  border-color: #2196F3;
+  border-left-width: 35px;
+}
+.login input:focus + i.fa {
+  opacity: 1;
+  left: 30px;
+  transition: all 0.25s ease-out;
+}
+.login a {
+  font-size: 0.8em;
+  color: #2196F3;
+  text-decoration: none;
+}
+.login .title {
+  color: #444;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0 30px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.login button {
+  width: 100%;
+  height: 100%;
+  padding: 10px 10px;
+  background: #2196F3;
+  color: #fff;
+  display: block;
+  border: none;
+  margin-top: 20px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  max-height: 60px;
+  border: 0px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 2px 2px;
+  transform: rotateZ(0deg);
+  transition: all 0.1s ease-out;
+  border-bottom-width: 7px;
+}
+</style>
+
+<br>
+<div class="row">
+    <div class=" col m12 s12 ">
+        <div class="col s12 m12 container-login100">
+            <div class="wrap-login100">
+
+                <form action="/index/validar" method="POST" enctype="multipart/form-data" class="login100-form validate-form">
+                    <div class="col s12 m12 text-center">
+                        <img style="width: 250px;" src="/img/logo-2.png" /> 
+                    </div>
+
+                    <span class="login100-form-title" >¡Bienvenido!<br> 
+                        <p style="font-size: 14px;">Identificate para Acceder</p>
+                    </span>
+                    
+                    <input type="hidden" name="ids" value="<?php echo $usr['id']; ?>">
+
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="icon_prefix" type="text" name="mail" class="validate"  required>
+                        <label for="icon_prefix">Correo:</label>
+                    </div>
+
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="icon_telephone" type="password" name="passw"  class="validate">
+                        <label for="icon_telephone">contraseña:</label>
+                    </div>
+
+                    <!-- <div class="wrap-input100 col m12 s12 validate-input " >
+                        <input class="input100" type="text" name="mail" required>
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Correo: </span>
+                    </div>
+
+                    <div class="wrap-input100 col m12 s12 validate-input" data-validate="Password is required">
+                        <input class="input100" type="password" name="passw" required>
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Contraseña: </span>
+                    </div> -->
+
+                    <div class="container-login100-form-btn">
+                        <button type="submit" id="add_user" class="login100-form-btn">
+                            Iniciar sesión
+                        </button>
+                    </div>
+
+                    <!-- <div class="col s12 m12 text-right">
+                        <a href="/home/recuperarcontrasena">¿Olvidaste tu contraseña?</a>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+<!-- 
+<div class="row">
+  <div class=" col m6 s12">
+  <div class="col s12 m7">
+    <h2 class="header">Iniciar sesión</h2>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <form action="/index/validar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+            <input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
+            <div class="input-field col m12 s12">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="icon_prefix" type="text" name="mail" class="validate"  required>
+                <label for="icon_prefix">Correo:</label>
+            </div>
+
+            <div class="input-field col m12 s12">
+                <i class="material-icons prefix">lock</i>
+                <input id="icon_telephone" type="password" name="passw"  class="validate">
+                <label for="icon_telephone">contraseña:</label>
+            </div>
+
+            <div class="input-field col m12 s12 text-center">
+              <div class="row">
+                <div class="col m2 s12"> </div>
+                <div class="col m8 s12"><button tyle="submit" id="add_user" class="waves-effect waves-light btn">Iniciar sesión</button></div>
+                <div class="col m2 s12"></div>
+                
+              </div>  
+            </div>
+          </div>
+        </form>
+        </div>
+        <div class="card-action">
+          <a href="/home/recuperarcontrasena">Olvide contraseña</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div> -->

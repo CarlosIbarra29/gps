@@ -1,0 +1,989 @@
+
+<?php foreach ($this->herramienta as $h) { $imagen = $h['imagen'];   $nombre =$h['nombre']; $evidencia =$h['evidencia_b'];  } ?>
+<?php foreach ($this->reparacion as $rep) { $id_h = $rep['id_herramienta'];  } ?>
+
+<input type="hidden" name="id_herr" id="id_herr" value="<?php echo $this->idher; ?>">
+
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+
+<!-- INICIO DETAIL-->
+<div class="col m12 s12">
+	<div class="row" style="margin-top: 15px;">
+		<div class="col m4 s12">
+			<div class="col m12 s12">
+				<?php if($this->op_sel == 0){ ?>
+					<a href="/herramienta/inventario"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?> 
+				<?php if($this->op_sel == 1){ ?>
+					<a href="/herramienta/buscarherramienta?nombre=<?php echo $this->nombre; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 2){ ?>
+					<a href="/herramienta/buscarherramienta?codigo=<?php echo $this->codigo; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 3){ ?>
+					<a href="/herramienta/buscarherramienta?status=<?php echo $this->status; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 4){ ?>
+					<a href="/herramienta/buscarherramienta?nombreh=<?php echo $this->nombreh; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+				<?php if($this->op_sel == 5){ ?>
+					<a href="/herramienta/buscarherramienta?hid=<?php echo $this->hid; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?> 
+				<?php if($this->op_sel == 6){ ?>
+					<a href="/herramienta/buscarherramienta?cate=<?php echo $this->cate_h; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+				<?php } ?>
+			</div>
+		</div>
+		<div class="col m8 s12">
+			<div class="row text-center">
+				<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status Herramienta</span>
+			</div>
+			<div class="row text-center">
+				<div class="col m3 s3">
+					<?php foreach ($this->herramienta as $her) { ?>
+						<?php if($her['status_disponible'] == 0){ ?>
+							<div class="chip">
+								<img src="/img/correct.png" >
+								Disponible
+							</div>
+						<?php }else{ ?>
+							<div class="chip">
+								<img src="/img/gris.jpg" >
+								Disponible
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->herramienta as $her) { ?>
+						<?php if($her['status_disponible'] == 1){ ?>
+							<div class="chip" >
+								<img src="/img/naranja.png" >
+								Ocupado
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Ocupado
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->herramienta as $her) { ?>
+						<?php if($her['status_disponible'] == 2){ ?>
+							<div class="chip" >
+								<img src="/img/azul.png" >
+								Reparación 
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Reparación
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="col m3 s3">
+					<?php foreach ($this->herramienta as $her) { ?>
+						<?php if($her['status_disponible'] == 3){ ?>
+							<div class="chip" >
+								<img src="/img/rojo.png" >
+								Baja
+							</div>
+						<?php }else{ ?>
+							<div class="chip" >
+								<img src="/img/gris.jpg" >
+								Baja
+							</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+			</div>
+
+			<div class="col m12 s12 text-center">
+			  	<?php foreach ($this->herramienta as $her) { ?>
+			  		<span>Ultima fecha de actualizacion herramienta: <?php echo $her['created_at'];  ?></span>
+			  	<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END INICIO DETAIL-->
+
+<?php foreach ($this->herramienta as $her) { ?>
+	<input type="hidden" name="status_disponible" id="status_disponible" value="<?php echo $her['status_disponible']; ?>">
+<?php } ?>
+
+<?php foreach ($this->herramienta as $idher) { 
+	$herramientaid = $idher["id_herramienta"];
+} ?>
+<input type="hidden" name="" id="herramienta_id" value="<?php echo $herramientaid; ?>">
+
+<!--Inicio Botones rep/baja-->
+<div class="col m12 s12">
+	<div class="col m4 s12 text-center"></div>
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->herramienta as $her) { ?>
+			<?php if($her['status_disponible'] == 3){ ?>
+				<div class="col m12 s12"></div>
+			<?php } elseif ($her['status_disponible'] == 2){ ?>
+				<div class="col m12 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Dar de baja</a>
+					</div>
+				</div>
+			<?php } else {?>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalrepara">Reparación</a>
+					</div>
+				</div>
+				<div class="col m6 s12">
+					<div class="input-field col m12 s12">
+						<a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalbaja">Dar de baja</a>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+	</div>
+</div>
+<!--End Botones -->
+
+<!-- Inicio Panel Inicial-->
+<div class="row">
+	<div class="col m4 s12 text-center">
+		<?php if($imagen== null){ ?>
+			<img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+		<?php }else{ ?>
+			<a class="example-image-link" href="/<?php echo $her['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $her['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+		<?php } ?>
+	</div>
+
+	<div class="col m8 s12 text-center">
+		<?php foreach ($this->herramienta as $her) { ?>
+			<?php if($her['status_disponible'] == 0){ ?>
+				<div class="card darken-1">
+					<div class="card-content">
+						<div class="row">
+							<div class="col m12 s12">
+		          			<h3 class="card-title">Asignar Herramienta:</h3>
+		          			<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="input-field col m6 s6">
+		          				<select name="responsable" id="responsable" required>
+		          					<option value="" disabled selected>Selecciona al Responsable:</option>
+					      			<?php foreach ($this->per as $personal) { ?>
+					      			<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					      			<?php } ?>
+	
+		          				</select>
+		          				<label>Responsable</label>
+		          			</div>
+		          			
+		          			<div class="input-field col m6 s6">
+		          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="asignar_h">Asignar Herramienta</a>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+			<?php }?>
+			<?php if($her['status_disponible'] == 1){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Liberar Herramienta</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+		          				<?php foreach ($this->pers as $perso) { ?>
+			          			<div class="input-field col m12 s12">
+			          				<h4 class="text-center">
+			          					<strong><span class="font_tittle text-center">A cargo de: </span></strong>
+			          				</h4>
+			          				<h5 class="text-center">
+			          					<?php echo $perso["nombrea"]; ?> <?php echo $perso["apellido_pa"]; ?> <?php echo $perso["apellido_ma"]; ?>
+		          					</h5>
+		          					<h5 class="text-center">
+		          						<strong><span class="font_tittle">Sitio: </span></strong>
+		          							<?php echo $perso["sitio"]; ?>
+		          					</h5>
+		          					<h5 class="text-center">
+		          						<strong><span class="font_tittle">Fecha salida: </span></strong>
+		          							<?php echo $perso["fecha_salida"]; ?>
+		          					</h5>
+			          			</div>
+			          			<?php } ?>
+		          			</div>
+		          			<div class="col m6 s12">
+		          				<br>
+			          			<div class="input-field col m12 s12">
+			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="liberar_h">Liberar Herramienta</a>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+	      	<?php if($her['status_disponible'] == 2){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Herramienta en Reparación</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+		          					<?php foreach ($this->herramienta as $her) { ?>
+		          						<h4 class="text-center">
+			          						<strong><span class="font_tittle text-center">Motivo de Reparación: </span></strong>
+			          					</h4>
+		          						<h4 class="text-center">
+		          							<?php echo $her["comentario_b"]; ?>
+		          						</h4>
+		          					<?php } ?>
+		          					<?php foreach ($this->pers as $perso) { ?>
+			          					<h5 class="text-center">
+				          					<strong><span class="font_tittle text-center">Último responsable: </span></strong>
+				          				</h5>
+			          					<h5 class="text-center">
+				          					<?php echo $perso["nombreu"]; ?> <?php echo $perso["apa"]; ?> <?php echo $perso["ama"]; ?>
+			          					</h5>
+			          				<?php } ?>
+		          					<?php foreach ($this->fecha as $fecha) { ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle">Fecha inicio reparación: </span></strong>
+			          							<?php echo $fecha["fecha"]; ?>
+			          					</h5>
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+			          			<div class="input-field col m12 s12">
+			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="lrepara_h">Herramienta Reparada</a>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+	      	<?php if($her['status_disponible'] == 3){ ?>	
+				<div class="card darken-1">
+		        	<div class="card-content">
+		          		<div class="row">
+		          			<div class="col m12 s12">
+		          				<h3 class="card-title">Baja de Herramienta</h3>
+		          				<hr>
+		          			</div>
+		          		</div>
+		          		<div class="row">
+		          			<div class="col m6 s12 text-left">
+			          			<div class="input-field col m12 s12">
+		          					<?php foreach ($this->herramienta as $her) { ?>
+		          						<h4 class="text-center">
+			          						<strong><span class="font_tittle text-center">Motivo de Baja: </span></strong>
+			          					</h4>
+			          					<?php if($her['comentario_b'] == null){ ?>
+			          						<h4 class="text-center">
+		          							La herramienta ha sido dada de baja
+		          							</h4>
+		          						<?php } else { ?>
+		          						<h4 class="text-center">
+		          							<?php echo $her["comentario_b"]; ?>
+		          						</h4>
+		          					<?php } ?>
+		          					
+		          					<?php } ?>
+		          					<?php foreach ($this->pers as $perso) { ?>
+			          					<h5 class="text-center">
+				          					<strong><span class="font_tittle text-center">Último responsable: </span></strong>
+				          				</h5>
+			          					<h5 class="text-center">
+				          					<?php echo $perso["nombreu"]; ?> <?php echo $perso["apa"]; ?> <?php echo $perso["ama"]; ?>
+			          					</h5>
+			          				<?php } ?>
+		          					<?php foreach ($this->fecha as $fecha) { ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle">Fecha de baja: </span></strong>
+			          							<?php echo $fecha["fecha"]; ?>
+			          					</h5>
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          			<div class="col m6 s12">
+			          			<div class="input-field col m12 s12">
+			          				<?php foreach ($this->herramienta as $her) { ?>
+			          					<h5 class="text-center">
+			          						<strong><span class="font_tittle text-center">Evidencia Baja: </span></strong>
+			          					</h5>
+			          					<?php if($evidencia== null){ ?>
+			          						<img src="/img/no_evidencia.png" class="responsive-img" style="width: 150px; margin-top: 5px;">
+			          					<?php }else{ ?>
+			          						<a class="example-image-link" href="/<?php echo $her['evidencia_b']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $her['evidencia_b']; ?>" id="camara_div" alt="<?php echo $her['codigo']; ?>" style="width:  150px;  margin-top: 5px;"/></a>
+			          						<h5>
+			          							<a href="/<?php echo $her['evidencia_b']; ?>" title="Descargar Archivo" class="waves-effect darken-1 waves-light lighten-4 btn" download="<?php echo substr(strrchr($her["codigo"], "/"), 1); ?>">Descargar</a> 
+			          						</h5>
+			          					<?php } ?>
+			          				<?php } ?>
+			          			</div>
+		          			</div>
+		          		</div>
+		        	</div>
+	      		</div>
+	      	<?php } ?>
+		<?php } ?>
+	</div>
+</div>
+<!-- End Panel Inicial-->
+
+<!-- Modal Baja Herramienta -->
+<div id="modalbaja" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<h4>Dar de baja herramienta</h4>
+		<div class="row">
+			<form action="/herramienta/requestbajaherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_baja">
+				<?php foreach ($this->herramienta as $idher) { ?>
+					<input type="hidden" name="idh" value="<?php echo $idher["id_herramienta"]; ?>">
+					<input type="hidden" name="idr" value="<?php echo $idher["id_responsable"]; ?>">
+				<?php } ?>
+			
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<textarea id="motivos" name="motivos" class="materialize-textarea"></textarea>
+						<label for="motivos">Motivo de baja:</label>
+					</div>
+					<div class="file-field input-field col m8 s8">
+				    	<div class="btn">
+				        	<span>Agregar Evidencia</span>
+				        	<input type="file" id="url" name="url" required>
+				        	<?php foreach ($this->herramienta as $idher) { ?>
+				        	<input type="hidden" name="imahidden" value="<?php echo $idher["evidencia_b"]; ?>">   
+				        	<?php } ?>
+				      	</div>
+				      	<div class="file-path-wrapper">
+				        	<input class="file-path validate" type="text">
+				      	</div>
+				    </div>
+				    <div class="input-field col m4 s4 text-center">
+                        <label>
+                            <input type="checkbox"  name="cobro">
+                            <span>¿Cobro Extra?</span>
+                        </label>
+                    </div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="baja_h" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Baja Herramienta-->
+
+
+<!-- Modal Reparacion Herramienta -->
+<div id="modalrepara" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<h4>Reparar Herramienta</h4>
+		<div class="row">
+			<form action="/herramienta/requestrherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_repara">
+				<?php foreach ($this->herramienta as $idher) { ?>
+					<input type="hidden" name="idhs" value="<?php echo $idher["id_herramienta"]; ?>">
+					<input type="hidden" name="idrs" value="<?php echo $idher["id_responsable"]; ?>">
+				<?php } ?>
+			
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<textarea id="motivo" name="motivo" class="materialize-textarea"></textarea>
+						<label for="motivo">*Motivo de reparación: </label>
+					</div>
+
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Agregar Orden de gastos</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">today</i>
+						<input type="date" id="fecha" name="fecha"  class="validate">
+						<label for="fecha">*Fecha de reparación: dd/mm/yyyy</label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">event_available</i>
+						<input type="text" id="costo" name="costo" class="validanumeros">
+						<label for="costo">Costo de Reparación:</label>
+					</div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="repara_h" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Reparacion Herramienta-->
+
+
+<!-- Inicio Datos Herramientas-->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Datos Generales Herramienta</h3>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->herramienta as $her ) { ?>
+								<h5>
+									<strong><span class="font_tittle">Código: </span></strong>
+									<?php echo $her['codigo']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Nombre: </span> </strong>
+									<?php echo $her['nombre']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Unidad: </span> </strong>
+									<?php echo $her['unidad']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Descripción: </span> </strong>
+									<?php echo $her['descripcion']; ?>
+								</h5>
+							<?php } ?>
+						</div>
+
+						<div class="col m6 s6 text-left">
+							<?php foreach ($this->herramienta as $her ) { ?>
+								<h5>
+									<strong><span class="font_tittle">Marca: </span></strong>
+									<?php echo $her['marca']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Modelo: </span> </strong>
+									<?php echo $her['modelo']; ?>
+								</h5>
+								<h5>
+									<strong><span class="font_tittle">Número de Serie: </span> </strong>
+									<?php echo $her['no_serie']; ?>
+								</h5>
+								<h4>
+									<strong><span class="font_tittle">Tiempo de Vida: </span> </strong>
+									<?php echo $her['tiempo_vida']; ?>
+								</h4>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Datos Herramientas-->
+
+
+<!-- Inicio Tabla Factura -->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<h3 class="card-title">Factura Herramienta</h3>
+							<hr>
+						</div>
+					</div>
+
+					<div class="row table_wrapper">
+						<table class="table text-center table-hover ">
+							<thead>
+								<tr>
+									<th>Fecha de Compra</th>
+									<th>Vencimiento Garantia</th>
+									<th>Número Factura</th>
+									<th>Descargar Factura</th>
+								</tr>
+							</thead>
+							<?php if ($this->herramienta) { 
+								foreach ($this->herramienta as $her) { ?>
+									<tbody>
+										<tr>
+											<td>
+												<?php echo $her['fecha_compra']; ?>
+											</td>
+											<td>
+												<?php echo $her['vencimiento_gar']; ?>
+											</td>
+											<td>
+												<?php echo $her['factura_numero']; ?>
+											</td>	
+											<?php if($her["factura_imagen"] != null){ ?>
+												<td>
+													<a title="Descargar Archivo" href="/<?php echo $her["factura_imagen"]; ?>" download="<?php echo substr(strrchr($her["factura_imagen"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+												</td>
+											<?php }else{ ?>
+												<td>
+													No Existe Factura
+												</td>
+											<?php } ?>
+										</tr>
+									</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td>No se Existen datos de Factura</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+<!-- End Tabla Factura-->
+
+<!-- Inicio Reparaciones -->
+<div class="col m12 s12 text-center">
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m12 s12 text-left">
+							<div class="col m8 s12 text-left">
+								<h3 class="card-title">Reporte de Reparaciones</h3>
+							</div>
+							<div class="col m4 s12 text-right">
+								<?php foreach ($this->nreparacion as $nrep) { ?>
+									<h6>
+										<strong>Número Reparaciones: </strong>
+										<span><?php echo $nrep['Reparaciones']; ?></span> 
+									</h6>
+								<?php }  ?>
+								<?php if ($this->reparacion) { ?>
+									<a href="/herramienta/reporterepara/id/<?php echo $id_h; ?>"> <h6 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h6></a>
+								<?php }  else{} ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="row table_wrapper">
+						<table class="table text-center table-hover ">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Mótivo</th>
+									<th>Costo</th>
+									<th>Fecha Inicio</th>
+									<th>Fecha Regreso</th>
+									<th>Descargar Orden</th>
+									<th></th>
+								</tr>
+							</thead>
+							<?php if ($this->reparacion) { 
+								foreach ($this->reparacion as $rep) { ?>
+									<tbody>
+										<tr>
+											<td>
+												<?php echo $rep['id_herramienta']; ?>
+											</td>
+											<td>
+												<?php echo $rep['motivo']; ?>
+											</td>
+											<td>
+												$<?php echo $rep['costo']; ?>
+											</td>
+											<td>
+												<?php echo $rep['fecha_inicio']; ?>
+											</td>
+											<td>
+												<?php echo $rep['fechaa']; ?>
+											</td>	
+											<?php if($rep["orden_compra"] != null){ ?>
+												<td>
+													<a title="Descargar Archivo" href="/<?php echo $rep["orden_compra"]; ?>" download="<?php echo substr(strrchr($rep["orden_compra"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+												</td>
+											<?php }else{ ?>
+												<td>
+													Agrega Orden de gastos
+												</td>
+											<?php } ?>
+											<?php if($rep["orden_compra"] == null){ ?>
+												<td>
+													<a href="/herramienta/reporteedit/id/<?php echo $rep["id_reporte"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+												</td>
+											<?php }else{ ?>
+												<td></td>
+											<?php } ?>
+										</tr>
+									</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td>La Herremienta nunca ha sido reparada</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+<!-- End Reparaciones -->
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	    $('.datepicker').datepicker();
+
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+	});
+
+ 	$("#asignar_h").click(function(){
+ 		swal({
+ 			title: "¿Estas seguro que deseas asignar la herramienta ?",
+	  		icon: "warning",
+	  		buttons: true,
+	  		dangerMode: true,
+	  	})
+	  	.then((willDelete) => {
+	  		if (willDelete) {
+	  			swal("Bien! la herramienta fue asignada", {
+	  				icon: "success",
+	  				buttons: false,
+	  			});
+
+	  			var responsable =document.getElementById("responsable").value
+	    		var	id = document.getElementById("id_herr").value;
+	    		var request = $.ajax({
+	    			url:"/herramienta/requestasignarherramienta",
+                	method:"POST",
+                	data: { responsable : responsable, id: id },
+                	processData: true,
+                // contentType: false,
+            	});
+				//-------------------end de ajax---------------------------
+
+				//-------------peticion de respuesta de ajax------------------
+
+				request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            	});
+				//-------------------end de respuesta ajax---------------------
+             	return false;
+            } else {
+            	swal("¡Verifica antes de hacer el cambio!");
+            }
+        });
+	});
+
+
+  	$("#lrepara_h").click(function(){
+	  	swal({
+		  title: "¿Estas seguro que la herramienta ya esta disponible para uso?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Bien! la herramienta esta en almacén", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var	id = document.getElementById("id_herr").value;
+	            var request = $.ajax({
+	                url:"/herramienta/requestherramientareparada",
+	                method:"POST",
+	                data: { id: id },
+	                processData: true,
+	                // contentType: false,
+	            });
+			//-------------------end de ajax---------------------------
+
+			//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+			//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  		} else {
+	  			swal("¡Verifica antes de hacer el cambio!");
+	  		}
+	  	});
+	});
+
+	$("#liberar_h").click(function(){
+	  	swal({
+		  title: "¿Estas seguro que la herramienta se regreso?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Bien! la herramienta esta en almacén", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var	id = document.getElementById("id_herr").value;
+	            var request = $.ajax({
+	                url:"/herramienta/requestregresarherramienta",
+	                method:"POST",
+	                data: { id: id },
+	                processData: true,
+	                // contentType: false,
+	            });
+			//-------------------end de ajax---------------------------
+
+			//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+			//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  		} else {
+	  			swal("¡Verifica antes de hacer el cambio!");
+	  		}
+	  	});
+	}); // End liberar _h
+
+	$("#repara_h").click(function(){
+		var motivo = document.getElementById("motivo").value;
+		var fecha =  document.getElementById("fecha").value;
+
+		if(motivo == "" || fecha == ""){
+			swal({
+				title: "Para mandar a reparación, llena los campos(*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm1, 500);     
+		}    
+	}); 
+
+    function submitForm1() {
+    	document.getElementById("submit_repara").submit()
+    }
+    //Validar reprar herramienta
+
+	
+
+
+	$("#baja_h").click(function(){
+		var motivo = document.getElementById("motivos").value;
+		var url = document.getElementById("url").value;
+		// var url = document.getElementById("url")[0].files.length;
+		// var url = $("url")[0].files.length;
+		if(motivo == "" || url == ""){
+			swal({
+				title: "Para dar de baja, llena todos los campos",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}    });
+
+    function submitForm() {
+    	document.getElementById("submit_baja").submit()
+    }
+    //Validar baja herramienta
+
+
+
+    $(".getpdf").click(function(){
+    	pdf= $(this).data('id');
+    	name= $(this).data('name');
+		var fileURL = pdf;
+		var fileName = 'CertificadoMedico_'+name+'.pdf';
+		download_file(fileURL, fileName);
+    });
+
+	function download_file(fileURL, fileName) {
+	  	var link = document.createElement('a');
+	  	link.href = fileURL;
+	  	link.download = fileName;
+	  	document.body.appendChild(link);
+	  	link.click();
+	  	document.body.removeChild(link);
+	}
+
+
+    $("#activo_personal").click(function(){
+    	swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+			})
+    	.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "0";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+		//-------------------end de ajax---------------------------
+		//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#inactivo_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    $("#baja_personal").click(function(){
+		swal({
+			title: "Estas seguro de cambiar el status?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+	    		var user = document.getElementById("usuario_id").value;
+	    		var dato = "2";
+	            var request = $.ajax({
+	                url:"/panel/requestchangeaddstatuspersonal",
+	                method:"POST",
+	                data: { user:user, dato:dato},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+</script>

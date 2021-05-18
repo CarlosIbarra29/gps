@@ -1,0 +1,415 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<div class="row" style="margin-top: 20px;">  
+	<div class="col m6 s6">
+		<h2>Cotizaciones</h2>
+	</div>
+	<div class="col m6 s6">
+		<a class=" btn modal-trigger" href="#modal1">Agregar Cotización</a>
+	</div>
+</div>
+
+  <!-- Modal Trigger -->
+  
+
+  <!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<h2>Agregar una cotización</h2>
+		<form action="/panel/requestaddcotizacionsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cotizacion">
+			<div class="file-field col m12 s12 input-field">
+			    <div class="btn  light-green">
+			    	<span>Cotización</span>
+			    	<input type="file" name="url">
+			    </div>
+			    <div class="file-path-wrapper">
+			    	<input class="file-path validate" id="file_cotizacion" type="text">
+			    </div>
+			</div>
+
+	        <div class="input-field col s12">
+	        	<i class="material-icons prefix">account_circle</i>
+	        	<input id="titulo" type="text" name="titulo" class="validate">
+	        	<label for="titulo">Titulo de la cotización</label>
+	        </div>
+
+			<div class="input-field col m12 s12">
+				<i class="material-icons prefix">date_range</i>
+				<input id="fecha_realizada" name="fecha_realizada" type="date" class="fecha_realizada">
+				<label for="fecha_realizada">Cotización realizada</label>
+			</div>
+
+	        <div class="input-field col s12">
+	        	<i class="material-icons prefix">attach_money</i>
+	        	<input id="total" type="text" name="total" class="validate">
+	        	<label for="total">Total</label>
+	        </div>
+
+	        <div class="input-field col s12">
+	        	<i class="material-icons prefix">mode_edit</i>
+	        	<textarea id="comentario" name="comentario" class="materialize-textarea"></textarea>
+	        	<label for="comentario">Comentario</label>
+	        </div>
+
+			<?php 
+				date_default_timezone_set('America/Mexico_City');
+            	$hoy = date("d/m/Y");
+			?>
+
+			<input type="hidden" id="fecha_hoy" name="fecha" value="<?php echo $hoy; ?>">
+			<input type="hidden" id="sitio" name="sitio" value="<?php echo $this->sitio; ?>">
+			<input type="hidden" id="proyecto" name="proyecto" value="<?php echo $this->proyecto; ?>">
+			<input type="hidden" id="id_sitio" name="id" value="<?php echo $this->id; ?>">
+			<input type="hidden" id="id_user" name="id_user" value="<?php echo $this->id_user; ?>">
+			<input type="hidden" id="name_user" name="name_user" value="<?php echo $this->nombre_user; ?>">
+
+			<div class="file-field col m4 s4 input-field">
+				
+			</div>
+		</form>
+    </div>
+    <div class="modal-footer">
+      	<button id="add_cotizacion" class="btn">Guardar</button>
+      	<button class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+
+<div class="row">
+	<div class="col m2 s2"></div>
+	<div class="col m8 s12">
+
+	</div> 
+	<div class="col m2 s2"></div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+		<h3>Lista de cotizaciones</h3>
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Titulo Cotización</th>
+					<th>Fecha de cotización</th>	
+					<th>Total</th>
+					<th>Documento</th>
+					<th>P.O</th>
+
+				</tr> 
+			</thead>
+		<?php 
+		if ($this->cotizaciones) { 
+		foreach ($this->cotizaciones as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr['titulo']; ?></td>
+				<td><?php echo $usr['fecha_cotizacion']; ?></td>
+				<td>
+					$<?php echo number_format($usr['total'], 2, '.', ','); ?>
+				</td>
+				<td>
+					<a title="Descargar Archivo" href="/<?php echo $usr["documento"]; ?>" download="/<?php echo $usr["documento"]; ?>"> <i class="material-icons prefix" style="width: 42px;font-size: 31px;">file_download</i> </a>
+
+					<a href="/<?php echo $usr["documento"]; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
+        		</td>
+
+        		<td>
+        			<?php if($usr['status_documento'] == 0){ ?>
+        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>">
+							<div class="chip">
+						    	<img src="/img/gris.jpg">
+						    	Pendiente
+						  	</div>
+					  	</a>
+        			<?php }else{ ?>
+        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>">
+							<div class="chip">
+						    	<img src="/img/correct.png">
+						    	con P.O
+						  	</div>
+					  	</a>
+        			<?php } ?>
+        		</td>
+				<td>
+					<a class="edit_cot modal-trigger" data-id="<?php echo $usr["id"] ?>" data-titulo="<?php echo $usr["titulo"] ?>" data-fecha="<?php echo $usr["fecha_cotizacion"] ?>" data-total="<?php echo $usr["total"] ?>" data-comentario="<?php echo $usr["comentario"] ?>" data-documento="/<?php echo $usr["documento"]; ?>" href="#modal_edit"><i class="fa fa-2x fa-edit"></i></a>
+
+				</td>
+				<td>
+					<a class="delete" data-id="<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+			</tr>
+		</tbody>
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		            <td class="text-center" colspan="6"><h4>No hay cotizaciones asignadas al sitio.</h4></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+
+		</table>
+	</div>
+</div>
+
+  <!-- Modal Structure -->
+  	<div id="modal_edit" class="modal modal-fixed-footer">
+    	<div class="modal-content">
+    		<h4>Editar Cotización</h4>	
+			<form action="/panel/requestupdatecotizacionsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cotizacionedit">
+				<div class="file-field col m12 s12 input-field">
+			    	<div class="btn  light-green">
+			    		<span>Cotización</span>
+			    		<input type="file" name="url">
+			    	</div>
+			    	<div class="file-path-wrapper">
+			    		<input class="file-path validate" id="file_cotizacion_edit" type="text">
+			    		<input type="hidden" name="imahidden" id="imahidden">
+			    	</div>
+				</div>
+
+		        <div class="input-field col s12">
+		        	<i class="material-icons prefix">account_circle</i>
+		        	<input id="titulo_edit" type="text" name="titulo" placeholder="" class="validate">
+		        	<label for="titulo_edit">Titulo de la cotización</label>
+		        </div>
+
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">date_range</i>
+					<input id="edit_date" name="fecha_realizada" placeholder="" type="date" class="datepicker">
+					<label for="edit_date">Cotización realizada</label>
+				</div>
+
+		        <div class="input-field col s12">
+		        	<i class="material-icons prefix">attach_money</i>
+		        	<input id="total_edit" type="text" name="total" placeholder="" class="validate">
+		        	<label for="total_edit">Total</label>
+		        </div>
+
+		        <div class="input-field col s12">
+		        	<i class="material-icons prefix">mode_edit</i>
+		        	<textarea id="comentario_edit" name="comentario" placeholder="" class="materialize-textarea"></textarea>
+		        	<label for="comentario_edit">Comentario</label>
+		        </div>
+
+		        <input type="hidden" name="id_cotizacion" id="id_cotizacion">
+				<input type="hidden" id="fecha_hoy" name="fecha" value="<?php echo $hoy; ?>">
+				<input type="hidden" id="sitio" name="sitio" value="<?php echo $this->sitio; ?>">
+				<input type="hidden" id="proyecto" name="proyecto" value="<?php echo $this->proyecto; ?>">
+				<input type="hidden" id="id_sitio" name="id" value="<?php echo $this->id; ?>">
+				<input type="hidden" id="id_user" name="id_user" value="<?php echo $this->id_user; ?>">
+				<input type="hidden" id="name_user" name="name_user" value="<?php echo $this->nombre_user; ?>">
+		    </form>
+    	</div>
+	    <div class="modal-footer">
+	      	<button id="edit_cotizacion" class="btn">Guardar</button>
+	      	<button class="modal-close red btn">Cerrar</button>
+	    </div>
+  </div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript">
+  	$( "#datepicker" ).datepicker({
+		dateFormat: "dd/mm/yy",
+		monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]
+
+	});
+
+  	$( "#datepicker_edit" ).datepicker({
+		dateFormat: "dd/mm/yy",
+		monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]
+
+	});
+  </script>
+
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+	$("#add_cotizacion").click(function(){
+		var documento = document.getElementById("file_cotizacion").value;
+		var titulo = document.getElementById("titulo").value;
+        if(documento == "" || titulo == ""){
+            swal({
+              title: "Para agregar una cotización debes llenar todos los campos",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});  
+            setTimeout(submitForm, 1500);     
+        }
+	});
+
+    function submitForm() {
+        document.getElementById("submit_cotizacion").submit()
+    }
+
+    $(".edit_cot").click(function(){
+      	var id = $(this).data('id');
+      	var titulo = $(this).data('titulo');
+      	var fecha = $(this).data('fecha');
+      	var total = $(this).data('total');
+      	var comentario = $(this).data('comentario');
+      	var	documento = $(this).data('documento');
+
+      	document.getElementById("id_cotizacion").value=id;
+      	document.getElementById("titulo_edit").value=titulo;
+      	document.getElementById("edit_date").value=fecha;
+      	document.getElementById("total_edit").value=total;
+      	document.getElementById("comentario_edit").value=comentario;
+      	document.getElementById("imahidden").value=documento;
+    });
+
+
+	$("#edit_cotizacion").click(function(){
+		var titulo = document.getElementById("titulo_edit").value;
+        if( titulo == ""){
+            swal({
+              title: "Para editar una cotización debes llenar todos los campos",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});  
+            setTimeout(editcotizacion, 1500);     
+        }
+	});
+
+    function editcotizacion() {
+        document.getElementById("submit_cotizacionedit").submit()
+    }
+
+  $(".delete").click(function(){
+	swal({
+	  title: "Estas seguro de eliminar la cotizacion?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});  
+  			var	id = $(this).data('id')
+            var request = $.ajax({
+                url:"/panel/requestdeletecotizacionsitio",
+                method:"POST",
+                data: { id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+
+  });
+</script>

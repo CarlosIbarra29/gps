@@ -1,0 +1,141 @@
+<input type="hidden" name="id_herr" id="id_herr" value="<?php echo $this->idher; ?>">
+
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<!-- INICIO DETAIL-->
+
+<div class="col m12 s12">
+	<div class="row" style="margin-top: 15px;">
+		<div class="col m12 s12">
+			<a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	</div>
+	</div>
+</div>
+<!-- END INICIO DETAIL-->
+
+
+
+<!-- Inicio Panel Inicial-->
+<div class="row">
+	<div class="col m8 s12 text-center">
+		<div class="card darken-1">
+			<div class="card-content">
+				<div class="row">
+					<div class="col m12 s12">
+						<h3 class="card-title">Personal con herramientas:</h3>
+		  				<hr>
+		          	</div>
+		        </div>
+
+		        <div class="row">
+		        <form action="/herramienta/bresponsable" enctype="multipart/form-data" class="form-horizontal form-material">
+		        	<div class="input-field col m8 s8">
+		        		<select name="responsable" id="responsable" required>
+		        			<option value="" disabled selected>Selecciona al Responsable:</option>
+					      	<?php foreach ($this->personal_campo as $personal) { ?>
+					      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					      	<?php } ?>
+	
+		          		</select>
+		          		<label>Responsable</label>
+		          	</div>
+		          	<div class="input-field col m4 s4">
+		          		<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Buscar</button>
+		          	</div>
+		          	</form>
+		        </div>
+		    </div>
+	    </div>
+	</div>
+	<div class="col m4 s12 text-center">
+		<a class="example-image-link" href="/img/gp_2.png" data-lightbox="example-1"><img class="example-image oculto" src="/img/gp_2.png" id="camara_div" alt="/img/gp_2.png" style="width: 200px;  margin-top: 5px;"/></a>
+	</div>
+</div>
+
+<!-- End Panel Inicial-->
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	$(document).ready(function(){
+	    $('.modal').modal();
+	    $('select').formSelect();
+	});
+
+ 	$("#asignar_h").click(function(){
+ 		swal({
+ 			title: "¿Estas seguro que deseas asignar la herramienta ?",
+	  		icon: "warning",
+	  		buttons: true,
+	  		dangerMode: true,
+	  	})
+	  	.then((willDelete) => {
+	  		if (willDelete) {
+	  			swal("Bien! la herramienta fue asignada", {
+	  				icon: "success",
+	  				buttons: false,
+	  			});
+
+	  			var responsable =document.getElementById("responsable").value
+	    		var	id = document.getElementById("id_herr").value;
+	    		var request = $.ajax({
+	    			url:"/herramienta/requestasignarherramienta",
+                	method:"POST",
+                	data: { responsable : responsable, id: id },
+                	processData: true,
+                // contentType: false,
+            	});
+				//-------------------end de ajax---------------------------
+
+				//-------------peticion de respuesta de ajax------------------
+
+				request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            	});
+				//-------------------end de respuesta ajax---------------------
+             	return false;
+            } else {
+            	swal("¡Verifica antes de hacer el cambio!");
+            }
+        });
+	});
+
+
+
+	$("#repara_h").click(function(){
+		var motivo = document.getElementById("motivo").value;
+		var costo = document.getElementById("costo").value;
+
+		if(motivo == "" || costo == ""){
+			swal({
+				title: "Para mandar a reparación, llena todos los campos",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm1, 500);     
+		}    
+	}); 
+
+    function submitForm1() {
+    	document.getElementById("submit_repara").submit()
+    }
+    //Validar reprar herramienta
+
+	
+
+
+</script>

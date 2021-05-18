@@ -1,0 +1,444 @@
+<?php foreach ($this->vehiculosc as $veh) { $idv = $veh['id_vehiculos']; }?>
+
+<?php 
+function isActhref($nameBtn,$urlname){
+    if($nameBtn==1 && $urlname==null){
+        return "active"; 
+    }
+    return ($nameBtn == $urlname)?"active":"";
+}
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+    if ($this->total >= 1 && $pagina <= $this->total) {
+
+        if (isset($_GET['pagina']) && $this->actpage != 1) {
+            $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }
+
+        $i = max(2, $pagina - 3);
+        if ($i > 2)
+            $links .= " <li><a>...</a></li> ";
+        for (; $i < min($pagina + 3, $this->total); $i++) {
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+            }
+        }
+        if ($i != $this->total)
+            $links .= " <li><a>...</a></li> ";
+        if($i ==$this->actpage){
+            $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+        }else{
+            $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+        }
+
+    }           
+}
+
+?>
+
+<input type="hidden" name="idvh" id="idvh" value="<?php echo $this->idvh; ?>">
+
+<style type="text/css">
+    .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+<!-- INICIO DETAIL-->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <?php foreach ($this->vehiculosc as $veh) { ?>
+        <a href="/vehiculos/vehdetail/id/<?php echo $veh['id_vehiculos']; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        <?php } ?>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Bitácora de Incidentes
+    </div>
+</div>
+
+<!-- END INICIO DETAIL-->
+
+<!-- Inicio Tabla Vehiculo -->
+<div class="col m8 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="row table_wrapper">
+                <table class="table text-center table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Submarca</th>
+                            <th>Modelo</th>
+                            <th>Color</th>
+                            <th>Placas</th>
+                        </tr>
+                    </thead>
+                    <?php if ($this->vehiculosc) { 
+                    foreach ($this->vehiculosc as $veh) { ?>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <?php echo $veh['marca']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['submarca']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['modelo']; ?>
+                                </td>   
+                                <td>
+                                    <?php echo $veh['color']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $veh['placas']; ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <?php } }else{ ?>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>No existe este vehículo.</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col m4 s12 text-center">
+    <?php if($veh['imagen'] == null){ ?>
+            <img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+    <?php }else{ ?>
+            <a class="example-image-link" href="/<?php echo $veh['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $veh['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+        <?php } ?>
+</div>
+<!-- End Tabla Vehiculo-->
+
+
+<!-- Inicio Tabla Incidente -->
+<div class="col m12 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card darken-1">
+                <div class="card-content">
+
+                    <div class="row">
+                        <div class="col m6 s6 text-left">
+                            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Operadores asignados a vehículo  
+                        </div>
+                        <div class="col m6 s6 text-right">
+                            <a href="/vehiculos/excelinc/id/<?php echo $idv; ?>"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
+                        </div>
+                    </div>
+
+                    <div class="row table_wrapper">
+                        <table class="table text-center table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Incidente</th>
+                                    <th>Reporto</th>
+                                    <th>Status</th>
+                                    <th>Imagen Vehículo</th>
+                                    <th>Imagen Incidente</th>
+                                    <th>Acciones</th>
+                                    <th>Costo</th>
+                                    <th>Fecha Reparación</th>
+                                    <th>Solicitud Asignada</th>
+                                    <th>Pago</th>
+                                    <th>Reparación</th>
+                                    <th>Comentarios</th>
+                                </tr>
+                            </thead>
+                            <?php if ($this->paginator) { 
+                            foreach ($this->paginator as $vehinc) { ?>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <?php echo $vehinc['fecha_incidente']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehinc['nombre_incidente']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehinc['nombre']; ?> <?php echo $vehinc['apellido_pa']; ?> <?php echo $vehinc['apellido_ma']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehinc['incidentest']; ?>
+                                        </td>
+                                        <td>
+                                            <a class="example-image-link" href="/<?php echo $vehinc['imagen_veh']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vehinc['imagen_veh']; ?>" id="camara_div"  style="width: 90px;  margin-top: 5px;"/></a>
+                                        </td>
+                                        <td>
+                                            <a class="example-image-link" href="/<?php echo $vehinc['imagen_incidente']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vehinc['imagen_incidente']; ?>" id="camara_div" style="width: 90px;  margin-top: 5px;"/></a>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehinc['accion']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $vehinc['costo']; ?>
+                                        </td> 
+                                        <td>
+                                            <?php echo $vehinc['frep']; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($vehinc["id_sol"] == 0) { ?>
+                                                <b>Asigna una solicitud</b>
+                                                <a class="text-center modal-trigger info_res" title="Asigna a Solicitud Archivo" href="#modalsol" data-id="<?php echo $vehinc["id_incidente"] ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">present_to_all</i> </a>
+                                            <?php } else { ?>
+                                                <b>Solicutud No.<?php echo $vehinc['id_sol']; ?></b>
+                                            <?php } ?>
+                                        </td> 
+
+                                        <td>
+                                            <?php if ($vehinc["id_sol"] == 0) { ?>
+                                                Sin Solicitud Asignada
+                                            <?php } else { ?>
+                                                <?php if ($vehinc["comprobante_pago"] == null) { ?>
+                                                    Aún no se ha pagado.
+                                                <?php } else { ?>
+                                                    <a title="Descargar Archivo" href="/<?php echo $vehinc["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehinc["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </td>                                
+                                        <td>
+                                            <?php if ($vehinc["id_sol"] == 0) { ?>
+                                                Sin Solicitud Asignada
+                                            <?php } else { ?>
+                                                <?php if ($vehinc["veh_rep"] == null) { ?>
+                                                    Sin Evidencia de reparación
+                                                <?php } else { ?>
+                                                    <a class="example-image-link" href="/<?php echo $vehinc['veh_rep']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vehinc['veh_rep']; ?>" id="camara_div" style="width: 90px;  margin-top: 5px;"/></a>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </td> 
+                                        <td>
+                                            <?php echo $vehinc['comentarios']; ?>
+                                        </td>                                    
+                                    </tr>
+                                </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td> No existen incidencias para este vehículo.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalsol" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col m12 s12 text-left" style="margin-top: 5px;">
+                <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignar Solicitud
+            </div>
+        </div>
+        <div class="row">
+            <form action="/vehiculos/updatesolinc" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_sol">
+                 <?php foreach ($this->vehiculosc as $veh) { ?>
+                    <input type="hidden" name="idhs" value="<?php echo $veh["id_vehiculos"]; ?>">     
+                <?php } ?> 
+                <input type="hidden" name="idi" id="id" value="">
+                <div class="row">
+
+                    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>Evidencia de Reparación</span>
+                            <input type="file" name="url" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="url" type="text">
+                        </div>
+                    </div>
+                     <div class="input-field col m12 s12">
+                        <select name="solicitud" id="solicitud" required>
+                            <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
+                            <?php foreach ($this->solicitud as $sveh) { ?>
+                                <option value="<?php echo $sveh["id"]; ?>">Id :<?php echo $sveh["id"]; ?> Servicio: <?php echo $sveh["nombre_servicio"]; ?> Monto: $<?php echo $sveh["monto"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Solicitud</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="añadirsol" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div> 
+<!-- End Tabla Incidente-->
+
+<!-- Paginador -->
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">Anterior</span>
+                    </li>
+                    <?php }else{ ?>
+                    <li class="page-item">
+                        <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                    </li>
+                    <?php } ?>
+                    <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                        <?php echo $links; ?>
+                    </li>
+                    <?php if($pagina >= $this->total): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">Siguente</span>
+                    </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+<!-- End Paginator -->
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 350,
+      'wrapAround': true
+    });
+
+    $(document).ready(function(){
+        $('.modal').modal();
+        $('select').formSelect();
+        $('.datepicker').datepicker();
+
+        $('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+        })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+       
+    });
+
+
+    $("#añadirsol").click(function(){
+        
+        var url =  document.getElementById("url").value;
+        var solicitud = document.getElementById("solicitud").value;
+
+        if(url == "" || solicitud == 0){
+            swal({
+                title: "Para asignar solicitud, llena los campos(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitForm1, 500);     
+        }    
+    }); 
+
+    function submitForm1() {
+
+        document.getElementById("submit_sol").submit()
+
+    }
+    
+
+
+        //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de eliminar el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppdel",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
+    $(".info_res").click(function(){
+        var id = $(this).data('id');     
+        document.getElementById("id").value = id;
+    }); 
+
+
+
+</script>
+

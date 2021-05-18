@@ -1,0 +1,4748 @@
+<?php $session = new Zend_Session_Namespace("current_session"); ?>
+<style type="text/css">
+	.font_tittle{ 
+		font-weight: bold;
+	}
+	.font-check{
+		font-size: 11px;
+	}
+</style>
+
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col s12 m12">
+      <div class="card  darken-1">
+        <div class="card-content">
+        	<div class="row">
+        		<div class="col m6 s6">
+        			<h3 class="card-title">Informacion General</h3>
+        		</div>
+        		<div class="col m6 s6 text-center">
+        			<a class='dropdown-trigger btn' href='#' style="width: 150px;" data-target='dropdown4'>Menú <i class="material-icons left">apps</i></a> 	
+        		</div>
+        	</div>
+
+
+          
+          <p>
+
+
+
+			<div class="row">
+				<div class="col m4 s12">
+				  <ul id='dropdown4' class='dropdown-content'><!-- 
+				  	<li><a href="/panel/detallesproyecto/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>">Cambiar Status</a></li>
+				  	<li class="divider" tabindex="-1"></li> -->
+				    <li><a id="carga_uno">Carga de archivos 1</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="asignar_cuadrilla">Asignar cuadrilla</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="reporte_evidencias">Reporte de evidencias</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="carga_dos">Carga de archivos 2</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="comentarios_sitio">Comentarios</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="archivos_sitio">Archivos</a></li>
+				    <li class="divider" tabindex="-1"></li>
+				    <li><a id="altan_sitio">Documentacion ALTAN</a></li>
+				  </ul>
+				</div>
+			</div>
+
+          	<div class="row">
+				<div class="col m4 s6">
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5 class="font_tittle">Nombre sitio: <a href="/panel/sitiosdetail/id/<?php echo $this->id_sitio; ?>"><?php echo $key['nombre']; ?></a></h5>
+						<h5><span class="font_tittle">Id cliente:</span> <span><?php echo $key['id_cliente']; ?></span></h5>
+						<h5> <span class="font_tittle">Cliente:</span> <?php echo $key['cliente']; ?></h5>
+					<?php } ?>
+<!-- 					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>
+					<?php } ?> -->
+				</div>
+
+				<div class="col m4 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Operador:</span> <?php echo $value['operador']; ?></h5>	
+						<h5> <span class="font_tittle">Tipo de torre:</span> </h5>
+					<?php } ?>
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5> <span class="font_tittle">Altura:</span> <?php echo $key['altura']; ?></h5>
+					<?php } ?>
+				</div>
+
+				<div class="col m4 s12">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5> <span class="font_tittle">Id operador:</span> <?php echo $value['id_operador'] ?></h5>
+					<?php } ?>
+					<?php foreach ($this->sitio as $key ) { ?>
+						<h5><span class="font_tittle">Tipo de sitio:</span> <?php echo $key['tipo_sitio']; ?></h5>
+						<h5> <span class="font_tittle">Edificio:</span> <?php echo $key['edificio']; ?></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col m6 s6">
+					<?php foreach ($this->nombreproyecto as $key){ ?>
+						<h5><span class="font_tittle">Proyecto:</span> <?php echo $key['nombre_proyecto']; ?></h5>	
+					<?php } ?>
+					<h5><span class="font_tittle">Cliente:</span> 
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->statuscliente as $mar) { 
+								 		if ($mar['id']==$usr['status_cliente']) { ?>
+								     		<?php echo $mar["nombre_status"]; ?>
+							<?php } if ($mar['id']!=$usr['status_cliente']) { ?>
+							<?php } } ?>
+						<?php } ?>
+					</h5>
+					
+					<h5> <span class="font_tittle">Status GPS:</span>
+						<?php foreach ($this->tipo_sitio as $usr){ ?>
+							<?php foreach ($this->status as $mar) { 
+								if ($mar['id']==$usr['status_proyecto']) { ?>
+								    <?php echo $mar["nombre_status"]; ?>
+								<?php } if ($mar['id']!=$usr['status_proyecto']) { ?>
+							<?php } } ?>
+						<?php } ?>
+
+					</h5>
+					<h5><span class="font_tittle">Obra civil:</span> </h5>
+				</div>
+				<div class="col m6 s6">
+					<?php foreach ($this->tipo_sitio as $value) { ?>
+						<h5><span class="font_tittle">Coordinador:</span> <span><?php echo $value['nombre_coordinador'] ?></span></h5>
+						<h5><span class="font_tittle">Ingeniero Proyecto:</span><span><?php echo $value['nombre_ingproyecto'] ?></span></h5>
+						<h5><span class="font_tittle">Residente:</span> <span><?php echo $value['nombre_residente'] ?></span></h5>
+						<h5><span class="font_tittle">PM Cliente:</span> <span><?php echo $value['pm_cliente'] ?></span></h5>
+					<?php } ?>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col m6 s12">
+					<h5> <span class="font_tittle">Fecha requerida cliente:</span></h5>
+				</div>
+				<div class="col m6 s12">
+					<?php foreach ($this->detalles_bts as $value) { ?>
+					<h5><span class="font_tittle">Fecha cronograma:</span><span><?php echo $value['inicioobra_baseline'] ?></span> </h5>
+					<?php } ?>
+				</div>
+			</div>
+
+
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<input type="hidden" name="id_proyecto" id="id_proyecto" value="<?php echo $this->idtipo; ?>">
+
+
+
+<div class="row text-center">
+	<div class="col m3 s3">
+	</div>
+	<div class="col m3 s3">
+		<a><h4>Baseline</h4></a>
+	</div>
+	<div class="col m3 s3">
+		<h4>Forecast</h4>
+	</div>
+	<div class="col m3 s3">
+		<h4>Actual</h4>
+	</div>
+</div>
+
+<!-- <form action="/panel/requestadddetailsitioajax" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_preliminarAP"> -->
+<?php if ($this->detalles_bts) {
+foreach ($this->detalles_bts as $key) { ?>
+	<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+	<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">TTV</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ttv" type="text" name="ttv_baseline" value="<?php echo $key['ttv_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ttv" type="text" name="ttv_forecast" value="<?php echo $key['ttv_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ttv" type="text" name="ttv_actual" value="<?php echo $key['ttv_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Muestreo MS/DE</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_muestreo" type="text" name="muestreo_baseline" value="<?php echo $key['muestreo_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_muestreo" type="text" name="muestreo_forecast" value="<?php echo $key['muestreo_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_muestreo" type="text" name="muestreo_actual" value="<?php echo $key['muestreo_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['proyecto_preliminarap'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalAP_pre"><h5 span class="font_tittle" style="color:green;">Proyecto Preliminar AP</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalAP_pre"><h5 span class="font_tittle" style="color:red;">Proyecto Preliminar AP</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ap" type="text" name="baseline_ap" value="<?php echo $key['proyectopreliminar_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ap" type="text" name="forecast_ap" value="<?php echo $key['proyectopreliminar_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ap" type="text" name="actual_ap" value="<?php echo $key['proyectopreliminar_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">RedLines</h5>
+	</div>
+	<div class="col m9 s9">
+		<input id="redline" type="text" name="baseline_red" class="validate" value="<?php echo $key['redlines']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['msde_preliminar'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalMSpreliminar"><h5 span class="font_tittle" style="color:green;">MS / DE Preliminar</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalMSpreliminar"><h5 span class="font_tittle" style="color:red;">MS / DE Preliminar</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_preliminar" type="text" name="baseline_preliminar" value="<?php echo $key['mspreliminar_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_preliminar" type="text" name="forecast_preliminar" value="<?php echo $key['mspreliminar_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_preliminar" type="text" name="actual_preliminar" value="<?php echo $key['mspreliminar_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['msde_final'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalMSfinal"><h5 span class="font_tittle" style="color:green;">MS / DE Final</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalMSfinal"><h5 span class="font_tittle" style="color:red;">MS / DE Final</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_msdefinal" type="text" name="baseline_msdefinal" value="<?php echo $key['msfinal_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_msdefinal" type="text" name="forecast_msdefinal" value="<?php echo $key['msfinal_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_msdefinal" type="text" name="actual_msdefinal" value="<?php echo $key['msfinal_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['proyecto_final'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalpfinal"><h5 span class="font_tittle" style="color:green;">Proyecto Final</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalpfinal"><h5 span class="font_tittle" style="color:red;">Proyecto Final</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_msfinal" type="text" name="baseline_msfinal" value="<?php echo $key['proyectofinal_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_msfinal" type="text" name="forecast_msfinal" value="<?php echo $key['proyectofinal_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_msfinal" type="text" name="actual_msfinal" value="<?php echo $key['proyectofinal_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Inicio de Obra (CoS)</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_cos" type="text" name="baseline_cos" value="<?php echo $key['inicioobra_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_cos" type="text" name="forecast_cos" value="<?php echo $key['inicioobra_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_cos" type="text" name="actual_cos" value="<?php echo $key['inicioobra_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Termino de Obra (CoF)</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_cof" type="text" name="baseline_cof" class="datepicker" value="<?php echo $key['terminoobra_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_cof" type="text" name="forecast_cof" class="datepicker" value="<?php echo $key['terminoobra_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_cof" type="text" name="actual_cof" class="datepicker" value="<?php echo $key['terminoobra_actual']; ?>">
+	</div>
+</div>
+<?php } }else{ ?>
+<input type="hidden" name="sitio" value="<?php echo $this->idtipo; ?>">
+	<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">TTV</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ttv" type="text" name="baseline_ttv">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ttv" type="text" name="forecast_ttv">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ttv" type="text" name="actual_ttv">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Muestreo MS/DE</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_muestreo" type="text" name="baseline_muestreo">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_muestreo" type="text" name="forecast_muestreo">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_muestreo" type="text" name="actual_muestreo">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['proyecto_preliminarap'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalAP_pre"><h5 span class="font_tittle" style="color:green;">Proyecto Preliminar AP</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalAP_pre"><h5 span class="font_tittle" style="color:red;">Proyecto Preliminar AP</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ap" type="text" name="baseline_ap">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ap" type="text" name="forecast_ap">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ap" type="text" name="actual_ap" >
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">RedLines</h5>
+	</div>
+	<div class="col m9 s9">
+		<input id="redline" type="text" name="baseline_red" >
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['msde_preliminar'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalMSpreliminar"><h5 span class="font_tittle" style="color:green;">MS / DE Preliminar</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalMSpreliminar"><h5 span class="font_tittle" style="color:red;">MS / DE Preliminar</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_preliminar" type="text" name="baseline_preliminar" >
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_preliminar" type="text" name="forecast_preliminar" >
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_preliminar" type="text" name="actual_preliminar" >
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['msde_final'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalMSfinal"><h5 span class="font_tittle" style="color:green;">MS / DE Final</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalMSfinal"><h5 span class="font_tittle" style="color:red;">MS / DE Final</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_msdefinal" type="text" name="baseline_msdefinal" >
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_msdefinal" type="text" name="forecast_msdefinal" >
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_msdefinal" type="text" name="actual_msdefinal">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetail as $pdf) { 
+    		if( is_null($pdf['proyecto_final'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#modalpfinal"><h5 span class="font_tittle" style="color:green;">Proyecto Final</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#modalpfinal"><h5 span class="font_tittle" style="color:red;">Proyecto Final</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_msfinal" type="text" name="baseline_msfinal" >
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_msfinal" type="text" name="forecast_msfinal" >
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_msfinal" type="text" name="actual_msfinal" >
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Inicio de Obra (CoS)</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_cos" type="text" name="baseline_cos" >
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_cos" type="text" name="forecast_cos" >
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_cos" type="text" name="actual_cos" >
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Termino de Obra (CoF)</h5>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_cof" type="text" name="baseline_cof" >
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_cof" type="text" name="forecast_cof" >
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_cof" type="text" name="actual_cof">
+	</div>
+</div>
+
+<?php } ?>
+<!-- </form> -->
+
+
+<!-- MODAL PROYECTO PRILIMINAR AP -->
+<div id="modalAP_pre" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Proyecto Preliminar AP</h3>
+		<div class="row">
+
+    		<?php foreach ($this->pdfdetail as $usr) { ?>
+    			<input type="hidden" name="imahidden" value="<?php echo $usr['proyecto_preliminarap']; ?>">
+    		<?php } ?>
+    		
+    		<?php 
+    		$preliminar = 0;
+    		foreach ($this->pdfdetail as $key) { 
+    			if( is_null($key['proyecto_preliminarap'])){
+    				$preliminar = 0;
+    			}else{
+    				$preliminar = 1;
+    			}
+
+    		}?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+				<?php foreach ($this->pdfdetail as $usr) { ?>
+				  	<?php if($preliminar == 0){ ?>
+    				<?php }else{ ?>
+						<tbody>
+							<tr>
+								<td>
+									Proyecto Preliminar AP
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $usr["proyecto_preliminarap"]; ?>" download="/<?php echo $usr["proyecto_preliminarap"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+				<?php } ?>
+	      	</table>
+		</div>
+
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+</div>
+<!--END MODAL PROYECTO PRILIMINAR AP -->
+
+
+
+
+<!-- MODAL MS / DE Preliminar -->
+<div id="modalMSpreliminar" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>MS / DE Preliminar</h3>
+		<div class="row">
+    		<?php 
+    		$preliminar == 0;
+    		foreach ($this->pdfdetail as $key) { 
+    			if(is_null($key['msde_preliminar'])){
+    				$preliminar = 0;
+    			}else{
+    				$preliminar = 1;
+    			}
+
+    		}?>
+
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+				<?php foreach ($this->pdfdetail as $usr) { ?>
+
+				  	<?php if($preliminar == 0){ ?>
+    				<?php }else{ ?>
+						<tbody>
+							<tr>
+								<td>
+									MS / DE Preliminar
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $usr["msde_preliminar"]; ?>" download="/<?php echo $usr["msde_preliminar"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+
+				<?php } ?>
+	      	</table>
+		</div>
+
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+</div>
+<!--END MODAL MS / DE Preliminar -->
+
+<!-- MODAL MS / DE Final -->
+<div id="modalMSfinal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>MS / DE Final</h3>
+		<div class="row">
+    		<?php 
+    		$preliminar == 0;
+    		foreach ($this->pdfdetail as $key) { 
+    			if(is_null($key['msde_final'])){
+    				$preliminar = 0;
+    			}else{
+    				$preliminar = 1;
+    			}
+
+    		}?>
+
+		</div>
+
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Proyecto</th>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+				<?php foreach ($this->pdfdetail as $usr) { ?>
+
+				  	<?php if($preliminar == 0){ ?>
+    				<?php }else{ ?>
+						<tbody>
+							<tr>
+								<td>
+									MS / DE Final
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $usr["msde_final"]; ?>" download="/<?php echo $usr["msde_final"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+
+				<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+
+</div>
+<!--END MODAL MS / DE Final -->
+
+<!-- MODAL MS / DE Final -->
+<div id="modalpfinal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Proyecto Final</h3>
+		<div class="row">
+
+
+    		<?php 
+    		$preliminar == 0;
+    		foreach ($this->pdfdetail as $key) { 
+    			if(is_null($key['proyecto_final'])){
+    				$preliminar = 0;
+    			}else{
+    				$preliminar = 1;
+    			}
+
+    		}?>
+
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Proyecto</th>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+				<?php foreach ($this->pdfdetail as $usr) { ?>
+
+				  	<?php if($preliminar == 0){ ?>
+    				<?php }else{ ?>
+						<tbody>
+							<tr>
+								<td>
+									Proyecto Final
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $usr["proyecto_final"]; ?>" download="/<?php echo $usr["proyecto_final"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="/panel/requestdeletepersonal/id/<?php echo $usr["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+
+				<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+</div>
+<!--END MODAL MS / DE Final -->
+
+
+
+<div class="row">
+	<div class="col m12 s12" id="div_asignar">
+		<h4>Asignar Cuadrilla:</h4>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m2 s12"></div>
+	<div class="col m8 s12">
+      	<table>
+        	<thead>
+          		<tr>
+              		<th>Id.</th>
+              		<th>Paterno</th>
+              		<th>Materno</th>
+              		<th>Nombre(s)</th>
+              		<th>Puesto</th>
+          		</tr>
+        	</thead>
+
+			<?php
+			if ($this->personal_proyecto) {
+			foreach ($this->personal_proyecto as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["id"]; ?></td>
+					<td><?php echo $usr["apellido_pa"]; ?></td>
+					<td><?php echo $usr["apellido_ma"]; ?></td>
+					<td><?php echo $usr["nombre"]; ?></td>
+					<td><?php echo $usr["puesto"]; ?></td>
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay personal asignado.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+      	</table>
+	</div>
+	<div class="col m2 s12"></div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12" id="div_evidencias">
+		<h4>Reporte de evidencias.</h4>
+	</div>
+</div>
+
+
+<div class="row">
+  <ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">date_range</i>WK 1</div>
+      <div class="collapsible-body">
+		<div class="row">
+			<?php 
+			$preliminares = 0; $trazo = 0; $excavacion = 0; $plantilla = 0; $translado = 0; $armado = 0; $muro = 0;
+			foreach ($this->wkuno as $key){ 
+				$preliminares = $key['status_preliminares'];
+				$trazo = $key['status_trazo'];
+				$excavacion = $key['status_excavacion'];
+				$plantilla = $key['status_plantilla'];
+				$translado = $key['status_translado'];
+				$armado = $key['status_armado'];
+				$muro = $key['status_muro'];
+
+			 } ?>
+
+
+			<div class="col m3 s12">
+			    <p>
+			    	<?php if($preliminares == 0){ ?>
+				    	<label class="check_option">
+				        	<input type="checkbox" class="filled-in" disabled />
+				        	<span class="font-check">Preliminares</span>
+				    	</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+				    	<label>
+				        	<input type="checkbox" checked="checked" class="filled-in" disabled />
+				        	<span class="font-check">Preliminares</span>
+				    	</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($trazo == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Trazo y limpieza</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label>
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Trazo y limpieza</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($excavacion == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Excavacion</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Excavacion</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($plantilla == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Plantilla</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Plantilla</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($translado == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Traslado de Materiales y Agregados</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Traslado de Materiales y Agregados</span>
+			      		</label>
+			    	<?php } ?>
+
+			    </p>
+			    <p>
+			    	<?php if($armado == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Habilitado y armado de acero</span>
+			      		</label>
+			    	<?php }else{ ?> 
+			    		 <!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Habilitado y armado de acero</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			    <p>
+			    	<?php if($muro == 0){ ?>
+			      		<label class="check_option">
+			        		<input type="checkbox" class="filled-in" disabled/>
+			        		<span class="font-check">Excavacion Muro / Dala parametral</span>
+			      		</label>
+			    	<?php }else{ ?>
+			    	<!-- opcion seleccionada  -->
+			      		<label class="check_option">
+			        		<input type="checkbox" checked="checked" class="filled-in" disabled/>
+			        		<span class="font-check">Excavacion Muro / Dala parametral</span>
+			      		</label>
+			    	<?php } ?>
+			    </p>
+			</div>
+
+			<div class="col m9 s12">
+				<div clas="row">
+					<div class="col m4 s6 text-center">
+						<?php if($preliminares == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Preliminares</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['preliminares']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['preliminares']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span></span>
+								<a class="img_download" data-img ="/<?php echo $key['preliminares']; ?>">Preliminares <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+
+					<div class="col m4 s6 text-center">
+						<?php if($trazo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Trazo y limpieza</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['trazo_limpieza']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['trazo_limpieza']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['trazo_limpieza']; ?>">Trazo y limpieza <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($excavacion == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Excavacion</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['excavacion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['excavacion']; ?>">Excavacion <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+
+					</div>
+
+					<div class="col m4 s6 text-center">
+						<?php if($plantilla == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Plantilla</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['plantilla']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['plantilla']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['plantilla']; ?>">Plantilla <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($translado == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Traslado de materiales</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['translado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['translado']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['translado']; ?>">Traslado de materiales <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($armado == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Habilitado y armado de acero</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['armado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['armado']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<span></span>
+								<a class="img_download" data-img ="/<?php echo $key['armado']; ?>">Habilitado y armado de acero <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+
+					<div class="col m4 s12 text-center">
+						<?php if($muro == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Excavacion Muro /	Dala parametral</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkuno as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['excavacion_muro']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion_muro']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['excavacion_muro']; ?>">Excavacion Muro / Dala parametral <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+				</div>
+			</div>
+		</div>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">date_range</i>WK 2</div>
+      	<div class="collapsible-body">
+			<?php 
+			$colocacion = 0; $vaciado = 0; $relleno = 0; $nicho = 0; $muro = 0;
+			foreach ($this->wkdos as $key){ 
+				$colocacion = $key['status_colocacion'];
+				$vaciado = $key['status_vaciado'];
+				$relleno = $key['status_relleno'];
+				$nicho = $key['status_nicho'];
+				$muro = $key['status_muro'];
+
+			 } ?>
+
+      		<div class="row">
+      			<div class="col m3 s12">
+      				<?php if($colocacion == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox"  class="filled-in" disabled />
+						        <span class="font-check">Colocación de anclas</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Colocación de anclas</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END COLOCACION DE ANCLAS -->
+      				<?php if($vaciado == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Vaciado de concreto</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Vaciado de concreto</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END VACIADO DE CONCRETO -->
+      				<?php if($relleno == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Desimbrado y relleno con tepetate</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Desimbrado y relleno con tepetate</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END DESIMBRADO Y RELLENO CON TEPETATE -->
+      				<?php if($nicho == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Nicho / Acometida electrica</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Nicho / Acometida electrica</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END NICHO / ACOMETIDA ELECTRICA -->
+      				<?php if($muro == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Muro perimetral / malla</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Muro perimetral / malla</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END MURO PERIMETRAL / MALLA -->
+      			</div>
+
+      			<div class="col m9 s12">
+					<div class="row">
+						<div class="col m4 s6 text-center">
+							<?php if($colocacion == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Colocación de anclas</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['colocacion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['colocacion']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span></span>
+									<a class="img_download" data-img ="/<?php echo $key['colocacion']; ?>">Colocación de anclas <i class="fa fa-download"></i></a>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END COLOCACION DE ANCLAS -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($vaciado == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Vaciado de concreto</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['vaciado']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['vaciado']; ?>"  alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<span></span>
+									<a class="img_download" data-img ="/<?php echo $key['vaciado']; ?>">Vaciado de concreto <i class="fa fa-download"></i></a>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END VACIADO DE CONCRETO -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($relleno == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Desimbrado y relleno con tepetate</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['relleno']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['relleno']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<a class="img_download" data-img ="/<?php echo $key['relleno']; ?>">Desimbrado y relleno con tepetate <i class="fa fa-download"></i></a>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END DESIMBRADO Y RELLENO CON TEPETATE -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($nicho == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Nicho / Acometida electrica</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['nicho']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['nicho']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<a class="img_download" data-img ="/<?php echo $key['nicho']; ?>">Nicho / Acometida electrica <i class="fa fa-download"></i></a>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END NICHO / ELECTRICA -->
+
+						<div class="col m4 s6 text-center">
+							<?php if($muro == 0){ ?>
+								<i class="large material-icons">photo_camera</i>
+								<div class="row">
+									<span>Muro perimetral / malla</span>
+								</div>
+							<?php }else{ ?>
+								<?php foreach ($this->wkdos as $key){ ?>
+									<a class="example-image-link" href="/<?php echo $key['muro']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['muro']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+								<div class="row">
+									<a class="img_download" data-img ="/<?php echo $key['muro']; ?>">Muro perimetral / malla <i class="fa fa-download"></i></a>
+								</div>
+								<?php } ?>
+							<?php } ?>
+						</div>
+					<!-- END MURO PERIMETRAL / MALLA -->
+					</div>
+      			</div>	
+      		</div>
+     	</div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">date_range</i>Wk 3</div>
+      <div class="collapsible-body">
+      	<div class="row">
+			<?php 
+			$excavaciontrayectoria = 0; $basemedicion = 0; $baseinterruptor = 0; $registrosfo = 0; $registroelectrico = 0;
+			$tuberiafo = 0; $tuberiaelectrica = 0; $trayectoriaaerea = 0; $planchaequipo = 0; $soportetelescopio = 0;
+			$sistematierra = 0; $interruptorgabinetes = 0; $nichocentro = 0; $gabinetefuerzas = 0; $instalacioncable = 0;
+			$basesequipos = 0; $orientacionsoportes = 0; $instalacioncgo = 0; $instalacionbarrastierras = 0; $aterrizajebarras =0;
+			$portacables = 0; $sistemaelectrico = 0; $fibraoptica = 0; $sistemadetierra = 0;
+			foreach ($this->wktres as $key){ 
+				$excavaciontrayectoria = $key['status_excavaciontrayectoria'];
+				$basemedicion = $key['status_basemedicion'];
+				$baseinterruptor = $key['status_baseinterruptor'];
+				$registrosfo = $key['status_registrosfo'];
+				$registroelectrico = $key['status_registroelectrico'];
+				$tuberiafo = $key['status_tuberiafo'];
+				$tuberiaelectrica = $key ['status_tuberiaelectrica'];
+				$trayectoriaaerea = $key['status_trayectoriaaerea'];
+				$planchaequipo = $key['status_planchaequipo'];
+				$soportetelescopio = $key['status_soportetelescopio'];
+				$sistematierra = $key['status_sistematierras']; 
+				$interruptorgabinetes = $key['status_interruptorgabinetes'];
+				$nichocentro = $key['status_nichocentro'];
+				$gabinetefuerzas = $key['status_gabinetefuerzas'];
+				$instalacioncable = $key['status_instalacioncable'];
+				$basesequipos = $key['status_basesequipos'];
+				$orientacionsoportes = $key['status_orientacionsoportes'];
+				$instalacioncgo = $key['status_instalacioncgo'];
+				$instalacionbarrastierras = $key['status_instalacionbarrastierras'];
+				$aterrizajebarras = $key['status_aterrizajebarras'];
+				$portacables = $key['status_portacables'];
+				$sistemaelectrico = $key['status_sistemaelectrico'];
+				$fibraoptica = $key['status_fibraoptica'];
+				$sistemadetierra = $key['status_sistemadetierra'];
+			 } ?>
+      		<div class="col m3 s12">
+      			<?php if($excavaciontrayectoria == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox"  class="filled-in" disabled />
+						    <span class="font-check">Excavacion de trayectorias</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Excavacion de trayectorias</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Excavacion de trayectorias -->
+
+      			<?php if($basemedicion == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de base de medicion</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de base de medicion</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END VACIADO DE CONCRETO -->
+
+      			<?php if($baseinterruptor == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de base de interruptor de cuchillas</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de base de interruptor de cuchillas</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de base de interruptor de cuchillas -->
+
+      			<?php if($registrosfo == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Construccion de registros de FO</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					    <p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Construccion de registros de FO</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END >Construccion de registros de FO -->
+
+      			<?php if($registroelectrico == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Construccion de registros de electricos</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Construccion de registros de electricos</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Construccion de registros de electricos -->
+
+      			<?php if($tuberiafo == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de tuberia FO</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de tuberia FO</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END CInstalacion de tuberia FO -->
+
+      			<?php if($tuberiaelectrica == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de tuberia electrica</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de tuberia electrica</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de tuberia electrica -->
+
+
+      			<?php if($trayectoriaaerea == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de trayectoria aerea</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de trayectoria aerea</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de trayectoria aerea -->
+
+
+      			<?php if($planchaequipo == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Construccion de plancha para equipos</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Construccion de plancha para equipos</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Construccion de plancha para equipos -->
+
+
+      			<?php if($soportetelescopio == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de soporte telescopio para portacablera</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de soporte telescopio para portacablera</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de soporte telescopio para portacablera -->
+
+
+      			<?php if($sistematierra == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de sistemas de tierras</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de sistemas de tierras</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de soporte telescopio para portacablera -->
+
+      			<?php if($interruptorgabinetes == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de interruptores en gabinetes de fuerzas</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de interruptores en gabinetes de fuerzas</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de interruptores en gabinetes de fuerzas -->
+
+      			<?php if($nichocentro == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Construccion de nicho para centro de cargas</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Construccion de nicho para centro de cargas</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Construccion de nicho para centro de cargas -->
+
+      			<?php if($gabinetefuerzas == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Colocacion de gabinete de fuerzas con soporte</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Colocacion de gabinete de fuerzas con soporte</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Colocacion de gabinete de fuerzas con soporte -->
+
+      			<?php if($instalacioncable == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de cable</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de cable</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de cable -->
+
+      			<?php if($basesequipos == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Colocacion de bases de equipos e interconexiones</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Colocacion de bases de equipos e interconexiones</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Colocacion de bases de equipos e interconexiones -->
+
+      			<?php if($orientacionsoportes == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion  y orientacion de soportes RF</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion  y orientacion de soportes RF</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion  y orientacion de soportes registrosfo -->
+
+
+      			<?php if($instalacioncgo == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de CGO</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de CGO</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de CGO -->
+
+
+      			<?php if($instalacionbarrastierras == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de barras de tierras</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de barras de tierras</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de barras de tierras -->
+
+      			<?php if($aterrizajebarras == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Aterrizaje de barras de tierras</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Aterrizaje de barras de tierras</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Aterrizaje de barras de tierras -->
+
+      			<?php if($portacables == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de porta cablera horizontal</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Instalacion de porta cablera horizontal</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Instalacion de porta cablera horizontal -->
+
+      			<?php if($sistemaelectrico == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Sistema electrico</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Sistema electrico</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Sistema electrico -->
+
+
+      			<?php if($fibraoptica == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Fibra optica</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Fibra optica</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Fibra opticas -->
+
+      			<?php if($sistemadetierra == 0){ ?>
+					<p>
+						<label class="check_option">
+						    <input type="checkbox" class="filled-in" disabled />
+						    <span class="font-check">Sistemas de tierras</span>
+						</label>
+					</p>
+      			<?php }else{ ?>
+					<p>
+						<label>
+						    <input type="checkbox" checked="checked" class="filled-in" disabled />
+						    <span class="font-check">Sistemas de tierras</span>
+						</label>
+					</p>
+      			<?php } ?>
+      		<!-- END Sistemas de tierras -->
+      		</div>
+
+      		<div class="col m9 s12">
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($excavaciontrayectoria == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Excavacion de trayectorias</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['excavacion_trayectoria']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['excavacion_trayectoria']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['excavacion_trayectoria']; ?>">Excavacion de trayectorias <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($basemedicion == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de base de medicion</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['base_medicion']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['base_medicion']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['base_medicion']; ?>">Instalacion de base de medicion <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($baseinterruptor == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de base de interruptor de cuchillas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['base_interruptor']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['base_interruptor']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['base_interruptor']; ?>">Instalacion de base de interruptor de cuchillas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($registrosfo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de registros de FO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['registros_fo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['registros_fo']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['registros_fo']; ?>">Construccion de registros de FO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($registroelectrico == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de registros electricos</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['registro_electrico']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['registro_electrico']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['registro_electrico']; ?>">Construccion de registros electricos <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($tuberiafo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de tuberia FO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['tuberia_fo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['tuberia_fo']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['tuberia_fo']; ?>">Instalacion de tuberia FO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($tuberiaelectrica == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de tuberia electrica</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['tuberia_electrica']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['tuberia_electrica']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['tuberia_electrica']; ?>">Instalacion de tuberia electrica <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($trayectoriaaerea == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de trayectoria aerea</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['trayectoria_aerea']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['trayectoria_aerea']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['trayectoria_aerea']; ?>">Instalacion de trayectoria aerea <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($planchaequipo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Constuccion de plancha para equipos</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['plancha_equipo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['plancha_equipo']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['plancha_equipo']; ?>">Constuccion de plancha para equipos <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($soportetelescopio == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de soporte telescopio para portacablera</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['soporte_telescopio']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['soporte_telescopio']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['soporte_telescopio']; ?>">Instalacion de soporte telescopio para portacablera <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>	
+					<div class="col m4 s6 text-center">
+						<?php if($sistematierra == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de sistemas de tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistema_tierras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistema_tierras']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistema_tierras']; ?>">Instalacion de sistemas de tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($interruptorgabinetes == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de interruptores en gabinetes de fuerzas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['interruptor_gabinetes']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['interruptor_gabinetes']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['interruptor_gabinetes']; ?>">Instalacion de interruptores en gabinetes de fuerzas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($nichocentro == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Construccion de nicho para centro  de cargas</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['nicho_centro']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['nicho_centro']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['nicho_centro']; ?>">Construccion de nicho para centro  de cargas <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+
+					<div class="col m4 s6 text-center">
+						<?php if($gabinetefuerzas == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Colocacion de gabinete de fuerzas con soporte</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['gabinete_fuerzas']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['gabinete_fuerzas']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['gabinete_fuerzas']; ?>">Colocacion de gabinete de fuerzas con soporte <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($instalacioncable == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de cable</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_cable']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_cable']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_cable']; ?>">Instalacion de cable <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($basesequipos == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Colocacion de bases de equipos e interconexiones</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['bases_equipos']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['bases_equipos']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['bases_equipos']; ?>">Colocacion de bases de equipos e interconexiones <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($orientacionsoportes == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion y orientacion de soportes RF</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['orientacion_soportes']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['orientacion_soportes']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['orientacion_soportes']; ?>">Instalacion y orientacion de soportes RF <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($instalacioncgo == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de CGO</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_cgo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_cgo']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_cgo']; ?>">Instalacion de CGO <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($instalacionbarrastierras == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de barras de tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['instalacion_barrastierras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['instalacion_barrastierras']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['instalacion_barrastierras']; ?>">Instalacion de barras de tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($aterrizajebarras == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Aterrizaje de barras de tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['aterrizaje_barras']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['aterrizaje_barras']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['aterrizaje_barras']; ?>">Aterrizaje de barras de tierras <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($portacables == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Instalacion de porta cablera horizontal</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['porta_cables']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['porta_cables']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['porta_cables']; ?>">Instalacion de porta cablera horizontal <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col m4 s6 text-center">
+						<?php if($sistemaelectrico == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Sistema electrico</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistema_electrico']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistema_electrico']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistema_electrico']; ?>">Sistema electrico< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($fibraoptica == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Fibra optica</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['fibra_optica']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['fibra_optica']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['fibra_optica']; ?>">Fibra optica< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<div class="col m4 s6 text-center">
+						<?php if($sistemadetierra == 0){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Sistemas de tierras</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wktres as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['sistemadetierra']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['sistemadetierra']; ?>" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['sistemadetierra']; ?>">Sistema de tierras< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</div>
+      		</div>
+      	</div>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">date_range</i>Wk 4</div>
+      <div class="collapsible-body">
+    	<div class="row">
+			<?php 
+			$montajetorre = 0; $camagrava = 0; $limpiezadetalle = 0; 
+			foreach ($this->wkcuatro as $key){ 
+				$montajetorre = $key['status_montajetorre'];
+				$camagrava = $key['status_camagrava'];
+				$limpiezadetalle = $key['status_limpiezadetalles'];
+			 } ?>
+
+			 <div class="row">
+      			<div class="col m3 s12">
+      				<?php if($montajetorre == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox"  class="filled-in" disabled />
+						        <span class="font-check">Montaje de torre </span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Montaje de torre</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END MONTAJE DE TORRE -->
+      				<?php if($camagrava == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Antivegetal y cama de grava</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Antivegetal y cama de grava</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END ANTIVEGETAL Y CAMA DE GRAVA -->
+      				<?php if($limpiezadetalle == 0){ ?>
+					    <p>
+						    <label class="check_option">
+						        <input type="checkbox" class="filled-in" disabled />
+						        <span class="font-check">Limpieza y detalle</span>
+						    </label>
+					    </p>
+      				<?php }else{ ?>
+					    <p>
+						    <label>
+						        <input type="checkbox" checked="checked" class="filled-in" disabled />
+						        <span class="font-check">Limpieza y detalle</span>
+						    </label>
+					    </p>
+      				<?php } ?>
+      			<!-- END LIMPIEZA Y DETALLE -->
+      			</div>
+
+      			<div class="col m9 s12">
+				<div clas="row">
+					<div class="col m4 s12 text-center">
+						<?php if($montajetorre == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Montaje de torre</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['montaje_torre']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['montaje_torre']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['montaje_torre']; ?>">Montaje de torre< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($camagrava == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Antivegetal y cama de grava</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['cama_grava']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['cama_grava']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['cama_grava']; ?>">Antivegetal y cama de grava< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+					<div class="col m4 s12 text-center">
+						<?php if($limpiezadetalle == 0 ){ ?>
+							<i class="large material-icons">photo_camera</i>
+							<div class="row">
+								<span>Limpieza y detalles</span>
+							</div>
+						<?php }else{ ?>
+							<?php foreach ($this->wkcuatro as $key){ ?>
+								<a class="example-image-link" href="/<?php echo $key['limpieza_detalles']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['limpieza_detalles']; ?>" id="camara_div" alt="image-1" style="width: 120px; height: 75px;"/></a>
+							<div class="row">
+								<a class="img_download" data-img ="/<?php echo $key['limpieza_detalles']; ?>">Limpieza y detalles< <i class="fa fa-download"></i></a>
+							</div>
+							<?php } ?>
+						<?php } ?>						
+					</div>
+				</div>
+      			</div>
+			 </div>
+      	</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+
+<div class="row text-center" id="div_baseline_dos">
+	<div class="col m3 s3">
+	</div>
+	<div class="col m3 s3">	
+		<a id="baselie_calcular"><h4 >Baseline</h4></a>
+	</div>
+	<div class="col m3 s3">
+		<h4>Forecast</h4>
+	</div>
+	<div class="col m3 s3">
+		<h4>Actual</h4>
+	</div>
+</div>
+
+<?php if ($this->detallesdos_bts) {
+foreach ($this->detallesdos_bts as $key) { ?>
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_reportesitio'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#reportesitiomodal"><h5 span class="font_tittle" style="color:green;">Reporte sitio terminado</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#reportesitiomodal"><h5 span class="font_tittle" style="color:red;">Reporte sitio terminado</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_reportesitio" type="text" name="baseline_reportesitio" value="<?php echo $key['reportesitio_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_reportesitio" type="text" name="forecast_reportesitio" value="<?php echo $key['reportesitio_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_reportesitio" type="text" name="actual_reportesitio" value="<?php echo $key['reportesitio_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Entrega de sitio al cliente</h5>
+	</div>
+	<div class="col m9 s3">
+		<input id="entrega_sitio" type="text" name="entrega_sitio" value="<?php echo $key['entrega_sitio']; ?>">
+	</div>
+</div>	
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">ODK operador</h5>
+	</div>
+	<div class="col m9 s3">
+		<input id="odk_operador" type="text" name="odk_operador" value="<?php echo $key['odk_operador']; ?>">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_punchlist'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#punchlistmodal"><h5 span class="font_tittle" style="color:green;">Punchlist operador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#punchlistmodal"><h5 span class="font_tittle" style="color:red;">Punchlist operador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="punchlist_operador" type="text" name="punchlist_operador" value="<?php echo $key['punchlist_operador']; ?>">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_correcciondetalles'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#correccionmodal"><h5 span class="font_tittle" style="color:green;">Correccion detalles</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#correccionmodal"><h5 span class="font_tittle" style="color:red;">Correccion detalles</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_correcciondetalles" type="text" name="baseline_correcciondetalles" value="<?php echo $key['corecciondetalles_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_correcciondetalles" type="text" name="forecast_correcciondetalles" value="<?php echo $key['correcciondetalles_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_correcciondetalles" type="text" name="actual_correcciondetalles" value="<?php echo $key['correcciondetalles_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_protocolooperador'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#protocolomodal"><h5 span class="font_tittle" style="color:green;">Protocolo limpio operador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#protocolomodal"><h5 span class="font_tittle" style="color:red;">Protocolo limpio operador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="protocolo_limpio" type="text" name="protocolo_limpio" value="<?php echo $key['protocolo_operador']; ?>">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_compactacion'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#compactacionmodal"><h5 span class="font_tittle" style="color:green;">Pruebas compactacion</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#compactacionmodal"><h5 span class="font_tittle" style="color:red;">Pruebas compactacion</h5></a>
+	    <?php } ?>
+
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_pruebascompactacion" type="text" name="baseline_pruebascompactacion" value="<?php echo $key['pruebacompactacion_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_pruebascompactacion" type="text" name="forecast_pruebascompactacion" value="<?php echo $key['pruebacompactacion_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_pruebascompactacion" type="text" name="actual_pruebascompactacion" value="<?php echo $key['pruebacompactacion_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_sietedias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#sietediasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 7 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#sietediasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 7 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_sietedias" type="text" name="baseline_sietedias" value="<?php echo $key['pruebasiete_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_sietedias" type="text" name="forecast_sietedias" value="<?php echo $key['pruebasiete_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_sietedias" type="text" name="actual_sietedias" value="<?php echo $key['pruebasiete_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_catorcedias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#catorcediasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 14 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#catorcediasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 14 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_catorcedias" type="text" name="baseline_catorcedias" value="<?php echo $key['pruebacatorce_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_catorcedias" type="text" name="forecast_catorcedias" value="<?php echo $key['pruebacatorce_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_catorcedias" type="text" name="actual_catorcedias" value="<?php echo $key['pruebacatorce_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_ventiundias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#ventiundiasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 21 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#ventiundiasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 21 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ventiunodias" type="text" name="baseline_ventiunodias" value="<?php echo $key['pruebaventiuno_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ventiunodias" type="text" name="forecast_ventiunodias" value="<?php echo $key['pruebaventiuno_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ventiunodias" type="text" name="actual_ventiunodias" value="<?php echo $key['pruebaventiuno_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_ventiochodias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#ventiochodiasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 28 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#ventiochodiasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 28 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ventiochodias" type="text" name="baseline_ventiochodias" value="<?php echo $key['pruebaventiocho_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ventiochodias" type="text" name="forecast_ventiochodias" value="<?php echo $key['pruebaventiocho_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ventiochodias" type="text" name="actual_ventiochodias" value="<?php echo $key['pruebaventiocho_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_resistividad'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#resistividadmodal"><h5 span class="font_tittle" style="color:green;">Pruebas resistividad</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#resistividadmodal"><h5 span class="font_tittle" style="color:red;">Pruebas resistividad</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_resistividad" type="text" name="baseline_resistividad" value="<?php echo $key['resistividad_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_resistividad" type="text" name="forecast_resistividad" value="<?php echo $key['resistividad_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_resistividad" type="text" name="actual_resistividad" value="<?php echo $key['resistividad_actual']; ?>">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_voltaje'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#voltajemodal"><h5 span class="font_tittle" style="color:green;">Pruebas de voltaje</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#voltajemodal"><h5 span class="font_tittle" style="color:red;">Pruebas de voltaje</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_voltaje" type="text" name="baseline_voltaje" value="<?php echo $key['voltaje_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_voltaje" type="text" name="forecast_voltaje" value="<?php echo $key['voltaje_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_voltaje" type="text" name="actual_voltaje" value="<?php echo $key['voltaje_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_adeudo'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#adeudomodal"><h5 span class="font_tittle" style="color:green;">Carta no adeudo arrendador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#adeudomodal"><h5 span class="font_tittle" style="color:red;">Carta no adeudo arrendador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="carta_adeudo" type="text" name="carta_adeudo" value="<?php echo $key['adeudo_baseline']; ?>">
+	</div>
+</div>	
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_asbuilt'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#asbuiltmodal"><h5 span class="font_tittle" style="color:green;">AsBuilt</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#asbuiltmodal"><h5 span class="font_tittle" style="color:red;">AsBuilt</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_asbuilt" type="text" name="baseline_asbuilt" value="<?php echo $key['asbuilt_baseline']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_asbuilt" type="text" name="forecast_asbuilt" value="<?php echo $key['asbuilt_forecast']; ?>">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_asbuilt" type="text" name="actual_asbuilt" value="<?php echo $key['asbuilt_actual']; ?>">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_cartaliberacion'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#liberacionmodal"><h5 span class="font_tittle" style="color:green;">Carta liberacion del cliente</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#liberacionmodal"><h5 span class="font_tittle" style="color:red;">Carta liberacion del cliente</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="carta_liberacion" type="text" name="carta_liberacion" value="<?php echo $key['carta_liberacion']; ?>">
+	</div>
+</div>	
+
+<?php } }else{ ?>
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_reportesitio'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#reportesitiomodal"><h5 span class="font_tittle" style="color:green;">Reporte sitio terminado</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#reportesitiomodal"><h5 span class="font_tittle" style="color:red;">Reporte sitio terminado</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_reportesitio" type="text" name="baseline_reportesitio" value="">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_reportesitio" type="text" name="forecast_reportesitio" value="">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_reportesitio" type="text" name="actual_reportesitio" value="">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">Entrega de sitio al cliente</h5>
+	</div>
+	<div class="col m9 s3">
+		<input id="entrega_sitio" type="text" name="entrega_sitio" value="">
+	</div>
+</div>	
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<h5 span class="font_tittle">ODK operador</h5>
+	</div>
+	<div class="col m9 s3">
+		<input id="odk_operador" type="text" name="odk_operador" value="">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_punchlist'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#punchlistmodal"><h5 span class="font_tittle" style="color:green;">Punchlist operador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#punchlistmodal"><h5 span class="font_tittle" style="color:red;">Punchlist operador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="punchlist_operador" type="text" name="punchlist_operador" value="">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_correcciondetalles'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#correccionmodal"><h5 span class="font_tittle" style="color:green;">Correccion detalles</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#correccionmodal"><h5 span class="font_tittle" style="color:red;">Correccion detalles</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_correcciondetalles" type="text" name="baseline_correcciondetalles">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_correcciondetalles" type="text" name="forecast_correcciondetalles">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_correcciondetalles" type="text" name="actual_correcciondetalles">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_protocolooperador'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#protocolomodal"><h5 span class="font_tittle" style="color:green;">Protocolo limpio operador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#protocolomodal"><h5 span class="font_tittle" style="color:red;">Protocolo limpio operador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="protocolo_limpio" type="text" name="protocolo_limpio">
+	</div>
+</div>	
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_compactacion'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#compactacionmodal"><h5 span class="font_tittle" style="color:green;">Pruebas capacitacion</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#compactacionmodal"><h5 span class="font_tittle" style="color:red;">Pruebas capacitacion</h5></a>
+	    <?php } ?>
+
+		
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_pruebascompactacion" type="text" name="baseline_pruebascompactacion">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_pruebascompactacion" type="text" name="forecast_pruebascompactacion">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_pruebascompactacion" type="text" name="actual_pruebascompactacion">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_sietedias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#sietediasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 7 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#sietediasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 7 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_sietedias" type="text" name="baseline_sietedias">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_sietedias" type="text" name="forecast_sietedias">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_sietedias" type="text" name="actual_sietedias">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_catorcedias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#catorcediasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 14 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#catorcediasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 14 dias</h5></a>
+	    <?php } ?>
+		
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_catorcedias" type="text" name="baseline_catorcedias">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_catorcedias" type="text" name="forecast_catorcedias">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_catorcedias" type="text" name="actual_catorcedias">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_ventiundias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#ventiundiasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 21 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#ventiundiasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 21 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ventiunodias" type="text" name="baseline_ventiunodias">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ventiunodias" type="text" name="forecast_ventiunodias">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ventiunodias" type="text" name="actual_ventiunodias">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_ventiochodias'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#ventiochodiasmodal"><h5 span class="font_tittle" style="color:green;">Pruebas de concreto 28 dias</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#ventiochodiasmodal"><h5 span class="font_tittle" style="color:red;">Pruebas de concreto 28 dias</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_ventiochodias" type="text" name="baseline_ventiochodias">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_ventiochodias" type="text" name="forecast_ventiochodias">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_ventiochodias" type="text" name="actual_ventiochodias">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_resistividad'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#resistividadmodal"><h5 span class="font_tittle" style="color:green;">Pruebas resistividad</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#resistividadmodal"><h5 span class="font_tittle" style="color:red;">Pruebas resistividad</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_resistividad" type="text" name="baseline_resistividad">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_resistividad" type="text" name="forecast_resistividad">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_resistividad" type="text" name="actual_resistividad">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_voltaje'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#voltajemodal"><h5 span class="font_tittle" style="color:green;">Pruebas de voltaje</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#voltajemodal"><h5 span class="font_tittle" style="color:red;">Pruebas de voltaje</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_voltaje" type="text" name="baseline_voltaje">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_voltaje" type="text" name="forecast_voltaje">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_voltaje" type="text" name="actual_voltaje">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_adeudo'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#adeudomodal"><h5 span class="font_tittle" style="color:green;">Carta no adeudo arrendador</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#adeudomodal"><h5 span class="font_tittle" style="color:red;">Carta no adeudo arrendador</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="carta_adeudo" type="text" name="carta_adeudo">
+	</div>
+</div>	
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_asbuilt'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#asbuiltmodal"><h5 span class="font_tittle" style="color:green;">AsBuilt</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#asbuiltmodal"><h5 span class="font_tittle" style="color:red;">AsBuilt</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m3 s3">
+		<input id="baseline_asbuilt" type="text" name="baseline_asbuilt">
+	</div>
+	<div class="col m3 s3">
+		<input id="forecast_asbuilt" type="text" name="forecast_asbuilt">
+	</div>
+	<div class="col m3 s3">
+		<input id="actual_asbuilt" type="text" name="actual_asbuilt">
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m3 s3">
+		<?php 
+    		$validate = 0;
+    		foreach ($this->pdfdetaildos as $pdf) { 
+    		if( is_null($pdf['pdf_cartaliberacion'])){ $validate = 0; }else{ $validate = 1; }
+
+    	}?>
+
+	    <?php if($validate ==1){ ?>
+	    <?php foreach ($this->pdfdetail as $pdf) { ?>
+			<a class="modal-trigger" href="#liberacionmodal"><h5 span class="font_tittle" style="color:green;">Carta liberacion del cliente</h5></a>
+	   	<?php } ?>
+	    <?php }else{ ?>
+			<a class="modal-trigger" href="#liberacionmodal"><h5 span class="font_tittle" style="color:red;">Carta liberacion del cliente</h5></a>
+	    <?php } ?>
+	</div>
+	<div class="col m9 s3">
+		<input id="carta_liberacion" type="text" name="carta_liberacion">
+	</div>
+</div>	
+<?php } ?>
+
+
+
+  <!-- Modal Structure -->
+  <div id="reportesitiomodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Reporte sitio terminado</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_reportesitio'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Reporte sitio terminado
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_reportesitio"]; ?>" download="/<?php echo $key["pdf_reportesitio"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+       
+
+  <div id="punchlistmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Punchlist operador</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_punchlist'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Punchlist operador
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_punchlist"]; ?>" download="/<?php echo $key["pdf_punchlist"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+       
+
+  <div id="correccionmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Correccion detalles</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_correcciondetalles'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Correccion detalles
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_correcciondetalles"]; ?>" download="/<?php echo $key["pdf_correcciondetalles"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="protocolomodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Protocolo limpio operador</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_protocolooperador'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Protocolo limpio operador
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_protocolooperador"]; ?>" download="/<?php echo $key["pdf_protocolooperador"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="compactacionmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas compactacion</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_compactacion'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas compactacion
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_compactacion"]; ?>" download="/<?php echo $key["pdf_compactacion"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="sietediasmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas de concreto 7 dias</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_sietedias'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas de concreto 7 dias
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_sietedias"]; ?>" download="/<?php echo $key["pdf_sietedias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="catorcediasmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas de concreto 14 dias</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_catorcedias'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas de concreto 14 dias
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_catorcedias"]; ?>" download="/<?php echo $key["pdf_catorcedias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+    </div>
+
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="ventiundiasmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas de concreto 21 dias</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_ventiundias'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas de concreto 21 dias
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_ventiundias"]; ?>" download="/<?php echo $key["pdf_ventiundias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="ventiochodiasmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas de concreto 28 dias</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_ventiochodias'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas de concreto 28 dias
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_ventiochodias"]; ?>" download="/<?php echo $key["pdf_ventiochodias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="resistividadmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas resistividad</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_resistividad'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas resistividad
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_resistividad"]; ?>" download="/<?php echo $key["pdf_resistividad"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="voltajemodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Pruebas de voltaje</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_voltaje'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Pruebas de voltaje
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_voltaje"]; ?>" download="/<?php echo $key["pdf_voltaje"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="adeudomodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>Carta no adeudo arrendador</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_adeudo'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									Carta no adeudo arrendador
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_adeudo"]; ?>" download="/<?php echo $key["pdf_adeudo"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="asbuiltmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>AsBuilt</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_asbuilt'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									AsBuilt
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_asbuilt"]; ?>" download="/<?php echo $key["pdf_asbuilt"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+  <div id="liberacionmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h3>AsBuilt</h3>
+		<div class="row">
+    		<?php  $ifreportesitio = 0;
+    		foreach ($this->pdfdetaildos as $key) {
+    			if(is_null($key['pdf_cartaliberacion'])){
+    				$ifreportesitio = 0;
+    			}else{
+    				$ifreportesitio = 1;
+    			}
+    		} ?>
+		</div>
+
+		<div class="row">
+	      	<table>
+		        <thead>
+		          	<tr>
+		            	<th>Archivo</th>
+		            	<th>Descargar</th>
+		            	<th class="text-center">Acciones</th>
+		          	</tr>
+		        </thead>
+
+    			<?php if($ifreportesitio ==1){ ?>
+    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+						<tbody>
+							<tr>
+								<td>
+									AsBuilt
+								</td>
+								<td>
+									<a title="Descargar Archivo" href="/<?php echo $key["pdf_cartaliberacion"]; ?>" download="/<?php echo $key["pdf_cartaliberacion"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+								</td>
+								<td>
+									<a class="delete" href="" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+						</tbody>
+    				<?php } ?>
+    			<?php }else{ ?>
+    			<?php } ?>
+	      	</table>
+		</div>
+
+    </div>
+    <div class="modal-footer">
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+<div class="row" id="div_comentarios">
+	<div class="col m12 s12">
+		<h3>Comentarios:</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div clas="col m12 s12">
+      	<table>
+        	<thead>
+          		<tr>
+              		<th>Personal</th>
+              		<th>Comentario</th>
+              		<th>Acciones</th>
+          		</tr>
+        	</thead>
+
+			<?php
+			if ($this->commit) {
+			foreach ($this->commit as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["nombre"]." ".$usr["ap"]; ?></td>
+					<td><?php echo $usr["comentario"]; ?></td>
+				<td>
+					<a href="/panel/comentariositio/comentario/<?php echo $usr["commitid"] ?>/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $this->proyecto_id; ?>/sitio/<?php echo $this->idtipo; ?>"><i class="fa fa-2x fa-edit"></i></a>
+				</td>
+				<td>
+					<a class="delete_comentario" data-id="<?php echo $usr["commitid"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay personal asignado.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+      </table>   
+	</div>
+</div>
+
+
+<div class="row" id="div_archivos">
+	<div class="col m12 s12">
+		<h3>Archivos:</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+      	<table>
+        	<thead>
+          		<tr>
+              		<th>Archivo</th>
+              		<th>Usuario</th>
+              		<th>Fecha y hora</th>
+              		<th>Descargar</th>
+          		</tr>
+        	</thead>
+
+        	<tbody>
+          		<tr>
+				<?php 
+		    		$preliminar = 0;
+		    		foreach ($this->pdfdetail as $key) { 
+		    			if( is_null($key['proyecto_preliminarap'])){ $preliminar = 0; }else{ $preliminar = 1; }
+		    		}
+ 				?>
+
+            		<td>Proyecto Preliminar AP</td>
+	    			<?php if($preliminar ==1){ ?>
+	    				<?php foreach ($this->pdfdetail as $key) { ?>
+							<td>
+								<?php echo $key["user_preliminar"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_preliminar"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["proyecto_preliminarap"]; ?>" download="/<?php echo $key["proyecto_preliminarap"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+
+          		<tr>
+            		<td>MS / DE Preliminar</td>
+		    		<?php 
+		    		$preliminar == 0;
+		    		foreach ($this->pdfdetail as $key) { 
+		    			if(is_null($key['msde_preliminar'])){ $preliminar = 0; }else{ $preliminar = 1; }
+		    		}?>
+
+	    			<?php if($preliminar ==1){ ?>
+	    				<?php foreach ($this->pdfdetail as $key) { ?>
+	    					<td>
+	    						<?php echo $key["user_mspreliminar"]; ?>
+	    					</td>
+							<td>
+								<?php echo $key["fecha_mspreliminar"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["msde_preliminar"]; ?>" download="/<?php echo $key["msde_preliminar"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		<tr>
+            		<td>MS / DE Final</td>
+		    		<?php 
+		    		$preliminar == 0;
+		    		foreach ($this->pdfdetail as $key) { 
+		    			if(is_null($key['msde_final'])){ $preliminar = 0; }else{ $preliminar = 1; }
+		    		}?>
+
+	    			<?php if($preliminar ==1){ ?>
+	    				<?php foreach ($this->pdfdetail as $key) { ?>
+							<td>
+								<?php echo $key["user_msfinal"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_msfinal"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["msde_final"]; ?>" download="/<?php echo $key["msde_final"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+
+          		<tr>
+            		<td>Proyecto final</td>
+		    		<?php 
+		    		$preliminar == 0;
+		    		foreach ($this->pdfdetail as $key) { 
+		    			if(is_null($key['proyecto_final'])){ $preliminar = 0; }else{ $preliminar = 1; }
+		    		}?>
+
+	    			<?php if($preliminar ==1){ ?>
+	    				<?php foreach ($this->pdfdetail as $key) { ?>
+							<td>
+								<?php echo $key["user_proyectofinal"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_proyectofinal"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["proyecto_final"]; ?>" download="/<?php echo $key["proyecto_final"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+
+
+          		</tr>
+          		<tr>
+          			<td>Reporte sitio terminado</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_reportesitio'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_reportesitio"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_reportesitio"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_reportesitio"]; ?>" download="/<?php echo $key["pdf_reportesitio"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+
+          		</tr>
+
+          		<tr>
+          			<td>Punchlist operado</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_punchlist'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_punchlist"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_punchlist"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_punchlist"]; ?>" download="/<?php echo $key["pdf_punchlist"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Correccion detalles</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_correcciondetalles'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_correcciondetalles"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_correcciondetalles"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_correcciondetalles"]; ?>" download="/<?php echo $key["pdf_correcciondetalles"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Protocolo limpio operador</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_protocolooperador'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_protocolooperador"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_protocolooperador"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_protocolooperador"]; ?>" download="/<?php echo $key["pdf_protocolooperador"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Pruebas compactacion</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_compactacion'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_compactacion"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_compactacion"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_compactacion"]; ?>" download="/<?php echo $key["pdf_compactacion"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Pruebas de concreto 7 dias</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_sietedias'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_sietedias"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_sietedias"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_sietedias"]; ?>" download="/<?php echo $key["pdf_sietedias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>  
+
+          		<tr>
+          			<td>Pruebas de concreto 14 dias</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_catorcedias'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_catorcedias"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_catorcedias"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_catorcedias"]; ?>" download="/<?php echo $key["pdf_catorcedias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr> 
+
+          		<tr>
+          			<td>Pruebas de concreto 21 dias</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_ventiundias'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>	
+								<?php echo $key["user_ventiundias"]; ?>
+							</td>
+							<td>	
+								<?php echo $key["fecha_ventiundias"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_ventiundias"]; ?>" download="/<?php echo $key["pdf_ventiundias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Pruebas de concreto 28 dias</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_ventiochodias'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_ventiochodias"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_ventiochodias"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_ventiochodias"]; ?>" download="/<?php echo $key["pdf_ventiochodias"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Pruebas resistividad</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_resistividad'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_resistividad"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_resistividad"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_resistividad"]; ?>" download="/<?php echo $key["pdf_resistividad"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Pruebas de voltaje</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_voltaje'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_voltaje"]; ?>	
+							</td>
+							<td>
+								<?php echo $key["fecha_voltaje"]; ?>	
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_voltaje"]; ?>" download="/<?php echo $key["pdf_voltaje"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Carta no adeudo arrendador</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_adeudo'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_adeudo"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_adeudo"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_adeudo"]; ?>" download="/<?php echo $key["pdf_adeudo"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>AsBuilt</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_asbuilt'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_asbuilt"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_asbuilt"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_asbuilt"]; ?>" download="/<?php echo $key["pdf_asbuilt"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>
+
+          		<tr>
+          			<td>Carta liberacion del cliente</td>
+		    		<?php  $ifreportesitio = 0;
+		    		foreach ($this->pdfdetaildos as $key) {
+		    			if(is_null($key['pdf_cartaliberacion'])){ $ifreportesitio = 0; }else{ $ifreportesitio = 1; }
+		    		} ?>
+
+	    			<?php if($ifreportesitio ==1){ ?>
+	    				<?php foreach ($this->pdfdetaildos as $key) { ?>
+							<td>
+								<?php echo $key["user_cartaliberacion"]; ?>
+							</td>
+							<td>
+								<?php echo $key["fecha_cartaliberacion"]; ?>
+							</td>
+							<td>
+								<a title="Descargar Archivo" href="/<?php echo $key["pdf_cartaliberacion"]; ?>" download="/<?php echo $key["pdf_cartaliberacion"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+							</td>
+	    				<?php } ?>
+	    			<?php }else{ ?>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+    						<td>
+    							  <div class="chip">
+    								<img src="/img/incorrect.png" alt="Contact Person">
+    								No disponible
+  								</div>
+    						</td>
+
+	    			<?php } ?>
+          		</tr>          		
+        	</tbody>
+      	</table>
+	</div>
+</div>
+
+
+<div class="row" id="div_altan">
+	<div class="col m12 s12">
+		<h3>Documentacion ALTAN:</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div clas="col m12 s12">
+      	<table>
+        	<thead>
+          		<tr>
+              		<th>Usuario</th>
+              		<th>Fecha agregado</th>
+              		<th>Descargar</th>
+              		<th>Eliminar</th>
+          		</tr>
+        	</thead>
+
+			<?php
+			if ($this->altanfile) {
+			foreach ($this->altanfile as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["user_file"]; ?></td>
+					<td><?php echo $usr["date_file"]; ?></td>
+					<td>
+						<a title="Descargar Archivo" href="/<?php echo $usr["file_altan"]; ?>" download="/<?php echo $usr["file_altan"]; ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+					</td>
+				<td>
+					<a class="delete_archivoaltan" data-id="<?php echo $usr["id"]; ?>" data-file="<?php echo $usr["file_altan"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				</td>
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay ningun archivo agregado.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+      </table>   
+	</div>
+</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    	$('select').formSelect();
+    	$('.collapsible').collapsible();
+    	$('.dropdown-trigger').dropdown();
+  	});
+
+    $(".img_download").click(function(){
+		var source = $(this).data('img');
+		var new_cad = source.slice(12, -4);
+		var a = document.createElement('a');
+
+		a.download = new_cad;
+		a.target = '_blank';
+		a.href= source;
+
+		a.click();
+    });
+
+     $("#carga_uno").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#baselie_cal").offset().top
+		 }, 2000);
+    });
+
+     $("#asignar_cuadrilla").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_asignar").offset().top
+		 }, 2000);
+    });
+
+    $("#reporte_evidencias").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_evidencias").offset().top
+		 }, 2000);
+    });
+
+    $("#carga_dos").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_baseline_dos").offset().top
+		 }, 2000);
+    });
+
+    $("#comentarios_sitio").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_comentarios").offset().top
+		 }, 2000);
+    });
+
+
+    $("#archivos_sitio").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_archivos").offset().top
+		 }, 2000);
+    });
+
+
+    $("#altan_sitio").click(function(){
+		var myElement = document.getElementById(''); 
+		 $('html, body').animate({
+		 scrollTop: $("#div_altan").offset().top
+		 }, 2000);
+    });
+</script>
+
+
+<!-- Usuario: gps_officetrack@gpsc.com.mx 
+Contraseña: OfT_#2020_office -->

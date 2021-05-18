@@ -1,0 +1,275 @@
+<?php 
+function eliminar_acentos($cadena){
+		
+		//Reemplazamos la A y a
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		//Reemplazamos la E y e
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		//Reemplazamos la I y i
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		//Reemplazamos la O y o
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		//Reemplazamos la U y u
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		//Reemplazamos la N, n, C y c
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+<!-- 	<div class="col m6 s6 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'Proveedores.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+	</div> -->
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación Personal</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m4">
+      	<div class="card">
+        	<div class="card-content">
+          		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Certificado Medico</span>
+				<div class="row">
+					<div class="col m12 s12 text-center" style="margin-top: 20px;">
+						<a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+					</div>
+				</div>
+        	</div>
+      	</div>
+    </div>
+
+    <div class="col s12 m4">
+      	<div class="card">
+        	<div class="card-content">
+          		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Antidoping</span>
+				<div class="row">
+					<div class="col m12 s12 text-center" style="margin-top: 20px;">
+						<a class=" btn" id="exportBtn2"><i class="material-icons right">file_download</i>Descargar</a>
+					</div>
+				</div>
+        	</div>
+      	</div>
+    </div>
+
+    <div class="col s12 m4">
+      	<div class="card">
+        	<div class="card-content">
+          		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">DC3</span>
+          		<div class="row">
+          			<div class="col m12 s12 text-center" style="margin-top: 20px;">
+          				<a class=" btn" id="exportBtn3"><i class="material-icons right">file_download</i>Descargar</a>
+          			</div>
+          		</div>
+        	</div>
+      	</div>
+    </div>
+
+</div>
+
+
+<div class="row excel-div oculto" id="tab1">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id personal</th>
+				<th>Nombre Personal</th>		
+				<th>Comentario</th>
+				<th>Lugar de Capacitacion</th>
+				<th>Fecha certificado</th>
+        		<th>Medico</th>
+        		<th>Cedula</th>
+        		<th>Folio Documento</th>
+        		<th>Documento</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->certificado_medico as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['id_personal'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['nombre'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['comentario'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['lugar_capacitacion'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['fecha'])); ?></td>
+        		<td><?php echo eliminar_acentos(str_replace(',','',$usr['medico'])); ?></td>
+        		<td><?php echo eliminar_acentos(str_replace(',','',$usr['cedula'])); ?></td>
+        		<td><?php echo eliminar_acentos(str_replace(',','',$usr['folio_documento'])); ?></td>
+        		<td>
+        			<?php if($usr['pdf'] == NULL || $usr['pdf'] == ""){ ?>
+        				<h5 style="color: red;">Sin Documento</h5>
+        			<?php }else{ ?>
+        				<h5>Con Documento</h5>
+        			<?php } ?>
+        		</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+
+<div class="row excel-div oculto" id="tab2">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id personal</th>
+				<th>Nombre Personal</th>
+				<th>Laboratorio</th>
+				<th>Fecha</th>
+				<th>Resultado</th>
+				<th>Folio</th>
+				<th>Documento</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->info_antidoping as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['id_personal'])); ?></td>
+				<td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>
+				</td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['laboratorio'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['fecha'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['resultado'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['folio'])); ?></td>
+				<td>
+					<?php if($usr["documento"] == NULL || $usr["documento"] == ""){ ?>
+						<h5 style="color: red">Sin Documentacion</h5>
+					<?php }else{ ?>
+						<h5>Con Documentacion</h5>
+					<?php } ?>
+				</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+
+<div class="row excel-div oculto" id="tab3">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id personal</th>
+				<th>Nombre Personal</th>
+				<th>NOM-009-STPS-2011 Trabajos en Alturas</th>
+				<th>NOM-029-STPS- Riesgo Electrico</th>
+				<th>NOM-030-STPS-2009 Primeros Auxilios</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->dctres as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['id_personal'])); ?></td>
+				<td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>
+				</td>
+				<td>
+					<?php if($usr["status_altura"] == 0){ ?>
+						<h5 style="color: red">Sin Documentacion</h5>
+					<?php }else{ ?>
+						<h5>Con Documentacion</h5>
+					<?php } ?>
+				</td>
+
+				<td>
+					<?php if($usr["status_electrico"] == 0){ ?>
+						<h5 style="color: red">Sin Documentacion</h5>
+					<?php }else{ ?>
+						<h5>Con Documentacion</h5>
+					<?php } ?>
+				</td>
+
+				<td>
+					<?php if($usr["status_auxilio"] == 0){ ?>
+						<h5 style="color: red">Sin Documentacion</h5>
+					<?php }else{ ?>
+						<h5>Con Documentacion</h5>
+					<?php } ?>
+				</td>
+
+
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Certificado Medico.xlsx",
+            sheet: {
+            	name: "Certificado Medico",
+            }
+        });
+    });
+
+
+    $("#exportBtn2").click(function(){
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Antidoping.xlsx",
+            sheet: {
+            	name: "Antidoping",
+            }
+        });
+    });
+
+
+    $("#exportBtn3").click(function(){
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "DC3.xlsx",
+            sheet: {
+            	name: "DC3",
+            }
+        });
+    });
+
+
+</script>

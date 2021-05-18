@@ -1,0 +1,184 @@
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/panel/sitiosdetail/id/<?php echo $this->idurl; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Proyecto</span>
+    </div>
+</div>
+
+
+      <!-- <h2>Editar el proyecto</h2> -->
+      <?php foreach ($this->tipo as $key){ ?>
+		<div class="col m12 s12">
+				<div class="row">
+					<input type="hidden" name="id_url" value="<?php echo $this->idurl; ?>">
+					<input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+					<input type="hidden" id="sitio" name="sitio" value="<?php echo $this->sitio; ?>">
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">date_range</i>
+			          	<input id="fecha_inicio" placeholder="dd/mm/yyyy" type="text" name="fecha_inicio" value="<?php echo $key['fecha_inicio'] ?>" class="datepicker">
+			          	<label for="fecha_inicio">Fecha de Inicio:</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="operador" placeholder="Ingrese el nombre del operador" type="text" name="operador" value="<?php echo $key['operador']; ?>">
+			          	<label for="operador">Operador:</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="id_operador" placeholder="Ingrese el id del operador" type="text" name="id_perador" value="<?php echo $key['id_operador']; ?>">
+			          	<label for="operador">Id operador:</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+<!-- 			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="residente" placeholder="Ingrese el nombre del residente" type="text" name="residente" value="<?php echo $key['residente']; ?>">
+			          	<label for="operador">Residente:</label> -->
+
+			        	<i class="material-icons prefix">account_circle</i>
+					    <select name="residente" id="residente">
+					    	<option value="0" disabled selected>Selecciona una opcion:</option>
+			               <?php foreach ($this->residentes as $mar) { 
+			                if ($mar['id']==$key['residente']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?> <?php echo $mar['apellido_pa']; ?> <?php echo $mar['apellido_ma']; ?></option>
+			                <?php } if ($mar['id']!=$key['residente']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?> <?php echo $mar['apellido_pa']; ?> <?php echo $mar['apellido_ma']; ?></option>
+			                <?php } } ?>  
+					    </select>
+					    <label>Residente</label>
+			        </div>
+
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="pm_cliente" placeholder="Ingrese el nombre de PM cliente" type="text" name="pm_cliente" value="<?php echo $key['pm_cliente']; ?>">
+			          	<label for="operador">PM cliente:</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">account_circle</i>
+					    <select name="coordinador" id="coordinador">
+					    	<option value="0" disabled selected>Selecciona una opcion:</option>
+			               <?php foreach ($this->coordinador as $mar) { 
+			                if ($mar['id']==$key['coordinador_id']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			                <?php } if ($mar['id']!=$key['coordinador_id']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			                <?php } } ?>  
+					    </select>
+					    <label>Coordinador</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">account_circle</i>
+					    <select name="ingeniero" id="ingeniero">
+					    	<option value="0" disabled selected>Selecciona una opcion:</option>
+			               <?php foreach ($this->ing as $mar) { 
+			                if ($mar['id']==$key['ingproyecto_id']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+			                <?php } if ($mar['id']!=$key['ingproyecto_id']) { ?>
+			                    <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+			                <?php } } ?>  
+					    </select>
+					    <label>Ingeniero de proyecto</label>
+			        </div>
+
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">date_range</i>
+			          	<input id="fecha_cliente" placeholder="dd/mm/yyyy" type="text" name="fecha_cliente" value="<?php echo $key['fecha_cliente'] ?>" class="datepicker">
+			          	<label for="fecha_cliente">Fecha de Inicio:</label>
+			        </div>
+
+		      	</div>
+
+
+
+
+		</div>
+		<?php } ?>
+
+<div class="row">
+	<div class="col m12 s12 text-right">
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/panel/sitiosdetail/id/<?php echo $this->idurl; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+				<button id="updateproyecto" class="waves-effect waves-light btn">Actualizar</button>
+			</div>	
+		</div>
+	</div>
+</div>
+
+
+
+<script src="/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+	$('.datepicker').datepicker( {"format":'yyyy-mm-dd'} ).datepicker("setDate",currentDate);
+</script>
+<script type="text/javascript">
+    	
+    $("#updateproyecto").click(function(){
+
+    	    var fecha_inicio = document.getElementById("fecha_inicio").value;
+    		var operador = document.getElementById("operador").value;
+    		var coordinador = document.getElementById("coordinador").value;
+    		var ingeniero = document.getElementById("ingeniero").value;
+    		var sitio = document.getElementById("sitio").value;
+    		var residente = document.getElementById("residente").value;
+    		var fecha_cliente = document.getElementById("fecha_cliente").value;
+
+	swal({
+	  title: "Estas seguro de modificar la información?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+
+
+    		res= residente;
+    		var pm_cliente = document.getElementById("pm_cliente").value;
+    		var id_operador = document.getElementById("id_operador").value;
+
+            var request = $.ajax({
+                url:"/panel/requestupdatesitioproyecto",
+                method:"POST",
+                data: { sitio : sitio, operador: operador, id_operador:id_operador, coordinador:coordinador, ingeniero:ingeniero, fecha: fecha_inicio, residente:res, pm_cliente: pm_cliente, fecha_cliente:fecha_cliente },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La asignacion fue cancelada!");
+	  }
+	});
+
+  });
+
+
+
+</script>

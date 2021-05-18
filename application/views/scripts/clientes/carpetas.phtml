@@ -1,0 +1,472 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+?>
+
+<?php foreach ($this->user as $value) {
+    $rol_user = $value['fkroles'];
+} ?>
+
+<!-- Inicio Botones -->
+<div class="col m12 s12" style="margin-top: 10px;">
+
+    <div class="col m5 s5"> 
+        <a href="/clientes/especificaciones"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+    <?php if ($rol_user == 0 || $rol_user == 8) { ?>
+      <div class="col m7 s7 text-right">
+          <a class="waves-effect green btn modal-trigger" href="#modal1">+ Añadir Carpeta</a>
+    	    <a class="waves-effect green btn modal-trigger" href="#modal2">+ Agregar Documento</a>
+      </div>
+    <?php } else { } ?>
+</div>
+ 
+<div class="row">
+    
+    <div class="col m12 s12 text-center" style="margin-top: 40px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de clientes
+    </div>
+
+</div>
+<!-- End Inicio Botones -->
+
+
+<!-- Buscador -->
+
+<!-- <div class="row">
+	  <div class="col m2 s12"></div>
+	 
+    <div class="col m8 s12">
+		  <form action="/clientes/busquedaclt" enctype="multipart/form-data" class="form-horizontal form-material">
+          <div class="input-field col m8 s8">
+              <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
+	            <label for="first_name">Buscar Cliente</label>
+	        </div>
+	        
+          <div class="input-field col m4 s4">
+	        	  <button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar<i class="material-icons left">search</i></button>
+	        </div>
+    	</form>
+	  </div>
+	  
+    <div class="col m2 s12"></div>
+
+</div> -->
+
+<!-- End Buscador -->
+
+<!-- Modal Agregar Carpeta -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Añade Carpeta
+        </div>
+
+        <div class="col m12 s12">
+            <form action="/clientes/requestaddcarpeta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_carpeta">
+                <div class="row">
+                	<input type="hidden" name="id_cliente" id="id_cliente" value="<?php echo $this->id_cliente; ?>">
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="carpeta" type="text" name="carpeta" class="validate" required>
+                        <label for="carpeta">* Agrega el Nombre:</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    		<button class=" btn" id="add_carpeta">Guardar</button>	
+    		<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Agregar Carpeta-->
+
+<!-- Modal Structure 1 -->
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Documento
+        </div>
+
+        <div class="col m12 s12">
+            <form action="/clientes/requestadddc" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_documento">
+                <div class="row">
+                    <input type="hidden" name="id_clientes" id="id_clientes" value="<?php echo $this->id_cliente; ?>">
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="namedoc" type="text" name="namedoc" class="validate" required>
+                        <label for="namedoc">* Nombre Documento:</label>
+                    </div>
+
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input type="date" id="fecha" name="fecha"  class="validate">
+                        <label for="fecha">* Fecha Documento: dd/mm/yyyy</label>
+                    </div>
+
+      			    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>Añade documento</span>
+                            <input type="file" name="urla">
+      				    </div>
+
+                        <div class="file-path-wrapper">
+      				       	<input class="file-path validate" id="url" type="text">
+      				    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    		<button class=" btn" id="add_documento">Guardar</button>	
+    		<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal -->
+
+<div class="col m3 s12 text-center">
+    <div class="row">
+        <?php if ($this->cliente_dato) {
+            foreach ($this->cliente_dato as $clientesd) { ?>
+                <div class="col m12 s12 text-center">
+                    <?php if($clientesd["logo"]== null){ ?>
+                        <img src="/img/no_disponible1.png" class="responsive-img" style="width: 150px; height: 150px;  margin-top: 5px;">
+                    <?php }else{ ?>
+                        <a class="example-image-link" href="/<?php echo $clientesd['logo']; ?>" data-lightbox="example-1">
+                            <img class="example-image oculto" src="/<?php echo $clientesd['logo']; ?>" id="camara_div" alt="<?php echo $clientesd["nombre_cliente"]; ?>" style="width: 150px; height: 150px;  margin-top: 5px; border-radius: 20px;"/>
+                        </a>
+                    <?php } ?>
+                </div>
+        <?php } } ?>
+    </div>
+</div>
+  
+<div class="col m9 s12">
+    <div class="row">
+		    <?php if ($this->carpetas) {
+		        foreach ($this->carpetas as $carpeta) { ?>
+                <div class="col m4 s4">
+		    		        <div class="card">
+                        <div class="card-content" style="padding: 20px 10px 20px 10px;">
+                            <div class="row" style="margin: 0px;">
+                                <div class="col m12 s12" style="padding: 0px;"> 
+                                    
+                                    <div class="col m6 s12 text-center" style="padding: 2px;">
+                                        <span class="text-center" style="font-size:13px; color: rgb(74,79,84); text-align: center; letter-spacing: 0em; font-weight: bold;"><?php echo $carpeta["nombre_carpeta"]; ?></span>
+                                    </div>
+
+                                    <div class="col m6 s12 text-right" style="padding: 2px;">
+                                        <a href="/clientes/subcarpeta/id/<?php echo $carpeta["id"]?>/cliente/<?php echo $carpeta["id_cliente"]?>"><i class="fa fa-2x fa-folder-open"></i></a>
+                                        <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                                          <a href="/clientes/carpetaedit/id/<?php echo $carpeta["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                                          <a class="deletecarpeta" data-id="<?php echo $carpeta["id"]; ?>" data-nombre="<?php echo $carpeta["nombre_carpeta"]; ?>">
+                                              <span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span>
+                                          </a>
+                                        <?php } else { } ?>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <?php } } ?>
+    </div>
+</div>
+
+
+
+
+
+<!-- Table Archivos -->
+<div class="col m12 s12">
+    <h3>Lista de Archivos</h3>
+
+    <table class="table text-left table-hover">
+    		<thead>
+      			<tr>
+      				<th>Id</th>
+      				<th>Nombre Archivo</th>	
+      				<th>Fecha Archivo</th>
+      				<th>Archivo</th>
+      				<th></th>
+      				<th></th>
+      			</tr> 
+    		</thead>
+        <?php if ($this->paginator) {
+		    foreach ($this->paginator as $archivo) { ?>
+            <tbody>
+                <tr>
+            		<td><?php echo $archivo["id"]; ?></td>
+            		<td><?php echo $archivo["nombre_archivo"]; ?></td>
+            		<td><?php echo $archivo["fecha"]; ?></td>
+            		<td>
+                        <a title="Descargar Archivo" href="/<?php echo $archivo["archivo"]; ?>" download="<?php echo substr(strrchr($archivo["archivo"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                        <a title="Visualizar" href="/<?php echo $archivo["archivo"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
+                    </td>
+            		<td>
+                    <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                        <a href="/clientes/archivoedit/id/<?php echo $archivo["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                    <?php } else { } ?>
+            		</td>
+            		<td>
+                    <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                        <a class="delete" data-id="<?php echo $archivo["id"]; ?>" data-nombre="<?php echo $archivo["nombre_archivo"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                    <?php } else { } ?>
+            		</td>
+                </tr>
+		        </tbody>
+		    <?php } } else{ ?>
+
+            <tbody>
+      				  <td></td>
+      				  <td></td>
+      				  <td>
+      					   <h4>No se encontraron Archivos en esta carpeta</h4>
+      				  </td>
+      				  <td></td>
+      				  <td></td>
+      			</tbody>
+        <?php }?>
+    </table>
+</div>
+<!-- End Table Archivos -->
+
+<!-- Paginación  -->
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+<!-- End Paginacion  -->
+
+<script src="/js/lightbox.js"></script>
+
+<!-- Scripts -->
+<script type="text/javascript">
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });
+
+	  $(document).ready(function(){
+	  
+    	$('.modal').modal();
+	  
+    }); //Modal script//
+
+	  
+    $("#add_carpeta").click(function(){
+    	var carpeta = document.getElementById("carpeta").value;
+
+    	if(carpeta == ""){
+
+    		swal({
+                  title: "Para agregar una carpeta, ingresa su nombre(*)",
+                });
+        }else{
+        	swal("Espera un momento, la información esta siendo procesada", {
+        		icon: "success",
+			 	buttons: false,
+			});
+                setTimeout(submitFormCpt, 500);     
+        }
+    });
+
+    function submitFormCpt() {
+   	
+   	    document.getElementById("submit_carpeta").submit()
+     
+    }	 //Agregar Carpeta Script
+
+    //Inicio Delete Ajax
+
+    $(".deletecarpeta").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+		swal({
+			title: "¿Estas seguro de eliminar la carpeta "+nombre+"? Los datos incluídos serán eliminados.",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				 swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+
+            var request = $.ajax({
+            	url:"/clientes/requestdeletecarpeta",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });		//-------------------end de ajax---------------------------
+
+					//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+					//-------------------end de respuesta ajax---------------------
+             return false;
+
+              } else {
+              	swal("La accion fue cancelada!");
+              }
+          });
+	});		// End Eliminar Carpeta
+
+
+    $("#add_documento").click(function(){
+	  	
+      	var namedoc = document.getElementById("namedoc").value;
+      	var url = document.getElementById("url").value;
+      	var fecha = document.getElementById("fecha").value;
+      	
+
+            if(namedoc == "" || url == "" || fecha == ""){
+                swal({
+                  title: "Para agregar un documento llena los datos requeridos (*)",
+                });
+            }else{
+                 swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+                setTimeout(submitFormDc, 500);     
+            }
+    });
+
+    function submitFormDc() {
+        
+        document.getElementById("submit_documento").submit()
+    
+    }	//Agregar Documento Carpeta
+
+//Inicio Delete Ajax
+
+        $(".delete").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+		swal({
+			title: "¿Estas seguro de eliminar el archivo "+nombre+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				 swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+
+            var request = $.ajax({
+            	url:"/clientes/requestdeletearchivo",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+              } else {
+              	swal("La accion fue cancelada!");
+              }
+          });
+	});
+ // End Ajax
+</script>

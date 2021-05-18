@@ -1,0 +1,174 @@
+<div class="row" >
+	<div class="col-md-12 mt-5">
+		<h5>Lista de productos solicitados</h5>
+		<form id="card-form" class="startPay" method="POST" action="/home/requestpedidospendientesadd">
+			<div class="col-md-12">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<th>Nombre Producto</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>Subtotal</th>
+					</thead>
+					<?php if (isset($_COOKIE['idorden'])) { ?>
+						<tbody class="autocomplete-form">
+						</tbody>
+					<?php }else{ ?>
+					<tbody>
+						<tr>
+							<td colspan="4"><h3>No tienes ninguna orden pendiente.</h3></td>
+						</tr>
+					</tbody>
+					<?php } ?>
+				</table>
+			</div>
+			<div class="col-md-12 mt-3 text-right">
+				<label><h3>Total :  <span  id="textTotal" ></span></h3></label>
+			</div>
+			<div class="row">
+			<div class="col-md-7 text-center">
+				<small><a href="/home/cuentanueva/id/<?php echo $this->cuentanueva; ?>">Si no tienes tarjetas, te sugerimos ingreses a este vinculo para agregar una nueva tarjeta.</a></small>
+				<select name="cuenta" class="card-data form-control" required>
+					<option value="">Seleccione tarjeta</option>
+					<?php foreach ($this->cuentas as $acounts){ $str=substr($acounts['ncuenta'], -4); ?>
+						<option value="<?php echo $acounts["id"]; ?>">Nombre del tarjetahabiente: <?php echo $acounts["nombrecuenta"]; ?> Terminación: <?php echo $str; ?>
+						</option>
+					<?php } ?>
+				</select>
+			</div>
+			<div class="col-md-2 text-center">
+				<input class="inputCard form-control" type="text" id="cardcvc" maxlength="4" placeholder="(CVC)" />
+			</div>
+			<div class="col-md-2">
+				<i class="fa fa-2x fa-cc-mastercard"></i> <i class="fa fa-2x fa-cc-visa"></i> <i class="fa fa-2x fa-cc-amex"></i>
+			</div>
+			</div>
+			<div class="col-md-12 text-center"><br>
+				<input type="submit" class="btn btn-primary form-control" value="Finalizar Compra">
+			</div>			
+		</form>
+	</div>
+</div>
+
+<div id="tk">
+	
+</div>
+<script type="text/javascript">
+	function showItemsPedidos(){
+		$.get( "/shopping/itemsget", function( data ) {
+			var res = JSON.parse(data);
+			var pedido="";
+			var total=0;
+			for(var i =0 ; i < res.length ; i++ ){
+				total += res[i].price*res[i].quantity;
+				pedido += 
+				'<tr>'+
+				'<input type="hidden" name="nombre[]" value="'+res[i].name+'">'+
+				'<input type="hidden" name="precio[]" value="'+res[i].price+'">'+
+				'<td><input type="hidden" name="id[]" value="'+res[i].id+'">'+res[i].name+'</td>'+
+				'<td><input type="hidden" name="cantidad[]" value="'+res[i].quantity+'">'+res[i].quantity+'</td>'+
+				'<td>'+res[i].price+'</td>'+
+				'<td><input type="hidden" name="idorden[]" value="<?php echo $_COOKIE['idorden']; ?>">'+(res[i].price*res[i].quantity)+'</td>'+
+				'<input type="hidden" name="total" value="'+total+'">'+
+				'</tr>';
+				
+			}
+			$(".autocomplete-form").html(pedido);
+			$("#textTotal").html(total);
+		});
+
+	}
+	showItemsPedidos();
+</script>
+
+<script type="text/javascript">
+	Conekta.setPublicKey("key_CHipyVBDPLojUtYivfEhtSw");
+	Conekta.setLanguage("es");
+    // nombre = document.getElementById("name").value;
+	var tarjeta = null;
+	var expy = null;
+    var expm =null;
+    var tokenParams = null;
+	var name = null;
+	var cvc = $("#cardcvc").val();
+
+
+    $(".card-data").change(function(){
+		var id = $(this).val();
+		$.post('/home/requestcharge',{id:id}).done(function(data){
+			console.log("data: "+data);
+			var x = JSON.parse(data);
+			console.log("data:");
+			console.log(x);
+
+			name = x[0].nombrecuenta;
+			tarjeta = x[0].ncuenta;
+			expy = x[0].venceyy;
+	    	expm = x[0].vencemm;
+	    	
+			Validate(name,tarjeta,expy,expm,cvc);
+			
+		});
+	});
+	
+	function Validate(name,tarjeta,expy,expm,cvc) {
+		
+		var cvc = $("#cardcvc").val();
+
+		console.log("Validado: "+Conekta.card.validateNumber(tarjeta)); 
+		console.log("Validado fecha: "+Conekta.card.validateExpirationDate(expm,expy));
+		console.log("Validado CVC: "+Conekta.card.validateCVC(cvc));
+		console.log("Validado Brand: "+Conekta.card.getBrand(tarjeta));
+		tokparams(tarjeta,name,expy,expm,cvc);
+
+	}
+	
+	function tokparams(tarjeta,name,expy,expm,cvc) {
+		tokenParams = {
+		  "card": {
+		    "number": tarjeta,
+		    "name": name,
+		    "exp_year": expy,
+		    "exp_month": expm,
+		    "cvc": cvc,
+		  	}
+		};
+		return tokenParams;
+	}
+
+	var successResponseHandler = function(token) {
+	  	console.log(token);
+	  	var $form = $("#card-form");
+    	//Inserta el token_id en la forma para que se envíe al servidor
+     	$form.append($('<input type="hidden" name="conektaTokenId" id="conektaTokenId">').val(token.id));
+     	// $form.append($('<input type="hidden" name="conektaTokenId">').val(token.id));
+   		$form.get(0).submit(); //Hace submit
+	};
+
+	var errorResponseHandler = function(error) {
+	  	console.log(error);
+	};
+
+	function execute(tokenParams,successResponseHandler,errorResponseHandler){
+		var r = Conekta.Token.create(tokenParams, successResponseHandler, errorResponseHandler);
+		return r;
+	}
+
+	$(document).ready(function(){
+		$(".startPay").submit(function(e){
+			e.preventDefault();
+			// console.log(tokenParams);
+			// $form.find("button").prop("disabled", true);
+			Validate(name,tarjeta,expy,expm,cvc);
+			var r  = execute(tokenParams,successResponseHandler,errorResponseHandler);
+			console.log("Response: ");
+			console.log(r);
+			
+		});
+	});
+
+	 
+</script>
+
+
+

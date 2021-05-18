@@ -1,0 +1,483 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+
+<div class="row mt-4">
+	<div class="col m4 s12 text-center">
+		<h2>Sitios</h2>
+	</div>
+
+	<div class="col m8 s12 text-center" style="margin-top: 15px;">
+		<?php if($this->rol_user == 13){?>
+		<?php }else{ ?>
+			<div class="row">
+				<div class="col m12 s12">
+					<!-- <a class="waves-effect red btn modal-trigger" href="#modaladd">+ Creación de Sitios</a> -->
+				</div>
+			</div>
+		<?php } ?>		
+	</div>
+</div>
+
+
+<div class="row">
+
+  <div class="input-field col m2 s12"></div> <!-- espacio -->
+	<div class="input-field col m4 s12">  
+	    <select id="mySelect">
+	      	<option value="1" selected>Nombre del sitio</option>
+	      	<option value="2">Id cliente</option>
+	      	<option value="3">Region</option>
+	      	<option value="4">Ciudad</option>
+	    </select>
+	    <label>Buscador</label>
+	</div>
+
+
+	<div class="col m4 s12" id="search_nombre">
+		<form action="/panel/searchsitios" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate">
+	          <label for="first_name">Buscar por Nombre</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>
+    	</form>
+	</div>
+	<div class="col m4 s12 oculto" id="search_cliente">
+		<form action="/panel/searchsitios" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa id del cliente" id="cliente" name="cliente" type="text" class="validate">
+	          <label for="cliente">Buscar por id del cliente</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>	
+        </form>
+	</div>
+	<div class="col m4 s12 oculto" id="search_region">
+	  	<form action="/panel/searchsitios" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa la region" id="region" name="region" type="text" class="validate">
+	          <label for="region">Buscar por region</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>	
+	    </form>
+	</div>
+
+	<div class="col m4 s12 oculto" id="search_ciudad">
+	  	<form action="/panel/searchsitios" enctype="multipart/form-data" class="form-horizontal form-material">
+	        <div class="input-field col m10 s8">
+	          <input placeholder="Ingresa la ciudad" id="ciudad" name="ciudad" type="text" class="validate">
+	          <label for="ciudad">Buscar por ciudad</label>
+	        </div>
+	        <div class="input-field col m2 s4">
+	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+	        </div>	
+	    </form>
+	</div>
+  <div class="input-field col m2 s12"></div> <!-- espacio -->
+</div>
+
+
+
+  <!-- Modal Structure -->
+  <div id="modaladd" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h2>Crear Sitio</h2>
+		<div class="col m12 s12">
+			<form action="/panel/requestaddsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_sitios">
+				<div class="row">
+			        <div class="input-field col m12 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="name" type="text" name="name" class="validate" required>
+			          	<label for="name">* Nombre:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">chevron_right</i>
+			          	<input id="id_cliente" type="text" name="id_cliente" class="validate" required>
+			          	<label for="id_cliente">* Id cliente:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">account_circle</i>
+			          	<input id="cliente_form" type="text" name="cliente" class="validate" required>
+			          	<label for="cliente_form">Cliente:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">place</i>
+			          	<input id="direccion" type="text" name="direccion" class="validate" required>
+			          	<label for="direccion">Dirección:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">place</i>
+			          	<input id="ciudad_form" type="text" name="ciudad" class="validate" required>
+			          	<label for="ciudad_form">Ciudad:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">place</i>
+			          	<input id="estado" type="text" name="estado" class="validate">
+			          	<label for="estado">Estado:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          	<i class="material-icons prefix">place</i>
+			          	<input id="region_form" type="text" name="region" class="validate">
+			          	<label for="region_form">Region:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+					    <select name="estructura">
+					      	<option value="" disabled selected>Selecciona una Estructura:</option>
+					      	<?php foreach ($this->estructura as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre_estructura"]; ?></option>
+					      	<?php } ?>					      	
+					    </select>
+					    <label>Estructura del sitio</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">place</i>
+			          	<input id="altura" type="text" name="altura" class="validate">
+			          	<label for="altura">Altura:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			        	<i class="material-icons prefix">business</i>
+			          	<input id="edificio" type="text" name="edificio" class="validate">
+			          	<label for="edificio">Edificio:</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+					    <select name="tipo_sitio">
+					      <option value="" disabled selected>Selecciona una opcion</option>
+					      <option value="Rooftop">Rooftop</option>
+					      <option value="Rawland">Rawland</option>
+					    </select>
+					    <label>Tipo de Sitio</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			        	<h4>Latitud:</h4>
+			        	<div class="row">
+			        		<div class="col m3 s3">
+			        			<input id="grados_lat" type="text" name="grados_lat" placeholder="Grados" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="min_lat" type="text" name="min_lat" placeholder="Minutos" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="seg_lat" type="text" name="seg_lat" placeholder="Segundos" class="validate">
+			        		</div>
+
+			        		<div class="col m3 s3">
+							    <select name="coordenada1">
+							      <option value="n" selected>N</option>
+							      <option value="s">S</option>
+							    </select>
+			        		</div>
+			        	</div>
+
+			          	<input id="latitude" type="text" placeholder="Agregar Latitud" name="latitude" class="validate">
+			        </div>
+			        <div class="input-field col m6 s12">
+
+			        	<h4>Longitud:</h4>
+			        	<div class="row">
+			        		<div class="col m3 s3">
+			        			<input id="grados_lon" type="text" name="grados_lon" placeholder="Grados" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="min_lon" type="text" name="min_lon" placeholder="Minutos" class="validate">
+			        		</div>
+			        		<div class="col m3 s3">
+			        			<input id="seg_lon" type="text" name="seg_lon" placeholder="Segundos" class="validate">
+			        		</div>
+
+			        		<div class="col m3 s3">
+							    <select name="coordenada2">
+							      <option value="e" selected>E</option>
+							      <option value="o">O</option>
+							    </select>
+			        		</div>
+			        	</div>
+
+			          	<input id="longitude" type="text" placeholder="Agregar Longitud" name="longitude" class="validate">
+			        </div>
+		      	</div>
+			
+		</div>
+    </div>
+    </form>
+    <div class="modal-footer">
+      	<button  id="addsitios" class="waves-effect waves-light btn">Guardar</button>
+      	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
+    </div>
+  </div>
+<!-- ================================================================================================= -->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m8 s6"> 
+			<h3>Lista de Sitios</h3>
+		</div>
+		<div class="col m4 s6 text-right">
+<!--      		<a href="/archivos/excelsitios"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a> -->
+		</div>
+	</div>
+		
+			<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id cliente</th>
+					<th>Nombre</th>	
+					
+					<th>Cliente</th>	
+					<th>Region</th>
+					<th>Ciudad</th>
+				</tr> 
+			</thead>
+			<?php
+			if ($this->paginator) {
+			foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr style="height: 20px;">
+					<td><?php echo $usr["id_cliente"]; ?></td>
+					<td>
+						<?php echo $usr["nombre"]; ?>
+						<!-- <a class="waves-effect waves-light modal-trigger load-material" data-material="<?php echo $usr['nombre_proyecto']; ?>" href="/panel/statussitio/id/<?php echo $usr["id"] ?>"><?php echo $usr["nombre"]; ?></a>	 -->
+					</td>
+					<td><?php echo $usr["cliente"]; ?></td>
+					<td><?php echo $usr["region"]; ?></td>
+					<td><?php echo $usr["ciudad"]; ?></td>
+					<td>
+						<a href="/panel/sitiosdetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+					</td>
+
+					<?php if($this->rol_user == 13){?>
+					<?php }else{ ?>
+<!-- 						<td>
+							<a href="/panel/sitiosedit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+						</td>
+						<td>
+							<a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+						</td> -->
+					<?php } ?>
+
+				</tr>
+	            <?php } }else{ ?>
+	            </tbody> 
+	            <tbody>
+	                <tr>
+	                    <td class="text-center" colspan="6"><h3>No hay sitos registrados.</h3></td>
+	                </tr>
+	            </tbody>
+	                
+	            <?php } ?>
+		</table>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script> -->
+<!-- <script>setTimeout('document.location.reload()',15000); </script> -->
+
+
+<!-- 
+<script type="text/javascript">
+var time = new Date().getTime();
+$(document.body).bind("mousemove keypress", function () {
+    time = new Date().getTime();
+});
+
+setInterval(function() {
+    if (new Date().getTime() - time >= 10000) {
+        window.location.reload(true);
+    }
+}, 1000);
+</script>
+ -->
+
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('select').formSelect();
+  	});
+
+
+    $(".delete").click(function(){
+    	id=$(this).data('id');
+    	nombre=$(this).data('nombre');
+		swal({
+			title: "Estas seguro de eliminar el sitio "+nombre+"?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Bien! El sitio "+nombre+" fue eliminado!", {
+	      icon: "success",
+	    });
+
+            var request = $.ajax({
+                url:"/panel/requestdeleteajaxsitios",
+                method:"POST",
+                data: { id : id },
+                processData: true,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("La accion fue cancelada!");
+	  }
+	});
+
+    });
+
+
+	$('#mySelect').on('change', function() {
+  		var value = $(this).val();
+  		if(value==1){
+			$("#search_nombre").show();
+			$("#search_cliente").hide();
+			$("#search_region").hide();
+			$("#search_ciudad").hide();
+  		}
+
+  		if(value==2){
+  			$("#search_cliente").show();
+  			$("#search_nombre").hide();
+  			$("#search_region").hide();
+  			$("#search_ciudad").hide();
+  		}
+
+  		if(value==3){
+  			$("#search_region").show();
+  			$("#search_nombre").hide();
+  			$("#search_cliente").hide();
+  			$("#search_ciudad").hide();
+  		}
+
+  		if(value==4){
+  			$("#search_ciudad").show();
+  			$("#search_region").hide();
+  			$("#search_nombre").hide();
+  			$("#search_cliente").hide();
+  		}
+  		// console.log(value);
+	});
+
+    $("#addsitios").click(function(){
+       var cliente = document.getElementById("id_cliente").value;
+        var name = document.getElementById("name").value;
+
+        if(cliente == "" || name == ""){
+            swal({
+              title: "Para agregar un sitio debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+            swal("Felicidades!", "El sitio se creo de forma correcta!", "success");   
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() {
+        document.getElementById("submit_sitios").submit()
+    }
+</script>

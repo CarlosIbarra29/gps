@@ -1,0 +1,156 @@
+<?php $session = new Zend_Session_Namespace("current_session"); ?>
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Sistemas Constructivos</title>
+	<!-- <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" > -->
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">	
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/swiper.css">
+	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	   <link rel="shortcut icon" href="/img/gp.png" />
+
+	<script type="text/javascript" src="https://cdn.conekta.io/js/latest/conekta.js"></script>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/tether.min.js"></script>	
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/ohsnap.js"></script>
+	<script type="text/javascript" src="/js/moment.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="/js/materialize.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+	
+</head>
+<body>
+<!-- NAVBAR -->
+
+<!-- NAVBAR -->
+<style type="text/css">
+	nav{
+		background-color: white;
+		color:black;
+	}
+</style>
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+      <a href="/home" class="brand-logo"><img src="/img/logo-2.png" width="150" height="60"></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger" style="color: black;"><i class="material-icons prefix">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <?php $host=  $_SERVER["REQUEST_URI"]; ?>
+  	<?php if($host == "/home/login"){ ?>
+  	<?php }else{?>
+  		 <li><a class="nav-link" href="/home/login"><h5 style="color: black">Iniciar Sesión</h5></a></li>
+  	<?php } ?>
+			<?php if ($session->id) { ?>
+			<li class="nav-item dropdown ">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="color: black">Perfil</h5> <span class="caret"></span></a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item <?php echo getURL("/home/perfilusuario"); ?>" href="/home/perfilusuario"><h5 style="color: black">Ver perfil</h5></a>
+				</div>
+			</li>
+			<?php } ?>	
+      </ul>
+    </div>
+ </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li>
+    	<a class="nav-link" href="/home/login"><h5 style="color: black">Iniciar Sesión</h5></a>
+    </li>
+			<?php if ($session->id) { ?>
+			<li class="nav-item dropdown ">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="color: black">Perfil</h5> <span class="caret"></span></a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item <?php echo getURL("/home/perfilusuario"); ?>" href="/home/perfilusuario"><h5 style="color: black">Ver perfil</h5></a>
+				</div>
+			</li>
+			<?php } ?>	
+  </ul>
+
+
+
+<div class="col m12 s12">
+	<?php echo $this->layout()->content; ?>
+	<div id="ohsnap" style="position: fixed; top: 100px; right: 30px;"></div>
+</div>
+<!-- CONTENIDO -->
+
+</body>
+
+<?php 
+	function getURL($url){
+		$currentURL = "$_SERVER[REQUEST_URI]";
+		if($currentURL == $url){
+			return "active";
+		}
+	}
+?>
+<style type="text/css">
+	.alert {
+		padding: 15px;
+		margin-bottom: 20px;
+		border: 1px solid #eed3d7;
+		border-radius: 4px;
+		bottom: 0px;
+		right: 21px;
+		float: right;
+		clear: right;
+		background-color: white;
+	}
+
+	.alert-red {
+		color: white;
+		background-color: #ff0000;
+	}
+	.alert-green {
+		color: white;
+		background-color: #00a307;
+	}
+	.alert-blue {
+		color: white;
+		background-color: #0036a2;
+	}
+	.alert-yellow {
+		color: black;
+		background-color: #ffe100;
+	}
+	.alert-orange {
+		color:white;
+		background-color: #ff5d00;
+	}
+	.alert-gray {
+		color:black;
+		background-color: #aaaaaa;
+	}
+
+	.navbar{
+		-webkit-box-shadow: 2px 6px 5px 0px rgba(0,0,0,0.35);
+		-moz-box-shadow: 2px 6px 5px 0px rgba(0,0,0,0.35);
+		box-shadow: 2px 6px 5px 0px rgba(0,0,0,0.35);
+	}
+</style>
+	<script src="/js/swiper.min.js"></script>
+	<script type="text/javascript" >
+$('.sidenav').sidenav();
+		$(document).ready(function(){
+
+			var swiper = new Swiper('#swiper-container', {
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+			});
+
+			var swiper2 = new Swiper('#swiper-container2', {
+				loop: true,
+				autoplay: {
+					delay: 5000,
+				}
+			});
+		});
+	</script>
+</html>

@@ -1,0 +1,204 @@
+<?php 
+function eliminar_acentos($cadena){
+		
+		//Reemplazamos la A y a
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		//Reemplazamos la E y e
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		//Reemplazamos la I y i
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		//Reemplazamos la O y o
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		//Reemplazamos la U y u
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		//Reemplazamos la N, n, C y c
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		$cadena = str_replace(
+		array(',', ',', ',', ','),
+		array(',', ',', ',', ','),
+		$cadena
+		);
+		
+
+		return $cadena;
+	}
+?>
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+		<a class="btn" onclick="exportTableToCSV(null,'Reporte de envios.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Envios</span>
+    </div>
+</div>
+
+
+<div class="row excel-div" id="tab1">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id</th>	
+				<th>Sitio</th>
+				<th>Proyecto</th>	
+				<th>Cliente</th>
+				<th>Fecha de envio</th>
+				<th>Hora entrega</th>
+				<th>Usuario</th>
+				<th>Fecha creacion</th>
+				<th>Prioridad</th>
+				<th>Tipo envio</th>
+				<th>Direccion</th>
+				<th>Contacto</th>
+				<th>Peso aproximado</th>
+				<th>Dimensiones</th>
+				<th>Descripcion</th>
+				<th>Comentario</th>
+				<th>Auditoria</th>
+				<th>Fecha auditoria</th>
+				<th>Comentario Auditoria</th>
+				<th>Operador</th>
+				<th>Vehiculo</th>
+				<th>Vehiculo Final</th>
+				<th>Status Solicitud</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->envios as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["name_sitio"]); ?></td>
+				<td><?php echo $usr['nombre_proyecto']; ?></td>
+				<td><?php echo $usr['id_cliente']; ?></td>
+				<td><?php echo $usr['fecha_solicitud']; ?></td>
+				<td><?php echo $usr['hora_entrega']; ?></td>
+				<td><?php echo eliminar_acentos($usr["user_solicitud"]); ?></td>
+				<td><?php echo $usr['fecha_envio']; ?></td>
+				<td>
+					<?php if($usr['prioridad'] == 1){ ?>
+						Noraml
+					<?php }else{ ?>
+						Alta
+					<?php } ?>
+				</td>
+				<td>
+					<?php if($usr['tipo_envio'] == 1){ ?>
+						Local
+					<?php }else{ ?>
+						Foraneo
+					<?php } ?>
+				</td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['direccion'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['contacto'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['peso_aproximado'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['dimensiones'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['descripcion'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['comentarios'])); ?></td>
+				<td><?php echo eliminar_acentos($usr["user_auditoria"]); ?></td>
+				<td><?php echo $usr['fecha_auditoria']; ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['comentario_auditoria'])); ?></td>
+				<td><?php echo eliminar_acentos(str_replace(',','',$usr['nombre_operador'])); ?></td>
+				<td><?php echo $usr['vehiculo']; ?></td>
+				<td><?php echo $usr['vehiculo_final']; ?></td>
+				<td>
+					<?php if($usr['status_solicitud'] == 0){ ?>
+						Pendiente
+					<?php } ?>
+
+					<?php if($usr['status_solicitud'] == 1){ ?>
+						Enviada
+					<?php } ?>
+
+					<?php if($usr['status_solicitud'] == 2){ ?>
+						Rechazada
+					<?php } ?>
+
+					<?php if($usr['status_solicitud'] == 3){ ?>
+						Logistica
+					<?php } ?>
+				</td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>/
+
+
+<script type="text/javascript">
+function exportTableToCSV(html, filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for(var i = 0; i < rows.length; i++){
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for(var j = 0; j < cols.length; j++){
+            row.push(cols[j].innerText);
+        }
+        csv.push(row.join(","));
+    }
+
+    // download csv file
+    downloadCSV(csv.join("\n"), filename);
+}
+
+function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+	if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+		alert("Your browser doesn't support Blobs");
+		return;
+	}
+	
+    csvFile = new Blob([csv], {type:"text/csv"});
+    downloadLink = document.createElement("a");
+    downloadLink.download = filename;
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+}
+</script>

@@ -1,0 +1,311 @@
+<style type="text/css">
+	.oculto{display: none;}
+</style>
+
+<div class="row"> 
+	<div class="col m12 s12 text-center" style="margin-top: 30px;">
+		<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Orden de Compra</span>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/panel/requestaddsolicitudordencompra" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_altan">
+  		<div class="input-field col m6 s12">
+    		<select id="sitio" name="sitio">
+      			<option value="0" disabled selected>* Selecciona un Sitio</option>
+      			<option value="oficina" >Oficina</option>
+      			<option value="almacen" >Stock Almacén</option>
+      			<?php foreach ($this->sitios as $key){ ?>
+      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+      			<?php } ?>
+    		</select>
+    		<label>Sitio:</label>
+  		</div>
+
+        <div class="input-field col m6 s12">
+        	<input id="fecha_requerida" name="fecha" type="text" class="datepicker">
+        	<label for="fecha_requerida">* Fecha Requerida</label>
+        </div>
+
+  		<div class="input-field col m6 s12">
+    		<select id="proveedor" name="proveedor">
+      			<option value="0" disabled selected>* Selecciona un Proveedor</option>
+      			<?php foreach ($this->proveedor as $key){ ?>
+      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_prov']; ?></option>
+      			<?php } ?>
+    		</select>
+    		<label>Proveedor:</label>
+  		</div>
+
+  		<div class="input-field col m6 s12">
+    		<select id="servicio" name="servicio"> 
+      			<option value="0" disabled selected>Selecciona un Servicio</option>
+      			<?php foreach ($this->servicio as $key){ ?>
+      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_servicio']; ?></option>
+      			<?php } ?>
+    		</select>
+    		<label>Servicio:</label>
+  		</div>
+
+	  	<div class="row">
+	  		<div class="col m6 s12">
+				<div class="input-field col s12">
+				    <select name="facturable" id="facturable">
+				    	<option value="" disabled selected>Seleciona una opción</option>
+				      	<option value="1">Facturable</option>
+				      	<option value="2">No facturable</option>
+				    </select>
+				    <label>* Facturable?</label>
+				</div>
+		        <div class="input-field col s12 siempre oculto facturable">
+		        	<i class="material-icons prefix">attach_money</i>
+		          	<input id="importe" type="number" name="importe" class="validate">
+		          	<label for="importe">* Importe:</label>
+		        </div>
+		        <div class="col s12 text-right oculto nofacturable">
+				    <label>
+				        <input type="checkbox" id="frontera"  class="filled-in"  />
+				        <span>Frontera</span>
+				    </label>
+		        </div>
+		        <div class="input-field col s12 oculto nofacturable">
+		          	<i class="material-icons prefix">assignment</i>
+		          	<input id="iva" placeholder="" type="text" name="iva" class="validate">
+		          	<label for="iva">IVA:</label>
+		        </div>
+		        <div class="col s12 text-right oculto nofacturable">
+				    <label>
+				        <input type="checkbox" id="isr_check"  class="filled-in"  />
+				        <span>Aplicar ISR</span>
+				    </label>
+		        </div>
+
+		        <div class="input-field col s12 oculto nofacturable">
+		          	<i class="material-icons prefix">assignment</i>
+		          	<input id="isr" placeholder=" " type="text" name="isr" class="validate">
+		          	<label for="isr">Retención ISR:</label>
+		        </div>
+
+		        <div class="col s12 text-right oculto nofacturable">
+				    <label>
+				        <input type="checkbox" id="ret_ivacheck"  class="filled-in"  />
+				        <span>Aplicar Retención IVA</span>
+				    </label>
+		        </div>
+
+		        <div class="input-field col s12 oculto nofacturable">
+		          	<i class="material-icons prefix">assignment</i>
+		          	<input id="ret_iva" placeholder=" " type="text" name="ret_iva" class="validate">
+		          	<label for="ret_iva">Retención IVA:</label>
+		        </div>
+
+		        <div class="col s12 text-right oculto nofacturable">
+				    <label style="font-size: 17px;">
+				        <a href="#" id="calcular">Calcular Total</a>
+				    </label>
+		        </div>
+
+
+		        <div class="input-field col s12 siempre oculto facturable">
+		          	<i class="material-icons prefix">attach_money</i>
+		          	<input id="total" placeholder="total" type="number" name="total" class="validate">
+		          	<label for="total">* Total:</label>
+		        </div>
+
+	  		</div>
+	  		<div class="col m6 s12">
+<!-- 	  			<h5>Cargar Documentos</h5>
+			    <div class="file-field input-field col s6">
+					<a class="deep-orange btn modal-trigger" href="#modal_cotizacion">Cotización</a>
+			    </div>
+
+			    <div class="file-field input-field col s6">
+				    <a class="deep-orange btn modal-trigger" href="#modal_comparativa">Comparativa</a>
+			    </div> -->
+
+		        <div class="input-field col s12">
+		          	<i class="material-icons prefix">mode_edit</i>
+		          	<textarea id="compra" name="compra" class="materialize-textarea"></textarea>
+		          	<label for="compra">* Condiciones de Compra</label>
+		        </div>
+
+		        <div class="input-field col s12">
+		          	<i class="material-icons prefix">mode_edit</i>
+		          	<textarea id="referencia" name="referencia" class="materialize-textarea"></textarea>
+		          	<label for="referencia">Referencia</label>
+		        </div>
+
+        		<div class="input-field col s12">
+          			<i class="material-icons prefix">assignment</i>
+          			<textarea id="descripcion" name="descripcion" class="materialize-textarea"></textarea>
+          			<label for="descripcion">Descripción</label>
+        		</div>
+        		</form>
+
+				<div class="row" >
+					<div class="col m12 s12 text-center" style="margin-top: 20px;">
+						<a class="btn" id="enviar_solicitud"><i class="material-icons right">arrow_forward</i>Paso 2</a>
+					</div>	
+				</div>
+	  		</div>
+	  	</div>
+	</div>
+</div>
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("m-d-Y");
+?>
+
+<input type="hidden" id="today_picker" value="<?php echo $hoy; ?>">
+<script src="/js/materialize.min.js"></script>
+	<script type="text/javascript">
+  		$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    		$('select').formSelect();
+    		$('.modal').modal();
+
+    	var currentDate = document.getElementById("today_picker").value; 
+    	// alert(currentDate);
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+
+  		});
+
+		$('#facturable').on('change', function() {
+			$opcion = this.value;
+			if($opcion == 2){
+				$(".siempre").show();
+				$(".facturable").show();
+				$(".nofacturable").hide();
+			}else{
+				$(".siempre").show();
+				$(".nofacturable").show();
+				// $(".facturable").hide();
+			}
+			
+		});
+
+		$("#enviar_solicitud").click(function(){
+			var sitio = document.getElementById("sitio").value;
+			var fecha = document.getElementById("fecha_requerida").value;
+			var proveedor = document.getElementById("proveedor").value;
+			var servicio = document.getElementById("servicio").value;
+			var importe = document.getElementById("importe").value;
+			var iva = document.getElementById("iva").value;
+			var isr = document.getElementById("isr").value;
+			var ret_iva = document.getElementById("ret_iva").value;
+			var total = document.getElementById("total").value;
+			var compra = document.getElementById("compra").value;
+			var referencia = document.getElementById("referencia").value;
+			var descripcion = document.getElementById("descripcion").value;
+		  
+		 //  if(importe != ""){
+
+			// var frontera = document.getElementById('frontera').checked;
+			// 	if(frontera){
+			// 	  	var iva = (parseFloat(importe) * 8)/ 100;
+			// 	}else{
+			// 		var iva = (parseFloat(importe) * 16)/ 100;
+			// 	}
+
+			// var isr_check = document.getElementById('isr_check').checked;
+			// 	if(isr_check){
+			// 	  	var isr = (parseFloat(importe) * 10)/ 100;
+			// 	}else{
+			// 		var isr = 0;
+			// 	}
+
+			// var ret_ivacheck = document.getElementById('ret_ivacheck').checked;
+			// 	if(ret_ivacheck){
+			// 	  	var ret_iva = (parseFloat(importe) * 10.67)/ 100;
+			// 	}else{
+			// 		var ret_iva = 0;
+			// 	}
+
+			//   var suma =parseFloat(iva) + parseFloat(importe);
+			//   var resta  = parseFloat(isr) + parseFloat(ret_iva);
+			//   var total = parseFloat(suma) - parseFloat(resta);
+
+			//   var iva_fixed = iva.toFixed(2);
+			//   var isr_fixed = isr.toFixed(2);
+			//   var ret_ivafixed = ret_iva.toFixed(2); 
+			//   var total_fixed = total.toFixed(2);
+			//     $("#iva").val(iva_fixed);
+			//     $("#isr").val(isr_fixed);
+			//     $("#ret_iva").val(ret_ivafixed);
+
+			//     $('#total').val(total_fixed);
+		 //  }
+
+
+
+	    	if(sitio == 0 || fecha == "" || proveedor == 0 || importe == "" || compra == "" || total == ""){
+	            swal({
+	             	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+	            });
+
+	    	}else{
+	    		// swal("Felicidades!", "La solicitud se creo correctamente!", "success"); 
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+	    		setTimeout(submitaltan, 1500);
+
+
+	    	}
+		});
+
+    	function submitaltan() { document.getElementById("submit_file_altan").submit() }
+
+	</script>
+
+
+    <script>
+
+		$("#calcular").click(function(){
+		    // $('#importe').change(function(){
+		  valor= document.getElementById("importe").value;
+		  
+		  if(valor != ""){
+
+			var frontera = document.getElementById('frontera').checked;
+				if(frontera){
+				  	var iva = (parseFloat(valor) * 8)/ 100;
+				}else{
+					var iva = (parseFloat(valor) * 16)/ 100;
+				}
+
+			var isr_check = document.getElementById('isr_check').checked;
+				if(isr_check){
+				  	var isr = (parseFloat(valor) * 10)/ 100;
+				}else{
+					var isr = 0;
+				}
+
+			var ret_ivacheck = document.getElementById('ret_ivacheck').checked;
+				if(ret_ivacheck){
+				  	var ret_iva = (parseFloat(valor) * 10.67)/ 100;
+				}else{
+					var ret_iva = 0;
+				}
+
+			  var suma =parseFloat(iva) + parseFloat(valor);
+			  var resta  = parseFloat(isr) + parseFloat(ret_iva);
+			  var total = parseFloat(suma) - parseFloat(resta);
+
+			  var iva_fixed = iva.toFixed(2);
+			  var isr_fixed = isr.toFixed(2);
+			  var ret_ivafixed = ret_iva.toFixed(2); 
+			  var total_fixed = total.toFixed(2);
+			    $("#iva").val(iva_fixed);
+			    $("#isr").val(isr_fixed);
+			    $("#ret_iva").val(ret_ivafixed);
+
+			    $('#total').val(total_fixed);
+		  }
+
+
+		  // })
+		});
+    </script>
