@@ -1298,12 +1298,6 @@ setInterval(function() {
                 </li>
             <?php } ?>
 
-            <?php if($usuarios[0]['fkroles'] == 13){ ?>
-<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
-                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
-                </li> -->
-            <?php } ?>
-
             <?php if($usuarios[0]['fkroles'] == 17){ ?>
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
@@ -1323,14 +1317,6 @@ setInterval(function() {
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
                 </li>
             <?php } ?>            
-
-<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
-                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
-                </li> -->
-                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
-                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
-                </li>
-
         </ul>                  
 
 </header>
