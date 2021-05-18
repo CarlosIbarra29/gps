@@ -779,12 +779,7 @@ setInterval(function() {
                     <a href="/panel/directorio">Directorio <i class="material-icons">assignment_ind</i></a>
                 </li>
 
-
-
             <?php if ($usuarios[0]['fkroles'] == 1) { ?>
-<!--                 <li class="bold <?php echo getUrl('/panel/asignaractividad',$actual_link); ?>">
-                    <a href="/panel/asignaractividad">Asignar Actividades <i class="material-icons">assignment_ind</i></a>
-                </li> -->
                 <li class="bold moves <?php echo getUrl('/clientes/especificaciones',$actual_link);?>">
                     <a href="/clientes/especificaciones">Especificaciones<i class="material-icons">domain</i></a>
                 </li>
@@ -865,7 +860,6 @@ setInterval(function() {
 
                 </li>
                 <li class="divider" tabindex="-1"></li>
-
                 <ul id='dropdown1' class='dropdown-content' style="background-color: #F5F5F5;">
                     <li class="bold <?php echo getUrl('/panel/tipoproyecto',$actual_link); echo getTipoproyecto($actual_link);?>">
                         <a href="/panel/tipoproyecto">Tipo de Proyecto
@@ -874,7 +868,6 @@ setInterval(function() {
                     </li>
 
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/estructurasitios',$actual_link); echo getEstructura($actual_link);?>">
                         <a href="/panel/estructurasitios">Estructura Sitios 
                             <i class="material-icons">apps</i>
@@ -882,14 +875,12 @@ setInterval(function() {
                     </li>
 
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/statusproyecto',$actual_link); echo getSttipo($actual_link);?>">
                         <a href="/panel/statusproyecto">Status Proyecto
                             <i class="material-icons">clear_all</i>
                         </a>
                     </li>
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/statuscliente',$actual_link);?>">
                          <a href="/panel/statuscliente">Status Cliente
                             <i class="material-icons">accessibility</i>
