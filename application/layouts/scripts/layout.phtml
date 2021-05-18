@@ -779,12 +779,7 @@ setInterval(function() {
                     <a href="/panel/directorio">Directorio <i class="material-icons">assignment_ind</i></a>
                 </li>
 
-
-
             <?php if ($usuarios[0]['fkroles'] == 1) { ?>
-<!--                 <li class="bold <?php echo getUrl('/panel/asignaractividad',$actual_link); ?>">
-                    <a href="/panel/asignaractividad">Asignar Actividades <i class="material-icons">assignment_ind</i></a>
-                </li> -->
                 <li class="bold moves <?php echo getUrl('/clientes/especificaciones',$actual_link);?>">
                     <a href="/clientes/especificaciones">Especificaciones<i class="material-icons">domain</i></a>
                 </li>
@@ -865,7 +860,6 @@ setInterval(function() {
 
                 </li>
                 <li class="divider" tabindex="-1"></li>
-
                 <ul id='dropdown1' class='dropdown-content' style="background-color: #F5F5F5;">
                     <li class="bold <?php echo getUrl('/panel/tipoproyecto',$actual_link); echo getTipoproyecto($actual_link);?>">
                         <a href="/panel/tipoproyecto">Tipo de Proyecto
@@ -874,7 +868,6 @@ setInterval(function() {
                     </li>
 
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/estructurasitios',$actual_link); echo getEstructura($actual_link);?>">
                         <a href="/panel/estructurasitios">Estructura Sitios 
                             <i class="material-icons">apps</i>
@@ -882,14 +875,12 @@ setInterval(function() {
                     </li>
 
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/statusproyecto',$actual_link); echo getSttipo($actual_link);?>">
                         <a href="/panel/statusproyecto">Status Proyecto
                             <i class="material-icons">clear_all</i>
                         </a>
                     </li>
                     <li class="divider" tabindex="-1"></li>
-
                     <li class="bold <?php echo getUrl('/panel/statuscliente',$actual_link);?>">
                          <a href="/panel/statuscliente">Status Cliente
                             <i class="material-icons">accessibility</i>
@@ -1024,17 +1015,12 @@ setInterval(function() {
                 <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
                     <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
-
-
-
                 <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
                     <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
                 </li>
                 <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
                     <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
                 </li>
-
-
             <?php } ?> 
 
             <?php if ($usuarios[0]['fkroles'] == 9) { ?>
@@ -1056,19 +1042,15 @@ setInterval(function() {
                 <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
                     <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
                     <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
                 </li>
-
                 <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
                     <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/gasolina/efecticard',$actual_link); echo getefecticard($actual_link);?>">
                     <a href="/gasolina/efecticard">Efecticard<i class="material-icons">call_to_action</i></a>
                 </li>
@@ -1083,18 +1065,15 @@ setInterval(function() {
                 <?php } ?>
             <!-- END TODOS LOS MODULOS -->
 
-
             <!-- ROL DE COMPRAS Y OFICINA DE PROYECTOS -->
             <?php if ($usuarios[0]['fkroles'] == 12 || $usuarios[0]['fkroles'] == 11) { ?>
 
                 <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
                     <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
                     <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
                 </li>
@@ -1123,13 +1102,9 @@ setInterval(function() {
                 <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
                     <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
                 </li>
-
-
                 <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
                     <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
                 </li>
-
-
                 <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
                     <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
                 </li>
@@ -1142,24 +1117,18 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
                     <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
                     <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
                     <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
-
-
                 <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
                     <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
                 </li>
@@ -1169,7 +1138,6 @@ setInterval(function() {
                  -->
             <?php } ?>
             <!-- END ROL DE COMNTABILIDAD-->
-
             <?php if($usuarios[0]['fkroles'] == 13){ ?>
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitios">Sitios<i class="material-icons">assignment_late</i></a>
@@ -1189,8 +1157,15 @@ setInterval(function() {
                 <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
                     <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
                 </li>
-            <?php } ?>    
 
+                <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
+                    <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
+                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
+            <?php } ?>    
 
             <!-- Auxiliar de facturacion -->
             <?php if($usuarios[0]['fkroles'] == 14){ ?>
@@ -1198,7 +1173,6 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
-
 
                 <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
                     <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
@@ -1227,39 +1201,30 @@ setInterval(function() {
             <?php } ?> 
 
             <?php if($usuarios[0]['fkroles'] == 8){ ?>
-
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
-
-
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
                     <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
                     <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
                     <a href="/vehiculos/listasolicitudes/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
                 </li>
                 <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
                     <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
-                </li>
-                
+                </li> 
                 <li class="bold moves <?php echo getUrl('/solicitud/combrobaciones',$actual_link); echo getcomprobaciones($actual_link)?>">
                     <a href="/solicitud/combrobaciones">Comprobaciones<i class="material-icons">format_list_numbered</i></a>
                 </li>
-
                 <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
                     <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
                 </li>
@@ -1290,7 +1255,7 @@ setInterval(function() {
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/materiales/materiales',$actual_link);?>"> 
-                    <a href="/materiales/materiales">Solicitud Materiales<i class="material-icons">business_center</i></a> 
+                    <a href="/materiales/materiales">Solicitud Materiales<i class="material-icons">business_center</i></a>
                 </li> 
 
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
@@ -1298,17 +1263,10 @@ setInterval(function() {
                 </li>
             <?php } ?>
 
-            <?php if($usuarios[0]['fkroles'] == 13){ ?>
-<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
-                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
-                </li> -->
-            <?php } ?>
-
             <?php if($usuarios[0]['fkroles'] == 17){ ?>
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
                 </li>
-
             <?php } ?>
 
             <?php if($usuarios[0]['fkroles'] == 18){ ?>
@@ -1323,14 +1281,6 @@ setInterval(function() {
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
                 </li>
             <?php } ?>            
-
-<!--                 <li class="bold <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
-                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
-                </li> -->
-                <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
-                    <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
-                </li>
-
         </ul>                  
 
 </header>
@@ -1372,17 +1322,6 @@ setInterval(function() {
 </main>
 
 
-<!--         <footer style="background-color:#66BB6A !important;  
-                    grid-template-columns: repeat(3, 1fr);
-                    bottom: 0;">
-          <div class="container">
-            <div class="row">
-              <div class="col l12 s12 text-center">
-                <img src="/img/logo-2.png" style="width: 290px;">
-              </div>
-            </div>
-          </div>
-        </footer> -->
 
 <meta name="__token" content="{!! csrf_token() !!}" />  
 <script type="text/javascript" src="/js/script.js"></script>

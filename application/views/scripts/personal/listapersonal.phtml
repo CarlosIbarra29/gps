@@ -1,0 +1,225 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m1 s12"></div>
+    <div class="col m10 s12">
+        <div class="row">
+            <div class="col m5 s6">
+                <div class="input-field col s12">
+                    <select>
+                        <option value="0" disabled selected>Selecciona una opcion</option>
+                        <option value="1">Nombre</option>
+                        <option value="2">Puesto</option>
+                        <option value="3">Sitio</option>
+                        <option value="4">Status</option>
+                    </select>
+                    <label>Buscar por: </label>
+                </div>
+            </div>
+            <div class="col m5 s6">
+                <div class="input-field col s12">
+                    <input placeholder="Ingresa el nombre del personal" id="name_search" type="text" class="validate">
+                    <label for="name_search">Nombre</label>
+                </div>
+            </div>
+            <div class="col m2 s12 text-center">
+                <div class="input-field col s12">
+                    <a class="waves-effect waves-light btn">Buscar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col m1 s12"></div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12">
+        <div class="row">
+            <div class="col m8 s6">
+                <!-- <h3></h3> -->
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
+            </div>
+            <div class="col m4 s6 text-right">
+                <div class="row">
+                    <div class="col m6 s6 text-right">
+                        <a class="btn green">Asignar</a>
+                    </div>
+                    <div class="col m6 s6 text-left">
+                        <a class="btn red">Liberar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table text-left table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th> 
+                    <th>Puesto</th>
+                    <th>Sitio</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Final</th>
+                </tr> 
+            </thead>
+            <?php if ($this->paginator) { 
+                foreach ($this->paginator as $usr) { ?>
+            <tbody>
+                <tr>
+                    <td><?php echo $usr["nombre"]; ?> <?php echo $usr["apellido_pa"]; ?> <?php echo $usr["apellido_ma"]; ?></td>
+                    <td><?php echo $usr["name_puesto"]; ?></td>
+                    <td>
+                        <?php if($usr["name_sitio"] == NULL || $usr["name_sitio"] == "vacio"){ ?>
+                            Por Asignar
+                        <?php }else{ ?>
+                            <?php echo $usr["name_sitio"]; ?>
+                        <?php } ?>
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <?php if($usr['status_cuadrilla'] == 1){ ?>
+                            <a class="liberar_personal modal-trigger" href="#modal1" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span>
+                            </a>
+                        <?php }else{ ?>
+                            <a class="asignar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-plus" style="color: green"></i></span>
+                            </a>
+                        <?php } ?>
+                    </td>
+                </tr>
+            </tbody>
+            <?php } }else{ ?>
+            <tbody>
+                <tr>
+                    <td>No se ha agregado personal </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <?php } ?>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Anterior</span>
+                        </li>
+                    <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                    <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                    <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.modal').modal();
+    });
+</script>
