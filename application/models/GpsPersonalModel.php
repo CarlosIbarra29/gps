@@ -10,10 +10,11 @@ class Application_Model_GpsPersonalModel extends Zend_Db_Table_Abstract{
                                 pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
                                 pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, 
                                 pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,  
-                                pc.status_operativo , pc.status_campo
+                                pc.status_operativo , pc.status_campo, tp.nombre_proyecto
                                 FROM personal_campo pc 
                                 LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
-                                WHERE pc.status_campo = ? 
+                                LEFT JOIN tipo_proyecto tp on tp.id = pc.tipo_proyectopersonal 
+                                WHERE pc.status_campo = ?
                                 LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
