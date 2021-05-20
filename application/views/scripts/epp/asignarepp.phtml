@@ -1,3 +1,7 @@
+<?php foreach ($this->user as $value) {
+    $rol_user = $value['fkroles'];
+} ?>
+
 <style type="text/css">
     .table_wrapper{
         overflow-x: auto;
@@ -11,10 +15,22 @@
 
 <!-- INICIO DETAIL-->
 <div class="row" style="margin-top: 10px;">
-    <div class="col m12 s12">
-        <?php foreach ($this->personal_epp as $regresar) { ?>
-        <a href="/panel/personaldetail/id/<?php echo $regresar['id']; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-        <?php } ?>    
+    <div class="col m5 s5">
+        <?php if ($rol_user == 13) { ?>
+
+        <?php } else { ?>       
+            <?php foreach ($this->personal_epp as $regresar) { ?>
+            <a href="/panel/personaldetail/id/<?php echo $regresar['id']; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+            <?php } ?> 
+        <?php } ?>   
+    </div>
+     <div class="col m7 s7 text-right">
+        <?php if ($rol_user == 13 || $rol_user == 1 || $rol_user == 8) { ?>
+            <a href="/epp/catalogo" class="waves-effect darken-1 waves-light btn">Ir Catálogo</a>
+            <a href="/epp/personal" class="waves-effect darken-1 waves-light btn">Buscar Personal</a>
+        <?php } else { ?>       
+            
+        <?php } ?>   
     </div>
 </div>
 

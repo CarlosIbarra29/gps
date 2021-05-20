@@ -64,6 +64,7 @@ function eliminar_acentos($cadena){
 	<table class="table text-left table-hover ">
 		<thead>
 			<tr>
+				<th>ID</th>
 				<th>Codigo</th>		
 				<th>Nombre</th>
 				<th>Unidad</th>
@@ -83,6 +84,7 @@ function eliminar_acentos($cadena){
 		foreach ($this->excelher as $dher) { ?>
 		<tbody>
 			<tr>
+				<td><?php echo $dher["id_herramienta"]; ?></td>
 				<td><?php echo $dher["codigo"]; ?></td>
 				<td><?php echo eliminar_acentos( $dher["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos( $dher["unidad"]); ?></td>
