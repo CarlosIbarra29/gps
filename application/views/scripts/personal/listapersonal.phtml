@@ -104,16 +104,15 @@
     <div class="col m12 s12">
         <div class="row">
             <div class="col m8 s6">
-                <!-- <h3></h3> -->
                 <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
             </div>
             <div class="col m4 s6 text-right">
                 <div class="row">
                     <div class="col m6 s6 text-right">
-                        <a class="btn green">Asignar</a>
+                        <a href="/personal/asignarpersonal" class="btn green">Asignar</a>
                     </div>
                     <div class="col m6 s6 text-left">
-                        <a class="btn red">Liberar</a>
+                        <a href="/personal/liberarpersonal"  class="btn red">Liberar</a>
                     </div>
                 </div>
             </div>
@@ -142,14 +141,18 @@
                         <?php } ?>
 
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <?php echo $usr["fechainicio_asignacion"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $usr["fechafinal_asignacion"]; ?>
+                    </td>
                     <td>
                         <?php if($usr['status_cuadrilla'] == 1){ ?>
-                            <a class="liberar_personal modal-trigger" href="#modal1" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span>
+                            <a class="liberar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span>
                             </a>
                         <?php }else{ ?>
-                            <a class="asignar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-plus" style="color: green"></i></span>
+                            <a class="asignar_personal modal-trigger" href="#modal3" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-plus" style="color: green"></i></span>
                             </a>
                         <?php } ?>
                     </td>
@@ -207,13 +210,61 @@
 </div>
 
 
-<div id="modal1" class="modal modal-fixed-footer">
+<div id="modal3" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
+        <div class="row">
+            <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                Asignar Personal
+            </span>
+        </div>
+
+        <div class="row">
+            <div class="col m12 s12">
+                <span id="name_userspan"style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"></span>
+            </div>
+        </div>
+        
+        <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
+            <div class="row" style="margin-top: 20px;">
+                <input type="hidden" name="id_user" id="id_user" value="">
+                <div class="col m12 s12">
+                    <div class="input-field col m12 s12">
+                        <select id="sitio_op" name="sitio">
+                            <option value="0" disabled selected>* Selecciona un Sitio</option>
+                            <?php foreach ($this->sitios as $key){ ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Sitio:</label>
+                    </div>
+
+                    <div class="input-field col m12 s12">
+                        <select id="proyecto_op" name="proyecto">
+                            <option value="0" disabled selected>* Selecciona un Proyecto</option>
+                            <?php foreach ($this->proyectos as $key){ ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Proyecto:</label>
+                    </div>
+
+                    <div class="input-field col m6 s12">
+                        <input id="fecha_inicial" name="fecha_inicial" type="date" class="datepicker">
+                        <label for="fecha_inicial">* Fecha Inicial</label>
+                    </div>
+
+                    <div class="input-field col m6 s12">
+                        <input id="fecha_final" name="fecha_final" type="date" class="datepicker">
+                        <label for="fecha_final">* Fecha Final</label>
+                    </div>
+
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    <div class="modal-footer">          
+        <button class=" btn" id="adduser">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
     </div>
 </div>
 
@@ -222,4 +273,81 @@
     $(document).ready(function(){
         $('.modal').modal();
     });
+
+    $(".asignar_personal").click(function(){
+        nombre = $(this).data('nombre');
+        ap = $(this).data('ap');
+        am = $(this).data('am');
+        name = nombre + " " + ap + " "+ am;
+        document.getElementById("name_userspan").innerHTML=name;
+
+        id = $(this).data('id');
+        document.getElementById("id_user").value=id;
+
+    });
+
+
+    $(".liberar_personal").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        ap=$(this).data('ap');
+        am =$(this).data('am');
+
+        swal({
+            title: "Estas seguro de liberar a "+ap+" "+nombre+" del sitio?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, "+ap+" "+nombre+"  se liberara del sitio", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/panel/requestliberarpersonal",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+    //-------------------end de ajax---------------------------
+
+    //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+    //-------------------end de respuesta ajax---------------------
+                 return false;
+            } else {
+                swal("La accion fue cancelada!");
+            } 
+        });
+
+    });
+
+    $("#adduser").click(function(){
+        var id_user = document.getElementById("id_user").value;
+        var sitio_op = document.getElementById("sitio_op").value;
+        var proyecto_op = document.getElementById("proyecto_op").value;
+        var fecha_inicial = document.getElementById("fecha_inicial").value;
+        var fecha_final = document.getElementById("fecha_final").value;
+
+        if(id_user == "" || sitio_op== 0 || proyecto_op== 0 || fecha_inicial=="" || fecha_final== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() { document.getElementById("submit_addperson").submit() }
 </script>

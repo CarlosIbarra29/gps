@@ -1,0 +1,218 @@
+
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/personal/liberarpersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<?php foreach ($this->sitio as $key) {
+	$nombre_sitio = $key['nombre'];
+} ?>
+
+<?php foreach ($this->proyectos as $value) {
+	$proyecto = $value['nombre_proyecto'];
+} ?>
+
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
+	</div>
+	<div class="col m12 s12 text-center">
+		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
+	</div>
+
+</div>
+
+<div class="row">
+    <div class="col m12 s12">
+        <div class="row" style="margin-top: 25px;">
+            <div class="col m6 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
+            </div>
+            <div class="col m6 s12 text-right">
+                <div class="row">
+                    <div class="col m8 s6 text-left">
+                    </div>
+
+                    <div class="col m4 s6 text-right">
+                        <a class="btn red" id="asignar_personal">Liberar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table text-left table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th> 
+                    <th>Puesto</th>
+                    <th>Sitio</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Final</th>
+                </tr> 
+            </thead>
+            <form action="/personal/requestliberarpersonalsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+
+                <input type="hidden" name="sitio" value="<?php echo $this->sitio_id; ?>">
+                <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+
+            <?php if ($this->paginator) { 
+                foreach ($this->paginator as $usr) { ?>
+            <tbody>
+                <tr>
+                    <td><?php echo $usr["nombre"]; ?> <?php echo $usr["apellido_pa"]; ?> <?php echo $usr["apellido_ma"]; ?></td>
+                    <td><?php echo $usr["name_puesto"]; ?></td>
+                    <td>
+                        <?php if($usr["name_sitio"] == NULL || $usr["name_sitio"] == "vacio"){ ?>
+                            Por Asignar
+                        <?php }else{ ?>
+                            <?php echo $usr["name_sitio"]; ?>
+                        <?php } ?>
+
+                    </td>
+                    <td>
+                    	<?php echo $usr["fechainicio_asignacion"]; ?>
+                    </td>
+                    <td>
+                    	<?php echo $usr["fechafinal_asignacion"]; ?>
+                    </td>
+                    <td>
+						<p>
+						    <label>
+						        <input type="checkbox" name="ids[]" value="<?php echo $usr["id_personal"]; ?>" />
+						        <span></span>
+						    </label>
+						</p>
+                    </td>
+                </tr>
+            </tbody>
+            <?php } }else{ ?>
+            	</form>
+            <tbody>
+                <tr>
+                    <td>No se ha agregado personal </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <?php } ?>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                    <?php if($pagina - 1 == 0){ ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Anterior</span>
+                        </li>
+                    <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                    <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                    <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<input type="hidden" id="actividad" value="1">
+<script type="text/javascript">
+    $("#asignar_personal").click(function(){
+        var actividad = document.getElementById("actividad").value;
+
+        if(actividad == ""){
+            swal({
+            	title: "Para agregar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitpersonal, 1500);     
+        }
+    });
+
+    function submitpersonal() { document.getElementById("submit_asignar").submit() }
+</script>
