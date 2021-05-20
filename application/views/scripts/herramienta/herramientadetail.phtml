@@ -408,29 +408,43 @@
 				<?php } ?>
 			
 				<div class="row">
-					<div class="input-field col m12 s12">
-						<textarea id="motivo" name="motivo" class="materialize-textarea"></textarea>
-						<label for="motivo">*Motivo de reparación: </label>
-					</div>
-
 					<div class="file-field input-field col m12 s12">
 						<div class="btn">
-							<span>Agregar Orden de gastos</span>
+							<span>Foto Herramienta a reparar</span>
 							<input type="file" name="url">
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text">
 						</div>
 					</div>
+					
 					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">today</i>
 						<input type="date" id="fecha" name="fecha"  class="validate">
 						<label for="fecha">*Fecha de reparación: dd/mm/yyyy</label>
 					</div>
+
 					<div class="input-field col m6 s12">
+                        <select name="solicitud" id="solicitud">
+                            <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
+                            <?php foreach ($this->solicitud as $sveh) { ?>
+                                <option value="<?php echo $sveh["id"]; ?>">Id: <?php echo $sveh["id"]; ?> Servicio: <?php echo $sveh["nombre_servicio"]; ?> Monto: $<?php echo $sveh["monto"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Solicitud:</label>
+                    </div>
+
+
+
+					<!-- <div class="input-field col m6 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input type="text" id="costo" name="costo" class="validanumeros">
 						<label for="costo">Costo de Reparación:</label>
+					</div> -->
+
+					<div class="input-field col m12 s12">
+						<textarea id="motivo" name="motivo" class="materialize-textarea"></textarea>
+						<label for="motivo">*Motivo de reparación: </label>
 					</div>
 	      		</div>
 	    	</form>
