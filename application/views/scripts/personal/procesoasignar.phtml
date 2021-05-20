@@ -60,59 +60,53 @@
 </style>
 
 
-<div class="row"> 
-    <div class="col m12 s12 text-center" style="margin-top: 30px;">
-        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/personal/asignarpersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
 </div>
 
+
+<?php foreach ($this->sitio as $key) {
+	$nombre_sitio = $key['nombre'];
+} ?>
+
+<?php foreach ($this->proyectos as $value) {
+	$proyecto = $value['nombre_proyecto'];
+} ?>
 
 <div class="row">
-    <div class="col m1 s12"></div>
-    <div class="col m10 s12">
-        <div class="row">
-            <div class="col m5 s6">
-                <div class="input-field col s12">
-                    <select>
-                        <option value="0" disabled selected>Selecciona una opcion</option>
-                        <option value="1">Nombre</option>
-                        <option value="2">Puesto</option>
-                        <option value="3">Sitio</option>
-                        <option value="4">Status</option>
-                    </select>
-                    <label>Buscar por: </label>
-                </div>
-            </div>
-            <div class="col m5 s6">
-                <div class="input-field col s12">
-                    <input placeholder="Ingresa el nombre del personal" id="name_search" type="text" class="validate">
-                    <label for="name_search">Nombre</label>
-                </div>
-            </div>
-            <div class="col m2 s12 text-center">
-                <div class="input-field col s12">
-                    <a class="waves-effect waves-light btn">Buscar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col m1 s12"></div>
-</div>
+	<div class="col m12 s12 text-center">
+		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+	</div>
+	<div class="col m12 s12 text-center">
+		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
+	</div>
 
+</div>
 
 <div class="row">
     <div class="col m12 s12">
-        <div class="row">
-            <div class="col m8 s6">
+        <div class="row" style="margin-top: 25px;">
+            <div class="col m6 s12">
                 <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
             </div>
-            <div class="col m4 s6 text-right">
+            <div class="col m6 s12 text-right">
                 <div class="row">
-                    <div class="col m6 s6 text-right">
-                        <a href="/personal/asignarpersonal" class="btn green">Asignar</a>
+                    <div class="col m8 s6 text-left">
+                    	<div class="row">
+                    		<div class="col m6 s12">
+                    			<span style="font-size: 17px;">Fecha Inicial: <?php echo $this->fecha_inicial; ?></span>
+                    		</div>
+                    		<div class="col m6 s12">
+                    			<span style="font-size: 17px;">Fecha Final: <?php echo $this->fecha_final; ?></span>
+                    		</div>
+                    	</div>
                     </div>
-                    <div class="col m6 s6 text-left">
-                        <a class="btn red">Liberar</a>
+
+                    <div class="col m4 s6 text-right">
+                        <a class="btn green" id="asignar_personal">Asignar</a>
                     </div>
                 </div>
             </div>
@@ -127,6 +121,13 @@
                     <th>Fecha Final</th>
                 </tr> 
             </thead>
+            <form action="/personal/requestaddpersonalsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+
+                <input type="hidden" name="sitio" value="<?php echo $this->sitio_id; ?>">
+                <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+                <input type="hidden" name="fecha_inicial" value="<?php echo $this->fecha_inicial; ?>">
+                <input type="hidden" name="fecha_final" value="<?php echo $this->fecha_final; ?>">
+
             <?php if ($this->paginator) { 
                 foreach ($this->paginator as $usr) { ?>
             <tbody>
@@ -141,24 +142,20 @@
                         <?php } ?>
 
                     </td>
+                    <td></td>
+                    <td><?php echo $usr["id_personal"]; ?></td>
                     <td>
-                        <?php echo $usr["fechainicio_asignacion"]; ?>
-                    </td>
-                    <td>
-                        <?php echo $usr["fechafinal_asignacion"]; ?>
-                    </td>
-                    <td>
-                        <?php if($usr['status_cuadrilla'] == 1){ ?>
-                            <a class="liberar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span>
-                            </a>
-                        <?php }else{ ?>
-                            <a class="asignar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-plus" style="color: green"></i></span>
-                            </a>
-                        <?php } ?>
+						<p>
+						    <label>
+						        <input type="checkbox" name="ids[]" value="<?php echo $usr["id_personal"]; ?>" />
+						        <span></span>
+						    </label>
+						</p>
                     </td>
                 </tr>
             </tbody>
             <?php } }else{ ?>
+            	</form>
             <tbody>
                 <tr>
                     <td>No se ha agregado personal </td>
@@ -172,8 +169,6 @@
         </table>
     </div>
 </div>
-
-
 
 
 
@@ -209,68 +204,23 @@
     </div> 
 </div>
 
-
-<div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>
-
-
+<input type="hidden" id="actividad" value="1">
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('.modal').modal();
+    $("#asignar_personal").click(function(){
+        var actividad = document.getElementById("actividad").value;
+
+        if(actividad == ""){
+            swal({
+            	title: "Para agregar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitpersonal, 1500);     
+        }
     });
 
-
-    $(".liberar_personal").click(function(){
-        id=$(this).data('id');
-        nombre=$(this).data('nombre');
-        ap=$(this).data('ap');
-        am =$(this).data('am');
-
-        swal({
-            title: "Estas seguro de liberar a "+ap+" "+nombre+" del sitio?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Espere un momento, "+ap+" "+nombre+"  se liberara del sitio", {
-                    icon: "success",
-                    buttons: false,
-                });
-
-
-                var request = $.ajax({
-                    url:"/panel/requestliberarpersonal",
-                    method:"POST",
-                    data: { id : id },
-                    processData: true,
-                });
-    //-------------------end de ajax---------------------------
-
-    //-------------peticion de respuesta de ajax------------------
-                request.done(function(response) {
-                    console.log(response);//imprime lo que responde el ajax
-                    // alert
-                    window.location.reload(true);
-                });
-    //-------------------end de respuesta ajax---------------------
-                 return false;
-
-
-            } else {
-                swal("La accion fue cancelada!");
-            } 
-        });
-
-    });
-  
-
+    function submitpersonal() { document.getElementById("submit_asignar").submit() }
 </script>

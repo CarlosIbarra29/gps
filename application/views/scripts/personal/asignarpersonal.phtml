@@ -1,0 +1,102 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/personal/listapersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m2 s12"></div>
+    <div class="col s12 m8">
+      <div class="card">
+        <div class="card-content">
+        	<div class="row">
+        		<div class="col m12 s12">
+        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+        		</div>
+        	</div>
+
+        	<div class="row">
+        		<div class="col m12 s12">
+			  		<div class="input-field col m12 s12">
+			    		<select id="sitio" name="sitio">
+			      			<option value="0" disabled selected>* Selecciona un Sitio</option>
+			      			<?php foreach ($this->sitios as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Sitio:</label>
+			  		</div>
+			  		<div class="input-field col m12 s12">
+			    		<select id="proyecto" name="proyecto">
+			      			<option value="0" disabled selected>* Selecciona un Proyecto</option>
+			      			<?php foreach ($this->proyectos as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Proyecto:</label>
+			  		</div>
+
+
+			  		<div class="input-field col m6 s12">
+	        			<input id="fecha_inicial" name="fecha" type="text" class="datepicker">
+        				<label for="fecha_inicial">* Fecha Inicial</label>
+			  		</div>
+
+			  		<div class="input-field col m6 s12">
+	        			<input id="fecha_final" name="fecha" type="text" class="datepicker">
+        				<label for="fecha_final">* Fecha Final</label>
+			  		</div>
+        		</div>
+        	</div>
+
+        	<div class="row">
+        		<div class="col m12 s12 text-right">
+        			<a class="btn" id="next_step"><i class="material-icons right">navigate_next</i>Siguiente</a>
+        		</div>
+        	</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+  	});
+
+  	$("#next_step").click(function(){
+  		var sitio = document.getElementById("sitio").value;
+  		var proyecto = document.getElementById("proyecto").value;
+  		var fecha_inicial = document.getElementById("fecha_inicial").value;
+  		var fecha_final = document.getElementById("fecha_final").value;
+
+	    	if(sitio == 0 || proyecto == 0 || fecha_inicial == "" || fecha_final == ""){
+	            swal({
+	              title: "Para continuar debes agregar llenar los datos",
+	            });
+	    	}else{
+
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+	    		var dia_uno = fecha_inicial.slice(0, -8);
+				var mes_uno = fecha_inicial.slice(3, -5);
+				var year_uno = fecha_inicial.slice(6);		
+
+	    		var dia_dos = fecha_final.slice(0, -8);
+				var mes_dos = fecha_final.slice(3, -5);
+				var year_dos = fecha_final.slice(6);	
+
+				window.location.href = '/personal/procesoasignar/sitio/'+sitio+'/proyecto/'+proyecto+'/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'';
+	    	}
+
+  	});
+</script>
