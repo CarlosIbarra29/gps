@@ -1,0 +1,82 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/personal/listapersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m2 s12"></div>
+    <div class="col s12 m8">
+      <div class="card">
+        <div class="card-content">
+        	<div class="row">
+        		<div class="col m12 s12">
+        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación del Personal</span>
+        		</div>
+        	</div>
+
+        	<div class="row">
+        		<div class="col m12 s12">
+			  		<div class="input-field col m12 s12">
+			    		<select id="sitio" name="sitio">
+			      			<option value="0" disabled selected>* Selecciona un Sitio</option>
+			      			<?php foreach ($this->sitios as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Sitio:</label>
+			  		</div>
+			  		<div class="input-field col m12 s12">
+			    		<select id="proyecto" name="proyecto">
+			      			<option value="0" disabled selected>* Selecciona un Proyecto</option>
+			      			<?php foreach ($this->proyectos as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Proyecto:</label>
+			  		</div>
+        		</div>
+        	</div>
+
+        	<div class="row">
+        		<div class="col m12 s12 text-right">
+        			<a class="btn" id="next_step"><i class="material-icons right">navigate_next</i>Siguiente</a>
+        		</div>
+        	</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+  	});
+
+  	$("#next_step").click(function(){
+  		var sitio = document.getElementById("sitio").value;
+  		var proyecto = document.getElementById("proyecto").value;
+
+	    	if(sitio == 0 || proyecto == 0 ){
+	            swal({
+	              title: "Para continuar debes agregar llenar los datos",
+	            });
+	    	}else{
+
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+
+				window.location.href = '/personal/procesoliberar/sitio/'+sitio+'/proyecto/'+proyecto+'';
+	    	}
+  	});
+</script>

@@ -4885,6 +4885,7 @@ foreach ($this->detallesdos_bts as $key) { ?>
 									<?php echo $key["fecha_sietedias"]; ?>
 								</td>
 								<td>
+									<input type="hidden" id="all_sietedias" value="/<?php echo $key["pdf_sietedias"]; ?>">
 									<a title="Descargar Archivo" href="/<?php echo $key["pdf_sietedias"]; ?>" download="<?php echo substr(strrchr($key["pdf_sietedias"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
 								</td>
 								<td>
@@ -4970,6 +4971,7 @@ foreach ($this->detallesdos_bts as $key) { ?>
 									<?php echo $key["fecha_catorcedias"]; ?>
 								</td>
 								<td>
+									<input type="hidden" id="all_catorce" value="/<?php echo $key["pdf_catorcedias"]; ?>">
 									<a title="Descargar Archivo" href="/<?php echo $key["pdf_catorcedias"]; ?>" download="<?php echo substr(strrchr($key["pdf_catorcedias"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
 								</td>
 								<td>
@@ -5592,6 +5594,14 @@ foreach ($this->detallesdos_bts as $key) { ?>
       	<button  class="modal-close red btn">Cerrar</button>
     </div>
   </div>
+
+<!-- 
+<div class="row">
+	<div class="col m12 s12">
+		<button type="button" id="dowload_all" class="btn">Descargar Documentos</button>
+	</div>
+</div>
+ -->
 
 <div class="row"> 
 	<div class="col m12 s12" style="margin-top: 10px;" id="div_comentarios">
@@ -8046,6 +8056,29 @@ $("#adddetaildosedit").click(function(){
 		  	}
 		});
     });
+
+  //   $("#dowload_all").click(function(){
+  //   	var all_sietedias = document.getElementById("all_sietedias").value;
+  //   	var all_catorce = document.getElementById("all_catorce").value;
+		// var links = [
+		//   all_sietedias
+		// ];
+
+		//   var link = document.createElement('a');
+
+		//   link.setAttribute('download', null);
+		//   link.style.display = 'none';
+
+		//   document.body.appendChild(link);
+
+		//   for (var i = 0; i < links.length; i++) {
+		//     link.setAttribute('href', links[i]);
+		//     link.click();
+		//   }
+
+		//   document.body.removeChild(link);
+  //   });
+
 </script>
 
 

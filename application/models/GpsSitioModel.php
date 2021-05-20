@@ -493,7 +493,6 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
     }//  UPDATE ROL
 
     public function asignacionpersonalasitio($post,$table,$name_sitio,$id){
-        // var_dump($post);exit;
         $status_cuadrilla = 1;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -512,6 +511,50 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+    public function liberacionpersonalasitio($post,$table,$id){
+        $status_cuadrilla = 0;
+        $value = 0;
+        $sitio = NULL;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_cuadrilla = ?, sitio_tipoproyectopersonal = ?, id_sitiopersonal = ?, name_sitio = ?, fechainicio_asignacion = ?, fechafinal_asignacion = ? WHERE id = ?",array(
+                $status_cuadrilla,
+                $value,
+                $value,
+                $sitio,
+                $sitio,
+                $sitio,
+                $id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
+    public function asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final){
+        $status_cuadrilla = 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_cuadrilla = ?, sitio_tipoproyectopersonal = ?, id_sitiopersonal = ?, name_sitio = ?, fechainicio_asignacion = ?, fechafinal_asignacion = ? WHERE id = ?",array(
+                $status_cuadrilla,
+                $post['proyecto'],
+                $post['sitio'],
+                $name_sitio,
+                $fecha_inicial,
+                $fecha_final,
+                $post['id_user']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
 
 
     public function Updatechangepersonal($post,$table,$hoy){
@@ -562,10 +605,13 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
     }//  UPDATE ROL
 
     public function Updateliberacionpersonalasitio($post){
-        $name_sitio = "vacio";
+        $name_sitio = NULL;
+        $inicial = NULL;
+        $final = NULL;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE personal_campo SET status_cuadrilla = 0, tipo_proyectopersonal = 0, sitio_tipoproyectopersonal = 0, id_sitiopersonal = 0, name_sitio = ? WHERE id = ?",array($name_sitio,$post["id"]));
+            $qry = $db->query("UPDATE personal_campo SET status_cuadrilla = 0, tipo_proyectopersonal = 0, sitio_tipoproyectopersonal = 0, id_sitiopersonal = 0, name_sitio = ?, fechainicio_asignacion = ?, fechafinal_asignacion = ? 
+                WHERE id = ?",array($name_sitio,$inicial,$final,$post["id"]));
             $db->closeConnection();               
             return $qry;
         } 

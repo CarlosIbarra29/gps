@@ -1,3 +1,4 @@
+
 <?php 
 	function isActhref($nameBtn,$urlname){
 	    if($nameBtn==1 && $urlname==null){
@@ -60,10 +61,9 @@
 </style>
 
 
-
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
-        <a href="/personal/asignarpersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+        <a href="/personal/liberarpersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
 </div>
 
@@ -78,7 +78,7 @@
 
 <div class="row">
 	<div class="col m12 s12 text-center">
-		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
 	</div>
 	<div class="col m12 s12 text-center">
 		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
@@ -95,18 +95,10 @@
             <div class="col m6 s12 text-right">
                 <div class="row">
                     <div class="col m8 s6 text-left">
-                    	<div class="row">
-                    		<div class="col m6 s12">
-                    			<span style="font-size: 17px;">Fecha Inicial: <?php echo $this->fecha_inicial; ?></span>
-                    		</div>
-                    		<div class="col m6 s12">
-                    			<span style="font-size: 17px;">Fecha Final: <?php echo $this->fecha_final; ?></span>
-                    		</div>
-                    	</div>
                     </div>
 
                     <div class="col m4 s6 text-right">
-                        <a class="btn green" id="asignar_personal">Asignar</a>
+                        <a class="btn red" id="asignar_personal">Liberar</a>
                     </div>
                 </div>
             </div>
@@ -121,12 +113,10 @@
                     <th>Fecha Final</th>
                 </tr> 
             </thead>
-            <form action="/personal/requestaddpersonalsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+            <form action="/personal/requestliberarpersonalsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 
                 <input type="hidden" name="sitio" value="<?php echo $this->sitio_id; ?>">
                 <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
-                <input type="hidden" name="fecha_inicial" value="<?php echo $this->fecha_inicial; ?>">
-                <input type="hidden" name="fecha_final" value="<?php echo $this->fecha_final; ?>">
 
             <?php if ($this->paginator) { 
                 foreach ($this->paginator as $usr) { ?>
@@ -142,8 +132,12 @@
                         <?php } ?>
 
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                    	<?php echo $usr["fechainicio_asignacion"]; ?>
+                    </td>
+                    <td>
+                    	<?php echo $usr["fechafinal_asignacion"]; ?>
+                    </td>
                     <td>
 						<p>
 						    <label>
@@ -169,8 +163,6 @@
         </table>
     </div>
 </div>
-
-
 
 <div class="row">
     <div class="col m12 s12 text-center">
