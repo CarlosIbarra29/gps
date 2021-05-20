@@ -444,6 +444,10 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->reparacion= $this->_her->Getreparacion($id);
             $this->view->nreparacion= $this->_her->Getnrep($id);
 
+            // $table="solicitud_ordencompra";
+            // $this->view->solicitud = $this->_her->GetSolicitudesReparacion($table);
+
+
             $op = $this->_getParam('op'); 
             $this->view->op_sel=$op; 
 

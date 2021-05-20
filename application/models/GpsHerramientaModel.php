@@ -520,6 +520,24 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    //  public function GetSolicitudesReparacion($table){
+    //     $statusas = 0;
+    //     $servicio= 29
+
+    //     try{
+    //         $db = Zend_Db_Table::getDefaultAdapter();
+    //         $qry = $db->query("SELECT so.id, so.total, so.condiciones_compra, so.referencia, so.descripcion, so.name_user, so.servicio_id
+    //             so.comentario, so.name_proveedor
+    //             FROM solicitud_ordencompra so
+    //             WHERE  so.servicio_id = $servicio");
+    //         $row = $qry->fetchAll();
+    //         return $row;
+    //         $db->closeConnection();
+    //     }catch (Exception $e){
+    //         echo $e;
+    //     }
+    // }   // CONSULTA DOCUMENTACION VEHICULOS
+
     public function Getreparacion($id){
     	try {
     		$db = Zend_Db_Table::getDefaultAdapter();
