@@ -17,6 +17,8 @@ class PersonalController extends Zend_Controller_Action{
     }
 
     public function listapersonalAction(){
+        $this->view->puesto = $this->_personal->getallpersonal(); 
+
         $table="sitios";
         $this->view->sitios = $this->_season->GetAll($table); 
         $this->view->proyectos =$this->_sitio->tiposproyectospersonal();      
@@ -37,6 +39,84 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->totalpage = $total_pages;
         $this->view->total=ceil($total_pages/$no_of_records_per_page);
         $this->view->paginator= $this->_personal->getpersonalcuadrilla($offset,$no_of_records_per_page,$id); 
+    }
+
+    public function buscadorpersonalAction(){
+        $this->view->puesto = $this->_personal->getallpersonal(); 
+
+        $table="sitios";
+        $this->view->sitios = $this->_season->GetAll($table); 
+        $this->view->proyectos =$this->_sitio->tiposproyectospersonal();      
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $op=$this->_getParam('op');
+        $this->view->op_select=$op;
+
+        if($op == 1){
+            $id = 1; $nombre=$this->_getParam('nombre'); $this->view->nombre_select=$nombre;
+            $pagi_count = $this->_personal->getnombrecuadrilla($id,$nombre);
+            $count=count($pagi_count);
+            $this->view->count=$count;
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_personal->getnombrecuadrillapag($offset,$no_of_records_per_page,$id,$nombre);
+        }
+
+        if($op == 2){
+            $id = 1; $puesto=$this->_getParam('puesto');
+            $pagi_count = $this->_personal->getpuestocuadrilla($id,$puesto);
+            $count=count($pagi_count);
+            $this->view->count=$count;
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_personal->getpuestocuadrillapag($offset,$no_of_records_per_page,$id,$puesto);
+        }
+
+        if($op == 3){
+            $id = 1; $sitio=$this->_getParam('sitio'); $this->view->sitio_select=$sitio;
+            $pagi_count = $this->_personal->getsitiocuadrilla($id,$sitio);
+            $count=count($pagi_count);
+            $this->view->count=$count;
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_personal->getsitiocuadrillapag($offset,$no_of_records_per_page,$id,$sitio);
+        }
+
+        if($op == 4){
+            $id = 1; $status=$this->_getParam('status'); $this->view->status_select=$status;
+            $pagi_count = $this->_personal->getstatuscuadrilla($id,$status);
+            $count=count($pagi_count);
+            $this->view->count=$count;
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_personal->getstatuscuadrillapag($offset,$no_of_records_per_page,$id,$status);
+        }
     }
 
     public function asignarpersonalAction(){
@@ -81,7 +161,7 @@ class PersonalController extends Zend_Controller_Action{
         $count=count($pagi_count);
         if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
 
-        $no_of_records_per_page = 20;
+        $no_of_records_per_page = 40;
         $offset = ($pagina-1) * $no_of_records_per_page; 
         $total_pages= $count;
 
@@ -102,9 +182,11 @@ class PersonalController extends Zend_Controller_Action{
 
         $pagi_count = $this->_personal->getpersonalliberarcount($sitio,$proyecto);
         $count=count($pagi_count);
+        $this->view->count=$count;
+
         if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
 
-        $no_of_records_per_page = 20;
+        $no_of_records_per_page = 40;
         $offset = ($pagina-1) * $no_of_records_per_page; 
         $total_pages= $count;
 
@@ -112,6 +194,30 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->total=ceil($total_pages/$no_of_records_per_page);
         $this->view->paginator= $this->_personal->getpersonalliberarpaginator($offset,$no_of_records_per_page,$sitio,$proyecto); 
 
+    }
+
+    public function asistenciapersonalAction(){
+        $id=$this->_getParam('id'); $this->view->personal_id=$id;
+        $table="personal_campo";
+        $wh="id";
+        $info = $this->view->info_personal = $this->_season->GetSpecific($table,$wh,$id);   
+        
+
+        if($info[0]['id_sitiopersonal'] == 0){
+            $sit = 0;
+            $this->view->if_sitio=$sit;
+        }else{
+            $sit = 1;
+            $this->view->if_sitio=$sit;
+            $table="sitios";
+            $wh="id";
+            $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']);  
+
+            $table="puestos_personal";
+            $wh="id";
+            $puesto = $this->_season->GetSpecific($table,$wh,$info[0]['puesto']);  
+            $this->view->puesto_info = $puesto[0]['nombre']; 
+        }
     }
 
     public function requestaddpersonalsitioAction(){
@@ -202,7 +308,20 @@ class PersonalController extends Zend_Controller_Action{
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
             } 
+    }
 
+
+    public function requestasistenciaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost(); 
+
+        $datetime1 = new DateTime($post['hora_entrada']);
+        $datetime2 = new DateTime($post['hora_salida']);
+        $interval = $datetime1->diff($datetime2);
+        // echo $interval->format('%R%a días');
+
+        var_dump($interval->format("%H:%I:%S"));exit;  
     }
 
 }

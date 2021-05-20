@@ -1,0 +1,176 @@
+
+<?php foreach ($this->info_personal as $key) {
+	$id = $key['id'];
+	$nombre = $key['nombre'];
+	$apellido_pa = $key['apellido_pa'];
+	$apellido_ma = $key['apellido_ma'];
+	$imagen = $key['imagen'];
+	$telefono = $key['telefono'];
+	$correo =$key['email_personal'];
+
+} ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/personal/listapersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asistencia del Personal</span>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content" >
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Personal</span>
+
+	        	<div class="row" style="margin-top: 30px;">
+	        		<div class="col m6 s6 text-center">
+	        			<!-- <img src="/<?php echo $imagen;?>" style="width: 100px;">  -->
+	        			<a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>"  alt="image-1" style="width: 100px;"/></a>
+	        		</div>
+
+	        		<div class="col m6 s6">
+	        			<div class="row">
+	        				<div class="col m12 s12 text-center">
+			        			<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			        				<?php echo $nombre; ?>
+			        			</span><br>
+			        			<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			        				<?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?>
+			        			</span>
+	        				</div>
+	        			</div>
+		        		<div class="row">
+		        			<div class="col m12 s12">
+		        				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			        				Puesto:
+			        			</span> <?php echo $this->puesto_info; ?><br>
+			        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			        				Telefono:
+			        			</span>  <?php echo $telefono; ?><br>
+			        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			        				Correo: 
+			        			</span><?php echo $correo; ?> 
+		        			</div>
+		        		</div>
+	        		</div>
+	        	</div>
+	        </div>
+      </div>
+    </div>
+
+
+    <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content">
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Sitio</span>
+
+	        	<div class="row">
+	        		<div class="col m12 s12" style="margin-top: 19px;">
+	        			<?php if($this->if_sitio == 0){ ?>
+	        			<?php }else{ ?>
+	        				<?php foreach ($this->sitio_info as $key) {
+	        					$nombre_sitio = $key['nombre'];
+	        					$direccion = $key['direccion'];
+	        					$estado = $key['estado'];
+	        					$ciudad = $key['ciudad'];
+	        				} ?>
+	        				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
+
+			        		<div class="row" style="margin-top: 20px;">
+			        			<div class="col m12 s12">
+				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+				        				Ciudad: 
+				        			</span> <?php echo $ciudad; ?> <br>
+				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+				        				Estado: 
+				        			</span> <?php echo $estado; ?> <br>
+				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+				        				Dirección: 
+				        			</span> <?php echo $direccion; ?>
+			        			</div>
+			        		</div>
+
+	        			<?php } ?>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asistencia</span>
+	          <div class="row">
+	          	<form action="/personal/requestasistencia" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
+	          	<div class="col m12 s12">
+			        <div class="input-field col s6">
+			        	<input id="hora_entrada" name="hora_entrada" type="time">
+			        	<label for="hora_entrada">Hora de entrada</label>
+			        </div>	
+
+			        <div class="input-field col s6">
+			        	<input id="hora_salida" name="hora_salida" type="time" >
+			        	<label for="hora_salida">Hora de Salida</label>
+			        </div>	
+	          	</div>
+	          	</form>
+	          </div>
+
+	          <div class="row">
+	          	<div class="col m12 s12 text-center">
+	          		<a class="btn" id="addhoras"><i class="material-icons right">access_time</i>Guardar</a>
+	          	</div>
+	          </div>
+
+	        </div>
+      	</div>
+    </div>
+</div>
+
+<script src="/js/lightbox.js"></script>
+
+<script type="text/javascript">
+  	$(document).ready(function(){
+  		$('.timepicker').timepicker();
+    	$('.modal').modal();
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'} ).datepicker("setDate",currentDate);
+
+    	$('select').formSelect();
+    	$('.collapsible').collapsible();
+    	$('.dropdown-trigger').dropdown();
+  	});
+
+
+    $("#addhoras").click(function(){
+        var hora_entrada = document.getElementById("hora_entrada").value;
+        var hora_salida = document.getElementById("hora_salida").value;
+
+        if(hora_entrada == "" ||  hora_salida== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitForm, 1500);     
+        }
+    });
+
+    function submitForm() { document.getElementById("submit_addperson").submit() }
+</script>
