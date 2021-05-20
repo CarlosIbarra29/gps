@@ -48,6 +48,10 @@ class VehiculosController extends Zend_Controller_Action{
         $table = "vehiculos_documentacion"; 
         $this->view->alertas=$this->_veh->GetVigenciasAll($table);
 
+        $table = "vehiculos_documentacion"; 
+        $this->view->alertasvencidas=$this->_veh->GetVigenciasven($table);
+        
+
         $table="vehiculos_grupo";
         $this->view->grupov = $this->_season->GetAll($table);
 
@@ -363,6 +367,9 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table = "vehiculos_documentacion"; 
             $this->view->alertas=$this->_veh->GetVigenciasSpecific($table,$id);
+
+            $table = "vehiculos_documentacion"; 
+            $this->view->alertasvencidas=$this->_veh->GetVigenciasvenSpecific($table,$id);
 
             $op = $this->_getParam('op'); 
             $this->view->op_sel=$op; 
@@ -3103,7 +3110,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+             $hoy = date("d-m-Y H:i:s");
 
             $table="vehiculos_solicitudes";
             $result = $this->_veh->UpdateSolPasDos($post,$table,$datouno,$datodos,$datotres,$datocuatro,$datocinco,$datoseis,$datosiete,$hoy);
@@ -3327,7 +3334,7 @@ class VehiculosController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
             // var_dump($post);
@@ -3356,7 +3363,7 @@ class VehiculosController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
             // var_dump($post);
@@ -3385,7 +3392,7 @@ class VehiculosController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
             // var_dump($post);
@@ -3534,7 +3541,7 @@ class VehiculosController extends Zend_Controller_Action{
                     }
                 }
                 date_default_timezone_set('America/Mexico_City');
-                $hoy = date("d-m-Y");
+                $hoy = date("d-m-Y H:i:s");
                 $status_pago = 1;
 
                 $id=$this->_session->id;
@@ -3550,7 +3557,8 @@ class VehiculosController extends Zend_Controller_Action{
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
                 if ($result) {
-                    return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
+                    // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
+                    return $this-> _redirect('/vehiculos/listasolcontabilidad/status/0');
                 }else{
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -3580,7 +3588,7 @@ class VehiculosController extends Zend_Controller_Action{
                     }
                 }
                 date_default_timezone_set('America/Mexico_City');
-                $hoy = date("d-m-Y");
+                $hoy = date("d-m-Y H:i:s");
                 $status_pago = 0;
 
                 $id=$this->_session->id;
@@ -3596,7 +3604,8 @@ class VehiculosController extends Zend_Controller_Action{
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
                 if ($result) {
-                    return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/0');
+                    // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/0');
+                    return $this-> _redirect('/vehiculos/listasolcontabilidad/status/0');
                 }else{
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -4357,7 +4366,7 @@ class VehiculosController extends Zend_Controller_Action{
             }//end de if
 
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
 
             $table="vehiculos_documentacion";
             $this->_veh->insertdoc($post,$table,$urldb,$nombredoc,$hoy);

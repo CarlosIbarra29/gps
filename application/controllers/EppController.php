@@ -313,6 +313,13 @@ class EppController extends Zend_Controller_Action{
             $id = $this->_getParam('id');
             $this->view->personal_epp= $this->_epp->GetPersonalEpp($id);
 
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
             $table="epp_asignar";
             $wh="id_personal";
             $status=0;
@@ -500,7 +507,7 @@ class EppController extends Zend_Controller_Action{
             $talla = $detalle[0]['descripcion'];
             $tallita=$this->view->tallaget= $this->_epp->GetTalla($talla);
 
-            // var_dump($tallita);
+            // var_dump($detalle);
             // die();
 
             $table="epp_tipo";
@@ -886,7 +893,12 @@ class EppController extends Zend_Controller_Action{
     } // Detalles de EPP Asignado
 
 
-    
+    public function personalAction(){
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+    }
 
 
 

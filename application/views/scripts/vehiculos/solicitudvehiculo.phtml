@@ -206,7 +206,15 @@
 
                                 <div class="row">
                                         <span><b>Solicito:</b> <?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br/>
-                                        <span><b>Autorizó:</b> <?php echo $nombreap; ?> <?php echo $apap; ?> <?php echo $amap; ?></span>
+                                        <span><b>Autorizó:</b> <?php echo $nombreap; ?> <?php echo $apap; ?> <?php echo $amap; ?></span><br/>
+                                        <span><b>Fecha Creación:</b> <?php echo $fecha_creacion; ?></span><br/>
+                                        <span><b>Fecha Autorización:</b> <?php echo $fecha_validacion; ?></span><br/>
+                                        <?php if ($fecha_pagada == null) { ?>
+                                            <span><b>Fecha Pago:</b> Aún es pagada</span>
+                                        <?php } else { ?>
+                                            <span><b>Fecha Pago:</b> <?php echo $fecha_pagada; ?></span>
+                                        <?php } ?>
+                            
                                 </div>
 
                                 <?php if ($status_comprobante == 1) { ?>

@@ -215,7 +215,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal,
             pc.id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
             FROM personal_campo pc 
-            INNER JOIN puestos_personal pp on pc.puesto = pp.id 
+            LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
             WHERE pc.id = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
@@ -246,7 +246,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
                 FROM epp_asignar ea 
                 LEFT JOIN
                 epp_catalogo ec ON ea.id_epp = ec.idepp
-                WHERE id_personal = ? AND status_epp= $status",array($id));
+                WHERE id_personal = ? AND status_epp= $status ORDER BY fecha_entrega ASC",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -712,6 +712,20 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }// Consulta Buscador Personal
+
+
+    public function GetAllPsn($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM personal_campo
+                ORDER BY nombre ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Consulta Personal Con herramienta
 
 
 } 
