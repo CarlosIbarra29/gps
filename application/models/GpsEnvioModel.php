@@ -204,6 +204,36 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function getenviosVencidos($step,$status){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT es.id, es.id_sitio, es.name_sitio, es.id_cliente, es.fecha_solicitud, es.fecha_envio, 
+                CONCAT(YEAR(DATE(CONCAT(SUBSTRING(fecha_envio, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_envio, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_envio, 1, 2)))),'-',
+                    MONTH(DATE(CONCAT(SUBSTRING(fecha_envio, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_envio, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_envio, 1, 2)))),'-',
+                    DAY(DATE(CONCAT(SUBSTRING(fecha_envio, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_envio, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_envio, 1, 2))))) as fecha_enviar,
+                    es.user_solicitud, es.step_envio, es.status_solicitud, es.descripcion
+                    FROM envios_solicitud es
+                    having fecha_enviar BETWEEN NOW() - INTERVAL 10 DAY AND NOW() AND es.step_envio = ? and es.status_solicitud= ?;",array($step,$status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
     public function getsteponepaginator($id,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

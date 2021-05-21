@@ -520,32 +520,35 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         }
     }
 
-    //  public function GetSolicitudesReparacion($table){
-    //     $statusas = 0;
-    //     $servicio= 29
+     public function GetSolicitudesReparacion($table){
+        $statusas = 0;
+        $servicio= 29;
 
-    //     try{
-    //         $db = Zend_Db_Table::getDefaultAdapter();
-    //         $qry = $db->query("SELECT so.id, so.total, so.condiciones_compra, so.referencia, so.descripcion, so.name_user, so.servicio_id
-    //             so.comentario, so.name_proveedor
-    //             FROM solicitud_ordencompra so
-    //             WHERE  so.servicio_id = $servicio");
-    //         $row = $qry->fetchAll();
-    //         return $row;
-    //         $db->closeConnection();
-    //     }catch (Exception $e){
-    //         echo $e;
-    //     }
-    // }   // CONSULTA DOCUMENTACION VEHICULOS
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT so.id, so.total, so.condiciones_compra, so.referencia, so.descripcion, so.name_user, so.servicio_id,
+                so.comentario, so.name_proveedor, so.status_asignada, so.status_pago
+                FROM solicitud_ordencompra so
+                WHERE  so.servicio_id = $servicio and so.status_asignada = $statusas and so.status_pago = 1;");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // CONSULTA DOCUMENTACION VEHICULOS
 
     public function Getreparacion($id){
     	try {
     		$db = Zend_Db_Table::getDefaultAdapter();
     		$qry = $db->query("SELECT r.id_reporte,r.motivo,r.orden_compra,r.fecha_inicio, r.costo,
-                IF(r.fecha_regreso IS NULL,'Aun no se regresa',r.fecha_regreso) AS fechaa,
-                r.id_herramienta, h.id_herramienta as id_h, h.codigo
+                IF(r.fecha_regreso IS NULL,'Aún no se repara',r.fecha_regreso) AS fechaa,
+                r.id_herramienta, r.id_solicitud, h.id_herramienta as id_h, h.codigo, so.id, so.total, ps.id as idpago,
+                ps.fecha_pago, ps.file_pago, ps.monto
                 FROM reportes_reparacion r
                 LEFT JOIN herramienta_inventario h ON r.id_herramienta = h.id_herramienta
+                LEFT JOIN solicitud_ordencompra so ON r.id_solicitud = so.id
+                LEFT JOIN pagos_solicitud ps ON so.id = ps.id_solicitud
     			WHERE r.id_herramienta = ?",array($id));
     		$row = $qry->fetchAll();
     		$db->closeConnection();
@@ -591,10 +594,13 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT r.id_reporte,r.motivo,r.orden_compra,r.fecha_inicio, r.costo,
-                IF(r.fecha_regreso IS NULL,'Aun no se regresa',r.fecha_regreso) AS fechaa,
-                r.id_herramienta, h.id_herramienta as id_h, h.codigo, h.nombre
+                IF(r.fecha_regreso IS NULL,'Aún no se repara',r.fecha_regreso) AS fechaa, h.nombre,
+                r.id_herramienta, r.id_solicitud, h.id_herramienta as id_h, h.codigo, so.id, so.total, ps.id as idpago,
+                ps.fecha_pago, ps.file_pago, ps.monto
                 FROM reportes_reparacion r
                 LEFT JOIN herramienta_inventario h ON r.id_herramienta = h.id_herramienta
+                LEFT JOIN solicitud_ordencompra so ON r.id_solicitud = so.id
+                LEFT JOIN pagos_solicitud ps ON so.id = ps.id_solicitud
                 WHERE r.id_herramienta = ?",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
@@ -761,11 +767,14 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
     }// END INSERT reporte de reparacion
 
     public function Updatefecha($post,$table,$hoy){
+        $status=1;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET  fecha_regreso= ? WHERE id_herramienta = ?",array(
+            $qry = $db->query("UPDATE $table SET  fecha_regreso = ?, id_solicitud = ?, status_rep = ? WHERE id_herramienta = ? and status_rep = 0",array(
                 $hoy,
-                $post["id"]));
+                $post["solicitud"],
+                $status,
+                $post["idhss"]));
             $db->closeConnection();               
             return $qry;
         } 
@@ -774,6 +783,20 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         }
     }//  actualizar fecha
 
+    public function Updatesolicitudasg($post,$table){
+        $status=1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET  status_asignada = ? WHERE id = ? ",array(
+                $status,
+                $post["solicitud"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  actualizar fecha
 
 
     public function UpdateStatusHerRep($post,$table,$personal){
@@ -808,7 +831,7 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
     			$status,
     			$comentario,
     			$evidencia,
-    			$post["id"]));
+    			$post["idhss"]));
     		$db->closeConnection();               
     		return $qry;
     	} 

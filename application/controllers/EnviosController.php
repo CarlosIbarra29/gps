@@ -120,8 +120,8 @@ class EnviosController extends Zend_Controller_Action{
 
     public function auditoriaenviosAction(){
         $actualpagina=$this->_getParam('pagina');
-        $this->view->actpage=$actualpagina;
-
+        $this->view->actpage=$actualpagina; 
+ 
         $step = 1;
         $status = 0;
         $en_proceso = $this->_envio->getsolicitudstepone($step,$status);
@@ -134,6 +134,9 @@ class EnviosController extends Zend_Controller_Action{
         if($status == 0){
             $step = 1;
             $status = 0;
+ 
+            $this->view->alertas=$this->_envio->getenviosVencidos($step,$status);
+            
             $envio = $this->_envio->getsolicitudstepone($step,$status);
             $count=count($envio);
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
@@ -150,6 +153,8 @@ class EnviosController extends Zend_Controller_Action{
         if($status == 1){
             $step = 1;
             $status = 1;
+
+           
             $envio = $this->_envio->getsolicitudstepone($step,$status);
             $count=count($envio);
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
@@ -182,6 +187,9 @@ class EnviosController extends Zend_Controller_Action{
         if($status == 3){
             $step = 1;
             $status = 3;
+
+            $this->view->alertas=$this->_envio->getenviosVencidos($step,$status);
+
             $envio = $this->_envio->getsolicitudstepone($step,$status);
             $count=count($envio);
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
