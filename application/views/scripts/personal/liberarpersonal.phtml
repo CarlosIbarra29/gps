@@ -60,6 +60,7 @@
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
   	});
 
+
   	$("#next_step").click(function(){
   		var sitio = document.getElementById("sitio").value;
   		var proyecto = document.getElementById("proyecto").value;
@@ -74,8 +75,6 @@
 					icon: "success",
 					buttons: false,
 				});
-
-
 				window.location.href = '/personal/procesoliberar/sitio/'+sitio+'/proyecto/'+proyecto+'';
 	    	}
   	});

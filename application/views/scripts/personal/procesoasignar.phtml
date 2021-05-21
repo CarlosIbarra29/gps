@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="col m4 s6 text-right">
-                        <a class="btn green" id="asignar_personal">Asignar</a>
+                        <a class="btn green oculto" id="asignar_personal">Asignar</a>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                     <td>
 						<p>
 						    <label>
-						        <input type="checkbox" name="ids[]" value="<?php echo $usr["id_personal"]; ?>" />
+						        <input type="checkbox" class="type_check" name="ids[]" value="<?php echo $usr["id_personal"]; ?>" />
 						        <span></span>
 						    </label>
 						</p>
@@ -223,4 +223,9 @@
     });
 
     function submitpersonal() { document.getElementById("submit_asignar").submit() }
+
+
+    $(".type_check").click(function(){
+    	$("#asignar_personal").show();
+    });
 </script>

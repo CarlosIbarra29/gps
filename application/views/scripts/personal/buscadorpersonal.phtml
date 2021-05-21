@@ -66,51 +66,118 @@
     </div>
 </div>
 
-
 <div class="row">
-    <div class="col m1 s12"></div>
+    <div class="col m1 s12">
+        <a href="/personal/listapersonal">Mostrar Todo</a>
+    </div>
     <div class="col m10 s12">
         <div class="row">
             <div class="col m5 s6">
                 <div class="input-field col s12">
                     <select id="select_search">
-                        <option value="1" selected>Nombre</option>
-                        <option value="2">Puesto</option>
-                        <option value="3">Sitio</option>
-                        <option value="4">Status</option>
+                        <?php if($this->op_select == 1){ ?>
+                            <option value="1" selected>Nombre</option>
+                            <option value="2">Puesto</option>
+                            <option value="3">Sitio</option>
+                            <option value="4">Status</option>
+                        <?php } ?>
+
+                        <?php if($this->op_select == 2){ ?>
+                            <option value="1">Nombre</option>
+                            <option value="2" selected>Puesto</option>
+                            <option value="3">Sitio</option>
+                            <option value="4">Status</option>
+                        <?php } ?>
+
+                        <?php if($this->op_select == 3){ ?>
+                            <option value="1">Nombre</option>
+                            <option value="2">Puesto</option>
+                            <option value="3" selected>Sitio</option>
+                            <option value="4">Status</option>
+                        <?php } ?>
+
+                        <?php if($this->op_select == 4){ ?>
+                            <option value="1">Nombre</option>
+                            <option value="2">Puesto</option>
+                            <option value="3">Sitio</option>
+                            <option value="4" selected>Status</option>
+                        <?php } ?>
                     </select>
                     <label>Buscar por: </label>
                 </div>
             </div>
             <div class="col m5 s6">
-                <div class="input-field col s12 op_nombre">
-                    <input placeholder="Ingresa el nombre(s) del personal" id="name_search" type="text">
-                    <label for="name_search">Nombre</label>
-                </div>
+                <?php if($this->op_select == 1){ ?>
+                    <div class="input-field col s12 op_nombre">
+                        <input placeholder="Ingresa el nombre(s) del personal" value="<?php echo $this->nombre_select; ?>" id="name_search" type="text">
+                        <label for="name_search">Nombre</label>
+                    </div>
+                <?php }else{ ?>
+                    <div class="input-field col s12 oculto op_nombre">
+                        <input placeholder="Ingresa el nombre(s) del personal" id="name_search" type="text">
+                        <label for="name_search">Nombre</label>
+                    </div>
+                <?php } ?>
 
-                <div class="input-field col m12 s12 oculto op_puesto">
-                    <select id="puesto" name="puesto">
-                        <option value="0" disabled selected>* Selecciona una opcion</option>
-                        <?php foreach ($this->puesto as $key){ ?>
-                            <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?></option>
-                        <?php } ?>
-                    </select>
-                    <label>Puesto:</label>
-                </div>
+                <?php if($this->op_select == 2){ ?>
+                    <div class="input-field col m12 s12 op_puesto">
+                        <select id="puesto" name="puesto">
+                            <option value="0" disabled selected>* Selecciona una opcion</option>
+                            <?php foreach ($this->puesto as $key){ ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Puesto:</label>
+                    </div>
+                <?php }else{ ?>
+                    <div class="input-field col m12 s12 oculto op_puesto">
+                        <select id="puesto" name="puesto">
+                            <option value="0" disabled selected>* Selecciona una opcion</option>
+                            <?php foreach ($this->puesto as $key){ ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Puesto:</label>
+                    </div>
+                <?php } ?>
 
-                <div class="input-field col s12 oculto op_sitio">
-                    <input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" class="validate">
-                    <label for="sitio_search">Sitio</label>
-                </div>
+                <?php if($this->op_select == 3){ ?>
+                    <div class="input-field col s12 op_sitio">
+                        <input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" value="<?php echo $this->sitio_select; ?>">
+                        <label for="sitio_search">Sitio</label>
+                    </div>
+                <?php }else{ ?>
+                    <div class="input-field col s12 oculto op_sitio">
+                        <input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" class="validate">
+                        <label for="sitio_search">Sitio</label>
+                    </div>
+                <?php } ?>
 
-                <div class="input-field col s12 oculto op_status">
-                    <select id="select_status">
-                        <option value="" disabled selected>Selecciona una opcion</option>
-                        <option value="0">Disponible</option>
-                        <option value="1">En sitio</option>
-                    </select>
-                    <label>Status</label>
-                </div>
+
+                <?php if($this->op_select == 4){ ?>
+                    <div class="input-field col s12 op_status">
+                        <select id="select_status">
+                            <?php if($this->status_select ==0){ ?>
+                                <option value="0" selected>Disponible</option>
+                                <option value="1">En sitio</option>
+                            <?php }else{?>
+                                <option value="0">Disponible</option>
+                                <option value="1" selected>En sitio</option>
+                            <?php } ?>
+                        </select>
+                        <label>Status</label>
+                    </div>
+                <?php }else{ ?>
+                    <div class="input-field col s12 oculto op_status">
+                        <select id="select_status">
+                            <option value="0" disabled selected>Selecciona una opcion</option>
+                            <option value="1">Disponible</option>
+                            <option value="2">En sitio</option>
+                        </select>
+                        <label>Status</label>
+                    </div>
+                <?php } ?>
+
 
             </div>
             <div class="col m2 s12 text-center">
@@ -130,16 +197,20 @@
             <div class="col m8 s6">
                 <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
             </div>
-            <div class="col m4 s6 text-right">
-                <div class="row">
-                    <div class="col m6 s6 text-right">
-                        <a href="/personal/asignarpersonal" class="btn green">Asignar</a>
-                    </div>
-                    <div class="col m6 s6 text-left">
-                        <a href="/personal/liberarpersonal"  class="btn red">Liberar</a>
+
+<!--             <?php if($this->count == 0){ ?>
+            <?php }else{ ?> -->
+                <div class="col m4 s6 text-right">
+                    <div class="row">
+                        <div class="col m6 s6 text-right">
+                            <a href="/personal/asignarpersonal" class="btn green">Asignar</a>
+                        </div>
+                        <div class="col m6 s6 text-left">
+                            <a href="/personal/liberarpersonal"  class="btn red">Liberar</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+
         </div>
         <table class="table text-left table-hover">
             <thead>
@@ -179,11 +250,6 @@
                             <a class="asignar_personal modal-trigger" href="#modal3" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-plus" style="color: green"></i></span>
                             </a>
                         <?php } ?>
-                    </td>
-                    <td>
-                    <td>
-                        <a href="/personal/asistenciapersonal/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>    
-                    </td>
                     </td>
                 </tr>
             </tbody>
@@ -297,7 +363,7 @@
     </div>
 </div>
 
-<input type="hidden" id="buscador_op" value="1">
+<input type="hidden" id="buscador_op" value="<?php echo $this->op_select; ?>">
 <script type="text/javascript">
     $(document).ready(function(){
         $('.modal').modal();
@@ -450,7 +516,7 @@
 
         if(buscador == 4){
             var select_status = document.getElementById("select_status").value;
-            if(select_status == ""){
+            if(select_status == 0){
                 swal({
                     title: "Es necesario seleccionar un status",
                 });
