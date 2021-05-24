@@ -59,7 +59,8 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
     public function updatesoldate($post,$table,$hoy,$name_audito){
             try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET  fecha_cambio = ?, motivo_date =?, fecha_actfecha = ?, user_fechacambio = ?  WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET fecha_solicitada = ?, fecha_cambio = ?, motivo_date =?, fecha_actfecha = ?, user_fechacambio = ?  WHERE id = ?",array(
+                $post['date_cambio'],
                 $post['date_cambio'],
                 $post['motivo_date'],
                 $hoy,

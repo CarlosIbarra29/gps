@@ -174,6 +174,7 @@ class ComprobacionController extends Zend_Controller_Action{
         $usr = $this->_season->GetSpecific($table,$wh,$id);
         $dato = $usr[0]['nombre']." ". $usr[0]['ap']." ".$usr[0]['am'];
         $this->view->user=$dato;
+        $this->view->personal = $this->_comprobacion->getpersonalactivo();
 
         $proceso = 0;
         $pago = 0;
@@ -284,6 +285,8 @@ class ComprobacionController extends Zend_Controller_Action{
         $status = $this->_getParam('status');
         $this->view->status_documento=$status;
 
+        $this->view->personal = $this->_comprobacion->getpersonalactivo();
+
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
             $aceptada = 2;
@@ -344,6 +347,142 @@ class ComprobacionController extends Zend_Controller_Action{
         }
 
     }
+
+    public function buscadorcajachicacontabilidadAction(){
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+        $this->view->personal = $this->_comprobacion->getpersonalactivo();
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;  
+
+            $aceptada = 2;
+            $pago = 0;
+            $solicitud= $this->_comprobacion->getcomprobacionproceso($aceptada,$pago);
+            $count=count($solicitud);
+            $this->view->enproceso = $count;
+
+        $op=$this->_getParam('op');
+        $this->view->op_search=$op;  
+
+        if($status == 0){
+            if($op == 1){
+                $residente = $this->_getParam('residente');
+                $proceso = 2;
+                $pago = 0;
+                $option = "nombre_residente";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
+                // var_dump($solicitud);exit;
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlikeres($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            }else{
+                $sitio = $this->_getParam('sitio');
+                $proceso = 2;
+                $pago = 0;
+                $option = "nombre_sitio";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolikesitio($proceso,$pago,$option,$sitio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            }
+        }
+
+
+        if($status == 1){
+            if($op == 1){
+                $residente = $this->_getParam('residente');
+                $proceso = 2;
+                $pago = 1;
+                $option = "nombre_residente";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
+                // var_dump($solicitud);exit;
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlikeres($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            }else{
+                $sitio = $this->_getParam('sitio');
+                $proceso = 2;
+                $pago = 1;
+                $option = "nombre_sitio";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolikesitio($proceso,$pago,$option,$sitio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            }
+        }
+
+        if($status == 3){
+            if($op == 1){
+                $residente = $this->_getParam('residente');
+                $proceso = 4;
+                $pago = 4;
+                $option = "nombre_residente";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
+                // var_dump($solicitud);exit;
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlikeres($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            }else{
+                $sitio = $this->_getParam('sitio');
+                $proceso = 4;
+                $pago = 4;
+                $option = "nombre_sitio";
+                $solicitud= $this->_comprobacion->getcomprobacionprocesolikesitio($proceso,$pago,$option,$sitio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            }
+        }
+    }
+
 
     public function detailcontabilidadAction(){
         $status = $this->_getParam('status');
@@ -520,11 +659,13 @@ class ComprobacionController extends Zend_Controller_Action{
 
     public function cajachicaresidenteAction(){
         $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
         $residente = $this->_getParam('residente');
         $this->view->nombre_residente=$residente;
 
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
+        $this->view->personal = $this->_comprobacion->getpersonalactivo();
 
         $id=$this->_session->id;
         $wh="id";
@@ -555,12 +696,12 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES EN PROCESO
 
         if($status == 1){
-            $aceptada = 2;
+            $proceso = 2;
             $pago = 0;
             $option ="nombre_residente";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
@@ -574,12 +715,12 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES ACEPTADAS
 
         if($status == 2){
-            $rechazada = 1;
+            $proceso = 1;
             $pago = 0;
             $option ="nombre_residente";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
@@ -593,15 +734,16 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES Rechazada
 
         if($status == 3){
-            $aceptada = 2;
+            $proceso = 2;
             $pago = 1;
-            $option ="nombre_residente";
+            $option ="id_residente";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$residente);
+            // var_dump($solicitud);exit;
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
@@ -611,7 +753,7 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$residente,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$residente,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES ACEPTADAS Y PAGADAS
 
@@ -636,11 +778,13 @@ class ComprobacionController extends Zend_Controller_Action{
 
     public function cajachicasitioAction(){
         $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
         $sitio = $this->_getParam('sitio');
         $this->view->nombre_sitio=$sitio;
 
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
+        $this->view->personal = $this->_comprobacion->getpersonalactivo();
 
         $id=$this->_session->id;
         $wh="id";
@@ -670,12 +814,12 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES EN PROCESO
 
         if($status == 1){
-            $aceptada = 2;
+            $proceso = 2;
             $pago = 0;
             $option ="nombre_sitio";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$sitio);
@@ -688,12 +832,12 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES ACEPTADAS
 
         if($status == 2){
-            $rechazada = 1;
+            $proceso = 1;
             $pago = 0;
             $option ="nombre_sitio";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$sitio);
@@ -706,12 +850,12 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES Rechazada
 
         if($status == 3){
-            $aceptada = 2;
+            $proceso = 2;
             $pago = 1;
             $option ="nombre_sitio";
             $solicitud= $this->_comprobacion->getcomprobacionprocesolike($proceso,$pago,$option,$sitio);
@@ -724,7 +868,7 @@ class ComprobacionController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($status,$pago,$option,$sitio,$offset,$no_of_records_per_page);
+            $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES ACEPTADAS Y PAGADAS
 

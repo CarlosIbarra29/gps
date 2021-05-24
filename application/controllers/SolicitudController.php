@@ -2845,6 +2845,7 @@ class SolicitudController extends Zend_Controller_Action{
             $wh="id";
             $table="comprobaciones";
             $com=$this->view->comprobacion = $this->_ordencompra->Getcomprobacionspecificdos($id);
+            // var_dump($com);exit;
             $factura = $com[0]['factura'];
             $table="comprobaciones";
             $wh = "factura";
@@ -3588,10 +3589,11 @@ class SolicitudController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        // var_dump($post);exit;
         $residente  = $post["residentes"];
         $table="personal_campo";
         $ver = $this->_comprobacion->upateuserfactura($residente,$table);
-        // var_dump($residente);exit;
+        
 
         if($post['facturable'] == 2){
             $no_fact = "No Facturable";
@@ -3617,9 +3619,6 @@ class SolicitudController extends Zend_Controller_Action{
 
         // var_dump($post);exit;
 
-
-
-        
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d-m-Y H:i:s");
             $id=$this->_session->id;

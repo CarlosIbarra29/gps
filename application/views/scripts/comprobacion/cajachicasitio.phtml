@@ -131,16 +131,21 @@
 				<div class="col m4 s6">
 					<div class="input-field col m12 s12">
 	    				<select id="buscador">
-	      					<option value="1" selected>Nombre Residente</option>
-	      					<option value="2">Nombre Sitio</option>
+	      					<option value="1">Nombre Residente</option>
+	      					<option value="2" selected>Nombre Sitio</option>
 	    				</select>
     				</div>
 				</div>
 
 				<div class="col m4 s6">
 			        <div class="input-field col m12 s12 oculto" id="name_residente">
-			        	<input id="residente_search" type="text" class="validate">
-			        	<label for="residente_search">Nombre Residente</label>
+					    <select id="residente_search" name="rol" required>
+					      	<option value="0" disabled selected>* Selecciona una opcion:</option>
+					      	<?php foreach ($this->personal as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>Nombre Residente</label>
 			        </div>
 
 			        <div class="input-field col m12 s12" id="name_sitio">
@@ -205,8 +210,7 @@
 						<?php echo $usr['user_solicitud']; ?>
 					</td>
 					<td>
-						<span style="font-weight: bold;"><?php echo $usr['nombre_sitio']; ?> </span> /
-						<?php echo $usr['nombre_tipoproyecto']; ?>
+						<span style="font-weight: bold;"><?php echo $usr['nombre_sitio']; ?> </span>
 					</td>
 					<td>
 						<?php echo $usr['nombre_residente']; ?>

@@ -165,7 +165,7 @@ class ArchivosController extends Zend_Controller_Action{
         $tipo = 4; $status = 27; $this->view->cambio_tres = $this->_archivo->getbtsstatus($tipo,$status);
         $tipo = 4; $status = 28; $this->view->cambio_cuatro= $this->_archivo->getbtsstatus($tipo,$status);
         $tipo = 4; $status = 29; $this->view->cambio_cinco = $this->_archivo->getbtsstatus($tipo,$status);
-
+        $tipo = 4; $status = 78; $this->view->cambio_seis = $this->_archivo->getbtsstatus($tipo,$status);
         // C A M B I O  D E  T O R R E
 
         $tipo = 5; $status = 76; $this->view->nueva_uno = $this->_archivo->getbtsstatus($tipo,$status);

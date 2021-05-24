@@ -251,10 +251,10 @@
 					<th>Usuario</th>
 					<th>Sitio</th>	
 					<th>Fecha envio</th>
-					<th>Prioridad</th>
 					<th>Tipo envío</th>
 					<th>Descripción</th>
 					<th>Autorización</th>
+					<th>Materiales</th>
 					<th>Detalle Solicitud</th>
 				</tr> 
 			</thead>
@@ -275,13 +275,6 @@
 					</td>
 					<td>
 						<?php echo $usr['fecha_solicitud']; ?>
-					</td>
-					<td>
-						<?php if($usr['prioridad'] == 1){?>
-							Normal
-						<?php }else{ ?>
-							Alta
-						<?php } ?>
 					</td>
 					<td>
 						<?php if($usr['tipo_envio'] == 1){?>
@@ -323,6 +316,13 @@
 						<?php } ?>
 						
 					</td>
+					<td>
+						<?php if($usr['solicitud_materiales'] == 0){ ?>
+						<?php }else{ ?>
+							<a title="Descargar Archivo" href="/<?php echo $usr["archivo"]; ?>" download="<?php echo substr(strrchr($usr["archivo"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> </a>
+						<?php } ?>
+					</td>
+
 					<td class="text-center">
 						<a href="/envios/enviodetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 					</td>

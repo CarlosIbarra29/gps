@@ -6,7 +6,7 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT s.id,s.id_cliente, s.nombre , s.cliente, s.ciudad, s.estado, s.region, ttp.nombre_proyecto as proyecto, sc.nombre_status as status_cliente, sp.nombre_status as status_proyecto,
-                st.issue, st.porcentaje_proyecto
+                st.issue, st.porcentaje_proyecto, st.id as id_proyectos
 				FROM sitios s 
 				INNER JOIN sitios_tipoproyecto st on s.id = st.id_sitio
 				INNER JOIN status_cliente sc on sc.id = st.status_cliente

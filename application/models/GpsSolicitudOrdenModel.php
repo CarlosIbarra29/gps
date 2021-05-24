@@ -87,6 +87,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                 'facturable'=>$post['facturable'],
                 'factura'=>$no_fact,
                 'servicio'=>$post['servicio'],
+                'coment_insert'=>$post['comentario'],
                 'fecha_user'=>$hoy,
                 'user'=>$nombre,
                 'factura_file'=>$urldb,
@@ -3219,7 +3220,7 @@ where soc.rol_encargado = 8 order by soc.id DESC LIMIT $offset,$no_of_records_pe
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id, c.id_sitio, c.id_tipoproyecto, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, c.razon_social, c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, c.comentarios_comprobacion, c.status_comprobacion, c.fecha_user, c.user, c.factura_file, c.autorizacion ,
-                s.nombre, s.comentarios
+                s.nombre, s.comentarios, c.coment_insert
                 from comprobaciones c 
                 LEFT JOIN servicios_comprobaciones s on s.id=c.servicio where c.id = ?",array($id));
             $row = $qry->fetchAll();

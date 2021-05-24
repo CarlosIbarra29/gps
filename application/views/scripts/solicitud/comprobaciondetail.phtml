@@ -96,6 +96,7 @@
   $status_comprobacion = $key['status_comprobacion'];
   $autorizacion = $key['autorizacion'];
   $comentario = $key['comentarios'];
+  $aud_coment = $key['coment_insert'];
 
 } ?>
 
@@ -243,7 +244,9 @@
 
                 <br>
           			<span class="title_info">Servicio:</span> <span class="title_info"><?php echo $servicio; ?></span> <br>
-          			<span class="title_info">Monto a facturar:</span> <span class="title_info" style="font-weight: bold;">$<?php echo $monto; ?></span>
+          			<span class="title_info">Monto a facturar:</span> <span class="title_info" style="font-weight: bold;">$<?php echo $monto; ?></span><br>
+                <span class="title_info">Comentario factura:</span> <span class="title_info" style="font-weight: bold; font-size: 17px;"><?php echo $aud_coment; ?></span>
+
                 <input type="hidden" id="monto_facturar" value="<?php echo $monto; ?>">
           		</div>
         	</div>
@@ -277,7 +280,7 @@
           <option value="" disabled selected>Selecciona una opcion:</option>
           <option value="0">Oficina</option>
           <?php foreach ($this->sitios as $res) { ?>
-          <option value="<?php echo $res["id"]; ?>" class="load-material" data-id="<?php echo $res["id"]; ?>" data-material="nombre_proyecto"><?php echo $res["nombre"]; ?></option>
+          <option value="<?php echo $res["id"]; ?>" class="load-material" data-id="<?php echo $res["id"]; ?>" data-material="nombre_proyecto"><?php echo $res["nombre"]; ?>/ Id cliente: <?php echo $res["id_cliente"]; ?></option>
           <?php } ?>                  
         </select>
         <label>* Sitios</label>
@@ -343,9 +346,9 @@
                   <?php } ?>
                 <?php foreach ($this->sit as $mar) { 
                   if ($mar['id']==$key['id_sitio']) { ?>
-                          <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                          <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?>/ Id cliente: <?php echo $mar["id_cliente"]; ?></option>
                 <?php } if ($mar['id']!=$key['sitio_id']) { ?>
-                          <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                          <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?>/ Id cliente: <?php echo $mar["id_cliente"]; ?></option>
                 <?php } } ?>  
               </select>
               <label>Sitio:</label>

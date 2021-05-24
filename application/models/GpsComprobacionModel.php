@@ -682,7 +682,30 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
                 cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ? AND $opcion like '%{$nombre}%'",array($status,$pago));
+                from comprobacion_solicitud cs 
+                where cs.autorizacion_status = ? 
+                AND cs.pago_status = ? 
+                AND cs.id_residente = ?",
+                array($status,$pago,$nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }  
+    }
+
+
+    public function getcomprobacionprocesolikesitio($status,$pago,$opcion,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
+                cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
+                from comprobacion_solicitud cs 
+                where cs.autorizacion_status = ? 
+                AND cs.pago_status = ? 
+                AND $opcion like '%{$nombre}%'",
+                array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -698,7 +721,30 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                 cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto,cs.autorizacion_status,
                 cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
                 cs.user_solicitud 
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ? AND $opcion like '%{$nombre}%' LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+                from comprobacion_solicitud cs 
+                where cs.autorizacion_status = ? 
+                AND cs.pago_status = ? 
+                AND $opcion like '%{$nombre}%' LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getpaginatorcomprobacionlikeres($status,$pago,$opcion,$nombre,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT cs.id, cs.id_residente, cs.nombre_residente, cs.id_sitio, 
+                cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto,cs.autorizacion_status,
+                cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
+                cs.user_solicitud 
+                from comprobacion_solicitud cs 
+                where cs.autorizacion_status = ? 
+                AND cs.pago_status = ? 
+                AND cs.id_residente = ? 
+                LIMIT $offset,$no_of_records_per_page",array($status,$pago,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -1140,6 +1186,19 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT f.id, f.no_factura, f.rfc_emisor, f.nombre_emisor, f.fecha_comprobante, f.total_factura, f.forma_pago, f.lugar_expedicion, f.status_factura FROM factura_efecticard f where status_factura = ? order by f.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getpersonalactivo(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM personal_campo where status_personal = 0 OR status_personal = 1 ORDER BY nombre ASC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

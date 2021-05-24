@@ -595,8 +595,18 @@
 
     $("#nueva_fecha").click(function(){
       var id = document.getElementById("id_fechacambio").value;
-      var date_cambio = document.getElementById("date_cambio").value;
+      var date_cambi = document.getElementById("date_cambio").value;
       var motivo_date = document.getElementById("motivo_date").value;
+
+      var mes = date_cambi.slice(5, -3);
+      var year = date_cambi.slice(0,-6);
+      var dia = date_cambi.slice(8);
+      console.log("Año: "+ year);
+      console.log("mes: "+ mes);
+      console.log("dia: "+ dia);
+      console.log("date:" +date_cambi);
+
+      var date_cambio = dia+"/"+mes+"/"+year;
       swal({
         title: "Estas seguro de cambiar la fecha?",
         icon: "warning",

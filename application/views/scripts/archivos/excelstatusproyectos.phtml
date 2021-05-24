@@ -73,8 +73,7 @@ function eliminar_acentos($cadena){
 <div class="row excel-div" id="tab1">
 	<table class="table text-left table-hover">
 		<thead>
-			<tr>
-				<th>Id sitio</th>		
+			<tr>	
 				<th>Id cliente</th>
 				<th>Nombre sitio</th>
 				<th>Cliente</th>
@@ -82,17 +81,18 @@ function eliminar_acentos($cadena){
         		<th>Estado</th>
         		<th>Region</th>
         		<th>Proyecto</th>
-        		<th>Status Proyecto</th>
         		<th>Status Cliente</th>
+        		<th>Status Proyecto</th>
         		<th>ISSUE</th>
         		<th>Porcentaje Proyecto</th>
+        		<th>Id sitio</th>	
+        		<th>ID proyecto</th>
 			</tr> 
 		</thead>
 		<?php 
 		foreach ($this->bts_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -104,6 +104,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -112,7 +114,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -124,6 +125,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -132,7 +135,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -144,6 +146,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -152,7 +156,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -164,6 +167,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -172,7 +177,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -184,6 +188,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -192,7 +198,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_seis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -204,6 +209,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -212,7 +219,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_siete as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -224,6 +230,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -233,7 +241,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_ocho as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -245,6 +252,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -254,7 +263,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_nuevo as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -266,6 +274,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -274,7 +284,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_diez as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -286,6 +295,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -294,7 +305,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_once as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -306,6 +316,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -314,7 +326,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_doce as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -326,6 +337,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -335,7 +348,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_trece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -347,6 +359,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -355,7 +369,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_catorece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -367,6 +380,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -375,7 +390,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_quince as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -387,6 +401,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -395,7 +411,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->bts_diesiseis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -407,6 +422,8 @@ function eliminar_acentos($cadena){
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
         		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -417,7 +434,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -428,6 +444,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -436,7 +455,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -447,6 +465,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -455,7 +476,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -466,6 +486,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -474,7 +497,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -485,6 +507,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -493,7 +518,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -504,6 +528,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -512,7 +539,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_seis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -523,6 +549,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -531,7 +560,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_siete as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -542,6 +570,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -551,7 +582,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_ocho as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -562,6 +592,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -571,7 +604,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_nuevo as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -582,6 +614,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -590,7 +625,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_diez as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -601,6 +635,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -609,7 +646,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_once as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -620,6 +656,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -628,7 +667,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_doce as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -639,6 +677,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -648,7 +689,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_trece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -659,6 +699,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -667,7 +710,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_catorece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -678,6 +720,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -686,7 +731,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->colo_quince as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -697,6 +741,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -707,7 +754,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -718,6 +764,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -726,7 +775,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -737,6 +785,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -745,7 +796,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -756,6 +806,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -764,7 +817,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -775,6 +827,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -783,7 +838,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -794,6 +848,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -802,7 +859,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_seis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -813,6 +869,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -821,7 +880,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_siete as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -832,6 +890,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -841,7 +902,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_ocho as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -852,6 +912,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -861,7 +924,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_nuevo as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -872,6 +934,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -880,7 +945,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_diez as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -891,6 +955,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -899,7 +966,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_once as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -910,6 +976,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -918,7 +987,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_doce as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -929,6 +997,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -938,7 +1009,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_trece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -949,6 +1019,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -957,7 +1030,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_catorece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -968,6 +1040,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -976,7 +1051,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_quince as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -987,6 +1061,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -995,7 +1072,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->refo_diesiseis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1006,6 +1082,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1017,7 +1096,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->cambio_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1028,6 +1106,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1036,7 +1117,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->cambio_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1047,6 +1127,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1055,7 +1138,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->cambio_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1066,6 +1148,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1074,7 +1159,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->cambio_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1085,6 +1169,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1093,7 +1180,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->cambio_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1104,11 +1190,33 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
 
-	
+		<?php 
+		foreach ($this->cambio_seis as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["region"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["proyecto"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+        		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>	
 
 		<!-- S T A T U S   P R O Y E C T O    C A M B I O  D E  T O R R E -->
 
@@ -1117,7 +1225,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1128,6 +1235,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1136,7 +1246,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1147,6 +1256,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1155,7 +1267,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1166,6 +1277,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1174,7 +1288,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1185,6 +1298,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1193,7 +1309,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1204,6 +1319,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1212,7 +1330,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_seis as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1223,6 +1340,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1231,7 +1351,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_siete as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1242,6 +1361,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1251,7 +1373,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_ocho as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1262,6 +1383,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1271,7 +1395,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_nuevo as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1282,6 +1405,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1290,7 +1416,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_diez as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1301,6 +1426,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1309,7 +1437,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_once as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1320,6 +1447,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1328,7 +1458,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_doce as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1339,6 +1468,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1348,7 +1480,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_trece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1359,6 +1490,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1367,7 +1501,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->nueva_catorece as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1378,6 +1511,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1388,7 +1524,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->mapeo_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1399,6 +1534,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1407,7 +1545,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->mapeo_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1418,6 +1555,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1426,7 +1566,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->mapeo_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1437,6 +1576,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1445,7 +1587,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->mapeo_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1456,6 +1597,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1468,7 +1612,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->torque_uno as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1479,6 +1622,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1487,7 +1633,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->torque_dos as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1498,6 +1643,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1506,7 +1654,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->torque_tres as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1517,6 +1664,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1525,7 +1675,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->torque_cuatro as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1536,6 +1685,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1544,7 +1696,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->torque_cinco as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1555,6 +1706,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
@@ -1568,7 +1722,6 @@ function eliminar_acentos($cadena){
 		foreach ($this->issue as $usr) { ?>
 		<tbody>
 			<tr>
-				<td><?php echo $usr["id"]; ?></td>
 				<td><?php echo $usr["id_cliente"]; ?></td>
 				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
@@ -1579,6 +1732,9 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
         		<td><?php echo eliminar_acentos($usr["issue"]); ?></td>
+        		<td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+        		<td><?php echo $usr["id"]; ?></td>
+        		<td><?php echo $usr["id_proyectos"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>

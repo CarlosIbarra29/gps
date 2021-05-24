@@ -16,8 +16,6 @@
     </div>
 </div>
 
-<!-- <?php echo $this->rol;?> -->
-
 <div class="row">
 	<div class="col m12 s12">
 			<form action="/envios/requestaddenviossteponeadmin" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_gasolina">
@@ -117,10 +115,10 @@
       					<div class="card">
         					<div class="card-image text-center">
         						<?php  if($key['imagen'] == NULL){ ?>
-        							<img src="/img/nodisponible.jpg" class="responsive-img" style="width: 240px;">
+        							<img src="/img/nodisponible.jpg" class="responsive-img" style="width: 300px; height: 350px;">
         						<?php }else{ ?>
           						<!-- <img src="/<?php echo $key['imagen']; ?>" class="responsive-img" style="width: 240px;"> -->
-          						<a class="example-image-link" href="/<?php echo $key['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['imagen']; ?>"  alt="image-1" style="width: 300px;"/></a>
+          						<a class="example-image-link" href="/<?php echo $key['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['imagen']; ?>"  alt="image-1" style="width: 300px; height: 350px;"/></a>
         						<?php } ?>
           						
         					</div>
@@ -146,42 +144,38 @@
 
 <script src="/js/lightbox.js"></script>
 <script src="/js/materialize.min.js"></script>
-	<script type="text/javascript">
-  		$(document).ready(function(){
-    		$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
-    		$('select').formSelect();
-    		$('.modal').modal();
-    		$('.timepicker').timepicker();
+<script type="text/javascript">
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	$('.timepicker').timepicker();
 
     	var currentDate = document.getElementById("today_picker").value; 
-    	// alert(currentDate);
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
 
-  		});
+  	});
 
+  	$("#send_step").click(function(){
+  		var sitio = document.getElementById("sitio").value;
+  		var prioridad = document.getElementById("prioridad").value;
+  		var fecha_envio = document.getElementById("fecha_envio").value;
+  		var	tipo_envio = document.getElementById("tipo_envio").value;
+  		var vehiculo = document.getElementById("vehiculo").value;
+  		var hora_envio = document.getElementById("hora_envio").value;
 
-  		$("#send_step").click(function(){
-  			var sitio = document.getElementById("sitio").value;
-  			var prioridad = document.getElementById("prioridad").value;
-  			var fecha_envio = document.getElementById("fecha_envio").value;
-  			var	tipo_envio = document.getElementById("tipo_envio").value;
-  			var vehiculo = document.getElementById("vehiculo").value;
-  			var hora_envio = document.getElementById("hora_envio").value;
-
-
-	        if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
-	            swal({
-	              title: "Para continuar debes agregar la información marcada con un '*' ",
-	            });
-	        }else{
-	          swal("Espere un momento, la información esta siendo procesada", {
+	    if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
+	        swal({
+	           	title: "Para continuar debes agregar la información marcada con un '*' ",
+	        });
+	    }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
 	            icon: "success",
 	            buttons: false,
-	          }); 
-	          setTimeout(submitForm, 1500);     
-	        }
+	        }); 
+	        setTimeout(submitForm, 1500);     
+	    }
+  	});
 
-  		});
-
-  		function submitForm() { document.getElementById("submit_gasolina").submit() }
-  </script>
+  	function submitForm() { document.getElementById("submit_gasolina").submit() }
+</script>

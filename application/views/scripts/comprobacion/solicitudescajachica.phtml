@@ -124,10 +124,10 @@
 </div>
 
 <div class="row" style="margin-top:10px;">
-	<div class="col m2 s12"></div>
-	<div class="col m8 s12"> 
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12"> 
 		<div class="col m12 s12" id="search_nombre">
-<!-- 			<div class="row">
+			<div class="row">
 				<div class="col m4 s6">
 					<div class="input-field col m12 s12">
 	    				<select id="buscador">
@@ -139,8 +139,13 @@
 
 				<div class="col m4 s6">
 			        <div class="input-field col m12 s12" id="name_residente">
-			        	<input id="residente_search" type="text" class="validate">
-			        	<label for="residente_search">Nombre Residente</label>
+					    <select id="residente_search" name="rol" required>
+					      	<option value="0" disabled selected>* Selecciona una opcion:</option>
+					      	<?php foreach ($this->personal as $rl) { ?>
+					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>Nombre Residente</label>
 			        </div>
 
 			        <div class="input-field col m12 s12 oculto" id="name_sitio">
@@ -155,7 +160,7 @@
 					</div>
 				</div>
 			</div>
- -->
+
 			
 <!-- 			<div class="row">
 				<div class="input-field col m12 s12 text-center">
@@ -164,7 +169,7 @@
 			</div> -->
 		</div>
 	</div>
-	<div class="col m2 s12"></div>
+	<div class="col m1 s12"></div>
 </div>
 
 
@@ -173,7 +178,7 @@
 		<div class="col m6 s6">
 			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Solicitudes de Caja chica</span>
 		</div>
-		<div class="col m6 s6 text-right">
+<!-- 		<div class="col m6 s6 text-right">
 			<?php $suma = 0;
 			if ($this->paginator) { 
 			foreach ($this->paginator as $usr) { ?>
@@ -183,7 +188,7 @@
 			<?php } ?>
 			<span style="font-size: 19px;">Total de la solicitudes <?php echo $this->nombre_sitio; ?>:</span>
 			<span style="font-size: 19px; font-weight: bold;">$<?php echo number_format($suma, 2, '.', ','); ?></span>
-		</div>
+		</div> -->
 	</div>
 
 	<div class="col m12 s12">
@@ -451,10 +456,10 @@
   		var status = document.getElementById("status_cajachica").value;
   		if(buscador == 1){
   			var nombre = document.getElementById("residente_search").value;
-  			window.location.href = "/comprobacion/cajachicaresidente/status/"+status+"/residente/"+nombre+"";
+  			window.location.href = "/comprobacion/cajachicaresidente/status/"+status+"/residente/"+nombre+"/op/1";
   		}else{
   			var nombre = document.getElementById("sitio_searc").value;
-  			window.location.href = "/comprobacion/cajachicasitio/status/"+status+"/sitio/"+nombre+"";
+  			window.location.href = "/comprobacion/cajachicasitio/status/"+status+"/sitio/"+nombre+"/op/2";
   		}
   	});
 </script>
