@@ -1310,7 +1310,7 @@ class ComprobacionController extends Zend_Controller_Action{
             $cabeceras = 'MIME-Version: 1.0' . "\r\n"; 
             $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
             // $cabeceras .= 'To: ygarcia@gpsc.com.mx, dparra@gpsc.com.mx, cvega@gpsc.com.mx'."\r\n";
-            $cabeceras .= 'To: fherrera@gpsc.com.mx, cibarra@gpsc.com.mx'."\r\n";
+            $cabeceras .= 'To: cvega@gpsc.com.mx, ygarcia@gpsc.com.mx, ajuarez@gpsc.com.mx'."\r\n";
             $cabeceras .= 'From: Factura eliminada <gpsc@gpsc.com.mx>' . "\r\n";
             $contenido = 'GPSconstructivos Factura Eliminada'. "\r\n";
 

@@ -12,7 +12,6 @@ class PersonalController extends Zend_Controller_Action{
         $this->_panel = new Application_Model_GpsPanelModel;
         $this->_sitio = new Application_Model_GpsSitioModel;
         $this->_personal = new Application_Model_GpsPersonalModel;
-
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -319,8 +318,6 @@ class PersonalController extends Zend_Controller_Action{
         $datetime1 = new DateTime($post['hora_entrada']);
         $datetime2 = new DateTime($post['hora_salida']);
         $interval = $datetime1->diff($datetime2);
-        // echo $interval->format('%R%a días');
-
         var_dump($interval->format("%H:%I:%S"));exit;  
     }
 
