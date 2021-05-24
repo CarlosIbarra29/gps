@@ -57,8 +57,8 @@ function eliminar_acentos($cadena){
 	<table class="table text-left table-hover ">
 		<thead>
 			<tr>
-				<th>Reparación</th>
-				<th>Id</th>		
+				<th>Id Reparación</th>
+				<th>Id Herramienta</th>		
 				<th>Nombre</th>
 				<th>Motivo Reparación</th>
 				<th>Fecha Inicio</th>
@@ -66,6 +66,7 @@ function eliminar_acentos($cadena){
         		<th>Solicitud Asignada</th>
         		<th>Fecha Pagada</th>
         		<th>Costo</th>
+        		<th>Orden de Compra</th>
 
 			</tr>
 		</thead>
@@ -102,6 +103,7 @@ function eliminar_acentos($cadena){
 						<?php echo $rh["total"]; ?>
 					<?php } ?>
 				</td>
+				<td><?php echo $rh["asignado"]; ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>

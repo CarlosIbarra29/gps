@@ -436,7 +436,7 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->herramienta = $this->_season->GetSpecific($table,$wh,$id);
 
             $table="personal_campo";
-            $this->view->per= $this->_season->GetAll($table);
+            $this->view->per= $this->_her->GetAllEmpleados($table);
             $this->view->pers = $this->_her->Getdatos($wh,$id);
             $this->view->fecha = $this->_her->Getfecha($wh,$id);
 

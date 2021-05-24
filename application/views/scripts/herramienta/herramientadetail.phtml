@@ -453,7 +453,7 @@
 		<div class="row">
 			<form action="/herramienta/requestherramientareparada" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_reparado">
 				<?php foreach ($this->herramienta as $idher) { ?>
-					<input type="text" id="idhss" name="idhss" value="<?php echo $idher["id_herramienta"]; ?>">
+					<input type="hidden" id="idhss" name="idhss" value="<?php echo $idher["id_herramienta"]; ?>">
 				<?php } ?>
 				<div class="row">
 					<div class="input-field col m12 s12">
@@ -641,7 +641,7 @@
 						<table class="table text-center table-hover ">
 							<thead>
 								<tr>
-									<th>Id</th>
+									<th>Id reparación</th>
 									<th>Motivo</th>
 									<th>Costo</th>
 									<th>Fecha Inicio</th>
@@ -658,7 +658,7 @@
 									<tbody>
 										<tr>
 											<td>
-												<?php echo $rep['id_herramienta']; ?>
+												<?php echo $rep['id_reporte']; ?>
 											</td>
 											<td>
 												<?php echo $rep['motivo']; ?>

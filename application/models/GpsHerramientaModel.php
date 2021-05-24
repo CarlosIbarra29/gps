@@ -351,6 +351,18 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
 //                 LEFT JOIN sitios s ON s.id = st.id_sitio
 
 
+    public function GetAllEmpleados($table){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM $table where delete_status=0 order by nombre asc;");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
     public function Getdatos($wh,$id){
     	try {
     		$db = Zend_Db_Table::getDefaultAdapter();
@@ -523,13 +535,14 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
      public function GetSolicitudesReparacion($table){
         $statusas = 0;
         $servicio= 29;
+        $servicios= 40;
 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT so.id, so.total, so.condiciones_compra, so.referencia, so.descripcion, so.name_user, so.servicio_id,
                 so.comentario, so.name_proveedor, so.status_asignada, so.status_pago
                 FROM solicitud_ordencompra so
-                WHERE  so.servicio_id = $servicio and so.status_asignada = $statusas and so.status_pago = 1;");
+                WHERE  so.servicio_id = $servicio and so.status_asignada = $statusas and so.status_pago = 1 or so.servicio_id  = $servicios and so.status_asignada = $statusas and so.status_pago = 1");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -595,6 +608,7 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT r.id_reporte,r.motivo,r.orden_compra,r.fecha_inicio, r.costo,
                 IF(r.fecha_regreso IS NULL,'Aún no se repara',r.fecha_regreso) AS fechaa, h.nombre,
+                 IF(r.id_solicitud = 0,'Sin solicitud Asignada',r.id_solicitud) AS asignado,
                 r.id_herramienta, r.id_solicitud, h.id_herramienta as id_h, h.codigo, so.id, so.total, ps.id as idpago,
                 ps.fecha_pago, ps.file_pago, ps.monto
                 FROM reportes_reparacion r
@@ -615,7 +629,8 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT r.id_reporte,r.motivo,r.orden_compra,r.fecha_inicio, r.costo,
-                IF(r.fecha_regreso IS NULL,'Aun no se regresa',r.fecha_regreso) AS fechaa,
+                IF(r.fecha_regreso IS NULL,'Aun no se regresa',r.fecha_regreso) AS fechaa,  
+                IF(r.id_solicitud = 0,'Sin solicitud Asignada',r.id_solicitud) AS asignado,
                 r.id_herramienta, h.id_herramienta as id_h, h.codigo, h.id_cat_herramienta, h.nombre, ct.nombre as nombrecategoria
                 FROM reportes_reparacion r
                 LEFT JOIN herramienta_inventario h ON r.id_herramienta = h.id_herramienta
