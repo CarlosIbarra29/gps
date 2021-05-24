@@ -504,7 +504,9 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function Getcomprobaciongenerada($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT c.id, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, c.razon_social, c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, c.comentarios_comprobacion, c.status_comprobacion, s.nombre_servicio
+            $qry = $db->query("SELECT c.id, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, c.razon_social, 
+                c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, c.comentarios_comprobacion, 
+                c.status_comprobacion, s.nombre_servicio
                 from comprobaciones c 
                 LEFT JOIN servicios s on s.id=c.servicio where c.status_comprobacion = 0 and c.id_residente = ?",array($id));
             $row = $qry->fetchAll();
@@ -571,7 +573,7 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT c.id, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, 
                 c.razon_social, c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, 
                 c.comentarios_comprobacion, c.status_comprobacion, s.nombre_servicio
-                from comprobaciones c 
+                FROM comprobaciones c 
                 LEFT JOIN servicios s on s.id=c.servicio where id_comprobacion = ? LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
@@ -598,7 +600,9 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getservicioscomprobaciones(){
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT sc.id, sc.nombre, sc.status_monto, sc.monto, sc.status_excepcion, sc.autorizacion, sc.nombre_rol, sc.comentarios FROM servicios_comprobaciones sc");
+            $qry = $db->query("SELECT sc.id, sc.nombre, sc.status_monto, sc.monto, sc.status_excepcion, sc.autorizacion, 
+                sc.nombre_rol, sc.comentarios 
+                FROM servicios_comprobaciones sc");
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -610,7 +614,9 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getservicioscomprobacionespaginator($offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT sc.id, sc.nombre, sc.status_monto, sc.monto, sc.status_excepcion, sc.autorizacion, sc.nombre_rol, sc.comentarios FROM servicios_comprobaciones sc LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT sc.id, sc.nombre, sc.status_monto, sc.monto, sc.status_excepcion, sc.autorizacion, 
+                sc.nombre_rol, sc.comentarios 
+                FROM servicios_comprobaciones sc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -622,9 +628,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getcomprobacionproceso($status,$pago){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto, cs.autorizacion_status, cs.pago_status, 
+            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, 
+                cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto, cs.autorizacion_status, cs.pago_status, 
                 cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ?",array($status,$pago));
+                FROM comprobacion_solicitud cs 
+                where cs.autorizacion_status = ? AND cs.pago_status = ?",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -636,9 +644,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getcomprobacionprocesoresidente($status,$pago,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT cs.id, cs.id_residente, cs.nombre_residente, cs.id_sitio, cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status, cs.pago_status, 
+            $qry = $db->query("SELECT cs.id, cs.id_residente, cs.nombre_residente, cs.id_sitio, cs.nombre_sitio, 
+                cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status, cs.pago_status, 
                 cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ? AND cs.id_residente = ?",array($status,$pago,$id));
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? AND cs.pago_status = ? AND cs.id_residente = ?",array($status,$pago,$id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -650,9 +660,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getpaginatorcomprobacion($status,$pago,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT cs.id, cs.id_residente, cs.nombre_residente, cs.id_sitio, cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status, cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
-                cs.user_solicitud, cs.status_caja
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ? ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+            $qry = $db->query("SELECT cs.id, cs.id_residente, cs.nombre_residente, cs.id_sitio, cs.nombre_sitio, 
+                cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status, cs.pago_status, cs.pago_file,
+                cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud, cs.status_caja
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? AND cs.pago_status = ? ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -668,7 +680,7 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                 cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto,cs.autorizacion_status,
                 cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
                 cs.user_solicitud, cs.monto_anterior 
-                from comprobacion_solicitud cs where cs.autorizacion_status = ? AND cs.pago_status = ? AND cs.id_residente = ? ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago,$id));
+                FROM comprobacion_solicitud cs WHEREWHERE cs.autorizacion_status = ? AND cs.pago_status = ? AND cs.id_residente = ? ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago,$id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -680,10 +692,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getcomprobacionprocesolike($status,$pago,$opcion,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
+            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, 
+                cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
                 cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
-                from comprobacion_solicitud cs 
-                where cs.autorizacion_status = ? 
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? 
                 AND cs.pago_status = ? 
                 AND cs.id_residente = ?",
                 array($status,$pago,$nombre));
@@ -699,10 +712,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
     public function getcomprobacionprocesolikesitio($status,$pago,$opcion,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
+            $qry = $db->query("SELECT cs.id,cs.id_residente,cs.nombre_residente,cs.id_sitio,cs.nombre_sitio, 
+                cs.id_tipoproyecto, cs.nombre_tipoproyecto, cs.monto, cs.autorizacion_status,cs.pago_status, 
                 cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, cs.user_solicitud 
-                from comprobacion_solicitud cs 
-                where cs.autorizacion_status = ? 
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? 
                 AND cs.pago_status = ? 
                 AND $opcion like '%{$nombre}%'",
                 array($status,$pago));
@@ -721,8 +735,8 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                 cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto,cs.autorizacion_status,
                 cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
                 cs.user_solicitud 
-                from comprobacion_solicitud cs 
-                where cs.autorizacion_status = ? 
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? 
                 AND cs.pago_status = ? 
                 AND $opcion like '%{$nombre}%' LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
@@ -740,8 +754,8 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                 cs.nombre_sitio, cs.id_tipoproyecto, cs.nombre_tipoproyecto,cs.monto,cs.autorizacion_status,
                 cs.pago_status, cs.pago_file, cs.status_caja, cs.comentario, cs.fecha_solicitud, 
                 cs.user_solicitud 
-                from comprobacion_solicitud cs 
-                where cs.autorizacion_status = ? 
+                FROM comprobacion_solicitud cs 
+                WHERE cs.autorizacion_status = ? 
                 AND cs.pago_status = ? 
                 AND cs.id_residente = ? 
                 LIMIT $offset,$no_of_records_per_page",array($status,$pago,$nombre));
@@ -905,8 +919,11 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id, c.fecha_solicitud, c.user_solicitud, c.nombre_residente, 
                 c.nombre_sitio,c.user_autorizacion,c.fecha_autorizacion,p.user_pago,p.fecha_pago,p.monto, 
-                YEAR(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4), '-',SUBSTRING(p.fecha_pago, 4, 2),'-',SUBSTRING(p.fecha_pago, 1, 2)))) AS years,
-                MONTH(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4), '-', SUBSTRING(p.fecha_pago, 4, 2),'-',SUBSTRING(p.fecha_pago, 1, 2)))) AS mes, DAY(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4),'-',SUBSTRING(p.fecha_pago, 4, 2),'-',SUBSTRING(p.fecha_pago, 1, 2)))) AS dia
+                YEAR(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4), '-',SUBSTRING(p.fecha_pago, 4, 2),'-',
+                SUBSTRING(p.fecha_pago, 1, 2)))) AS years, MONTH(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4), '-', 
+                SUBSTRING(p.fecha_pago, 4, 2),'-',SUBSTRING(p.fecha_pago, 1, 2)))) AS mes, 
+                DAY(DATE(CONCAT(SUBSTRING(p.fecha_pago, 7, 4),'-',SUBSTRING(p.fecha_pago, 4, 2),'-',
+                SUBSTRING(p.fecha_pago, 1, 2)))) AS dia
                 FROM comprobacion_solicitud c 
                 INNER JOIN comprobacion_pago p on c.id=p.id_solicitud WHERE c.pago_status = 1 having mes = ? AND years = ? ",array($month,$year));
             $row = $qry->fetchAll();
