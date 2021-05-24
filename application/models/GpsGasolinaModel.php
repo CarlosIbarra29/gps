@@ -145,8 +145,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getstepuno(){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.consumo
-							FROM add_gasolina g where g.step_gasolina = 0;");
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.consumo
+				FROM add_gasolina g 
+                WHERE g.step_gasolina = 0;");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -158,8 +160,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getstepunopaginator($offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable,g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.consumo
-							FROM add_gasolina g where g.step_gasolina = 0 LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable,
+                g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.consumo
+				FROM add_gasolina g 
+                WHERE g.step_gasolina = 0 LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -176,7 +180,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                 g.tarjeta, g.placas, v.marca, v.modelo, v.submarca, g.importe, g.tarjeta
                 FROM add_gasolina g 
                 INNER JOIN vehiculos v on v.id_vehiculos = g.id_vehiculo
-                where g.step_gasolina = 1 and g.status_gasolina = ?", array($estado));
+                WHERE g.step_gasolina = 1 and g.status_gasolina = ?", array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -188,7 +192,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesogasolinasitio($estado,$nombre){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.importe, g.consumo, g.status_gasolina FROM add_gasolina g where g.step_gasolina = 1 AND name_sitio like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.importe, g.consumo, 
+                g.status_gasolina FROM add_gasolina g 
+                WHERE g.step_gasolina = 1 AND name_sitio like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -200,7 +207,11 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesogasolinaresponsable($estado,$nombre){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.importe, g.consumo, g.status_gasolina FROM add_gasolina g where g.step_gasolina = 1 AND name_responsable like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion,  g.forma_pago, g.step_gasolina, g.importe, g.consumo, 
+                g.status_gasolina FROM add_gasolina g 
+                WHERE g.step_gasolina = 1 
+                AND name_responsable like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -212,7 +223,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesogasolinaplacas($estado,$nombre){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.placas, g.estacion,  g.forma_pago, g.step_gasolina, g.importe,g.consumo, g.status_gasolina FROM add_gasolina g where g.step_gasolina = 1 AND g.placas like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.placas, g.estacion,  g.forma_pago, g.step_gasolina, g.importe,g.consumo, 
+                g.status_gasolina FROM add_gasolina g 
+                WHERE g.step_gasolina = 1 AND g.placas like '%{$nombre}%' and g.status_gasolina = ? ", array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -224,7 +238,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesogasolinatarjeta($estado,$nombre){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.placas, g.estacion,  g.forma_pago, g.step_gasolina, g.importe,g.consumo, g.status_gasolina, g.id_tarjeta FROM add_gasolina g where g.step_gasolina = 1 AND g.id_tarjeta = ? and g.status_gasolina = ? ", array($nombre,$estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.placas, g.estacion,  g.forma_pago, g.step_gasolina, g.importe,g.consumo, 
+                g.status_gasolina, g.id_tarjeta FROM add_gasolina g 
+                WHERE g.step_gasolina = 1 AND g.id_tarjeta = ? and g.status_gasolina = ? ", array($nombre,$estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -236,9 +253,12 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesopaginator($offset,$no_of_records_per_page,$estado){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, g.status_gasolina, g.id_vehiculo, g.tarjeta, v.placas
-                            FROM add_gasolina g 
-                            LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos where g.step_gasolina = 1 and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, 
+                g.status_gasolina, g.id_vehiculo, g.tarjeta, v.placas
+                FROM add_gasolina g 
+                LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
+                WHERE g.step_gasolina = 1 and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -250,9 +270,12 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesopaginatorsitio($offset,$no_of_records_per_page,$estado,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, g.status_gasolina, g.id_vehiculo, v.placas
-                            FROM add_gasolina g 
-                            LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos where g.step_gasolina = 1 AND name_sitio like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, 
+                g.status_gasolina, g.id_vehiculo, v.placas
+                FROM add_gasolina g 
+                LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
+                WHERE g.step_gasolina = 1 AND name_sitio like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -264,9 +287,12 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesopaginatorresponsable($offset,$no_of_records_per_page,$estado,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, g.status_gasolina, g.id_vehiculo, v.placas
-                            FROM add_gasolina g 
-                            LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos where g.step_gasolina = 1 AND name_responsable like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, 
+                g.status_gasolina, g.id_vehiculo, v.placas
+                FROM add_gasolina g 
+                LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
+                WHERE g.step_gasolina = 1 AND name_responsable like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -278,9 +304,12 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesopaginatorplacas($offset,$no_of_records_per_page,$estado,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo,g.placas, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, g.status_gasolina, g.id_vehiculo, v.placas
-                            FROM add_gasolina g 
-                            LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos where g.step_gasolina = 1 AND g.placas like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo,g.placas, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, 
+                g.status_gasolina, g.id_vehiculo, v.placas
+                FROM add_gasolina g 
+                LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
+                WHERE g.step_gasolina = 1 AND g.placas like '%{$nombre}%' and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -292,9 +321,12 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getprocesopaginatortarjeta($offset,$no_of_records_per_page,$estado,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, g.fecha_requerida, g.id_vehiculo,g.placas, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, g.status_gasolina, g.id_tarjeta, v.placas
-                            FROM add_gasolina g 
-                            LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos where g.step_gasolina = 1 AND g.id_tarjeta = ? and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($nombre,$estado));
+            $qry = $db->query("SELECT g.id, g.id_sitios, g.name_sitio, g.id_proyecto, g.id_responsable, g.name_responsable, 
+                g.fecha_requerida, g.id_vehiculo,g.placas, g.estacion, g.forma_pago, g.importe, g.step_gasolina, g.consumo, 
+                g.status_gasolina, g.id_tarjeta, v.placas
+                FROM add_gasolina g 
+                LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
+                WHERE g.step_gasolina = 1 AND g.id_tarjeta = ? and g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($nombre,$estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -306,9 +338,10 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getefecticardpaginator($offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.no_tarjeta,t.id_responsable, t.status_tarjeta, t.fecha_asignacion, t.vigencia ,p.nombre, p.apellido_pa, p.apellido_ma
-                    FROM tarjeta_efecticard t
-                    LEFT JOIN personal_campo p on t.id_responsable = p.id LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT t.id, t.no_tarjeta,t.id_responsable, t.status_tarjeta, t.fecha_asignacion, t.vigencia,
+                p.nombre, p.apellido_pa, p.apellido_ma
+                FROM tarjeta_efecticard t
+                LEFT JOIN personal_campo p on t.id_responsable = p.id LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -321,7 +354,11 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getinfoindex($year,$month){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT ad.id,ad.id_sitios, ad.name_sitio, ad.id_proyecto, ad.id_responsable, ad.name_responsable, ad.fecha_requerida, ad.id_vehiculo, ad.placas, ad.estacion, ad.forma_pago,ad.importe, ad.step_gasolina, ad.consumo, ad.odometro_inicial, ad.odometro_final, ad.id_tarjeta, ad.tarjeta, Month(date(ad.fecha_requerida)) as mes ,YEAR(date(ad.fecha_requerida)) as years FROM add_gasolina ad having mes = $month AND years = $year");
+            $qry = $db->query("SELECT ad.id,ad.id_sitios, ad.name_sitio, ad.id_proyecto, ad.id_responsable, 
+                ad.name_responsable, ad.fecha_requerida, ad.id_vehiculo, ad.placas, ad.estacion, ad.forma_pago,ad.importe, 
+                ad.step_gasolina, ad.consumo, ad.odometro_inicial, ad.odometro_final, ad.id_tarjeta, ad.tarjeta, 
+                Month(date(ad.fecha_requerida)) as mes ,YEAR(date(ad.fecha_requerida)) as years 
+                FROM add_gasolina ad having mes = $month AND years = $year");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -333,7 +370,11 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     public function getinfoindexsitio($year,$month, $sitio){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT ad.id,ad.id_sitios, ad.name_sitio, ad.id_proyecto, ad.id_responsable, ad.name_responsable, ad.fecha_requerida, ad.id_vehiculo, ad.placas, ad.estacion, ad.forma_pago,ad.importe, ad.step_gasolina, ad.consumo, ad.odometro_inicial, ad.odometro_final, ad.id_tarjeta, ad.tarjeta, Month(date(ad.fecha_requerida)) as mes ,YEAR(date(ad.fecha_requerida)) as years FROM add_gasolina ad having mes = $month AND years = $year AND ad.id_proyecto = $sitio");
+            $qry = $db->query("SELECT ad.id,ad.id_sitios, ad.name_sitio, ad.id_proyecto, ad.id_responsable, 
+                ad.name_responsable, ad.fecha_requerida, ad.id_vehiculo, ad.placas, ad.estacion, ad.forma_pago,ad.importe, 
+                ad.step_gasolina, ad.consumo, ad.odometro_inicial, ad.odometro_final, ad.id_tarjeta, ad.tarjeta, 
+                Month(date(ad.fecha_requerida)) as mes ,YEAR(date(ad.fecha_requerida)) as years 
+                FROM add_gasolina ad having mes = $month AND years = $year AND ad.id_proyecto = $sitio");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
