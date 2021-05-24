@@ -140,7 +140,6 @@
   				<li class="tab col s3"><a href="/materiales/auditoriamateriales/status/1"><h4>Surtiendo</h4></a></li>
   			<?php } ?>
 
-
   			<?php if($status == 2){ ?>
   				<li class="tab col s3 active_menu">
   					<a href="/materiales/auditoriamateriales/status/2"><h4>Listo para enviar</h4></a>
@@ -293,9 +292,7 @@
 						    	Rechazada
 						  	</div>
 						<?php } ?>
-						
 					</td>
-
 					<td>
 						<?php if($usr['solicitud_materiales']  == 0 || $usr['solicitud_materiales']  == NULL ){ ?>
 						<?php }else{ ?>
@@ -313,9 +310,7 @@
 							<i class="material-icons" style="color: green">bookmark</i>	
 						</td>
 					<?php } ?>
-
 				</tr>
-
 		    <?php } }else{ ?>
 		    </tbody> 
 		    <tbody>
@@ -377,10 +372,8 @@
     	$('select').formSelect();
     	$('.modal').modal();
     	$('.timepicker').timepicker();
-
     	var currentDate = document.getElementById("today_picker").value; 
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
-
   	});
 
   	$('#alert_close').click(function(){
@@ -435,7 +428,6 @@
 	$("#search_opdos").click(function(){
 		var op = document.getElementById("buscador").value;
 		var status = document.getElementById("status_seach").value;
-
 		if(op == 1){
 			sitio =	document.getElementById("sitio_search").value;
 			window.location.href = "/materiales/buscadormateriales/status/"+status+"/sitio/"+sitio+"/op/1";

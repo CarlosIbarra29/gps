@@ -428,7 +428,8 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getpaginationuser($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT u.id, u.nombre, u.ap, u.am, u.direccion,  u.telefono, u.correo, u.fkroles, u.imagen, r.id as idrol, r.nombre as namerol
+            $qry = $db->query("SELECT u.id, u.nombre, u.ap, u.am, u.direccion,  u.telefono, u.correo, u.fkroles, 
+                u.imagen, r.id as idrol, r.nombre as namerol
                 FROM usuario u 
                 LEFT JOIN roles r on u.fkroles = r.id order by nombre asc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -457,8 +458,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Informaciongeneral($id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio, pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.id = ?",array($id));
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.id = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -470,8 +476,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonalcero(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =0 order by id desc");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =0 order by id desc");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -483,8 +494,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonalgasolina(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =0 AND pc.status_personal = 0 order by pc.nombre ASC");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =0 AND pc.status_personal = 0 order by pc.nombre ASC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -497,8 +513,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonal($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,  pc.status_operativo from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =0 order by id desc LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.email_personal, pc.nss,pc.rfc, pc.dia_pago, 
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,  pc.status_operativo 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =0 order by id desc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -510,8 +531,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonaldirectorio($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =0 and status_personal = 0 order by pc.apellido_pa asc LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =0 and status_personal = 0 order by pc.apellido_pa asc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -523,8 +549,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonaldeletecount(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =1 order by id desc");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =1 order by id desc");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -536,8 +567,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getcountpersonaldelete($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status =1 order by id desc LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =1 order by id desc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -561,8 +597,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function nombrepersonalcount($nombre,$offset,$no_of_records_per_page){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.delete_status= 0 AND pc.nombre like '%{$nombre}%'  LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status= 0 AND pc.nombre like '%{$nombre}%'  LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -574,7 +615,9 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function nombrepersonalexcel(){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT p.nombre, p.apellido_pa, p.apellido_ma, p.telefono, p.curp, p.telefono, p.email_personal, p.nss, p.rfc, p.puesto, pp.nombre as name FROM personal_campo p LEFT JOIN puestos_personal pp on p.puesto= pp.id;");
+            $qry = $db->query("SELECT p.nombre, p.apellido_pa, p.apellido_ma, p.telefono, p.curp, p.telefono, 
+                        p.email_personal, p.nss, p.rfc, p.puesto, pp.nombre as name 
+                        FROM personal_campo p LEFT JOIN puestos_personal pp on p.puesto= pp.id;");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -585,7 +628,9 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function nombrepersonalreporte(){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT p.nombre, p.apellido_pa, p.apellido_ma, p.telefono, p.curp, p.telefono, p.email_personal, p.nss, p.rfc, p.name_sitio,p.status_personal, p.puesto, pp.nombre as name FROM personal_campo p LEFT JOIN puestos_personal pp on p.puesto= pp.id;");
+            $qry = $db->query("SELECT p.nombre, p.apellido_pa, p.apellido_ma, p.telefono, p.curp, p.telefono, 
+                        p.email_personal, p.nss, p.rfc, p.name_sitio,p.status_personal, p.puesto, pp.nombre as name 
+                        FROM personal_campo p LEFT JOIN puestos_personal pp on p.puesto= pp.id;");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -598,10 +643,10 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT s.id, s.id_cliente,s.Idgps, s.nombre, s.cliente, s.cliente, s.direccion, 
-                s.ciudad, s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio, s.latitude, 
-                s.longitude, e.nombre_estructura
-                FROM sitios s
-                LEFT JOIN estructura_sitio e on e.id = s.estructura");
+                        s.ciudad, s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio, s.latitude, 
+                        s.longitude, e.nombre_estructura
+                        FROM sitios s
+                        LEFT JOIN estructura_sitio e on e.id = s.estructura");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -613,8 +658,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function puestopersonal($puesto){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pp.nombre  like '%{$puesto}%'");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pp.nombre  like '%{$puesto}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -626,8 +676,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function puestopersonalcount($puesto,$offset,$no_of_records_per_page){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pp.nombre  like '%{$puesto}%' LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pp.nombre  like '%{$puesto}%' LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -651,8 +706,13 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function statuspersonalcount($status,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-             $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
-                                    pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago, pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo from personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id Where pc.status_expediente = ?   LIMIT $offset,$no_of_records_per_page",array($status));
+             $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto, pc.status_operativo 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.status_expediente = ? LIMIT $offset,$no_of_records_per_page",array($status));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -735,13 +795,16 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     }
 
 
-    public function Getpersonalcuadrilla($id,$proyecto,$sitio, $nombre){  
-        // var_dump($nombre);exit;
+    public function Getpersonalcuadrilla($id,$proyecto,$sitio, $nombre){ 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT p.id as id_personal, p.nombre, p.apellido_pa, p.apellido_ma, p.imagen, p.curp, p.puesto, p.status_expediente, p.telefono, p.email_personal, p.nss, p.rfc,p.dia_pago, p.hora_pago, p.status_personal, p.fecha_personal, p.status_cuadrilla, p.id_sitiopersonal, p.name_sitio, p.delete_status, pt.id, pt.nombre as name_puesto
-                FROM personal_campo p 
-                LEFT JOIN puestos_personal pt on pt.id = p.puesto WHERE tipo_proyectopersonal = ? AND sitio_tipoproyectopersonal = ? AND id_sitiopersonal = ? AND name_sitio = ?",array($proyecto,$id,$sitio,$nombre));
+            $qry = $db->query("SELECT p.id as id_personal, p.nombre, p.apellido_pa, p.apellido_ma, p.imagen, 
+                        p.curp, p.puesto, p.status_expediente, p.telefono, p.email_personal, p.nss,p.rfc,p.dia_pago,
+                        p.hora_pago, p.status_personal, p.fecha_personal, p.status_cuadrilla, p.id_sitiopersonal, 
+                        p.name_sitio, p.delete_status, pt.id, pt.nombre as name_puesto
+                        FROM personal_campo p 
+                        LEFT JOIN puestos_personal pt on pt.id = p.puesto 
+                        WHERE tipo_proyectopersonal = ? AND sitio_tipoproyectopersonal = ? AND id_sitiopersonal = ? AND name_sitio = ?",array($proyecto,$id,$sitio,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -754,9 +817,12 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function Getinfodetailpersonal($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma, p.imagen, p.curp, p.puesto, p.status_expediente, p.telefono, p.email_personal, p.nss, p.rfc, p.dia_pago, p.hora_pago, p.status_personal, p.fecha_personal, p.status_cuadrilla, p. tipo_proyectopersonal, pu.id as idp,pu.nombre as name_puesto 
-                from personal_campo p
-                LEFT join puestos_personal pu on pu.id = p.puesto where p.id = ?",array($id));
+            $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma, p.imagen, p.curp, p.puesto, 
+                        p.status_expediente, p.telefono, p.email_personal, p.nss, p.rfc, p.dia_pago, p.hora_pago, 
+                        p.status_personal, p.fecha_personal, p.status_cuadrilla, p. tipo_proyectopersonal, 
+                        pu.id as idp,pu.nombre as name_puesto 
+                        FROM personal_campo p
+                        LEFT join puestos_personal pu on pu.id = p.puesto where p.id = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -793,10 +859,10 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function getpersonaldctres(){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT ap.id, ap.id_personal, ap.status_altura, ap.status_electrico, 
-                ap.status_auxilio, pc.nombre, pc.apellido_pa, pc.apellido_ma
-                FROM antidoping_personal ap
-                LEFT JOIN personal_campo pc on pc.id = ap.id_personal");
+            $qry = $db->query("SELECT ap.id, ap.id_personal, ap.status_altura, ap.status_electrico,  
+                        ap.status_auxilio, pc.nombre, pc.apellido_pa, pc.apellido_ma
+                        FROM antidoping_personal ap
+                        LEFT JOIN personal_campo pc on pc.id = ap.id_personal");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -809,9 +875,9 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT a.id, a.id_personal, a.file as documento, a.laboratorio, a.fecha, 
-                a.resultado, a.folio, p.nombre, p.apellido_pa, p.apellido_ma
-                FROM info_antidoping a
-                LEFT JOIN personal_campo p on p.id=a.id_personal");
+                        a.resultado, a.folio, p.nombre, p.apellido_pa, p.apellido_ma
+                        FROM info_antidoping a
+                        LEFT JOIN personal_campo p on p.id=a.id_personal");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
