@@ -1797,7 +1797,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             v.marca, v.submarca, v.modelo, v.color, v.placas 
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
-            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() AND vd.status = 0");
+            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() - INTERVAL 1 DAY AND vd.status = 0");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -1832,7 +1832,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             v.marca, v.submarca, v.modelo, v.color, v.placas 
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
-            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() AND vd.status = 0 AND vd.id_vehiculo = $id");
+            WHERE vd.vigencia BETWEEN NOW() - INTERVAL 30 DAY AND NOW() - INTERVAL 1 DAY AND vd.status = 0 AND vd.id_vehiculo = $id");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

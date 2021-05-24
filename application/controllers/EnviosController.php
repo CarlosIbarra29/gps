@@ -16,7 +16,7 @@ class EnviosController extends Zend_Controller_Action{
             $this->redirect('/home/login');
         }
         
-    }//END INIT
+    }//END INIT 
 
     public function solicitudespendientesAction(){
         $actualpagina=$this->_getParam('pagina');

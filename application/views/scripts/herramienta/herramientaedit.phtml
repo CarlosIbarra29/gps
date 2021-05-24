@@ -155,7 +155,7 @@
 							<?php if ($inv['id_responsable'] == 0) { ?>
 								<option value="0" disabled selected>* Selecciona una opcion:</option>
 						      	<?php foreach ($this->per as $personal) { ?>
-						      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?></option>
+						      	<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?><?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
 						      	<?php } ?>
 							<?php } else { ?>
 						    	<?php foreach ($this->per as $personal) { 
