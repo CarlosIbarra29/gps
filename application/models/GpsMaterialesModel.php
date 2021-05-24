@@ -191,6 +191,36 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function getmaterialesVencidos($step,$status){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ms.id, ms.id_sitio, ms.name_sitio, ms.id_tipoproyecto, ms.fecha_user , ms.fecha_solicitada, 
+                    CONCAT(YEAR(DATE(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 1, 2)))),'-',
+                    MONTH(DATE(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 1, 2)))),'-',
+                    DAY(DATE(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 4, 2),
+                    '-',
+                    SUBSTRING(fecha_solicitada, 1, 2))))) as fecha_solicitar,
+                    ms.user_solicitud, ms.step_solicitud, ms.status_solicitud, ms.comentario
+                    FROM materiales_solicitud ms
+                    having fecha_solicitar BETWEEN NOW() - INTERVAL 20 DAY AND NOW() AND ms.step_solicitud = ? and ms.status_solicitud= ?;",array($step,$status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
     public function getsolicitudesmaterialpag($step,$status,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

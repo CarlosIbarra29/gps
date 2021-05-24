@@ -12,7 +12,7 @@
         $pagina = 1;
     }  
 ?>
-
+ 
 <?php 
 
     $links = "";
@@ -61,12 +61,54 @@
 	-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	}
+
+	.icon_style{
+	    font-size: 17px;
+	    font-family: "Nunito", sans-serif;
+	    cursor:pointer; 
+	}
+
+	.colorfont strong{
+		color: rgb(169,68,66);
+		font-weight: bold;
+	}
+
+	.colorfont span{
+		color: rgb(169,68,66);
+		font-weight: 350;
+	}
 </style>
 
 <div class="row">
 	<div class="col m12 s12">
 		
 	</div>
+</div>
+
+<div class="col m12 s12">
+    <div class="row">
+        <div class="col m12 s12" id="alert_box">
+            <?php if ($this->alertas) { ?>
+                <?php foreach ($this->alertas as $vencidas) { ?>
+                    <div style="background: rgb(242,222,222);"  class="card darken-1">
+                        <div style="padding: 10px;" class="card-content white-text colorfont">
+                            <strong>¡Cuidado!</strong> 
+                            <span>
+                            	El envío para el sitio <b><?php echo $vencidas['name_sitio']; ?></b> programado el: 
+                            	<b><?php echo $vencidas['fecha_enviar']; ?></b> esta vencido. Atiendelo
+                            </span> &nbsp; 
+                            <a href="/envios/enviodetail/id/<?php echo $vencidas["id"] ?>">
+                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                            </a>
+                        </div>    
+                    </div>              
+                <?php } ?>
+                <div class="col m12 s12 text-right">
+                    <a><i class="icon_style"  id="alert_close" aria-hidden="true"> Cerrar todo </i></a>
+                </div> 
+            <?php } else { } ?>
+        </div>
+    </div>
 </div>
 
 <?php 
@@ -351,6 +393,10 @@
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
 
   	});
+
+  	$('#alert_close').click(function(){
+	    $( "#alert_box" ).fadeOut( );
+	});
 
 	$("#buscador_id").on('change', function() {
 		var value = this.value;

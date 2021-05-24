@@ -11,6 +11,17 @@
 			<?php foreach ($this->reporte as $rep) { ?>
 			<input type="hidden" name="idsr" value="<?php echo $rep["id_herramienta"]; ?>">
 			<input type="hidden" name="ids" value="<?php echo $rep["id_reporte"]; ?>">
+				<div class="file-field input-field col m12 s12">
+					    <div class="btn">
+					        <span>Foto de Herramienta a reparar</span>
+					        <input type="file" name="url">
+					        <input type="hidden" name="imahidden" value="<?php echo $rep["orden_compra"]; ?>">   
+					    </div>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					    </div>
+				  </div>
+
 				<div class="row">
 			        <div class="input-field col m12 s12">
 			          	<i class="material-icons prefix">account_circle</i>
@@ -19,16 +30,7 @@
 			        </div> 
 		      	</div>
 
-		      	<div class="file-field input-field col m12 s12">
-					    <div class="btn">
-					        <span>Orden de gastos</span>
-					        <input type="file" name="url">
-					        <input type="hidden" name="imahidden" value="<?php echo $rep["orden_compra"]; ?>">   
-					    </div>
-					    <div class="file-path-wrapper">
-					        <input class="file-path validate" type="text">
-					    </div>
-				  </div>
+		      	
 
 				  <div class="row">
 			        <div class="input-field col m6 s12">

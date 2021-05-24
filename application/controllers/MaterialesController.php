@@ -78,6 +78,8 @@ class MaterialesController extends Zend_Controller_Action{
         $count_enproceso = count($en_proceso);
         $this->view->en_proceso = $count_enproceso;
 
+        $this->view->alertas=$this->_material->getmaterialesVencidos($step,$status);
+        
         $step = 1;
         $solicitud = $this->_material->getsolicitudesmateriales($step,$status);
         $count=count($solicitud);

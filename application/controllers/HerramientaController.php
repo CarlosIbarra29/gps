@@ -436,7 +436,7 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->herramienta = $this->_season->GetSpecific($table,$wh,$id);
 
             $table="personal_campo";
-            $this->view->per= $this->_season->GetAll($table);
+            $this->view->per= $this->_her->GetAllEmpleados($table);
             $this->view->pers = $this->_her->Getdatos($wh,$id);
             $this->view->fecha = $this->_her->Getfecha($wh,$id);
 
@@ -444,8 +444,8 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->reparacion= $this->_her->Getreparacion($id);
             $this->view->nreparacion= $this->_her->Getnrep($id);
 
-            // $table="solicitud_ordencompra";
-            // $this->view->solicitud = $this->_her->GetSolicitudesReparacion($table);
+            $table="solicitud_ordencompra";
+            $this->view->solicitud = $this->_her->GetSolicitudesReparacion($table);
 
 
             $op = $this->_getParam('op'); 
@@ -540,8 +540,6 @@ class HerramientaController extends Zend_Controller_Action{
                 print '</script>'; 
             }
         }
-   
-            
             
     }// End Request Reparar herramienta
 
@@ -697,10 +695,36 @@ class HerramientaController extends Zend_Controller_Action{
         }
     }       //End Regresar SELECCION herramientas
 
+    // public function requestherramientareparadaAction(){
+    //     $this->_helper->layout()->disableLayout();
+    //     $this->_helper->viewRenderer->setNoRender(true);
+    //     $post = $this->getRequest()->getPost();
+    //     if($this->getRequest()->getPost()){
+
+    //         date_default_timezone_set('America/Mexico_City');
+    //         $hoy = date("d-m-Y");
+    //         $table="reportes_reparacion";
+    //         $this->_her->Updatefecha($post,$table,$hoy);
+
+
+    //         $table="herramienta_inventario";
+    //         $result = $this->_her->UpdateStatusHerR($post,$table);
+    //         if ($result) {
+    //             echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            
+    //         }else{
+    //             print '<script language="JavaScript">';
+    //             print 'alert("Ocurrio un error: Comprueba los datos.");';
+    //             print '</script>';
+    //         }
+    //     }
+    // }// End Request Reparada herramienta
+
     public function requestherramientareparadaAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             date_default_timezone_set('America/Mexico_City');
@@ -708,19 +732,21 @@ class HerramientaController extends Zend_Controller_Action{
             $table="reportes_reparacion";
             $this->_her->Updatefecha($post,$table,$hoy);
 
-
+            $table="solicitud_ordencompra";
+            $this->_her->Updatesolicitudasg($post,$table);
+            
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHerR($post,$table);
             if ($result) {
-                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
-            
+                return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idhss'].''); 
             }else{
-                print '<script language="JavaScript">';
-                print 'alert("Ocurrio un error: Comprueba los datos.");';
-                print '</script>';
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
             }
         }
-    }// End Request Reparada herramienta
+            
+    }// End Request Herramienta Reparada
 
     public function requestbajaherramientaAction(){
         $this->_helper->layout()->disableLayout();

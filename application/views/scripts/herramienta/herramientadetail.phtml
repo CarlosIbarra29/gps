@@ -274,7 +274,8 @@
 		          			</div>
 		          			<div class="col m6 s12">
 			          			<div class="input-field col m12 s12">
-			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="lrepara_h">Herramienta Reparada</a>
+			          				<a class="waves-effect darken-1 waves-light lighten-4 btn btn modal-trigger" href="#modalreparado">Herramienta Reparada</a>
+			          				<!-- <a class="waves-effect darken-1 waves-light lighten-4 btn" id="lrepara_h">Herramienta Reparada</a> -->
 			          			</div>
 		          			</div>
 		          		</div>
@@ -353,7 +354,7 @@
 <!-- Modal Baja Herramienta -->
 <div id="modalbaja" class="modal modal-fixed-footer">
 	<div class="modal-content">
-		<h4>Dar de baja herramienta</h4>
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Dar de baja herramienta</span>
 		<div class="row">
 			<form action="/herramienta/requestbajaherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_baja">
 				<?php foreach ($this->herramienta as $idher) { ?>
@@ -399,7 +400,7 @@
 <!-- Modal Reparacion Herramienta -->
 <div id="modalrepara" class="modal modal-fixed-footer">
 	<div class="modal-content">
-		<h4>Reparar Herramienta</h4>
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reparar Herramienta</span>
 		<div class="row">
 			<form action="/herramienta/requestrherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_repara">
 				<?php foreach ($this->herramienta as $idher) { ?>
@@ -425,22 +426,10 @@
 					</div>
 
 					<div class="input-field col m6 s12">
-                        <select name="solicitud" id="solicitud">
-                            <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
-                            <?php foreach ($this->solicitud as $sveh) { ?>
-                                <option value="<?php echo $sveh["id"]; ?>">Id: <?php echo $sveh["id"]; ?> Servicio: <?php echo $sveh["nombre_servicio"]; ?> Monto: $<?php echo $sveh["monto"]; ?></option>
-                            <?php } ?>
-                        </select>
-                        <label>Solicitud:</label>
-                    </div>
-
-
-
-					<!-- <div class="input-field col m6 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input type="text" id="costo" name="costo" class="validanumeros">
 						<label for="costo">Costo de Reparación:</label>
-					</div> -->
+					</div>
 
 					<div class="input-field col m12 s12">
 						<textarea id="motivo" name="motivo" class="materialize-textarea"></textarea>
@@ -452,6 +441,40 @@
     </div>
     <div class="modal-footer">
     	<button type="button" id="repara_h" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Reparacion Herramienta-->
+
+<!-- Modal  Herramienta Reparada -->
+<div id="modalreparado" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta reparada</span>
+		<div class="row">
+			<form action="/herramienta/requestherramientareparada" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_reparado">
+				<?php foreach ($this->herramienta as $idher) { ?>
+					<input type="hidden" id="idhss" name="idhss" value="<?php echo $idher["id_herramienta"]; ?>">
+				<?php } ?>
+				<div class="row">
+					<div class="input-field col m12 s12">
+						<span style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: normal;">* Asigna un Solicitud a esta reparación, para que la herramienta esté disponible.</span>
+					</div>
+
+					<div class="input-field col m12 s12">
+                        <select name="solicitud" id="solicitud">
+                            <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
+                            <?php foreach ($this->solicitud as $solicitud) { ?>
+                                <option value="<?php echo $solicitud["id"]; ?>">Id: <?php echo $solicitud["id"]; ?> solicitud: <?php echo $solicitud["descripcion"]; ?> Monto: $<?php echo $solicitud["total"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Solicitud:</label>
+                    </div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="lrepara_h" class="btn">Guardar</button>
       	<button  class="modal-close red btn">Cerrar</button>
     </div>
 </div>
@@ -618,12 +641,15 @@
 						<table class="table text-center table-hover ">
 							<thead>
 								<tr>
-									<th>Id</th>
-									<th>Mótivo</th>
+									<th>Id reparación</th>
+									<th>Motivo</th>
 									<th>Costo</th>
 									<th>Fecha Inicio</th>
 									<th>Fecha Regreso</th>
-									<th>Descargar Orden</th>
+									<th>Evidencia</th>
+									<th>Solicitud</th>
+									<th>Fecha Pago</th>
+									<th>Comprobante</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -632,13 +658,17 @@
 									<tbody>
 										<tr>
 											<td>
-												<?php echo $rep['id_herramienta']; ?>
+												<?php echo $rep['id_reporte']; ?>
 											</td>
 											<td>
 												<?php echo $rep['motivo']; ?>
 											</td>
 											<td>
-												$<?php echo $rep['costo']; ?>
+												<?php if($rep["total"]== null){ ?>
+													$<?php echo $rep['costo']; ?>
+												<?php }else{ ?>
+													$<?php echo $rep['total']; ?>
+												<?php } ?>
 											</td>
 											<td>
 												<?php echo $rep['fecha_inicio']; ?>
@@ -646,16 +676,38 @@
 											<td>
 												<?php echo $rep['fechaa']; ?>
 											</td>	
-											<?php if($rep["orden_compra"] != null){ ?>
-												<td>
-													<a title="Descargar Archivo" href="/<?php echo $rep["orden_compra"]; ?>" download="<?php echo substr(strrchr($rep["orden_compra"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
-												</td>
-											<?php }else{ ?>
-												<td>
-													Agrega Orden de gastos
-												</td>
-											<?php } ?>
-											<?php if($rep["orden_compra"] == null){ ?>
+											<td>
+												<?php if($rep["orden_compra"]== null){ ?>
+													<img src="/img/no_disponible1.png" class="responsive-img" style="width: 80px; margin-top: 5px;">
+												<?php }else{ ?>
+													<a class="example-image-link" href="/<?php echo $rep['orden_compra']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $rep['orden_compra']; ?>" id="camara_div"  style="width: 90px;  margin-top: 5px;"/></a>
+												<?php } ?>
+											</td>
+											<td>
+												<?php if($rep["id_solicitud"]== 0){ ?>
+													Sin Solicitud Asignada 
+												<?php }else{ ?>
+													<?php echo $rep['id_solicitud']; ?>
+												<?php } ?>
+											</td>
+
+											<td>
+												<?php if($rep["id_solicitud"]== 0){ ?>
+													Sin Solicitud Asignada 
+												<?php }else{ ?>
+													<?php echo $rep['fecha_pago']; ?>
+												<?php } ?>
+											</td>
+
+											<td class="text-center">
+												<?php if($rep["id_solicitud"]== 0){ ?>
+													Sin Solicitud Asignada 
+												<?php }else{ ?>
+													<a class="text-center" title="Descargar Archivo" href="/<?php echo $rep["file_pago"]; ?>" download="<?php echo substr(strrchr($rep["file_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+													<a title="Visualizar" href="/<?php echo $rep["file_pago"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
+												<?php } ?>
+											</td>
+											<?php if($rep["id_solicitud"] == 0){ ?>
 												<td>
 													<a href="/herramienta/reporteedit/id/<?php echo $rep["id_reporte"] ?>"><i class="fa fa-2x fa-edit"></i></a>
 												</td>
@@ -750,45 +802,42 @@
 	});
 
 
-  	$("#lrepara_h").click(function(){
-	  	swal({
-		  title: "¿Estas seguro que la herramienta ya esta disponible para uso?",
-		  icon: "warning",
-		  buttons: true,
-		  dangerMode: true,
-		})
-		.then((willDelete) => {
-			if (willDelete) {
-				swal("Bien! la herramienta esta en almacén", {
-					icon: "success",
-					buttons: false,
-				});
+ //  	$("#lrepara_h").click(function(){
+	//   	swal({
+	// 	  title: "¿Estas seguro que la herramienta ya esta disponible para uso?",
+	// 	  icon: "warning",
+	// 	  buttons: true,
+	// 	  dangerMode: true,
+	// 	})
+	// 	.then((willDelete) => {
+	// 		if (willDelete) {
+	// 			swal("Bien! la herramienta esta en almacén", {
+	// 				icon: "success",
+	// 				buttons: false,
+	// 			});
 
-				var	id = document.getElementById("id_herr").value;
-	            var request = $.ajax({
-	                url:"/herramienta/requestherramientareparada",
-	                method:"POST",
-	                data: { id: id },
-	                processData: true,
-	                // contentType: false,
-	            });
-			//-------------------end de ajax---------------------------
+	// 			var	id = document.getElementById("id_herr").value;
+	//             var request = $.ajax({
+	//                 url:"/herramienta/requestherramientareparada",
+	//                 method:"POST",
+	//                 data: { id: id },
+	//                 processData: true,
+	//                 // contentType: false,
+	//             });
+	//             request.done(function(response) {
+	//                 console.log(response);//imprime lo que responde el ajax
+	//                 // alert
+	//                 window.location.reload(true);
+	//             });
 
-			//-------------peticion de respuesta de ajax------------------
-	            request.done(function(response) {
-	                console.log(response);//imprime lo que responde el ajax
-	                // alert
-	                window.location.reload(true);
-	            });
-			//-------------------end de respuesta ajax---------------------
-             return false;
+ //             return false;
 
 
-	  		} else {
-	  			swal("¡Verifica antes de hacer el cambio!");
-	  		}
-	  	});
-	});
+	//   		} else {
+	//   			swal("¡Verifica antes de hacer el cambio!");
+	//   		}
+	//   	});
+	// });
 
 	$("#liberar_h").click(function(){
 	  	swal({
@@ -851,6 +900,29 @@
     	document.getElementById("submit_repara").submit()
     }
     //Validar reprar herramienta
+
+
+
+	$("#lrepara_h").click(function(){
+		var idhss = document.getElementById("idhss").value;
+
+		if(idhss == 0){
+			swal({
+				title: "Para poner disponible está herramienta, llena los campos(*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitFormReparado, 500);     
+		}    
+	}); 
+
+    function submitFormReparado() {
+    	document.getElementById("submit_reparado").submit()
+    }
+    //Validar herramienta reparado
 
 	
 
