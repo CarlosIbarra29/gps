@@ -237,7 +237,6 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->sitio = $this->_season->GetSpecific($table,$wh,$sitio);     
         $this->view->proyectos = $this->_sitio->proyectoasignarpersonal($proyecto);  
 
-
         $pagi_count = $this->_personal->getpersonalliberarcount($sitio,$proyecto);
         $count=count($pagi_count);
         $this->view->count=$count;
@@ -340,8 +339,7 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-        
-
+        // var_dump($post);exit;
         $day_uno = substr($post['fecha_inicial'], 8); 
         $mes_uno = substr($post['fecha_inicial'], 5,2); 
         $year_uno = substr($post['fecha_inicial'], 0,4); 
@@ -352,15 +350,38 @@ class PersonalController extends Zend_Controller_Action{
         $year_dos = substr($post['fecha_final'], 0,4); 
         $fecha_final = $day_dos."/".$mes_dos."/".$year_dos;
 
+        if($post['op'] == 1){
+            $id=$post['sitio'];
+            $wh="id";
+            $table="sitios";
+            $sitio = $this->_season->GetSpecific($table,$wh,$id);
+            $name_sitio = $sitio[0]['nombre'];
 
-        $id=$post['sitio'];
-        $wh="id";
-        $table="sitios";
-        $sitio = $this->_season->GetSpecific($table,$wh,$id);
-        $name_sitio = $sitio[0]['nombre'];
+            $table="personal_campo";
+            $result = $this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
+        }
 
-        $table="personal_campo";
-        $result = $this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
+        if($post['op'] == 2){
+            $name_sitio = "Compensacion";
+            $sitio= 2222222;
+            $table="personal_campo";
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+            // var_dump($result);exit;
+        }
+
+        if($post['op'] == 3){
+            $name_sitio = "Taller";
+            $sitio= 3333333;
+            $table="personal_campo";
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+        }
+
+        if($post['op'] == 4){
+            $name_sitio = "Vacaciones";
+            $sitio= 4444444;
+            $table="personal_campo";
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+        }
 
             if ($result) {
                 return $this-> _redirect('/personal/listapersonal');
