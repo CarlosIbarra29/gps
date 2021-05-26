@@ -38,6 +38,7 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->totalpage = $total_pages;
         $this->view->total=ceil($total_pages/$no_of_records_per_page);
         $this->view->paginator= $this->_personal->getpersonalcuadrilla($offset,$no_of_records_per_page,$id); 
+        // var_dump($ver);exit;
     }
 
     public function buscadorpersonalAction(){
@@ -132,8 +133,6 @@ class PersonalController extends Zend_Controller_Action{
 
 
     public function procesoasignarAction(){
-        $sitio=$this->_getParam('sitio');  $this->view->sitio_id=$sitio;
-        $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
         // FECHA INICIAL 
             $dateuno=$this->_getParam('dia_inicial'); 
             $datedos=$this->_getParam('mes_inicial'); 
@@ -149,24 +148,45 @@ class PersonalController extends Zend_Controller_Action{
             $datos_one = $dateone."/".$datetwo."/".$datethree;
             $this->view->fecha_final=$datos_one;
         // END FECHA FINAL
-        $wh="id";
-        $table="sitios";
-        $this->view->sitio = $this->_season->GetSpecific($table,$wh,$sitio);     
-        $this->view->proyectos = $this->_sitio->proyectoasignarpersonal($proyecto);  
 
-        $id=1; $status=0; $wh="status_campo";
-        $table="personal_campo";
-        $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
-        $count=count($pagi_count);
-        if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+        $op=$this->_getParam('op'); 
+        if($op == 1){
+            $sitio=$this->_getParam('sitio');  $this->view->sitio_id=$sitio;
+            $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
 
-        $no_of_records_per_page = 40;
-        $offset = ($pagina-1) * $no_of_records_per_page; 
-        $total_pages= $count;
+            $wh="id";
+            $table="sitios";
+            $this->view->sitio = $this->_season->GetSpecific($table,$wh,$sitio);     
+            $this->view->proyectos = $this->_sitio->proyectoasignarpersonal($proyecto);  
 
-        $this->view->totalpage = $total_pages;
-        $this->view->total=ceil($total_pages/$no_of_records_per_page);
-        $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
+            $id=1; $status=0; $wh="status_campo";
+            $table="personal_campo";
+            $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 40;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
+        } // END SITIOS
+
+        if($op == 2){
+            var_dump($op);exit;
+        } // END COMPENSACION
+
+        if($op == 3){
+            var_dump($op);exit;
+        } // END TALLER
+
+        if($op == 4){
+            var_dump($op);exit;
+        } // END VACACIONES
+
+
     }
 
     public function procesoliberarAction(){

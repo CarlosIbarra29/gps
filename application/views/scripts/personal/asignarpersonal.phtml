@@ -1,60 +1,209 @@
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
+
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
         <a href="/personal/listapersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
 </div>
 
+<!-- <input type="h" name=""> -->
+
 <div class="row">
 	<div class="col m2 s12"></div>
     <div class="col s12 m8">
-      <div class="card">
-        <div class="card-content">
-        	<div class="row">
-        		<div class="col m12 s12">
-        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+      	<div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Opciones</span>
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" id="sitio_op">
+							<img src="/img/correct.png" class="sitio_uno">
+							<img src="/img/gris.jpg" class="sitio_dos oculto">
+							Sitio
+						</div>
+	        		</div>
+	        		<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" id="compensacion_op">
+							<img src="/img/gris.jpg" class="comp_uno">
+							<img src="/img/correct.png" class="comp_dos oculto">
+							Compensación
+						</div>
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+
+	        		<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" id="taller_op">
+							<img src="/img/gris.jpg" class="taller_uno">
+							<img src="/img/correct.png" class="taller_dos oculto">
+							Taller
+						</div>
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" id="vacaciones_op">
+							<img src="/img/gris.jpg" class="vacaciones_uno">
+							<img src="/img/correct.png" class="vacaciones_dos oculto">
+							Vacaciones
+						</div>
+	        		</div>
+	        	</div>
+
+	        </div>
+      	</div>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
+
+
+<div class="row">
+	<div class="col m2 s12"></div>
+    <div class="col s12 m8">
+      	<div class="card">
+	        <div class="card-content" id="div_sitio">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12" >
+				  		<div class="input-field col m12 s12">
+				    		<select id="sitio" name="sitio">
+				      			<option value="0" disabled selected>* Selecciona un Sitio</option>
+				      			<?php foreach ($this->sitios as $key){ ?>
+				      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+				      			<?php } ?>
+				    		</select>
+				    		<label>Sitio:</label>
+				  		</div>
+				  		<div class="input-field col m12 s12">
+				    		<select id="proyecto" name="proyecto">
+				      			<option value="0" disabled selected>* Selecciona un Proyecto</option>
+				      			<?php foreach ($this->proyectos as $key){ ?>
+				      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+				      			<?php } ?>
+				    		</select>
+				    		<label>Proyecto:</label>
+				  		</div>
+
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_inicial" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_inicial">* Fecha Inicial</label>
+				  		</div>
+
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_final" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_final">* Fecha Final</label>
+				  		</div>
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn" id="next_step"><i class="material-icons right">navigate_next</i>Siguiente</a>
+	        		</div>
+	        	</div>
+	        </div>
+
+        	<div class="card-content oculto" id="div_compensacion">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+	        		</div>
+	        	</div>
+
+        		<div class="row">
+	        		<div class="col m12 s12">
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_inicialcom" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_inicialcom">* Fecha Inicial</label>
+				  		</div>
+
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_finalcom" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_finalcom">* Fecha Final</label>
+				  		</div>
+	        		</div>
         		</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn" id="next_compensacion"><i class="material-icons right">navigate_next</i>Siguiente</a>
+	        		</div>
+	        	</div>
+
         	</div>
 
-        	<div class="row">
-        		<div class="col m12 s12">
-			  		<div class="input-field col m12 s12">
-			    		<select id="sitio" name="sitio">
-			      			<option value="0" disabled selected>* Selecciona un Sitio</option>
-			      			<?php foreach ($this->sitios as $key){ ?>
-			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
-			      			<?php } ?>
-			    		</select>
-			    		<label>Sitio:</label>
-			  		</div>
-			  		<div class="input-field col m12 s12">
-			    		<select id="proyecto" name="proyecto">
-			      			<option value="0" disabled selected>* Selecciona un Proyecto</option>
-			      			<?php foreach ($this->proyectos as $key){ ?>
-			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
-			      			<?php } ?>
-			    		</select>
-			    		<label>Proyecto:</label>
-			  		</div>
+        	<div class="card-content oculto" id="div_taller">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+	        		</div>
+	        	</div>
 
+        		<div class="row">
+	        		<div class="col m12 s12">
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_inicialtaller" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_inicialtaller">* Fecha Inicial</label>
+				  		</div>
 
-			  		<div class="input-field col m6 s12">
-	        			<input id="fecha_inicial" name="fecha" type="text" class="datepicker">
-        				<label for="fecha_inicial">* Fecha Inicial</label>
-			  		</div>
-
-			  		<div class="input-field col m6 s12">
-	        			<input id="fecha_final" name="fecha" type="text" class="datepicker">
-        				<label for="fecha_final">* Fecha Final</label>
-			  		</div>
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_finaltaller" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_finaltaller">* Fecha Final</label>
+				  		</div>
+	        		</div>
         		</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn" id="next_taller"><i class="material-icons right">navigate_next</i>Siguiente</a>
+	        		</div>
+	        	</div>
+
         	</div>
 
-        	<div class="row">
-        		<div class="col m12 s12 text-right">
-        			<a class="btn" id="next_step"><i class="material-icons right">navigate_next</i>Siguiente</a>
-        		</div>
-        	</div>
 
+        	<div class="card-content oculto" id="div_vacaciones">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+	        		</div>
+	        	</div>
+
+        		<div class="row">
+	        		<div class="col m12 s12">
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_inicialvaca" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_inicialvaca">* Fecha Inicial</label>
+				  		</div>
+
+				  		<div class="input-field col m6 s12">
+		        			<input id="fecha_finalvaca" name="fecha" type="text" class="datepicker">
+	        				<label for="fecha_finalvaca">* Fecha Final</label>
+				  		</div>
+	        		</div>
+        		</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn" id="next_vacaciones"><i class="material-icons right">navigate_next</i>Siguiente</a>
+	        		</div>
+	        	</div>
+
+        	</div>
         </div>
       </div>
     </div>
@@ -71,32 +220,159 @@
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
   	});
 
+  	$("#sitio_op").click(function(){
+  		$(".sitio_uno").show(); $(".sitio_dos").hide();
+  		$(".comp_uno").show(); $(".comp_dos").hide();
+  		$(".taller_uno").show(); $(".taller_dos").hide();
+  		$(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+  		$("#div_sitio").show();
+  		$("#div_compensacion").hide();
+  		$("#div_taller").hide();
+  		$("#div_vacaciones").hide();
+  	});
+
+  	$("#compensacion_op").click(function(){
+  		$(".sitio_uno").hide(); $(".sitio_dos").show();
+  		$(".comp_uno").hide(); $(".comp_dos").show();
+  		$(".taller_uno").show(); $(".taller_dos").hide();
+  		$(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+  		$("#div_sitio").hide();
+  		$("#div_compensacion").show();
+  		$("#div_taller").hide();
+  		$("#div_vacaciones").hide();
+  	});
+
+  	$("#taller_op").click(function(){
+  		$(".taller_uno").hide(); $(".taller_dos").show();
+  		$(".sitio_uno").hide(); $(".sitio_dos").show();
+  		$(".comp_uno").show(); $(".comp_dos").hide();
+  		$(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+  		$("#div_sitio").hide();
+  		$("#div_compensacion").hide();
+  		$("#div_taller").show();
+  		$("#div_vacaciones").hide();
+  	});
+
+  	$("#vacaciones_op").click(function(){
+  		$(".sitio_uno").hide(); $(".sitio_dos").show();
+  		$(".comp_uno").show(); $(".comp_dos").hide();
+  		$(".taller_uno").show();  $(".taller_dos").hide();
+  		$(".vacaciones_uno").hide(); $(".vacaciones_dos").show();
+
+  		$("#div_sitio").hide();
+  		$("#div_compensacion").hide();
+  		$("#div_taller").hide();
+  		$("#div_vacaciones").show();
+  	});
+
   	$("#next_step").click(function(){
   		var sitio = document.getElementById("sitio").value;
   		var proyecto = document.getElementById("proyecto").value;
   		var fecha_inicial = document.getElementById("fecha_inicial").value;
   		var fecha_final = document.getElementById("fecha_final").value;
 
-	    	if(sitio == 0 || proyecto == 0 || fecha_inicial == "" || fecha_final == ""){
-	            swal({
-	              title: "Para continuar debes agregar llenar los datos",
-	            });
-	    	}else{
+	    if(sitio == 0 || proyecto == 0 || fecha_inicial == "" || fecha_final == ""){
+	        swal({
+	            title: "Para continuar debes agregar llenar los datos",
+	        });
+	    }else{
 
-				swal("Espere un momento, la información esta siendo procesada", {
-					icon: "success",
-					buttons: false,
-				});
-	    		var dia_uno = fecha_inicial.slice(0, -8);
-				var mes_uno = fecha_inicial.slice(3, -5);
-				var year_uno = fecha_inicial.slice(6);		
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+	    	var dia_uno = fecha_inicial.slice(0, -8);
+			var mes_uno = fecha_inicial.slice(3, -5);
+			var year_uno = fecha_inicial.slice(6);		
 
-	    		var dia_dos = fecha_final.slice(0, -8);
-				var mes_dos = fecha_final.slice(3, -5);
-				var year_dos = fecha_final.slice(6);	
+	    	var dia_dos = fecha_final.slice(0, -8);
+			var mes_dos = fecha_final.slice(3, -5);
+			var year_dos = fecha_final.slice(6);	
 
-				window.location.href = '/personal/procesoasignar/sitio/'+sitio+'/proyecto/'+proyecto+'/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'';
-	    	}
+			window.location.href = '/personal/procesoasignar/sitio/'+sitio+'/proyecto/'+proyecto+'/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'/op/1';
+	    }
 
   	});
+
+  	$("#next_compensacion").click(function(){
+  		var fecha_inicial = document.getElementById("fecha_inicialcom").value;
+  		var fecha_final = document.getElementById("fecha_finalcom").value;
+
+	    if(fecha_inicial == "" || fecha_final == ""){
+	        swal({
+	            title: "Para continuar debes agregar llenar los datos",
+	        });
+	    }else{
+
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+	    	var dia_uno = fecha_inicial.slice(0, -8);
+			var mes_uno = fecha_inicial.slice(3, -5);
+			var year_uno = fecha_inicial.slice(6);		
+
+	    	var dia_dos = fecha_final.slice(0, -8);
+			var mes_dos = fecha_final.slice(3, -5);
+			var year_dos = fecha_final.slice(6);	
+
+			window.location.href = '/personal/procesoasignar/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'/op/2';
+	    }
+  	});
+
+  	$("#next_taller").click(function(){
+  		var fecha_inicial = document.getElementById("fecha_inicialtaller").value;
+  		var fecha_final = document.getElementById("fecha_finaltaller").value;
+
+	    if(fecha_inicial == "" || fecha_final == ""){
+	        swal({
+	            title: "Para continuar debes agregar llenar los datos",
+	        });
+	    }else{
+
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+	    	var dia_uno = fecha_inicial.slice(0, -8);
+			var mes_uno = fecha_inicial.slice(3, -5);
+			var year_uno = fecha_inicial.slice(6);		
+
+	    	var dia_dos = fecha_final.slice(0, -8);
+			var mes_dos = fecha_final.slice(3, -5);
+			var year_dos = fecha_final.slice(6);	
+
+			window.location.href = '/personal/procesoasignar/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'/op/3';
+	    }
+  	});
+
+  	$("#next_vacaciones").click(function(){
+  		var fecha_inicial = document.getElementById("fecha_inicialvaca").value;
+  		var fecha_final = document.getElementById("fecha_finalvaca").value;
+
+	    if(fecha_inicial == "" || fecha_final == ""){
+	        swal({
+	            title: "Para continuar debes agregar llenar los datos",
+	        });
+	    }else{
+
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+	    	var dia_uno = fecha_inicial.slice(0, -8);
+			var mes_uno = fecha_inicial.slice(3, -5);
+			var year_uno = fecha_inicial.slice(6);		
+
+	    	var dia_dos = fecha_final.slice(0, -8);
+			var mes_dos = fecha_final.slice(3, -5);
+			var year_dos = fecha_final.slice(6);	
+
+			window.location.href = '/personal/procesoasignar/dia_inicial/'+dia_uno+'/mes_inicial/'+mes_uno+'/year_inicial/'+year_uno+'/dia_final/'+dia_dos+'/mes_final/'+mes_dos+'/year_final/'+year_dos+'/op/4';
+	    }
+  	});
+
 </script>
