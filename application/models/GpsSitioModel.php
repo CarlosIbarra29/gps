@@ -512,6 +512,28 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+    public function asignacionpersonalop($post,$table,$name_sitio,$id,$proyecto){
+        $status_cuadrilla = 1;
+        $proyec = 0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_cuadrilla = ?, sitio_tipoproyectopersonal = ?, id_sitiopersonal = ?, name_sitio = ?, fechainicio_asignacion = ?, fechafinal_asignacion = ? WHERE id = ?",array(
+                $status_cuadrilla,
+                $proyec,
+                $proyecto,
+                $name_sitio,
+                $post['fecha_inicial'],
+                $post['fecha_final'],
+                $id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function liberacionpersonalasitio($post,$table,$id){
         $status_cuadrilla = 0;
         $value = 0;

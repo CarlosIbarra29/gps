@@ -150,6 +150,7 @@ class PersonalController extends Zend_Controller_Action{
         // END FECHA FINAL
 
         $op=$this->_getParam('op'); 
+        $this->view->op_select = $op;
         if($op == 1){
             $sitio=$this->_getParam('sitio');  $this->view->sitio_id=$sitio;
             $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
@@ -175,21 +176,59 @@ class PersonalController extends Zend_Controller_Action{
         } // END SITIOS
 
         if($op == 2){
-            var_dump($op);exit;
+            $id=1; $status=0; $wh="status_campo";
+            $table="personal_campo";
+            $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 40;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
         } // END COMPENSACION
 
         if($op == 3){
-            var_dump($op);exit;
+            $id=1; $status=0; $wh="status_campo";
+            $table="personal_campo";
+            $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 40;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
         } // END TALLER
 
         if($op == 4){
-            var_dump($op);exit;
+            $id=1; $status=0; $wh="status_campo";
+            $table="personal_campo";
+            $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 40;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
         } // END VACACIONES
 
 
     }
 
     public function procesoliberarAction(){
+        $op=$this->_getParam('op');  $this->view->op_select=$op;
+
         $sitio=$this->_getParam('sitio');  $this->view->sitio_id=$sitio;
         $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
 
@@ -244,25 +283,48 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
-        // date_default_timezone_set('America/Mexico_City');
-        // $hoy = date("d-m-Y H:i:s");
-        // $id=$this->_session->id;
-        // $wh="id";
-        // $table="usuario";
-        // $usr = $this->_season->GetSpecific($table,$wh,$id);
-        // $ap_paterno = $usr[0]['ap'];
-        // $nombre_user = $usr[0]['nombre']." ".$ap_paterno;
+        if($post['op'] == 1){
+            $id=$post['sitio'];
+            $wh="id";
+            $table="sitios";
+            $sitio = $this->_season->GetSpecific($table,$wh,$id);
+            $name_sitio = $sitio[0]['nombre']; 
 
-        $id=$post['sitio'];
-        $wh="id";
-        $table="sitios";
-        $sitio = $this->_season->GetSpecific($table,$wh,$id);
-        $name_sitio = $sitio[0]['nombre'];
+            foreach ($post['ids'] as $key) {                
+                $table="personal_campo";
+                $id = $key;
+                $result = $this->_sitio->asignacionpersonalasitio($post,$table,$name_sitio,$id);  
+            }
+        }
 
-        foreach ($post['ids'] as $key) {                
-            $table="personal_campo";
-            $id = $key;
-            $result = $this->_sitio->asignacionpersonalasitio($post,$table,$name_sitio,$id);  
+        if($post['op'] == 2){
+            $name_sitio = "Compensacion";
+            $proyecto=2222222;
+            foreach ($post['ids'] as $key) {                
+                $table="personal_campo";
+                $id = $key;
+                $result = $this->_sitio->asignacionpersonalop($post,$table,$name_sitio,$id,$proyecto);  
+            }
+        }
+
+        if($post['op'] == 3){
+            $name_sitio = "Taller";
+            $proyecto=3333333;
+            foreach ($post['ids'] as $key) {                
+                $table="personal_campo";
+                $id = $key;
+                $result = $this->_sitio->asignacionpersonalop($post,$table,$name_sitio,$id,$proyecto);  
+            }
+        }
+
+        if($post['op'] == 4){
+            $name_sitio = "Vacaciones";
+            $proyecto=4444444;
+            foreach ($post['ids'] as $key) {                
+                $table="personal_campo";
+                $id = $key;
+                $result = $this->_sitio->asignacionpersonalop($post,$table,$name_sitio,$id,$proyecto);  
+            }       
         }
 
             if ($result) {
