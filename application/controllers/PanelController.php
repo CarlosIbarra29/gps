@@ -435,16 +435,16 @@ class PanelController extends Zend_Controller_Action{
             $id = $this->_getParam('id');
             $table="personal_campo";
             $wh="id";
-            $ver = $this->view->usuarios = $this->_season->GetSpecific($table,$wh,$id);
-        $table="puestos_personal";
-        $this->view->puestos = $this->_season->GetAll($table);
+            $this->view->usuarios = $this->_season->GetSpecific($table,$wh,$id);
+            $table="puestos_personal";
+            $this->view->puestos = $this->_season->GetAll($table);
 
-        $id=$this->_session->id;
-        $wh="id";
-        $table="usuario";
-        $usr = $this->_season->GetSpecific($table,$wh,$id);
-        $rol = $usr[0]['fkroles'];
-        $this->view->rol_user = $rol;
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $rol = $usr[0]['fkroles'];
+            $this->view->rol_user = $rol;
         }else {
             return $this-> _redirect('/');
         }        

@@ -186,6 +186,16 @@
 					    <label>Disponibilidad</label>
 					</div>
 
+					<div class="input-field col m6 s12">
+					    <select name="cuadrilla" id="cuadrilla">
+					      <option value="" disabled selected>* Selecciona una opcion</option>
+					      <option value="1">Si</option>
+					      <option value="0">No</option>
+					    </select>
+					    <label>Foraneo</label>
+					</div>
+
+
 			        <div class="input-field col m6 s12">
 			          <i class="material-icons prefix">event_available</i>
 			          <input id="curp" type="text" name="curp" class="validate">
@@ -460,8 +470,9 @@
         var ap = document.getElementById("ap").value;
         var am = document.getElementById("am").value;
         var email = document.getElementById("mail").value;
+        var cuadrilla = document.getElementById("cuadrilla").value;
 
-        if(status == 3 || name == "" || ap == "" || am == ""){
+        if(status == 3 || name == "" || ap == "" || am == "" || cuadrilla == ""){
             swal({
                 title: "Para agregar al personal debes llenar todos los campos marcados con un '*'",
             });
