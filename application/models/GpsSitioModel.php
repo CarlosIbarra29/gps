@@ -239,7 +239,9 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
                 'id_sitiotipo'=>$post['sitio_tipoproyecto'],
                 'file_altan'=>$urldb,
                 'user_file'=>$user,
-                'date_file'=>$hoy);
+                'date_file'=>$hoy,
+                'name_file'=>$post['name_file']
+            );
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;

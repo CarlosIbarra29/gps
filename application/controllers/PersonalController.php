@@ -339,7 +339,7 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-        // var_dump($post);exit;
+        
         $day_uno = substr($post['fecha_inicial'], 8); 
         $mes_uno = substr($post['fecha_inicial'], 5,2); 
         $year_uno = substr($post['fecha_inicial'], 0,4); 
@@ -366,7 +366,6 @@ class PersonalController extends Zend_Controller_Action{
             $sitio= 2222222;
             $table="personal_campo";
             $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
-            // var_dump($result);exit;
         }
 
         if($post['op'] == 3){
