@@ -45,7 +45,7 @@
 			<div class="row">
 			<div class="btn">
 				<span>Añade Responsiva</span>
-				<input type="file" name="url">
+				<input type="file" name="url"> 
 			</div>
 			<div class="file-path-wrapper">
 				<input class="file-path validate" type="text">
@@ -96,7 +96,8 @@
 												<?php echo $res['fecha']; ?>
 											</td>
 											<td>
-												<a title="Visualizar" href="#modal" class="modal-trigger info_res" data-id="<?php echo $res["id"] ?>" data-imagen="<?php echo $res["responsivah"];?>" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
+												<a title="Visualizar" href="/<?php echo $res["responsivah"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
+												
 											</td>	
 											<?php if($res["responsivah"] != null){ ?>
 												<td>

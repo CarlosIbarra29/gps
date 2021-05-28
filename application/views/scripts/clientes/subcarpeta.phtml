@@ -216,12 +216,12 @@
                         <a title="Visualizar" href="/<?php echo $archivo["archivo"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
                     </td>
             		<td>
-                  <?php if ($rol_user == 0 || $rol_user == 8) { ?>
+                  <?php if ($rol_user == 1 || $rol_user == 8) { ?>
                     <a href="/clientes/archivoedit2/id/<?php echo $archivo["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
                   <?php } else { } ?>
             		</td>
             		<td>
-                  <?php if ($rol_user == 0 || $rol_user == 8) { ?>
+                  <?php if ($rol_user == 1 || $rol_user == 8) { ?>
                     <a class="delete" data-id="<?php echo $archivo["id"]; ?>" data-nombre="<?php echo $archivo["nombre_archivo"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
                   <?php } else { } ?>
             		</td>

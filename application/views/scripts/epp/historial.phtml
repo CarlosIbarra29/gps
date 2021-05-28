@@ -99,7 +99,9 @@
 												<?php echo $res['fecha']; ?>
 											</td>
 											<td>
-												<a title="Visualizar" href="#modal" class="modal-trigger info_res" data-id="<?php echo $res["id_responsiva"] ?>" data-imagen="<?php echo $res["responsiva"];?>" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
+												<a title="Visualizar" href="/<?php echo $res["responsiva"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
+												
+												<!-- <a title="Visualizar" href="#modal" class="modal-trigger info_res" data-id="<?php echo $res["id_responsiva"] ?>" data-imagen="<?php echo $res["responsiva"];?>" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a> -->
 											</td>	
 											<?php if($res["responsiva"] != null){ ?>
 												<td>

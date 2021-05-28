@@ -506,7 +506,7 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
     public function Getherramientasresp($id){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT h.id_herramienta as ID, h.codigo as Código, h.nombre as Herramienta
+            $qry = $db->query("SELECT h.id_herramienta as ID, h.codigo as Código, h.nombre as Herramienta, h.fecha_salida as Entrega
                 FROM herramienta_inventario h
                 LEFT JOIN personal_campo p ON h.id_responsable = p.id 
                 WHERE h.id_responsable = ? ORDER BY h.codigo desc " ,array($id));

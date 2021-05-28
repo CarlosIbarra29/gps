@@ -1504,6 +1504,10 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos_tpodoc";
             $this->view->tpodoc = $this->_season->GetAll($table);
 
+            $table="vehiculos_tpodoc";
+            $this->view->tpod = $this->_veh->GetAdoc($table,$id);
+
+
             $id_user=$this->_session->id;
             $this->view->usuario = $id_user;
 
@@ -1516,9 +1520,6 @@ class VehiculosController extends Zend_Controller_Action{
 
             $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
-
-            // $table = "vehiculos_documentacion"; 
-            // $this->view->vigencia=$this->_veh->GetVigencias($table);
 
             $table="vehiculos_documentacion";
             $vehdct = $this->view->vehdoc = $this->_veh->GetVehiculosDoc($table,$id);
@@ -1592,46 +1593,90 @@ class VehiculosController extends Zend_Controller_Action{
         
         $nombredoc = $doc[0]['nombredoc'];
 
+        $idv = $post['idhs'];
+        $table = "vehiculos";
+            $porveh = $this->_veh->GetProcentaje($table,$idv);
+            $actual = $porveh[0]['porcentaje_doc'];
+
+
+        $table = "vehiculos_tpodoc";
+            $ndoc = $this->_veh->GetNumeroDocumentos($table);
+            $numerodoc = $ndoc[0]['numero'];
+            $porcentaje = 100/$numerodoc;
+            
+        $nuevoporcentaje = $actual + $porcentaje;
+            
+
         if($this->getRequest()->getPost()){
 
-            $table="vehiculos_documentacion";
-            $name = $_FILES['url']['name'];
-            if(empty($name)){ 
-                print '<script language="JavaScript">'; 
-                print 'alert("Agrega una imagen");'; 
-                print '</script>'; 
-            }else{
-                $bytes = $_FILES['url']['size'];
-                $res = $this->formatSizeUnits($bytes);
+            $aplicable = $post['accion'];
 
-                if($res == 0){ 
+            if ($aplicable == 1) {
+
+                $table="vehiculos_documentacion";
+                $name = $_FILES['url']['name'];
+                if(empty($name)){ 
                     print '<script language="JavaScript">'; 
-                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
                 }else{
-                    $info1 = new SplFileInfo($_FILES['url']['name']);
-                    $ext1 = $info1->getExtension();
-                    $url1 = 'pdf/vehiculosdoc/';
-                    $urldb = $url1.$info1;
-                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                    $bytes = $_FILES['url']['size'];
+                    $res = $this->formatSizeUnits($bytes);
+
+                    if($res == 0){ 
+                        print '<script language="JavaScript">'; 
+                        print 'alert("El pdf supera el maximo de tamaño");'; 
+                        print '</script>'; 
+                    }else{
+                        $info1 = new SplFileInfo($_FILES['url']['name']);
+                        $ext1 = $info1->getExtension();
+                        $url1 = 'pdf/vehiculosdoc/';
+                        $urldb = $url1.$info1;
+                        move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                    }
+                }//end de if
+
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y");
+
+                $table="vehiculos_documentacion";
+                $this->_veh->insertdoc($post,$table,$urldb,$nombredoc,$hoy);
+
+                $table="vehiculos";
+                $this->_veh->updateporcentaje($post,$table,$nuevoporcentaje);
+
+                $table="vehiculos_solicitudes";
+                $result = $this->_veh->updatesol($post,$table);
+
+                if ($result) {
+                    return $this-> _redirect('/vehiculos/documentacion/id/'.$post['idhs'].''); 
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
                 }
-            }//end de if
 
-            date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            } 
 
-            $table="vehiculos_documentacion";
-            $this->_veh->insertdoc($post,$table,$urldb,$nombredoc,$hoy);
+            if ($aplicable == 2) {
 
-            $table="vehiculos_solicitudes";
-            $result = $this->_veh->updatesol($post,$table);
+                $table="vehiculos";
+                $this->_veh->updateporcentaje($post,$table,$nuevoporcentaje);
 
-            if ($result) {
-                return $this-> _redirect('/vehiculos/documentacion/id/'.$post['idhs'].''); 
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y");
+
+                $table="vehiculos_documentacion";
+                $result = $this->_veh->insertdoc2($post,$table,$nombredoc,$hoy);
+
+                if ($result) {
+                    return $this-> _redirect('/vehiculos/documentacion/id/'.$post['idhs'].''); 
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                }
+
             }
         }
     }
@@ -1642,7 +1687,29 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
+
             $id =  $post['id'];
+            $table="vehiculos_documentacion";
+            $wh= "id";
+            $detalles = $this->_season->GetSpecific($table,$wh,$id);
+            $idv = $detalles[0]['id_vehiculo'];
+
+            $table = "vehiculos";
+            $porveh = $this->_veh->GetProcentaje($table,$idv);
+            $actual = $porveh[0]['porcentaje_doc'];
+
+
+            $table = "vehiculos_tpodoc";
+            $ndoc = $this->_veh->GetNumeroDocumentos($table);
+            $numerodoc = $ndoc[0]['numero'];
+            $porcentaje = 100/$numerodoc;
+            
+            $nuevoporcentaje = $actual - $porcentaje;
+            
+            $table="vehiculos";
+            $this->_veh->updateporcentaje2($post,$table,$nuevoporcentaje,$idv);
+            
+            // $id =  $post['id'];
             $table="vehiculos_documentacion";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
@@ -4386,6 +4453,61 @@ class VehiculosController extends Zend_Controller_Action{
             }
         }
     }
+
+
+    public function documentoeditAction(){
+        
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+
+            $table="vehiculos_documentacion";
+            $wh="id";
+            $this->view->documentoedit = $this->_season->GetSpecific($table,$wh,$id);
+
+        }else {
+            return $this-> _redirect('/');
+        }   
+    }  // END EDIT DOCUMENTO
+
+    public function requestupdatedocumentosAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true); 
+        $post = $this->getRequest()->getPost();
+
+        $vehiculo = $post['vehiculo'];
+
+        if($this->getRequest()->getPost()){
+            $table="vehiculos_documentacion";
+            $name = $_FILES['url']['name'];
+            $urldb = $post["imahidden"];
+            if(!empty($_FILES["url"]["name"])) {
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if ($res == 0) {
+                    print '<script language="JavaScript">'; 
+                    print 'alert("La imagen supera el maximo de tamaño");'; 
+                    print '</script>';
+                } else {
+                    unlink($post['imahidden']);
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'pdf/vehiculosdoc/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                }
+            }//end de if
+
+            $table="vehiculos_documentacion";
+            $result = $this->_veh->updatedocedit($post,$table,$urldb);
+            if ($result) {
+                return $this-> _redirect('/vehiculos/documentacion/id/'.$vehiculo.'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }   //END REQUEST UPDATE DOCUMENTO
 
     public function formatSizeUnits($bytes){ 
 

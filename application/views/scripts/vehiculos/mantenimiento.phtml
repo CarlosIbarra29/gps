@@ -189,13 +189,14 @@ if($this->total== 1){
                                             <?php echo $vehmto['servicio_realizado']; ?>
                                         </td>
                                         <td>
-                                            $ <?php echo $vehmto['costo']; ?>
+                                            $<?php echo $vehmto['costo']; ?>
                                         </td>
                                         <td>
                                             <?php echo $vehmto['frep']; ?>
                                         </td>
-                                        <td>
-                                            <a class="example-image-link" href="/<?php echo $vehmto['imagen_servicio']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vehmto['imagen_servicio']; ?>" id="camara_div" style="width: 90px;  margin-top: 5px;"/></a>
+                                        <td class="text-center">
+                                            <a title="Visualizar" href="/<?php echo $vehmto["imagen_servicio"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
+                                            <!-- <a class="example-image-link" href="/<?php echo $vehmto['imagen_servicio']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $vehmto['imagen_servicio']; ?>" id="camara_div" style="width: 90px;  margin-top: 5px;"/></a> -->
                                         </td>
                                         <td class="text-center">
                                             <?php if ($vehmto["id_sol"] == 0) { ?>
@@ -205,14 +206,16 @@ if($this->total== 1){
                                                 <b>Solicutud No.<?php echo $vehmto['id_sol']; ?></b>
                                             <?php } ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <?php if ($vehmto["id_sol"] == 0) { ?>
                                                 Sin Solicitud Asignada
                                             <?php } else { ?>
                                                 <?php if ($vehmto["comprobante_pago"] == null) { ?>
                                                     Aún no se ha pagado.
                                                 <?php } else { ?>
-                                                    <a title="Descargar Archivo" href="/<?php echo $vehmto["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehmto["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                                    <a title="Descargar Archivo" href="/<?php echo $vehmto["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehmto["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+
+                                                    <a title="Visualizar" href="/<?php echo $vehmto["comprobante_pago"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
                                                 <?php } ?>
                                             <?php } ?>
                                         </td>                                
@@ -278,7 +281,7 @@ if($this->total== 1){
                         <select name="solicitud" id="solicitud" required>
                             <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
                             <?php foreach ($this->solicitud as $sveh) { ?>
-                                <option value="<?php echo $sveh["id"]; ?>">Id :<?php echo $sveh["id"]; ?> Servicio: <?php echo $sveh["nombre_servicio"]; ?> Monto: $<?php echo $sveh["monto"]; ?></option>
+                                <option value="<?php echo $sveh["id"]; ?>">Id :<?php echo $sveh["id"]; ?> Servicio: <?php echo $sveh["nombre_servicio"]; ?> Monto: $<?php echo $sveh["total"]; ?></option>
                             <?php } ?>
                         </select>
                         <label>Solicitud</label>
@@ -358,7 +361,7 @@ if($this->total== 1){
         var url =  document.getElementById("url").value;
         var solicitud = document.getElementById("solicitud").value;
 
-        if(url == "" || solicitud == 0){
+        if(solicitud == 0){
             swal({
                 title: "Para asignar solicitud, llena los campos(*)",
             });
