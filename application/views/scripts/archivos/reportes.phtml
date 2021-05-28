@@ -619,12 +619,10 @@
     $('.modal').modal();
   });
 
-
   $("#all_check").click(function(){
     var reporte = document.getElementById("check_allreporte").value;
     if(reporte == 0){
       document.getElementById("check_allreporte").value = 1;
-
       document.getElementById("nombre_check").checked = true;
       document.getElementById("ap_check").checked = true;
       document.getElementById("am_check").checked = true;
@@ -639,7 +637,6 @@
       document.getElementById("puesto_check").checked = true;
     }else{
       document.getElementById("check_allreporte").value = 0;    
-
       document.getElementById("nombre_check").checked = false;
       document.getElementById("ap_check").checked = false;
       document.getElementById("am_check").checked = false;
@@ -775,7 +772,6 @@
     window.location.href = "/archivos/excelavanceproyectos/tipo/"+tipo+"";
   });
 
-
   $("#selected_generalinfo").click(function(){
     $("#selected_generalinfo").hide();
     $("#selected_generalinfouno").show();
@@ -787,7 +783,6 @@
 
     $("#reporte_personal").show();
     $("#reporte_personaldos").hide();
-    
   });
 
   $("#selected_docuno").click(function(){

@@ -290,8 +290,8 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT stp.id_tipoproyecto,stp.id_sitio,  tp.id, tp.nombre_proyecto
-            from sitios_tipoproyecto stp
-            LEFT join tipo_proyecto tp on stp.id=tp.id where id_sitio = ?",array($id));
+                        FROM sitios_tipoproyecto stp
+                        LEFT JOIN tipo_proyecto tp on stp.id=tp.id where id_sitio = ?",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -352,9 +352,10 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT dc.id as commitid, dc.id_sitiotipo, dc.id_usuario, dc.comentario, 
-                u.id, u.nombre, u.ap
-                From detalle_comentarios dc LEFT JOIN usuario u on u.id=dc.id_usuario 
-                where dc.id_sitiotipo = ? ",array($tipo));
+                        u.id, u.nombre, u.ap
+                        From detalle_comentarios dc 
+                        LEFT JOIN usuario u on u.id=dc.id_usuario 
+                        WHERE dc.id_sitiotipo = ? ",array($tipo));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -367,13 +368,14 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tp.id, tp.nombre_proyecto,  stp.id as idtipo, stp.id_tipoproyecto,
-                stp.nombre_coordinador,stp.nombre_ingproyecto, stp.id_sitio, stp.status_cliente, 
-                stp.status_proyecto,stp.fecha_inicio,stp.porcentaje_proyecto ,sc.id, sc.nombre_status 
-                as statuscliente, sp.id, sp.nombre_status as statusproyecto
-                    FROM tipo_proyecto tp
-                    LEFT JOIN sitios_tipoproyecto stp on tp.id = stp.id_tipoproyecto
-                    LEFT JOIN status_cliente sc on sc.id = stp.status_cliente
-                    LEFT JOIN status_proyecto sp on sp.id = stp.status_proyecto where stp.id_sitio= ? ;",array($id));
+                        stp.nombre_coordinador,stp.nombre_ingproyecto, stp.id_sitio, stp.status_cliente, 
+                        stp.status_proyecto,stp.fecha_inicio,stp.porcentaje_proyecto ,sc.id, sc.nombre_status 
+                        as statuscliente, sp.id, sp.nombre_status as statusproyecto
+                        FROM tipo_proyecto tp
+                        LEFT JOIN sitios_tipoproyecto stp on tp.id = stp.id_tipoproyecto
+                        LEFT JOIN status_cliente sc on sc.id = stp.status_cliente
+                        LEFT JOIN status_proyecto sp on sp.id = stp.status_proyecto 
+                        WHERE stp.id_sitio= ? ;",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -692,7 +694,9 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
     public function Getcomentariossitioid($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT c.id, c.id_sitio, c.comentarios, c.created_at FROM comentarios_sitios c where c.id_sitio = ? ORDER BY id DESC",array($id));
+            $qry = $db->query("SELECT c.id, c.id_sitio, c.comentarios, c.created_at 
+                        FROM comentarios_sitios c 
+                        WHERE c.id_sitio = ? ORDER BY id DESC",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -704,7 +708,8 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
     public function Getpaginationcotizacionservicio($id,$table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT * FROM $table WHERE sitio_id = ? LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT * FROM $table WHERE sitio_id = ? 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -716,7 +721,8 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
     public function Getpaginationcotizacionpo($id,$table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT * FROM $table WHERE id_sitiopo = ? LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT * FROM $table WHERE id_sitiopo = ? 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -729,9 +735,9 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, 
-                tp.nombre_proyecto
-                FROM sitios_tipoproyecto tis
-                LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id where tis.id_sitio =?",array($id));
+                        tp.nombre_proyecto
+                        FROM sitios_tipoproyecto tis
+                        LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id where tis.id_sitio =?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -744,10 +750,10 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, 
-                                tp.nombre_proyecto, s.nombre, s.id_cliente
-                                FROM sitios_tipoproyecto tis
-                                LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id 
-                                LEFT JOIN sitios s on s.id = tis.id_sitio ORDER BY s.nombre ASC");
+                        tp.nombre_proyecto, s.nombre, s.id_cliente
+                        FROM sitios_tipoproyecto tis
+                        LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id 
+                        LEFT JOIN sitios s on s.id = tis.id_sitio ORDER BY s.nombre ASC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -761,10 +767,10 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, 
-                tp.nombre_proyecto, s.nombre, s.id_cliente
-                FROM sitios_tipoproyecto tis
-                LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id 
-                LEFT JOIN sitios s on s.id = tis.id_sitio where tis.id = ?",array($proyecto));
+                        tp.nombre_proyecto, s.nombre, s.id_cliente
+                        FROM sitios_tipoproyecto tis
+                        LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id 
+                        LEFT JOIN sitios s on s.id = tis.id_sitio where tis.id = ?",array($proyecto));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -778,10 +784,11 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT s.id, s.idgps,s.id_cliente,s.nombre, s.cliente,s.direccion,s.ciudad,
-                    s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio, s.latitude, 
-                    s.longitude, st.id_sitio, st.ingproyecto_id
-                From sitios s 
-                LEFT JOIN sitios_tipoproyecto st on s.id= st.id_sitio where st.ingproyecto_id = ?",array($id));
+                        s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio, s.latitude, 
+                        s.longitude, st.id_sitio, st.ingproyecto_id
+                        From sitios s 
+                        LEFT JOIN sitios_tipoproyecto st on s.id= st.id_sitio 
+                        WHERE st.ingproyecto_id = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -794,10 +801,11 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT s.id, s.idgps, s.id_cliente, s.nombre, s.cliente,s.direccion,s.ciudad, 
-                s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio,s.latitude,s.longitude,
-                st.id_sitio, st.ingproyecto_id
-                from sitios s 
-                LEFT JOIN sitios_tipoproyecto st on s.id= st.id_sitio where st.ingproyecto_id = ? LIMIT $offset,$no_of_records_per_page",array($id));
+                        s.estado, s.region, s.estructura, s.altura, s.edificio, s.tipo_sitio,s.latitude,s.longitude,
+                        st.id_sitio, st.ingproyecto_id
+                        FROM sitios s 
+                        LEFT JOIN sitios_tipoproyecto st on s.id= st.id_sitio 
+                        WHERE st.ingproyecto_id = ? LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -822,10 +830,10 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT p.id, p.nombre,p.apellido_pa, p.apellido_ma, p.telefono, 
-                            p.email_personal, p.status_personal, p.name_sitio, p.status_operativo,
-                            p.id_sitiopersonal,p.curp,p.nss,p.rfc, pp.nombre as puesto
-                            FROM personal_campo p
-                            LEFT JOIN puestos_personal pp on p.puesto = pp.id;");
+                        p.email_personal, p.status_personal, p.name_sitio, p.status_operativo,
+                        p.id_sitiopersonal,p.curp,p.nss,p.rfc, pp.nombre as puesto
+                        FROM personal_campo p
+                        LEFT JOIN puestos_personal pp on p.puesto = pp.id;");
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -838,10 +846,10 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma, p.telefono,
-                p.email_personal, p.status_personal, p.name_sitio, p.status_operativo, p.id_sitiopersonal, 
-                p.rfc, p.curp, p.nss, pp.nombre as puesto
-                FROM personal_campo p
-                LEFT JOIN puestos_personal pp on p.puesto = pp.id where p.id_sitiopersonal = ?",array($id));
+                        p.email_personal, p.status_personal, p.name_sitio, p.status_operativo, p.id_sitiopersonal, 
+                        p.rfc, p.curp, p.nss, pp.nombre as puesto
+                        FROM personal_campo p
+                        LEFT JOIN puestos_personal pp on p.puesto = pp.id where p.id_sitiopersonal = ?",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -854,19 +862,19 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT db.id,db.id_sitiotipo,s.id_cliente,s.nombre, db.ttv_baseline, 
-                db.ttv_forecast, db.ttv_actual, db.muestreo_baseline, db.muestreo_forecast, 
-                db.muestreo_actual, db.proyectopreliminar_baseline, db.proyectopreliminar_forecast, 
-                db.proyectopreliminar_actual, db.redlines, db.mspreliminar_baseline,db.mspreliminar_forecast,
-                db.mspreliminar_actual,db.msfinal_baseline, db.msfinal_forecast, db.msfinal_actual,
-                db.proyectofinal_baseline, db.proyectofinal_forecast,db.proyectofinal_actual, 
-                db.inicioobra_baseline, db.inicioobra_forecast,db.inicioobra_actual,db.terminoobra_baseline,
-                db.terminoobra_forecast, db.terminoobra_actual, 
-                st.id_sitio, sp.nombre_status
-                FROM detalle_bts db
-                INNER JOIN sitios_tipoproyecto st on db.id_sitiotipo = st.id
-                INNER JOIN sitios s on s.id = st.id_sitio
-                INNER JOIN status_proyecto sp on sp.id =st.status_proyecto
-                WHERE sp.id != 77 AND st.id_tipoproyecto = ?", array($proyecto));
+                        db.ttv_forecast, db.ttv_actual, db.muestreo_baseline, db.muestreo_forecast, 
+                        db.muestreo_actual, db.proyectopreliminar_baseline, db.proyectopreliminar_forecast, 
+                        db.proyectopreliminar_actual, db.redlines, db.mspreliminar_baseline,db.mspreliminar_forecast,
+                        db.mspreliminar_actual,db.msfinal_baseline, db.msfinal_forecast, db.msfinal_actual,
+                        db.proyectofinal_baseline, db.proyectofinal_forecast,db.proyectofinal_actual, 
+                        db.inicioobra_baseline, db.inicioobra_forecast,db.inicioobra_actual,db.terminoobra_baseline,
+                        db.terminoobra_forecast, db.terminoobra_actual, 
+                        st.id_sitio, sp.nombre_status
+                        FROM detalle_bts db
+                        INNER JOIN sitios_tipoproyecto st on db.id_sitiotipo = st.id
+                        INNER JOIN sitios s on s.id = st.id_sitio
+                        INNER JOIN status_proyecto sp on sp.id =st.status_proyecto
+                        WHERE sp.id != 77 AND st.id_tipoproyecto = ?", array($proyecto));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;

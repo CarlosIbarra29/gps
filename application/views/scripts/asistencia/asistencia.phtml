@@ -18,14 +18,12 @@
 	<div class="col m1 s12"></div>
 	<div class="col m10 s12">
 		<div class="row">
-
 			<div class="col m4 s6 text-right">
 		        <div class="input-field col m12 s12">
 		          <input type="time" id="todos" value="" oninput="actualizarValorMunicipioInm()">
 		          <label for="todos">Hora de entrada</label>
 		        </div>
 			</div>
-
 			<div class="col m4 s6">
 			    <div class="file-field input-field">
 			      <div class="btn">
@@ -130,7 +128,6 @@
 <script src="/js/lightbox.js"></script>
 <script src="/js/materialize.min.js"></script>
 <script type="text/javascript">
-
   	$(document).ready(function(){
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
     	$('select').formSelect();
@@ -139,7 +136,6 @@
 
     	var currentDate = document.getElementById("today_picker").value; 
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
-
   	});
 
     function actualizarValorMunicipioInm() {
@@ -149,7 +145,6 @@
 
     $("#hora_extrapersonal").click(function(){
         var actividad = document.getElementById("actividad").value;
-
         if(actividad == ""){
             swal({
             	title: "Para agregar un imagen debes seleccionar una tarea ",
@@ -164,5 +159,4 @@
     });
 
     function submitpersonal() { document.getElementById("submit_asignar").submit() }
-
 </script>
