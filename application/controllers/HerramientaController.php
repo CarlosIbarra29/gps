@@ -484,7 +484,7 @@ class HerramientaController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHer($post,$table,$hoy);
             if ($result) {
@@ -759,7 +759,7 @@ class HerramientaController extends Zend_Controller_Action{
                 $personal = $post['idr'];
                 $table="cobro_herramientas";
                 date_default_timezone_set('America/Mexico_City');
-                $hoy = date("d-m-Y");
+                 $hoy = date("d-m-Y H:i:s");
                 $a= $this->_her->InsertCobrohd($post,$table,$hoy,$personal);
 
 
@@ -1181,7 +1181,7 @@ class HerramientaController extends Zend_Controller_Action{
             }
 
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+             $hoy = date("d-m-Y H:i:s");
             $table="responsivah";
 
             $result = $this->_her->insertresponsivah($post,$table,$urldb,$hoy);

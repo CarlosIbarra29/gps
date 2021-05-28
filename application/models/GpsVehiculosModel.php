@@ -8,7 +8,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.id_responsable, 
-                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior,
+                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.porcentaje_doc,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo,
                 IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma 
                 FROM vehiculos v 
@@ -44,7 +44,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.id_responsable,
-                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior,
+                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.porcentaje_doc,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo,
                 IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma 
                 FROM vehiculos v 
@@ -81,7 +81,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.id_responsable,
-                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior,
+                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.porcentaje_doc,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo,
                 IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma 
                 FROM vehiculos v 
@@ -118,7 +118,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.id_responsable,
-                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior,
+                v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.porcentaje_doc,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo,
                 IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma 
                 FROM vehiculos v 
@@ -180,6 +180,66 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }// END UPDATE VEHICULO
+
+
+    public function GetAdoc($table,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT *
+from vehiculos_tpodoc vt 
+where id not in ( 
+    SELECT vt.id
+    from vehiculos_tpodoc vt
+    left JOIN vehiculos_documentacion vd ON vd.tipo_doc = vt.id
+    where id_vehiculo = $id and vd.status = 0 OR id_vehiculo = $id and vd.status = 2
+) ");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function GetNumeroDocumentos($table){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT count(*) as numero FROM $table");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function GettpDocumentos($table,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM vehiculos_tpodoc vt
+                LEFT JOIN vehiculos_documentacion vd ON vd.tipo_doc = vt.id
+                WHERE id_vehiculo = $id ");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function GetProcentaje($table,$idv){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT porcentaje_doc FROM $table where id_vehiculos = $idv");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    
 
     public function GetVehiculos($table,$id){
         try{
@@ -429,6 +489,60 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }// END INSERT Documentacion
+
+
+    public function insertdoc2($post,$table,$nombredoc,$hoy){
+        $statusv =2;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'status'=>$statusv,
+                'id_vehiculo'=>$post['idhs'],
+                'fecha'=>$hoy,
+                'tipo_doc'=>$post['nombred'],
+                'nombre_doc'=>$nombredoc,
+                'vigencia'=>$post['vigencia'],
+                'id_sol'=>$post['solicitud'],
+                'comentarios'=>$post['comentarios']
+            );
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT Documentacion
+
+    public function updateporcentaje($post,$table,$nuevoporcentaje){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET  porcentaje_doc = ? WHERE id_vehiculos = ?",array(
+                $nuevoporcentaje,
+                $post["idhs"]
+            ));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  ACTUALIZAR Porcentaje +
+
+     public function updateporcentaje2($post,$table,$nuevoporcentaje,$idv){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET  porcentaje_doc = ? WHERE id_vehiculos = ?",array(
+                $nuevoporcentaje,
+                $idv
+            ));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  ACTUALIZAR Porcentaje -
+
 
     public function updateAsgSol($post,$table,$urldb){
         try {
@@ -792,7 +906,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
             LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vd.id_sol
-            WHERE vd.id_vehiculo = ? AND vd.status = 0",array($id));
+            WHERE vd.id_vehiculo = ? AND vd.status = 0 OR vd.id_vehiculo = $id AND vd.status = 2",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -810,7 +924,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
             LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vd.id_sol
-            WHERE vd.id_vehiculo = $id AND vd.status = 0 LIMIT $offset,$no_of_records_per_page");
+            WHERE vd.id_vehiculo = $id AND vd.status = 0 OR vd.id_vehiculo = $id AND vd.status = 2 LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -860,7 +974,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
 
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, 
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.total, 
                 vs.status_solicitud, vs.id_proveedor, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
                 vs.monto, vs.status_comprobante, vs.status_asignada, vs.fecha_validacion, p.nombre as nombrer, 
                 p.apellido_pa as apr, p.apellido_ma as amr, sv.nombre_servicio, pr.nombre_prov, vp.fecha_pago, vp.comprobante_pago,
@@ -889,7 +1003,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 v.color, v.placas, vm.veh_rep, vm.id_sol, vp.comprobante_pago,  vp.monto as MontoPagado
                 FROM vehiculos_manto vm 
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vm.id_vehiculo
-                LEFT JOIN vehiculos_pagos vp ON vp.id = vm.id_sol
+                LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vm.id_sol
                 WHERE vm.id_vehiculo = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
@@ -902,14 +1016,14 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
     public function GetpaginationMto($table,$offset,$no_of_records_per_page,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT vm.id_manto, vm.status_veh, vm.id_vehiculo, vm.tipo_manto,
+            $qry = $db->query("SELECT vm.id_manto, vm.status_veh, vm.id_vehiculo, vm.tipo_manto, 
                 IF(vm.tipo_manto =1 ,'Mantenimiento Preventivo','Mantenimiento Correctivo') AS tmanto, vm.fecha_manto,
                 vm.fecha_rep, IF(vm.fecha_rep IS NULL,'Vehículo en mantenimiento', vm.fecha_rep) AS frep, vm.kilometraje,
                 vm.servicio_realizado, vm.costo, vm.comprobante_servicio, vm.imagen_servicio, v.marca, v.submarca, v.modelo, 
                 v.color, v.placas, vm.veh_rep, vm.id_sol, vp.comprobante_pago,  vp.monto as MontoPagado
                 FROM vehiculos_manto vm 
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vm.id_vehiculo
-                LEFT JOIN vehiculos_pagos vp ON vp.id = vm.id_sol
+                LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vm.id_sol
                 WHERE vm.id_vehiculo = $id LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
@@ -931,7 +1045,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 FROM vehiculos_incidentes vi
                 LEFT JOIN personal_campo pc ON pc.id = vi.id_personal
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vi.id_vehiculo
-                LEFT JOIN vehiculos_pagos vp ON vp.id = vi.id_sol
+                LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vi.id_sol
                 WHERE vi.id_vehiculo = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
@@ -954,7 +1068,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 FROM vehiculos_incidentes vi
                 LEFT JOIN personal_campo pc ON pc.id = vi.id_personal
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vi.id_vehiculo
-                LEFT JOIN vehiculos_pagos vp ON vp.id = vi.id_sol
+                LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vi.id_sol
                 WHERE vi.id_vehiculo = $id LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
@@ -1898,4 +2012,21 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE Status Solicitud a Aceptada
 
+
+    public function updatedocedit($post,$table,$urldb){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET vigencia = ?, documento = ?, comentarios = ? WHERE id = ? ",
+                array(
+                    $post['vigencia'],
+                    $urldb,
+                    $post['comentarios'],
+                    $post['iddocumento']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   // END UPDATE DOCUMENTO
 } 

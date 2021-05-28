@@ -350,6 +350,7 @@ if($this->total== 1){
 					<th>Placas</th>
 					<th>Grupo</th>
 					<th>Asignado a:</th>
+					<th>% Documentación</th>
 					<th>Status</th>
 					<th></th>
 					<th></th>
@@ -369,11 +370,33 @@ if($this->total== 1){
 							<td><?php echo $veh["grupo"]; ?></td>
 							<td>
 								<?php if($veh['id_responsable'] == 0){ ?>
-									Sin Asignar
+									<b>Sin Asignar</b>
 								<?php } else { ?>
-									<?php echo $veh["nombrea"]; ?> <?php echo $veh["apellido_pa"]; ?>
+									<b><?php echo $veh["nombrea"]; ?> <?php echo $veh["apellido_pa"]; ?></b>
 								<?php } ?>
 									
+							</td>
+							<td>
+								<?php if($veh["porcentaje_doc"] == 0){ ?>
+									<div class="progress">
+										<div class="determinate orange" style="width: 0%"></div>
+	  								</div>
+	  										<b>0%</b>
+								
+
+								<?php } else if ($veh["porcentaje_doc"] >= 90) { ?>
+									<div class="progress">
+	      								<div class="determinate green" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
+	  								</div>
+	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
+								
+								<?php } else if ($veh["porcentaje_doc"] >= 1 || $veh["porcentaje_doc"] < 90) { ?>
+									<div class="progress">
+	      								<div class="determinate orange" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
+	  								</div>
+	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
+								<?php } ?>
+
 							</td>
 							<td>
 								<?php if($veh['id_status'] == 0){ ?>

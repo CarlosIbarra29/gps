@@ -397,6 +397,7 @@ function isActhref($nameBtn,$urlname){
 					<th>Placas</th>
 					<th>Grupo</th>
 					<th>Asignado a:</th>
+					<th>% Documentación</th>
 					<th>Status</th>
 					<th></th>
 					<th></th>
@@ -420,6 +421,28 @@ function isActhref($nameBtn,$urlname){
 								<?php } else { ?>
 									<?php echo $veh["nombrea"]; ?> <?php echo $veh["apellido_pa"]; ?>
 								<?php } ?>
+							</td>
+							<td>
+								<?php if($veh["porcentaje_doc"] == 0){ ?>
+									<div class="progress">
+										<div class="determinate orange" style="width: 0%"></div>
+	  								</div>
+	  										<b>0%</b>
+
+								<?php } else if ($veh["porcentaje_doc"] >= 90) { ?>
+									<div class="progress">
+	      								<div class="determinate green" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
+	  								</div>
+	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
+								
+								<?php } else if ($veh["porcentaje_doc"] >= 1 || $veh["porcentaje_doc"] < 90) { ?>
+									<div class="progress">
+	      								<div class="determinate orange" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
+	  								</div>
+	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
+								<?php } ?>
+
+							</td>
 							<td>
 								<?php if($veh['id_status'] == 0){ ?>
 									<div class="chip" id="disponible">

@@ -67,10 +67,6 @@ if($this->total== 1){
     .table_wrapper{
         overflow-x: auto;
     }
-
-    .oculto{
-        display: none;
-    }
 </style>
 
 
@@ -113,16 +109,8 @@ if($this->total== 1){
                 <?php } ?> 
 
                 <div class="row">
-                    <div class="input-field col m12 s12">
-                        <select name="accion" id="accion" required>
-                            <option value="" disabled selected>¿La documentación aplica en este vehículo?</option>
-                            <option value="1">Aplica</option>
-                            <option value="2">No Aplica</option>
-                        </select>
-                        <label>¿Aplica?</label>
-                    </div>
 
-                    <div id="docd" class="file-field input-field col m12 s12 oculto">
+                    <div class="file-field input-field col m12 s12">
                         <div class="btn">
                             <span>Agregar Documento</span>
                             <input type="file" name="url" required>
@@ -138,10 +126,10 @@ if($this->total== 1){
                         <label for="fecha">*Fecha: dd/mm/yyyy</label>
                     </div> -->
 
-                    <div id="tdocd" class="input-field col m6 s12 oculto">
+                    <div class="input-field col m6 s6">
                         <select name="nombred" id="nombred" required>
                             <option value="" disabled selected>Selecciona Tipo de Documento:</option>
-                            <?php foreach ($this->tpod as $tipodoc) { ?>
+                            <?php foreach ($this->tpodoc as $tipodoc) { ?>
                                 <option value="<?php echo $tipodoc["id"]; ?>"><?php echo $tipodoc["nombredoc"]; ?></option>
                             <?php } ?>
                         </select>
@@ -149,7 +137,7 @@ if($this->total== 1){
                     </div>
 
 
-                    <div id="vigd" class="input-field col m6 s12 oculto">
+                    <div class="input-field col m6 s12">
                         <i class="material-icons prefix">today</i>
                         <input type="date" id="vigencia" name="vigencia"  class="validate">
                         <label for="vigencia">*Vigencia: dd/mm/yyyy</label>
@@ -165,7 +153,7 @@ if($this->total== 1){
                         <label>Solicitud:</label>
                     </div> -->
 
-                    <div id="sold" class="input-field col m6 s12 oculto">
+                    <div class="input-field col m6 s6">
                         <select name="solicitud" id="solicitud">
                             <option value="" disabled selected>Selecciona la solicitud que le corresponde:</option>
                             <?php foreach ($this->solicitud as $sveh) { ?>
@@ -175,7 +163,7 @@ if($this->total== 1){
                         <label>Solicitud:</label>
                     </div>
 
-                    <div id="comd" class="input-field col m6 s12 oculto">
+                    <div class="input-field col m6 s12">
                         <textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
                         <label for="comentarios">Comentarios: </label>
                     </div>
@@ -254,128 +242,14 @@ if($this->total== 1){
 
 
 <!-- Inicio Tabla Documentacion -->
-<!-- <div class="col m2 s2 text-center">
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card darken-1">
-                <div class="card-content">
-                    <div class="row table_wrapper">
-                        <table class="table text-center table-hover ">
-                            <thead>
-                                <tr>
-                                    <th>Tipo Documento</th>
-                                </tr>
-                            </thead>
-                            <?php if ($this->tpodoc) { 
-                            foreach ($this->tpodoc as $tipc) { ?>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <?php foreach ($this->vehdoc as $c) { $checkl = $c['tipo_doc']; ?>
-                                            
-                                                <?php if($tipc['id'] == $checkl ) { ?> 
-                                                    <?php $tpo = ($checkl) ? true : false;   ?> 
-
-                                                        <input type="checkbox" checked="<?php print $tpo; ?>" disabled name="tipos">
-                                                        <span><?php echo $tipc['nombredoc']; ?></span>
-
-                                                <?php }  ?> 
-                                            <?php } ?>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            <?php } }else{ ?>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td> No existe documentación este vehículo.</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            <?php } ?>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>  -->
-<!-- End Tabla Documentacion-->
-
-
-<div class="col m2 s4 text-center">
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card darken-1">
-                <div class="card-content">
-                    <div class="row ">
-                        <table class="table text-center table-hover ">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Documentos Faltantes</th>
-                                </tr>
-                            </thead>
-                            <?php if ($this->tpod) { 
-                            foreach ($this->tpod as $tipc) { ?>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox"  disabled name="tipos">
-                                            <span><?php echo $tipc['nombredoc']; ?></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            <?php } }else{ ?>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center"> Ninguno</td>
-                                    </tr>
-                                </tbody>
-                            <?php } ?>
-                        </table>
-                        <table class="table text-center table-hover ">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Documentos Agregados</th>
-                                </tr>
-                            </thead>
-                            <?php if ($this->vehdoc) { 
-                            foreach ($this->vehdoc as $completo) { ?>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" checked="<?php print $tpo; ?>" disabled name="tipos">
-                                            <span><?php echo $completo['nombre_doc']; ?></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            <?php } }else{ ?>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center"> Ninguno</td>
-                                    </tr>
-                                </tbody>
-                            <?php } ?>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> 
-
-
-<!-- Inicio Tabla Documentacion -->
-<div class="col m10 s8 text-center">
+<div class="col m12 s12 text-center">
     <div class="row">
         <div class="col s12 m12">
             <div class="card darken-1">
                 <div class="card-content">
 
                     <div class="row">
-                        <div style="padding: 1rem 1rem 1rem 1rem;" class="col m6 s8 text-left">
+                        <div style="padding: 1rem 1rem 1rem 1rem;" class="col m6 s6 text-left">
                             <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación del vehículo  
                         </div>
                         <div class="col m6 s6 text-right">
@@ -415,97 +289,71 @@ if($this->total== 1){
                                             <?php echo $vehd['nombre_doc']; ?>
                                         </td>
                                         <td>
-                                            <?php if ($vehd['vigencia'] == "") { ?>
-                                                No Aplica
-                                            <?php } else { ?>
-                                                <?php echo $vehd['vigencia']; ?>
-                                            <?php } ?>
+                                            <?php echo $vehd['vigencia']; ?>
                                         </td>
                                         <td class="text-center">
-                                            <?php if ($vehd['vigencia'] == "") { ?>
-                                                No Aplica
-                                            <?php } else { ?>
-                                                <?php if ($vehd['diasvigencia'] == true) { ?>
+                                            <?php if ($vehd['diasvigencia'] == true) { ?>
 
-                                                    Por Vencer/Vencida<br/>
+                                                Por Vencer/Vencida<br/>
+
+                                                <a class="text-center modal-trigger info_res" title="Actualiza Documento" href="#modalactualiza" data-id="<?php echo $vehd["id"] ?>" data-tpo="<?php echo $vehd["tipo_doc"] ?>" data-nombre="<?php echo $vehd["nombre_doc"] ?>"style="color: blue; font-size:8px;"> 
+                                                    <i class="material-icons">sync</i> 
+                                                </a><br/>
+                                                
+                                                <b>Actualiza el documento</b><br />
+                                             
+                                            <?php } else { ?>
+                                                
+                                                <?php if (date("Y-m-d",strtotime($vehd['vigencia']."- 1 days")) <= date("Y-m-d",strtotime(date("Y-m-d")."- 31 days"))) { ?>
+                                                     Por Vencer/Vencida<br/>
 
                                                     <a class="text-center modal-trigger info_res" title="Actualiza Documento" href="#modalactualiza" data-id="<?php echo $vehd["id"] ?>" data-tpo="<?php echo $vehd["tipo_doc"] ?>" data-nombre="<?php echo $vehd["nombre_doc"] ?>"style="color: blue; font-size:8px;"> 
                                                         <i class="material-icons">sync</i> 
                                                     </a><br/>
                                                     
                                                     <b>Actualiza el documento</b><br />
-                                                 
+                                                
+                                                <!--  <?php echo date("d-m-Y",strtotime($vehd['vigencia']."- 1 days")) ?>  
+                                                 <?php echo date("d-m-Y",strtotime(date("d-m-Y")."- 31 days")) ?> -->
+
+
                                                 <?php } else { ?>
-                                                    <?php if (date("Y-m-d",strtotime($vehd['vigencia']."- 1 days")) <= date("Y-m-d",strtotime(date("Y-m-d")."- 31 days"))) { ?>
-                                                         Por Vencer/Vencida<br/>
-
-                                                        <a class="text-center modal-trigger info_res" title="Actualiza Documento" href="#modalactualiza" data-id="<?php echo $vehd["id"] ?>" data-tpo="<?php echo $vehd["tipo_doc"] ?>" data-nombre="<?php echo $vehd["nombre_doc"] ?>"style="color: blue; font-size:8px;"> 
-                                                            <i class="material-icons">sync</i> 
-                                                        </a><br/>
-                                                        
-                                                        <b>Actualiza el documento</b><br />
-                                                    
-                                                    <!--  <?php echo date("d-m-Y",strtotime($vehd['vigencia']."- 1 days")) ?>  
-                                                     <?php echo date("d-m-Y",strtotime(date("d-m-Y")."- 31 days")) ?> -->
-
-
-                                                    <?php } else { ?>
-                                                        <?php echo $vehd['statusd']; ?>
-                                                        <!-- <?php echo date("d-m-Y",strtotime($vehd['vigencia']."- 31 days")) ?>  
-                                                        <?php echo date("d-m-Y") ?> -->  
-                                                    <?php } ?>
+                                                    <?php echo $vehd['statusd']; ?>
+                                                    <!-- <?php echo date("d-m-Y",strtotime($vehd['vigencia']."- 31 days")) ?>  
+                                                    <?php echo date("d-m-Y") ?> -->  
                                                 <?php } ?>
-                                            <?php } ?>        
-                                            <!-- if (date("d-m-Y",strtotime($vehd['vigencia']."- 1 days")) >= date("d-m-Y",strtotime(date("d-m-Y")."- 31 days")) -->
+                                            <?php } ?>
                                         </td>
                                         <td>
-                                            <?php if ($vehd['vigencia'] == "") { ?>
-                                                <b>El documento no aplica en este vehículo</b>
+                                            <?php if ($vehd["id_sol"] == 0) { ?>
+                                                <b>Sin Solicitud Asignada</b>
                                             <?php } else { ?>
-                                                <?php if ($vehd["id_sol"] == 0) { ?>
-                                                    <b>Sin Solicitud Asignada</b>
-                                                <?php } else { ?>
-                                                    <b>Solicitud No.<?php echo $vehd['id_sol']; ?></b>
-                                                <?php } ?>
+                                                <b>Solicitud No.<?php echo $vehd['id_sol']; ?></b>
                                             <?php } ?>
                                         </td> 
                                          <td>
                                             <?php echo $vehd['comentarios']; ?>
                                         </td>
                                         <td>
-                                            <?php if ($vehd['vigencia'] == "") { ?>
-                                                No aplica
+                                            <?php if ($vehd["id_sol"] == 0) { ?>
+                                                No cuenta con solicitud.
                                             <?php } else { ?>
-                                                <?php if ($vehd["id_sol"] == 0) { ?>
-                                                    No cuenta con solicitud.
+                                                <?php if ($vehd["comprobante_pago"] == null) { ?>
+                                                    Aún no se ha pagado.
                                                 <?php } else { ?>
-                                                    <?php if ($vehd["comprobante_pago"] == null) { ?>
-                                                        Aún no se ha pagado.
-                                                    <?php } else { ?>
-                                                        <a title="Descargar Archivo" href="/<?php echo $vehd["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehd["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
-                                                    <?php } ?>
+                                                    <a title="Descargar Archivo" href="/<?php echo $vehd["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehd["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
                                                 <?php } ?>
-                                            <?php } ?> 
+                                            <?php } ?>
                                         </td> 
                                         <td>
-                                            <?php if ($vehd['vigencia'] == "") { ?>
-                                                
-                                            <?php } else { ?>
-                                                <a title="Descargar Archivo" href="/<?php echo $vehd["documento"]; ?>" download="<?php echo substr(strrchr($vehd["documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
-                                           
-                                                <a title="Visualizar" href="/<?php echo $vehd["documento"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
-
-                                            <?php } ?>
+                                            <a title="Descargar Archivo" href="/<?php echo $vehd["documento"]; ?>" download="<?php echo substr(strrchr($vehd["documento"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                       
+                                            <a title="Visualizar" href="/<?php echo $vehd["documento"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons left">gamepad</i> </a>
                                         </td>
 
                                         <td>
-                                            <?php if($rol_user == 1 || $rol_user == 8){ ?>
-                                                <?php if ($vehd['vigencia'] == "") { ?>
-                                                
-                                                <?php } else { ?>
-                                                    <a style="color: blue;" href="/vehiculos/documentoedit/id/<?php echo $vehd["id"] ?>"><i class="fa fa-2x fa-edit"></i></a> 
-                                                <?php } ?>
-                                                    <a class="delete" data-id="<?php echo $vehd["id"]; ?>" data-nombre="<?php echo $vehd["nombre_doc"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                            <?php if($rol_user == 1 || $rol_user == 8){ ?> 
+                                                <a class="delete" data-id="<?php echo $vehd["id"]; ?>" data-nombre="<?php echo $vehd["nombre_doc"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
                                             <?php } else { ?>
                                             <?php } ?>
                                         </td>
@@ -664,6 +512,7 @@ if($this->total== 1){
     // $("#añadirdoc").click(function(){
 
     //     var comentarios = document.getElementById("comentarios").value;
+    //     var fecha =  document.getElementById("fecha").value;
     //     var nombred = document.getElementById("nombred").value;
     //     var vigencia =  document.getElementById("vigencia").value;
     //     var url =  document.getElementById("url").value;
@@ -693,12 +542,13 @@ if($this->total== 1){
     $("#añadirdoc").click(function(){
 
         var comentarios = document.getElementById("comentarios").value;
+        // var fecha =  document.getElementById("fecha").value;
         var nombred = document.getElementById("nombred").value;
         var vigencia =  document.getElementById("vigencia").value;
         var url =  document.getElementById("url").value;
         // var solicitud = document.getElementById("solicitud").value;
 
-        if(comentarios == "" || nombred == 0 || vigencia  == " " || url == ""){
+        if(comentarios == "" || nombred == 0 || vigencia  == "" || url == ""){
             swal({
                 title: "Para añadir documentación, llena los campos(*)",
             });
@@ -751,7 +601,7 @@ if($this->total== 1){
         id=$(this).data('id');
         nombre=$(this).data('nombre');
         swal({
-            title: "Estas seguro de eliminar el Documento de "+nombre+"?",
+            title: "Estas seguro de eliminar el Documento de"+nombre+"?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -798,31 +648,6 @@ if($this->total== 1){
         var nombre = $(this).data('nombre');
         document.getElementById("nombre").value = nombre;
     }); 
-
-    $('#accion').on('change', function() {
-        var value = $(this).val();
-        if(value==1){
-            $("#docd").show();
-            $("#tdocd").show();
-            $("#vigd").show();
-            $("#sold").show();
-            $("#comd").show();
-
-        }
-
-        if(value==2){
-
-            $("#docd").hide();
-            $("#tdocd").show();
-            $("#vigd").hide();
-            $("#sold").hide();
-            $("#comd").show();
-
-            document.getElementById('url').value='0';
-            document.getElementById('vigencia').value="";
-            document.getElementById('solicitud').value=' ';
-        }
-    });
 
 </script>
 
