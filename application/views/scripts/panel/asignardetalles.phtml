@@ -6763,11 +6763,19 @@ foreach ($this->detallesdos_bts as $key) { ?>
 </div>
 
 <div class="row">
-	<div class="col m2 s12"></div>
-	<div class="col m8 s12">
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12">
 		<div class="row">
-			<div class="col m8 s6">
-		  		<form action="/panel/requestaddfilealtan" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_altan">
+<form action="/panel/requestaddfilealtan" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_altan">
+			<div class="col m6 s6">
+		        <div class="input-field col s12">
+		          <input placeholder="Agrega un nombre" name="name_file" id="first_name" type="text" class="validate">
+		          <label for="first_name">Nombre del Archivo</label>
+		        </div>	
+			</div>
+
+
+			<div class="col m6 s6">
 		    		<div class="file-field input-field">
 		      			<div class="btn">
 		        			<span>Archivo</span>
@@ -6777,28 +6785,32 @@ foreach ($this->detallesdos_bts as $key) { ?>
 		        			<input class="file-path validate" id="file_altan" type="text">
 		      			</div>
 		    		</div>
+
     				<input type="hidden" id="id_sitio" name="id_sitio" value="<?php echo $this->id_sitio; ?>">
     				<input type="hidden" id="id_tipoproyecto" name="id_tipoproyecto" value="<?php echo $this->proyecto_id; ?>">
     				<input type="hidden" id="sitio_tipoproyecto" name="sitio_tipoproyecto" value="<?php echo $this->idtipo; ?>">
     				<input type="hidden" id="nombre_sitio" name="nombre_sitio" value="<?php echo $this->nombre_sitio; ?>">
     				<input type="hidden" name="id_detalle" value="<?php echo $this->id_detalle; ?>">
-		  		</form>
 			</div>
-			<div class="col m4 s6">
-				<div class="file-field input-field">
-					<button id="altan_add" class="waves-effect waves-light btn">Guardar</button>
+			</form>
+
+		<!-- </div>1 s12"></div> -->
+</div>
+
+			<div class="row">
+				<div class="col m12 s12 text-center">
+					<!-- <div class="file-field input-field"> -->
+						<button id="altan_add" class="waves-effect waves-light btn">Guardar</button>
+					<!-- </div> -->
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col m2 s12"></div>
-</div>
 
 <div class="row">
 	<div clas="col m12 s12">
       	<table>
         	<thead>
           		<tr>
+          			<th>Archivo</th>
               		<th>Usuario</th>
               		<th>Fecha agregado</th>
               		<th>Descargar</th>
@@ -6811,6 +6823,7 @@ foreach ($this->detallesdos_bts as $key) { ?>
 			foreach ($this->altanfile as $usr) { ?>
 			<tbody>
 				<tr style="height: 20px;">
+					<td><?php echo $usr["name_file"]; ?></td>
 					<td><?php echo $usr["user_file"]; ?></td>
 					<td><?php echo $usr["date_file"]; ?></td>
 					<td>

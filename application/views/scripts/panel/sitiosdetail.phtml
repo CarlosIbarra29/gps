@@ -311,8 +311,8 @@
 					<input type="hidden" name="sitio" value="<?php echo $this->id_sitio; ?>">
 			        <div class="input-field col m6 s12">
 			        	<i class="material-icons prefix">account_circle</i>
-					    <select name="tipo_proyecto">
-					      	<option value="" disabled selected>Tipos de proyecto:</option>
+					    <select name="tipo_proyecto" id="id_proyecto">
+					      	<option value="0" disabled selected>* Tipos de proyecto:</option>
 					      	<?php foreach ($this->tipo as $rl) { ?>
 					      	<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre_proyecto"]; ?></option>
 					      	<?php } ?>					      	
@@ -365,8 +365,6 @@
 					    </select>
 					    <label>Coordinador</label>
 			        </div>
-
-
 			        <div class="input-field col m6 s12">
 			        	<i class="material-icons prefix">account_circle</i>
 					    <select name="ingproyecto">
@@ -380,17 +378,16 @@
 
 			        <div class="input-field col m6 s12">
 			          	<input id="data_cliente" placeholder="Ingrese el id del operador" type="date" name="fecha_cliente" >
-			          	<label for="data_cliente">Fecha Requerida por el cliente:</label>
+			          	<label for="data_cliente">* Fecha Requerida por el cliente:</label>
 			        </div>
 
 		      	</div>
-
-			
 		</div>
+		</form>
+
     </div>
     <div class="modal-footer">
-      	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Guardar</button>
-      	</form>
+      	<button tyle="submit" id="add_proyectositio" class="waves-effect waves-light btn">Guardar</button>
       	<button  class="modal-close waves-effect waves-light red btn">Cerrar</button>
     </div>
   </div>
@@ -550,6 +547,11 @@
 											<td><a href="/grafica/btsproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
 
+										<?php if($usr["id_tipoproyecto"] == 3){ ?>
+											<td><a href="/grafica/reforzamientoproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+										<?php } ?>
+
+
 										<?php if($usr["id_tipoproyecto"] == 5){ ?>
 											<td><a href="/grafica/torrenuevaproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
@@ -647,6 +649,28 @@
 
     function editarsubmit() { document.getElementById("submit_sitios").submit() }
 
+
+    $("#add_proyectositio").click(function(){
+     	var tipo = document.getElementById("id_proyecto").value;
+        var fecha = document.getElementById("data_cliente").value;
+
+        if(tipo == 0 || fecha == "" ){
+            swal({
+                title: "Para continuar es necesario llenar los campos marcados por un '*'",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });    
+            setTimeout(submitForm, 1500);     
+        }
+
+    });
+
+    function submitForm() {
+        document.getElementById("form_user").submit()
+    }
 </script>
 
 

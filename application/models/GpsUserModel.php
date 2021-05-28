@@ -133,7 +133,9 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
                 'dia_pago'=>$post['dia_pago'],
                 'hora_pago'=>$post['hora_pago'],
                 'tarjeta'=>$post['tarjeta'],
-                'disponibilidad'=>$post['disponibilidad']); 
+                'disponibilidad'=>$post['disponibilidad'],
+                'status_campo'=>$post['cuadrilla']
+            ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
@@ -335,7 +337,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
 	public function refreshPersonal($post,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, status_campo = ? WHERE id = ?",array(
                	$post['name'],
             	$post['apellido_pa'],
             	$post['ampellido_ma'],
@@ -350,6 +352,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
                 $post['hora_pago'],
                 $post['disponibilidad'],
                 $post['tarjeta'],
+                $post['cuadrilla'],
                 $post["ids"]));
             $db->closeConnection();               
             return $qry;

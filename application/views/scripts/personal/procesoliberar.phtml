@@ -67,24 +67,58 @@
     </div>
 </div>
 
+<?php if($this->op_select == 1){ ?>
+    <?php foreach ($this->sitio as $key) {
+    	$nombre_sitio = $key['nombre'];
+    } ?>
 
-<?php foreach ($this->sitio as $key) {
-	$nombre_sitio = $key['nombre'];
-} ?>
+    <?php foreach ($this->proyectos as $value) {
+    	$proyecto = $value['nombre_proyecto'];
+    } ?>
 
-<?php foreach ($this->proyectos as $value) {
-	$proyecto = $value['nombre_proyecto'];
-} ?>
+    <div class="row">
+    	<div class="col m12 s12 text-center">
+    		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
+    	</div>
+    	<div class="col m12 s12 text-center">
+    		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
+    	</div>
+    </div>
+<?php } ?>
 
-<div class="row">
-	<div class="col m12 s12 text-center">
-		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
-	</div>
-	<div class="col m12 s12 text-center">
-		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
-	</div>
+<?php if($this->op_select == 2){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Compensación</span>
+        </div>
+    </div>
+<?php } ?>
 
-</div>
+<?php if($this->op_select == 3){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Taller</span>
+        </div>
+    </div>
+<?php } ?>
+
+
+<?php if($this->op_select == 4){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación de Personal</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vacaciones</span>
+        </div>
+    </div>
+<?php } ?>
 
 <div class="row">
     <div class="col m12 s12">
@@ -97,10 +131,10 @@
                     <div class="col m8 s6 text-left">
                     </div>
 
-                    <div class="col m4 s6 text-right">
+                    <div class="col m4 s6 text-right oculto" id="op_btn">
                     	<?php if($this->count == 0){ ?>
                     	<?php }else{ ?>
-                    		<a class="btn red oculto" id="asignar_personal">Liberar</a>
+                    		<a class="btn red " id="asignar_personal">Liberar</a>
                     	<?php } ?>
                     </div>
                 </div>
@@ -220,7 +254,7 @@
     function submitpersonal() { document.getElementById("submit_asignar").submit() }
 
     $(".type_check").click(function(){
-    	$("#asignar_personal").show();
+    	$("#op_btn").show();
     });
 
 </script>

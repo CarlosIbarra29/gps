@@ -80,6 +80,19 @@
 			</div>
 
 			<div class="input-field col m6 s12">
+				<select name="cuadrilla" id="cuadrilla">
+					<?php if($usr["status_campo"] == 0){ ?>
+						<option value="1">Si</option>
+						<option value="0" selected>No</option>
+					<?php }else{ ?>
+						<option value="1" selected>Si</option>
+						<option value="0">No</option>
+					<?php } ?>
+				</select>
+				<label>Foraneo</label>
+			</div>
+
+			<div class="input-field col m6 s12">
 			    <i class="material-icons prefix">event_available</i>
 			    <input id="curp" type="text" name="curp" value="<?php echo $usr["curp"]; ?>" class="validate">
 			    <label for="curp">CURP:</label>

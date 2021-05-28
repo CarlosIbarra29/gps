@@ -67,7 +67,7 @@
     </div>
 </div>
 
-
+<?php if($this->op_select == 1){ ?>
 <?php foreach ($this->sitio as $key) {
 	$nombre_sitio = $key['nombre'];
 } ?>
@@ -83,9 +83,42 @@
 	<div class="col m12 s12 text-center">
 		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?> / <?php echo $proyecto; ?></span>
 	</div>
-
 </div>
+<?php } ?>
 
+<?php if($this->op_select == 2){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Compensación</span>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if($this->op_select == 3){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Taller</span>
+        </div>
+    </div>
+<?php } ?>
+
+
+<?php if($this->op_select == 4){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Asignación de Cuadrillas</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vacaciones</span>
+        </div>
+    </div>
+<?php } ?>
 <div class="row">
     <div class="col m12 s12">
         <div class="row" style="margin-top: 25px;">
@@ -105,8 +138,8 @@
                     	</div>
                     </div>
 
-                    <div class="col m4 s6 text-right">
-                        <a class="btn green oculto" id="asignar_personal">Asignar</a>
+                    <div class="col m4 s6 text-right oculto" id="op_btn">
+                        <a class="btn green" id="asignar_personal">Asignar</a>
                     </div>
                 </div>
             </div>
@@ -123,6 +156,7 @@
             </thead>
             <form action="/personal/requestaddpersonalsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 
+                <input type="hidden" name="op" value="<?php echo $this->op_select; ?>">
                 <input type="hidden" name="sitio" value="<?php echo $this->sitio_id; ?>">
                 <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
                 <input type="hidden" name="fecha_inicial" value="<?php echo $this->fecha_inicial; ?>">
@@ -226,6 +260,6 @@
 
 
     $(".type_check").click(function(){
-    	$("#asignar_personal").show();
+    	$("#op_btn").show();
     });
 </script>

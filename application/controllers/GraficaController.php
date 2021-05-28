@@ -322,7 +322,147 @@ class GraficaController extends Zend_Controller_Action{
         $table="usuario";
         $usr = $this->_season->GetSpecific($table,$wh,$id);
         $this->view->rol_user = $usr[0]['fkroles']; 
+    }
 
+    public function reforzamientoprojectAction(){
+        $sitio=$this->_getParam('sitio');
+        $year=2021;
+        $this->view->year_op = $year;
+        $month = "1";
+        $enero = $this->view->enero=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_enero=count($enero);
+
+        $month = "2";
+        $febrero = $this->view->febrero=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);        
+        $this->view->count_febreo=count($febrero);
+
+        $month = "3";
+        $marzo = $this->view->marzo=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_marzo=count($marzo);
+
+        $month = "4";
+        $abril = $this->view->abril=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_abril=count($abril);   
+
+        $month = "5";
+        $mayo = $this->view->mayo=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio); 
+        $this->view->count_mayo=count($mayo);  
+
+        $month = "6";
+        $junio = $this->view->junio=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);   
+        $this->view->count_junio=count($junio);
+
+        $month = "7";
+        $julio = $this->view->julio=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio); 
+        $this->view->count_julio=count($julio);  
+
+        $month = "8";
+        $agosto = $this->view->agosto=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_agosto=count($agosto);   
+
+        $month = "9";
+        $septiembre = $this->view->septiembre=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_septiembre=count($septiembre);   
+
+        $month = "10";
+        $octubre = $this->view->octubre=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);  
+        $this->view->count_octubre=count($octubre); 
+
+        $month = "11";
+        $noviembre = $this->view->noviembre=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);
+        $this->view->count_noviembre=count($noviembre);   
+
+        $month = "12";
+        $diciembre = $this->view->diciembre=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);  
+        $this->view->count_diciembre=count($diciembre);
+
+
+        //  G A S O L I N A
+        $month= 1;
+        $gas_enero = $this->view->gas_enero=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasenero = count($gas_enero);
+        $month= 2;
+        $gas_febrero = $this->view->gas_febrero=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasfebrero = count($gas_febrero);
+        $month= 3;
+        $gas_marzo = $this->view->gas_marzo=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasmarzo = count($gas_marzo);
+        $month= 4;
+        $gas_abril = $this->view->gas_abril=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasabril = count($gas_abril);
+        $month= 5;
+        $gas_mayo = $this->view->gas_mayo=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasmayo = count($gas_mayo);
+        $month= 6;
+        $gas_junio = $this->view->gas_junio=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasjunio = count($gas_junio);
+        $month= 7;
+        $gas_julio = $this->view->gas_julio=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasjulio = count($gas_julio);
+        $month= 8;
+        $gas_agosto = $this->view->gas_agosto=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasagosto = count($gas_agosto);
+        $month= 9;
+        $gas_septiembre = $this->view->gas_septiembre=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasseptiembre = count($gas_septiembre);
+        $month= 10;
+        $gas_octubre = $this->view->gas_octubre=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasoctubre = count($gas_octubre);
+        $month= 11;
+        $gas_noviembre = $this->view->gas_noviembre=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasnoviembre = count($gas_noviembre);
+        $month= 12;
+        $gas_diciembre = $this->view->gas_diciembre=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
+        $this->view->count_gasdiciembre = count($gas_diciembre);
+
+        // C A J A   C H I C A
+        $month= 1;
+        $cajachica_enero = $this->view->cajachica_enero=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicaenero = count($cajachica_enero);
+        $month= 2;
+        $cajachica_febrero = $this->view->cajachica_febrero=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicafebrero = count($cajachica_febrero);
+        $month= 3;
+        $cajachica_marzo = $this->view->cajachica_marzo=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicamarzo = count($cajachica_marzo);
+        $month= 4;
+        $cajachica_abril = $this->view->cajachica_abril=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicaabril = count($cajachica_abril);
+        $month= 5;
+        $cajachica_mayo = $this->view->cajachica_mayo=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicamayo = count($cajachica_mayo);
+        $month= 6;
+        $cajachica_junio = $this->view->cajachica_junio=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicajunio = count($cajachica_junio);
+        $month= 7;
+        $cajachica_julio = $this->view->cajachica_julio=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicajulio = count($cajachica_julio);
+        $month= 8;
+        $cajachica_agosto = $this->view->cajachica_agosto=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicaagosto = count($cajachica_agosto);
+        $month= 9;
+        $cajachica_septiembre = $this->view->cajachica_septiembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicaseptiembre = count($cajachica_septiembre);
+        $month= 10;
+        $cajachica_octubre = $this->view->cajachica_octubre=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicaoctubre = count($cajachica_octubre);
+        $month= 11;
+        $cajachica_noviembre = $this->view->cajachica_noviembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachica_noviembre = count($cajachica_noviembre);
+        $month= 12;
+        $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
+        $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
+
+
+        // F A C T U R A S
+        $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
+
+
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->rol_user = $usr[0]['fkroles'];           
     }
 
 

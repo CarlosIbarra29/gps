@@ -1,3 +1,10 @@
+<style type="text/css">
+  .oculto{
+    display: none;
+  }
+</style>
+
+
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
         <a href="/personal/listapersonal" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
@@ -5,10 +12,64 @@
 </div>
 
 <div class="row">
+  <div class="col m2 s12"></div>
+    <div class="col s12 m8">
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Opciones</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col m6 s6 text-center">
+            <div class="chip modal-trigger" id="sitio_op">
+              <img src="/img/correct.png" class="sitio_uno">
+              <img src="/img/gris.jpg" class="sitio_dos oculto">
+              Sitio
+            </div>
+              </div>
+              <div class="col m6 s6 text-center">
+            <div class="chip modal-trigger" id="compensacion_op">
+              <img src="/img/gris.jpg" class="comp_uno">
+              <img src="/img/correct.png" class="comp_dos oculto">
+              Compensación
+            </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col m6 s6 text-center">
+            <div class="chip modal-trigger" id="taller_op">
+              <img src="/img/gris.jpg" class="taller_uno">
+              <img src="/img/correct.png" class="taller_dos oculto">
+              Taller
+            </div>
+              </div>
+
+              <div class="col m6 s6 text-center">
+            <div class="chip modal-trigger" id="vacaciones_op">
+              <img src="/img/gris.jpg" class="vacaciones_uno">
+              <img src="/img/correct.png" class="vacaciones_dos oculto">
+              Vacaciones
+            </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
+
+
+<div class="row">
 	<div class="col m2 s12"></div>
     <div class="col s12 m8">
       <div class="card">
-        <div class="card-content">
+        <div class="card-content" id="div_sitio">
         	<div class="row">
         		<div class="col m12 s12">
         			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación del Personal</span>
@@ -45,6 +106,65 @@
         	</div>
 
         </div>
+
+
+        <div class="card-content oculto" id="div_compensacion">
+            <div class="row">
+              <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación del Personal</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col m6 s6 text-center">
+                <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Compensación</span>
+              </div>
+
+              <div class="col m6 s6 text-right">
+                <a class="btn" id="next_compensacion"><i class="material-icons right">navigate_next</i>Siguiente</a>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="card-content oculto" id="div_taller">
+            <div class="row">
+              <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación del Personal</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col m6 s6 text-center">
+                <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Taller</span>
+              </div>
+
+              <div class="col m6 s6 text-right">
+                <a class="btn" id="next_taller"><i class="material-icons right">navigate_next</i>Siguiente</a>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="card-content oculto" id="div_vacaciones">
+            <div class="row">
+              <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberación del Personal</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col m6 s6 text-center">
+                <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vacaciones</span>
+              </div>
+
+              <div class="col m6 s6 text-right">
+                <a class="btn" id="next_vacaciones"><i class="material-icons right">navigate_next</i>Siguiente</a>
+              </div>
+            </div>
+        </div>
+
+
       </div>
     </div>
     <div class="col m2 s12"></div>
@@ -61,6 +181,56 @@
   	});
 
 
+    $("#sitio_op").click(function(){
+      $(".sitio_uno").show(); $(".sitio_dos").hide();
+      $(".comp_uno").show(); $(".comp_dos").hide();
+      $(".taller_uno").show(); $(".taller_dos").hide();
+      $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+      $("#div_sitio").show();
+      $("#div_compensacion").hide();
+      $("#div_taller").hide();
+      $("#div_vacaciones").hide();
+    });
+
+    $("#compensacion_op").click(function(){
+      $(".sitio_uno").hide(); $(".sitio_dos").show();
+      $(".comp_uno").hide(); $(".comp_dos").show();
+      $(".taller_uno").show(); $(".taller_dos").hide();
+      $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+      $("#div_sitio").hide();
+      $("#div_compensacion").show();
+      $("#div_taller").hide();
+      $("#div_vacaciones").hide();
+    });
+
+    $("#taller_op").click(function(){
+      $(".taller_uno").hide(); $(".taller_dos").show();
+      $(".sitio_uno").hide(); $(".sitio_dos").show();
+      $(".comp_uno").show(); $(".comp_dos").hide();
+      $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+      $("#div_sitio").hide();
+      $("#div_compensacion").hide();
+      $("#div_taller").show();
+      $("#div_vacaciones").hide();
+    });
+
+    $("#vacaciones_op").click(function(){
+      $(".sitio_uno").hide(); $(".sitio_dos").show();
+      $(".comp_uno").show(); $(".comp_dos").hide();
+      $(".taller_uno").show();  $(".taller_dos").hide();
+      $(".vacaciones_uno").hide(); $(".vacaciones_dos").show();
+
+      $("#div_sitio").hide();
+      $("#div_compensacion").hide();
+      $("#div_taller").hide();
+      $("#div_vacaciones").show();
+    });
+
+
+
   	$("#next_step").click(function(){
   		var sitio = document.getElementById("sitio").value;
   		var proyecto = document.getElementById("proyecto").value;
@@ -75,7 +245,31 @@
 					icon: "success",
 					buttons: false,
 				});
-				window.location.href = '/personal/procesoliberar/sitio/'+sitio+'/proyecto/'+proyecto+'';
+				window.location.href = '/personal/procesoliberar/sitio/'+sitio+'/proyecto/'+proyecto+'/op/1';
 	    	}
   	});
+
+    $("#next_compensacion").click(function(){
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+        window.location.href = '/personal/procesoliberar/sitio/2222222/proyecto/0/op/2';
+    });
+
+    $("#next_taller").click(function(){
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+        window.location.href = '/personal/procesoliberar/sitio/3333333/proyecto/0/op/3';
+    });
+
+    $("#next_vacaciones").click(function(){
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+        window.location.href = '/personal/procesoliberar/sitio/4444444/proyecto/0/op/4';
+    });
 </script>
