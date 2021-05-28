@@ -153,7 +153,6 @@
     	$('select').formSelect();
     	$('.modal').modal();
     	$('.timepicker').timepicker();
-
     	var currentDate = document.getElementById("today_picker").value; 
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
   	});
@@ -165,7 +164,6 @@
   			var	tipo_envio = document.getElementById("tipo_envio").value;
   			var vehiculo = document.getElementById("vehiculo").value;
   			var hora_envio = document.getElementById("hora_envio").value;
-
 
 	        if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
 	            swal({

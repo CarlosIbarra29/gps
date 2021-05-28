@@ -244,8 +244,6 @@ function exportTableToCSV(html, filename) {
         }
         csv.push(row.join(","));
     }
-
-    // download csv file
     downloadCSV(csv.join("\n"), filename);
 }
 

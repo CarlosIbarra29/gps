@@ -222,8 +222,6 @@ class PersonalController extends Zend_Controller_Action{
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
         } // END VACACIONES
-
-
     }
 
     public function procesoliberarAction(){
@@ -259,7 +257,6 @@ class PersonalController extends Zend_Controller_Action{
         $wh="id";
         $info = $this->view->info_personal = $this->_season->GetSpecific($table,$wh,$id);   
         
-
         if($info[0]['id_sitiopersonal'] == 0){
             $sit = 0;
             $this->view->if_sitio=$sit;
@@ -401,7 +398,7 @@ class PersonalController extends Zend_Controller_Action{
             $id = $key;
             $result = $this->_sitio->liberacionpersonalasitio($post,$table,$id);  
         }
-
+        
             if ($result) {
                 return $this-> _redirect('/personal/listapersonal');
             }else{

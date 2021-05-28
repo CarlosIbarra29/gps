@@ -89,23 +89,23 @@ class Application_Model_GpsTorrenuevaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT  tn.id, tn.id_sitio, tn.proyecto, tn.sitio, tn.torre_file, tn.torre_status, 
-                            tn.user_torre, tn.fecha_torre,tn.simentacion_file, tn.simentacion_status, 
-                            tn.fecha_simentacion, tn.user_simentacion,tn.calculo_file,tn.calculo_status, 
-                            tn.fecha_calculo, tn.user_calculo, tn.staad_status, tn.staad_file, tn.fecha_saad,
-                            tn.user_staad,tn.mecanica_status, tn.mecanica_file, tn.fecha_mecanica, 
-                            tn.user_mecanica, tn.acero_file, tn.acero_status, tn.fecha_acero, tn.user_acero, 
-                            tn.tornilleria_file,tn.tornilleria_status,tn.fecha_tornilleria, tn.user_tornilleria,
-                            tn.galvanizado_file,tn.galvanizado_status,tn.fecha_galvanizado, tn.user_galvanizado,
-                            tn.verticalidad_file, tn.verticalidad_status, tn.fecha_verticalidad, 
-                            tn.user_verticalidad, tn.tension_file, tn.tension_status, tn.fecha_tension, 
-                            tn.user_tension, tn.foto_file, tn.foto_status, tn.fecha_foto, tn.user_foto, 
-                            tn.tor_file, tn.tor_status, tn.fecha_tor, tn.user_tor, tn.pesoacero_file, 
-                            tn.pesoacero_status, tn.fecha_pesoacero, tn.user_pesoacero, tn.torrepdf_file, 
-                            tn.torrepdf_status, tn.fecha_torrepdf,tn.user_torrepdf,tn.torredwg_file, 
-                            tn.torredwg_status,tn.fecha_torredwg,tn.user_dwg, tn.modelotorre_status, 
-                            tn.modelotorre_file, tn.fecha_torrenueva, tn.user_torrenueva
-                            FROM torre_nuevafile tn 
-                            WHERE tn.id_sitio = ? and tn.proyecto =? and tn.sitio = ?",array($id,$proyecto,$sitio));
+                        tn.user_torre, tn.fecha_torre,tn.simentacion_file, tn.simentacion_status, 
+                        tn.fecha_simentacion, tn.user_simentacion,tn.calculo_file,tn.calculo_status, 
+                        tn.fecha_calculo, tn.user_calculo, tn.staad_status, tn.staad_file, tn.fecha_saad,
+                        tn.user_staad,tn.mecanica_status, tn.mecanica_file, tn.fecha_mecanica, 
+                        tn.user_mecanica, tn.acero_file, tn.acero_status, tn.fecha_acero, tn.user_acero, 
+                        tn.tornilleria_file,tn.tornilleria_status,tn.fecha_tornilleria, tn.user_tornilleria,
+                        tn.galvanizado_file,tn.galvanizado_status,tn.fecha_galvanizado, tn.user_galvanizado,
+                        tn.verticalidad_file, tn.verticalidad_status, tn.fecha_verticalidad, 
+                        tn.user_verticalidad, tn.tension_file, tn.tension_status, tn.fecha_tension, 
+                        tn.user_tension, tn.foto_file, tn.foto_status, tn.fecha_foto, tn.user_foto, 
+                        tn.tor_file, tn.tor_status, tn.fecha_tor, tn.user_tor, tn.pesoacero_file, 
+                        tn.pesoacero_status, tn.fecha_pesoacero, tn.user_pesoacero, tn.torrepdf_file, 
+                        tn.torrepdf_status, tn.fecha_torrepdf,tn.user_torrepdf,tn.torredwg_file, 
+                        tn.torredwg_status,tn.fecha_torredwg,tn.user_dwg, tn.modelotorre_status, 
+                        tn.modelotorre_file, tn.fecha_torrenueva, tn.user_torrenueva
+                        FROM torre_nuevafile tn 
+                        WHERE tn.id_sitio = ? and tn.proyecto =? and tn.sitio = ?",array($id,$proyecto,$sitio));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -119,9 +119,9 @@ class Application_Model_GpsTorrenuevaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tn.id, tn.id_sitio, tn.proyecto, tn.sitio, tn.velocidad, tn.terreno, 
-                            tn.rugosidad, tn.topography, tn.estructura, tn.mar_asnm, tn.temp, tn.carga
-                            FROM detalle_torrenueva tn 
-                            WHERE tn.id_sitio = ? and tn.proyecto =? and tn.sitio = ?",array($id,$proyecto,$sitio));
+                        tn.rugosidad, tn.topography, tn.estructura, tn.mar_asnm, tn.temp, tn.carga
+                        FROM detalle_torrenueva tn 
+                        WHERE tn.id_sitio = ? and tn.proyecto =? and tn.sitio = ?",array($id,$proyecto,$sitio));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

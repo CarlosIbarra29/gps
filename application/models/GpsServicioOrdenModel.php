@@ -75,7 +75,7 @@ class Application_Model_GpsServicioOrdenModel extends Zend_Db_Table_Abstract{
     public function getcotizacionycomparativa($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT sc.id_solicitud, sc.titulo_cotizacion, sc.documento_cotizacion, com.id_solicitud,
+            $qry = $db->query("SELECT sc.id_solicitud, sc.titulo_cotizacion, sc.documento_cotizacion,com.id_solicitud,
                                 com.titulo_comparativa, com.documento_comparativa 
                                 FROM cotizacion_solicitudordencompra sc 
                                 INNER JOIN  comparativa_solicitudordencompra com on sc.id_solicitud = com.id_solicitud where sc.id_solicitud = ?",array($id));
