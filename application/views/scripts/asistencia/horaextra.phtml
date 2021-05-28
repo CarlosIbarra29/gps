@@ -1,0 +1,124 @@
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/asistencia/cuadrillas" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Horas Extra</span><br>
+        <span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $this->sitio; ?></span>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 40px;">
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12">
+		<div class="row">
+			<div class="col m8 s6 text-right">
+				<div class="input-field col m12 s12">
+					<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Autorizar</a>
+				</div>
+			</div>
+			<div class="col m4 s6 text-right">
+		        <div class="input-field col m12 s12">
+		          <input type="text" id="todos" value="" oninput="actualizarValorMunicipioInm()">
+		          <label for="todos">Horas extra para todos</label>
+		        </div>
+			</div>
+
+		</div>
+		<form action="/asistencia/requestaddhoraextrapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+		<input  name="act_todos" id="act_todos" value="" type="hidden">
+		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
+            </input>
+        <table class="table text-left table-hover">
+            <thead>
+                <tr >
+					<th>id</th>
+					<th>Nombre</th>
+					<th>Puesto</th>
+					<th>Foto</th>
+					<th>Horas Extra</th>
+                </tr> 
+            </thead>
+
+            <?php if ($this->personal) { 
+                foreach ($this->personal as $usr) { ?>
+            <tbody>
+                <tr>
+                	<td>
+                		<?php echo $usr['id']; ?>
+                	</td>
+                    <td>
+                    	<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+                    </td>
+
+                    <td>
+                    	<?php echo $usr['name_puesto']; ?>
+                    </td>
+                    <td>
+                    	<?php if($usr['imagen'] == NULL){ ?>
+                    		<img src="/img/no_disponible1.png"style="width: 70px; height: 70px;">
+                    	<?php }else{ ?>
+	                    	<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>"  alt="image-1" style="width: 70px; height: 70px;"/>
+	                    	</a>
+                    	<?php } ?>
+                    </td>
+                    <td>
+				        <div class="input-field col s12">
+				          <input id="first_name" name="hora_extra[]" value="<?php echo $usr['hora_extra']; ?>" max="100" min="0" type="number" class="validate">
+
+				          <input type="hidden" name="personal[]" value="<?php echo $usr['id']; ?>">
+				        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <?php } }else{ ?>
+            <tbody>
+                <tr>
+                    <td>No se ha agregado personal </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <?php } ?>
+        </table>
+       </form> 
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+
+
+<input type="hidden" id="actividad" value="1">
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+    function actualizarValorMunicipioInm() {
+		let todos = document.getElementById("todos").value;
+		document.getElementById("act_todos").value = todos;
+	}
+
+    $("#hora_extrapersonal").click(function(){
+        var actividad = document.getElementById("actividad").value;
+
+        if(actividad == ""){
+            swal({
+            	title: "Para agregar un imagen debes seleccionar una tarea ",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitpersonal, 1500);     
+        }
+    });
+
+    function submitpersonal() { document.getElementById("submit_asignar").submit() }
+
+</script>

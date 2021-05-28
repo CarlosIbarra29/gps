@@ -401,7 +401,7 @@ class PersonalController extends Zend_Controller_Action{
             $id = $key;
             $result = $this->_sitio->liberacionpersonalasitio($post,$table,$id);  
         }
-
+        
             if ($result) {
                 return $this-> _redirect('/personal/listapersonal');
             }else{
