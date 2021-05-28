@@ -42,6 +42,32 @@ class AsistenciaController extends Zend_Controller_Action{
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
     }
 
+    public function personalasistenciaAction(){
+    	$sitio = $this->_getParam('sitio');
+    	$this->view->sitio_name = $sitio;
+       	$id=$this->_getParam('id'); $this->view->personal_id=$id;
+        $table="personal_campo";
+        $wh="id";
+        $info = $this->view->info_personal = $this->_season->GetSpecific($table,$wh,$id);   
+        
+
+        if($info[0]['id_sitiopersonal'] == 0){
+            $sit = 0;
+            $this->view->if_sitio=$sit;
+        }else{
+            $sit = 1;
+            $this->view->if_sitio=$sit;
+            $table="sitios";
+            $wh="id";
+            $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']);  
+
+            $table="puestos_personal";
+            $wh="id";
+            $puesto = $this->_season->GetSpecific($table,$wh,$info[0]['puesto']);  
+            $this->view->puesto_info = $puesto[0]['nombre']; 
+        }
+    }
+
     public function requestaddhoraextrapersonalAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -82,7 +108,4 @@ class AsistenciaController extends Zend_Controller_Action{
         } 
 
     }
-
-
-
 }

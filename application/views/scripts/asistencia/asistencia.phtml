@@ -18,11 +18,7 @@
 	<div class="col m1 s12"></div>
 	<div class="col m10 s12">
 		<div class="row">
-			<div class="col m8 s6 text-right">
-				<div class="input-field col m12 s12">
-					<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Fecha entrada</a>
-				</div>
-			</div>
+
 			<div class="col m4 s6 text-right">
 		        <div class="input-field col m12 s12">
 		          <input type="time" id="todos" value="" oninput="actualizarValorMunicipioInm()">
@@ -30,6 +26,23 @@
 		        </div>
 			</div>
 
+			<div class="col m4 s6">
+			    <div class="file-field input-field">
+			      <div class="btn">
+			        <span>Foto</span>
+			        <input type="file">
+			      </div>
+			      <div class="file-path-wrapper">
+			        <input class="file-path validate" type="text">
+			      </div>
+			    </div>
+			</div>
+
+			<div class="col m4 s6 text-right">
+				<div class="input-field col m12 s12">
+					<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Guardar</a>
+				</div>
+			</div>
 		</div>
 		<form action="/asistencia/requestaddhoraextrapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 		<input  name="act_todos" id="act_todos" value="" type="hidden">
@@ -42,6 +55,7 @@
 					<th>Nombre</th>
 					<th>Puesto</th>
 					<th>Foto</th>
+					<th>Horas extra</th>
 					<th>Horas Entrada</th>
 					<th>Hora Salida</th>
 					<th></th>
@@ -56,7 +70,9 @@
                 		<?php echo $usr['id']; ?>
                 	</td>
                     <td>
-                    	<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+                    	<a href="/asistencia/personalasistencia/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->sitio; ?>">
+                    		<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+                    	</a>
                     </td>
 
                     <td>
@@ -69,6 +85,10 @@
 	                    	<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>"  alt="image-1" style="width: 70px; height: 70px;"/>
 	                    	</a>
                     	<?php } ?>
+                    </td>
+                    <td>
+                    	
+                    	<span  style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['hora_extra']; ?> Horas</span>
                     </td>
                     <td>
                     	<!-- Hora entrada -->

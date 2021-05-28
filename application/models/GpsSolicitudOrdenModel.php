@@ -3144,17 +3144,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadoraceptadascoordprov($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago !=1 AND name_proveedor like '%{$nombre}%' order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.id_usuario= ? AND soc.status_documentouno = 1 
+                        AND soc.status_pago !=1 AND name_proveedor like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3166,17 +3169,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadoraceptadascoordidsol($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago !=1 AND soc.id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago !=1 
+                        AND soc.id = ? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3191,17 +3197,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadoraceptadascoordidserv($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago !=1 AND soc.servicio_id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr,soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.id_usuario= ? AND soc.status_documentouno = 1 AND soc.status_pago !=1 
+                        AND soc.servicio_id = ? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3213,11 +3222,16 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountcoordinadorpagadas($id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, 
+                        u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 
+                        AND soc.status_pago = 1",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3229,11 +3243,16 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountcoordinadorpagadascoord($id,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.name_proveedor, soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND nombre_sitio like '%{$nombre}%'",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia,soc.descripcion,soc.nombre_sitio,soc.name_proveedor,
+                        soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,
+                        soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND nombre_sitio like '%{$nombre}%'",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3245,11 +3264,16 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountcoordinadorpagadascoordprov($id,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.name_proveedor, soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND name_proveedor like '%{$nombre}%'",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia,soc.descripcion,soc.nombre_sitio,soc.name_proveedor,
+                        soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,
+                        soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND name_proveedor like '%{$nombre}%'",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3261,11 +3285,16 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountcoordinadorpagadascoordidsol($id,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.name_proveedor, soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND soc.id = ? ",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia,soc.descripcion,soc.nombre_sitio,soc.name_proveedor,
+                        soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,
+                        soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND soc.id = ? ",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3277,11 +3306,16 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountcoordinadorpagadascoordidserv($id,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.name_proveedor, soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND soc.servicio_id = ? ",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia,soc.descripcion,soc.nombre_sitio,soc.name_proveedor,
+                        soc.servicio_id, soc.status_documento,soc.status_documentouno,soc.delete_status,
+                        soc.status_pago ,u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND soc.servicio_id = ? ",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3293,17 +3327,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadorpagadas($id,$table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 
+                        AND soc.status_pago = 1 order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3315,17 +3352,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadorpagadascoord($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND nombre_sitio like '%{$nombre}%' order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND nombre_sitio like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3337,17 +3377,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadorpagadascoordprov($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND name_proveedor like '%{$nombre}%' order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND name_proveedor like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3359,17 +3402,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadorpagadascoordidsol($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND soc.id =? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND soc.id =? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3381,17 +3427,20 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcoordinadorpagadascoordidserv($id,$table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
-                                where soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 AND soc.servicio_id =? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.id_usuario= ? and soc.status_documentouno = 1 AND soc.status_pago = 1 
+                        AND soc.servicio_id =? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3403,10 +3452,14 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountaceptandpay(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, u.nombre, u.ap
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id where soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1  order by soc.id DESC");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.id_usuario,
+                        soc.status_documentouno ,soc.delete_status, soc.status_pago ,u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 
+                        AND soc.status_pago = 1  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3418,10 +3471,14 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudcountaceptandpaysitio($nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, u.nombre, u.ap
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id where soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 AND nombre_sitio like '%{$nombre}%'  order by soc.id DESC");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.id_usuario,
+                        soc.status_documentouno ,soc.delete_status, soc.status_pago ,u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND nombre_sitio like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3433,17 +3490,19 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudaceptandpay($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, 
-                soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.status_pago,
-                soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
-                s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
-                FROM solicitud_ordencompra soc
-                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                LEFT JOIN servicios s on s.id = soc.servicio_id
-                LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
-                LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
-                                where soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  
+                        AND soc.status_pago = 1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3455,11 +3514,17 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusernamesolicitudaceptandpaysitio($table,$offset,$no_of_records_per_page,$nombre){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.status_documentouno,soc.name_proveedor, soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio ,soc.fecha_validaciondos
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id= soc.servicio_id where soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 AND nombre_sitio like '%{$nombre}%' order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.facturable,
+                        soc.status_documentouno,soc.name_proveedor, soc.id_usuario,soc.delete_status, 
+                        soc.status_pago,u.id, u.nombre, u.ap, s.nombre_servicio , soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND nombre_sitio like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3471,10 +3536,13 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getsolicitudesaprobadascontabilidad(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.rol_encargado, u.id, u.nombre, u.ap
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id where soc.status_documento=1 order by soc.id DESC");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.delete_status,
+                        soc.status_documentouno,soc.id_usuario,soc.rol_encargado,u.id,u.nombre,u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.status_documento=1 order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3485,13 +3553,15 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function countsolicitudesaprobadascontabilidad($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.fecha_requerida, soc.servicio_id,
-                                soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, 
-                                soc.descripcion, soc.nombre_sitio, soc.status_documento,soc.status_documentouno ,soc.id_usuario
-                                ,soc.delete_status, soc.rol_encargado, u.id, u.nombre, u.ap, s.nombre_servicio
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN usuario u on soc.id_usuario = u.id 
-                                LEFT JOIN servicios s on s.id = soc.servicio_id where soc.status_documento=1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia,soc.descripcion, soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.rol_encargado,u.id,u.nombre,
+                        u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id 
+                        WHERE soc.status_documento=1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3528,10 +3598,11 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function Getresidentessitio($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT stp.id, stp.id_tipoproyecto, stp.id_sitio, stp.residente, stp.nombre_coordinador, s.id, s.nombre, s.cliente, tp.nombre_proyecto
-                FROM sitios_tipoproyecto stp
-                LEFT JOIN sitios s on stp.id_sitio = s.id 
-                LEFT JOIN tipo_proyecto tp on tp.id=stp.id_tipoproyecto where residente =?",array($id));
+            $qry = $db->query("SELECT stp.id, stp.id_tipoproyecto, stp.id_sitio, stp.residente, 
+                        stp.nombre_coordinador, s.id, s.nombre, s.cliente, tp.nombre_proyecto
+                        FROM sitios_tipoproyecto stp
+                        LEFT JOIN sitios s on stp.id_sitio = s.id 
+                        LEFT JOIN tipo_proyecto tp on tp.id=stp.id_tipoproyecto where residente =?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3543,9 +3614,12 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function Getcomprobacionproceso($id){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT c.id, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, c.razon_social, c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, c.comentarios_comprobacion, c.status_comprobacion, s.nombre
-                from comprobaciones c 
-                LEFT JOIN servicios_comprobaciones s on s.id=c.servicio where c.status_comprobacion = 0 and c.id_residente = ?",array($id));
+            $qry = $db->query("SELECT c.id, c.id_residente, c.fecha_del, c.fecha_al, c.monto_solicitud, 
+                        c.razon_social, c.facturable, c.factura, c.servicio, c.monto_comprobacion, c.vo_bo, 
+                        c.comentarios_comprobacion, c.status_comprobacion, s.nombre
+                        FROM comprobaciones c 
+                        LEFT JOIN servicios_comprobaciones s on s.id=c.servicio 
+                        WHERE c.status_comprobacion = 0 and c.id_residente = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
