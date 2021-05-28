@@ -55,6 +55,7 @@ if($this->total== 1){
 <?php 
     date_default_timezone_set('America/Mexico_City');
     $hoy = date("d/m/Y");
+    $year = date("Y");
 ?>
 
 <?php foreach ($this->user as $value) {
@@ -247,8 +248,8 @@ if($this->total== 1){
     <?php if($veh['imagen'] == null){ ?>
             <img src="/img/no_disponible1.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
     <?php }else{ ?>
-            <a class="example-image-link" href="/<?php echo $veh['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $veh['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
-        <?php } ?>
+            <a class="example-image-link" href="/<?php echo $veh['imagen']; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $veh['imagen']; ?>" id="camara_div" style="width: 240px;  margin-top: 5px;"/></a>
+        <?php } ?> 
 </div>
 <!-- End Tabla Vehiculo-->
 
@@ -380,7 +381,7 @@ if($this->total== 1){
                         </div>
                         <div class="col m6 s6 text-right">
                              <div class="input-field col m12 s12">
-                                <a class="waves-effect darken-1 waves-light lighten-4 btn" href="/vehiculos/historialvd/id/<?php echo $idv; ?>">Historial Documentación</a>
+                                <a class="waves-effect darken-1 waves-light lighten-4 btn" href="/vehiculos/historialvd/id/<?php echo $idv; ?>/year/<?php echo $year; ?>">Historial Documentación</a>
                             </div>
                         </div>
                       <!--   <div class="col m6 s6 text-right">

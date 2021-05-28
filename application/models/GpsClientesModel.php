@@ -93,6 +93,21 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
     }   // CONSULTA Carpeta Principal
 
 
+    public function GetArchivosCarpeta1($table,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
+                FROM clientes_archivos ca
+                WHERE ca.id_carpeta = 0 AND ca.id_cliente = $id
+                order by ca.id asc");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
     public function Getpaginationarchivosclientes($table,$offset,$no_of_records_per_page,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -205,6 +220,20 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         }
     }   // CONSULTA SubCarpetaEspecifiva
 
+    public function GetAllsubcarpeta($table,$id,$clienteid){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
+                FROM clientes_archivos ca
+                WHERE ca.id_carpeta = $id AND ca.id_cliente = $clienteid
+                order by ca.id asc");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Arvhicos Especificos
 
     public function Getpaginationarchivocarpeta($table,$offset,$no_of_records_per_page,$id,$clienteid){
         try{

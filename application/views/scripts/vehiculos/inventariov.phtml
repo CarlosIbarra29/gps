@@ -382,20 +382,27 @@ if($this->total== 1){
 										<div class="determinate orange" style="width: 0%"></div>
 	  								</div>
 	  										<b>0%</b>
-								
 
-								<?php } else if ($veh["porcentaje_doc"] >= 90) { ?>
+	  							<?php } else if ($veh["porcentaje_doc"] == 100 || $veh["porcentaje_doc"] > 100.01 ) { ?>
+									<div class="progress">
+	      								<div class="determinate green" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
+	  								</div>
+	  									<b>100%</b>
+
+								<?php } else if ($veh["porcentaje_doc"] >= 90.01 ) { ?>
 									<div class="progress">
 	      								<div class="determinate green" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
 	  								</div>
 	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
 								
-								<?php } else if ($veh["porcentaje_doc"] >= 1 || $veh["porcentaje_doc"] < 90) { ?>
+								
+								<?php } else if ($veh["porcentaje_doc"] >= 1 || $veh["porcentaje_doc"] <= 90) { ?>
 									<div class="progress">
 	      								<div class="determinate orange" style="width: <?php echo $veh["porcentaje_doc"]; ?>%"></div>
 	  								</div>
 	  									<b><?php echo round($veh["porcentaje_doc"],2) ; ?>%</b>
-								<?php } ?>
+
+								<?php } ?>								
 
 							</td>
 							<td>
