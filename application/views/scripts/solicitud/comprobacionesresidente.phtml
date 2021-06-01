@@ -262,6 +262,7 @@
                 <th>Sitio</th>
                 <th>Monto solicitud</th>
                 <th>Monto actual</th>
+                <!-- <th>Monto Total</th> -->
                 <th>Autorización</th>
                 <th>Pago</th>
               </tr>
@@ -273,17 +274,18 @@
                 <td><?php echo $this->nombre_sitio; ?></td>
 
                 <?php 
-                  if($this->pago == 1){
-                    $total = $this->monto_anterior + $this->sol_monto;
-                  }else{
+                  // if($this->pago == 1){
+                  //   $total = $this->monto_anterior + $this->sol_monto;
+                  // }else{
                     $total = $this->monto_anterior;
-                  }
+                  // }
 
                 ?>
-
+                <!-- <?php $total_monto = $this->monto + $total; ?> -->
                 
                 <td style="font-weight: bold;">$<?php echo number_format($this->sol_monto, 2, '.', ','); ?></td>
                 <td style="font-weight: bold;">$<?php echo number_format($total, 2, '.', ','); ?></td>
+                <!-- <td style="font-weight: bold;">$<?php echo number_format($total_monto, 2, '.', ','); ?></td> -->
                 <td>
                   <?php if($this->autorizacion == 0){ ?>
                     <div class="chip" id="inactivo_personal">
@@ -332,6 +334,15 @@
               </tr>
             </tbody>
           </table>
+
+          <?php  $tot = $this->monto_anterior + $this->sol_monto; ?>
+          <!-- <div class="row"> -->
+            <div class="col m12 s12 text-right"> 
+              <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Monto estimado después de pago: <span style="font-size:17px;">$<?php echo number_format($tot, 2, '.', ','); ?></span>
+              </span>
+            </div>
+          <!-- </div> -->
+
         </div>
       </div>
     <?php } ?>

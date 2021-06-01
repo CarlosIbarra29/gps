@@ -172,11 +172,11 @@
                 <td><?php echo $this->nombre_sitio; ?></td>
 
                 <?php 
-                  if($this->pago == 1){
-                    $total = $this->monto_anterior + $this->sol_monto;
-                  }else{
+                  // if($this->pago == 1){
+                  //   $total = $this->monto_anterior + $this->sol_monto;
+                  // }else{
                     $total = $this->monto_anterior;
-                  }
+                  // }
 
                 ?>
 
@@ -230,6 +230,15 @@
               </tr>
             </tbody>
           </table>
+
+          <?php  $tot = $this->monto_anterior + $this->sol_monto; ?>
+          <!-- <div class="row"> -->
+            <div class="col m12 s12 text-right"> 
+              <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Monto estimado después de pago: <span style="font-size:17px;">$<?php echo number_format($tot, 2, '.', ','); ?></span>
+              </span>
+            </div>
+          <!-- </div> -->
+          
         </div>
       </div>
     <?php } ?>

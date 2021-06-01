@@ -632,6 +632,9 @@ foreach ($this->solicitud as $key) {
 
   </div>
 
+
+  <input type="hidden" id="name_residente" value="<?php echo $residente; ?>">
+  <input type="hidden" id="id_comprobacion" value="<?php echo $this->id_solicitud; ?>">
 <script type="text/javascript">
   $(document).ready(function(){
     $('.modal').modal();
@@ -855,10 +858,13 @@ foreach ($this->solicitud as $key) {
 
 <script type="text/javascript">
       $("#exportBtn1").click(function(){
+        var residente = document.getElementById("name_residente").value;
+        var id = document.getElementById("id_comprobacion").value;
+        
         TableToExcel.convert(document.getElementById("tab1"), {
-            name: "Comprobacion.xlsx",
+            name: "Comprobacion No. "+id+" -"+residente+" .xlsx",
             sheet: {
-              name: "Comprobacion"
+              name: "Comprobacion No. "+id+" -"+residente+""
             }
           });
         });

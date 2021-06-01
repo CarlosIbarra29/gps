@@ -166,7 +166,7 @@
     <script>
       function getPDF(selector) {
         kendo.drawing.drawDOM($(selector)).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "Solicitud NO <?php echo $this->id_comprobacion; ?>.pdf");
+          kendo.drawing.pdf.saveAs(group, "Comprobacion NO <?php echo $this->id_comprobacion; ?> - <?php echo $nombre_residente; ?> .pdf");
         });
       }
 
