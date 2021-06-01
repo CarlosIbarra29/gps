@@ -341,7 +341,7 @@ class ClientesController extends Zend_Controller_Action{
             $table="clientes_archivos";
             $this->view->clt = $this->_season->GetAll($table);
 
-            $clientes=$this->_season->GetAll($table);
+            $clientes=$this->_cliente->GetArchivosCarpeta1($table,$id);
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {
@@ -610,7 +610,7 @@ class ClientesController extends Zend_Controller_Action{
             $table="clientes_archivos";
             $this->view->clt = $this->_season->GetAll($table);
 
-            $clientes=$this->_season->GetAll($table);
+            $clientes=$this->_cliente->GetAllsubcarpeta($table,$id,$clienteid);
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {
@@ -837,7 +837,7 @@ class ClientesController extends Zend_Controller_Action{
             $table="clientes_archivos";
             $this->view->clt = $this->_season->GetAll($table);
 
-            $clientes=$this->_season->GetAll($table);
+            $clientes=$this->_cliente->GetAllsubcarpeta($table,$id,$clienteid);
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {

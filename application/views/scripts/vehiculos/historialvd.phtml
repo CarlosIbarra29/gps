@@ -58,6 +58,7 @@ if($this->total== 1){
 ?>
 
 <input type="hidden" name="idvh" id="idvh" value="<?php echo $this->idvh; ?>">
+<input type="hidden" name="año" id="año" value="<?php echo $this->year; ?>">
 
 <style type="text/css">
     .table_wrapper{
@@ -75,9 +76,9 @@ if($this->total== 1){
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación Histórica
-  </div>
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentación del <?php echo $this->year; ?> 
+    </div>
 </div>
 
 <!-- END INICIO DETAIL-->
@@ -154,8 +155,31 @@ if($this->total== 1){
                 <div class="card-content">
 
                     <div class="row">
-                        <div style="padding: 1rem 1rem 1rem 1rem;" class="col m6 s6 text-left">
-                            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de documentos  
+                        <div style="padding: 1rem 1rem 1rem 1rem; " class="col m4 s4 text-left">
+                            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Documentos Historial</span>
+                        </div>
+                        <div class="col m8 s8 text-right">
+                            <div class="col m6 s12 text-right">
+                                <a href="/vehiculos/exceldoc/id/<?php echo $idv; ?>/year/<?php echo $this->year; ?>"> <h4 style="color: green;">Generar Excel Histórico <i class="material-icons">insert_drive_file</i></h4></a>
+                            </div>
+                            <div class="col m6 s12 text-rigth">
+                                <div class="input-field col s12">
+                                    <select id="filtrar_year">
+                                        <option value="" disabled selected>Selecciona una opcion*</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                    </select>
+                                    <label>Filtrar por año:</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -293,16 +317,12 @@ if($this->total== 1){
     });
 
 
-    $(".info_res").click(function(){
-        var id = $(this).data('id');     
-        document.getElementById("id").value = id;
+    $('#filtrar_year').on('change', function() {
+        var op = this.value;
+        var vehiculo =  document.getElementById("idvh").value;
+        window.location.href = "/vehiculos/historialvd/id/"+vehiculo+"/year/"+op;
+    });
 
-        var tpo = $(this).data('tpo');
-        document.getElementById("tpo").value = tpo; 
-
-        var nombre = $(this).data('nombre');
-        document.getElementById("nombre").value = nombre;
-    }); 
 
 </script>
 

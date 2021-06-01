@@ -1749,10 +1749,14 @@ class VehiculosController extends Zend_Controller_Action{
 
             $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
-
+            
+            $año = $this->_getParam('year');
+            $this->view->year=$año;
+            
             $table="vehiculos_documentacion";
-            $vehdct = $this->view->vehdoc = $this->_veh->GetVehiculosDocH($table,$id);
+            $vehdct = $this->view->vehdoc = $this->_veh->GetVehiculosDocH($table,$id,$año);
             $count=count($vehdct);
+            
 
             if (isset($_GET['pagina'])) {
                 $pagina = $_GET['pagina'];
@@ -1767,10 +1771,9 @@ class VehiculosController extends Zend_Controller_Action{
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $table="vehiculos_documentacion";
-            $sql= $this->view->paginator= $this->_veh->GetpaginationDocH($table,$offset,$no_of_records_per_page,$id);
+            $sql= $this->view->paginator= $this->_veh->GetpaginationDocH($table,$offset,$no_of_records_per_page,$id,$año);
             
             $veh = $this->_getParam('id');
-            
             $this->view->idvh=$veh;
         
         }   else {
@@ -1780,6 +1783,26 @@ class VehiculosController extends Zend_Controller_Action{
         } 
 
     }
+
+
+    public function exceldocAction(){
+
+          if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+
+            $año = $this->_getParam('year');
+            $this->view->year=$año;
+
+            $table="vehiculos_documentacion";
+            $this->view->vehmdocumentacion = $this->_veh->GetVehiculosDocE($table,$id);
+        
+        }else {
+
+            return $this-> _redirect('/');
+        
+        } 
+
+    }   // EXCEL VEHICULOS MANTENIMIENTO
 
 
 

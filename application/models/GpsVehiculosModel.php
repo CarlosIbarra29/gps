@@ -933,16 +933,17 @@ where id not in (
         }
     }   // CONSULTA ASIGNACION VEHICULOS PAGINACION
 
-    public function GetVehiculosDocH($table,$id){
+    public function GetVehiculosDocH($table,$id,$año){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia,
+            YEAR(DATE(vigencia)) AS Año,
             vd.status, IF(vd.status = 0, 'Vigente', 'Vencido') as statusd, vd.comentarios, vd.documento, vd.id_sol,
             vp.comprobante_pago, v.marca, v.submarca, v.modelo, v.color, v.placas 
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
             LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vd.id_sol
-            WHERE vd.id_vehiculo = ? ORDER BY vd.status ASC",array($id));
+            having vd.id_vehiculo = ? and vd.status = 0 and Año = $año OR vd.id_vehiculo = $id and vd.status = 1 and Año = $año ORDER BY vd.status ASC",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -951,16 +952,17 @@ where id not in (
         }
     }   // CONSULTA DOCUMENTACION VEHICULOS
 
-    public function GetpaginationDocH($table,$offset,$no_of_records_per_page,$id){
+    public function GetpaginationDocH($table,$offset,$no_of_records_per_page,$id,$año){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia,
+            YEAR(DATE(vigencia)) AS Año,
             vd.status, IF(vd.status = 0, 'Vigente', 'Vencido') as statusd, vd.comentarios, vd.documento, vd.id_sol,
             vp.comprobante_pago, v.marca, v.submarca, v.modelo, v.color, v.placas 
             FROM vehiculos_documentacion vd
             LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
             LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vd.id_sol
-            WHERE vd.id_vehiculo = $id ORDER BY vd.status ASC LIMIT $offset,$no_of_records_per_page");
+            having vd.id_vehiculo = $id and vd.status = 0 and Año = $año OR vd.id_vehiculo = $id and vd.status = 1 and Año = $año ORDER BY vd.status ASC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -1012,6 +1014,26 @@ where id not in (
             echo $e;
         }
     }   // CONSULTA MANTENIMIENTO VEHICULOS
+
+
+    public function GetVehiculosDocE($table,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vd.id, vd.tipo_doc, vd.id_vehiculo, vd.nombre_doc, vd.fecha, vd.vigencia,
+            YEAR(DATE(vigencia)) AS Año,
+            vd.status, IF(vd.status = 0, 'Vigente', 'Vencido') as statusd, vd.comentarios, vd.documento, vd.id_sol,
+            vp.comprobante_pago, v.marca, v.submarca, v.modelo, v.color, v.placas 
+            FROM vehiculos_documentacion vd
+            LEFT JOIN vehiculos v ON v.id_vehiculos = vd.id_vehiculo
+            LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vd.id_sol
+            WHERE vd.id_vehiculo = ? and vd.status = 0 OR vd.id_vehiculo = $id and vd.status = 1 ORDER BY vd.vigencia ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // CONSULTA DOCUMENTACION VEHICULOS GENERal
 
     public function GetpaginationMto($table,$offset,$no_of_records_per_page,$id){
         try{
