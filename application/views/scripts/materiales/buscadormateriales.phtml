@@ -328,6 +328,14 @@
 
 
 					</td>
+
+					<td>
+						<?php if($usr['solicitud_materiales']  == 0 || $usr['solicitud_materiales']  == NULL ){ ?>
+						<?php }else{ ?>
+							<a href="/envios/enviodetail/id/<?php echo $usr['envio_id']; ?>/status/<?php echo $usr['envios_status']; ?>"><i class="material-icons">local_shipping</i></a>
+						<?php } ?>
+					</td>
+					
 					<td class="text-center">
 						<a href="/materiales/materialdetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 					</td>

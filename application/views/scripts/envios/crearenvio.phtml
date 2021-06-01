@@ -83,7 +83,7 @@
 
 			<div class="input-field col m6 s12">
 	    		<select id="materiales" name="materiales">
-	      			<option value="0" disabled selected> Selecciona una solicitud</option>
+	      			<option value="0" disabled selected>* Selecciona una solicitud</option>
 	      			<?php foreach ($this->materiales as $key){ ?>
 	      				<?php if($key['id_sitio'] == 0){ ?>
 	      					<option value="<?php echo $key['id']; ?>">No. <?php echo $key['id']; ?> / Sitio: Stock Almacen / Fecha envio: <?php echo $key['fecha_solicitada']; ?> </option>
@@ -162,8 +162,9 @@
   		var	tipo_envio = document.getElementById("tipo_envio").value;
   		var vehiculo = document.getElementById("vehiculo").value;
   		var hora_envio = document.getElementById("hora_envio").value;
+  		var materiales = document.getElementById("materiales").value;
 
-	    if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == ""){
+	    if(sitio == 0 || prioridad == 0 || fecha_envio == "" || tipo_envio == 0 || vehiculo == 0 || hora_envio == "" || materiales == 0){
 	        swal({
 	           	title: "Para continuar debes agregar la información marcada con un '*' ",
 	        });

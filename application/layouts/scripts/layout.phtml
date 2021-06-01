@@ -500,6 +500,13 @@ setInterval(function() {
         if($actual_link == $urlname){ return "active"; }    
     } 
 
+    function getlistaruth($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/solicitud/solicitudescompras/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+    }
+
 
     function getUsuarios($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
@@ -1124,6 +1131,10 @@ setInterval(function() {
                 </li>
                 <li class="bold moves <?php echo getUrl('/solicitud/listaordencompracoordinador',$actual_link); echo getlistasolicitudcoord($actual_link);?>">
                     <a href="/solicitud/listaordencompracoordinador/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/solicitudescompras/status/0',$actual_link); ?>">
+                    <a href="/solicitud/solicitudescompras/status/0">Solicitudes Ruth<i class="material-icons">format_list_numbered</i></a>
                 </li>
 
                 <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">

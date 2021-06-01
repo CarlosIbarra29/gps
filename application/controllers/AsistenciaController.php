@@ -50,7 +50,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $wh="id";
         $info = $this->view->info_personal = $this->_season->GetSpecific($table,$wh,$id);   
         
-
         if($info[0]['id_sitiopersonal'] == 0){
             $sit = 0;
             $this->view->if_sitio=$sit;
