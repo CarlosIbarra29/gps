@@ -104,9 +104,21 @@
 				<label>Vehículos</label>
 			</div>
 
+			<div class="input-field col m6 s12">
+				<select id="materiales" name="materiales" required>
+			    	<?php foreach ($this->materiales as $mar) { 
+			     		if ($mar['id']==$key['solicitud_materiales']) { ?>
+			                <option value="<?php echo $mar['id']; ?>" selected>No. <?php echo $mar['id']; ?> / Sitio: Stock Almacen / Fecha envio: <?php echo $mar['fecha_solicitada']; ?> </option>
+			     	<?php } if ($mar['id']!=$key['solicitud_materiales']) { ?>
+			                <option value="<?php echo $mar['id']; ?>">No. <?php echo $mar['id']; ?> / Sitio: <?php echo $mar['name_sitio']; ?> / Fecha envio: <?php echo $mar['fecha_solicitada']; ?> </option>	
+			     	<?php } } ?>  
+				</select>
+				<label>* Solicitud de Materiales:</label>
+			</div>
+
 
 			<?php } ?>
-			<div class="input-field col m6 s12">
+<!-- 			<div class="input-field col m6 s12">
 	    		<select id="materiales" name="materiales">
 	      			<option value="0" disabled selected>Selecciona una solicitud</option>
 	      			<?php foreach ($this->materiales as $key){ ?>
@@ -118,9 +130,10 @@
 	      			<?php } ?>
 	    		</select>
 	    		<label>Solicitud de Materiales:</label>
-			</div>
+			</div> -->
 
-			<div class="input-field col m6 12">
+
+<!-- 			<div class="input-field col m6 12">
 				<?php if($this->sol_mat == 1){ ?>
 					<span style="font-size:15px;">No se selecciono una solicitud de material</span>
 					<input type="hidden" name="id_mat" value="0">
@@ -134,7 +147,7 @@
 					<span style="font-size:15px;">Solicitud materiales No. <?php echo $id; ?> / Sitio: <?php echo $name; ?> / Fecha envio: <?php echo $fecha; ?> </span>
 					<input type="hidden" name="id_mat" value="<?php echo $id; ?>">
 				<?php } ?>
-			</div>
+			</div> -->
 		</form>
 
 		<div class="row">

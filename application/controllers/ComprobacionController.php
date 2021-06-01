@@ -19,8 +19,7 @@ class ComprobacionController extends Zend_Controller_Action{
 
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
-        }
-        
+        }    
     }
 
     public function listafacturasAction(){
@@ -871,7 +870,6 @@ class ComprobacionController extends Zend_Controller_Action{
             $this->view->paginator= $this->_comprobacion->getpaginatorcomprobacionlike($proceso,$pago,$option,$sitio,$offset,$no_of_records_per_page);
         }
         // SOLICITUDES ACEPTADAS Y PAGADAS
-
     }
 
 
@@ -931,7 +929,6 @@ class ComprobacionController extends Zend_Controller_Action{
                 $table="comprobaciones";
                 $facturable = 2;
                 $ver= $this->view->facturable_no = $this->_comprobacion->getfacturasenprocesofacturable($id_solicitud,$facturable);
-
             }
            
         }
@@ -1310,7 +1307,6 @@ class ComprobacionController extends Zend_Controller_Action{
             $table="comprobaciones";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
-            // var_dump($result);exit;
             if ($result) {
                 return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['ids'].'');  
             }else{

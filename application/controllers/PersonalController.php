@@ -38,7 +38,6 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->totalpage = $total_pages;
         $this->view->total=ceil($total_pages/$no_of_records_per_page);
         $this->view->paginator= $this->_personal->getpersonalcuadrilla($offset,$no_of_records_per_page,$id); 
-        // var_dump($ver);exit;
     }
 
     public function buscadorpersonalAction(){

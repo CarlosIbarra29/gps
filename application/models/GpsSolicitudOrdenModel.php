@@ -4089,4 +4089,255 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     }
 
 
+    public function getusernamesolicitudcompras($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento,soc.status_documentouno,soc.delete_status, u.id, u.nombre, u.ap, 
+                        s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.status_documento = 0 and status_documentouno = 0  
+                        order by soc.id DESC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcomprasoption($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.id_usuario, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento,soc.status_documentouno,soc.delete_status,soc.status_pago ,u.id, 
+                        u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario = ?",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamecompraspaginator($id,$table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ?
+                        order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+// '%{$nombre}%'
+    public function getsolicitudsearchcompras($id,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.nombre_sitio like '%{$nombre}%' order by soc.id DESC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcompraspag($id,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.nombre_sitio like '%{$nombre}%'  order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcomprasprov($id,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.name_proveedor like '%{$nombre}%' order by soc.id DESC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcompraspagprov($id,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.name_proveedor like '%{$nombre}%'  order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcomprasid($id,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.id= ? order by soc.id DESC",array($id,$nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcompraspagid($id,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getsolicitudsearchcompraserv($id,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.servicio_id= ? order by soc.id DESC",array($id,$nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getsolicitudsearchcompraspagserv($id,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto  
+                        WHERE soc.id_usuario = ? and soc.servicio_id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page",array($id,$nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 }

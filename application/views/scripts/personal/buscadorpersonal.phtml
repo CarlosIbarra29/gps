@@ -316,10 +316,43 @@
                 <span id="name_userspan"style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"></span>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col m2 s6 text-center">
+                <div class="chip modal-trigger" id="sitio_op">
+                    <img src="/img/correct.png" class="sitio_uno">
+                    <img src="/img/gris.jpg" class="sitio_dos oculto">
+                    Sitio
+                </div>
+            </div>
+            <div class="col m4 s6 text-center">
+                <div class="chip modal-trigger" id="compensacion_op">
+                    <img src="/img/gris.jpg" class="comp_uno">
+                    <img src="/img/correct.png" class="comp_dos oculto">
+                    Compensación
+                </div>
+            </div>
+            <div class="col m3 s6 text-center">
+                <div class="chip modal-trigger" id="taller_op">
+                    <img src="/img/gris.jpg" class="taller_uno">
+                    <img src="/img/correct.png" class="taller_dos oculto">
+                    Taller
+                </div>
+            </div>
+
+            <div class="col m3 s6 text-center">
+                <div class="chip modal-trigger" id="vacaciones_op">
+                    <img src="/img/gris.jpg" class="vacaciones_uno">
+                    <img src="/img/correct.png" class="vacaciones_dos oculto">
+                    Vacaciones
+                </div>
+            </div>
+        </div>
         
-        <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
-            <div class="row" style="margin-top: 20px;">
+        <div class="row" style="margin-top: 20px;" id="div_sitio">
+            <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
                 <input type="hidden" name="id_user" id="id_user" value="">
+                <input type="hidden" name="op" value="1">
                 <div class="col m12 s12">
                     <div class="input-field col m12 s12">
                         <select id="sitio_op" name="sitio">
@@ -352,16 +385,70 @@
                     </div>
 
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <div class="row oculto" style="margin-top: 20px;" id="div_compensacion">
+            <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_compensacion">
+                <input type="hidden" name="op" value="2">
+                <input type="hidden" name="id_user" id="id_userdos" value="">
+                <div class="input-field col m6 s12">
+                    <input id="fecha_inicialcomp" name="fecha_inicial" type="date" class="datepicker">
+                    <label for="fecha_inicialcomp">* Fecha Inicial</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <input id="fecha_finalcomp" name="fecha_final" type="date" class="datepicker">
+                    <label for="fecha_finalcomp">* Fecha Final</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="row oculto" style="margin-top: 20px;" id="div_taller">
+            <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_taller">
+                <input type="hidden" name="op" value="3">
+                <input type="hidden" name="id_user" id="id_usertres" value="">
+                <div class="input-field col m6 s12">
+                    <input id="fecha_inicialtaller" name="fecha_inicial" type="date" class="datepicker">
+                    <label for="fecha_inicialtaller">* Fecha Inicial</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <input id="fecha_finaltaller" name="fecha_final" type="date" class="datepicker">
+                    <label for="fecha_finaltaller">* Fecha Final</label>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="row oculto" style="margin-top: 20px;" id="div_vacaciones">
+            <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_vacaciones">
+                <input type="hidden" name="op" value="4">
+                <input type="hidden" name="id_user" id="id_usercuatro" value="">
+                <div class="input-field col m6 s12">
+                    <input id="fecha_inicialvaca" name="fecha_inicial" type="date" class="datepicker">
+                    <label for="fecha_inicialvaca">* Fecha Inicial</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <input id="fecha_finalvaca" name="fecha_final" type="date" class="datepicker">
+                    <label for="fecha_finalvaca">* Fecha Final</label>
+                </div>
+            </form>
+        </div>
+
     </div>
     <div class="modal-footer">          
         <button class=" btn" id="adduser">Guardar</button>
+        <button class=" btn oculto" id="btn_compensacion">Guardar</button>
+        <button class=" btn oculto" id="btn_taller">Guardar</button>
+        <button class=" btn oculto" id="btn_vacaciones">Guardar</button>
+
         <button  class="modal-close red btn">Cerrar</button>
     </div>
 </div>
 
-<input type="hidden" id="buscador_op" value="<?php echo $this->op_select; ?>">
+<input type="hidden" id="buscador_op" value="1">
 <script type="text/javascript">
     $(document).ready(function(){
         $('.modal').modal();
@@ -376,6 +463,9 @@
 
         id = $(this).data('id');
         document.getElementById("id_user").value=id;
+        document.getElementById("id_userdos").value=id;
+        document.getElementById("id_usertres").value=id;
+        document.getElementById("id_usercuatro").value=id;
     });
 
 
@@ -460,6 +550,7 @@
             $(".op_sitio").hide();
             $(".op_status").hide();            
         }
+
         if(value == 3){
             $(".op_sitio").show();
             $(".op_nombre").hide();
@@ -514,7 +605,7 @@
 
         if(buscador == 4){
             var select_status = document.getElementById("select_status").value;
-            if(select_status == 0){
+            if(select_status == ""){
                 swal({
                     title: "Es necesario seleccionar un status",
                 });
@@ -523,4 +614,132 @@
             }
         }
     });
+
+    $("#sitio_op").click(function(){
+        $(".sitio_uno").show(); $(".sitio_dos").hide();
+        $(".comp_uno").show(); $(".comp_dos").hide();
+        $(".taller_uno").show(); $(".taller_dos").hide();
+        $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+        $("#div_sitio").show();
+        $("#div_compensacion").hide();
+        $("#div_taller").hide();
+        $("#div_vacaciones").hide();
+
+        $("#adduser").show();
+        $("#btn_compensacion").hide();
+        $("#btn_taller").hide();
+        $("#btn_vacaciones").hide();
+    });
+
+    $("#compensacion_op").click(function(){
+        $(".sitio_uno").hide(); $(".sitio_dos").show();
+        $(".comp_uno").hide(); $(".comp_dos").show();
+        $(".taller_uno").show(); $(".taller_dos").hide();
+        $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+        $("#div_sitio").hide();
+        $("#div_compensacion").show();
+        $("#div_taller").hide();
+        $("#div_vacaciones").hide();
+
+        $("#adduser").hide();
+        $("#btn_compensacion").show();
+        $("#btn_taller").hide();
+        $("#btn_vacaciones").hide();
+    });
+
+    $("#taller_op").click(function(){
+        $(".taller_uno").hide(); $(".taller_dos").show();
+        $(".sitio_uno").hide(); $(".sitio_dos").show();
+        $(".comp_uno").show(); $(".comp_dos").hide();
+        $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+        $("#div_sitio").hide();
+        $("#div_compensacion").hide();
+        $("#div_taller").show();
+        $("#div_vacaciones").hide();
+
+        $("#adduser").hide();
+        $("#btn_compensacion").hide();
+        $("#btn_taller").show();
+        $("#btn_vacaciones").hide();
+    });
+
+    $("#vacaciones_op").click(function(){
+        $(".sitio_uno").hide(); $(".sitio_dos").show();
+        $(".comp_uno").show(); $(".comp_dos").hide();
+        $(".taller_uno").show(); $(".taller_dos").hide();
+        $(".vacaciones_uno").hide(); $(".vacaciones_dos").show();
+
+        $("#div_sitio").hide();
+        $("#div_compensacion").hide();
+        $("#div_taller").hide();
+        $("#div_vacaciones").show();
+
+        $("#adduser").hide();
+        $("#btn_compensacion").hide();
+        $("#btn_taller").hide();
+        $("#btn_vacaciones").show();
+    });
+
+
+    $("#btn_compensacion").click(function(){
+        var id_user = document.getElementById("id_user").value;
+        var fecha_inicial = document.getElementById("fecha_inicialcomp").value;
+        var fecha_final = document.getElementById("fecha_finalcomp").value;
+
+        if(id_user == "" ||  fecha_inicial=="" || fecha_final== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitComp, 1500);     
+        }
+    });
+    function submitComp() { document.getElementById("submit_compensacion").submit() }
+
+
+    $("#btn_taller").click(function(){
+        var id_user = document.getElementById("id_user").value;
+        var fecha_inicial = document.getElementById("fecha_inicialtaller").value;
+        var fecha_final = document.getElementById("fecha_finaltaller").value;
+
+        if(id_user == "" ||  fecha_inicial=="" || fecha_final== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submittaller, 1500);     
+        }
+    });
+    function submittaller() { document.getElementById("submit_taller").submit() }
+
+    $("#btn_vacaciones").click(function(){
+        var id_user = document.getElementById("id_user").value;
+        var fecha_inicial = document.getElementById("fecha_inicialvaca").value;
+        var fecha_final = document.getElementById("fecha_finalvaca").value;
+
+        if(id_user == "" ||  fecha_inicial=="" || fecha_final== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitvacaciones, 1500);     
+        }
+    });
+    function submitvacaciones() { document.getElementById("submit_vacaciones").submit() }
+    
 </script>

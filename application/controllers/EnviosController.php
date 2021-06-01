@@ -89,6 +89,7 @@ class EnviosController extends Zend_Controller_Action{
         $table="envios_solicitud";
         $wh="id";
         $prov=$this->view->informacion = $this->_season->GetSpecific($table,$wh,$id);
+        // var_dump($prov);exit;
         if($prov[0]['solicitud_materiales'] != 0){
             $material = 0;
             $this->view->sol_mat =  $material;
@@ -115,7 +116,8 @@ class EnviosController extends Zend_Controller_Action{
         $id = 0;
         $wh="status_envio";
         $table="materiales_solicitud";
-        $this->view->materiales = $this->_season->GetSpecific($table,$wh,$id);
+        $ver=$this->view->materiales = $this->_season->GetAll($table);
+        // var_dump($ver);exit;
     }
 
     public function auditoriaenviosAction(){

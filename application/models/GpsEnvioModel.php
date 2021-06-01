@@ -289,7 +289,7 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
     public function getenviosteponepaginator($step,$status,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud e.fecha_envio, 
+            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud,e.fecha_envio, 
                         e.user_solicitud, e.prioridad, e.tipo_envio, e.vehiculo, e.direccion, e.step_envio, 
                         e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado, e.dimensiones, e.comentarios, 
                         e.status_solicitud, e.vehiculo_final,e.operador, e.acuse,e.descripcion, e.id_tipoproyecto, 
@@ -471,9 +471,10 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse, e.id_tipoproyecto, 
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
-                        WHERE step_envio = ? AND status_solicitud = ? AND fecha_solicitud = ? 
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        WHERE step_envio = ? AND e.status_solicitud = ? AND e.fecha_solicitud = ? 
                         ORDER BY years, mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$fecha));
             $row = $qry->fetchAll();
@@ -494,9 +495,10 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse,e.descripcion, e.id_tipoproyecto,
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
-                        WHERE step_envio = ? AND status_solicitud = ? AND name_sitio like '%{$sitio}%'
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        WHERE step_envio = ? AND e.status_solicitud = ? AND e.name_sitio like '%{$sitio}%'
                         ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status));
             $row = $qry->fetchAll();
             return $row;
@@ -515,9 +517,10 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse,e.descripcion, e.id_tipoproyecto,
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
-                        WHERE step_envio = ? AND status_solicitud = ? AND user_solicitud like '%{$user}%'
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        WHERE step_envio = ? AND e.status_solicitud = ? AND e.user_solicitud like '%{$user}%'
                         ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status));
             $row = $qry->fetchAll();
             return $row;
@@ -536,8 +539,10 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse,e.descripcion, e.id_tipoproyecto,
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
-                        FROM envios_solicitud e where step_envio = ? and status_solicitud = ? and e.prioridad = ?
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
+                        FROM envios_solicitud e 
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        WHERE step_envio = ? and status_solicitud = ? and e.prioridad = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$prioridad));
             $row = $qry->fetchAll();
@@ -557,8 +562,9 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse,e.descripcion, e.id_tipoproyecto,
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
                         WHERE step_envio = ? and status_solicitud = ? and tipo_envio = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$envio));
@@ -579,8 +585,10 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         e.status_solicitud, e.vehiculo_final, e.operador, e.acuse,e.descripcion, e.id_tipoproyecto,
                         year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
                         month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
-                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
-                        FROM envios_solicitud e where step_envio = ? and status_solicitud = ? and e.id = ?
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
+                        FROM envios_solicitud e 
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        WHERE step_envio = ? and status_solicitud = ? and e.id = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$solicitud));
             $row = $qry->fetchAll();

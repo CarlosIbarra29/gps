@@ -305,13 +305,15 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT m.id, m.id_sitio, m.name_sitio, m.id_tipoproyecto, m.user_solicitud, 
-                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,
+                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud, e.solicitud_materiales,
+                e.id as envio_id, e.status_solicitud as envios_status,
                 year(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS years, 
                 month(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS mes,
                 day(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS dia, m.status_check
                 FROM materiales_solicitud m
                 LEFT JOIN sitios_tipoproyecto st on st.id=m.id_tipoproyecto
                 LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
+                LEFT JOIN envios_solicitud e on e.solicitud_materiales = m.id
                 where m.step_solicitud = ? AND m.status_solicitud = ? and m.name_sitio like '%{$sitio}%'
                     ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status));
             $row = $qry->fetchAll();
@@ -341,13 +343,15 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT m.id, m.id_sitio, m.name_sitio, m.id_tipoproyecto, m.user_solicitud, 
-                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,
+                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud, e.solicitud_materiales,
+                e.id as envio_id, e.status_solicitud as envios_status,
                 year(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS years, 
                 month(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS mes,
                 day(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS dia,m.status_check
                 FROM materiales_solicitud m
                 LEFT JOIN sitios_tipoproyecto st on st.id=m.id_tipoproyecto
                 LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
+                LEFT JOIN envios_solicitud e on e.solicitud_materiales = m.id
                 where m.step_solicitud = ? AND m.status_solicitud = ? and  fecha_solicitada = ?
                     ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status,$fecha));
             $row = $qry->fetchAll();
@@ -377,13 +381,15 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT m.id, m.id_sitio, m.name_sitio, m.id_tipoproyecto, m.user_solicitud, 
-                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,
+                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,e.solicitud_materiales,
+                e.id as envio_id, e.status_solicitud as envios_status,
                 year(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS years, 
                 month(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS mes,
                 day(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS dia, m.status_check
                 FROM materiales_solicitud m
                 LEFT JOIN sitios_tipoproyecto st on st.id=m.id_tipoproyecto
                 LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
+                LEFT JOIN envios_solicitud e on e.solicitud_materiales = m.id
                 where m.step_solicitud = ? AND m.status_solicitud = ?  and m.user_solicitud like '%{$user}%'
                     ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status));
             $row = $qry->fetchAll();
@@ -413,13 +419,15 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT m.id, m.id_sitio, m.name_sitio, m.id_tipoproyecto, m.user_solicitud, 
-                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,
+                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,e.solicitud_materiales,
+                e.id as envio_id, e.status_solicitud as envios_status,
                 year(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS years, 
                 month(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS mes,
                 day(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS dia, m.status_check
                 FROM materiales_solicitud m
                 LEFT JOIN sitios_tipoproyecto st on st.id=m.id_tipoproyecto
                 LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
+                LEFT JOIN envios_solicitud e on e.solicitud_materiales = m.id
                 where m.step_solicitud = ? AND m.status_solicitud = ?  and m.id =?
                     ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status,$id));
             $row = $qry->fetchAll();
@@ -450,13 +458,15 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT m.id, m.id_sitio, m.name_sitio, m.id_tipoproyecto, m.user_solicitud, 
-                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,
+                m.fecha_solicitada, tp.nombre_proyecto, m.step_solicitud, m.status_solicitud,e.solicitud_materiales,
+                e.id as envio_id, e.status_solicitud as envios_status,
                 year(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS years, 
                 month(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS mes,
                 day(date(CONCAT(SUBSTRING(fecha_solicitada, 7, 4),  '/', SUBSTRING(fecha_solicitada, 4, 2), '/', SUBSTRING(fecha_solicitada, 1, 2)))) AS dia, m.status_check
                 FROM materiales_solicitud m
                 LEFT JOIN sitios_tipoproyecto st on st.id=m.id_tipoproyecto
                 LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
+                LEFT JOIN envios_solicitud e on e.solicitud_materiales = m.id
                 where m.step_solicitud = ? AND m.status_solicitud = ?  and m.status_check =?
                     ORDER BY years,mes, dia ASC LIMIT $offset,$no_of_records_per_page",array($step,$status,$id));
             $row = $qry->fetchAll();
