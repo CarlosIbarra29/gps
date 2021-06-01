@@ -139,6 +139,11 @@ class EppController extends Zend_Controller_Action{
         $this->view->excelepp = $this->_epp->eppexcel();
     }// Excel EPP
 
+     public function excelasignacionAction(){
+    
+        $this->view->excelepp = $this->_epp->eppasignacion();
+    }// Excel EPP
+
 
     public function buscareppAction(){
         $actualpagina=$this->_getParam('pagina');

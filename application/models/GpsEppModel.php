@@ -139,6 +139,26 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }
 
+
+    public function eppasignacion(){  
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma,
+            ae.id_epp, ae.cantidad, ae.descripcion, ec.talla , ae.fecha_entrega, ae.reposicion, ae.comentario, ae.status_epp,
+            p.status_personal, p.delete_status, p.id_sitiopersonal,p.name_sitio 
+            FROM epp_asignar ae 
+            LEFT JOIN personal_campo p ON p.id = ae.id_personal
+            LEFT JOIN epp_catalogo ec ON ec.idepp = ae.id_epp
+            WHERE p.delete_status = 0
+            ORDER by p.id");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
     public function Getpaginationtipo($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

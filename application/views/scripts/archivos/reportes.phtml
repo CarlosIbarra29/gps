@@ -65,7 +65,8 @@
                 <tr>
                   <td style="font-size: 15px; font-weight: bold;">EPP</td>
                   <td>
-                    <a href="/epp/excelepp/status/0">Generar Excel</a>
+                    <a class="modal-trigger" href="#modalepp">Generar Excel</a>
+                    <!-- <a href="/epp/excelepp/status/0">Generar Excel</a> -->
                   </td>
                 </tr>
 
@@ -612,6 +613,155 @@
       <button  class="modal-close red btn">Cerrar</button>
     </div>
   </div>
+
+
+<div id="modalepp" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP</span>
+
+    <div class="row" style="margin-top: 40px;" id="div_epp">
+      
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="inv_epp">
+            Inventario EPP
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="asg_epp">
+            Asignación EPP
+        </div>
+      </div>
+    
+    </div>
+      
+    <div class="row oculto" style="margin-top: 40px;" id="div_invepp">
+      
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/correct.png" class="inv_epp">
+            Inventario EPP
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="asg_epp">
+            Asignación EPP
+        </div>
+      </div>
+
+      <div class="row">
+        
+        <div class="col m12 s12" style="margin-top: 30px;">
+          <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+            Inventario EPP
+          </span>
+        </div>
+
+
+        <div class="col m12 s12" style="margin-top: 20px;">
+          
+          Esté excel de inventario EPP arrojará los siguientes campos:
+            
+          <div class="row">
+                     
+            <div class="col m4 s6">
+              <ul>
+                <li class="">Id EPP</li>
+                <li class="">Nombre EPP</li>
+                <li class="">Talla EPP</li>
+                <li class="">Descripción</li>
+              </ul>
+            </div>
+
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">Stock</li>
+                  <li class="">Costo Aprobado</li>
+                  <li class="">Tiempo vida en dias</li>
+                  <li class="">Tipo de EPP</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6 text-center" style="margin-top: 30px;">
+                <a class="btn"href="/epp/excelepp/status/0"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row oculto" style="margin-top: 40px;" id="div_asgepp">
+        <div class="col m6 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inv_epp">
+            Inventario EPP
+          </div>
+        </div>
+
+        <div class="col m6 s12">
+          <div class="chip">
+            <img src="/img/correct.png" class="asg_epp">
+            Asignación EPP
+          </div>
+        </div>
+
+        <div class="row">
+          
+          <div class="col m12 s12" style="margin-top: 30px;">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+              Asignación EPP
+            </span>
+          </div>
+
+          <div class="col m12 s12" style="margin-top: 20px;">
+          
+          Esté excel muestra la asignacón del epp al personal y arrojará los siguientes campos:
+            
+          <div class="row">
+                     
+            <div class="col m4 s6">
+              <ul>
+                <li class="">Id Personal</li>
+                <li class="">Nombre Personal</li>
+                <li class="">Apellido Paterno</li>
+                <li class="">Apellido Materno</li>
+                <li class="">Status Personal</li>
+                <li class="">Cantidad EPP</li>
+                <li class="">Nombre EPP</li>
+              </ul>
+            </div>
+
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">Talla</li>
+                  <li class="">Fecha Entrega</li>
+                  <li class="">Fecha Reposición</li>
+                  <li class="">Status EPP</li>
+                  <li class="">Id sitio</li>
+                  <li class="">Nombre Sitio</li>
+                  <li class="">Comentarios</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6 text-center" style="margin-top: 30px;">
+                <a class="btn"href="/epp/excelasignacion"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
         
 
 <script type="text/javascript">
@@ -797,5 +947,19 @@
     $("#reporte_personal").hide();
     $("#reporte_personaldos").show();
   });
+
+  //EPP 
+  $(".inv_epp").click(function(){
+    $("#div_epp").hide();
+    $("#div_invepp").show();
+    $("#div_asgepp").hide();
+  });
+
+  $(".asg_epp").click(function(){
+    $("#div_epp").hide();
+    $("#div_invepp").hide();
+    $("#div_asgepp").show();
+  });
+
 
 </script>
