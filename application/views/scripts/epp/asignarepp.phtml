@@ -253,6 +253,9 @@
                                     <th>Fecha Entrega</th>
                                     <th>Reposición</th>
                                     <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <?php if ($this->eppasignado) { 
@@ -279,8 +282,9 @@
                                         </td>
                                         <td>
                                             <?php if ($epp['cobro'] == 1) { ?>
-                                                <i style="color: blue;" class="material-icons">monetization_on</i>
-                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a> 
+                                                
+                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                                                <i style="color: blue;" class="material-icons">monetization_on</i> 
                                             <?php } else {  ?> 
                                                 <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>  
                                             <?php } ?>    
@@ -288,6 +292,9 @@
                                         <td>
                                             <a href="/epp/asignaedit/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
                                         </td>
+                                        <td>
+                                            <a class="regresar" data-id="<?php echo $epp["id"]; ?>" data-nombre="<?php echo $epp["descripcion"]; ?>"><span class="warning"><i class="material-icons" style="color: green;">redo</i></span></a>
+                                        </td> 
                                         <td>
                                             <a class="delete" data-id="<?php echo $epp["id"]; ?>" data-nombre="<?php echo $epp["descripcion"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
                                         </td>                                            
@@ -454,6 +461,49 @@
         });
     });
     // End Delete Ajax
+
+
+    $(".regresar").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de regresar al stock el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppregresar",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
 
 
     $(".getpdf").click(function(){
