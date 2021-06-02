@@ -278,7 +278,12 @@
                                             <?php echo $epp['reposicion']; ?>
                                         </td>
                                         <td>
-                                            <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>    
+                                            <?php if ($epp['cobro'] == 1) { ?>
+                                                <i style="color: blue;" class="material-icons">monetization_on</i>
+                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a> 
+                                            <?php } else {  ?> 
+                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>  
+                                            <?php } ?>    
                                         </td>
                                         <td>
                                             <a href="/epp/asignaedit/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>

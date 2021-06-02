@@ -381,7 +381,7 @@ if($this->total== 1){
                         </div>
                         <div class="col m6 s6 text-right">
                              <div class="input-field col m12 s12">
-                                <a class="waves-effect darken-1 waves-light lighten-4 btn" href="/vehiculos/historialvd/id/<?php echo $idv; ?>/year/<?php echo $year; ?>">Historial Documentación</a>
+                                <a class="waves-effect darken-1 waves-light lighten-4 btn" href="/vehiculos/historialvd/id/<?php echo $idv; ?>/year/<?php echo $year; ?>">Documentación Anual</a>
                             </div>
                         </div>
                       <!--   <div class="col m6 s6 text-right">
@@ -395,7 +395,7 @@ if($this->total== 1){
                                 <tr>
                                     <!-- <th>Fecha</th> -->
                                     <th>Tipo Documento</th>
-                                    <th>Vigencia</th>
+                                    <th>Vigencia Fecha</th>
                                     <th>Status</th>
                                     <th>Solicitud Asignada</th>
                                     <th>Comentarios</th>
@@ -412,17 +412,17 @@ if($this->total== 1){
                                         <!-- <td>
                                             <?php echo $vehd['fecha']; ?>
                                         </td> -->
-                                        <td>
+                                        <td >
                                             <?php echo $vehd['nombre_doc']; ?>
                                         </td>
-                                        <td>
+                                        <td style="font-size: 12px; font-weight: bold;" >
                                             <?php if ($vehd['vigencia'] == "") { ?>
                                                 No Aplica
                                             <?php } else { ?>
                                                 <?php echo $vehd['vigencia']; ?>
                                             <?php } ?>
                                         </td>
-                                        <td class="text-center">
+                                        <td style="font-size: 14px" class="text-center">
                                             <?php if ($vehd['vigencia'] == "") { ?>
                                                 No Aplica
                                             <?php } else { ?>
@@ -459,7 +459,7 @@ if($this->total== 1){
                                             <?php } ?>        
                                             <!-- if (date("d-m-Y",strtotime($vehd['vigencia']."- 1 days")) >= date("d-m-Y",strtotime(date("d-m-Y")."- 31 days")) -->
                                         </td>
-                                        <td>
+                                        <td style="font-size: 14px">
                                             <?php if ($vehd['vigencia'] == "") { ?>
                                                 <b>El documento no aplica en este vehículo</b>
                                             <?php } else { ?>
@@ -470,10 +470,10 @@ if($this->total== 1){
                                                 <?php } ?>
                                             <?php } ?>
                                         </td> 
-                                         <td>
+                                         <td style="font-size: 14px">
                                             <?php echo $vehd['comentarios']; ?>
                                         </td>
-                                        <td>
+                                        <td style="font-size: 14px; text-align: center;">
                                             <?php if ($vehd['vigencia'] == "") { ?>
                                                 No aplica
                                             <?php } else { ?>
@@ -483,12 +483,12 @@ if($this->total== 1){
                                                     <?php if ($vehd["comprobante_pago"] == null) { ?>
                                                         Aún no se ha pagado.
                                                     <?php } else { ?>
-                                                        <a title="Descargar Archivo" href="/<?php echo $vehd["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehd["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+                                                        <a title="Descargar Archivo" href="/<?php echo $vehd["comprobante_pago"]; ?>" download="<?php echo substr(strrchr($vehd["comprobante_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
                                                     <?php } ?>
                                                 <?php } ?>
                                             <?php } ?> 
                                         </td> 
-                                        <td>
+                                        <td style="font-size: 14px">
                                             <?php if ($vehd['vigencia'] == "") { ?>
                                                 
                                             <?php } else { ?>
@@ -499,7 +499,7 @@ if($this->total== 1){
                                             <?php } ?>
                                         </td>
 
-                                        <td>
+                                        <td style="font-size: 14px">
                                             <?php if($rol_user == 1 || $rol_user == 8){ ?>
                                                 <?php if ($vehd['vigencia'] == "") { ?>
                                                 

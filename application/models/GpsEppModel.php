@@ -737,7 +737,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     public function GetAllPsn($table){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT * FROM personal_campo
+            $qry = $db->query("SELECT * FROM personal_campo where delete_status = 0 and status_personal = 0
                 ORDER BY nombre ASC");
             $row = $qry->fetchAll();
             return $row;
