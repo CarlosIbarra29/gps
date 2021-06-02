@@ -327,7 +327,7 @@
                     .done(function(data) {
                         kendo.saveAs({
                             dataURI: data,
-                            fileName: "Reporte <?php echo $nombre_res; ?> <?php echo $apellido_res; ?> <?php echo $hoy; ?> .pdf"
+                            fileName: "Comprobacion No. <?php echo $this->id_comprobacion; ?> - <?php echo $nombre_res; ?> <?php echo $apellido_res; ?> <?php echo $hoy; ?> .pdf"
                         });
                     });
                 }

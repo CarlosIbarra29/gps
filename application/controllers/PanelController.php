@@ -1743,6 +1743,7 @@ class PanelController extends Zend_Controller_Action{
             $sitio = $this->_getParam('sitio');
             $this->view->sitio_id=$sitio;   
             $ver = $this->view->torre = $this->_torrenueva->getexist($id,$proyecto,$sitio);
+            // var_dump($ver);exit;
             $torre = $this->view->torre_doc = $this->_torrenueva->getexistinfodos($id,$proyecto,$sitio);
 
             $table="status_proyecto";
@@ -2905,6 +2906,13 @@ class PanelController extends Zend_Controller_Action{
                 $fecha_user = "fecha_torrenueva";  $user_file = "user_torrenueva";
             }
 
+            if($post['archivo'] == 17){
+                $nombre_file = "colloapp"; $torre_status = "colloapp_status";
+                $fecha_user = "fecha_colloapp";  $user_file = "user_colloapp";
+            }
+
+            // var_dump($nombre_file); var_dump($torre_status); var_dump($fecha_user); exit;   
+
             $table="torre_nuevafile";
             $result = $this->_torrenueva->refreshfiletorrenueva($post,$table,$id_torrenueva,$urldb,$nombre_file,$torre_status, $fecha_user, $user_file, $hoy, $user);
             if ($result) {
@@ -3026,7 +3034,6 @@ class PanelController extends Zend_Controller_Action{
         }
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y");
-
         if($this->getRequest()->getPost()){
             $table="documentos_personal";
             $name = $_FILES['url']['name'];

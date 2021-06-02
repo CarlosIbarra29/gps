@@ -103,7 +103,8 @@ class Application_Model_GpsTorrenuevaModel extends Zend_Db_Table_Abstract{
                         tn.pesoacero_status, tn.fecha_pesoacero, tn.user_pesoacero, tn.torrepdf_file, 
                         tn.torrepdf_status, tn.fecha_torrepdf,tn.user_torrepdf,tn.torredwg_file, 
                         tn.torredwg_status,tn.fecha_torredwg,tn.user_dwg, tn.modelotorre_status, 
-                        tn.modelotorre_file, tn.fecha_torrenueva, tn.user_torrenueva
+                        tn.modelotorre_file, tn.fecha_torrenueva,tn.user_torrenueva,tn.colloapp,tn.fecha_colloapp,
+                        tn.user_colloapp, tn.colloapp_status
                         FROM torre_nuevafile tn 
                         WHERE tn.id_sitio = ? and tn.proyecto =? and tn.sitio = ?",array($id,$proyecto,$sitio));
             $row = $qry->fetchAll();

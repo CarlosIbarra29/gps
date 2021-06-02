@@ -282,7 +282,7 @@
 	$torre_status= 0; $simentacion_status=0; $calculo_status=0; $staad_status = 0; $mecanica_status=0;
 	$acero_status=0 ; $tornilleria_status = 0; $galvanizado_status = 0; $verticalidad_status = 0;
 	$tension_status = 0; $foto_status = 0; $tor_status =0; $pesoacero_status= 0; $torrepdf_status = 0;
-	$torredwg_status = 0;
+	$torredwg_status = 0; $colloapp_status = 0; $modelotorre_status= 0;
 	foreach ($this->torre as $key){ 
 		// STATUS
 		$torre_status = $key['torre_status']; $simentacion_status = $key['simentacion_status'];
@@ -292,7 +292,7 @@
 		$verticalidad_status = $key['verticalidad_status']; $tension_status = $key['tension_status'];
 		$foto_status = $key['foto_status']; $tor_status= $key['tor_status']; $pesoacero_status=$key['pesoacero_status'];
 		$torrepdf_status = $key['torrepdf_status']; $torredwg_status = $key['torredwg_status'];
-		$modelotorre_status = $key['modelotorre_status'];
+		$modelotorre_status = $key['modelotorre_status']; $colloapp_status = $key['colloapp_status'];
 
 		// ARCHIVO
 		$torre_file = $key['torre_file']; $simentacion = $key['simentacion_file'];
@@ -302,7 +302,7 @@
 		$verticalidad_file = $key['verticalidad_file']; $tension_file = $key['tension_file'];
 		$foto_file = $key['foto_file']; $tor_file= $key['tor_file']; $pesoacero_file = $key['pesoacero_file'];
 		$torrepdf_file = $key['torrepdf_file']; $torredwg_file = $key['torredwg_file'];
-		$modelotorre_file = $key['modelotorre_file'];
+		$modelotorre_file = $key['modelotorre_file']; $colloapp = $key['colloapp'];
 
 		// FECHA
 		$fecha_torre = $key['fecha_torre']; $fecha_simentacion = $key['fecha_simentacion'];
@@ -312,7 +312,7 @@
 		$fecha_tension = $key['fecha_tension']; $fecha_foto = $key['fecha_foto']; $fecha_tor=$key['fecha_tor'];
 		$fecha_pesoacero = $key['fecha_pesoacero']; $fecha_torrepdf = $key['fecha_torrepdf']; 
 		$fecha_torredwg = $key['fecha_torredwg']; $fecha_acero = $key['fecha_acero'];
-		$fecha_torrenueva = $key['fecha_torrenueva'];
+		$fecha_torrenueva = $key['fecha_torrenueva']; $fecha_colloapp = $key['fecha_colloapp'];
 
 		// USUARIO
 		$user_torre = $key['user_torre']; $user_simentacion = $key['user_simentacion'];
@@ -320,9 +320,9 @@
 		$user_mecanica = $key['user_mecanica']; $user_tornilleria = $key['user_tornilleria'];
 		$user_galvanizado = $key['user_galvanizado']; $user_verticalidad = $key['user_verticalidad'];
 		$user_tension = $key['user_tension']; $user_foto = $key['user_foto']; $user_tor=$key['user_tor'];
-		$user_pesoacero = $key['user_pesoacero']; $user_torrepdf = $key['user_torrepdf']; $user_dwg = $key['user_dwg'];
-		$user_acero = $key['user_acero'];
-		$user_torrenueva = $key['user_torrenueva'];
+		$user_pesoacero = $key['user_pesoacero']; $user_torrepdf = $key['user_torrepdf']; 
+		$user_dwg = $key['user_dwg']; $user_acero = $key['user_acero'];
+		$user_torrenueva = $key['user_torrenueva']; $user_colloapp = $key['user_colloapp'];
 	} ?>
 
 <div class="row"> 
@@ -350,6 +350,7 @@
 	    		<?php } ?>
 	      		
 	      		<?php if($this->rol_user == 2 || $this->rol_user == 1 || $this->rol_user == 7 ){ ?>
+	      			<option value="17">Collo App</option>
 	      			<option value="5">Mecanica de suelos/ Dictamen</option>
 		      		<option value="6">Certificado de acero</option>
 		      		<option value="7">Certificado de tornilleria</option>
@@ -485,6 +486,22 @@
 	            	<a href="/<?php echo $modelotorre_file; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
             	</td>
            	<?php }?>
+          </tr>
+
+          <tr>
+          	<td>Collo App</td>
+          	<?php if($colloapp_status == 0){ ?>
+	            <td>Sin Información</td>
+	            <td>  --- </td> 
+          	<?php }else{ ?>
+	        	<td><?php echo $user_colloapp; ?></td>
+	        	<td><?php echo $fecha_colloapp; ?></td>
+	        	<td>
+	            	<a title="Descargar Archivo" href="/<?php echo $colloapp; ?>" download="<?php echo substr(strrchr($colloapp, "/"), 1); ?>"> <i class="material-icons prefix" style="width: 42px;font-size: 31px;">file_download</i> </a>
+
+	            	<a href="/<?php echo $colloapp; ?>" target="_blank"> <i class="material-icons prefix" style="font-size: 31px;">open_with</i></a>
+            	</td>
+          	<?php } ?>
           </tr>
 
           <tr>	
