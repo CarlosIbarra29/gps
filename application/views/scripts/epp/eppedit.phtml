@@ -23,11 +23,11 @@
 						<?php foreach ($this->eppt as $eppt) { 
 						if ($eppt['id_tipo']==$epp['tipo_epp']) { ?>
 					        <option value="<?php echo $eppt["id_tipo"]; ?>" selected><?php echo $eppt["nombre"]; ?></option>
-					    <?php } if ($eppt['id_tipo']==$epp['tipo_epp']) { ?>
+					    <?php } if ($eppt['id_tipo']!=$epp['tipo_epp']) { ?>
 					            <option value="<?php echo $eppt['id_tipo']; ?>" ><?php echo $eppt["nombre"]; ?></option>
 					    <?php } } ?>  
 					</select>
-					<label>Categoria Herramienta</label>
+					<label>Tipo EPP</label>
 				</div>
 				<div class="input-field col m12 s12">
 			        <i class="material-icons prefix">account_circle</i>

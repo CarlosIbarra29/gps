@@ -8,6 +8,12 @@
     }
 </style>
 
+<?php 
+date_default_timezone_set('America/Mexico_City');
+$hoy = date("Y-m-d");
+
+?>
+
 <?php foreach ($this->personal_epp as $peep) { $id_p = $peep['id'];  } ?>
 <input type="hidden" name="id_personal" id="id_personal" value="<?php echo $this->idpersonal; ?>">
 
@@ -275,10 +281,16 @@
                                             <?php echo $epp['t_e']; ?>
                                         </td>
                                          <td>
-                                            <?php echo $epp['fecha_entrega']; ?>
+                                            <?php echo  date("d-m-Y", strtotime($epp['fecha_entrega'])); ?>
+                                            <!-- <?php echo $epp['fecha_entrega']; ?> -->
                                         </td>
                                         <td>
-                                            <?php echo $epp['reposicion']; ?>
+                                            <?php if ($epp['reposicion'] < $hoy){ ?>
+                                                <p style="color: red; font-weight: bold;"><?php echo  date("d-m-Y", strtotime($epp['reposicion'])); ?></p>
+                                            <!-- <?php echo $epp['reposicion']; ?> -->
+                                            <?php } else { ?>
+                                                <?php echo  date("d-m-Y", strtotime($epp['reposicion'])); ?>
+                                            <?php } ?>
                                         </td>
                                         <td>
                                             <?php if ($epp['cobro'] == 1) { ?>
