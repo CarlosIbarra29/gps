@@ -381,6 +381,12 @@ function eliminar_acentos($cadena){
 				<th>Altura sobre el nivel mar (ASNM)</th>
 				<th>Temp (°C)</th>
 				<th>Carga</th>
+				<th>Status GPS</th>
+				<th>Status Cliente</th>
+				<th>Suministro de Materiales</th>
+				<th>Corte</th>
+				<th>Soldadura</th>
+				<th>Galvanizado</th>
 			</tr> 
 		</thead>
 		<?php 
@@ -398,7 +404,13 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["estructura"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["mar_asnm"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["temp"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["carga"]); ?></td>	
+				<td><?php echo eliminar_acentos($usr["carga"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_gps"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["suministro_materiales"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["corte"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["soldadura"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["galvanizado"]); ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>

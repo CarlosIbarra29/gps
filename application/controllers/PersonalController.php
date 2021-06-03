@@ -322,13 +322,13 @@ class PersonalController extends Zend_Controller_Action{
             }       
         }
 
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     } 
 
     public function requestaddpersonalasignarAction(){
@@ -352,7 +352,6 @@ class PersonalController extends Zend_Controller_Action{
             $table="sitios";
             $sitio = $this->_season->GetSpecific($table,$wh,$id);
             $name_sitio = $sitio[0]['nombre'];
-
             $table="personal_campo";
             $result = $this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
         }
@@ -378,13 +377,13 @@ class PersonalController extends Zend_Controller_Action{
             $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
         }
 
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     }
 
     public function requestliberarpersonalsitioAction(){
@@ -398,13 +397,13 @@ class PersonalController extends Zend_Controller_Action{
             $result = $this->_sitio->liberacionpersonalasitio($post,$table,$id);  
         }
         
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     }
 
 

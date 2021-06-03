@@ -329,11 +329,18 @@ class Application_Model_GpsTorrenuevaModel extends Zend_Db_Table_Abstract{
     public function getfactoresdiseno(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT dt.id_sitio,s.id_cliente, s.nombre,s.altura, e.nombre_estructura,dt.velocidad, 
-                        dt.terreno, dt.rugosidad, dt.topography, dt.estructura, dt.mar_asnm, dt.temp, dt.carga 
+            $qry = $db->query("SELECT dt.id_sitio,s.id_cliente,s.nombre,s.altura,e.nombre_estructura, 
+                        dt.sitio as id_proyecto, dt.velocidad,dt.terreno, dt.rugosidad, dt.topography, 
+                        dt.estructura, dt.mar_asnm, dt.temp, dt.carga, sp.nombre_status as status_gps, 
+                        sc.nombre_status as status_cliente,ta.suministro_materiales, ta.corte, ta.soldadura, 
+                        ta.galvanizado
                         FROM detalle_torrenueva dt
                         LEFT JOIN sitios s on s.id = dt.id_sitio
-                        LEFT JOIN estructura_sitio e on e.id= s.estructura;");
+                        LEFT JOIN estructura_sitio e on e.id= s.estructura
+                        LEFT JOIN sitios_tipoproyecto st on st.id = dt.sitio
+                        LEFT JOIN status_proyecto sp on sp.id = st.status_proyecto
+                        LEFT JOIN status_cliente sc on sc.id = st.status_cliente
+                        LEFT JOIN torrenueva_avances ta on ta.id_sitiotipo = dt.sitio");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
