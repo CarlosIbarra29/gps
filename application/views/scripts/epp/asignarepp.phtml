@@ -292,14 +292,14 @@ $hoy = date("Y-m-d");
                                                 <?php echo  date("d-m-Y", strtotime($epp['reposicion'])); ?>
                                             <?php } ?>
                                         </td>
-                                        <td>
-                                            <?php if ($epp['cobro'] == 1) { ?>
-                                                
-                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-                                                <i style="color: blue;" class="material-icons">monetization_on</i> 
-                                            <?php } else {  ?> 
-                                                <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>  
-                                            <?php } ?>    
+                                        <td> 
+                                            <a href="/epp/asignadetail/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                                                <?php if ($epp['cobro'] == 1) { ?>   
+                                                    <i style="color: blue;" class="material-icons">monetization_on</i> 
+                                                <?php } else { } ?>   
+                                                 <?php if ($epp['comprado_campo'] == 1) { ?>   
+                                                    <i style="color: blue;" class="material-icons">image</i> 
+                                                <?php } else { } ?>  
                                         </td>
                                         <td>
                                             <a href="/epp/asignaedit/id/<?php echo $epp["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
