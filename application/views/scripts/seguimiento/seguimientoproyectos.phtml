@@ -79,6 +79,7 @@
 			      		<option value="2">Sitio</option>
 			      		<option value="3">Status Gps</option>
 			      		<option value="4">Status Cliente</option>
+			      		<option value="5">Residente</option>
 			    	</select>
 			    	<label>Buscar por:</label>
 			  	</div>
@@ -97,7 +98,7 @@
 		    		<select id="status_proyecto" name="status_proyecto">
 		      			<option value="0" disabled selected>* Selecciona un status</option>
 					<?php foreach ($this->status_proyecto as $key){ ?>
-						<option value="<?php echo $key; ?>"><?php echo $key; ?></option>
+						<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_status']; ?></option>
 					<?php } ?>
 
 		    		</select>
@@ -113,6 +114,17 @@
 		    		</select>
 		    		<label>Status Cliente:</label>
 		        </div>
+
+		        <div class="input-field col s12 oculto" id="op_residente">
+		    		<select id="residente" name="residente">
+		      			<option value="0" disabled selected>* Selecciona un residente</option>
+		      			<?php foreach ($this->residentes as $key){ ?>
+		      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+		      			<?php } ?>
+		    		</select>
+		    		<label>Residente:</label>
+		        </div>
+
 			</div>
 			<div class="col m3 s6 text-center">
 				<a class="btn" id="btn_search"><i class="material-icons right">search</i>Buscar</a>
@@ -123,16 +135,41 @@
 </div>
 
 
-<div class="row"> 
-	<div class="col m12 s12" style="margin-top: 15px;">
-		<div class="col m6 s6">
-
-		</div>
-		<div class="col m6 s6 text-right">
-
-		</div>
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12 text-right">
+		<?php if($this->seguimiento_sp == 0){ ?>
+			<div class="col m6 s6">
+				<label>
+				    <input name="seguimiento1" id="en_procesoseg" type="radio" checked/>
+				    <span>Sitios en Proceso (<?php echo $this->count_proceso; ?>)</span>
+				</label>
+			</div>
+			<div class="col m6 s6">
+				<label>
+				    <input name="seguimiento1" id="todos_sit" type="radio"/>
+				    <span>Todos los sitios (<?php echo $this->count_todos; ?>)</span>
+				</label>
+			</div>
+		<?php }else{ ?>
+			<div class="col m6 s6">
+				<label>
+				    <input name="seguimiento1" id="en_procesoseg" type="radio"/>
+				    <span>Sitios en Proceso (<?php echo $this->count_proceso; ?>)</span>
+				</label>
+			</div>
+			<div class="col m6 s6">
+				<label>
+				    <input name="seguimiento1" id="todos_sit" type="radio" checked/>
+				    <span>Todos los sitios (<?php echo $this->count_todos; ?>)</span>
+				</label>
+			</div>
+		<?php } ?>
 	</div>
+</div>
 
+
+<div class="row"> 
 	<div class="col m12 s12">
 		<table class="table text-left table-hover">
 			<thead>
@@ -140,6 +177,7 @@
 					<th>Id Cliente</th>
 					<th>Sitio</th>
 					<th>Proyecto</th>
+					<th>Residente</th>
 					<th>Status Gps</th>	
 					<th>Status Cliente</th>
 					<th>ISSUE</th>
@@ -152,14 +190,21 @@
 			<tbody>
 				<tr>
 					<td>
-						<?php echo $usr['id_cliente']; ?>
+						<a href="/panel/sitiosedit/id/<?php echo $usr["id_sitio"]; ?>">
+							<?php echo $usr['id_cliente']; ?>		
+						</a>
 					</td>
 					<td>
 						<?php echo $usr['name_sitio']; ?>
 					</td>
 					<td>
-						<?php echo $usr['nombre_proyecto']; ?>
-					</td>	
+						<a href="/panel/sitiosdetailedit/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>">
+							<?php echo $usr['nombre_proyecto']; ?>
+						</a>
+					</td>
+					<td>
+						<?php echo $usr['nombre_residente']; ?>
+					</td>		
 					<td>
 						<?php echo $usr['status_gps']; ?>
 					</td>		
@@ -171,6 +216,27 @@
 					</td>		
 					<td class="text-center">
 						<a href="/panel/detallesproyecto/id/<?php echo $usr['id_sitio'] ?>/proyecto/<?php echo $usr['id_tipoproyecto'] ?>/sitio/<?php echo $usr['id'] ?>/op/3"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+					<td>
+						<?php if($usr['id_tipoproyecto'] == 1){ ?>
+							<a href="/panel/asignardetalles/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>"><i class="fa fa-2x fa-folder-open"></i></a>
+						<?php } ?>
+
+						<?php if($usr['id_tipoproyecto'] == 2){ ?>
+							<a href="/panel/detallescolocacion/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>"><i class="fa fa-2x fa-folder-open"></i></a>
+						<?php } ?>		
+
+						<?php if($usr['id_tipoproyecto'] == 3){ ?>
+							<a href="/panel/detallesreforzamiento/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>"><i class="fa fa-2x fa-folder-open"></i></a>
+						<?php } ?>
+
+						<?php if($usr['id_tipoproyecto'] == 4){ ?>
+							<a href="/panel/detallescambiotorre/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>"><i class="fa fa-2x fa-folder-open"></i></a>
+						<?php } ?>
+
+						<?php if($usr['id_tipoproyecto'] == 5){ ?>
+							<a href="/panel/detallestorrenueva/id/<?php echo $usr["id_sitio"]; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr['id'] ?>"><i class="fa fa-2x fa-folder-open"></i></a>
+						<?php } ?>
 					</td>
 				</tr>
 
@@ -225,6 +291,7 @@
 </div>
 
 <input type="hidden" id="buscador" value="1">
+<input type="hidden" id="seguimiento_id" value="<?php echo $this->seguimiento_sp; ?>">
 <script type="text/javascript">
 	$("#op_search").on('change', function() {
 		var value = this.value;
@@ -234,6 +301,7 @@
 			$("#op_sitio").hide();
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
+			$("#op_residente").hide();
 		}
 
 		if(value == 2){
@@ -241,6 +309,7 @@
 			$("#op_sitio").show();
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
+			$("#op_residente").hide();
 		}
 
 		if(value == 3){
@@ -248,6 +317,7 @@
 			$("#op_sitio").hide();
 			$("#op_statusgps").show();
 			$("#op_statuscliente").hide();
+			$("#op_residente").hide();
 		}
 
 		if(value == 4){
@@ -255,29 +325,61 @@
 			$("#op_sitio").hide();
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").show();
+			$("#op_residente").hide();
+		}
+
+		if(value == 5){
+			$("#op_cliente").hide();
+			$("#op_sitio").hide();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").hide();
+			$("#op_residente").show();
 		}
 	});
 
 	$("#btn_search").click(function(){
 		var op = document.getElementById("buscador").value;
+		var seguimiento = document.getElementById("seguimiento_id").value;
 		if(op == 1){
 			var cliente = document.getElementById("id_cliente").value;
-			window.location.href = "/seguimiento/buscadorseguimiento/cliente/"+cliente+"/op/1";
+			window.location.href = "/seguimiento/buscadorseguimiento/cliente/"+cliente+"/op/1/sp/"+seguimiento+"";
 		}
 
 		if(op == 2){
 			var sitio = document.getElementById("id_sitio").value;
-			window.location.href = "/seguimiento/buscadorseguimiento/sitio/"+sitio+"/op/2";
+			window.location.href = "/seguimiento/buscadorseguimiento/sitio/"+sitio+"/op/2/sp/"+seguimiento+"";
 		}
 
 		if(op == 3){
 			var gps = document.getElementById("status_proyecto").value;
-			window.location.href = "/seguimiento/buscadorseguimiento/gps/"+gps+"/op/3";
+			window.location.href = "/seguimiento/buscadorseguimiento/gps/"+gps+"/op/3/sp/"+seguimiento+"";
 		}
 
 		if(op == 4){
 			var status = document.getElementById("status_cliente").value;
-			window.location.href = "/seguimiento/buscadorseguimiento/status/"+status+"/op/4";
+			window.location.href = "/seguimiento/buscadorseguimiento/status/"+status+"/op/4/sp/"+seguimiento+"";
+		}
+
+		if(op == 5){
+			var residente = document.getElementById("residente").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/residente/"+residente+"/op/5/sp/"+seguimiento+"";
 		}
 	});
+
+	$("#en_procesoseg").click(function(){
+	    swal("Espere un momento, la información esta siendo procesada", {
+	        icon: "success",
+	        buttons: false,
+	    }); 
+	    window.location.href = "/seguimiento/seguimientoproyectos/sp/0";
+	});
+
+	$("#todos_sit").click(function(){
+	    swal("Espere un momento, la información esta siendo procesada", {
+	        icon: "success",
+	        buttons: false,
+	    }); 
+	    window.location.href = "/seguimiento/seguimientoproyectos/sp/1";
+	});
+
 </script>

@@ -31,6 +31,22 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE USER
 
+    public function updatesitioresidente($post,$table,$personal){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET residente = ?, nombre_residente = ? WHERE id = ?",array(
+                $post['id_user'],
+                $personal,
+                $post["proyecto"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }// END UPDATE USER
+
+
     public function refresharchivoption($id,$table,$option,$fecha,$user, $post){
         $uno =null; $dos =null; $tres =null;
         try {

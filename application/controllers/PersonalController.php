@@ -17,7 +17,6 @@ class PersonalController extends Zend_Controller_Action{
 
     public function listapersonalAction(){
         $this->view->puesto = $this->_personal->getallpersonal(); 
-
         $table="sitios";
         $this->view->sitios = $this->_season->GetAll($table); 
         $this->view->proyectos =$this->_sitio->tiposproyectospersonal();      
@@ -335,7 +334,21 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-        
+
+        $id=$post['id_user'];
+        $wh="id";
+        $table="personal_campo";
+        $personal = $this->_season->GetSpecific($table,$wh,$id);
+
+        if($personal[0]['puesto'] == 30 || $personal[0]['puesto'] == 31){
+            $name = $personal[0]['nombre']." ".$personal[0]['apellido_pa']." ".$personal[0]['apellido_ma'];
+            // var_dump($post);exit;
+            $table ="sitios_tipoproyecto";
+            $this->_sitio->updatesitioresidente($post,$table,$name);
+        }
+
+        // var_dump($personal);exit;
+
         $day_uno = substr($post['fecha_inicial'], 8); 
         $mes_uno = substr($post['fecha_inicial'], 5,2); 
         $year_uno = substr($post['fecha_inicial'], 0,4); 
