@@ -387,6 +387,7 @@ function eliminar_acentos($cadena){
 				<th>Corte</th>
 				<th>Soldadura</th>
 				<th>Galvanizado</th>
+				<th>Total</th>
 			</tr> 
 		</thead>
 		<?php 
@@ -407,10 +408,41 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos($usr["carga"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["status_gps"]); ?></td>
 				<td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["suministro_materiales"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["corte"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["soldadura"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["galvanizado"]); ?></td>
+				<?php if($usr["suministro_materiales"] == NULL){ ?>
+					<td>0</td>
+					<?php $suministro = 0; ?>
+				<?php }else{ ?>
+					<td><?php echo eliminar_acentos($usr["suministro_materiales"]); ?></td>
+					<?php $suministro = $usr["suministro_materiales"]; ?>
+				<?php } ?>
+
+				<?php if($usr["corte"] == NULL){ ?>
+					<td>0</td>
+					<?php $corte = 0; ?>
+				<?php }else{ ?>
+					<td><?php echo eliminar_acentos($usr["corte"]); ?></td>
+					<?php $corte = $usr["corte"]; ?>
+				<?php } ?>
+				
+				<?php if($usr["soldadura"] == NULL){ ?>
+					<td>0</td>
+					<?php $soldadura = 0; ?>
+				<?php }else{ ?>
+					<td><?php echo eliminar_acentos($usr["soldadura"]); ?></td>
+					<?php $soldadura = $usr["soldadura"]; ?>
+				<?php } ?>
+				
+				<?php if($usr["galvanizado"] == NULL){ ?>
+					<td>0</td>
+					<?php $galvanizado = 0; ?>
+				<?php }else{ ?>
+					<td><?php echo eliminar_acentos($usr["galvanizado"]); ?></td>
+					<?php $galvanizado = $usr["galvanizado"]; ?>
+				<?php } ?>
+				<td>
+					<?php $total_t = $suministro + $corte + $soldadura + $galvanizado; ?>
+					<?php echo $total_t; ?>
+				</td>
 			</tr>
 		</tbody>
 		<?php } ?>

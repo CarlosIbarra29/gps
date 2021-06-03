@@ -26,9 +26,10 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
     public function getcomentarios(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT c.id_sitio, s.nombre, s.id_cliente, c.comentarios  
+            $qry = $db->query("SELECT si.id_cliente,si.nombre,c.comentarios,c.id_sitio as id_proyecto, s.id_sitio
                         FROM comentarios_sitios c
-						INNER JOIN sitios s on s.id = c.id_sitio");
+                        INNER JOIN sitios_tipoproyecto s on s.id = c.id_sitio
+                        INNER JOIN sitios si on si.id = s.id_sitio");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

@@ -1748,20 +1748,27 @@ function eliminar_acentos($cadena){
 		<table class="table text-left table-hover" >
 			<thead>
 				<tr>
-					<th>Id Sitio</th>
-					<th>Nombre sitio</th>
 					<th>ID_cliente</th>
+					<th>Nombre sitio</th>
 					<th>Comentario</th>
+					<th>Id Sitio</th>
+					<th>Id Proyecto</th>
+					
+					
 				</tr> 
 			</thead>
 			<?php 
 			foreach ($this->comentarios as $usr) { ?>
 			<tbody>
 				<tr>
-					<td><?php echo eliminar_acentos($usr["id_sitio"]); ?></td>
-					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 					<td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
 					<td><?php echo eliminar_acentos($usr["comentarios"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_sitio"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["id_proyecto"]); ?></td>
+					
+					
+					
 				</tr>
 			</tbody>
 			<?php } ?>

@@ -1,0 +1,345 @@
+
+<!-- <a href="javascript:window.history.go(-1);" class="btn-primary regreso">Regresar</a> -->
+
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+ 
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+ <style type="text/css">
+ 	.oculto{
+ 		display: none;
+ 	}
+ </style>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 25px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+        	Seguimiento de Proyectos
+        </span>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 25px;">
+	<div class="col m1 s12">
+		<a href="/seguimiento/seguimientoproyectos">Mostrar Todo</a>
+	</div>
+	<div class="col m10 s12">
+		<div class="row">
+			<div class="col m4 s6">
+			 	<div class="input-field col s12">
+			    	<select id="op_search">
+			    		<?php if($this->op_option == 1){ ?>
+				      		<option value="1" selected>Id cliente</option>
+				      		<option value="2">Sitio</option>
+				      		<option value="3">Status Gps</option>
+				      		<option value="4">Status Cliente</option>
+			    		<?php } ?>
+			    		<?php if($this->op_option == 2){ ?>
+				      		<option value="1">Id cliente</option>
+				      		<option value="2" selected>Sitio</option>
+				      		<option value="3">Status Gps</option>
+				      		<option value="4">Status Cliente</option>
+			    		<?php } ?>
+			    		<?php if($this->op_option == 3){ ?>
+				      		<option value="1">Id cliente</option>
+				      		<option value="2">Sitio</option>
+				      		<option value="3" selected>Status Gps</option>
+				      		<option value="4">Status Cliente</option>
+			    		<?php } ?>
+			    		<?php if($this->op_option == 4){ ?>
+				      		<option value="1">Id cliente</option>
+				      		<option value="2">Sitio</option>
+				      		<option value="3">Status Gps</option>
+				      		<option value="4" selected>Status Cliente</option>
+			    		<?php } ?>
+			    	</select>
+			    	<label>Buscar por:</label>
+			  	</div>
+			</div>
+			<div class="col m5 s6">
+				<?php if($this->op_option == 1){ ?>
+					<div class="input-field col s12" id="op_cliente">
+				<?php }else{ ?>
+					<div class="input-field col s12 oculto" id="op_cliente">
+				<?php } ?>
+		        	<input placeholder="Ingresa el id del cliente" value="<?php echo $this->cliente; ?>" id="id_cliente" type="text" class="validate">
+		          	<label for="id_cliente">Id Cliente</label>
+		        </div>
+
+		        <?php if($this->op_option == 2){ ?>
+		        	<div class="input-field col s12" id="op_sitio">
+		        <?php }else{ ?>
+		        	<div class="input-field col s12 oculto" id="op_sitio">
+		        <?php } ?>
+		        	<input placeholder="Ingresa el nombre del sitio" value="<?php echo $this->sitio; ?>" id="id_sitio" type="text" class="validate">
+		          	<label for="id_sitio">Nombre del Sitio</label>
+		        </div>
+
+		        <?php if($this->op_option == 3){ ?>
+		        	<div class="input-field col s12" id="op_statusgps">
+			    		<select id="status_proyecto" name="status_proyecto">
+					    	<?php foreach ($this->status_proyecto as $mar) { 
+					     		if ($mar['id']==$this->gps) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_status"]; ?></option>
+					     	<?php } if ($mar['id']!=$this->gps) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_status"]; ?></option>
+					     	<?php } } ?>  
+						</select>
+			    		<label>Status Gps:</label>
+		        	</div>
+		        <?php }else{ ?>
+		        	<div class="input-field col s12 oculto" id="op_statusgps">
+			    		<select id="status_proyecto" name="status_proyecto">
+			      			<option value="0" disabled selected>* Selecciona un status</option>
+			      			<?php foreach ($this->status_proyecto as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_status']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Status Gps:</label>
+		        	</div>
+		        <?php } ?>
+
+
+		        <?php if($this->op_option == 4){ ?>
+		        	<div class="input-field col s12" id="op_statuscliente">
+			    		<select id="status_cliente" name="status_cliente">
+					    	<?php foreach ($this->status_cliente as $mar) { 
+					     		if ($mar['id']==$this->status) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre_status"]; ?></option>
+					     	<?php } if ($mar['id']!=$this->status) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre_status"]; ?></option>
+					     	<?php } } ?>  
+			    		</select>
+			    		<label>Status Cliente:</label>
+		        	</div>
+		        <?php }else{ ?>
+		        	<div class="input-field col s12 oculto" id="op_statuscliente">
+			    		<select id="status_cliente" name="status_cliente">
+			      			<option value="0" disabled selected>* Selecciona un status</option>
+			      			<?php foreach ($this->status_cliente as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_status']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Status Cliente:</label>
+		        	</div>
+		        <?php } ?>
+
+			</div>
+			<div class="col m3 s6 text-center">
+				<a class="btn" id="btn_search"><i class="material-icons right">search</i>Buscar</a>
+			</div>
+		</div>
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+
+
+<div class="row"> 
+	<div class="col m12 s12" style="margin-top: 15px;">
+		<div class="col m6 s6">
+
+		</div>
+		<div class="col m6 s6 text-right">
+		</div>
+	</div>
+
+	<div class="col m12 s12">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Id Cliente</th>
+					<th>Sitio</th>
+					<th>Proyecto</th>
+					<th>Status Gps</th>	
+					<th>Status Cliente</th>
+					<th>ISSUE</th>
+				</tr> 
+			</thead>
+			<?php
+			$total = 0;
+			if ($this->paginator) { 
+			foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td>
+						<?php echo $usr['id_cliente']; ?>
+					</td>
+					<td>
+						<?php echo $usr['name_sitio']; ?>
+					</td>
+					<td>
+						<?php echo $usr['nombre_proyecto']; ?>
+					</td>	
+					<td>
+						<?php echo $usr['status_gps']; ?>
+					</td>		
+					<td>
+						<?php echo $usr['status_cliente']; ?>
+					</td>	
+					<td>
+						<?php echo $usr['issue']; ?>
+					</td>		
+					<td class="text-center">
+						<a href="/panel/detallesproyecto/id/<?php echo $usr['id_sitio'] ?>/proyecto/<?php echo $usr['id_tipoproyecto'] ?>/sitio/<?php echo $usr['id'] ?>/op/3"><i class="fa fa-2x fa-id-card-o"></i></a>
+					</td>
+				</tr>
+
+		    <?php } }else{ ?>
+		    </tbody> 
+		    <tbody>
+		        <tr>
+		        	<td></td>
+		        	<td></td>
+		        	<td></td>
+		            <td class="text-center" colspan=h4><h4>No hay solicitudes de envíos.</h4></td>
+		            <td></td>
+		            <td></td>
+		        </tr>
+		    </tbody>
+		                
+		    <?php } ?>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<input type="hidden" id="buscador" value="<?php echo $this->op_option; ?>">
+<script type="text/javascript">
+	$("#op_search").on('change', function() {
+		var value = this.value;
+		document.getElementById("buscador").value= value;
+		if(value == 1){
+			$("#op_cliente").show();
+			$("#op_sitio").hide();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").hide();
+		}
+
+		if(value == 2){
+			$("#op_cliente").hide();
+			$("#op_sitio").show();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").hide();
+		}
+
+		if(value == 3){
+			$("#op_cliente").hide();
+			$("#op_sitio").hide();
+			$("#op_statusgps").show();
+			$("#op_statuscliente").hide();
+		}
+
+		if(value == 4){
+			$("#op_cliente").hide();
+			$("#op_sitio").hide();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").show();
+		}
+	});
+
+	$("#btn_search").click(function(){
+		var op = document.getElementById("buscador").value;
+		if(op == 1){
+			var cliente = document.getElementById("id_cliente").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/cliente/"+cliente+"/op/1";
+		}
+
+		if(op == 2){
+			var sitio = document.getElementById("id_sitio").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/sitio/"+sitio+"/op/2";
+		}
+
+		if(op == 3){
+			var gps = document.getElementById("status_proyecto").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/gps/"+gps+"/op/3";
+		}
+
+		if(op == 4){
+			var status = document.getElementById("status_cliente").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/status/"+status+"/op/4";
+		}
+	});
+</script>
