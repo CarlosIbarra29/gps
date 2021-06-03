@@ -17,7 +17,6 @@ class PersonalController extends Zend_Controller_Action{
 
     public function listapersonalAction(){
         $this->view->puesto = $this->_personal->getallpersonal(); 
-
         $table="sitios";
         $this->view->sitios = $this->_season->GetAll($table); 
         $this->view->proyectos =$this->_sitio->tiposproyectospersonal();      
@@ -322,20 +321,34 @@ class PersonalController extends Zend_Controller_Action{
             }       
         }
 
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     } 
 
     public function requestaddpersonalasignarAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-        
+
+        $id=$post['id_user'];
+        $wh="id";
+        $table="personal_campo";
+        $personal = $this->_season->GetSpecific($table,$wh,$id);
+
+        if($personal[0]['puesto'] == 30 || $personal[0]['puesto'] == 31){
+            $name = $personal[0]['nombre']." ".$personal[0]['apellido_pa']." ".$personal[0]['apellido_ma'];
+            // var_dump($post);exit;
+            $table ="sitios_tipoproyecto";
+            $this->_sitio->updatesitioresidente($post,$table,$name);
+        }
+
+        // var_dump($personal);exit;
+
         $day_uno = substr($post['fecha_inicial'], 8); 
         $mes_uno = substr($post['fecha_inicial'], 5,2); 
         $year_uno = substr($post['fecha_inicial'], 0,4); 
@@ -352,7 +365,6 @@ class PersonalController extends Zend_Controller_Action{
             $table="sitios";
             $sitio = $this->_season->GetSpecific($table,$wh,$id);
             $name_sitio = $sitio[0]['nombre'];
-
             $table="personal_campo";
             $result = $this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
         }
@@ -378,13 +390,13 @@ class PersonalController extends Zend_Controller_Action{
             $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
         }
 
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     }
 
     public function requestliberarpersonalsitioAction(){
@@ -398,13 +410,13 @@ class PersonalController extends Zend_Controller_Action{
             $result = $this->_sitio->liberacionpersonalasitio($post,$table,$id);  
         }
         
-            if ($result) {
-                return $this-> _redirect('/personal/listapersonal');
-            }else{
-                print '<script language="JavaScript">'; 
-                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
-                print '</script>'; 
-            } 
+        if ($result) {
+            return $this-> _redirect('/personal/listapersonal');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     }
 
 
