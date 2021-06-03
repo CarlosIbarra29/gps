@@ -363,6 +363,46 @@ class EppController extends Zend_Controller_Action{
         }
     }//END REQUEST EPP Desasignado
 
+    public function requesteppregresarAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+
+            $id =  $post['id'];
+            $table="epp_asignar";
+            $wh= "id";
+            $datos = $this->_season->GetSpecific($table,$wh,$id);
+            $id_epp = $datos[0]['id_epp'];
+            $cantidad =$datos[0]['cantidad'];
+
+
+            $table = "epp_catalogo";
+            $catalogo = $this->_epp->GetRegresar($table,$id_epp);
+            
+            $cantidadAct = $catalogo[0]['stock'];
+            
+            $nuevostock = $cantidadAct + $cantidad;
+            
+            $table="epp_catalogo";
+            $this->_epp->updateStock2($post,$table,$nuevostock,$id_epp);
+            
+            // $id =  $post['id'];
+            $table="epp_asignar";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+            if ($result) {
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            }else{
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            }
+        }   
+    }//END REQUEST DELETE TODO
+
+
     public function requestasignareppAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

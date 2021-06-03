@@ -295,6 +295,36 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE AsignacionEPP
 
+
+    public function GetRegresar($table,$id_epp){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM $table where idepp = $id_epp");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+
+
+     public function updateStock2($post,$table,$nuevostock,$id_epp){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET  stock = ? WHERE idepp = ?",array(
+                $nuevostock,
+                $id_epp
+            ));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  ACTUALIZAR STOCK 
+
     
     public function buscarrep($id,$table){
          try {
@@ -737,7 +767,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     public function GetAllPsn($table){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT * FROM personal_campo
+            $qry = $db->query("SELECT * FROM personal_campo where delete_status = 0 and status_personal = 0
                 ORDER BY nombre ASC");
             $row = $qry->fetchAll();
             return $row;

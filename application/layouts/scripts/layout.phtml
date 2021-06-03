@@ -668,6 +668,22 @@ setInterval(function() {
 
     }
 
+    function getepp($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $getpag="/epp/catalogo?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $getpag="/epp/tipo";
+        if($actual_link == $getpag){ return "active"; }
+
+        $getpag="/epp/tipo?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+    }
+
     function getgasolina($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
         $filename = substr(strrchr($actual_link, "/"), 1);
@@ -902,9 +918,9 @@ setInterval(function() {
                     <a href="/vehiculos/serviciosv">Servicios Vehículos<i class="material-icons">directions_car</i></a>
                     </li>
                     <li class="divider" tabindex="-1"></li>
-                    <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
+                    <!-- <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
                         <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
-                    </li>
+                    </li> -->
                     <!-- <li class="divider" tabindex="-1"></li> -->
                     <li class="bold <?php echo getUrl('/vehiculos/tpodocumento',$actual_link);?>">
                         <a href="/vehiculos/tpodocumento">Doc. Vehículos<i class="material-icons">perm_media</i></a>
@@ -913,6 +929,11 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
                     <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/catalogo',$actual_link); echo getepp($actual_link);?>">
+                    <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
+                </li>
+
                 <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
                     <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
                 </li>
