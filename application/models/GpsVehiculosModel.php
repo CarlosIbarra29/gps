@@ -244,7 +244,7 @@ where id not in (
     public function GetVehiculos($table,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion,
+            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion, v.porcentaje_doc,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo
                 FROM vehiculos v 
                 LEFT JOIN vehiculos_grupo vg ON vg.id_grupo = v.id_grupo

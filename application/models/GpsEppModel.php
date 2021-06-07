@@ -261,7 +261,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     public function GetEppAsignado($table,$wh,$id,$status){
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, 
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, ea.comprado_campo,
                 ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida 
                 FROM epp_asignar ea 
                 LEFT JOIN
