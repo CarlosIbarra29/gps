@@ -71,7 +71,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        
+        // var_dump($post);exit;
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y H:i:s");
         $id=$this->_session->id;

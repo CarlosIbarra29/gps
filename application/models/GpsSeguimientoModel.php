@@ -99,7 +99,7 @@ class Application_Model_GpsSeguimientoModel extends Zend_Db_Table_Abstract{
             			s.id_cliente, sp.nombre_status as status_gps, sc.nombre_status as status_cliente, 
 						st.operador, st.nombre_residente, st.pm_cliente, st.nombre_coordinador,st.nombre_ingproyecto,
 						st.fecha_inicio, st.issue, st.porcentaje_proyecto, st.fecha_cliente,st.status_cliente, 
-						st.status_proyecto as id_proyecto
+						st.status_proyecto as id_proyecto,st.ingproyecto_id
 						FROM sitios_tipoproyecto st
 						INNER JOIN sitios s on s.id = st.id_sitio
 						INNER JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
@@ -120,7 +120,7 @@ class Application_Model_GpsSeguimientoModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT st.id, st.id_tipoproyecto, tp.nombre_proyecto, st.id_sitio, s.nombre as
             		 	name_sitio, s.id_cliente, sp.nombre_status as status_gps, sc.nombre_status as status_cliente, 
 						st.operador, st.nombre_residente, st.pm_cliente, st.nombre_coordinador,st.nombre_ingproyecto,
-						st.fecha_inicio, st.issue, st.porcentaje_proyecto, st.fecha_cliente
+						st.fecha_inicio, st.issue, st.porcentaje_proyecto, st.fecha_cliente,st.ingproyecto_id
 						FROM sitios_tipoproyecto st
 						INNER JOIN sitios s on s.id = st.id_sitio
 						INNER JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
@@ -144,7 +144,7 @@ class Application_Model_GpsSeguimientoModel extends Zend_Db_Table_Abstract{
                         s.id_cliente, sp.nombre_status as status_gps, sc.nombre_status as status_cliente, 
                         st.operador, st.nombre_residente, st.pm_cliente, st.nombre_coordinador,st.nombre_ingproyecto,
                         st.fecha_inicio, st.issue, st.porcentaje_proyecto, st.fecha_cliente,st.status_cliente, 
-                        st.status_proyecto as id_proyecto, st.residente
+                        st.status_proyecto as id_proyecto, st.residente,st.ingproyecto_id
                         FROM sitios_tipoproyecto st
                         INNER JOIN sitios s on s.id = st.id_sitio
                         INNER JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
@@ -167,7 +167,7 @@ class Application_Model_GpsSeguimientoModel extends Zend_Db_Table_Abstract{
                         s.id_cliente, sp.nombre_status as status_gps, sc.nombre_status as status_cliente, 
                         st.operador, st.nombre_residente, st.pm_cliente, st.nombre_coordinador,st.nombre_ingproyecto,
                         st.fecha_inicio, st.issue, st.porcentaje_proyecto, st.fecha_cliente,st.status_cliente as id_clientes, 
-                        st.status_proyecto as id_proyectos
+                        st.status_proyecto as id_proyectos,st.ingproyecto_id
                         FROM sitios_tipoproyecto st
                         INNER JOIN sitios s on s.id = st.id_sitio
                         INNER JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto

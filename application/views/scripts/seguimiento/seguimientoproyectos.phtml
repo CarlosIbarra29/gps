@@ -80,6 +80,7 @@
 			      		<option value="3">Status Gps</option>
 			      		<option value="4">Status Cliente</option>
 			      		<option value="5">Residente</option>
+			      		<option value="6">Ing. Proyecto</option>
 			    	</select>
 			    	<label>Buscar por:</label>
 			  	</div>
@@ -123,6 +124,16 @@
 		      			<?php } ?>
 		    		</select>
 		    		<label>Residente:</label>
+		        </div>
+
+		        <div class="input-field col s12 oculto" id="op_ingenieros">
+		    		<select id="ingeniero" name="ingeniero">
+		      			<option value="0" disabled selected>* Selecciona un ingeniero</option>
+		      			<?php foreach ($this->ingenieros as $key){ ?>
+		      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['ap']; ?> <?php echo $key['am']; ?></option>
+		      			<?php } ?>
+		    		</select>
+		    		<label>Ing Proyecto:</label>
 		        </div>
 
 			</div>
@@ -177,7 +188,7 @@
 					<th>Id Cliente</th>
 					<th>Sitio</th>
 					<th>Proyecto</th>
-					<th>Residente</th>
+					<th>Ing. Proyecto</th>
 					<th>Status Gps</th>	
 					<th>Status Cliente</th>
 					<th>ISSUE</th>
@@ -203,7 +214,7 @@
 						</a>
 					</td>
 					<td>
-						<?php echo $usr['nombre_residente']; ?>
+						<?php echo $usr['nombre_ingproyecto']; ?>
 					</td>		
 					<td>
 						<?php echo $usr['status_gps']; ?>
@@ -302,6 +313,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 2){
@@ -310,6 +322,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 3){
@@ -318,6 +331,7 @@
 			$("#op_statusgps").show();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 4){
@@ -326,6 +340,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").show();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 5){
@@ -334,6 +349,16 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").show();
+			$("#op_ingenieros").hide();
+		}
+
+		if(value == 6){
+			$("#op_cliente").hide();
+			$("#op_sitio").hide();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").hide();
+			$("#op_residente").hide();
+			$("#op_ingenieros").show();
 		}
 	});
 
@@ -363,6 +388,10 @@
 		if(op == 5){
 			var residente = document.getElementById("residente").value;
 			window.location.href = "/seguimiento/buscadorseguimiento/residente/"+residente+"/op/5/sp/"+seguimiento+"";
+		}
+		if(op == 6){
+			var ingeniero = document.getElementById("ingeniero").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/ingeniero/"+ingeniero+"/op/6/sp/"+seguimiento+"";
 		}
 	});
 

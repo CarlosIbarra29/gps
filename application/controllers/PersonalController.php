@@ -272,10 +272,24 @@ class PersonalController extends Zend_Controller_Action{
         }
     }
 
+
     public function requestaddpersonalsitioAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        // var_dump($post);exit;
+        $year_uno = substr($post['fecha_inicial'], 6); 
+        $mes_uno = substr($post['fecha_inicial'], 3,2); 
+        $day_uno = substr($post['fecha_inicial'], 0,2); 
+        $fecha_inicial = $day_uno."-".$mes_uno."-".$year_uno;
+
+        $year_dos = substr($post['fecha_final'], 6); 
+        $mes_dos = substr($post['fecha_final'], 3,2); 
+        $day_dos = substr($post['fecha_final'], 0,2); 
+        $fecha_fianl = $day_dos."-".$mes_dos."-".$year_dos;
+
+        $fechaInicio=strtotime($fecha_inicial);
+        $fechaFin=strtotime($fecha_fianl);
 
         if($post['op'] == 1){
             $id=$post['sitio'];
@@ -288,6 +302,14 @@ class PersonalController extends Zend_Controller_Action{
                 $table="personal_campo";
                 $id = $key;
                 $result = $this->_sitio->asignacionpersonalasitio($post,$table,$name_sitio,$id);  
+
+
+                for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+                    $dias =  date("d-m-Y", $i);
+                    $table="personal_checkin";
+                    $this->_personal->isertdaystocheckin($post,$table,$name_sitio,$id,$dias);
+                }
+
             }
         }
 

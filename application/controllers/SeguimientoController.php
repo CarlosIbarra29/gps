@@ -30,6 +30,10 @@ class SeguimientoController extends Zend_Controller_Action{
         $wh="puesto";
         $this->view->residentes = $this->_ordencompra->Getresidentes($id,$id_dos);
 
+        $table = "usuario";
+        $wh ="fkroles";
+        $estructura =  2;
+        $ver=$this->view->ingenieros = $this->_season->GetSpecific($table,$wh,$estructura);
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -49,7 +53,6 @@ class SeguimientoController extends Zend_Controller_Action{
             $carta = "Carta de Liberación";
             $cancelado = "Cancelado";
             $solicitud = $this->_seguimiento->getsitiosproceso($carta,$cancelado,$carta); 
-            // var_dump($solicitud);exit;
             $count=count($solicitud);
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
 
@@ -86,6 +89,11 @@ class SeguimientoController extends Zend_Controller_Action{
         $wh="puesto";
         $dos=$this->view->residentes = $this->_ordencompra->Getresidentes($id,$id_dos);
 
+        $table = "usuario";
+        $wh ="fkroles";
+        $estructura =  2;
+        $ver=$this->view->ingenieros_op = $this->_season->GetSpecific($table,$wh,$estructura);
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -308,6 +316,46 @@ class SeguimientoController extends Zend_Controller_Action{
 
         }
 
+        if($op == 6){
+            $option = "st.ingproyecto_id";
+            $id = $this->_getParam('ingeniero');
+            $ver=$this->view->inge=$id;
+            // var_dump($ver);exit;
+            $carta = "Carta de Liberación";
+            $cancelado = "Cancelado";
+            $solicitud = $this->_seguimiento->getproyectosseguimientosearchproceso($option,$id,$carta,$cancelado,$carta); 
+            // var_dump($solicitud);exit;
+            $this->view->count_proceso=count($solicitud);
+
+            $solicitud = $this->_seguimiento->getproyectosseguimientosearch($option, $id); 
+            $this->view->count_todos=count($solicitud);
+            // COUNT
+            if($sp == 0){
+                $solicitud = $this->_seguimiento->getproyectosseguimientosearchproceso($option,$id,$carta,$cancelado,$carta);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_seguimiento->paginatorseguimientosearchproceso($offset,$no_of_records_per_page,$option,$id,$carta,$cancelado,$carta);
+            }else{
+                $solicitud = $this->_seguimiento->getproyectosseguimientosearch($option, $id); 
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator= $this->_seguimiento->paginatorseguimientosearch($offset,$no_of_records_per_page,$option,$id);
+            }          
+
+        }
 
     }
 }

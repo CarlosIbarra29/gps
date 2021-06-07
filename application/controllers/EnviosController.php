@@ -11,7 +11,6 @@ class EnviosController extends Zend_Controller_Action{
         $this->_servicios = new Application_Model_GpsServicioModel;
         $this->_ordencompra = new Application_Model_GpsSolicitudOrdenModel;
         $this->_envio = new Application_Model_GpsEnvioModel;
-
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
         }
