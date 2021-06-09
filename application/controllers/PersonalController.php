@@ -277,7 +277,7 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
+        
         $year_uno = substr($post['fecha_inicial'], 6); 
         $mes_uno = substr($post['fecha_inicial'], 3,2); 
         $day_uno = substr($post['fecha_inicial'], 0,2); 
@@ -298,18 +298,17 @@ class PersonalController extends Zend_Controller_Action{
             $sitio = $this->_season->GetSpecific($table,$wh,$id);
             $name_sitio = $sitio[0]['nombre']; 
 
-            foreach ($post['ids'] as $key) {                
+            foreach ($post['ids'] as $key){                
                 $table="personal_campo";
                 $id = $key;
                 $result = $this->_sitio->asignacionpersonalasitio($post,$table,$name_sitio,$id);  
-
 
                 for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
                     $dias =  date("d-m-Y", $i);
                     $table="personal_checkin";
                     $this->_personal->isertdaystocheckin($post,$table,$name_sitio,$id,$dias);
-                }
-
+                } 
+                // FALTA HACER EL PROCESO EN LA SECCION INDIVIDUAL-------------------------------------------
             }
         }
 
@@ -361,15 +360,11 @@ class PersonalController extends Zend_Controller_Action{
         $wh="id";
         $table="personal_campo";
         $personal = $this->_season->GetSpecific($table,$wh,$id);
-
         if($personal[0]['puesto'] == 30 || $personal[0]['puesto'] == 31){
             $name = $personal[0]['nombre']." ".$personal[0]['apellido_pa']." ".$personal[0]['apellido_ma'];
-            // var_dump($post);exit;
             $table ="sitios_tipoproyecto";
             $this->_sitio->updatesitioresidente($post,$table,$name);
         }
-
-        // var_dump($personal);exit;
 
         $day_uno = substr($post['fecha_inicial'], 8); 
         $mes_uno = substr($post['fecha_inicial'], 5,2); 
@@ -388,7 +383,7 @@ class PersonalController extends Zend_Controller_Action{
             $sitio = $this->_season->GetSpecific($table,$wh,$id);
             $name_sitio = $sitio[0]['nombre'];
             $table="personal_campo";
-            $result = $this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
+            $result=$this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
         }
 
         if($post['op'] == 2){

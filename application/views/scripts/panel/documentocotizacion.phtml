@@ -53,14 +53,19 @@
 
  ?>
 
-<div class="row" style="margin-top: 20px;">  
-	<div class="col m6 s6">
-		<h2>P.O</h2>
-	</div>
-	<div class="col m6 s6">
-		<a class=" btn modal-trigger" href="#modal1">Agregar P.O</a>
-	</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
 </div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+    	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">P.O</span>
+    </div>
+</div>
+
 
   <!-- Modal Structure -->
 <div id="modal1" class="modal modal-fixed-footer">
@@ -97,7 +102,7 @@
 
 			<div class="input-field col m6 s12">
 				<i class="material-icons prefix">attach_money</i>
-				<input id="monto" name="monto" type="text" class="monto">
+				<input id="monto" name="monto" type="number" class="monto">
 				<label for="monto">Monto</label>
 			</div>
 
@@ -133,8 +138,17 @@
 </div>
 
 <div class="row">
+
+	<div class="row">
+		<div class="col m6 s12">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de P.O</span>
+		</div>
+		<div class="col m6 s12 text-right">
+			<a class=" btn modal-trigger" href="#modal1">Agregar P.O</a>
+		</div>
+	</div>
+
 	<div class="col m12 s12">
-		<h3>Lista de P.O</h3>
 		<table class="table text-left table-hover">
 			<thead>
 				<tr>
@@ -163,12 +177,12 @@
 
         		<td>
         			<?php if($usr['status_factura'] == 0){ ?>
-        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>">
+        				<!-- <a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>"> -->
 							<div class="chip">
 						    	<img src="/img/gris.jpg">
 						    	Pendiente
 						  	</div>
-					  	</a>
+					  	<!-- </a> -->
         			<?php }else{ ?>
 						<div class="chip">
 					    	<img src="/img/correct.png">

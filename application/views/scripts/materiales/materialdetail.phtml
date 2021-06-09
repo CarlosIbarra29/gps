@@ -72,7 +72,7 @@
       <span>Status Actual: Listo para enviar</span>
     <?php } ?>
 
-    <?php if($this->rol_user == 1 || $this->rol_user == 12){ ?>
+    <?php if($this->rol_user == 1 || $this->rol_user == 12 || $this->rol_user == 13){ ?>
       <div class="row" style="margin-top: 10px;">
         <div class="col m6 s6">
           <?php if($status_solicitud == 3){ ?>
@@ -100,11 +100,22 @@
         <?php if($status_solicitud == 1){ ?>
           <div class="col m6 s6">
             <div class="chip" id="surtiendo_status" data-dato ="2">
-              <img src="/img/correct.png" >
+              <img  src="/img/gris.jpg"  >
               Listo para enviar
             </div>
           </div>
         <?php } ?>
+
+
+        <?php if($status_solicitud == 2){ ?>
+          <div class="col m6 s6">
+            <div class="chip">
+              <img  src="/img/correct.png"  >
+              Listo para enviar
+            </div>
+          </div>
+        <?php } ?>
+
       </div>
     <?php } ?>
 

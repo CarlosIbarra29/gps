@@ -2336,7 +2336,8 @@ class PanelController extends Zend_Controller_Action{
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $table="cotizaciones_sitiospo";
-            $sql= $this->view->cotizaciones= $this->_sitio->Getpaginationcotizacionpo($sitio,$table,$offset,$no_of_records_per_page); 
+            $id= $this->_getParam('id');
+            $sql= $this->view->cotizaciones= $this->_sitio->Getpaginationcotizacionpo($sitio,$id,$table,$offset,$no_of_records_per_page); 
         }       
     }
 
@@ -3882,6 +3883,8 @@ class PanelController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
             $table="sitios_tipoproyecto";
+            $this->_sitio->UpdateStatusgps($post,$table);
+            $this->_sitio->UpdateStatuscliente($post,$table);
             $result = $this->_sitio->UpdateIsuecliente($post,$table);
             if ($result) {
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   

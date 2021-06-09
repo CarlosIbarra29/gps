@@ -204,15 +204,53 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
 	        <div class="card-content">
 	        	<div class="row">
 	        		<div class="col m6 s6">
-	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Gastos</span>
+	        			<span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Gastos</span>
 	        		</div>
 	        		<div class="col m6 s6 text-right">
 	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-	        				Total: $<?php echo number_format($total, 2, '.', ','); ?>
+	        				<!-- Total: $<?php echo number_format($total, 2, '.', ','); ?> -->
 	        			</span>
 	        		</div>
 	        	</div>
+		        <div class="row">
+		        	<div class="col m4 s12 text-center">
+		        		<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+		        			Cotización: $<?php echo number_format($this->suma_cotizacion, 2, '.', ','); ?> 
+		        		</span>
+		        	</div>
+
+		        	<div class="col m4 s12 text-center">
+		        		<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+		        			PO: $<?php echo number_format($this->suma_po, 2, '.', ','); ?> 
+		        		</span>
+		        	</div>
+
+		        	<div class="col m4 s12 text-center">
+		        		<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+		        			Gastos: $<?php echo number_format($total, 2, '.', ','); ?> 
+		        		</span>
+		        	</div>
+		        </div>
+
+		        <?php $total_suma = $this->suma_po - $total; ?>
+		        <div class="row">
+		        	<div class="col m4 s12"></div>
+		        	<div class="col m4 s12"></div>
+		        	<div class="col m4 s12 text-center">
+		        		<?php if($total_suma >= $this->suma_po){ ?>
+		        		<span style="font-size:16px; color:green; letter-spacing: 0.1em; font-weight: bold;">
+		        			Total: $<?php echo number_format($total_suma, 2, '.', ','); ?> 
+		        		</span>		
+		        		<?php }else{ ?>
+		        		<span style="font-size:16px; color: red; letter-spacing: 0.1em; font-weight: bold;">
+		        			Total: $<?php echo number_format($total_suma, 2, '.', ','); ?> 
+		        		</span>		
+		        		<?php } ?>
+        		
+		        	</div>
+		        </div>
 	        </div>
+	        
 	        <div class="card-action">
 	        	<div class="row">
 	        		<div class="col m12 s12">

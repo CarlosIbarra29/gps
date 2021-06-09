@@ -163,6 +163,7 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
                 'sitio_id'=>$post['sitio'],
+                'proyecto_id'=>$post['id'],
                 'titulo'=>$post['titulo'],
                 'fecha_cotizacion'=>$post['fecha_realizada'],
                 'fecha'=>$post['fecha'],
@@ -440,7 +441,7 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_proyecto = ? WHERE id = ?",array(
-                $post['status'],
+                $post['gps'],
                 $post["id"]));
             $db->closeConnection();               
             return $qry;
@@ -454,7 +455,7 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_cliente = ? WHERE id = ?",array(
-                $post['status'],
+                $post['cli'],
                 $post["id"]));
             $db->closeConnection();               
             return $qry;
@@ -734,11 +735,12 @@ class Application_Model_GpsSitioModel extends Zend_Db_Table_Abstract{
         }
     } //END GET INFO TO PAGINATOR
 
-    public function Getpaginationcotizacionpo($id,$table,$offset,$no_of_records_per_page){
+    public function Getpaginationcotizacionpo($sitio,$id,$table,$offset,$no_of_records_per_page){
+        // var_dump($id);exit;
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT * FROM $table WHERE id_sitiopo = ? 
-                        LIMIT $offset,$no_of_records_per_page",array($id));
+            $qry = $db->query("SELECT * FROM $table WHERE id_sitiopo = ? AND id_cotizacion = ?
+                        LIMIT $offset,$no_of_records_per_page",array($sitio,$id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

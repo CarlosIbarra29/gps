@@ -119,7 +119,7 @@
 <div class="row">
 	<div class="col m6 s12">
 		<div class="row">
-			<div class="input-field col m8 s6">
+			<div class="input-field col m12 s12">
 				<select name="status_gps" id="status_gps">
 				    <?php foreach ($this->tipo_sitio as $usr){ ?>
 					    <?php foreach ($this->status as $mar) { 
@@ -132,13 +132,11 @@
 				</select>
 				<label>Status del Gps</label>
 			</div>
-			<div class="input-field col m4 s6">
-				  	<a class="waves-effect red darken-1 waves-light lighten-4 btn" id="mod_gps">Modificar</a>
-			</div>		
+				<!-- <a class="waves-effect red darken-1 waves-light lighten-4 btn" id="mod_gps">Modificar</a> -->	
 		</div>
 
 	<div class="row">
-		<div class="input-field col m8 s6">
+		<div class="input-field col m12 s12">
 			<select name="status_cli" id="status_cli">
 				    <?php foreach ($this->tipo_sitio as $usr){ ?>
 					    <?php foreach ($this->statuscliente as $mar) { 
@@ -152,22 +150,24 @@
 			    <label>Status del Cliente</label>
 		</div>
 
-		<div class="input-field col m4 s6">
-			<a class="waves-effect red darken-1 waves-light btn" id="mod_cli">Modificar</a>
-		</div>
+			<!-- <a class="waves-effect red darken-1 waves-light btn" id="mod_cli">Modificar</a> -->
 	</div>
 
 	<div class="row">
-        <div class="input-field col m8 s6">
+        <div class="input-field col m12 s12">
         	<?php foreach ($this->tipo_sitio as $usr){ ?>
 	          <input id="id_issue" type="text" value="<?php echo $usr['issue']; ?>" class="validate">
 	          <label for="id_issue">ISSUE</label>
         	<?php }  ?>
 
         </div>
-		<div class="input-field col m4 s6">
-			<a class="waves-effect red darken-1 waves-light btn" id="issue">Agregar</a>
-		</div>
+			<!-- <a class="waves-effect red darken-1 waves-light btn" id="issue">Agregar</a> -->
+	</div>
+
+	<div class="row">
+		<div class="col m12 s12 text-center">
+			<a class="waves-effect red darken-1 waves-light btn" id="issue">Guardar</a>
+		</div>	
 	</div>
 
 
@@ -299,8 +299,6 @@
             });
 //-------------------end de respuesta ajax---------------------
              return false;
-
-
 	  } else {
 	    swal("El cambio de status fue cancelado!");
 	  }
@@ -340,8 +338,6 @@
             });
 //-------------------end de respuesta ajax---------------------
              return false;
-
-
 	  } else {
 	    swal("El cambio de status fue cancelado!");
 	  }
@@ -363,17 +359,19 @@
 				icon: "success",
 				buttons: false,
 			}); 
+
+			var gps = document.getElementById("status_gps").value;
+			var cli = document.getElementById("status_cli").value;
   			var issue = document.getElementById("id_issue").value;
   			var	id = document.getElementById("id_proyecto").value;
             var request = $.ajax({
                 url:"/panel/requestchangeisuesitio",
                 method:"POST",
-                data: { issue : issue, id: id },
+                data: { gps : gps, cli : cli, issue : issue, id: id },
                 processData: true,
                 // contentType: false,
             });
 //-------------------end de ajax---------------------------
-
 //-------------peticion de respuesta de ajax------------------
             request.done(function(response) {
                 console.log(response);//imprime lo que responde el ajax
@@ -382,8 +380,6 @@
             });
 //-------------------end de respuesta ajax---------------------
              return false;
-
-
 	  } else {
 	    swal("El cambio de status fue cancelado!");
 	  }
