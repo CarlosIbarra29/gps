@@ -240,4 +240,19 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     } //END GET ASISTENCIA
 
+    public function getsolicitudpendientecheckin($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre_sitio, pc.user_solicitud, pc.user_solicitud,pc.status, 
+                        pc.motivo, pc.asistencia_status
+                        FROM personal_solicitudhoras pc 
+                        where pc.nombre_sitio =? and pc.status= 1 AND pc.asistencia_status = 0",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA PENDIENTE
+
 }

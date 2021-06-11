@@ -34,6 +34,14 @@ class AsistenciaController extends Zend_Controller_Action{
     	$nombre = $this->_getParam('sitio');
     	$this->view->sitio = $nombre;
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
+        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientecheckin($nombre);
+        if(empty($solicitud)){
+            $valor = 0;
+            $this->view->op_solicitud = $valor;
+        }else{
+            $valor = 1;
+            $this->view->op_solicitud = $valor;
+        }
     }
 
     public function horaextraAction(){
@@ -138,7 +146,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $table="personal_solicitudhoras";
         $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
         $this->view->personal= $this->_asistencia->getpersonalsolicituddetalle($id);
-
         $user = $this->_session->id;
         $this->view->id_user = $user;
     }
@@ -146,7 +153,6 @@ class AsistenciaController extends Zend_Controller_Action{
     public function pdfasistenciasolicitudAction(){
         $id = $this->_getParam('id');
         $this->view->id_solicitud = $id; 
-
         $wh="id";
         $table="personal_solicitudhoras";
         $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
@@ -166,9 +172,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $usr = $this->_season->GetSpecific($table,$wh,$id);
         $ap_paterno = $usr[0]['ap'];
         $nombre = $usr[0]['nombre']." ".$ap_paterno;
-
         // Solicitud caja chica
-        // var_dump($post);exit;
             $table="personal_solicitudhoras";
             $id_solicitud = $this->_asistencia->isertsolicitudhoras($post,$table,$nombre,$hoy);
             $op = 0;
@@ -179,9 +183,7 @@ class AsistenciaController extends Zend_Controller_Action{
                 $result = $this->_asistencia->insertpersonalsolictud($post,$table,$id,$value,$hoy,$nombre,$id_solicitud);  
                 $op ++;
             }
-
         //END solicitud caja chica
-        // var_dump($post);exit;
 
         $table = "personal_campo";
         // if($post['act_todos'] != ""){
