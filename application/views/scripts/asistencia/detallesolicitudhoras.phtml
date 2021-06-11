@@ -1,0 +1,164 @@
+<?php 
+	foreach ($this->solicitud as $key) {
+ 		$id = $key['id'];
+ 		$name_sitio = $key['nombre_sitio'];
+ 		$user = $key['user_solicitud'];
+ 		$fecha = $key['user_fecha'];
+ 		$motivo = $key['motivo'];
+ 		$status_solicitud = $key['status'];
+ 	} 
+?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud Hora Extra</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12">
+		<?php if($status_solicitud == 0){ ?>
+			<div class="row">
+				<div class="col m6 s6 text-center">
+	              <div class="chip" id="autorizar_solicitud">
+	                  <img src="/img/gris.jpg" >
+	                  Autorizar
+	              </div>
+				</div>
+				<div class="col m6 s6 text-center">
+	              <div class="chip" id="rechazar_solicitud">
+	                  <img src="/img/gris.jpg" >
+	                  Rechazar
+	              </div>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+</div>
+
+
+<div class="row" style="margin-top: 25px;">
+    <div class="col s12 m6">
+      	<div class="card ">
+		    <div class="card-content">
+				<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información Solicitud</span>
+
+				<div class="row" style="margin-top: 20px;">
+					<div class="col m12 s12">
+						<span  style="font-size:17px;">Sitio: </span> 
+						<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_sitio; ?></span> 
+						<br> 
+						<span  style="font-size:17px;">Usuario: </span>
+						<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> <?php echo $user; ?></span>
+						<br> 
+						<span  style="font-size:17px;">Fecha: </span>
+						<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $fecha; ?></span>
+					</div>
+				</div>
+
+	        </div>
+      	</div>
+    </div>
+
+
+    <div class="col s12 m6">
+      	<div class="card ">
+		    <div class="card-content">
+				<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Solicitud</span>
+
+				<div class="row" style="margin-top: 20px;">
+					<div class="col m12 s12">
+						<?php if($status_solicitud == 0){ ?>
+							<span  style="font-size:17px;">Status: </span>
+							<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pendiente</span>
+							<br>
+							<span  style="font-size:17px;">Fecha: </span>
+							<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">---</span>
+							<br>
+							<span  style="font-size:17px;">Usuario: </span>
+							<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">---</span>
+						<?php } ?>
+					</div>
+				</div>
+
+	        </div>
+      	</div>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<span  style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Motivo: </span>
+		<span  style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: bold;">
+			<?php echo $motivo; ?>
+		</span>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+	    <div class="card">
+	        <div class="card-content">
+	        	<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Personal</span>
+
+	        	<div class="row" style="margin-top: 20px;">
+	        		<div class="col m12 s12">
+					    <table class="table text-left table-hover">
+					      <thead>
+					        <tr>
+					          <th>Nombre</th>
+					          <th>Puesto</th>
+					          <th>Imagen</th>
+					          <th>Horas extras</th>
+					        </tr> 
+					      </thead>
+					      <?php
+					      if ($this->personal) { 
+					      foreach ($this->personal as $usr) { ?>
+					      <tbody>
+			                <tr>
+			                    <td>
+			                    	<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+			                    </td>
+
+			                    <td>
+			                    	<?php echo $usr['puesto']; ?>
+			                    </td>
+			                    <td>
+			                    	<?php if($usr['imagen'] == NULL){ ?>
+			                    		<img src="/img/no_disponible1.png"style="width: 70px; height: 70px;">
+			                    	<?php }else{ ?>
+				                    	<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>"  alt="image-1" style="width: 70px; height: 70px;"/>
+				                    	</a>
+			                    	<?php } ?>
+			                    </td>
+			                    <td class="text-center">
+			                    	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> <?php echo $usr['hora_extra']; ?> Horas</span>
+			                    </td>
+			                </tr>
+					        <?php } }else{ ?>
+					        </tbody> 
+					        <tbody>
+					            <tr>
+					                <td class="text-center" colspan="6"><h4>No se encontro personal asignado.</h4></td>
+					            </tr>
+					        </tbody>
+					                    
+					        <?php } ?>
+					    </table>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+</div>

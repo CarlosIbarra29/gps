@@ -3,7 +3,6 @@
 class Application_Model_GpsPersonalModel extends Zend_Db_Table_Abstract{
 
     public function isertdaystocheckin($post,$table,$name_sitio,$id,$dias){
-        // var_dump($id);exit;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(

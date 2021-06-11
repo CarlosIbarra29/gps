@@ -1157,11 +1157,11 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
 		        	<div class="col m4 s12"></div>
 		        	<div class="col m4 s12 text-center">
 		        		<?php if($total_suma >= $this->suma_po){ ?>
-		        		<span style="font-size:16px; color:green; letter-spacing: 0.1em; font-weight: bold;">
+		        		<span style="font-size:16px; color:red; letter-spacing: 0.1em; font-weight: bold;">
 		        			Total: $<?php echo number_format($total_suma, 2, '.', ','); ?> 
 		        		</span>		
 		        		<?php }else{ ?>
-		        		<span style="font-size:16px; color: red; letter-spacing: 0.1em; font-weight: bold;">
+		        		<span style="font-size:16px; color: green; letter-spacing: 0.1em; font-weight: bold;">
 		        			Total: $<?php echo number_format($total_suma, 2, '.', ','); ?> 
 		        		</span>		
 		        		<?php } ?>

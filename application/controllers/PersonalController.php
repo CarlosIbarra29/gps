@@ -303,11 +303,11 @@ class PersonalController extends Zend_Controller_Action{
                 $id = $key;
                 $result = $this->_sitio->asignacionpersonalasitio($post,$table,$name_sitio,$id);  
 
-                for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
-                    $dias =  date("d-m-Y", $i);
-                    $table="personal_checkin";
-                    $this->_personal->isertdaystocheckin($post,$table,$name_sitio,$id,$dias);
-                } 
+                // for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+                //     $dias =  date("d-m-Y", $i);
+                //     $table="personal_checkin";
+                //     $this->_personal->isertdaystocheckin($post,$table,$name_sitio,$id,$dias);
+                // } 
                 // FALTA HACER EL PROCESO EN LA SECCION INDIVIDUAL-------------------------------------------
             }
         }
@@ -355,7 +355,6 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-
         $id=$post['id_user'];
         $wh="id";
         $table="personal_campo";
@@ -366,15 +365,18 @@ class PersonalController extends Zend_Controller_Action{
             $this->_sitio->updatesitioresidente($post,$table,$name);
         }
 
-        $day_uno = substr($post['fecha_inicial'], 8); 
-        $mes_uno = substr($post['fecha_inicial'], 5,2); 
         $year_uno = substr($post['fecha_inicial'], 0,4); 
-        $fecha_inicial = $day_uno."/".$mes_uno."/".$year_uno;
+        $mes_uno = substr($post['fecha_inicial'], 5,2); 
+        $day_uno = substr($post['fecha_inicial'], 8,2); 
+        $fecha_inicial = $day_uno."-".$mes_uno."-".$year_uno;
 
-        $day_dos = substr($post['fecha_final'], 8); 
-        $mes_dos = substr($post['fecha_final'], 5,2); 
         $year_dos = substr($post['fecha_final'], 0,4); 
-        $fecha_final = $day_dos."/".$mes_dos."/".$year_dos;
+        $mes_dos = substr($post['fecha_final'], 5,2); 
+        $day_dos = substr($post['fecha_final'], 8,2); 
+        $fecha_fianl = $day_dos."-".$mes_dos."-".$year_dos;
+
+        $fechaInicio=strtotime($fecha_inicial);
+        $fechaFin=strtotime($fecha_fianl);
 
         if($post['op'] == 1){
             $id=$post['sitio'];
@@ -383,28 +385,35 @@ class PersonalController extends Zend_Controller_Action{
             $sitio = $this->_season->GetSpecific($table,$wh,$id);
             $name_sitio = $sitio[0]['nombre'];
             $table="personal_campo";
-            $result=$this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_final);
+            $result=$this->_sitio->asignacionpersonalasitioind($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl);
+
+            // for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+            //     $dias =  date("d-m-Y", $i);
+            //     $table="personal_checkin";
+            //     $id = $post['id_user'];
+            //     $this->_personal->isertdaystocheckin($post,$table,$name_sitio,$id,$dias);
+            // } 
         }
 
         if($post['op'] == 2){
             $name_sitio = "Compensacion";
             $sitio= 2222222;
             $table="personal_campo";
-            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
         }
 
         if($post['op'] == 3){
             $name_sitio = "Taller";
             $sitio= 3333333;
             $table="personal_campo";
-            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
         }
 
         if($post['op'] == 4){
             $name_sitio = "Vacaciones";
             $sitio= 4444444;
             $table="personal_campo";
-            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_final,$sitio);
+            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
         }
 
         if ($result) {

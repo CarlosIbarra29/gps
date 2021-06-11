@@ -3926,16 +3926,23 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getdireccionusergraficas($nombre,$year,$month){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr,soc.retencion_iva, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.name_user,soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable ,soc.name_user, s.nombre_servicio, soc.fecha_validaciondos, year(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS years ,month(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS mes ,day(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS dia,tp.nombre_proyecto
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN servicios s on s.id= soc.servicio_id 
-                                LEFT JOIN sitios_tipoproyecto stp on stp.id = soc.tipo_proyecto
-                                LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto 
-                                having soc.status_documento= 1  AND soc.status_pago != 1
-                                AND mes  = $month
-                                AND years = $year 
-                                AND name_user like '%{$nombre}%' order by soc.id DESC");
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.name_proveedor, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr,
+                        soc.retencion_iva, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento,soc.name_user,soc.status_documentouno,soc.id_usuario,
+                        soc.delete_status, soc.status_pago, soc.facturable ,soc.name_user, s.nombre_servicio, 
+                        soc.fecha_validaciondos, 
+                        year(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS years,
+                        month(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS mes,
+                        day(date(CONCAT(SUBSTRING(fecha_validaciondos,7,4),'-',SUBSTRING(fecha_validaciondos,4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS dia,tp.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto 
+                        having soc.status_documento= 1  AND soc.status_pago != 1
+                        AND mes  = $month
+                        AND years = $year 
+                        AND name_user like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3947,16 +3954,23 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getdireccionserviciograficas($nombre,$year,$month){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, soc.servicio_id,
-                                    soc.importe, soc.iva, soc.retencion_isr,soc.retencion_iva, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.name_user,soc.status_documentouno,,soc.servicio_id,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable ,soc.name_user s.nombre_servicio, soc.fecha_validaciondos, year(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS years ,month(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS mes ,day(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS dia,tp.nombre_proyecto
-                                FROM solicitud_ordencompra soc
-                                LEFT JOIN servicios s on s.id= soc.servicio_id 
-                                LEFT JOIN sitios_tipoproyecto stp on stp.id = soc.tipo_proyecto
-                                LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto 
-                                having soc.status_documento= 1  AND soc.status_pago != 1
-                                AND mes  = $month
-                                AND years = $year 
-                                AND soc.servicio_id = ? order by soc.id DESC",array($nombre));
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id,soc.name_proveedor, 
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr,
+                        soc.retencion_iva, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento,soc.name_user,soc.status_documentouno,
+                        soc.servicio_id,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
+                        soc.name_user s.nombre_servicio, soc.fecha_validaciondos, 
+                        year(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS years,
+                        month(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS mes,
+                        day(date(CONCAT(SUBSTRING(fecha_validaciondos, 7, 4),  '-', SUBSTRING(fecha_validaciondos, 4, 2), '-', SUBSTRING(fecha_validaciondos, 1, 2)))) AS dia,tp.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto 
+                        having soc.status_documento= 1  AND soc.status_pago != 1
+                        AND mes  = $month
+                        AND years = $year 
+                        AND soc.servicio_id = ? order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

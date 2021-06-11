@@ -743,6 +743,16 @@ setInterval(function() {
 
     }
 
+    function gethorasextra($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $name = strstr($filename, '?', true);
+
+        $urldetail = "/asistencia/solicitudhorasextra/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }       
+    }
+
     function getenvioaud($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
         $filename = substr(strrchr($actual_link, "/"), 1);
@@ -818,6 +828,9 @@ setInterval(function() {
 
                 <li class="bold moves <?php echo getUrl('/asistencia/cuadrillas',$actual_link);?>">
                     <a href="/asistencia/cuadrillas">Asistencia<i class="material-icons">event_available</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/asistencia/solicitudhorasextra',$actual_link);echo gethorasextra($actual_link);?>">
+                    <a href="/asistencia/solicitudhorasextra">Solicitud Horas extra<i class="material-icons">access_time</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">

@@ -1,0 +1,231 @@
+
+<?php 
+  function isActhref($nameBtn,$urlname){
+      if($nameBtn==1 && $urlname==null){
+        return "active"; 
+      }
+      return ($nameBtn == $urlname)?"active":"";
+  }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<?php 
+	$status =  $this->status_documento;
+?>
+
+<style type="text/css">
+  .oculto{display: none;}
+  .active_menu{
+    -webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    -moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+  }
+</style>
+
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/asistencia/solicitudhorasextra/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/asistencia/solicitudhorasextra/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/asistencia/solicitudhorasextra/status/1"><h4>Autorizadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/asistencia/solicitudhorasextra/status/1"><h4>Autorizadas</h4></a></li>
+  			<?php } ?>
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/asistencia/solicitudhorasextra/status/2"><h4>Rechazadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/asistencia/solicitudhorasextra/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>	
+  		</ul>
+	</div>
+</div>
+
+<div class="row">
+  <div class="col m12 s12">
+    <div class="row">
+      <div class="col m8 s8">
+        <h3>Lista de solicitudes de horas extra</h3>
+      </div>
+      <div class="col m4 s4 text-right">
+
+      </div>
+    </div>
+    <table class="table text-left table-hover">
+      <thead>
+        <tr>
+          <th>NO.</th>
+          <th>Sitio</th>
+          <th>Motivo</th>
+          <th>Usuario</th>    
+          <th>Status</th>
+        </tr> 
+      </thead>
+      <?php
+      if ($this->paginator) { 
+      foreach ($this->paginator as $usr) { ?>
+      <tbody>
+        <tr>
+          <td>
+            <h5><?php echo $usr['id']; ?></h5>
+          </td>
+          <td>
+            <h5><?php echo $usr['nombre_sitio']; ?> </h5>
+          </td>
+          <td>
+            <h5><?php echo $usr['motivo']; ?></h5>
+          </td>
+          <td>
+            <h5><?php echo $usr['user_solicitud']; ?></h5>
+          </td>
+
+          <td>
+            <?php if($usr['status'] == 0){ ?>
+              <div class="chip" id="inactivo_personal">
+                  <img src="/img/gris.jpg" >
+                  En proceso
+                </div>
+            <?php } ?>
+
+            <?php if($usr['status'] == 1){ ?>
+              <div class="chip" id="activo_personal">
+                  <img src="/img/correct.png" >
+                  Autorizada
+                </div>
+                
+            <?php } ?>
+
+            <?php if($usr['status'] == 2){ ?>
+              <div class="chip" id="inactivo_personal">
+                  <img src="/img/rojo.png" >
+                  Rechazada
+                </div>
+            <?php } ?>
+
+          </td>
+
+          <td class="text-center">
+            <a href="/asistencia/detallesolicitudhoras/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+          </td>
+<!--          <td class="text-center">
+            <a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+          </td> -->
+        </tr>
+        <?php } }else{ ?>
+        </tbody> 
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="6"><h4>No hay solicitudes de horas extra.</h4></td>
+            </tr>
+        </tbody>
+                    
+        <?php } ?>
+    </table>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>

@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="row">
+<!-- <div class="row">
     <div class="col s12 m12">
       	<div class="card">
 	        <div class="card-content">
@@ -49,29 +49,45 @@
       	</div>
     </div>
 </div>
+ -->
+
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Solicitud de horas extra</span>
+				<div class="row">
+					<div class="col m12 s12 text-center">
+						<div class="input-field col m12 s12">
+						    <input type="text" id="motivo" value="">
+						    <label for="motivo">Motivo</label>
+						</div>
+
+					</div>
+					<div class="col m4 s6 text-right">
+				<!-- 		<div class="input-field col m12 s12">
+						    <input type="text" id="todos" value="" oninput="actualizarValorMunicipioInm()">
+						    <label for="todos">Horas extra para todos</label>
+						</div> -->
+					</div>
+				</div>
+	        </div>
+      	</div>
+    </div>
+</div>
 
 
 <div class="row" style="margin-top: 40px;">
 	<div class="col m1 s12"></div>
 	<div class="col m10 s12">
-		<div class="row">
-			<div class="col m8 s6 text-right">
-				<div class="input-field col m12 s12">
-					<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Autorizar</a>
-				</div>
-			</div>
-			<div class="col m4 s6 text-right">
-		        <div class="input-field col m12 s12">
-		          <input type="text" id="todos" value="" oninput="actualizarValorMunicipioInm()">
-		          <label for="todos">Horas extra para todos</label>
-		        </div>
-			</div>
 
-		</div>
+
 		<form action="/asistencia/requestaddhoraextrapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 		<input  name="act_todos" id="act_todos" value="" type="hidden">
 		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
             </input>
+        <input type="hidden" name="motivo" id="motivo_sol">
         <table class="table text-left table-hover">
             <thead>
                 <tr >
@@ -132,6 +148,16 @@
 </div>
 
 
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="input-field col m12 s12">
+			<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Autorizar</a>
+		</div>
+	</div>
+</div>
+
+
+
 <input type="hidden" id="actividad" value="1">
 <script src="/js/lightbox.js"></script>
 <script type="text/javascript">
@@ -142,9 +168,11 @@
 
     $("#hora_extrapersonal").click(function(){
         var actividad = document.getElementById("actividad").value;
-        if(actividad == ""){
+        var motivo = document.getElementById("motivo").value;
+        document.getElementById("motivo_sol").value=motivo;
+        if(actividad == "" || motivo == ""){
             swal({
-            	title: "Para agregar un imagen debes seleccionar una tarea ",
+            	title: "Es necesario agregar un motivo a la solicitud",
             });
         }else{
 			swal("Espere un momento, la información esta siendo procesada", {

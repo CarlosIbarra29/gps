@@ -67,11 +67,76 @@ class AsistenciaController extends Zend_Controller_Action{
         }
     }
 
+    public function solicitudhorasextraAction(){
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        $op_status = 0;
+        $sol =$this->_asistencia->getprocesosolicitudhoras($op_status);
+        $this->view->enproceso = count($sol);
+
+        if($status == 0){
+            $op_status = 0;
+            $pagi_count = $this->_asistencia->getprocesosolicitudhoras($op_status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+        }
+
+        if($status == 1){
+            $op_status = 1;
+            $pagi_count = $this->_asistencia->getprocesosolicitudhoras($op_status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+        }
+
+        if($status == 2){
+            $op_status = 2;
+            $pagi_count = $this->_asistencia->getprocesosolicitudhoras($op_status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+        }
+    }
+
+    public function detallesolicitudhorasAction(){
+        $id = $this->_getParam('id');
+        $this->view->id_solicitud = $id;
+
+        $wh="id";
+        $table="personal_solicitudhoras";
+        $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->personal= $this->_asistencia->getpersonalsolicituddetalle($id);
+
+    }
+
     public function requestaddhoraextrapersonalAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
+        
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y H:i:s");
         $id=$this->_session->id;
@@ -81,22 +146,38 @@ class AsistenciaController extends Zend_Controller_Action{
         $ap_paterno = $usr[0]['ap'];
         $nombre = $usr[0]['nombre']." ".$ap_paterno;
 
+        // Solicitud caja chica
+        // var_dump($post);exit;
+            $table="personal_solicitudhoras";
+            $id_solicitud = $this->_asistencia->isertsolicitudhoras($post,$table,$nombre,$hoy);
+            $op = 0;
+            $table="personal_userhoras";
+            foreach ($post['personal'] as $key) {
+                $id = $key;
+                $value = $post['hora_extra'][$op];
+                $result = $this->_asistencia->insertpersonalsolictud($post,$table,$id,$value,$hoy,$nombre,$id_solicitud);  
+                $op ++;
+            }
+
+        //END solicitud caja chica
+        // var_dump($post);exit;
+
         $table = "personal_campo";
-        if($post['act_todos'] != ""){
-	        foreach ($post['personal'] as $key) {
-	        	$id = $key;
-	        	$value = $post['act_todos'];
-	        	$result = $this->_asistencia->updatehoraextra($post,$table,$id,$value,$hoy,$nombre); 
-	        }
-        }else{
-	        $op = 0;
-	        foreach ($post['personal'] as $key) {
-	        	$id = $key;
-	        	$value = $post['hora_extra'][$op];
-	        	$result = $this->_asistencia->updatehoraextra($post,$table,$id,$value,$hoy,$nombre);  
-	        	$op ++;
-	        }
-        }
+        // if($post['act_todos'] != ""){
+	       //  foreach ($post['personal'] as $key) {
+	       //  	$id = $key;
+	       //  	$value = $post['act_todos'];
+	       //  	$result = $this->_asistencia->updatehoraextra($post,$table,$id,$value,$hoy,$nombre); 
+	       //  }
+        // }else{
+	       //  $op = 0;
+	       //  foreach ($post['personal'] as $key) {
+	       //  	$id = $key;
+	       //  	$value = $post['hora_extra'][$op];
+	       //  	$result = $this->_asistencia->updatehoraextra($post,$table,$id,$value,$hoy,$nombre);  
+	       //  	$op ++;
+	       //  }
+        // }
 
         if ($result) {
             return $this-> _redirect('/asistencia/horaextra/sitio/'.$post['sitio'].'');

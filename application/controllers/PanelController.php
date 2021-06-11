@@ -3601,7 +3601,7 @@ class PanelController extends Zend_Controller_Action{
                 }
             } 
         }
-
+        // var_dump($post);exit;
         $table="cotizaciones_sitiospo";
         $result = $this->_sitio->insercotizacionsitiopo($post,$table,$urldb);
         if ($result) {

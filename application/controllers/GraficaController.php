@@ -261,7 +261,6 @@ class GraficaController extends Zend_Controller_Action{
         $diciembre = $this->view->diciembre=$this->_ordencompra->getinfosolicitudessitio($year,$month,$sitio);  
         $this->view->count_diciembre=count($diciembre);
 
-
         //  G A S O L I N A
         $month= 1;
         $gas_enero = $this->view->gas_enero=$this->_gasolina->getinfoindexsitio($year,$month,$sitio);
@@ -338,10 +337,8 @@ class GraficaController extends Zend_Controller_Action{
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
-
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
-
 
         $id=$this->_session->id;
         $wh="id";
@@ -508,7 +505,6 @@ class GraficaController extends Zend_Controller_Action{
 
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
-
 
         $id=$this->_session->id;
         $wh="id";
