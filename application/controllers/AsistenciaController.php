@@ -40,6 +40,15 @@ class AsistenciaController extends Zend_Controller_Action{
     	$nombre = $this->_getParam('sitio');
     	$this->view->sitio = $nombre;
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
+        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($nombre);
+        if(empty($solicitud)){
+            $valor = 0;
+            $this->view->op_solicitud = $valor;
+        }else{
+            $valor = 1;
+            $this->view->op_solicitud = $valor;
+        }
+        // var_dump($solicitud);exit;
     }
 
     public function personalasistenciaAction(){
@@ -224,19 +233,31 @@ class AsistenciaController extends Zend_Controller_Action{
 
         foreach ($post['validar'] as $key) {
             $solicitud = $key;
+            $table="personal_userhoras";
+            $this->_asistencia->updaterolregistrohora($solicitud,$table);
             $wh="id";
             $table="personal_userhoras";
             $usr = $this->_season->GetSpecific($table,$wh,$solicitud);
 
             $horaextra = $usr[0]['hora_extra'];
             $id_user = $usr[0]['id_user'];
-            var_dump("Solicitud =" .$solicitud);
-            var_dump("Hora Extra =".$horaextra);
-            var_dump("ID usuario =".$id_user);
-            var_dump($usr);
+            $table="personal_campo";
+            $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
+
+            $table="personal_solicitudhoras";
+            $solicitud = $post['solicitud'];
+            $result =$this->_asistencia->updaterolregistrohorasolicitud($solicitud,$table);
+
         }
 
-        var_dump($post);exit;
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/detallesolicitudhoras/id/'.$post['solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
     }
 
 }

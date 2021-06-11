@@ -61,6 +61,45 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+    public function updaterolregistrohora($post,$table){
+        $value= 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_user = $value WHERE id = ?",array($post));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updaterolregistrohorapersonal($post,$table,$horaextra){
+        $value= 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET hora_extra = ? WHERE id = ?",array($horaextra,$post));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updaterolregistrohorasolicitud($solicitud,$table){
+        $value= 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status = $value WHERE id = ?",array($solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
     public function trancatecuadrilla(){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -171,7 +210,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pu.id as id_sol,pu.id_user, pu.hora_extra, pc.nombre, pc.apellido_pa, 
-                        pc.apellido_ma, pc.imagen,  pp.nombre as puesto, pu.id_solicitud
+                        pc.apellido_ma, pc.imagen,  pp.nombre as puesto, pu.id_solicitud, pu.status_user
                         FROM personal_userhoras pu
                         INNER JOIN personal_campo pc on pc.id = pu.id_user
                         INNER JOIN puestos_personal pp on pp.id = pc.puesto
@@ -183,5 +222,22 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET DETALLE PERSONAL SOLICITUD HORAS EXTRA
+
+
+
+    public function getsolicitudpendiente($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre_sitio, pc.user_solicitud, pc.user_solicitud,pc.status, 
+                        pc.motivo, pc.asistencia_status
+                        FROM personal_solicitudhoras pc 
+                        where pc.nombre_sitio =? and pc.status= 0;",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
 
 }

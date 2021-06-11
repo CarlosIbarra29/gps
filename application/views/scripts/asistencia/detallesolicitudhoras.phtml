@@ -199,13 +199,31 @@
 							          <input id="first_name" name="hora_extra[]" value="<?php echo $usr['hora_extra']; ?>" max="100" min="0" type="hidden" class="validate">
 
 							          <input type="hidden" name="personal[]" value="<?php echo $usr['id_user']; ?>">
- -->
-								    <p>
-								      <label>
-								        <input type="checkbox" name="validar[]" value="<?php echo $usr['id_sol']; ?>" />
-								        <span></span>
-								      </label>
-								    </p>
+ -->			
+ 									<?php if($status_solicitud == 0){ ?>
+									    <p>
+									      <label>
+									        <input type="checkbox" name="validar[]" value="<?php echo $usr['id_sol']; ?>" />
+									        <span></span>
+									      </label>
+									    </p>
+									<?php }else{ ?>
+										<?php if($usr['status_user'] == 1){ ?>
+										    <p>
+										      <label>
+										        <input type="checkbox" checked disabled />
+										        <span></span>
+										      </label>
+										    </p>
+										<?php }else{ ?>
+										    <p>
+										      <label>
+										        <input type="checkbox" disabled />
+										        <span></span>
+										      </label>
+										    </p>
+										<?php } ?>
+									<?php } ?>
 			                    </td>
 
 			                </tr>
@@ -223,11 +241,15 @@
 	        	</div>
 	        	</form>
 
-	        	<div class="row">
-	        		<div class="col m12 s12 text-center">
-	        			<a class="btn" id="hora_extrapersonal"><i class="material-icons right">send</i>Guardar</a>
-	        		</div>
-	        	</div>
+
+	        	<?php if($status_solicitud == 1){ ?>
+	        	<?php }else{ ?>
+		        	<div class="row">
+		        		<div class="col m12 s12 text-center">
+		        			<a class="btn" id="hora_extrapersonal"><i class="material-icons right">send</i>Guardar</a>
+		        		</div>
+		        	</div>
+	        	<?php } ?>
 
 	        </div>
 	    </div>
