@@ -750,7 +750,11 @@ setInterval(function() {
         $name = strstr($filename, '?', true);
 
         $urldetail = "/asistencia/solicitudhorasextra/status/".$filename."";
-        if($actual_link == $urldetail){ return "active"; }       
+        if($actual_link == $urldetail){ return "active"; }    
+
+
+        $urldetail = "/asistencia/detallesolicitudhoras/id/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
     }
 
     function getenvioaud($actual_link){

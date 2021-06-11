@@ -95,21 +95,21 @@
 
   			<?php if($status == 1){ ?>
   				<li class="tab col s3 active_menu">
-  					<a href="/asistencia/solicitudhorasextra/status/1"><h4>Autorizadas</h4></a>
+  					<a href="/asistencia/solicitudhorasextra/status/1"><h4>Auditadas</h4></a>
   					<div></div>
   				</li>
   			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/asistencia/solicitudhorasextra/status/1"><h4>Autorizadas</h4></a></li>
+  				<li class="tab col s3"><a href="/asistencia/solicitudhorasextra/status/1"><h4>Auditadas</h4></a></li>
   			<?php } ?>
 
-  			<?php if($status == 2){ ?>
+<!--   			<?php if($status == 2){ ?>
   				<li class="tab col s3 active_menu">
   					<a href="/asistencia/solicitudhorasextra/status/2"><h4>Rechazadas</h4></a>
   					<div></div>
   				</li>
   			<?php }else{ ?>
   				<li class="tab col s3"><a href="/asistencia/solicitudhorasextra/status/2"><h4>Rechazadas</h4></a></li>
-  			<?php } ?>	
+  			<?php } ?> -->	
   		</ul>
 	</div>
 </div>
@@ -163,18 +163,10 @@
             <?php if($usr['status'] == 1){ ?>
               <div class="chip" id="activo_personal">
                   <img src="/img/correct.png" >
-                  Autorizada
+                  Auditada
                 </div>
                 
             <?php } ?>
-
-            <?php if($usr['status'] == 2){ ?>
-              <div class="chip" id="inactivo_personal">
-                  <img src="/img/rojo.png" >
-                  Rechazada
-                </div>
-            <?php } ?>
-
           </td>
 
           <td class="text-center">

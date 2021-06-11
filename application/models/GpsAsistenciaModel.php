@@ -73,6 +73,25 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }// END TRUNCATE
 
+
+    public function updatesolicitudhoraextra($post,$table,$today,$nombre_usuario){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status = ?, validacion_user = ?, fecha_validacion = ?, comentario = ? WHERE id = ?",array(
+                $post['dato'],
+                $nombre_usuario,
+                $today,
+                $post['comentario'],
+                $post["id"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function getallsitioscuadrilla(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -151,8 +170,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
     public function getpersonalsolicituddetalle($id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pu.id_user, pu.hora_extra, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
-                        pc.imagen,  pp.nombre as puesto, pu.id_solicitud
+            $qry = $db->query("SELECT pu.id as id_sol,pu.id_user, pu.hora_extra, pc.nombre, pc.apellido_pa, 
+                        pc.apellido_ma, pc.imagen,  pp.nombre as puesto, pu.id_solicitud
                         FROM personal_userhoras pu
                         INNER JOIN personal_campo pc on pc.id = pu.id_user
                         INNER JOIN puestos_personal pp on pp.id = pc.puesto

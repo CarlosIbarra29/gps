@@ -130,6 +130,8 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
         $this->view->personal= $this->_asistencia->getpersonalsolicituddetalle($id);
 
+        $user = $this->_session->id;
+        $this->view->id_user = $user;
     }
 
     public function requestaddhoraextrapersonalAction(){
@@ -186,6 +188,55 @@ class AsistenciaController extends Zend_Controller_Action{
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         } 
-
     }
+
+
+    public function requestupdatesolicitudhorasextraAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        date_default_timezone_set('America/Mexico_City');
+        $today = date("d-m-Y H:i:s");
+        $id=$post['id_user'];
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $nombre_usuario = $usr[0]['nombre']." ".$usr[0]['ap']." ".$usr[0]['am'];
+         $table="personal_solicitudhoras";
+        $table="personal_solicitudhoras";
+        $this->_asistencia->updatesolicitudhoraextra($post,$table,$today,$nombre_usuario);
+
+        if ($result) {
+            echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        }else{
+            print '<script language="JavaScript">';
+            print 'alert("Ocurrio un error: Comprueba los datos.");';
+            print '</script>';
+        }
+    }
+
+
+    public function requestvaldiarusuariosAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        foreach ($post['validar'] as $key) {
+            $solicitud = $key;
+            $wh="id";
+            $table="personal_userhoras";
+            $usr = $this->_season->GetSpecific($table,$wh,$solicitud);
+
+            $horaextra = $usr[0]['hora_extra'];
+            $id_user = $usr[0]['id_user'];
+            var_dump("Solicitud =" .$solicitud);
+            var_dump("Hora Extra =".$horaextra);
+            var_dump("ID usuario =".$id_user);
+            var_dump($usr);
+        }
+
+        var_dump($post);exit;
+    }
+
 }
