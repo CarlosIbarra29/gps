@@ -143,6 +143,16 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->view->id_user = $user;
     }
 
+    public function pdfasistenciasolicitudAction(){
+        $id = $this->_getParam('id');
+        $this->view->id_solicitud = $id; 
+
+        $wh="id";
+        $table="personal_solicitudhoras";
+        $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->personal= $this->_asistencia->getpersonalsolicituddetalle($id);
+    }
+
     public function requestaddhoraextrapersonalAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
