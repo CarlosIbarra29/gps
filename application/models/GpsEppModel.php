@@ -1641,10 +1641,10 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE SOLICITUD Surtida EPP
 
-    public function UpdateeppSol($post,$table,$idsol,$status){
+    public function UpdateeppSol($post,$table,$idsol,$status,$hoy){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET status_epp = ? fecha_entrega = ? WHERE id_sol = ?",array($status,$hoy,$idsol));
+            $qry = $db->query("UPDATE $table SET status_epp = ?, fecha_entrega = ? WHERE id_sol = ?",array($status,$hoy,$idsol));
             $db->closeConnection();               
             return $qry;
         } 
@@ -1652,5 +1652,59 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   // UPDATE STATUS 
+
+
+    public function insertasgEppSol($table,$fechanew, $fecha_entrega, $cantidad, $descripcion, $talla, $id_personal, $id_epp,
+                $cobro, $tipo_epp){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'cantidad'=>$cantidad,
+                'tipo_epp'=>$tipo_epp,
+                'descripcion'=>$descripcion,
+                'talla'=>$talla,
+                'id_epp'=>$id_epp,
+                'fecha_entrega'=>$fecha_entrega,
+                'reposicion'=>$fechanew,
+                'cobro'=>$cobro,
+                'id_personal'=>$id_personal
+            );
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END Insert asignar epp a personal desde solicitudes
+
+    public function UpdateStockEppSol($table,$cantidad,$talla){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET stock = stock - ? WHERE idepp = ?",array(
+                $cantidad,
+                $talla));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Stock de EPP desde Solicitudes
+
+    public function insertrespEppSol($idper,$table,$urldb,$fhoy){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'responsiva'=>$urldb,
+                'id_personal'=>$idper,
+                'fecha'=>$fhoy
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }//  Insert Responsiva En historial desde solicitudes
 
 } 

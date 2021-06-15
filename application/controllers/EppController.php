@@ -2883,15 +2883,43 @@ class EppController extends Zend_Controller_Action{
            
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("Y-m-d");
+
         $status = 1;
         $this->_epp->UpdateeppSol($post,$table,$idsol,$status,$hoy);  
 
+            $solicitud = $post['id_solicitud'];
+            $wh="id_sol";
+            $table="epp_asignarsol";
+            $eppasg = $this->_season->GetSpecific($table,$wh,$solicitud);
+          
+        foreach ($eppasg as $key) {
+          
+            $fecha_entrega = $key['fecha_entrega'];
+            $cantidad = $key['cantidad'];
+            $descripcion = $key['descripcion'];
+            $talla = $key['talla'];
+            $id_personal = $key['id_personal'];
+            $id_epp = $key['id_epp'];
+            $cobro = $key['cobro'];
+            $tipo_epp = $key['tipo_epp'];
 
+            $id=$talla;
+            $table="epp_catalogo";
+            $vida=$this->_epp->buscarrep($id,$table);
+           
 
-            // $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
-            
-        var_dump($usr);
-        die();
+            $vidap=implode($vida[0]);
+            $date=$fecha_entrega;
+            $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
+           
+            $table="epp_asignar";
+            $this->_epp->insertasgEppSol($table,$fechanew, $fecha_entrega, $cantidad, $descripcion, $talla, $id_personal, $id_epp,
+                $cobro, $tipo_epp);
+
+            $table="epp_catalogo";
+            $this->_epp->UpdateStockEppSol($table,$cantidad,$talla);
+
+        }
 
         if($this->getRequest()->getPost()){
 
@@ -2913,7 +2941,7 @@ class EppController extends Zend_Controller_Action{
                 }else{
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
-                    $url1 = 'img/epp/responsivassol';
+                    $url1 = 'img/epp/responsivas';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
                 }
@@ -2921,7 +2949,12 @@ class EppController extends Zend_Controller_Action{
 
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d-m-Y H:i:s");
-            $status_surtido = 1;
+
+            $idper = $eppasg[0]['id_personal'];
+            $fhoy = date("d-m-Y");
+            $table="responsivas";
+
+            $this->_epp->insertrespEppSol($idper,$table,$urldb,$fhoy);
 
             $id=$this->_session->id;
             $wh="id";
@@ -2929,12 +2962,12 @@ class EppController extends Zend_Controller_Action{
             $usr = $this->_season->GetSpecific($table,$wh,$id);
             $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
             $id_usuario = $usr[0]['id'];            
-
+            
+            $status_surtido = 1;
+            
             $table = "epp_solicitudes";
             $result = $this->_epp->UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb);
 
-            // $table="vehiculos_pagos";
-            // $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
             if ($result) {
                 // return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['id_solicitud'].'/status/2');
                 return $this-> _redirect('/epp/listasolalmacen/status/0');

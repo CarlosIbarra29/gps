@@ -500,6 +500,63 @@ setInterval(function() {
         if($actual_link == $urlname){ return "active"; }    
     } 
 
+    function getlistasolicitudalm($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/solicituddetailalm/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $getpag="/epp/listasolalmacen?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/solicitudeppalm/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+    } 
+
+    function getListaSolEppAdm($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/solicituddetail/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $getpag="/epp/listasolicitudes?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/solicitudepp/status/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+
+    } 
+
+    function getListaSolEppSpf($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+        $getpag="/epp/listasolspecif?pagina=".$namebus."";
+        if($actual_link == $getpag){ return "active"; }
+    }
+
+    function getSolEppSpf($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/updatesoleppspf/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+    } 
+
+
+    function getSolEppAdm($actual_link){
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $name = strstr($actual_link, '?', true);
+        $urlname="/epp/updatesolepp/id/".$filename."";
+        if($actual_link == $urlname){ return "active"; }  
+    } 
+    
+
     function getlistaruth($actual_link){
         $filename = substr(strrchr($actual_link, "/"), 1);
         $name = strstr($actual_link, '?', true);
@@ -956,8 +1013,12 @@ setInterval(function() {
                     <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
                 </li>
 
-                <li class="bold moves <?php echo getUrl('/epp/eppsol',$actual_link);?>">
-                    <a href="/epp/eppsol">EPP Solicitides<i class="material-icons">nature_people</i></a>
+                <li class="bold moves <?php echo getUrl('/epp/catalogo',$actual_link); echo getSolEppAdm($actual_link);?>">
+                    <a href="/epp/catalogo">EPP Solicitides<i class="material-icons">nature_people</i></a>
+                </li>
+                
+                <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                    <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
@@ -1006,9 +1067,14 @@ setInterval(function() {
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
 
-                <li class="bold moves <?php echo getUrl('/epp/eppsolspecific',$actual_link);?>"> 
-                    <a href="/epp/eppsolspecific">EPP Solicitudes<i class="material-icons">nature_people</i></a> 
+                <li class="bold moves <?php echo getUrl('/epp/eppsolspecific',$actual_link);echo getSolEppSpf($actual_link);?>">
+                    <a href="/epp/eppsolspecific">Solicitudes EPP<i class="material-icons">nature_people</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/listasolspecific/status/0',$actual_link);echo getListaSolEppSpf($actual_link);?>">
+                    <a href="/epp/listasolspecific/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
+                </li>
+
             <?php } ?>
 
 
@@ -1191,6 +1257,10 @@ setInterval(function() {
 
                 <li class="bold <?php echo getUrl('/epp/catalogo',$actual_link);?>">
                     <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/listasolalmacen',$actual_link); echo getlistasolicitudalm($actual_link);?>">
+                    <a href="/epp/listasolalmacen/status/0">Lista de Solicitudes EPP<i class="material-icons">nature_people</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
