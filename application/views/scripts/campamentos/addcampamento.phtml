@@ -58,6 +58,32 @@ if($this->total== 1){
 	.table_wrapper{
 		overflow-x: auto;
 	}
+
+	.icon_style{
+	    font-size: 17px;
+	    font-family: "Nunito", sans-serif;
+	    cursor:pointer; 
+	}
+
+	.colorfont strong{
+		color: rgb(169,68,66);
+		font-weight: bold;
+	}
+
+	.colorfont span{
+		color: rgb(169,68,66);
+		font-weight: 350;
+	}
+
+	.colorfont1 strong{
+		color: rgb(114,97,40);
+		font-weight: bold;
+	}
+
+	.colorfont1 span{
+		color: rgb(114,97,40);
+		font-weight: 350;
+	}
 </style>
 
 
@@ -68,13 +94,65 @@ if($this->total== 1){
         <a class="waves-effect green btn modal-trigger" href="#modal1">+ Crear Campamento </a>    
     </div>
 </div>
+<!-- End botones -->
+
+
+<!-- Notificaciones -->
+
+<div class="col m12 s12">
+    <div class="row">
+        <div class="col m12 s12" id="alert_box">
+            <?php if ($this->alertas || $this->alertasvencidas) { ?>
+                <!-- <div class="col m12 s12 text-right">
+                    <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i>
+                </div> -->
+
+                <?php foreach ($this->alertasvencidas as $vencidas) { ?>
+                    <div style="background: rgb(242,222,222);"  class="card darken-1">
+                        <div style="padding: 10px;" class="card-content white-text colorfont">
+                            <strong>¡Cuidado!</strong> 
+                            <span>
+                                El campamento del sitio <b><?php echo $vencidas['nombre']; ?></b> vencio el día: <?php echo  date("d-m-Y", strtotime($vencidas['fin_renta'])); ?> !Verificalo!
+                            </span> &nbsp; 
+                            <a href="/campamentos/campdetail/id/<?php echo $vencidas["id_campamento"] ?>">
+                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                            </a>
+                        </div>    
+                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                    </div>              
+                <?php } ?>
+
+                <?php foreach ($this->alertas as $not) { ?>
+                    <div style="background: rgb(250,252,217);"  class="card darken-1">
+                        <div style="padding: 10px;" class="card-content white-text colorfont1">
+                            <strong>¡Advertencia!</strong> 
+                            <span>
+                               El campamento del sitio <b><?php echo $not['nombre']; ?> </b> esta por vencer el día:  <?php echo  date("d-m-Y", strtotime($not['fin_renta'])); ?> atíendelo !Ahora!
+                            </span> &nbsp; 
+                            <a href="/campamentos/campdetail/id/<?php echo $not["id_campamento"] ?>">
+                               <i style="color: rgb(114,97,40);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                            </a>
+                        </div>    
+                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                    </div>              
+                <?php } ?>
+
+                <div class="col m12 s12 text-right">
+                    <a><i class="icon_style"  id="alert_close" aria-hidden="true"> Cerrar todo </i></a>
+                </div> 
+            <?php } else { } ?>
+        </div>
+    </div>
+</div>
+
+<!-- end notificaciones  -->
 
 <div class="row">
 	<div class="col m12 s12 text-center" style="margin-top: 10px;">
 		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Campamentos
 	</div>
 </div>
-<!-- End botones -->
+
 
 <!-- Buscador -->
 <div class="row">
@@ -536,6 +614,9 @@ if($this->total== 1){
 	});
 	// End Selected
 
-	
+	$('#alert_close').click(function(){
+	    $( "#alert_box" ).fadeOut( );
+	});
+
 </script>
 
