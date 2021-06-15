@@ -134,7 +134,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status);
         }
     }
 
@@ -144,7 +144,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
         $wh="id";
         $table="personal_solicitudhoras";
-        $this->view->solicitud= $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
         $this->view->personal= $this->_asistencia->getpersonalsolicituddetalle($id);
         $user = $this->_session->id;
         $this->view->id_user = $user;
@@ -211,6 +211,28 @@ class AsistenciaController extends Zend_Controller_Action{
         } 
     }
 
+    public function requestchangehoraextrapersonalAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+            $op = 0;
+            $table="personal_userhoras";
+            foreach ($post['personal'] as $key) {
+                $id = $key;
+                $value = $post['hora_extra'][$op];
+                $result = $this->_asistencia->updatehoraextrasolicitud($table,$id,$value);  
+                $op ++;
+            }
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/detallesolicitudhoras/id/'.$post['id_solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+    }
+
 
     public function requestupdatesolicitudhorasextraAction(){
         $this->_helper->layout()->disableLayout();
@@ -242,6 +264,30 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
+        $wh="id";
+        $table="personal_solicitudhoras";
+        $soli = $this->_season->GetSpecific($table,$wh,$post['solicitud']);
+        $name_sitio = $soli[0]['nombre_sitio'];
+
+        $wh="name_sitio";
+        $table="personal_campo";
+        $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
+
+        foreach ($personal as $key) {
+            $id_user = $key['id'];
+            $table="personal_campo";
+            $horaextra = 0;
+            $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
+        }
+
+
+        if($post['op_status'] == 0){
+            $solicitud = $post['solicitud'];
+            $table="personal_userhoras";
+            $this->_asistencia->updaterolregistrohorapersonaldos($solicitud,$table);
+            // $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
+        }
 
         foreach ($post['validar'] as $key) {
             $solicitud = $key;
@@ -259,8 +305,8 @@ class AsistenciaController extends Zend_Controller_Action{
             $table="personal_solicitudhoras";
             $solicitud = $post['solicitud'];
             $result =$this->_asistencia->updaterolregistrohorasolicitud($solicitud,$table);
-
         }
+
 
 
         if ($result) {

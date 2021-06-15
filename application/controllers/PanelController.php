@@ -1258,7 +1258,8 @@ class PanelController extends Zend_Controller_Action{
             foreach ($usr as $key) {
                $fk=$key['fkroles'];
             }
-            $this->view->rol_user=$fk;
+            $ver =$this->view->rol_user=$fk;
+            // var_dump($fk);exit;
         }else {
             return $this-> _redirect('/');
         } 
