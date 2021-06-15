@@ -684,6 +684,8 @@ setInterval(function() {
 
     }
 
+
+
     function getgasolina($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
         $filename = substr(strrchr($actual_link, "/"), 1);
@@ -937,6 +939,10 @@ setInterval(function() {
                     <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
                 </li>
 
+                <li class="bold moves <?php echo getUrl('/epp/eppsol',$actual_link);?>">
+                    <a href="/epp/eppsol">EPP Solicitides<i class="material-icons">nature_people</i></a>
+                </li>
+
                 <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
                     <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
                 </li>
@@ -982,6 +988,10 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/eppsolspecific',$actual_link);?>"> 
+                    <a href="/epp/eppsolspecific">EPP Solicitudes<i class="material-icons">nature_people</i></a> 
+                </li>
             <?php } ?>
 
 
@@ -995,6 +1005,7 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
                 </li>
+                
             <?php } ?>
 
 

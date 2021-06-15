@@ -1,0 +1,103 @@
+<style type="text/css">
+  .oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/eppsol" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de EPP Paso 1</span>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 19px;">
+    <div class="col m12 s12"> 
+        <form action="/epp/requestupdsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitudp">
+          <input type="hidden" name="ids" value="<?php echo $this->ids; ?>">
+          <?php foreach ($this->solicitudes as $epps){ ?>
+              <!-- <div class="input-field col m6 s12"></div> -->
+             
+
+              <div class="input-field col m6 s12">
+                  <input id="fecha_requerida" name="fecha_requerida" value="<?php echo $epps['fecha_requerida']; ?>" type="text" class="datepicker">
+                  <label for="fecha_requerida">* Fecha Requerida</label>
+              </div>
+
+              <div class="input-field col m6 s12">
+                  <select id="personal" name="personal"> 
+                      <option value="0" disabled selected>Selecciona un personal</option>
+                      <?php foreach ($this->personal_campo as $key){ 
+                          if ($key['id']==$epps['id_personal']) { ?>
+                              <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                          <?php } if ($key['id']!=$epps['id_personal']) { ?>
+                              <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                      <?php } } ?>
+                  </select>
+                  <label>* Personal:</label>
+              </div>
+
+               <div class="input-field col m12 s12">
+                  <i class="material-icons prefix">mode_edit</i>
+                  <textarea id="comentarios" name="comentarios" value="<?php echo $epps['comentarios']; ?>" class="materialize-textarea"><?php echo $epps['comentarios']; ?></textarea>
+                  <label for="comentarios">* Comentarios de solicitud:  </label>
+              </div>
+
+            <?php } ?>
+        </form>
+
+        <div class="input-field col m12 s12 text-right">
+            <div class="row">
+                <a href="/epp/addsoleppdos/id/<?php echo $this->ids; ?>" class="red btn">Paso 2</a>
+                <button  id="updatesolicitud" class="btn">Actualizar</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+        $('select').formSelect();
+        $('.modal').modal();
+        $('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+            })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+    });
+
+
+    $("#updatesolicitud").click(function(){
+        var fecha = document.getElementById("fecha_requerida").value;
+        var personal = document.getElementById("personal").value;
+        var comentarios = document.getElementById("comentarios").value;
+
+        if(fecha == "" || personal == 0 || comentarios == ""){
+            swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+            });
+
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_ser, 1000);   
+        }
+    });
+
+    function submit_ser() { 
+        document.getElementById("submitudp").submit() 
+    }
+
+
+</script>

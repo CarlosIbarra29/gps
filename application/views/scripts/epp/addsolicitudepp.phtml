@@ -1,0 +1,99 @@
+<style type="text/css">
+	.oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/eppsol" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Solicitud de EPP</span>
+  </div>
+</div>
+
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/epp/requestpasounoepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_solepp">
+
+			<!-- <div class="input-field col m6 s12"></div> -->
+			
+			<div class="input-field col m6 s12">
+	        	<input id="fecha_requerida" name="fecha_requerida" type="text" class="datepicker">
+	        	<label for="fecha_requerida">* Fecha Requerida</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	    		<select id="personal" name="personal"> 
+	      			<option value="0" disabled selected>Selecciona un personal</option>
+	      			<?php foreach ($this->personal_campo as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>* Personal:</label>
+	  		</div>
+
+
+			<div class="input-field col m12 s12">
+			    <i class="material-icons prefix">mode_edit</i>
+			    <textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+			    <label for="comentarios">* Comentarios de solicitud: </label>
+			</div>
+
+		</form>
+
+		<div class="row">
+			<div class="col m12 s12 text-right" style="margin-top: 20px;">
+				<a class="btn" id="enviar_solicitud"><i class="material-icons right">arrow_forward</i>Paso 2</a>
+			</div>
+	  	</div>
+	</div>
+</div>
+
+
+	<script type="text/javascript">
+  		$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    		$('select').formSelect();
+    		$('.modal').modal();
+    		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+  		});
+
+
+		$("#enviar_solicitud").click(function(){
+
+			var fecha = document.getElementById("fecha_requerida").value;
+			var personal = document.getElementById("personal").value;
+			var comentarios = document.getElementById("comentarios").value;
+			
+
+			if(fecha == "" || personal == 0 || comentarios == ""){
+	            swal({
+	             	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+	            });
+
+	    	}else{
+	    		swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+	    		setTimeout(submit_ser, 1000);   
+	    	}
+		});
+
+		function submit_ser() { 
+			document.getElementById("submit_solepp").submit() 
+		}
+
+
+	</script>

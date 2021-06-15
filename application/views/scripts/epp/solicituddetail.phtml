@@ -1,0 +1,1047 @@
+<style type="text/css">
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans";
+}
+/* Form Progress */
+
+.progress {
+
+  margin: 20px auto;
+  text-align: center;
+  padding-bottom: 80px;
+  background-color: white;
+}
+.progress .circle,
+.progress .bar {
+  display: inline-block;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #d5d5da;
+  vertical-align:top;
+}
+.progress .bar {
+  position: relative;
+  width: 80px;
+  height: 6px;
+  margin: 0 -5px 17px -5px;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  top:16px;
+  vertical-align:top
+}
+.progress .circle .label {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 27px;
+  border-radius: 32px;
+  margin-top: 1px;
+  color: #b5b5ba;
+  font-size: 15px;
+}
+.progress .circle .title {
+  color: #b5b5ba;
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: -30px;
+  display: block;
+  width: 100px;
+  margin-top: 5px;
+}
+/* Done / Active */
+
+.progress .bar.done,
+.progress .circle.done {
+  background: #eee;
+}
+.progress .bar.active {
+  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+}
+.progress .circle.done .label {
+  color: #FFF;
+  background: #8bc435;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.done .title {
+  color: #444;
+}
+.progress .circle.active .label {
+  color: #FFF;
+  background: #0c95be;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.active .title {
+  color: #0c95be;
+}
+</style>
+
+<div class="row">
+	<div class="col m12 s12">
+		
+	</div>
+</div>
+	<?php 
+	foreach ($this->solicitud as $key){
+	    $idsol = $key ['id'];
+		$status_sol = $key['status_solicitud'];
+	}?>
+
+
+    <?php 
+	foreach ($this->detalle as $key){
+	    
+	    $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
+	    $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
+	    $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
+	    $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
+	    $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
+	    $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
+	    $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
+	    $comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
+	    $user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
+	    
+	    $imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
+ 
+	}?>
+
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+    	<?php if($rol_user == 1 || $rol_user == 8){ ?> 
+        	<a href="/epp/listasolicitudes/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+        <?php } else { ?>
+        	<a href="/epp/listasolspecific/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+        <?php } ?>
+    </div>
+</div>
+
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<input type="hidden" id="id_solicitud" value="<?php echo $this->id_solicitud; ?>">
+<input type="hidden" id="id_user" name="id_user" value="<?php echo $this->usuario; ?>">
+
+<!-- General Solicitud -->
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card darken-1">
+	        <div class="card-content">
+	          	<div class="row">
+	          		<div class="col m6 s12">
+	          			<h3 class="card-title">Información de la Solicitud</h3>
+	          		</div>
+	          		<div class="col m6 s12">
+	          			<div class="row">	
+	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+	          					<?php if($status_sol == 0){ ?>
+	          						<div class="col m6 s6">
+	          							<form action="/epp/requestchgaceptsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+	          								<input type="hidden" name="id" value="<?php echo $this->id_solicitud; ?>">
+											<input type="hidden" name="id_user" value="<?php echo $this->usuario; ?>">
+	          							</form>
+	          							<div class="chip">
+									    	<img src="/img/gris.jpg" id="autorizar_sol">
+									    	Autorizado
+									  	</div>
+									</div>
+									<div class="col m6 s6">
+										<div class="chip modal-trigger" href="#modal1">
+								    		<img src="/img/gris.jpg">
+								    		Rechazado
+								  		</div>
+									</div>
+	          					<?php } ?>
+
+	          					<?php if($status_sol == 1){ ?>
+	          						<div class="col m6 s6 text-center">
+										<div class="chip">
+									    	<img src="/img/correct.png" >
+									    	Autorizado
+									  	</div>
+									</div>
+
+									<div class="col m6 s6 text-center">
+										<div class="row">
+											<div class="col m12 s12 center">
+												<a  href="/epp/solicitudepp/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+
+												<!-- <a  href="/vehiculos/solicitudvehiculo/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a> -->
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+
+	          					<?php if($status_sol== 3){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/naranja.png" >
+									    	Cancelada
+									  	</div>
+									</div>
+
+									<div class="col m8 s6">
+										<div class="row">
+											<div class="col m12 s12 center">
+												<a  href="/epp/solicitudepp/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+								
+								<?php if($status_sol == 2){ ?>
+									<div class="col m6 s6">
+										<div class="chip modal-trigger">
+									    	<img src="/img/rojo.png" >
+									    	Rechazado
+									  	</div>
+									</div>
+								<?php }?>
+
+	          				<?php } else { ?>
+
+
+	          					<?php if($status_sol == 0){ ?>
+	          						<div class="col m6 s6">
+	          							<div class="chip">
+									    	<img src="/img/gris.jpg">
+									    	Autorizado
+									  	</div>
+									</div>
+									<div class="col m6 s6">
+										<div class="chip">
+								    		<img src="/img/gris.jpg">
+								    		Rechazado
+								  		</div>
+									</div>
+	          					<?php } ?>
+
+	          					<?php if($status_sol == 1){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/correct.png" >
+									    	Autorizado
+									  	</div>
+									</div>
+
+									<div class="col m4 s6">
+										<div class="chip">
+								    		<img src="/img/gris.jpg">
+								    		Rechazado
+								  		</div>
+									</div>
+									<div class="col m4 s6">
+										<div class="row">
+											<div class="col m12 s12 center">
+												<a  href="/epp/solicitudepp/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+
+	          					<?php if($status_sol== 3){ ?>
+	          						<div class="col m4 s6">
+										<div class="chip">
+									    	<img src="/img/naranja.png" >
+									    	Cancelada
+									  	</div>
+									</div>
+
+									<div class="col m8 s6">
+										<div class="row">
+											<div class="col m12 s12 center">
+												<a  href="/epp/solicitudepp/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+
+								
+								<?php if($status_sol == 2){ ?>
+									<div class="col m6 s6">
+										<div class="chip modal-trigger">
+									    	<img src="/img/rojo.png" >
+									    	Rechazado
+									  	</div>
+									</div>
+								<?php }?>
+								
+	          				<?php } ?>
+	          			</div>
+	          		</div>
+	          	</div>
+	        </div>
+	          	
+	        <div class="row" style="margin-left: 10px;">
+	          	<div class="col m4 s12">
+	          			<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos del Personal</span>
+		          		<h4>Nombre: <?php echo $nresponsable; ?> </h4>
+		          		<h4>Apellido Paterno: <?php echo $apres; ?> </h4>
+		          		<h4>Apellido Materno: <?php echo $amres; ?></h4>
+		          		<h4>Puesto: <?php echo $pname; ?> 
+	          	</div>
+	          	<div class="col m4 s12">
+	          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Generales</span>	
+	          		<h4>Usuario que solicito: <b><?php echo $name_usuario; ?></b></h4>
+	          		<h4>Fecha Requerida: <b><?php echo $fecha_requerida; ?></b></h4>
+	          		<?php if ($comentarios == null) { ?>
+	          			<h4>Comentarios: <b>Sin Comentarios</b></h4>
+	          		<?php } else { ?>
+	          			<h4>Comentarios: <b><?php echo $comentarios; ?></b></h4>
+	          		<?php } ?>
+	          	</div>
+
+	          	<div class="col m4 s12 text-center">
+		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13){ ?> 
+		          		<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+		          			<!-- Validacion de rechazada -->
+		          			<div>
+		          				<span>* Esta opción solo esta disponible si el Epp no ha sido surtido.</span>
+		          			</div>
+		          			
+		          			<div style="margin-top: 5px;">
+		          				<a class="btn modal-trigger orange darken-3" href="#modal6">Cancelar Solicitud</a>	
+		          			</div>
+		          				
+	  						<div id="modal6" class="modal modal-fixed-footer">
+	    					
+	    						<div class="modal-content">
+	      							<h2>Cancelar Solicitud EPP</h2>
+
+	      							<input type="hidden" id="id_rechazada" value="<?php echo $this->id_solicitud; ?>">
+						        	
+						        	<div class="input-field col s12">
+						          		<i class="material-icons prefix">assignment</i>
+						          		<textarea id="cancels" name="descripcion" class="materialize-textarea"></textarea>
+						          		<label for="cancels">Motivo</label>
+						        	</div>
+	    						</div>
+	    						<div class="modal-footer">
+									<button type="button" id="cancel_sol" class="btn">Guardar</button>
+								    <button  class="modal-close red btn">Cerrar</button>
+	    						</div>
+	  							
+	  						</div>
+		          		<?php }else{ ?>
+
+		          		<?php } ?>
+		          	<?php }else{} ?>
+	          		<div>
+	          			<?php if($imagen == null){ ?>
+	          				<img src="/img/no_disponible1.png" class="responsive-img text-center" style="width: 200px; margin-top: 5px;">
+    					<?php }else{ ?>
+            				<a class="example-image-link text-center" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>" id="camara_div" alt="<?php echo $nresponsable; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+        				<?php } ?>
+	          		</div>
+	          	</div>
+	        </div>
+
+
+	        <!-- <div class="row">
+	          	<div class="col m4 s12">
+	          		<?php foreach ($this->validacion as $key){ ?>
+		          		<h4>Datos de Autorización</h4>
+		          		<h4>Auditor: <?php echo $key['nombre']; ?> <?php echo $key['ap']; ?></h4>
+		          		<h4>Fecha y Hora: <?php echo $key["fecha_validacion"]; ?></h4>	          				
+	          		<?php } ?>
+	          	</div>
+	        </div> -->
+	          	
+	        <!-- <h3 class="card-title" style="margin-left: 10px;">Información de la Solicitud</h3> -->
+	        <div class="row" style="margin-left: 10px;">
+	          	<div class="col m12 s12">
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+					<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+					<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+						<div class="progress">
+							<div class="circle done"> 
+								<span class="label">1</span>
+								<span class="title">Solicitud Creada</span>
+						  	</div> 
+						  	<span class="bar active"></span>
+						  	<div class="circle" > 
+						  		<span class="label">2</span>
+						    	<span class="title">Aprobada</span>
+						  	</div> 
+						  	
+						  	<span class="bar"></span>
+						  	<div class="circle"> 
+						  		<span class="label">3</span>
+						    	<span class="title">Surtida</span>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+						<div class="progress">
+							<div class="circle done"> 
+							  	<span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+							</div> 
+							<span class="bar active"></span>
+
+							<div class="circle done" > 
+								<span class="label">2</span>
+								<span class="title">Aprobada</span>
+							</div> 
+							<span class="bar"></span>
+
+							<div class="circle"> 
+								<span class="label">3</span>
+								<span class="title">Surtida</span>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if($status_sol == 1 && $status_surtido == 1){ ?>
+						<div class="progress">
+							<div class="circle done"> 
+							  	<span class="label">1</span>
+							    <span class="title">Solicitud Creada</span>
+							</div> 
+							<span class="bar active"></span>
+
+							<div class="circle done" > 
+								<span class="label">2</span>
+							    <span class="title">Aprobada</span>
+							</div> 
+							<span class="bar"></span>
+
+							<div class="circle done"> 
+								<span class="label">3</span>
+							    <span class="title">Pagada</span>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if($status_sol == 2 && $status_surtido == 0){ ?>
+						<div class="progress">
+						  	<div class="circle done"> 
+						  		<span class="label">1</span>
+						    	<span class="title">Solicitud Creada</span>
+						  	</div> 
+						  	<span class="bar active"></span>
+
+							<div class="circle done" > 
+							  	<span class="label">2</span>
+							    <span class="title">Rechazada</span>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if($status_sol == 3 && $status_surtido == 0){ ?>
+						<div class="progress">
+						  	<div class="circle done"> 
+						  		<span class="label">1</span>
+						    	<span class="title">Solicitud Creada</span>
+							</div> 
+							<span class="bar active"></span>
+
+						  	<div class="circle done" > 
+						  		<span class="label">2</span>
+						    	<span class="title">Cancelada</span>
+						  	</div>
+						</div>
+					<?php } ?>
+	          	</div>
+	        </div>
+
+	        <div class="row" style="margin-left: 10px;">
+	         	<div class="col m6 s12">
+	        		<h4>* Solicitud Creada: <?php echo $fecha_solicitud; ?></h4>
+	        		<h4>* Creada por: <?php echo $name_usuario; ?></h4>
+	        		<?php if ($status_sol==1) { ?>
+	        			<h4>* Aprobada por: <?php echo $name_useraprobado; ?></h4>
+	        		<?php } ?>
+	        		<?php if ($status_sol==2) { ?>
+	        			<h4>* Rechazado por: <?php echo $name_userrechazado; ?></h4>
+	        		<?php } ?>
+	        		<?php if ($status_sol == 1 && $status_surtido == 1) { ?>
+	        			<h4>* Surtido por: <?php echo $name_usersurtido; ?></h4>
+	        		<?php } ?>
+	        	</div>
+
+	        	<div class="col m6 s12">
+	        		<?php if ($status_sol==1) { ?>
+	        			<h4>* Aprobada el: <?php echo $fecha_aprobada; ?></h4>
+	        		<?php } ?>
+	        		<?php if ($status_sol==2) { ?>
+	        			<h4>* Rechazada el: <?php echo $fecha_rechazado; ?></h4>
+	        		<?php } ?>
+	        		<?php if ($status_sol == 1 && $status_surtido == 1) { ?>
+	        			<h4>* Surtido el: <?php echo $fecha_surtido; ?></h4>
+	        		<?php } ?>	
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+</div>
+<!-- End General Solicitud -->
+
+<!-- Detalles Solicitud Requerido -->
+<div class="row">
+	<div class="col m12 s12">
+		<div class="card  darken-1">
+			<div class="card-content">
+				<div class="row">
+		          	<div class="col m6 s12">
+		          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de Solicitud (EPP Requerido)</span>
+		          	</div>
+		        </div>				
+				<div class="row">
+					<div class="col m12 s12">
+						<div class="row">
+			      			<table>
+			        			<thead>
+			          				<tr>
+			              				<th class="text-center"><b>Cantidad</b></th>
+                                    	<th class="text-center"><b>Descripción</b></th>
+                                    	<th class="text-center"><b>Talla</b></th>
+                                    	<th class="text-center"><b>Tipo EPP</b></th>
+			          				</tr>
+			        			</thead>
+			        			<?php if ($this->epp_requerido) { 
+			        				foreach ($this->epp_requerido as $eppreq) { ?>
+										<tbody>
+											<tr>
+												<td class="text-center">
+                                            		<?php echo $eppreq['cantidad']; ?>
+                                        		</td>
+                                        		<td class="text-center">
+                                            		<?php echo $eppreq['descripcion']; ?>
+		                                        </td>
+		                                         <td class="text-center">
+		                                            <?php echo $eppreq['t_e']; ?>
+		                                        </td>
+		                                         <td class="text-center">
+		                                            <?php echo $eppreq['nombretipo']; ?>
+		                                        </td>
+											</tr>
+										</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td>No se ha surtido la solicitud</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+			      			</table>
+			        	</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- End Detalles Solicitud -->
+
+<!-- Detalles Solicitud Actuamlemnte-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="card  darken-1">
+			<div class="card-content">
+				<div class="row">
+		          	<div class="col m6 s12">
+		          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP con el que cuenta actualmente.</span>
+		          	</div>
+		        </div>				
+				<div class="row">
+					<div class="col m12 s12">
+						<div class="row">
+			      			<table>
+			        			<thead>
+			          				<tr>
+			              				<th class="text-center"><b>Cantidad</b></th>
+                                    	<th class="text-center"><b>Descripción</b></th>
+                                    	<th class="text-center"><b>Talla</b></th>
+                                    	<th class="text-center"><b>Fecha Asignación</b></th>
+			          				</tr>
+			        			</thead>
+			        			<?php if ($this->eppasignado) { 
+			        				foreach ($this->eppasignado as $eppasg) { ?>
+										<tbody>
+											<tr>
+												<td class="text-center">
+                                            		<?php echo $eppasg['cantidad']; ?>
+                                        		</td>
+		                                        <td class="text-center">
+		                                            <?php echo $eppasg['descripcion']; ?>
+		                                        </td>
+		                                         <td class="text-center">
+		                                            <?php echo $eppasg['t_e']; ?>
+		                                        </td>
+		                                        <td class="text-center">
+		                                            <?php echo  date("d-m-Y", strtotime($eppasg['fecha_entrega'])); ?>
+		                                        </td>
+											</tr>
+										</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td>No se ha asignado EPP a este personal</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+			      			</table>
+			        	</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- End Detalles Solicitud -->
+
+<!-- Comentarios  -->
+<div class="row">
+	<div class="col s12 m12">
+	    <div class="card darken-1">
+		    <div class="card-content">
+		        <div class="row">
+		          	<div class="col m6 s12">
+		          		<h3 class="card-title">Comentarios:</h3>
+		          	</div>
+		        </div>
+		        <div class="row">
+		          	<h4>
+		          		<?php if ($comentarios_rechazo == "") {?>
+		          			Sin Comentarios...
+		          		<?php } else {?> 
+		        			<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $comentarios_rechazo; ?></span>
+		        		<?php } ?>
+		          	</h4>
+		        </div>
+		    </div>
+	    </div>
+	</div>
+</div>
+<!-- End Comentarios -->
+
+<!-- Modal Rechazar Solicitud -->
+<div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+	    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status cancelado de la solicitud EPP.</span>
+
+	    <input type="hidden" id="id_rechazada" value="<?php echo $this->id_solicitud; ?>">
+
+	    <div class="input-field col s12">
+			<i class="material-icons prefix">assignment</i>
+			<textarea id="cancels" name="descripcion" class="materialize-textarea"></textarea>
+			<label for="cancels">Motivos de Rechazo</label>
+		</div>
+	 </div>
+
+	 <div class="modal-footer">
+		<button type="button" id="rechazar_sol" class="btn">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+	  							
+</div>
+
+<!-- <div id="modal1" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status cancelado de la solicitud a vehículo.</span>
+		<div class="row">
+			<form class="col s12">
+				<input type="hidden" id="id_rechazada" value="<?php echo $this->id_solicitud; ?>">
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+						<label for="comentarios">Comentarios:</label>
+	        		</div>
+	      		</div>
+	    	</form>
+	  	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="rechazar_sol" class="btn">Guardar</button>
+      	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div> -->
+<!-- End Modal Rechazar Solicitud -->
+
+<?php foreach ($this->user as $value) {
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<!-- Surtir -->
+<?php if($rol_user == 13 || $rol_user == 1 || $rol_user == 8){ ?>
+	<div class="row">
+		<div class="col m12 s12">
+			<div class="card  darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m6 s6">
+        					<h3>Detalles Surtido</h3>
+        				</div>
+        			</div>
+
+        			<?php if($status_sol == 0){ ?>
+        				<div class="row">
+							<h4>
+        						Solicitud aún no autorizada...
+        					</h4>
+        				</div>
+        			<?php } ?>
+
+        			<?php if($status_sol == 1){ ?>
+
+        				<?php if ($status_surtido == 0) { ?>
+        					<div class="row">
+	        					<div class="col m12 s12 text-center">
+				        			<div class="row">
+				        				<div class="col m4 s12 text-center"></div>
+
+				        				<div class="col m4 s12 text-center">
+				        					<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em;">
+				        						Surtido en Proceso...
+				        					</span>
+				        				</div>
+
+				        				<div class="col m4 s12 text-center"></div>
+				        				<!-- <div class="col m8 s12">
+				        					<form action="/vehiculos/requestaddcomprobantedepagov" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
+				        						<input type="hidden" name="monto" id="monto_form">
+				        						<input type="hidden" name="status_pago" id="status_form">
+
+				        						<div class="input-field col m12 s12">
+									          		<i class="material-icons prefix">event_available</i>
+									          		<input id="monto" type="text" name="monto" class="validate">
+									          		<label for="monto">Monto</label>
+									        	</div>
+
+									    		<div class="file-field col m12 s12 input-field text-center">
+									      			<div class="btn">
+									        			<span>Comprobante Pago</span>
+									        			<input id="file_comprobante" type="file" name="url">
+									      			</div>
+									      			<div class="file-path-wrapper">
+									        			<input class="file-path validate"  type="text">
+									      			</div>
+									    		</div>
+									    			<input type="hidden" name="id_solicitud" value="<?php echo $idsol; ?>">
+									   		</form> 	
+				        				</div>
+
+				        				<div class="col m4 s12">
+				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
+				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
+				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
+				        					<div class="col m12 s12 text-center">
+				        						<a class="btn" id="btcomprobante">Subir Pago</a>
+											</div>
+		        						</div> -->
+
+				        			</div>
+			        			</div>
+			        		</div>
+						<?php } ?>
+
+						<?php if ($status_surtido == 1) { ?>
+							<div class="row">
+			      				<table>
+			        				<thead>
+			          					<tr>
+			              					<th>Fecha de Surtido</th>
+			              					<th>Realizado por:</th>
+			              					<th>Responsiva Firmada</th>
+			          					</tr>
+			        				</thead>
+			        				<?php 
+			        				if ($this->solsurtida) { 
+			        				foreach ($this->solsurtida as $usr) { ?>
+												<tbody>
+													<tr>
+														<td>
+															<?php echo $usr['fecha_surtido']; ?>
+														</td>
+														<td>
+															<?php echo $usr['name_usersurtido']; ?>
+														</td>	
+														<td>
+															<a title="Descargar Archivo" href="/<?php echo $usr["url_responsiva"]; ?>" download="<?php echo substr(strrchr($usr["url_responsiva"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+														</td>
+													</tr>
+												</tbody>
+									<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td>No se ha surtido la solicitud</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+									<?php } ?>
+			      				</table>
+			        		</div>
+						<?php } ?>
+					<?php } ?>
+				</div>
+        	</div>
+        </div>
+    </div>
+
+<?php }else{ ?>
+	<div class="row">
+		<div class="col m12 s12">
+			<div class="card  darken-1">
+				<div class="card-content">
+					<div class="row">
+						<div class="col m6 s6">
+        					<h3>Detalles Surtido</h3>
+        				</div>
+        			</div>
+
+        			<?php if($status_sol == 0){ ?>
+        				<div class="row">
+							<h4>
+        						Solicitud aún no autorizada...
+        					</h4>
+        				</div>
+        			<?php } ?>
+
+        			<?php if($status_sol == 1){ ?>
+
+        				<?php if ($status_surtido == 0) { ?>
+        					<div class="row">
+							<h4>
+        						Solicitud aún no surtida.<br>
+        						Espera a que almacen haya surtido la solicitud...
+        					</h4>
+        				</div>
+						<?php } ?>
+
+						<?php if ($status_surtido == 1) { ?>
+							<div class="row">
+			      				<table>
+			        				<thead>
+			          					<tr>
+			              					<th>Fecha de Pago</th>
+			              					<th>Realizado por:</th>
+			              					<th>Responsiva Firmada</th>
+			          					</tr>
+			        				</thead>
+			        				<?php 
+			        				if ($this->solsurtida) { 
+			        				foreach ($this->solsurtida as $usr) { ?>
+												<tbody>
+													<tr>
+														<td>
+															<?php echo $usr['fecha_surtido']; ?>
+														</td>
+														<td>
+															<?php echo $usr['name_usersurtido']; ?>
+														</td>	
+														<td>
+															<a title="Descargar Archivo" href="/<?php echo $usr["url_responsiva"]; ?>" download="<?php echo substr(strrchr($usr["url_responsiva"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">file_download</i> </a>
+														</td>
+													</tr>
+												</tbody>
+									<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td>No se ha surtido la solicitud</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+									<?php } ?>
+			      				</table>
+			        		</div>
+
+						<?php } ?>
+					<?php } ?>
+
+					<?php if($status_sol == 2){ ?>
+	        			<div class="row">
+							<h4>
+	        					¡Solicitud cancelada!
+	        				</h4>
+	        			</div>
+	        		<?php } ?>
+				</div>
+        	</div>
+        </div>
+    </div>
+<?php } ?>
+
+  
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ <script src="/js/lightbox.js"></script>
+
+        
+<script type="text/javascript">
+
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });   
+
+	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('.tooltipped').tooltip();
+ 	});
+
+
+ 	 $("#autorizar_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/epp/requestchgaceptsolepp",
+	                method:"POST",
+	                data: {dato:dato, id:id, id_user:id_user},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    
+    $("#cancel_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "3";
+	    		var	comentario = document.getElementById("cancels").value;
+	            var request = $.ajax({
+	                url:"/epp/requestchgcanceleppsol",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+
+    $("#rechazar_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "2";
+	    		var	comentario = document.getElementById("cancels").value;
+	            var request = $.ajax({
+	                url:"/epp/requestchgcanceleppsol",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+    $("#btcomprobante").click(function(){
+    	var file = document.getElementById("file_comprobante").value;
+    	var monto = document.getElementById("monto").value;
+
+    	if(monto == "" || file == ""){
+            swal({
+              title: "Para continuar debes llenar todos los datos (Monto y Comprobante de pago)",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitfileprede, 1500);
+    	}
+    });
+    	
+    function submitfileprede() { document.getElementById("submit_comprobante").submit() }
+
+</script>

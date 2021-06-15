@@ -945,7 +945,2006 @@ class EppController extends Zend_Controller_Action{
 
     }
 
+    //////////////////////////////// Solicitudes EPP //////////////////////////////////
 
+    public function eppsolAction(){
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+        
+        $solicitud = $this->_epp->GetSolStepEPP();
+        $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_epp->GetStepEpppaginator($offset,$no_of_records_per_page);
+
+    }
+
+    public function addsolicitudeppAction(){
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+    }
+
+
+    public function requestpasounoeppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+           
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+    
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->insertsolepp1($post,$table,$id_user,$name_user);
+
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdos/id/'.$result.'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }
+
+
+    public function updatesoleppAction(){
+
+        $id=$this->_getParam('id');
+        $this->view->ids = $id;
+        
+        $wh="id";
+        $table="epp_solicitudes";
+        $this->view->solicitudes = $this->_season->GetSpecific($table,$wh,$id);
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+    }
+
+
+    public function requestupdsoleppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            // var_dump($name_user);
+            // die();
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->UpdateSolPUno($post,$table,$id_user,$name_user);
+            
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdos/id/'.$post['ids'].'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }
+
+
+    public function requestdeleppsolAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+            $id =  $post['id'];
+            $table="epp_solicitudes";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+            if ($result) {
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            }else{
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            }
+        }   
+    }//END REQUEST DELETE TODO
+
+
+    public function addsoleppdosAction(){
+       
+        $id =$this->_getParam('id');
+        $this->view->id = $id;
+        $wh="id";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $id_personal = $usr[0]['id_personal'];
+        $this->view->idpersonals = $id_personal;
+
+        $this->view->personalsel = $this->_epp->GetPersonalSel($id_personal);
+
+
+        $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+        $table="epp_catalogo";
+        $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
+
+        $this->view->eppxasignar = $this->_epp->GetEppXasg($id);
+        
+
+    }// SOL Paso 2
+
+
+    public function requestasgeppsolAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+                
+            $id=$post['talla'];
+            $wh="idepp";
+            $table="epp_catalogo";
+            $eppcat = $this->_season->GetSpecific($table,$wh,$id);
+            $tipo = $eppcat[0]['tipo_epp'];
+
+            $table="epp_asignarsol";
+            $result =  $this->_epp->insertasignacionsol($post,$table,$tipo);
+
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdos/id/'.$post['solid'].''); 
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }        
+    }// End Request Asignar -herramienta
+
+    public function requestdelasgAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+            $id =  $post['id'];
+            $table="epp_asignarsol";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+            if ($result) {
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            }else{
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            }
+        }   
+    }//END REQUEST DELETE TODO
+
+
+    public function requestaddsolvehdosAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->UpdateSolPasDos($post,$table,$hoy);
+            if ($result) {
+                return $this-> _redirect('/epp/eppsol');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+
+        }
+    }   // Solicitud Terminada Paso 2
+
+    //////////////////////////////////////////// Solicitud EPP ESPecific //////////////////////////////////////////////
+
+    public function eppsolspecificAction(){
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+            
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $id_user = $user[0]['id'];
+
+        $solicitud = $this->_epp->GetSolStepEPPSpecific($id_user);
+        $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_epp->GetStepEppSpecificpaginator($id_user,$offset,$no_of_records_per_page);
+
+    }
+
+
+    public function addsoleppspecificAction(){
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+    }
+
+
+     public function requestpasounoeppspfAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+           
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+    
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->insertsolepp1($post,$table,$id_user,$name_user);
+
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdosspf/id/'.$result.'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }
+
+
+    public function addsoleppdosspfAction(){
+       
+        $id =$this->_getParam('id');
+        $this->view->id = $id;
+        $wh="id";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $id_personal = $usr[0]['id_personal'];
+        $this->view->idpersonals = $id_personal;
+
+        $this->view->personalsel = $this->_epp->GetPersonalSel($id_personal);
+
+
+        $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+        $table="epp_catalogo";
+        $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
+
+        $this->view->eppxasignar = $this->_epp->GetEppXasg($id);
+
+    }// SOL specific Paso 2
+
+    public function requestaddsoldosspfAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->UpdateSolPasDos($post,$table,$hoy);
+            if ($result) {
+                return $this-> _redirect('/epp/eppsolspecific');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+
+        }
+    }   // Solicitud Specific Terminada Paso 2
+
+
+    public function updatesoleppspfAction(){
+
+        $id=$this->_getParam('id');
+        $this->view->ids = $id;
+        
+        $wh="id";
+        $table="epp_solicitudes";
+        $this->view->solicitudes = $this->_season->GetSpecific($table,$wh,$id);
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+    }
+
+    public function requestasgeppsolspfAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+                
+            $id=$post['talla'];
+            $wh="idepp";
+            $table="epp_catalogo";
+            $eppcat = $this->_season->GetSpecific($table,$wh,$id);
+            $tipo = $eppcat[0]['tipo_epp'];
+
+            $table="epp_asignarsol";
+            $result =  $this->_epp->insertasignacionsol($post,$table,$tipo);
+
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdosspf/id/'.$post['solid'].''); 
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }        
+    }// End Request Asignar -herramienta
+
+    public function requestupdsolspfAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            // var_dump($name_user);
+            // die();
+
+            $table="epp_solicitudes";
+            $result = $this->_epp->UpdateSolPUno($post,$table,$id_user,$name_user);
+            
+            if ($result) {
+                return $this-> _redirect('/epp/addsoleppdosspf/id/'.$post['ids'].'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }
+
+
+
+    ////////////////// Listas Solicitudes Admin /////////////////////////////////////////
+
+
+    public function listasolicitudesAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        // status_documento  enproceso
+        
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $sql = $this->_epp->GetSolCount();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+        if($status == 0) {
+
+            $solicitud=$this->_epp->GetSolCount();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql=$this->view->paginator= $this->_epp->GetSolProcesopaginator($table,$offset,$no_of_records_per_page);
+            // var_dump($sql);exit;
+        }
+
+        if($status == 1){
+            $solicitud=$this->_epp->GetSolEppAceptCount();
+
+            $count=count($solicitud);
+
+            if(isset($_GET['pagina'])) { 
+                $pagina = $_GET['pagina']; 
+            }else { 
+                $pagina= $this->view->pagina = 1; 
+            }
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql= $this->view->paginator= $this->_epp->GetSolAceptadaspaginator($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 2){
+            $solicitud=$this->_epp->GetSolEppCancelCount();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $this->view->paginator= $this->_epp->GetSolCanceladaspaginator($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 3){
+            $solicitud=$this->_epp->GetSolEppSurtidoCount();
+            // var_dump($solicitud);exit;
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql= $this->view->paginator= $this->_epp->GetSolSurtidaspaginator($table,$offset,$no_of_records_per_page);
+        }
+    }   // Lista solicitudes en proceso
+
+
+    public function listasolbuscarAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $sql = $this->_epp->GetSolCount();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($status == 0) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 1) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 2) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 3) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+    }   // Buscadores Solicitud
+    
+
+    /////////////////////////////////////  Lista Solicitudes Specific   //////////////////////////////////////////////////////
+    
+
+    public function listasolspecificAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        // status_documento  enproceso
+        
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $sql = $this->_epp->GetSolspfCount($id);
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+        if($status == 0) {
+
+            $solicitud=$this->_epp->GetSolspfCount($id);
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql=$this->view->paginator= $this->_epp->GetSolProcesoSpfpaginator($table,$id,$offset,$no_of_records_per_page);
+            // var_dump($sql);exit;
+        }
+
+        if($status == 1){
+            $solicitud=$this->_epp->GetSolEppAceptSpfCount($id);
+
+            $count=count($solicitud);
+
+            if(isset($_GET['pagina'])) { 
+                $pagina = $_GET['pagina']; 
+            }else { 
+                $pagina= $this->view->pagina = 1; 
+            }
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql= $this->view->paginator= $this->_epp->GetSolAceptadasSpfpaginator($table,$id,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 2){
+            $solicitud=$this->_epp->GetSolEppCancelSpfCount($id);
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $this->view->paginator= $this->_epp->GetSolCanceladasSpfpaginator($table,$id,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 3){
+            $solicitud=$this->_epp->GetSolEppSurtidoSpfCount($id);
+            // var_dump($solicitud);exit;
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql= $this->view->paginator= $this->_epp->GetSolSurtidasSpfpaginator($table,$id,$offset,$no_of_records_per_page);
+        }
+    }   // Lista solicitudes Specific
+
+    /////////////////////////////////////// Buscadores Specific ////////////////////////////////////////////
+    
+
+    public function listasolbuscarspfAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $sql = $this->_epp->GetSolspfCount($id);
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $iduser=$this->_session->id;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($status == 0) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 0;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 1) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 2) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($persona,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 3) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+    }   // Buscadores Solicitud Specific
+
+
+    public function listasolalmacenAction(){
+
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        // status_documento  enproceso
+        
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $sql = $this->_epp->GetUserSolicitudAlmCount();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+
+        if($status == 0) {
+
+            $solicitud=$this->_epp->GetUserSolicitudAlmCount();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql=$this->view->paginator= $this->_epp->GetPagSolProcesoAlm($table,$offset,$no_of_records_per_page);
+            // var_dump($sql);exit;
+        }
+
+        if($status == 1){
+            $solicitud=$this->_epp->GetSolEppCancelCount();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $this->view->paginator= $this->_epp->GetSolCanceladaspaginator($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 2){
+            $solicitud=$this->_epp->GetSolEppSurtidoCount();
+            // var_dump($solicitud);exit;
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_solicitudes";
+            $sql= $this->view->paginator= $this->_epp->GetSolSurtidaspaginator($table,$offset,$no_of_records_per_page);
+        }
+
+    }
+
+
+    public function listasolbuscaralmAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="epp_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $sql = $this->_epp->GetUserSolicitudAlmCount();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="personal_campo";
+        $this->view->personal_campo = $this->_epp->GetAllPsn($table);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($status == 0) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 1) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statussur = 0;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+
+        if($status == 2) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $personal = $this->_getParam('personal');
+                $this->view->personalsol=$personal;
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statussur = 1;
+
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="epp_solicitudes";
+                $this->view->paginator= $this->_epp->GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur);
+            }
+
+        }
+
+    }   // Buscadores Solicitud
+    
+
+    public function solicituddetailAction(){
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_solicitudes";
+            $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
+
+            $table = "epp_asignarsol";
+            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $this->view->solsurtida = $this->_season->GetSpecific($table,$wh,$id);
+        
+            $id_personal = $usr[0]['id_personal'];
+            $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $status = $this->_getParam('status');
+            $this->view->status_back = $status;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
+
+        }else {
+            return $this-> _redirect('/');
+        }
+    }
+
+
+    public function requestchgaceptsoleppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            // $dato = date("Y-m-d H:i:s");
+
+            $id = $post['id_user'];
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+        
+
+        if($this->getRequest()->getPost()){
+
+            $table="epp_solicitudes";
+            $result=$this->_epp->UpdateAceptSolEpp($post,$table,$hoy,$name_user);
+
+
+            if ($result) {
+                return $this->_redirect('/epp/solicituddetail/id/'.$post['id_solicitud'].'/status/1');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }   // END REQUEST ACEPTAR SOLICITUD
+
+
+    public function requestchgcanceleppsolAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $dato = date("Y-m-d H:i:s");
+
+            $id = $post['id_user'];
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+
+
+        if($this->getRequest()->getPost()){
+
+            $table="epp_solicitudes";
+            $result=$this->_epp->UpdateRechazarSolEpp($post,$table,$hoy,$name_user);
+
+
+            if ($result) {
+                return $this->_redirect('/epp/solicituddetail/id/'.$post['id_solicitud'].'/status/2');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }   // END REQUEST CANCELAR SOLICITUD
+
+
+    public function solicitudeppAction(){
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_solicitudes";
+            $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
+
+            $table = "epp_asignarsol";
+            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $this->view->solsurtida = $this->_season->GetSpecific($table,$wh,$id);
+        
+            $id_personal = $usr[0]['id_personal'];
+            $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $status = $this->_getParam('status');
+            $this->view->status_back = $status;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        }else {
+            return $this-> _redirect('/');
+        }
+    }   //Para PDF de la solicitud Usuario y MAnager
+
+
+    public function solicituddetailalmAction(){
+
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_solicitudes";
+            $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
+
+            $table = "epp_asignarsol";
+            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $this->view->solsurtida = $this->_season->GetSpecific($table,$wh,$id);
+        
+            $id_personal = $usr[0]['id_personal'];
+            $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $status = $this->_getParam('status');
+            $this->view->status_back = $status;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
+
+        }else {
+            return $this-> _redirect('/');
+        }
+
+    }
+
+    public function solicitudeppalmAction(){
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_solicitudes";
+            $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
+
+            $table = "epp_asignarsol";
+            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
+            $table = "epp_solicitudes";
+            $wh = "id";
+            $this->view->solsurtida = $this->_season->GetSpecific($table,$wh,$id);
+        
+            $id_personal = $usr[0]['id_personal'];
+            $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $status = $this->_getParam('status');
+            $this->view->status_back = $status;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        }else {
+            return $this-> _redirect('/');
+        }
+    }   //Para PDF de la solicitud Usuario y MAnager
+
+
+    public function requestaddresponsivaeppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        $idsol = $post['id_solicitud'];
+        $wh="id_sol";
+        $table="epp_asignarsol";
+        $usr = $this->_season->GetSpecific($table,$wh,$idsol);
+           
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("Y-m-d");
+        $status = 1;
+        $this->_epp->UpdateeppSol($post,$table,$idsol,$status,$hoy);  
+
+
+
+            // $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            
+        var_dump($usr);
+        die();
+
+        if($this->getRequest()->getPost()){
+
+            $name = $_FILES['url']['name'];
+            
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/responsivassol';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                }
+            }
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $status_surtido = 1;
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            $id_usuario = $usr[0]['id'];            
+
+            $table = "epp_solicitudes";
+            $result = $this->_epp->UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb);
+
+            // $table="vehiculos_pagos";
+            // $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+            if ($result) {
+                // return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['id_solicitud'].'/status/2');
+                return $this-> _redirect('/epp/listasolalmacen/status/0');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }
 
 
     public function formatSizeUnits($bytes){ 
@@ -976,3 +2975,7 @@ class EppController extends Zend_Controller_Action{
         return $bytes;
         }//END FUNCION DE TAMAÑO DE IMAGEN
     }
+
+
+    // date_default_timezone_set('America/Mexico_City');
+    // $hoy = date("d-m-Y H:i:s");

@@ -1,6 +1,8 @@
 <?php
 
 class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
+    protected $_name = 'epp_solicitudes';
+    protected $_primary = 'id';
 
     public function Getpaginationepp($table,$offset,$no_of_records_per_page){
         try{
@@ -775,7 +777,880 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }catch (Exception $e){
             echo $e;
         }
-    }   // Consulta Personal Con herramienta
+    }   // Consulta Personal EPP
 
+
+     public function GetSolStepEPP(){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT *
+                FROM epp_solicitudes where step_uno = 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function GetSolStepEPPSpecific($id_user){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT *
+                FROM epp_solicitudes where step_uno = 0 and id_usuario = $id_user");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function GetStepEpppaginator($offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida,
+            e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 0 LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET INFO TO PAGINATOR
+
+
+    public function GetStepEppSpecificpaginator($id_user,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida,
+            e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 0 and e.id_usuario = $id_user LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET INFO TO PAGINATOR SPECIFIC
+
+
+    public function insertsolepp1($post,$table,$id_user,$name_user){
+        try {
+            $row = $this->createRow();
+            $row->id_usuario = $id_user;
+            $row->name_usuario = $name_user;
+            $row->id_personal = $post['personal'];
+            $row->comentarios = $post['comentarios'];
+            $row->fecha_requerida = $post['fecha_requerida'];
+            $res = $row->save();              
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }   // END INSERT PASO 1 SOLICITUD EPP
+
+    public function UpdateSolPUno($post,$table,$id_user,$name_user){
+            try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET fecha_requerida = ?, id_usuario = ?, name_usuario = ?, id_personal = ?, comentarios = ? WHERE id = ?",array(
+                $post['fecha_requerida'],
+                $id_user,
+                $name_user,
+                $post['personal'],
+                $post['comentarios'],
+                $post['ids']));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   // END UPDATE PASO 1 SOLICITUD EPP
+
+    public function GetPersonalSel($id_personal){
+         try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM personal_campo WHERE id = $id_personal");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function GetEppAsgAct($id_personal){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, ea.comprado_campo,
+                ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida 
+                FROM epp_asignar ea 
+                LEFT JOIN
+                epp_catalogo ec ON ea.id_epp = ec.idepp
+                WHERE id_personal = ? AND status_epp = 0 ORDER BY fecha_entrega ASC",array($id_personal));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Asignado Actualmente
+
+    public function insertasignacionsol($post,$table,$tipo){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'cantidad'=>$post['cantidad'],
+                'descripcion'=>$post['epp'],
+                'talla'=>$post['talla'],
+                'id_personal'=>$post['idhs'],
+                'tipo_epp'=>$tipo,
+                'id_epp'=>$post['talla'],
+                'id_sol'=>$post['solid']
+            );
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END Insert EPP por asignar
+
+
+    public function GetEppXasg($id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.status_epp, ea.comprado_campo,
+                ea.id_epp, ea.id_sol, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida, 
+                et.nombre as nombretipo
+                FROM epp_asignarsol ea 
+                LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
+                LEFT JOIN epp_tipo et ON et.id_tipo = ea.tipo_epp
+                WHERE ea.id_sol = ? and ea.status_epp = 0 ORDER BY ea.id ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Por Asignar
+
+
+    public function GetEppXasgSinStatus($id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, 
+                ea.fecha_entrega, ea.status_epp, ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre, ec.talla as t_e, 
+                ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
+                FROM epp_asignarsol ea 
+                LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
+                LEFT JOIN epp_tipo et ON et.id_tipo = ea.tipo_epp
+                WHERE ea.id_sol = ? ORDER BY ea.id ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Por Asignar Sin status
+
+    public function UpdateSolPasDos($post,$table,$hoy){
+        $pasodos = 1; 
+            try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET step_uno = ?, fecha_solicitud = ? WHERE id = ?",array(
+                $pasodos,
+                $hoy,
+                $post['idsol']));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   // END UPDATE PASO 2 SOLICITUD EPP 
+
+
+    ///////////////////////////////// Lista epp_solicitudes Almacen ////////////////////////////////////////////////////////////
+
+
+    public function GetUserSolicitudAlmCount(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Consulta Solicitudes en Proceso Almacen  
+
+
+    public function GetPagSolProcesoAlm($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Paginacion Solicitudes en Proceso Almacen 
+
+
+    ///////////////////////////////// Lista epp_solicitudes Admin ////////////////////////////////////////////////////////////
+
+    public function GetSolCount(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 0 and e.status_surtido = 0 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT
+
+    public function GetSolProcesopaginator($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 0 and e.status_surtido = 0 order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes en Proceso
+
+    public function GetSolEppAceptCount(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT Acerptadas
+
+
+
+    public function GetSolAceptadaspaginator($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Aceptadas
+
+
+    public function GetSolEppCancelCount(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 2 and e.status_surtido = 0 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT Canceladas/Rechazadas
+
+
+
+    public function GetSolCanceladaspaginator($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 2 and e.status_surtido = 0 order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Canceladas/Rechazadas
+
+
+    public function GetSolEppSurtidoCount(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 1 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES COUNT Surtidas
+
+
+
+    public function GetSolSurtidaspaginator($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 1 order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Surtidas
+
+    /////////////////////////////////////////////// Buscadores Admin  /////////////////////////////////////////////////////////
+
+     public function GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_personal = ? Order By e.id ASC",array($personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Personal
+
+    public function GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_personal = ? Order By e.id ASC LIMIT $offset,$no_of_records_per_page",array($personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Personal
+
+
+     public function GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id = ? order by e.id ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por ID
+
+    public function GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id = ? order by e.id ASC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por ID
+
+
+    public function GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.name_usuario like '%{$user}%' order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Usuario
+
+
+     public function GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.name_usuario like '%{$user}%' order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Usuario
+
+
+    //////////////////////////////////////// Lista solicitudes Specific ////////////////////////////////////////////////
+
+    public function GetSolspfCount($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 0 and e.status_surtido = 0 and e.id_usuario = $id order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT
+
+
+
+    public function GetSolProcesoSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 0 and e.status_surtido = 0  and e.id_usuario = $id order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes en Proceso
+
+    public function GetSolEppAceptSpfCount($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 and e.id_usuario = $id order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT Acerptadas
+
+
+
+    public function GetSolAceptadasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 0 and e.id_usuario = $id order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Aceptadas
+
+
+    public function GetSolEppCancelSpfCount($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 2 and e.status_surtido = 0 and e.id_usuario = $id order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES  COUNT Canceladas/Rechazadas
+
+
+
+    public function GetSolCanceladasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 2 and e.status_surtido = 0 and e.id_usuario = $id order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Canceladas/Rechazadas
+
+
+    public function GetSolEppSurtidoSpfCount($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 1 and e.id_usuario = $id order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES COUNT Surtidas
+
+
+
+    public function GetSolSurtidasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = 1 and e.status_solicitud = 1 and e.status_surtido = 1 and e.id_usuario = $id order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //Paginacion Solicitudes Surtidas
+    
+
+    /////////////////////////////////////////////// Buscadores Specific  /////////////////////////////////////////////////////////
+
+     public function GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.id_personal = ? Order By e.id ASC",array($personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Personal
+
+    public function GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.id_personal = ? Order By e.id ASC LIMIT $offset,$no_of_records_per_page",array($personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Personal
+
+
+     public function GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.id = ? order by e.id ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por ID
+
+    public function GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.id = ? order by e.id ASC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por ID
+
+
+    public function GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.name_usuario like '%{$user}%' order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Usuario
+
+
+     public function GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
+                e.status_surtido, e.status_solicitud, e.step_uno, e.comentarios, pc.nombre, pc.apellido_pa, pc.apellido_ma, 
+                pc.puesto, pp.nombre as pname 
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                where e.step_uno = $statusstep and e.status_solicitud = $statussol and e.status_surtido = $statussur AND e.id_usuario = $iduser AND e.name_usuario like '%{$user}%' order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Usuario
+
+
+    /////////////////////////////////////////////////////// detalles de solicitud /////////////////////////////////////
+
+
+    public function GetDetallesEppSol($table,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.id_personal, e.fecha_solicitud, e.fecha_requerida,
+                e.status_solicitud, e.step_uno, e.status_surtido, e.comentarios, e.url_responsiva, e.fecha_aprobada, 
+                e.user_aprobado, e.name_useraprobado, e.fecha_rechazado, e.user_rechazado, e.name_userrechazado, 
+                e.comentarios_rechazo, e.fecha_surtido, e.user_surtido, e.name_usersurtido, pc.imagen,
+                pc.nombre as nombreres, pc.apellido_pa as ares, pc.apellido_ma as amres, pc.puesto, pp.nombre as pname
+                FROM epp_solicitudes e 
+                LEFT JOIN personal_campo pc ON pc.id = e.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                WHERE e.id = ? order by e.id ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Detalles de solicitud
+
+
+    public function UpdateAceptSolEpp($post,$table,$hoy,$name_user){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_solicitud = ?, user_aprobado = ?, fecha_aprobada = ?, name_useraprobado = ? WHERE id = ?",array(
+                $post['dato'],
+                $post['id_user'],
+                $hoy,
+                $name_user,
+                $post["id"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE Status Solicitud a Aceptada
+
+
+    public function UpdateRechazarSolEpp($post,$table,$hoy,$name_user){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_solicitud = ?, user_rechazado = ?, fecha_rechazado = ?, comentarios_rechazo = ?, name_userrechazado = ?  WHERE id = ?",array(
+                $post['dato'],
+                $post['id_user'],
+                $hoy,
+                $post['comentario'],
+                $name_user,
+                $post["id"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE Status Solicitud a Rechazada
+
+
+    public function UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_surtido=?, url_responsiva = ?, fecha_surtido = ?, user_surtido = ?, name_usersurtido = ? WHERE id = ?",array(
+                $status_surtido,
+                $urldb,
+                $hoy,
+                $id_usuario,
+                $name_user,
+                $post['id_solicitud']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }// END UPDATE SOLICITUD Surtida EPP
+
+    public function UpdateeppSol($post,$table,$idsol,$status){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_epp = ? fecha_entrega = ? WHERE id_sol = ?",array($status,$hoy,$idsol));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   // UPDATE STATUS 
 
 } 

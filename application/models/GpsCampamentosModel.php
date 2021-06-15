@@ -410,6 +410,42 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         }
     }// Obetener Sitios
 
+
+    public function GetCampamentosxVen($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT c.id_campamento, c.id_sitio ,c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
+                c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, s.id_cliente,
+                s.Idgps, s.nombre, s.cliente
+            FROM campamentos c
+            LEFT JOIN sitios s ON s.id = c.id_sitio
+            WHERE c.fin_renta between curdate() and date_add(curdate(), interval 10 day) AND c.status_campamento = 2");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Campamentos por vencer para alertas.
+
+
+    public function GetCampamentosVen($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT c.id_campamento, c.id_sitio ,c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
+                c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, s.id_cliente,
+                s.Idgps, s.nombre, s.cliente
+            FROM campamentos c
+            LEFT JOIN sitios s ON s.id = c.id_sitio
+            WHERE c.fin_renta BETWEEN NOW() - INTERVAL 10 DAY AND NOW() - INTERVAL 1 DAY AND c.status_campamento = 2");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Alertas Campamentos Vencidos.
+
   
 
 

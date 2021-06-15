@@ -1,0 +1,403 @@
+<?php 
+date_default_timezone_set('America/Mexico_City');
+$hoy = date("Y-m-d");
+
+?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/updatesolepp/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar Paso 1</a>    
+    </div>
+</div> 
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+	<div class="col m12 s12 text-center">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de EPP <br/>Paso 2</span>
+	</div>
+</div>
+
+
+<?php foreach ($this->personalsel as $personal) { ?> 
+	<div class="col m12 s12">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em;">EPP a solicitar para: <?php echo $personal['nombre'] ?> <?php echo $personal['apellido_pa'] ?> <?php echo $personal['apellido_ma'] ?></span>
+	</div>
+<?php } ?>
+
+<div class="row" style="margin-top: 15px;"></div> 
+
+<!-- EPP Asignado -->
+<div class="col m12 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card darken-1">
+                <div class="card-content">
+
+                    <div class="row">
+                        <div class="col m12 s12 text-left">
+                            <h3 class="card-title">EPP Asignado Actualmente</h3>
+                        </div>
+                    </div>
+
+                    <div class="row table_wrapper">
+                        <table class="table text-center table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Cantidad</th>
+                                    <th>Descripción</th>
+                                    <th>Talla</th>
+                                    <th>Fecha Entrega</th>
+                                    <th>Reposición</th>
+                                </tr>
+                            </thead>
+                            <?php if ($this->eppasignado) { 
+                            foreach ($this->eppasignado as $epp) { ?>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <?php echo $epp['cantidad']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $epp['descripcion']; ?>
+                                        </td>
+                                         <td>
+                                            <?php echo $epp['t_e']; ?>
+                                        </td>
+                                         <td>
+                                            <?php echo  date("d-m-Y", strtotime($epp['fecha_entrega'])); ?>
+                                            <!-- <?php echo $epp['fecha_entrega']; ?> -->
+                                        </td>
+                                        <td>
+                                            <?php if ($epp['reposicion'] < $hoy){ ?>
+                                                <p style="color: red; font-weight: bold;"><?php echo  date("d-m-Y", strtotime($epp['reposicion'])); ?></p>
+                                            <!-- <?php echo $epp['reposicion']; ?> -->
+                                            <?php } else { ?>
+                                                <?php echo  date("d-m-Y", strtotime($epp['reposicion'])); ?>
+                                            <?php } ?>
+                                        </td>                                            
+                                    </tr>
+                                </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>No se ha asignado EPP al Personal</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Epp asignado EPP -->
+
+
+<!-- Epp por Asignar  -->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m12 s12 text-left" style="margin-top: 5px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar EPP
+        </div>
+
+        <form action="/epp/requestasgeppsol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asigna">
+
+        	<?php foreach ($this->personalsel as $personal) { ?>
+                <input type="hidden" name="idhs" value="<?php echo $personal["id"]; ?>">
+            <?php } ?>
+
+            	<input type="hidden" name="solid" value="<?php echo $this->id; ?>">
+
+            <div class="row">
+
+                <div class="input-field col m2 s12">
+                    <i class="material-icons prefix">format_list_numbered</i>
+                    <input type="number" id="cantidad" name="cantidad" min="1" class="validanumeros">
+                    <label for="cantidad">Cantidad:</label>
+                </div>
+
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">accessibility</i>
+                    <select id="epp" name="epp" required>
+                        <option value="0" disabled selected>* Selecciona una opcion:</option>
+                        <?php foreach ($this->eppn as $epp) { ?>
+                        	<option value="<?php echo $epp["nombre"]; ?>"><?php echo $epp["nombre"]; ?></option>
+                        <?php } ?>
+                    </select>
+                    <label>EPP</label>
+                </div>
+
+                <div class="input-field col m4 s12">
+                    <div class="col m2 s12">
+                        <input type="hidden" id="input-tallas" list="tallas_lista">  
+                        <span style="color: #9e9e9e; font-weight: bold;">*Talla</span>
+                        <!-- <i class="material-icons prefix">photo_size_select_small</i> -->
+                    </div>
+                    <div class="col m10 s12">
+                        <select style="background: white; border-bottom-color: #686868;" class="browser-default" id="tallas_lista" name="talla" ></select>
+                    </div>
+                </div>
+
+
+                <div class="input-field col m2 s12 text-center">
+					<button type="button" id="asignareppsol" class="btn">Guardar</button>	
+				</div>
+      
+            </div>
+            
+        </form>
+
+
+		
+	</div>
+</div>
+<!-- End Epp por Asignar -->
+
+<!-- EPP X Asignar -->
+<div class="col m12 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card darken-1">
+                <div class="card-content">
+
+                    <div class="row">
+                        <div class="col m12 s12 text-left">
+                            <h3 class="card-title">EPP Por Asignar</h3>
+                        </div>
+                    </div>
+
+                    <div class="row table_wrapper">
+                        <table class="table text-center table-hover ">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Talla</th>
+                                    <th class="text-center">Tipo EPP</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <?php if ($this->eppxasignar) { 
+                            foreach ($this->eppxasignar as $eppxa) { ?>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?php echo $eppxa['cantidad']; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo $eppxa['descripcion']; ?>
+                                        </td>
+                                         <td class="text-center">
+                                            <?php echo $eppxa['t_e']; ?>
+                                        </td>
+                                         <td class="text-center">
+                                            <?php echo $eppxa['nombretipo']; ?>
+                                        </td>
+                                        <td>
+                                            <a class="delete" data-id="<?php echo $eppxa["id"]; ?>" data-nombre="<?php echo $eppxa["descripcion"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                        </td>                                            
+                                    </tr>
+                                </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>No se ha agregado EPP a está solicitud.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End EPP X Asignar -->
+
+<!-- Terminar Solicitud -->
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/epp/requestaddsolvehdos" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="subpaso2epp">
+			<input type="hidden" id="idsol" name="idsol" value="<?php echo $this->id; ?>">
+    	</form>
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/epp/eppsol" class="red btn">Salir</a>
+				<?php if ($this->eppxasignar) { ?>
+					<button  id="sendpasodos" class="btn">Terminar Solicitud</button>
+				<?php } else { ?>
+					<button  id="sendpasodos" disabled class="btn">Terminar Solicitud</button>
+				<?php } ?>
+			</div>	
+		</div>
+	</div>
+</div>
+<!-- End Terminar Solicitud -->
+
+<script src="/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+    	$('.datepicker').datepicker();
+
+    	$('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+        })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+    });
+
+    $("#sendpasodos").click(function(){
+        var idsol = document.getElementById("idsol").value;
+
+        if(idsol == 0){
+            swal({
+              title: "Para continuar debes agregar minímo un EPP",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { 
+    	document.getElementById("subpaso2epp").submit() 
+    }
+
+    //Obtener Tallas
+    $('#epp').change(function(){
+
+    	limpiar();       
+    	epp = document.getElementById("epp").value;
+
+    	$.ajax({
+
+            url: "/epp/gettallas/",       
+            data: { epp: epp },
+            type: "POST",
+
+            success: function(data) {
+
+              $("#id-talla").find('option').remove();
+
+              var aData = JSON.parse(data);
+
+              console.log(aData);
+
+              var sOptions = '';
+
+              $.each(aData, function(i, v) {
+
+                sOptions += '<option value="' + v.idepp + '">' + v.talla + '</option>';
+
+                // console.log(sOptions);
+              });
+
+              console.log(sOptions);
+
+              $('#tallas_lista').html( sOptions );
+            },
+
+            error: function(a, b, c) {
+
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }
+        });
+    });
+
+    function limpiar(){
+        document.getElementById('input-tallas').value='';
+    }
+    //End Obtener Tallas
+
+
+    //EPP X Asignar
+    $("#asignareppsol").click(function(){
+        var cantidad = document.getElementById("cantidad").value;
+        var epp =  document.getElementById("epp").value;
+        var tallas_lista =  document.getElementById("tallas_lista").value;
+
+        if(cantidad == "" || epp == 0 || tallas_lista  == ""){
+            swal({
+                title: "Llena los campos, para asignar el EPP(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(añadirepp, 500);     
+        }    
+    }); 
+
+    function añadirepp() {
+
+        document.getElementById("submit_asigna").submit()
+
+    }
+    //End EPP X Asignar 
+
+
+    $(".delete").click(function(){
+    	swal({
+
+    		title: "¿Estás seguro de eliminar el registro?",
+	  		icon: "warning",
+	  		buttons: true,
+	  		dangerMode: true,
+	  	})
+
+	  	.then((willDelete) => {
+	  		if (willDelete) {
+	  			swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});  
+
+				var	id = $(this).data('id')
+            	var request = $.ajax({
+                	url:"/epp/requestdelasg",
+                	method:"POST",
+                	data: { id: id },
+                	processData: true,
+                	// contentType: false,
+            	});
+					//-------------------end de ajax---------------------------
+
+					//-------------peticion de respuesta de ajax------------------
+            	request.done(function(response) {
+                	console.log(response);//imprime lo que responde el ajax
+                	// alert
+                	window.location.reload(true);
+            	});
+					//-------------------end de respuesta ajax---------------------
+            	
+            	return false;
+
+            } else {
+            	swal("El cambio de status fue cancelado!");
+            }
+        });
+	 });
+
+</script>
+
+

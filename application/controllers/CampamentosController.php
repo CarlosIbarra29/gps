@@ -36,6 +36,13 @@ class CampamentosController extends Zend_Controller_Action{
         $table="tipo_proyecto";
         $this->view->proyectos = $this->_season->GetAll($table);
 
+
+        $table = "campamentos"; 
+        $this->view->alertas=$this->_cam->GetCampamentosxVen($table);
+
+        $table = "campamentos"; 
+        $this->view->alertasvencidas=$this->_cam->GetCampamentosVen($table);
+
         $table="campamentos_status";
         $this->view->campamentos_s = $this->_season->GetAll($table); 
 
