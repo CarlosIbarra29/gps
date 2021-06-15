@@ -479,7 +479,7 @@
 
 
 									</td>
-									<?php if($this->rol_user == 13 || $this->rol_user == 17 || $this->rol_user == 4	|| $this->rol_user == 7){ ?>
+									<?php if($this->rol_user == 13 || $this->rol_user == 17 || $this->rol_user == 4){ ?>
 									<?php }else{ ?>
 									<?php if($usr["id_tipoproyecto"] == 1){ ?>
 										<td>
@@ -528,10 +528,10 @@
 
 									
 									<?php if($this->rol_user == 13 || $this->rol_user == 2 || $this->rol_user == 17 || $this->rol_user == 4 || $this->rol_user == 7){ ?>
-										<td>
+<!-- 										<td>
 											<a href="/panel/asignardetallesview/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
 										</td>
-
+ -->
 
 									<?php }else{ ?>
 										<td>

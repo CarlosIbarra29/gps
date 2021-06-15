@@ -61,6 +61,19 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+    public function updatehoraextrasolicitud($table,$id,$value){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET hora_extra = ? WHERE id = ?",array($value,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function updaterolregistrohora($post,$table){
         $value= 1;
         try {
@@ -73,6 +86,20 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+    public function updaterolregistrohorapersonaldos($solicitud,$table){
+        $value= 0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_user = ? WHERE id_solicitud = ?",array($value,$solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
 
     public function updaterolregistrohorapersonal($post,$table,$horaextra){
         $value= 1;
