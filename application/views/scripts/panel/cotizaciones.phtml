@@ -53,22 +53,26 @@
 
  ?>
 
-<div class="row" style="margin-top: 20px;">  
-	<div class="col m6 s6">
-		<h2>Cotizaciones</h2>
-	</div>
-	<div class="col m6 s6">
-		<a class=" btn modal-trigger" href="#modal1">Agregar Cotización</a>
-	</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
 </div>
 
-  <!-- Modal Trigger -->
-  
 
-  <!-- Modal Structure -->
+<div class="row">
+    <div class="col m12 s12 text-center">
+    	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cotizaciones</span>
+    </div>
+</div>
+
 <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-    	<h2>Agregar una cotización</h2>
+    	<div class="row">
+    		<div class="col m12 s12">
+    			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Agregar Cotización</span>
+    		</div>
+    	</div>
 		<form action="/panel/requestaddcotizacionsitio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cotizacion">
 			<div class="file-field col m12 s12 input-field">
 			    <div class="btn  light-green">
@@ -94,7 +98,7 @@
 
 	        <div class="input-field col s12">
 	        	<i class="material-icons prefix">attach_money</i>
-	        	<input id="total" type="text" name="total" class="validate">
+	        	<input id="total" type="number" name="total" class="validate">
 	        	<label for="total">Total</label>
 	        </div>
 
@@ -128,18 +132,16 @@
 </div>
 
 
-
 <div class="row">
-	<div class="col m2 s2"></div>
-	<div class="col m8 s12">
-
-	</div> 
-	<div class="col m2 s2"></div>
-</div>
-
-<div class="row">
+	<div class="row">
+		<div class="col m6 s6">
+			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Cotizaciones</span>
+		</div>
+		<div class="col m6 s6 text-right">
+			<a class=" btn modal-trigger" href="#modal1">Agregar Cotización</a>
+		</div>
+	</div>
 	<div class="col m12 s12">
-		<h3>Lista de cotizaciones</h3>
 		<table class="table text-left table-hover">
 			<thead>
 				<tr>
@@ -169,14 +171,14 @@
 
         		<td>
         			<?php if($usr['status_documento'] == 0){ ?>
-        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>">
+        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->sitio; ?>">
 							<div class="chip">
 						    	<img src="/img/gris.jpg">
 						    	Pendiente
 						  	</div>
 					  	</a>
         			<?php }else{ ?>
-        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->id; ?>">
+        				<a href="/panel/documentocotizacion/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->sitio; ?>">
 							<div class="chip">
 						    	<img src="/img/correct.png">
 						    	con P.O
@@ -197,7 +199,7 @@
 		    </tbody> 
 		    <tbody>
 		        <tr>
-		            <td class="text-center" colspan="6"><h4>No hay cotizaciones asignadas al sitio.</h4></td>
+		            <td class="text-center" colspan="6"><h4>No hay cotizaciones asignadas al proyecto.</h4></td>
 		        </tr>
 		    </tbody>
 		                

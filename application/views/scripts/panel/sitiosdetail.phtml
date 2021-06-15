@@ -547,13 +547,24 @@
 											<td><a href="/grafica/btsproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
 
+										<?php if($usr["id_tipoproyecto"] == 2){ ?>
+											<td><a href="/grafica/colocacionproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+										<?php } ?>
+
 										<?php if($usr["id_tipoproyecto"] == 3){ ?>
 											<td><a href="/grafica/reforzamientoproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
 
+										<?php if($usr["id_tipoproyecto"] == 4){ ?>
+											<td><a href="/grafica/cambiotorreproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+										<?php } ?>
 
 										<?php if($usr["id_tipoproyecto"] == 5){ ?>
 											<td><a href="/grafica/torrenuevaproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+										<?php } ?>
+
+										<?php if($usr["id_tipoproyecto"] == 6){ ?>
+											<td><a href="/grafica/mapeotorreproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
 
 									<?php } ?>

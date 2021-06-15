@@ -11,6 +11,17 @@
     </div>
 </div>
 
+<?php if($this->op_solicitud == 1){ ?>
+
+<?php 
+	foreach ($this->solicitud as $key) {
+		$id_solicitud = $key['id'];
+		$nombre_sitio = $key['nombre_sitio'];
+		$user_solicitud = $key['user_solicitud'];
+		$status_auditoria = $key['status'];
+		$status_asistencia = $key['asistencia_status'];
+	}
+?>
 
 <div class="row">
     <div class="col s12 m12">
@@ -24,22 +35,44 @@
 					          	<tr>
 					              <th>No.</th>
 					              <th>Sitio</th>
-					              <th>Horas extra</th>
-					              <th>Status</th>
+					              <th>Usuario</th>
+					              <th>Status Auditoria</th>
+					              <th>Status Asistencia</th>
 					          	</tr>
 					        </thead>
 
 				        	<tbody>
 					          	<tr>
-					            	<td>1</td>
-					            	<td><?php echo $this->sitio; ?></td>
-					            	<td> 3 Horas Extra</td>
+					            	<td><?php echo $id_solicitud; ?></td>
+					            	<td><?php echo $nombre_sitio; ?></td>
+					            	<td><?php echo $user_solicitud; ?></td>
 					            	<td>
-						                <div class="chip modal-trigger" id="sitio_op">
-						                    <img src="/img/gris.jpg" class="sitio_dos">
-						                    Pendiente
-						                </div>
+					            		<?php if($status_auditoria == 0){ ?>
+							                <div class="chip modal-trigger" id="sitio_op">
+							                    <img src="/img/gris.jpg" class="sitio_dos">
+							                    Pendiente
+							                </div>
+						            	<?php }else{ ?>
+							                <div class="chip modal-trigger" id="sitio_op">
+							                    <img src="/img/correct.png" class="sitio_dos">
+							                    Auditada
+							                </div>
+						            	<?php } ?>
 					            	</td>
+					            	<td>
+					            		<?php if($status_asistencia == 0){ ?>
+							                <div class="chip modal-trigger" id="sitio_op">
+							                    <img src="/img/gris.jpg" class="sitio_dos">
+							                    Pendiente
+							                </div>
+						            	<?php }else{ ?>
+							                <div class="chip modal-trigger" id="sitio_op">
+							                    <img src="/img/correct.png" class="sitio_dos">
+							                    Auditada
+							                </div>
+						            	<?php } ?>
+					            	</td>
+
 					          	</tr>
 				        	</tbody>
 				      	</table>
@@ -49,29 +82,43 @@
       	</div>
     </div>
 </div>
+<?php }else{ ?>
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Solicitud de horas extra</span>
+				<div class="row">
+					<div class="col m12 s12 text-center">
+						<div class="input-field col m12 s12">
+						    <input type="text" id="motivo" value="">
+						    <label for="motivo">Motivo</label>
+						</div>
 
+					</div>
+					<div class="col m4 s6 text-right">
+				<!-- 		<div class="input-field col m12 s12">
+						    <input type="text" id="todos" value="" oninput="actualizarValorMunicipioInm()">
+						    <label for="todos">Horas extra para todos</label>
+						</div> -->
+					</div>
+				</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+<?php } ?>
 
 <div class="row" style="margin-top: 40px;">
 	<div class="col m1 s12"></div>
 	<div class="col m10 s12">
-		<div class="row">
-			<div class="col m8 s6 text-right">
-				<div class="input-field col m12 s12">
-					<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Autorizar</a>
-				</div>
-			</div>
-			<div class="col m4 s6 text-right">
-		        <div class="input-field col m12 s12">
-		          <input type="text" id="todos" value="" oninput="actualizarValorMunicipioInm()">
-		          <label for="todos">Horas extra para todos</label>
-		        </div>
-			</div>
 
-		</div>
+
 		<form action="/asistencia/requestaddhoraextrapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 		<input  name="act_todos" id="act_todos" value="" type="hidden">
 		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
             </input>
+        <input type="hidden" name="motivo" id="motivo_sol">
         <table class="table text-left table-hover">
             <thead>
                 <tr >
@@ -131,6 +178,24 @@
 	<div class="col m1 s12"></div>
 </div>
 
+<?php if($this->op_solicitud == 1){ ?>
+
+	<div class="col m12 s12 text-center">
+		<div class="input-field col m12 s12">
+			<a onclick="M.toast({html: 'Ya existe una solicitud'})" class="btn"><i class="material-icons right">access_time</i>Autorizar</a>
+		</div>
+	</div>
+<?php }else{ ?>
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="input-field col m12 s12">
+			<a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Autorizar</a>
+		</div>
+	</div>
+</div>
+<?php } ?>
+
+
 
 <input type="hidden" id="actividad" value="1">
 <script src="/js/lightbox.js"></script>
@@ -142,9 +207,11 @@
 
     $("#hora_extrapersonal").click(function(){
         var actividad = document.getElementById("actividad").value;
-        if(actividad == ""){
+        var motivo = document.getElementById("motivo").value;
+        document.getElementById("motivo_sol").value=motivo;
+        if(actividad == "" || motivo == ""){
             swal({
-            	title: "Para agregar un imagen debes seleccionar una tarea ",
+            	title: "Es necesario agregar un motivo a la solicitud",
             });
         }else{
 			swal("Espere un momento, la información esta siendo procesada", {

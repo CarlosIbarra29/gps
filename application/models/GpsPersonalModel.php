@@ -2,6 +2,25 @@
 
 class Application_Model_GpsPersonalModel extends Zend_Db_Table_Abstract{
 
+    public function isertdaystocheckin($post,$table,$name_sitio,$id,$dias){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$id,
+                'dia_planeacion'=>$dias,
+                'sito_id'=>$post['sitio'],
+                'name_sitio'=>$name_sitio,
+                'id_proyecto'=>$post['proyecto']
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
+
+
     public function getallpersonal(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

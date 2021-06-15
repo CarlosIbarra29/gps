@@ -86,6 +86,7 @@
 				      		<option value="3">Status Gps</option>
 				      		<option value="4">Status Cliente</option>
 				      		<option value="5">Residente</option>
+				      		<option value="6">Ing. Proyecto</option>
 			    		<?php } ?>
 			    		<?php if($this->op_option == 2){ ?>
 				      		<option value="1">Id cliente</option>
@@ -93,6 +94,7 @@
 				      		<option value="3">Status Gps</option>
 				      		<option value="4">Status Cliente</option>
 				      		<option value="5">Residente</option>
+				      		<option value="6">Ing. Proyecto</option>
 			    		<?php } ?>
 			    		<?php if($this->op_option == 3){ ?>
 				      		<option value="1">Id cliente</option>
@@ -100,6 +102,7 @@
 				      		<option value="3" selected>Status Gps</option>
 				      		<option value="4">Status Cliente</option>
 				      		<option value="5">Residente</option>
+				      		<option value="6">Ing. Proyecto</option>
 			    		<?php } ?>
 			    		<?php if($this->op_option == 4){ ?>
 				      		<option value="1">Id cliente</option>
@@ -107,6 +110,7 @@
 				      		<option value="3">Status Gps</option>
 				      		<option value="4" selected>Status Cliente</option>
 				      		<option value="5">Residente</option>
+				      		<option value="6">Ing. Proyecto</option>
 			    		<?php } ?>
 			    		<?php if($this->op_option == 5){ ?>
 				      		<option value="1">Id cliente</option>
@@ -114,6 +118,15 @@
 				      		<option value="3">Status Gps</option>
 				      		<option value="4">Status Cliente</option>
 				      		<option value="5" selected>Residente</option>
+				      		<option value="6">Ing. Proyecto</option>
+			    		<?php } ?>
+			    		<?php if($this->op_option == 6){ ?>
+				      		<option value="1">Id cliente</option>
+				      		<option value="2">Sitio</option>
+				      		<option value="3">Status Gps</option>
+				      		<option value="4">Status Cliente</option>
+				      		<option value="5">Residente</option>
+				      		<option value="6" selected>Ing. Proyecto</option>
 			    		<?php } ?>
 			    	</select>
 			    	<label>Buscar por:</label>
@@ -211,6 +224,32 @@
 			        </div>
 		        <?php } ?>
 
+		        <?php if($this->op_option == 6){ ?>
+			        <div class="input-field col s12" id="op_ingenieros">
+			    		<select id="ingeniero" name="ingeniero">
+				    	<?php foreach ($this->ingenieros_op as $mar) { 
+					     		if ($mar['id']== $this->inge) { ?>
+					                <option selected value="<?php echo $mar['id']; ?>"><?php echo $mar['nombre']; ?> <?php echo $mar['ap']; ?> <?php echo $mar['am']; ?></option>
+					     	<?php } if ($mar['id']!= $this->inge) { ?>
+					                <option value="<?php echo $mar['id']; ?>"><?php echo $mar['nombre']; ?> <?php echo $mar['ap']; ?> <?php echo $mar['am']; ?></option>
+					     	<?php } } ?>    
+			    		</select>
+			    		<label>Ing Proyecto:</label>
+			        </div>
+		        <?php }else{ ?>
+			        <div class="input-field col s12 oculto" id="op_ingenieros">
+			    		<select id="ingeniero" name="ingeniero">
+			      			<option value="0" disabled selected>* Selecciona un ingeniero</option>
+			      			<?php foreach ($this->ingenieros_op as $key){ ?>
+			      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['ap']; ?> <?php echo $key['am']; ?></option>
+			      			<?php } ?>
+			    		</select>
+			    		<label>Ing Proyecto:</label>
+			        </div>
+		        <?php } ?>
+
+
+
 			</div>
 			<div class="col m3 s6 text-center">
 				<a class="btn" id="btn_search"><i class="material-icons right">search</i>Buscar</a>
@@ -270,7 +309,7 @@
 					<th>Id Cliente</th>
 					<th>Sitio</th>
 					<th>Proyecto</th>
-					<th>Residente</th>
+					<th>Ing. Proyecto</th>
 					<th>Status Gps</th>	
 					<th>Status Cliente</th>
 					<th>ISSUE</th>
@@ -296,7 +335,7 @@
 						</a>
 					</td>
 					<td>
-						<?php echo $usr['nombre_residente']; ?>
+						<?php echo $usr['nombre_ingproyecto']; ?>
 					</td>		
 					<td>
 						<?php echo $usr['status_gps']; ?>
@@ -395,6 +434,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 2){
@@ -403,6 +443,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 3){
@@ -411,6 +452,7 @@
 			$("#op_statusgps").show();
 			$("#op_statuscliente").hide();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 4){
@@ -419,6 +461,7 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").show();
 			$("#op_residente").hide();
+			$("#op_ingenieros").hide();
 		}
 
 		if(value == 5){
@@ -427,6 +470,16 @@
 			$("#op_statusgps").hide();
 			$("#op_statuscliente").hide();
 			$("#op_residente").show();
+			$("#op_ingenieros").hide();
+		}
+
+		if(value == 6){
+			$("#op_cliente").hide();
+			$("#op_sitio").hide();
+			$("#op_statusgps").hide();
+			$("#op_statuscliente").hide();
+			$("#op_residente").hide();
+			$("#op_ingenieros").show();
 		}
 	});
 
@@ -457,6 +510,11 @@
 			var residente = document.getElementById("residente").value;
 			window.location.href = "/seguimiento/buscadorseguimiento/residente/"+residente+"/op/5/sp/"+seguimiento+"";
 		}
+
+		if(op == 6){
+			var ingeniero = document.getElementById("ingeniero").value;
+			window.location.href = "/seguimiento/buscadorseguimiento/ingeniero/"+ingeniero+"/op/6/sp/"+seguimiento+"";
+		}
 	});
 
 	$("#en_procesoseg").click(function(){
@@ -484,6 +542,9 @@
 	    if(op == 5){
 	    	window.location.href = "/seguimiento/buscadorseguimiento/residente/<?php echo $this->residente; ?>/op/"+op+"/sp/0";
 	    }  
+	    if(op == 6){
+	    	window.location.href = "/seguimiento/buscadorseguimiento/ingeniero/<?php echo $this->inge; ?>/op/"+op+"/sp/0";
+	    }  
 	});
 
 	$("#todos_sit").click(function(){
@@ -508,7 +569,9 @@
 	    if(op == 5){
 	    	window.location.href = "/seguimiento/buscadorseguimiento/residente/<?php echo $this->residente; ?>/op/"+op+"/sp/1";
 	    }  
-
+	    if(op == 6){
+	    	window.location.href = "/seguimiento/buscadorseguimiento/ingeniero/<?php echo $this->inge; ?>/op/"+op+"/sp/1";
+	    } 
 
 
 	});
