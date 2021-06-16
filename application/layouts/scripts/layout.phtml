@@ -1142,6 +1142,11 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
+                </li>
+                
                 <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
                     <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
                 </li>
