@@ -83,6 +83,9 @@ class AsistenciaController extends Zend_Controller_Action{
             $puesto = $this->_season->GetSpecific($table,$wh,$info[0]['puesto']);  
             $this->view->puesto_info = $puesto[0]['nombre']; 
         }
+        $id=$this->_getParam('id');
+        $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id);
+
     }
 
     public function solicitudhorasextraAction(){
@@ -238,20 +241,81 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        
+        // var_dump($post);exit;
         if($post['op_asistencia'] == 0){
+            $name = $_FILES['url_entrada']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url_entrada']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url_entrada']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url_entrada']['tmp_name'],$urldb);
+                }
+            }
+
             foreach ($post['ids'] as $key) {
                 $fecha = date("N");
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y");
                 $id= $key;
                 $wh="id";
                 $table="personal_campo";
                 $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
                 $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
                 $table="personal_campo";
-                $result=$this->_asistencia->updatehoraentrada($id,$table,$post,$fecha,$proyecto);
+                $result=$this->_asistencia->updatehoraentrada($id,$table,$post,$fecha,$proyecto,$hoy,$urldb);
             }
         }else{
 
+            $name = $_FILES['url_salida']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url_salida']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url_salida']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url_salida']['tmp_name'],$urldb);
+                }
+            }
+
+            foreach ($post['ids'] as $key) {
+                $id= $key;
+
+                $wh="id";
+                $table="personal_campo";
+                $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
+
+                // $hora_inicio = $pagi_count[0]['hora_inicio'];
+                // $datetime1 = new DateTime($hora_inicio);
+                // $datetime2 = new DateTime($post['h_salida']);
+                // $interval = $datetime1->diff($datetime2);
+                // $diferencia = $interval->format("%H:%I");
+
+                $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
+                $table="personal_campo";
+                $result=$this->_asistencia->updatehorasalida($id,$table,$post,$proyecto,$urldb);
+            }
         }
         
         if ($result) {
@@ -261,6 +325,31 @@ class AsistenciaController extends Zend_Controller_Action{
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         }   
+    }
+
+    public function requestaddinasistenciapersonalAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost(); 
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y");
+
+        $fecha = date("N");
+        $id = $post['ids'];
+        $table="personal_campo";
+        $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
+        $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
+        $result=$this->_asistencia->updateinasistencia($id,$table,$post,$fecha,$proyecto,$hoy);
+        
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+
     }
 
     public function requestupdatesolicitudhorasextraAction(){
@@ -346,5 +435,97 @@ class AsistenciaController extends Zend_Controller_Action{
             print '</script>'; 
         } 
     }
+
+    public function requestaddfinalziarprocesoAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        $name_sitio = $post['sitio'];
+        $wh="name_sitio";
+        $table="personal_campo";
+        $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
+
+        foreach ($personal as $key) {
+            $id_personal =$key['id'];
+            // $name_sitio
+            $hora_entrada = $key['hora_inicio'];
+            $hora_salida = $key['hora_final'];
+            $dia = $key['day_asistencia'];
+            $dia_num = $key['day_number'];
+            $hora_extra = $key['hora_extra'];
+            $id_solicitudhora = $post['id_solicitudextra'];
+            $proyecto_entrada = $key['proyecto_fechainicio'];
+            $proyecto_salida = $key['proyecto_fechafinal'];
+            $ev_entrada = $key["evidencia_entrada"];
+            $ev_salida = $key["evidencia_salida"];
+            $table="personal_asistencia";
+            $status_asistencia = $key['status_asistencia'];
+            $motivo = $key['motivo_inasistencia'];
+            $result=$this->_asistencia->insertfinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+        } 
+        // END INSERT PERSONAL (personal_asistencia)
+
+        foreach ($personal as $key) {
+            $id_personal =$key['id'];
+            // $name_sitio
+            $hora_entrada = NULL;
+            $hora_salida = NULL;
+            $dia = NULL;
+            $dia_num = 0;
+            $hora_extra = 0;
+            $id_solicitudhora = 0;
+            $proyecto_entrada = 0;
+            $proyecto_salida = 0;
+            $ev_entrada = NULL;
+            $ev_salida = NULL;
+            $motivo = NULL;
+            $table="personal_campo";
+            $status_asistencia = $key['status_asistencia'];
+            $result=$this->_asistencia->updatefinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+        } 
+        // END UPDATE PERSONAL (personal_Campo)
+
+        $table="personal_solicitudhoras";
+        $result = $this->_asistencia->updatesolicitudhoraextras($table,$post);
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+
+    }
+
+    public function formatSizeUnits($bytes){
+        if ($bytes >= 1073741824)
+        {
+            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+        }
+        elseif ($bytes >= 1048576)
+        {
+            $bytes = number_format($bytes / 1048576, 2) . ' MB';
+        }
+        elseif ($bytes >= 1024)
+        {
+            $bytes = number_format($bytes / 1024, 2) . ' KB';
+        }
+        elseif ($bytes > 1)
+        {
+            $bytes = $bytes . ' bytes';
+        }
+        elseif ($bytes == 1)
+        {
+            $bytes = $bytes . ' byte';
+        }
+        else
+        {
+            $bytes = '0 bytes';
+        }
+        return $bytes;
+    }//END FUNCION DE TAMAÑO DE IMAGEN
+
 
 }
