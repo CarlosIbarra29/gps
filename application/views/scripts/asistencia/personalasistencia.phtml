@@ -1,4 +1,8 @@
-
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+</style>
 <?php foreach ($this->info_personal as $key) {
 	$id = $key['id'];
 	$nombre = $key['nombre'];
@@ -104,9 +108,27 @@
     </div>
 </div>
 
-
-
 <div class="row">
+	<div class="col m12 s12 text-right">
+		  <a class=" btn modal-trigger" href="#modalasistencia">Agregar Asistencia</a>
+	</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalasistencia" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Asistencia</span>
+    	<p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_newasistencia" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+          
+
+
+<!-- <div class="row">
     <div class="col s12 m12">
       	<div class="card">
 	        <div class="card-content">
@@ -136,7 +158,247 @@
 	        </div>
       	</div>
     </div>
+</div> -->
+
+
+<div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-content">
+			<div class="col m12 s12">
+				<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
+			</div>
+			<div class="row">
+				<div class="col m12 s12"> 
+			        <table class="table text-left table-hover">
+			            <thead>
+			                <tr>
+								<th>Sitio</th>
+								<th>Asistencia</th>
+								<th>Entrada</th>
+								<th>Salida</th>
+								<th>Horas trabajadas</th>
+								<th>Pago</th>
+			                </tr> 
+			            </thead>
+
+			            <?php 
+			            $montos = 0;
+			            if ($this->asistencia) { 
+			                foreach ($this->asistencia as $usr) { ?>
+			            <tbody>
+			                <tr>
+			                	<td>
+			                		<?php echo $usr['nombre']; ?>
+			                	</td>
+			                	<td>
+			                		<?php echo $usr['dia']; ?>
+			                	</td>
+
+			                	<?php if($usr['status_asistencia'] == 0){ ?>
+			                	<td>
+			                		<?php echo $usr['hora_entrada']; ?>
+			                	</td>
+			                	<td>
+			                		<?php echo $usr['hora_salida']; ?>
+			                	</td>
+			                        <?php 
+			                            $datetime1 = new DateTime($usr['hora_entrada']);
+			                            $datetime2 = new DateTime($usr['hora_salida']);
+			                            $interval = $datetime1->diff($datetime2);
+			                            $diferencia = $interval->format("%H:%I");
+			                         ?>
+			                  	<td>
+			                  		<?php echo $diferencia; ?> Hrs
+			                  	</td>
+
+			                  	<td>
+
+			                  		<?php 
+			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
+			                  				$rest = substr($diferencia, 0, -3);
+			                  				if($rest == 5){
+			                  					$monto = $usr['dia_pago'];
+			                  				}
+
+				                  			if($rest <= 9){
+				                  				$total = $rest - 5;
+				                  				$suma = $total * $usr['hora_pago'];
+				                  				$monto = $usr['dia_pago'] + $suma;
+				                  				// echo "menor";
+				                  			}
+
+			                  				if($rest == 10){
+			                  					$monto = $usr['dia_pago'] * 2;
+			                  				}
+
+				                  			if($rest > 10){
+				                  				$total = $rest - 10;
+				                  				$suma = $total * $usr['hora_pago'];
+				                  				$dia = $usr['dia_pago']*2;
+
+				                  				$monto = $dia + $suma;
+				                  				// echo "menor";
+				                  			}
+
+
+			                  			}else{
+				                  			$rest = substr($diferencia, 0, -3);
+				                  			if($rest < 10){
+				                  				$total = $rest - 2;
+				                  				$monto = $total * $usr['hora_pago'];
+				                  				// echo "menor";
+				                  			}
+
+				                  			if($rest > 10){
+				                  				$total = $rest - 10;
+				                  				$multi = $total * $usr['hora_pago'];
+				                  				$monto = $usr['dia_pago'] + $multi;
+				                  				// echo "mayor";
+				                  			}
+
+				                  			if($rest == 10){
+				                  				$monto = $usr['dia_pago'];
+				                  				// echo "igual";
+				                  			}
+
+			                  			}
+			                  		?>
+
+			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $monto; ?></span>
+			                  	</td>
+			                  <?php }else{ ?>
+			                  	<td>00:00</td>
+			                  	<td>00:00</td>
+			                  	<td>Inasistencia</td>
+			                  	<td>
+			                  		<?php $monto = 0; ?>
+			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $monto; ?></span>
+			                  	</td>
+			                  <?php } ?>
+			                  	<td>
+			                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+			                  	</td>
+			                  	<?php $montos = $montos + $monto; ?>
+			                </tr>
+			            </tbody>
+			            <?php } }else{ ?>
+			            <tbody>
+			                <tr>
+			                    <td>No hay registros de la asistencia </td>
+			                    <td></td>
+			                    <td></td>
+			                    <td></td>
+			                    <td></td>
+			                </tr>
+			            </tbody>
+			            <?php } ?>
+			        </table>
+				</div>
+			</div>
+        </div>
+
+
+        <div class="card-action">
+        	<div class="row">
+        		<div class="col m6 s6"></div>
+        		<div class="col m6 s6 text-right">
+        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: $<?php echo $montos; ?></span>
+        		</div>
+        	</div>
+        </div>
+
+      </div>
+    </div>
 </div>
+
+
+
+<!-- Modal Structure -->
+<div id="modaldelete" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Asistencia</span>
+        <div class="row div_info">
+        	<div class="col m8 s12" style="margin-top: 20px;">
+				<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sitio Actual:</span> <span id="sitio_modal"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre:</span> <span id="name_modal"></span> <br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Pago:</span> $<span id="diapago_modal"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Hora Pago:</span> $<span id="horapago_modal"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Asistencia:</span> <span id="dia_modal"></span> <span id="today_modal"></span><br>
+        	</div>
+
+        	<div class="col m4 s12 text-center">
+        		<a id="edit_registro"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
+        	</div>
+        </div>
+
+        <div class="row div_info">
+        	<div class="col m6 s12 text-center">
+        		<div>
+        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Entrada:</span> 
+        		</div>
+        		<div>
+        			<span id="hentrada_modal"></span>
+        		</div>
+        		<a class="example-image-link" id="href_entrada" data-lightbox="example-1"><img class="example-image" id="img_entrada" alt="image-1" style="width: 250px; height: 150px;"/></a>	  
+        	</div>
+        	<div class="col m6 s12 text-center">
+        		<div>
+        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Salida:</span> 
+        		</div>
+        		<div>
+        			<span id="hsalida_modal"></span>
+        		</div>
+        		<a class="example-image-link" id="href_salida" data-lightbox="example-1"><img class="example-image" id="img_salida" alt="image-1" style="width: 250px; height: 150px;"/></a>	  
+        	</div>
+        </div>
+
+        <div class="row div_editinfo oculto">
+        	<div class="col m12 s12"  style="margin-top: 20px;">
+        		<a id="back_info" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>   
+        	</div>
+        </div>
+
+        <div class="row div_editinfo oculto">
+        	<div class="col m12 s12" style="margin-top: 20px;">
+		        <div class="input-field col s6">
+		        	<input placeholder="" id="edit_day" type="text" class="validate">
+		        	<label for="edit_day">Día</label>
+		        </div>
+				<div class="input-field col s6">
+				    <select id="proyecto" name="proyecto">
+				      	<option value="0" disabled selected>* Selecciona un Proyecto</option>
+				      	<?php foreach ($this->proyectos as $key){ ?>
+				      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+				      	<?php } ?>
+				    </select>
+				    <label>Proyecto:</label>
+				</div>
+
+			    <div class="input-field col m6 s12">
+			        <input id="hora_entrada" name="hora_entrada" type="time">
+			        <label for="hora_entrada">Hora de entrada</label>
+			    </div>	
+
+			    <div class="input-field col m6 s12">
+			       	<input id="hora_salida" name="hora_salida" type="time" >
+			       	<label for="hora_salida">Hora de Salida</label>
+			    </div>
+
+        	</div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" id="add_inasistencia" class="btn">Guardar</button> -->
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
 
 <script src="/js/lightbox.js"></script>
 <script type="text/javascript">
@@ -169,6 +431,61 @@
             setTimeout(submitForm, 1500);     
         }
     });
-
     function submitForm() { document.getElementById("submit_addperson").submit() }
+
+    $(".delete").click(function(){
+    	var id = $(this).data('id');
+    	var name = $(this).data('name');
+    	document.getElementById("name_modal").innerHTML=name;
+
+    	var sitio = $(this).data('sitio');
+    	document.getElementById("sitio_modal").innerHTML=sitio;
+
+    	var diapago = $(this).data('diapago');
+    	document.getElementById("diapago_modal").innerHTML=diapago;
+
+    	var horapago = $(this).data('horapago');
+    	document.getElementById("horapago_modal").innerHTML=horapago;
+
+    	var dia = $(this).data('dia');
+    	if(dia == 1){ day = "Lunes";} if(dia == 2){ day = "Martes";} if(dia == 3){ day = "Miercoles";}
+    	if(dia == 4){ day = "Jueves";} if(dia == 5){ day = "Viernes";} if(dia == 6){ day = "Sabado";}
+    	if(dia == 7){ day = "Domingo";}
+    	document.getElementById("dia_modal").innerHTML=day;
+
+    	var today = $(this).data('today');
+    	document.getElementById("today_modal").innerHTML= "("+today+")";
+    	document.getElementById("edit_day").value = today;
+
+    	var img = document.getElementById("img_entrada");
+    	var entrada = $(this).data('eventrada');
+    	img.src=entrada;
+
+    	var element =document.getElementById("href_entrada");
+    	element.href =entrada;
+
+    	var hentrada = $(this).data('hentrada');
+    	document.getElementById("hentrada_modal").innerHTML=hentrada;
+
+    	var imgs = document.getElementById("img_salida");
+    	var salida = $(this).data('evsalida');
+    	imgs.src=salida;
+
+    	var elements =document.getElementById("href_salida");
+    	elements.href =salida;
+
+    	var hsalida = $(this).data('hsalida');
+    	document.getElementById("hsalida_modal").innerHTML=hsalida;
+    });
+
+
+    $("#edit_registro").click(function(){
+    	$(".div_info").hide();
+    	$(".div_editinfo").show();
+    });
+
+    $("#back_info").click(function(){
+    	$(".div_info").show();
+    	$(".div_editinfo").hide();
+    });
 </script>
