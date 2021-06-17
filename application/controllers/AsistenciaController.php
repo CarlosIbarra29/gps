@@ -85,6 +85,7 @@ class AsistenciaController extends Zend_Controller_Action{
         }
         $id=$this->_getParam('id');
         $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id);
+        $this->view->proyectos =$this->_sitio->tiposproyectospersonal();   
 
     }
 
