@@ -49,6 +49,7 @@ class AsistenciaController extends Zend_Controller_Action{
     	$this->view->sitio = $nombre;
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
         $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($nombre);
+        // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
@@ -233,6 +234,34 @@ class AsistenciaController extends Zend_Controller_Action{
         } 
     }
 
+    public function requestaddasistenciapersonalAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($post['op_asistencia'] == 0){
+            foreach ($post['ids'] as $key) {
+                $fecha = date("N");
+                $id= $key;
+                $wh="id";
+                $table="personal_campo";
+                $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
+                $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
+                $table="personal_campo";
+                $result=$this->_asistencia->updatehoraentrada($id,$table,$post,$fecha,$proyecto);
+            }
+        }else{
+
+        }
+        
+        if ($result) {
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }   
+    }
 
     public function requestupdatesolicitudhorasextraAction(){
         $this->_helper->layout()->disableLayout();

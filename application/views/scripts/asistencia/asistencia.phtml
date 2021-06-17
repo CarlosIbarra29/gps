@@ -5,8 +5,22 @@
 </style>
 
 <div class="row" style="margin-top: 10px;">
-    <div class="col m12 s12">
+    <div class="col m6 s6">
         <a href="/asistencia/cuadrillas" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+
+    <div class="col m6 s6 text-right">
+        <a class="btn red modal-trigger" href="#finalizar"><i class="material-icons right">warning</i>Finalizar Proceso</a>
+    </div>
+</div>
+
+  <!-- Modal Structure -->
+<div id="finalizar" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Finalizar Asistencia</span>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
 </div>
 
@@ -125,8 +139,8 @@
 				</div>
 			</div>
 		</div> -->
-
-
+        <form action="/asistencia/requestaddasistenciapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
+        <input type="hidden" name="op_asistencia" id="op_asistencia">
         <div class="row">
             <div class="col s12 m12">
                 <div class="card">
@@ -147,11 +161,10 @@
                             </div>
                         </div>
 
-
                         <div class="row oculto" id="div_entrada">
                             <div class="col m s6 text-right">
                                 <div class="input-field col m12 s12">
-                                  <input type="time" id="h_entrada" value="">
+                                  <input type="time" id="h_entrada" name="h_entrada" value="">
                                   <label for="h_entrada">Hora de entrada</label>
                                 </div>
                             </div>
@@ -168,11 +181,10 @@
                             </div>
                         </div> 
 
-
                         <div class="row oculto" id="div_salida">
                             <div class="col m s6 text-right">
                                 <div class="input-field col m12 s12">
-                                  <input type="time" id="h_salida" value="">
+                                  <input type="time" id="h_salida" name="h_salida" value="">
                                   <label for="h_salida">Hora de salida</label>
                                 </div>
                             </div>
@@ -188,17 +200,13 @@
                                 </div>
                             </div>
                         </div> 
-
                     </div>
                 </div>
             </div>
         </div>
 
-
-		<form action="/personal/requestaddhoraextrapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
 		<input  name="act_todos" id="act_todos" value="" type="hidden">
-		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
-            </input>
+		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
         <table class="table text-left table-hover">
             <thead>
                 <tr >
@@ -241,7 +249,7 @@
                     	<span  style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['hora_extra']; ?> Horas</span>
                     </td>
                     <td>
-                    	<!-- Hora entrada -->
+                    	<?php echo $usr['fechainicio_asignacion']; ?>
                     </td>
                     <td>
                     	<!-- Hora Salida -->
@@ -254,6 +262,9 @@
 						        <span></span>
 						    </label>
 						</p>
+                    </td>
+                    <td>
+                        <a class="delete modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-user-times" style="color: red"></i></span></a>
                     </td>
 
                 </tr>
@@ -282,6 +293,23 @@
             <a class="btn" id="hora_extrapersonal"><i class="material-icons right">access_time</i>Guardar</a>
         </div>
     </div> 
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modaldelete" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Inasistencia</span>
+        <div class="row">
+            <div class="col m12 s12">
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="file_TTV" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
 </div>
 
 
@@ -324,11 +352,17 @@
         $("#div_entrada").show();
         $("#div_salida").hide();
         $("#btn_op").show();
+
+        var asistencia = 0;
+        document.getElementById("op_asistencia").value = asistencia;
     });
 
     $("#op_salida").click(function(){
         $("#div_salida").show();
         $("#div_entrada").hide();
         $("#btn_op").show();
+
+        var asistencia = 1;
+        document.getElementById("op_asistencia").value = asistencia;
     });
 </script>
