@@ -461,49 +461,112 @@
 		          	<div class="col m6 s12">
 		          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de Solicitud (EPP Requerido)</span>
 		          	</div>
+		          	<div class="col m6 text-right s12">
+		          		<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+		          			<form action="/epp/requestreplayentrega" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="returnentrega">
+				          		<input type="hidden" name="sol" value="<?php echo $idsolicitud ?>">
+				          		<input type="submit" class="btn" id="reestablecer" value="Reestablecer"  dir="/epp/requestreplayentrega" />
+				          	</form>
+				        <?php } else { } ?>
+		          	</div>
 		        </div>				
 				<div class="row">
 					<div class="col m12 s12">
 						<div class="row">
-			      			<table>
-			        			<thead>
-			          				<tr>
-			              				<th class="text-center"><b>Cantidad</b></th>
-                                    	<th class="text-center"><b>Descripción</b></th>
-                                    	<th class="text-center"><b>Talla</b></th>
-                                    	<th class="text-center"><b>Tipo EPP</b></th>
-			          				</tr>
-			        			</thead>
-			        			<?php if ($this->epp_requerido) { 
-			        				foreach ($this->epp_requerido as $eppreq) { ?>
+							<form action="/epp/requesteppasignado" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="udpasignado">
+				      			<table>
+				        			<thead>
+				          				<tr>
+				              				<th class="text-center"><b>Cantidad</b></th>
+	                                    	<th class="text-center"><b>Descripción</b></th>
+	                                    	<th class="text-center"><b>Talla</b></th>
+	                                    	<th class="text-center"><b>Tipo EPP</b></th>
+	                                    	<th class="text-center"><b>Cobro Extra</b></th>
+	                                    	<th class="text-center"><b>EPP a Entregar</b></th>
+	                                    	<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+	                                    		<th class="text-center"><b>Operaciones</b></th>
+	                                    	<?php } else { } ?>
+				          				</tr>
+				        			</thead>
+				        			<?php if ($this->epp_requerido) { 
+				        				foreach ($this->epp_requerido as $eppreq) { ?>
+				        					<input type="hidden" name="sol_id" value="<?php echo $eppreq['id_sol']; ?>">
+											<tbody>
+												<tr>
+													<td class="text-center">
+	                                            		<?php echo $eppreq['cantidad']; ?>
+	                                        		</td>
+	                                        		<td class="text-center">
+	                                            		<?php echo $eppreq['descripcion']; ?>
+			                                        </td>
+			                                         <td class="text-center">
+			                                            <?php echo $eppreq['t_e']; ?>
+			                                        </td>
+			                                        <td class="text-center">
+			                                            <?php echo $eppreq['nombretipo']; ?>
+			                                        </td>
+			                                        <td class="text-center">
+			                                        	<?php if ($eppreq['cobro'] == 1) { ?>
+			                                            	Sí
+			                                        	<?php } else { ?> 
+			                                        		No
+			                                        	<?php } ?>
+			                                        </td>
+			                                        <td class="text-center">
+			                                        	<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+						                                    <?php if($eppreq['epp_asignado'] == 1){ ?>
+						                                   		<label>
+																	<input type="checkbox" name="ideppasg[]" value="<?php echo $eppreq['id']; ?>" checked disabled>
+																	<span></span>
+																</label>
+						                                    <?php } else { ?>
+						                                    	<label>
+						                                    		<input type="checkbox" name="ideppasg[]" value="<?php echo $eppreq['id']; ?>">
+						                                    		<span></span>
+																</label>
+						                                    <?php } ?>
+						                                <?php } else { ?>
+						                                	<?php if($eppreq['epp_asignado'] == 1){ ?>
+						                                   		<label>
+																	<input type="checkbox" checked disabled>
+																	<span></span>
+																</label>
+						                                    <?php } else { ?>
+						                                    	<label>
+						                                    		<input type="checkbox" disabled>
+						                                    		<span></span>
+																</label>
+						                                    <?php } ?>
+						                                <?php } ?>
+													</td>
+													<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+														<td class="text-center">
+															<a href="/epp/eppentregaedit/id/<?php echo $eppreq["id"] ?>"><i class="material-icons" style="color: blue;">storage</i></a>
+														</td>
+													<?php } else { }?>
+												</tr>
+											</tbody>
+									<?php } }else{ ?>
 										<tbody>
 											<tr>
-												<td class="text-center">
-                                            		<?php echo $eppreq['cantidad']; ?>
-                                        		</td>
-                                        		<td class="text-center">
-                                            		<?php echo $eppreq['descripcion']; ?>
-		                                        </td>
-		                                         <td class="text-center">
-		                                            <?php echo $eppreq['t_e']; ?>
-		                                        </td>
-		                                         <td class="text-center">
-		                                            <?php echo $eppreq['nombretipo']; ?>
-		                                        </td>
+												<td>No se ha surtido la solicitud</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
 											</tr>
 										</tbody>
-								<?php } }else{ ?>
-									<tbody>
-										<tr>
-											<td>No se ha surtido la solicitud</td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								<?php } ?>
-			      			</table>
+									<?php } ?>
+				      			</table><br/>
+				      			<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+					      			<?php if ($this->epp_requerido) { ?> 
+		                                <div class="col s12 m6 text-left"></div>
+										<div class="col s12 m6 text-right">
+											<input type="submit" class="btn" id="addasignado" value="Actualizar"   dir="/epp/requesteppasignado" />
+										</div>
+									<?php } else { } ?>						
+								<?php  }else{ }?>
+				      		</form>
 			        	</div>
 					</div>
 				</div>
@@ -533,6 +596,7 @@
                                     	<th class="text-center"><b>Descripción</b></th>
                                     	<th class="text-center"><b>Talla</b></th>
                                     	<th class="text-center"><b>Fecha Asignación</b></th>
+                                    	<th class="text-center"><b>Fecha Reposoción</b></th>
 			          				</tr>
 			        			</thead>
 			        			<?php if ($this->eppasignado) { 
@@ -550,6 +614,9 @@
 		                                        </td>
 		                                        <td class="text-center">
 		                                            <?php echo  date("d-m-Y", strtotime($eppasg['fecha_entrega'])); ?>
+		                                        </td>
+		                                        <td class="text-center">
+		                                            <?php echo  date("d-m-Y", strtotime($eppasg['reposicion'])); ?>
 		                                        </td>
 											</tr>
 										</tbody>
@@ -820,7 +887,7 @@
 <?php } ?>
 
   
-
+<input type="hidden" id="eppaasignar" value="yes">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
  <script src="/js/lightbox.js"></script>
 
@@ -890,5 +957,48 @@
     });
     	
     function submitresponsiva() { document.getElementById("sumbit_responsiva").submit() }
+
+
+    $("#addasignado").click(function(){
+        var eppaasignar = document.getElementById("eppaasignar").value;
+        if(eppaasignar == "" ){
+            swal({
+            	title: "¿Estas seguro que entregarás el epp seleccionado?",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitAsignar, 500);     
+        }
+    });	
+
+
+	function submitAsignar() {
+		document.getElementById("udpasignado").submit()
+	}// End Liberar seleccion Ajax
+
+
+	$("#reestablecer").click(function(){
+        var sol = document.getElementById("sol").value;
+        if(sol == 0 ){
+            swal({
+            	title: "El epp regresara a status sin asignar",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitReturn, 500);     
+        }
+    });	
+
+
+
+	function submitReturn() {
+		document.getElementById("returnentrega").submit()
+	}// End Liberar seleccion Ajax
 
 </script>

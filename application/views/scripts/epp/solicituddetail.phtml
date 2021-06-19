@@ -83,6 +83,12 @@
 }
 </style>
 
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
 <div class="row">
 	<div class="col m12 s12">
 		
@@ -503,49 +509,136 @@
 		          	<div class="col m6 s12">
 		          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de Solicitud (EPP Requerido)</span>
 		          	</div>
+		          	<div class="col m6 text-right s12">
+		          		<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+		          			<?php if($rol_user == 1 || $rol_user == 8){ ?>
+				          		<form action="/epp/limpiarcobro" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="limpiarcepp">
+				          			<input type="hidden" name="sol" value="<?php echo $idsolicitud ?>">
+				          			<input type="submit" class="btn" id="limpiezaepp" value="Reestablecer"  dir="/epp/limpiarcobro" />
+				          		</form>
+				        <?php } else { } ?>
+				          	<?php } else { } ?>
+		          	</div>
 		        </div>				
 				<div class="row">
 					<div class="col m12 s12">
-						<div class="row">
-			      			<table>
-			        			<thead>
-			          				<tr>
-			              				<th class="text-center"><b>Cantidad</b></th>
-                                    	<th class="text-center"><b>Descripción</b></th>
-                                    	<th class="text-center"><b>Talla</b></th>
-                                    	<th class="text-center"><b>Tipo EPP</b></th>
-			          				</tr>
-			        			</thead>
-			        			<?php if ($this->epp_requerido) { 
-			        				foreach ($this->epp_requerido as $eppreq) { ?>
+						<div class="row table_wrapper" style="margin-bottom: 3px;">
+							<form action="/epp/requestactualizacobro" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="actualizasel">
+				      			<table>
+				        			<thead>
+				          				<tr>
+				              				<th class="text-center"><b>Cantidad</b></th>
+	                                    	<th class="text-center"><b>Descripción</b></th>
+	                                    	<th class="text-center"><b>Talla</b></th>
+	                                    	<th class="text-center"><b>Tipo EPP</b></th>
+	                                    	<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+	                                    		<?php if($rol_user == 1 || $rol_user == 8){ ?>
+	                                    			<th class="text-center"><b>Cobro</b></th>
+	                                    		<?php } else { } ?>
+	                                    	<?php } else {  ?>
+	                                    		<th class="text-center"><b>Cobro</b></th>
+	                                    	<?php } ?>
+	                                    	<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+	                                    	<?php } else {  ?>
+	                                    		<th class="text-center"><b>Status</b></th>
+	                                    	<?php } ?>
+
+				          				</tr>
+				        			</thead>
+				        			<?php if ($this->epp_requerido) { 
+				        				foreach ($this->epp_requerido as $eppreq) { ?>
+				        					<input type="hidden" name="sol_id" value="<?php echo $eppreq['id_sol']; ?>">
+											<tbody>
+												<tr>									
+													<td class="text-center">
+	                                            		<?php echo $eppreq['cantidad']; ?>
+	                                        		</td>
+	                                        		<td class="text-center">
+	                                            		<?php echo $eppreq['descripcion']; ?>
+			                                        </td>
+			                                         <td class="text-center">
+			                                            <?php echo $eppreq['t_e']; ?>
+			                                        </td>
+			                                         <td class="text-center">
+			                                            <?php echo $eppreq['nombretipo']; ?>
+			                                        </td>
+			                                        <?php if($status_sol == 0 && $status_surtido == 0){ ?>
+
+				                                        <?php if($rol_user == 1 || $rol_user == 8){ ?>
+				                                        	<td class="text-center">
+				                                        		<?php if($eppreq['cobro'] == 1){ ?>
+				                                        			<!-- <input type="hidden" name="status_cobro" value="0"> -->
+				                                        			<label>
+																		<input type="checkbox" name="idepp[]" value="<?php echo $eppreq['id']; ?>" checked disabled>
+																		<span></span>
+																	</label>
+				                                        		<?php } else { ?>
+				                                        			<!-- <input type="hidden" name="status_cobro" value="1"> -->
+				                                        			<label>
+																		<input type="checkbox" name="idepp[]" value="<?php echo $eppreq['id']; ?>">
+																		<span></span>
+																	</label>
+				                                        		<?php } ?>
+																
+															</td>
+				                                        <?php } else { } ?>
+				                                    <?php } else { ?> 
+				                                    	<td class="text-center">
+				                                        	<?php if($eppreq['cobro'] == 1){ ?>
+				                                        		<label>
+																	<input type="checkbox" checked disabled>
+																	<span></span>
+																</label>
+				                                        	<?php } else { ?>
+				                                        		<label>
+																	<input type="checkbox" disabled>
+																	<span></span>
+																</label>
+				                                        	<?php } ?>
+														</td>     	
+				                                	<?php } ?>
+				                                	<?php if($status_sol == 1 && $status_surtido == 0) { ?>
+				                                		<td class="text-center"><b>En proceso de Almacén</b></td>
+				                                	<?php } ?>
+
+				                                	<?php if($status_sol == 2 && $status_surtido == 0) { ?>
+				                                		<td class="text-center"><b>Sin surtir</b></td>
+				                                	<?php } ?>
+
+				                                	<?php if($status_sol == 1 && $status_surtido == 1) { ?>
+				                                		<td class="text-center">
+				                                			<?php if($eppreq['epp_asignado'] == 1){ ?>
+				                                				<b>Surtido</b>
+				                                			<?php } else {  ?>
+				                                				<b>No Surtido</b>
+				                                			<?php } ?>
+				                                		</td>
+				                                	<?php } ?>
+												</tr>
+											</tbody>
+									<?php } }else{ ?>
 										<tbody>
 											<tr>
-												<td class="text-center">
-                                            		<?php echo $eppreq['cantidad']; ?>
-                                        		</td>
-                                        		<td class="text-center">
-                                            		<?php echo $eppreq['descripcion']; ?>
-		                                        </td>
-		                                         <td class="text-center">
-		                                            <?php echo $eppreq['t_e']; ?>
-		                                        </td>
-		                                         <td class="text-center">
-		                                            <?php echo $eppreq['nombretipo']; ?>
-		                                        </td>
+												<td>No se ha surtido la solicitud</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
 											</tr>
 										</tbody>
-								<?php } }else{ ?>
-									<tbody>
-										<tr>
-											<td>No se ha surtido la solicitud</td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								<?php } ?>
-			      			</table>
+									<?php } ?>
+				      			</table><br/>
+				      			<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+					      			<?php if($rol_user == 1 || $rol_user == 8){ ?>
+		                                <?php if ($this->epp_requerido) { ?> 
+		                                	<div class="col s12 m6 text-left"></div>
+											<div class="col s12 m6 text-right">
+												<input type="submit" class="btn" id="addcobro" value="Selecciona si requieren cobro"   dir="/epp/requestactualizacobro" />
+											</div>
+										<?php } else { } ?>						
+									<?php  }else{ }?>
+								<?php  }else{ }?>
+							</form>
 			        	</div>
 					</div>
 				</div>
@@ -554,6 +647,11 @@
     </div>
 </div>
 <!-- End Detalles Solicitud -->
+
+<?php 
+	date_default_timezone_set('America/Mexico_City');
+	$hoy = date("Y-m-d");
+?>
 
 <!-- Detalles Solicitud Actuamlemnte-->
 <div class="col m12 s12">
@@ -567,7 +665,7 @@
 		        </div>				
 				<div class="row">
 					<div class="col m12 s12">
-						<div class="row">
+						<div class="row table_wrapper">
 			      			<table>
 			        			<thead>
 			          				<tr>
@@ -575,6 +673,12 @@
                                     	<th class="text-center"><b>Descripción</b></th>
                                     	<th class="text-center"><b>Talla</b></th>
                                     	<th class="text-center"><b>Fecha Asignación</b></th>
+                                    	<th class="text-center"><b>Reposición</b></th>
+                                    	<?php if($status_sol == 0 && $status_surtido == 0){ ?>
+	                                    	<?php if($rol_user == 1 || $rol_user == 8){ ?>
+	                                    		<th class="text-center"><b>Operaciones</b></th>
+	                                    	<?php } else { } ?>
+	                                    <?php } else { } ?>
 			          				</tr>
 			        			</thead>
 			        			<?php if ($this->eppasignado) { 
@@ -593,6 +697,21 @@
 		                                        <td class="text-center">
 		                                            <?php echo  date("d-m-Y", strtotime($eppasg['fecha_entrega'])); ?>
 		                                        </td>
+		                                        <td class="text-center">
+			                                        <?php if ($eppasg['reposicion'] < $hoy){ ?>
+	                                                	<p style="color: red; font-weight: bold;"><?php echo  date("d-m-Y", strtotime($eppasg['reposicion'])); ?></p>
+	                                            	<?php } else { ?>
+	                                                	<?php echo  date("d-m-Y", strtotime($eppasg['reposicion'])); ?>
+	                                            	<?php } ?>
+	                                            </td>
+	                                            <?php if($status_sol == 0 && $status_surtido == 0){ ?>
+		                                            <?php if($rol_user == 1 || $rol_user == 8){ ?>
+		                                            	<td class="text-center">
+	                                            			<a class="regresar" data-id="<?php echo $eppasg["id"]; ?>" data-nombre="<?php echo $eppasg["descripcion"]; ?>"><span class="warning"><i class="material-icons" style="color: green;">redo</i></span></a>
+	                                             			<a class="delete" data-id="<?php echo $eppasg["id"]; ?>" data-nombre="<?php echo $eppasg["descripcion"]; ?>"><span class="warning"><i class="material-icons" style="color: red;">delete</i></span></a>
+	                                        			</td>                                   
+		                                            <?php } else { } ?>
+		                                        <?php } else { } ?>
 											</tr>
 										</tbody>
 								<?php } }else{ ?>
@@ -895,7 +1014,7 @@
 <?php } ?>
 
   
-
+<input type="hidden" id="cobroepp" value="yes">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
  <script src="/js/lightbox.js"></script>
 
@@ -1025,6 +1144,134 @@
     });
 
 
+            //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de eliminar el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppdel",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
+
+    $(".regresar").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de regresar al stock el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppregresar",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
+
+	$("#addcobro").click(function(){
+        var cobroepp = document.getElementById("cobroepp").value;
+        if(cobroepp == "" ){
+            swal({
+            	title: "¿Estas seguro de deseas enviar a cobro el epp seleccionado?",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitActcobro, 500);     
+        }
+    });	
+
+
+	function submitActcobro() {
+		document.getElementById("actualizasel").submit()
+	}// End Liberar seleccion Ajax
+
+
+	$("#limpiezaepp").click(function(){
+        var sol = document.getElementById("sol").value;
+        if(sol == 0 ){
+            swal({
+            	title: "El epp regresara a ser sin cobro",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(cobroclean, 500);     
+        }
+    });	
+
+
+	function cobroclean() {
+		document.getElementById("limpiarcepp").submit()
+	}// End Liberar seleccion Ajax
+
+
+
     $("#btcomprobante").click(function(){
     	var file = document.getElementById("file_comprobante").value;
     	var monto = document.getElementById("monto").value;
@@ -1043,5 +1290,7 @@
     });
     	
     function submitfileprede() { document.getElementById("submit_comprobante").submit() }
+
+
 
 </script>
