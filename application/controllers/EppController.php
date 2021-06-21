@@ -566,7 +566,7 @@ class EppController extends Zend_Controller_Action{
     }
 
 
-     public function requestupdateasigAction(){
+    public function requestupdateasigAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -2772,6 +2772,9 @@ class EppController extends Zend_Controller_Action{
             $table = "epp_asignarsol";
             $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
 
+            $table = "epp_asignarsol";
+            $this->view->epp_surtido = $this->_epp->GetEppXasgStatus($id);
+
             $table = "epp_solicitudes";
             $wh = "id";
             $this->view->solsurtida = $this->_season->GetSpecific($table,$wh,$id);
@@ -2847,7 +2850,7 @@ class EppController extends Zend_Controller_Action{
             $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
 
             $table = "epp_asignarsol";
-            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+            $this->view->epp_requerido = $this->_epp->GetEppXasgStatus($id);
 
             $table = "epp_solicitudes";
             $wh = "id";
@@ -2890,7 +2893,7 @@ class EppController extends Zend_Controller_Action{
             $solicitud = $post['id_solicitud'];
             $wh="id_sol";
             $table="epp_asignarsol";
-            $eppasg = $this->_season->GetSpecific($table,$wh,$solicitud);
+            $eppasg = $this->_epp->GetSpecificInsertar($table,$wh,$solicitud);
           
         foreach ($eppasg as $key) {
           
@@ -2978,6 +2981,185 @@ class EppController extends Zend_Controller_Action{
             }
         }
     }
+
+
+    public function requestactualizacobroAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $ids = $post['idepp'];
+        $table="epp_asignarsol";
+
+        foreach ($ids as $key => $value) {      
+            
+            $result = null;
+           
+            $result = $this->_epp->UpdateStatusCobro($value,$table);
+            
+        }
+
+        if ($result) {
+
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol_id'].'/status/0'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Seleccion a Cobrar
+
+
+    public function limpiarcobroAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $solicitud = $post['sol'];
+        $table="epp_asignarsol";
+        
+        $result = $this->_epp->UpdateReestablecerCobro($solicitud,$table);
+
+        if ($result) {
+ 
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol'].'/status/0'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Regresar EPP sin cobro
+
+
+
+    public function requesteppasignadoAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $ids = $post['ideppasg'];
+        $table="epp_asignarsol";
+
+        foreach ($ids as $key => $value) {      
+            
+            $result = null;
+           
+            $result = $this->_epp->UpdateStatusAsignado($value,$table);
+            
+        }
+
+        if ($result) {
+
+            return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['sol_id'].'/status/0'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Seleccion a Cobrar
+
+
+    
+
+    public function requestreplayentregaAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $solicitud = $post['sol'];
+        $table="epp_asignarsol";
+        
+        $result = $this->_epp->UpdateReestablecerAsignar($solicitud,$table);
+
+        if ($result) {
+ 
+            return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['sol'].'/status/0'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Regresar EPP sin Asignar
+
+
+    public function eppentregaeditAction(){
+
+        if($this->_hasParam('id')){
+            
+            $id = $this->_getParam('id');
+            $wh="id";
+            $table="epp_asignarsol";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+           
+            $table="epp_asignarsol";
+            $this->view->asignado = $this->_epp->DetallesEPPXAsignar($id);
+
+
+            $table="epp_asignarsol";;
+            $wh = "id";
+            $detalle= $this->_season->GetSpecific($table,$wh,$id);
+
+            $talla = $detalle[0]['descripcion'];
+            $tallita=$this->view->tallaget= $this->_epp->GetTalla($talla);
+
+
+            $table="epp_tipo";
+            $this->view->tipo = $this->_season->GetAll($table);
+        
+        } else {
+        
+            return $this-> _redirect('/');
+        
+        }  
+
+    }
+
+    public function requestudpsoleppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+
+            $table="epp_asignarsol";
+            $result = $this->_epp->UpdEppxAsg($post,$table);
+            
+            if ($result) {
+                return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/0');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }//END REQUEST UPDATE ASINADO
+
+
+
 
 
     public function formatSizeUnits($bytes){ 

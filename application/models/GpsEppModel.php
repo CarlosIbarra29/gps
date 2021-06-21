@@ -951,12 +951,31 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, 
-                ea.fecha_entrega, ea.status_epp, ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre, ec.talla as t_e, 
-                ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
+                ea.epp_asignado, ea.fecha_entrega, ea.status_epp, ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,
+                ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
                 FROM epp_asignarsol ea 
                 LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
                 LEFT JOIN epp_tipo et ON et.id_tipo = ea.tipo_epp
                 WHERE ea.id_sol = ? ORDER BY ea.id ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Por Asignar Sin status
+
+
+    public function GetEppXasgStatus($id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, 
+                ea.epp_asignado, ea.fecha_entrega, ea.status_epp, ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,
+                ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
+                FROM epp_asignarsol ea 
+                LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
+                LEFT JOIN epp_tipo et ON et.id_tipo = ea.tipo_epp
+                WHERE ea.id_sol = ? and ea.epp_asignado = 1 ORDER BY ea.id ASC",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
@@ -1707,4 +1726,121 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }//  Insert Responsiva En historial desde solicitudes
 
+
+     public function UpdateStatusCobro($post,$table){
+        $statuscobro=1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cobro = ? WHERE id = ?",array(
+                $statuscobro,
+                $post));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Status Cobro solicitud
+
+
+     public function UpdateReestablecerCobro($solicitud,$table){
+        $statuscobro=0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cobro = ? WHERE id_sol = ?",array(
+                $statuscobro,
+                $solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Reestablecer Cobro
+
+
+     public function UpdateStatusAsignado($post,$table){
+        $status=1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET epp_asignado = ? WHERE id = ?",array(
+                $status,
+                $post));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Status Cobro solicitud
+
+
+    public function UpdateReestablecerAsignar($solicitud,$table){
+        $status=0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET epp_asignado = ? WHERE id_sol = ?",array(
+                $status,
+                $solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Reestablecer Cobro
+
+    public function GetSpecificInsertar($table,$wh,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM $table WHERE $wh = ? and epp_asignado = 1",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+
+    public function DetallesEPPXAsignar($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre as nombrep, pc.apellido_pa, pc.apellido_ma, 
+                ea.id AS idea, ea.fecha_entrega, ea.tipo_epp, ea.id_epp, ea.cantidad, ea.id_sol,
+                ea.id_personal, ec.idepp, ec.nombre, ec.talla, ec.descripcion, 
+                ec.costo_aprobado, ec.tipo_epp as tipoe, et.nombre as eppt
+                FROM epp_asignarsol ea
+                INNER JOIN personal_campo pc ON ea.id_personal = pc.id
+                LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
+                LEFT JOIN epp_tipo et ON ea.tipo_epp = et.id_tipo
+                WHERE ea.id = ?",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Consulta EPP en solicitudes
+
+
+    public function UpdEppxAsg($post,$table){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE epp_asignarsol SET talla = ?, id_epp = ? WHERE id = ? ",
+                array(
+                    $post['tallaget'],
+                    $post['tallaget'],
+                    $post['idea']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+
+    }   //  Update UpdEppxAsg
+
+
+      
 } 

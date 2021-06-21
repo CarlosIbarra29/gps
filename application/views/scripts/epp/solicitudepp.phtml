@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="for" style="margin-top: 60px;">
-                    <h3>Fecha Requerida : <?php echo $fecha_requerida; ?></h3>
+                    <h3>Fecha Requerida : <?php echo $fecha_requerida; ?></h3> 
                     
                     <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos de Personal</span>
                     <p>
@@ -97,7 +97,7 @@
                     <br/><br/>
                     <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Generales</span>
                     
-                    <p style="padding-bottom: 20px;">
+                    <p style="padding-bottom: 10px;">
                         
                         <span class="title-pdf"><b>Solicito:</b></span> <?php echo $name_usuario; ?> <br />
                         <span class="title-pdf"><b>Fecha Creación:</b></span> <?php echo $fecha_solicitud; ?><br />
@@ -122,9 +122,9 @@
                 <div class="pdf-body">
 
                     <div class="row">
-                        <div class="col m12 s12 text-center">
+                        <div class="col m12 s12 text-center" style="margin-top: 22px;">
                             <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP entregado anteriormente
-                            </span><br><br>
+                            </span><br>
                         </div>  
 
                         <div class="col m12 s12">
@@ -173,51 +173,99 @@
                         </div>
 
 
-                        
-                        <div class="col m12 s12" style="margin-top: 30px;">
-                            <div class="col m12 s12 text-center">
-                                <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP a entregar</span><br>
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="text-center"><b>Cantidad</b></th>
-                                        <th class="text-center"><b>Descripción</b></th>
-                                        <th class="text-center"><b>Talla</b></th>
-                                        <th class="text-center"><b>Tipo EPP</b></th>
-                                        <th class="text-center"><b>Fecha Entrega</b></th>
-                                    </tr>
-                                </thead>
-                                <?php if ($this->epp_requerido) { 
-                                    foreach ($this->epp_requerido as $eppreq) { ?>
+                        <?php if($status_sol == 1 && $status_surtido ==1) { ?>
+                            <div class="col m12 s12" style="margin-top: 20px;">
+                                <div class="col m12 s12 text-center">
+                                    <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP a entregar</span><br>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"><b>Cantidad</b></th>
+                                            <th class="text-center"><b>Descripción</b></th>
+                                            <th class="text-center"><b>Talla</b></th>
+                                            <th class="text-center"><b>Tipo EPP</b></th>
+                                            <th class="text-center"><b>Fecha Entrega</b></th>
+                                            <th class="text-center"><b>Status</b></th>
+                                        </tr>
+                                    </thead>
+                                    <?php if ($this->epp_surtido) { 
+                                        foreach ($this->epp_surtido as $epps) { ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center"><?php echo $epps['cantidad']; ?></td>
+                                                    <td class="text-center"><?php echo $epps['descripcion']; ?></td>
+                                                    <td class="text-center"><?php echo $epps['t_e']; ?></td>
+                                                    <td class="text-center"><?php echo $epps['nombretipo']; ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($epps['fecha_entrega'] == null) { ?>
+                                                            <?php echo $hoy ?>
+                                                        <?php } else { ?>
+                                                            <?php echo $epps['fecha_entrega']; ?>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td class="text-center">Entregado</td>
+                                                </tr>
+                                            </tbody>
+                                    <?php } }else{ ?>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['nombretipo']; ?></td>
-                                                <td class="text-center">
-                                                    <?php if ($eppreq['fecha_entrega'] == null) { ?>
-                                                        <?php echo $hoy ?>
-                                                    <?php } else { ?>
-                                                        <?php echo $eppreq['fecha_entrega']; ?>
-                                                    <?php } ?>
-                                                </td>
+                                                <td>No se ha surtido la solicitud</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                         </tbody>
-                                <?php } }else{ ?>
-                                    <tbody>
+                                    <?php } ?>
+                                </table>
+                            </div>
+                        <?php } else { ?>
+                            <div class="col m12 s12" style="margin-top: 20px;">
+                                <div class="col m12 s12 text-center">
+                                    <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP a entregar</span><br>
+                                </div>
+                                <table>
+                                    <thead>
                                         <tr>
-                                            <td>No se ha surtido la solicitud</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <th class="text-center"><b>Cantidad</b></th>
+                                            <th class="text-center"><b>Descripción</b></th>
+                                            <th class="text-center"><b>Talla</b></th>
+                                            <th class="text-center"><b>Tipo EPP</b></th>
+                                            <th class="text-center"><b>Fecha Entrega</b></th>
                                         </tr>
-                                    </tbody>
-                                <?php } ?>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <?php if ($this->epp_requerido) { 
+                                        foreach ($this->epp_requerido as $eppreq) { ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
+                                                    <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
+                                                    <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
+                                                    <td class="text-center"><?php echo $eppreq['nombretipo']; ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($eppreq['fecha_entrega'] == null) { ?>
+                                                            <?php echo $hoy ?>
+                                                        <?php } else { ?>
+                                                            <?php echo $eppreq['fecha_entrega']; ?>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                    <?php } }else{ ?>
+                                        <tbody>
+                                            <tr>
+                                                <td>No se ha surtido la solicitud</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    <?php } ?>
+                                </table>
+                            </div>
+                        <?php } ?>    
                     </div>
 
                     <div class="row signature">
@@ -409,7 +457,7 @@
             }
             
             .signature {
-                padding-top: .5in;
+                padding-top: .25in;
             }
 
             td, th{

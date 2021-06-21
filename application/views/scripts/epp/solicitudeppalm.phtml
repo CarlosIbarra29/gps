@@ -38,7 +38,7 @@
             $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
             $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
             $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
-            $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
+            $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva']; 
             $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
             $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
             $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
@@ -97,7 +97,7 @@
                     <br/><br/>
                     <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Generales</span>
                     
-                    <p style="padding-bottom: 20px;">
+                    <p style="padding-bottom: 10px;">
                         
                         <span class="title-pdf"><b>Solicito:</b></span> <?php echo $name_usuario; ?> <br />
                         <span class="title-pdf"><b>Fecha Creación:</b></span> <?php echo $fecha_solicitud; ?><br />
@@ -122,9 +122,9 @@
                 <div class="pdf-body">
 
                     <div class="row">
-                        <div class="col m12 s12 text-center">
+                        <div class="col m12 s12 text-center" style="margin-top: 22px;">
                             <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP entregado anteriormente
-                            </span><br><br>
+                            </span><br>
                         </div>  
 
                         <div class="col m12 s12">
@@ -174,7 +174,7 @@
 
 
                         
-                        <div class="col m12 s12" style="margin-top: 30px;">
+                        <div class="col m12 s12" style="margin-top: 20px;">
                             <div class="col m12 s12 text-center">
                                 <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP a entregar</span><br>
                             </div>
@@ -184,8 +184,11 @@
                                         <th class="text-center"><b>Cantidad</b></th>
                                         <th class="text-center"><b>Descripción</b></th>
                                         <th class="text-center"><b>Talla</b></th>
-                                        <th class="text-center"><b>Tipo EPP</b></th>
+                                        <th class="text-center"><b>Cobro Extra</b></th>
                                         <th class="text-center"><b>Fecha Entrega</b></th>
+                                        <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
+                                            <th class="text-center"><b>Status</b></th>
+                                        <?php } else { } ?>
                                     </tr>
                                 </thead>
                                 <?php if ($this->epp_requerido) { 
@@ -195,20 +198,29 @@
                                                 <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
                                                 <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
                                                 <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['nombretipo']; ?></td>
+                                                <td class="text-center">
+                                                    <?php if ($eppreq['cobro'] == 1) { ?>
+                                                        Aplica descuento
+                                                    <?php } else { ?>
+                                                        Sin descuento
+                                                    <?php } ?>
+                                                </td>
                                                 <td class="text-center">
                                                     <?php if ($eppreq['fecha_entrega'] == null) { ?>
                                                         <?php echo $hoy ?>
                                                     <?php } else { ?>
-                                                        <?php echo $eppreq['fecha_entrega']; ?>
+                                                        <?php echo  date("d-m-Y", strtotime($eppreq['fecha_entrega'])); ?>
                                                     <?php } ?>
                                                 </td>
+                                                <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
+                                                    <td class="text-center">Entregado</td>
+                                                <?php } else { } ?>
                                             </tr>
                                         </tbody>
                                 <?php } }else{ ?>
                                     <tbody>
                                         <tr>
-                                            <td>No se ha surtido la solicitud</td>
+                                            <td>No se ha seleccionado el EPP a surtir</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -409,7 +421,7 @@
             }
             
             .signature {
-                padding-top: .5in;
+                padding-top: .25in;
             }
 
             td, th{
