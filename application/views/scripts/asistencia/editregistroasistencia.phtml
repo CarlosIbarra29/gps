@@ -22,16 +22,15 @@
         		$date = $day_uno."/".$mes_uno."/".$year_uno;
 			?>
 
-	        <div class="input-field col s6">
-	        	<input id="sitio" name="sitio" value="<?php echo $key['nombre']; ?>" type="text">
-	        	<label for="sitio">Sitio</label>
-	        </div>
-
-	        <div class="input-field col s6">
+	        <div class="input-field col  m6 s12">
 	        	<input id="day_registro" name="day" type="date">
 	        	<label for="day_registro">Día: <?php echo $date; ?></label>
 	        	<input type="hidden" name="dia_registro" value="<?php echo $key['dia']; ?>">
 	        </div>
+
+<!-- 	        <div class="input-field col  m6 s6">
+
+	        </div> -->
 
 			<div class="input-field col m6 s12">
 			    <input id="new_horaentrada" value="<?php echo $key['hora_entrada']; ?>" name="hora_entrada" type="time">
@@ -39,7 +38,7 @@
 			</div>	
 
 
-			<div class="input-field col s6">
+			<div class="input-field col m6 s12">
 				<select id="sitio_entrada" name="sitio_entrada" required>
 			    	<?php foreach ($this->proyectos as $mar) { 
 			     		if ($mar['id']==$key['id_proyecto']) { ?>
@@ -56,7 +55,7 @@
 			    <label for="new_horasalida">Hora de Salida</label>
 			</div>	
 
-			<div class="input-field col s6">
+			<div class="input-field col m6 s12">
 				<select id="sitio_entrada" name="sitio_entrada" required>
 			    	<?php foreach ($this->proyectos as $mar) { 
 			     		if ($mar['id']==$key['id_proyecto_salida']) { ?>

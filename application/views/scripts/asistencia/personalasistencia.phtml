@@ -196,9 +196,14 @@
     <div class="col s12 m12">
       <div class="card">
         <div class="card-content">
-			<div class="col m12 s12">
-				<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
-			</div>
+        	<div class="row">
+				<div class="col m6 s6">
+					<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
+				</div>
+				<div class="col m6 s6 text-right">
+					  <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a>
+				</div>
+        	</div>
 			<div class="row">
 				<div class="col m12 s12"> 
 			        <table class="table text-left table-hover">
@@ -347,10 +352,7 @@
 			        </table>
 				</div>
 			</div>
-        </div>
 
-
-        <div class="card-action">
         	<div class="row">
         		<div class="col m6 s6"></div>
         		<div class="col m6 s6 text-right">
@@ -359,12 +361,43 @@
         			</span>
         		</div>
         	</div>
+
+        </div>
+
+
+        <div class="card-action">
+        	<div class="row">
+        		<div class="col m12 s12 text-center">
+        			<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
+        		</div>
+        	</div>
         </div>
 
       </div>
     </div>
 </div>
 
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Generar Nomina</span>
+
+    	<div class="row">
+    		<div class="col m12 s12">
+    			<form action="/asistencia/requestaddsolicitudnomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addnomina">
+    				<input type="hidden" name="sitio" id="form_sitio" value="<?php echo $this->sitio_name; ?>">
+    				<input type="hidden" name="user" id="form_user" value="<?php echo $this->personal_id; ?>">
+    				<input type="hidden" name="id_proyecto" id="form_proyecto" value="<?php echo $this->proyecto; ?>">
+    				<input type="hidden" name="monto" value="<?php echo $montos; ?>">
+    			</form>
+    		</div>
+    	</div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_generarnomina" class="btn">Generar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
 
 
 <!-- Modal Structure -->
@@ -561,4 +594,24 @@
         }
     });
     function submitnewasistencia() { document.getElementById("submit_newasistencia").submit() }
+
+
+    $("#add_generarnomina").click(function(){
+    	var form_sitio = document.getElementById("form_sitio").value;
+    	var form_user = document.getElementById("form_user").value;
+    	var form_proyecto = document.getElementById("form_proyecto").value;
+
+        if(form_sitio == "" ||  form_user== "" || form_proyecto == "" ){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitnomina, 1500);     
+        }
+    });
+    function submitnomina() { document.getElementById("submit_addnomina").submit() }
 </script>

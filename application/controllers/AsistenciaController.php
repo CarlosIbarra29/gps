@@ -8,6 +8,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_sitio = new Application_Model_GpsSitioModel;
         $this->_personal = new Application_Model_GpsPersonalModel;
         $this->_asistencia = new Application_Model_GpsAsistenciaModel;
+        $this->_nomina = new Application_Model_GpsNominaModel;
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -45,7 +46,7 @@ class AsistenciaController extends Zend_Controller_Action{
     	}
     	
         $table="sitios_cuadrillas";
-        $this->view->sitios = $this->_season->GetAll($table); 
+        $this->view->sitios = $this->_asistencia->getsitioscuadrillasordername(); 
     }
 
     public function asistenciaAction(){
@@ -82,6 +83,10 @@ class AsistenciaController extends Zend_Controller_Action{
             $valor = 1;
             $this->view->op_solicitud = $valor;
         }
+    }
+
+    public function historialnominaAction(){
+
     }
 
     public function personalasistenciaAction(){
@@ -531,6 +536,36 @@ class AsistenciaController extends Zend_Controller_Action{
             print '</script>'; 
         } 
 
+    }
+
+    public function requestaddsolicitudnominaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        $id_user = $post['user'];
+        $wh = "id";
+        $table = "personal_campo";
+        $usr = $this->_season->GetSpecific($table,$wh,$id_user);
+        $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
+        $table = "personal_nomina";
+        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
+
+        $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+        foreach ($ver as $key) {
+            $id = $key['id_pa'];
+            $table="personal_asistencia";
+            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table);
+            
+        }
+
+        if ($result) {
+            return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+             
     }
 
     public function formatSizeUnits($bytes){

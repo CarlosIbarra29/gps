@@ -229,6 +229,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
     }//  UPDATE ROL
 
 
+
+
     public function trancatecuadrilla(){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -419,6 +421,18 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
                         FROM personal_asistencia pa 
                         LEFT JOIN personal_campo pc on pc.id = pa.id_personal
                         where pa.id = ? and status_nomina = 0",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA REGISTRO
+
+    public function getsitioscuadrillasordername(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sc.id,sc.nombre_sitio, sc.cliente, sc.proyecto, sc.id_proyecto, sc.status_asistencia FROM sitios_cuadrillas sc order by sc.nombre_sitio ASC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
