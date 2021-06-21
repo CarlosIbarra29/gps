@@ -799,7 +799,15 @@ setInterval(function() {
 
         $getpag="/envios/crearenvio";
         if($actual_link == $getpag){ return "active"; }
+    }
 
+    function getnomina($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/nomina/solicitudnomina/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
     }
 
     function gethorasextra($actual_link){
@@ -894,6 +902,9 @@ setInterval(function() {
                 </li>
                 <li class="bold moves <?php echo getUrl('/asistencia/solicitudhorasextra',$actual_link);echo gethorasextra($actual_link);?>">
                     <a href="/asistencia/solicitudhorasextra">Solicitud Horas extra<i class="material-icons">access_time</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
+                    <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">

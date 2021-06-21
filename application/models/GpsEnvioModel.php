@@ -542,7 +542,7 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
                         LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
-                        WHERE step_envio = ? and status_solicitud = ? and e.prioridad = ?
+                        WHERE step_envio = ? and e.status_solicitud = ? and e.prioridad = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$prioridad));
             $row = $qry->fetchAll();
@@ -565,7 +565,7 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
                         LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
-                        WHERE step_envio = ? and status_solicitud = ? and tipo_envio = ?
+                        WHERE step_envio = ? and e.status_solicitud = ? and tipo_envio = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$envio));
             $row = $qry->fetchAll();
@@ -588,7 +588,7 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,e.solicitud_materiales, m.file as archivo
                         FROM envios_solicitud e 
                         LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
-                        WHERE step_envio = ? and status_solicitud = ? and e.id = ?
+                        WHERE step_envio = ? and e.status_solicitud = ? and e.id = ?
                         ORDER BY years,mes, dia ASC 
                         LIMIT $offset,$no_of_records_per_page",array($step,$status,$solicitud));
             $row = $qry->fetchAll();

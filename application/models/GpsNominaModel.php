@@ -19,7 +19,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
-    
+
     public function updatestatusnominauser($id_solicitud,$id,$table){
         $status= 1;
         try {
@@ -32,5 +32,39 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+    public function getsolicitudnomina($status,$pago){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+             			pn.solicitud_fecha,pn.solicitud_user,pn.status_auditoria,pn.user_auditoria, 
+             			pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+						FROM personal_nomina pn 
+						where pn.status_auditoria = ? and status_pago = ?",array($status,$pago));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
+    public function getnominasolicitud($offset,$no_of_records_per_page,$status,$pago){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+             			pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
+             			pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+						FROM personal_nomina pn
+						 where pn.status_auditoria = ? and status_pago = ?
+                        ORDER BY pn.sitio ASC
+                        LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
 
 }
