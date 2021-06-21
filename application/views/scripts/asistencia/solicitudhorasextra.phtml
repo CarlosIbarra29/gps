@@ -129,6 +129,7 @@
         <tr>
           <th>NO.</th>
           <th>Sitio</th>
+          <th>Cliente</th>
           <th>Motivo</th>
           <th>Usuario</th>    
           <th>Status</th>
@@ -143,7 +144,12 @@
             <h5><?php echo $usr['id']; ?></h5>
           </td>
           <td>
-            <h5><?php echo $usr['nombre_sitio']; ?> </h5>
+            <h5><?php echo $usr['nombre_sitio']; ?>/ <?php echo $usr['nombre_proyecto']; ?></h5>
+          </td>
+          <td>
+            <h5>
+              <?php echo $usr['id_cliente']; ?>
+            </h5>
           </td>
           <td>
             <h5><?php echo $usr['motivo']; ?></h5>

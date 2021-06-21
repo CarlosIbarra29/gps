@@ -17,13 +17,31 @@ class AsistenciaController extends Zend_Controller_Action{
 
     	$uniq_sitio = array();
     	foreach ($sitio as $key) {
-    		$uniq_sitio [] = $key['name_sitio'];
+    		$uniq_sitio [] = $key['sitio_tipoproyectopersonal'];
     	}
-
     	$resultado = array_unique($uniq_sitio);
-    	$table="sitios_cuadrillas";
+        
     	foreach ($resultado as $key) {
-    		$this->_asistencia->insertsitiocuadrilla($key,$table);
+            $id=$key;
+            $wh="id";
+            $table="sitios_tipoproyecto";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+            $id_sitio = $usr[0]['id_sitio'];
+            $proyecto = $usr[0]['id_tipoproyecto'];
+
+            $table="sitios";
+            $sit = $this->_season->GetSpecific($table,$wh,$id_sitio);
+
+            $nombre = $sit[0]['nombre'];
+            $cliente = $sit[0]['id_cliente'];
+
+            $table="tipo_proyecto";
+            $pro = $this->_season->GetSpecific($table,$wh,$proyecto);
+
+            $tipo_proyecto =$pro[0]['nombre_proyecto'];
+            $table="sitios_cuadrillas";
+    		$this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);
     	}
     	
         $table="sitios_cuadrillas";
@@ -33,8 +51,12 @@ class AsistenciaController extends Zend_Controller_Action{
     public function asistenciaAction(){
     	$nombre = $this->_getParam('sitio');
     	$this->view->sitio = $nombre;
-    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
-        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientecheckin($nombre);
+
+        $proyecto= $this->_getParam('proyecto');
+        $this->view->proyecto = $proyecto;
+
+    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientecheckin($proyecto);
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
@@ -47,9 +69,12 @@ class AsistenciaController extends Zend_Controller_Action{
     public function horaextraAction(){
     	$nombre = $this->_getParam('sitio');
     	$this->view->sitio = $nombre;
-    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($nombre);
-        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($nombre);
-        // var_dump($solicitud);exit;
+
+        $proyecto= $this->_getParam('proyecto');
+        $this->view->proyecto = $proyecto;
+
+    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
@@ -57,13 +82,13 @@ class AsistenciaController extends Zend_Controller_Action{
             $valor = 1;
             $this->view->op_solicitud = $valor;
         }
-        // var_dump($solicitud);exit;
     }
 
     public function personalasistenciaAction(){
     	$sitio = $this->_getParam('sitio');
     	$this->view->sitio_name = $sitio;
        	$id=$this->_getParam('id'); $this->view->personal_id=$id;
+        $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
         $table="personal_campo";
         $wh="id";
         $info = $this->view->info_personal = $this->_season->GetSpecific($table,$wh,$id);   
@@ -86,8 +111,17 @@ class AsistenciaController extends Zend_Controller_Action{
         $id=$this->_getParam('id');
         $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id);
         $this->view->proyectos =$this->_sitio->tiposproyectospersonal();   
-
     }
+
+    public function editregistroasistenciaAction(){
+        $user=$this->_getParam('user'); $this->view->personal_id=$user;
+        $sitio = $this->_getParam('sitio');  $this->view->sitio_name = $sitio;
+        $proyecto = $this->_getParam('proyecto');  $this->view->proyecto = $proyecto;
+        $this->view->proyectos =$this->_sitio->tiposproyectospersonal();  
+
+        $id=$this->_getParam('id');
+        $this->view->asistencia =$this->_asistencia->getpersonalasistencianominaregistro($id);
+    } 
 
     public function solicitudhorasextraAction(){
         $status = $this->_getParam('status');
@@ -168,6 +202,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        // var_dump($post);exit;
         
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y H:i:s");
@@ -242,7 +277,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
         if($post['op_asistencia'] == 0){
             $name = $_FILES['url_entrada']['name'];
             if(empty($name)){ 
@@ -320,7 +354,7 @@ class AsistenciaController extends Zend_Controller_Action{
         }
         
         if ($result) {
-            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].' ');
         }else{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -342,7 +376,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
         $result=$this->_asistencia->updateinasistencia($id,$table,$post,$fecha,$proyecto,$hoy);
         
-
         if ($result) {
             return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
         }else{
@@ -441,15 +474,15 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-
-        $name_sitio = $post['sitio'];
-        $wh="name_sitio";
+        // var_dump($post);exit;
+        $name_sitio = $post['proyecto'];
+        $wh="sitio_tipoproyectopersonal";
         $table="personal_campo";
         $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
 
         foreach ($personal as $key) {
             $id_personal =$key['id'];
-            // $name_sitio
+            $name_sitio = $key['name_sitio'];
             $hora_entrada = $key['hora_inicio'];
             $hora_salida = $key['hora_final'];
             $dia = $key['day_asistencia'];
@@ -469,7 +502,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
         foreach ($personal as $key) {
             $id_personal =$key['id'];
-            // $name_sitio
+            $name_sitio = $key['name_sitio'];
             $hora_entrada = NULL;
             $hora_salida = NULL;
             $dia = NULL;
@@ -491,7 +524,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $result = $this->_asistencia->updatesolicitudhoraextras($table,$post);
 
         if ($result) {
-            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].'');
         }else{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 

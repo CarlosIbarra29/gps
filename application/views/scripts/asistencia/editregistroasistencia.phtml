@@ -1,0 +1,73 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/asistencia/personalasistencia/id/<?php echo $this->personal_id ?>/sitio/<?php echo $this->sitio_name; ?>/proyecto/<?php echo$this->proyecto ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>   
+    </div>
+</div>
+
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Modificar Registro</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<?php foreach ($this->asistencia as $key) { ?>
+			<?php 
+				$year_uno = substr($key['dia'], 6); 
+        		$mes_uno = substr($key['dia'], 3,2); 
+        		$day_uno = substr($key['dia'], 0,2); 
+        		$date = $day_uno."/".$mes_uno."/".$year_uno;
+			?>
+
+	        <div class="input-field col s6">
+	        	<input id="sitio" name="sitio" value="<?php echo $key['nombre']; ?>" type="text">
+	        	<label for="sitio">Sitio</label>
+	        </div>
+
+	        <div class="input-field col s6">
+	        	<input id="day_registro" name="day" type="date">
+	        	<label for="day_registro">Día: <?php echo $date; ?></label>
+	        	<input type="hidden" name="dia_registro" value="<?php echo $key['dia']; ?>">
+	        </div>
+
+			<div class="input-field col m6 s12">
+			    <input id="new_horaentrada" value="<?php echo $key['hora_entrada']; ?>" name="hora_entrada" type="time">
+			    <label for="new_horaentrada">Hora de entrada</label>
+			</div>	
+
+
+			<div class="input-field col s6">
+				<select id="sitio_entrada" name="sitio_entrada" required>
+			    	<?php foreach ($this->proyectos as $mar) { 
+			     		if ($mar['id']==$key['id_proyecto']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+			     	<?php } if ($mar['id']!=$key['id_proyecto']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+			     	<?php } } ?>  
+				</select>
+				<label>Sitio Entrada</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+			    <input id="new_horasalida" value="<?php echo $key['hora_salida']; ?>" name="hora_salida" type="time">
+			    <label for="new_horasalida">Hora de Salida</label>
+			</div>	
+
+			<div class="input-field col s6">
+				<select id="sitio_entrada" name="sitio_entrada" required>
+			    	<?php foreach ($this->proyectos as $mar) { 
+			     		if ($mar['id']==$key['id_proyecto_salida']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+			     	<?php } if ($mar['id']!=$key['id_proyecto_salida']) { ?>
+			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+			     	<?php } } ?>  
+				</select>
+				<label>Sitio Salida</label>
+			</div>
+
+    	<?php } ?>
+	</div>
+</div>

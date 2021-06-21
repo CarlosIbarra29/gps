@@ -16,7 +16,7 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
-        <a href="/asistencia/asistencia/sitio/<?php echo $this->sitio_name; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+        <a href="/asistencia/asistencia/sitio/<?php echo $this->sitio_name; ?>/proyecto/<?php echo $this->proyecto ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
 </div>
 
@@ -118,7 +118,38 @@
 <div id="modalasistencia" class="modal modal-fixed-footer">
     <div class="modal-content">
     	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Asistencia</span>
-    	<p>A bunch of text</p>
+
+	    <div class="row" style="margin-top: 30px;">
+	        <form action="/personal/requestasistencia" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
+	          	<div class="col m12 s12">
+
+			        <div class="input-field col s6">
+			        	<input placeholder="" id="new_day" name="day" type="date" class="validate">
+			        	<label for="edit_day">Día</label>
+			        </div>
+					<div class="input-field col s6">
+					    <select id="new_proyecto" name="proyecto">
+					      	<option value="0" disabled selected>* Selecciona un Proyecto</option>
+					      	<?php foreach ($this->proyectos as $key){ ?>
+					      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+					      	<?php } ?>
+					    </select>
+					    <label>Proyecto:</label>
+					</div>
+
+			        <div class="input-field col m6 s12">
+			        	<input id="new_horaentrada" name="hora_entrada" type="time">
+			        	<label for="new_horaentrada">Hora de entrada</label>
+			        </div>	
+
+			        <div class="input-field col m6 s12">
+			        	<input id="new_horasalida" name="hora_salida" type="time" >
+			        	<label for="new_horasalida">Hora de Salida</label>
+			        </div>	
+	          	</div>
+	        </form>
+	    </div>  
+
     </div>
     <div class="modal-footer">
         <button type="button" id="add_newasistencia" class="btn">Guardar</button>
@@ -215,27 +246,44 @@
 			                  	<td>
 
 			                  		<?php 
+				                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
+				                  			$dia_pago = 0;
+				                  		}else{
+				                  			$dia_pago = $usr['dia_pago'];
+				                  		} 
+			                  		?>
+
+		                  		<?php 
+				                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
+				                  			$hora_pago = 0;
+				                  		}else{
+				                  			$hora_pago = $usr['hora_pago'];
+				                  		} 
+			                  		?>
+
+			                  		<?php 
 			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
 			                  				$rest = substr($diferencia, 0, -3);
+
 			                  				if($rest == 5){
-			                  					$monto = $usr['dia_pago'];
+			                  					$monto = $dia_pago;
 			                  				}
 
 				                  			if($rest <= 9){
 				                  				$total = $rest - 5;
-				                  				$suma = $total * $usr['hora_pago'];
-				                  				$monto = $usr['dia_pago'] + $suma;
+				                  				$suma = $total * $hora_pago;
+				                  				$monto = $dia_pago + $suma;
 				                  				// echo "menor";
 				                  			}
 
 			                  				if($rest == 10){
-			                  					$monto = $usr['dia_pago'] * 2;
+			                  					$monto = $dia_pago * 2;
 			                  				}
 
 				                  			if($rest > 10){
 				                  				$total = $rest - 10;
-				                  				$suma = $total * $usr['hora_pago'];
-				                  				$dia = $usr['dia_pago']*2;
+				                  				$suma = $total * $hora_pago;
+				                  				$dia = $dia_pago*2;
 
 				                  				$monto = $dia + $suma;
 				                  				// echo "menor";
@@ -246,26 +294,26 @@
 				                  			$rest = substr($diferencia, 0, -3);
 				                  			if($rest < 10){
 				                  				$total = $rest - 2;
-				                  				$monto = $total * $usr['hora_pago'];
+				                  				$monto = $total * $hora_pago;
 				                  				// echo "menor";
 				                  			}
 
 				                  			if($rest > 10){
 				                  				$total = $rest - 10;
-				                  				$multi = $total * $usr['hora_pago'];
-				                  				$monto = $usr['dia_pago'] + $multi;
+				                  				$multi = $total * $hora_pago;
+				                  				$monto = $dia_pago + $multi;
 				                  				// echo "mayor";
 				                  			}
 
 				                  			if($rest == 10){
-				                  				$monto = $usr['dia_pago'];
+				                  				$monto = $dia_pago;
 				                  				// echo "igual";
 				                  			}
 
 			                  			}
 			                  		?>
 
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $monto; ?></span>
+			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
 			                  	</td>
 			                  <?php }else{ ?>
 			                  	<td>00:00</td>
@@ -273,11 +321,14 @@
 			                  	<td>Inasistencia</td>
 			                  	<td>
 			                  		<?php $monto = 0; ?>
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $monto; ?></span>
+			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
 			                  	</td>
 			                  <?php } ?>
 			                  	<td>
 			                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+			                  	</td>
+			                  	<td>
+			                  		<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
 			                  	</td>
 			                  	<?php $montos = $montos + $monto; ?>
 			                </tr>
@@ -303,7 +354,9 @@
         	<div class="row">
         		<div class="col m6 s6"></div>
         		<div class="col m6 s6 text-right">
-        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: $<?php echo $montos; ?></span>
+        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: <!-- $<?php echo $montos; ?> -->
+        				$<?php echo number_format($montos, 2, '.', ','); ?>
+        			</span>
         		</div>
         	</div>
         </div>
@@ -332,7 +385,7 @@
         	</div>
 
         	<div class="col m4 s12 text-center">
-        		<a id="edit_registro"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
+        		
         	</div>
         </div>
 
@@ -366,7 +419,7 @@
         <div class="row div_editinfo oculto">
         	<div class="col m12 s12" style="margin-top: 20px;">
 		        <div class="input-field col s6">
-		        	<input placeholder="" id="edit_day" type="text" class="validate">
+		        	<input placeholder="" id="edit_day" type="date" class="validate">
 		        	<label for="edit_day">Día</label>
 		        </div>
 				<div class="input-field col s6">
@@ -419,7 +472,7 @@
         var hora_entrada = document.getElementById("hora_entrada").value;
         var hora_salida = document.getElementById("hora_salida").value;
 
-        if(hora_entrada == "" ||  hora_salida== ""){
+        if(hora_entrada == "" ||  hora_salida == ""){
             swal({
                 title: "Para asignar al personal es necesario llenar los datos",
             });
@@ -488,4 +541,24 @@
     	$(".div_info").show();
     	$(".div_editinfo").hide();
     });
+
+    $("#add_newasistencia").click(function(){
+    	var day = document.getElementById("new_day").value;
+    	var proyecto = document.getElementById("new_proyecto").value;
+    	var entrada = document.getElementById("new_horaentrada").value;
+    	var salida = document.getElementById("new_horasalida").value;
+
+        if(day == "" ||  proyecto== 0 || entrada == "" || salida == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitnewasistencia, 1500);     
+        }
+    });
+    function submitnewasistencia() { document.getElementById("submit_newasistencia").submit() }
 </script>

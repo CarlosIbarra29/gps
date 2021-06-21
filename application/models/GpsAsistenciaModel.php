@@ -9,6 +9,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         try {
             $row = $this->createRow();
             $row->nombre_sitio = $post['sitio'];
+            $row->id_proyecto = $post['proyecto'];
             $row->user_solicitud = $user;
             $row->user_fecha = $fecha;
             $row->motivo = $post['motivo'];
@@ -62,11 +63,14 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
-    public function insertsitiocuadrilla($post,$table){
+    public function insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
-                'nombre_sitio'=>$post,
+                'nombre_sitio'=>$nombre,
+                'cliente'=>$cliente,
+                'proyecto'=>$tipo_proyecto,
+                'id_proyecto'=>$key
             ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
@@ -291,7 +295,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
                         FROM personal_campo pc 
                         LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
                         LEFT JOIN tipo_proyecto tp on tp.id = pc.tipo_proyectopersonal 
-                        WHERE name_sitio = ? ORDER BY pc.nombre ASC",array($nombre));
+                        WHERE sitio_tipoproyectopersonal = ? ORDER BY pc.nombre ASC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -320,8 +324,12 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ps.id,ps.nombre_sitio,ps.user_solicitud, ps.user_fecha, ps.status, 
-                        ps.asistencia_status, ps.motivo
+                        ps.asistencia_status, ps.motivo, ps.id_proyecto, st.id_tipoproyecto, st.id_sitio, s.nombre,
+                        s.id_cliente, tp.nombre_proyecto
                         FROM personal_solicitudhoras ps
+                        LEFT JOIN sitios_tipoproyecto st on st.id = ps.id_proyecto
+                        LEFT JOIN sitios s on s.id = st.id_sitio
+                        LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
                         WHERE ps.status = ?
                         ORDER BY ps.id ASC
                         LIMIT $offset,$no_of_records_per_page",array($op_status));
@@ -356,9 +364,9 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre_sitio, pc.user_solicitud, pc.user_solicitud,pc.status, 
-                        pc.motivo, pc.asistencia_status
+                        pc.motivo, pc.asistencia_status, pc.id_proyecto
                         FROM personal_solicitudhoras pc 
-                        where pc.nombre_sitio =? and pc.status= 0 OR pc.asistencia_status =0;",array($nombre));
+                        where id_proyecto = ? and pc.status= 0;",array($nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -385,8 +393,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
     public function getpersonalasistencianomina($id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pa.id, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, pa.dia, 
-                        pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto, pa.id_proyecto_salida, 
+            $qry = $db->query("SELECT pa.id as id_pa, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, 
+                        pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
                         pa.ev_entrada, pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
                         pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma
                         FROM personal_asistencia pa 
@@ -399,4 +407,24 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET ASISTENCIA PENDIENTE
+
+
+    public function getpersonalasistencianominaregistro($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pa.id as id_pa, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, 
+                        pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
+                        pa.ev_entrada, pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
+                        pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma
+                        FROM personal_asistencia pa 
+                        LEFT JOIN personal_campo pc on pc.id = pa.id_personal
+                        where pa.id = ? and status_nomina = 0",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA REGISTRO
+
 }
