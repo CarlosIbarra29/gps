@@ -148,7 +148,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status);
         }
 
         if($status == 1){
@@ -163,7 +163,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status);
         }
 
         if($status == 2){
@@ -207,7 +207,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
         
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y H:i:s");
@@ -248,7 +247,7 @@ class AsistenciaController extends Zend_Controller_Action{
         // }
 
         if ($result) {
-            return $this-> _redirect('/asistencia/horaextra/sitio/'.$post['sitio'].'');
+            return $this-> _redirect('/asistencia/horaextra/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].'');
         }else{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -341,17 +340,14 @@ class AsistenciaController extends Zend_Controller_Action{
 
             foreach ($post['ids'] as $key) {
                 $id= $key;
-
                 $wh="id";
                 $table="personal_campo";
                 $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
-
                 // $hora_inicio = $pagi_count[0]['hora_inicio'];
                 // $datetime1 = new DateTime($hora_inicio);
                 // $datetime2 = new DateTime($post['h_salida']);
                 // $interval = $datetime1->diff($datetime2);
                 // $diferencia = $interval->format("%H:%I");
-
                 $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
                 $table="personal_campo";
                 $result=$this->_asistencia->updatehorasalida($id,$table,$post,$proyecto,$urldb);
@@ -438,7 +434,6 @@ class AsistenciaController extends Zend_Controller_Action{
             $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
         }
 
-
         if($post['op_status'] == 0){
             $solicitud = $post['solicitud'];
             $table="personal_userhoras";
@@ -463,8 +458,6 @@ class AsistenciaController extends Zend_Controller_Action{
             $solicitud = $post['solicitud'];
             $result =$this->_asistencia->updaterolregistrohorasolicitud($solicitud,$table);
         }
-
-
 
         if ($result) {
             return $this-> _redirect('/asistencia/detallesolicitudhoras/id/'.$post['solicitud'].'');
@@ -554,8 +547,7 @@ class AsistenciaController extends Zend_Controller_Action{
         foreach ($ver as $key) {
             $id = $key['id_pa'];
             $table="personal_asistencia";
-            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table);
-            
+            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table);  
         }
 
         if ($result) {

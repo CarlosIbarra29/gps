@@ -333,7 +333,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios s on s.id = st.id_sitio
                         LEFT JOIN tipo_proyecto tp on tp.id = st.id_tipoproyecto
                         WHERE ps.status = ?
-                        ORDER BY ps.id ASC
+                        ORDER BY ps.id DESC
                         LIMIT $offset,$no_of_records_per_page",array($op_status));
             $row = $qry->fetchAll();
             return $row;
@@ -398,7 +398,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT pa.id as id_pa, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, 
                         pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
                         pa.ev_entrada, pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
-                        pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma
+                        pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma, 
+                        pa.status_extra
                         FROM personal_asistencia pa 
                         LEFT JOIN personal_campo pc on pc.id = pa.id_personal
                         where pa.id_personal = ? and status_nomina = 0",array($id));

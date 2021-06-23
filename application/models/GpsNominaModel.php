@@ -20,6 +20,32 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function insertnominaextra($table,$post,$day_num,$urldb_entrada,$url_salida,$fecha_fianl){
+    	$status=1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$post['user'],
+                'nombre'=>$post['sitio'],
+                'hora_entrada'=>$post['hora_entrada'],
+                'hora_salida'=>$post['hora_salida'],
+                'dia'=>$fecha_fianl,
+                'day_num'=>$day_num,
+                'id_proyecto'=>$post['proyecto_entrada'],
+                'id_proyecto_salida'=>$post['proyecto_salida'],
+                'ev_entrada'=>$urldb_entrada,
+                'ev_salida'=>$url_salida,
+                'status_extra'=>$status
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
+
+
     public function updatestatusnominauser($id_solicitud,$id,$table){
         $status= 1;
         try {
@@ -66,5 +92,39 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET PAGINATOR PERSONAL
+
+    public function getdetailnomina($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pa.id, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, pa.dia, 
+            			pa.day_num, pa.hora_extra, pa.id_solicitudhora, pa.id_proyecto, pa.id_proyecto_salida, 
+            			pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia, pa.status_nomina, 
+						pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra
+						FROM personal_asistencia pa
+						INNER JOIN personal_campo pc on pc.id=pa.id_personal 
+						where pa.solicitud_nomina = ?",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA REGISTRO
+
+    public function getdetailnominauser($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, 
+            		pp.nombre as puesto
+					FROM personal_campo pc
+					INNER JOIN puestos_personal pp on pp.id = pc.puesto 
+					where pc.id = ?",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA REGISTRO
 
 }
