@@ -26,6 +26,56 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
         }
     }// END INSERT USER
 
+    public function insertnewprestamonomina($post,$table,$id,$descuento,$hoy){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$post['user'],
+                'nombre'=>$post['sitio'],
+                'dia'=>$hoy,
+                'id_proyecto'=>$post['id_proyecto'],
+                'id_proyecto_salida'=>$post['id_proyecto'],
+                'monto_pago'=>$descuento,
+                'solicitud_prestamo'=>$id
+
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
+
+
+    public function updatesolicituprestamouno($id,$table,$num_pago){
+        $status= 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_saldada = ?, status_prestamo = ? WHERE id = ?",array($num_pago,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updatesolicituprestamodos($id,$table,$num_pago){
+    	// var_dump($num_pago);exit;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_saldada =? WHERE id = ?",array($num_pago,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
+
     public function getprestamos($op_status){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

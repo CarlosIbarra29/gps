@@ -567,23 +567,28 @@ class AsistenciaController extends Zend_Controller_Action{
             $interval = $datetime1->diff($datetime2);
             $diferencia = $interval->format("%H:%I");
 
-            if($key['status_extra'] == 0){ 
+            if($ver['solicitud_prestamo'] == 0){ 
+                if($ver['status_extra'] == 0){ 
 
-                if($key['dia_pago'] == "" || $key['dia_pago'] == NULL){
-                    $dia_pago = 0;
-                }else{
-                    $dia_pago = $key['dia_pago'];
-                } 
-                                     
-                if($key['hora_pago'] == "" || $key['hora_pago'] == NULL){
-                    $hora_pago = 0;
-                }else{
-                    $hora_pago = $key['hora_pago'];
-                } 
                                     
-              
-                if($key['day_num'] == 6 || $key['day_num'] == 7){
-                    $rest = substr($diferencia, 0, -3);
+                    if($ver['dia_pago'] == "" || $ver['dia_pago'] == NULL){
+                        $dia_pago = 0;
+                    }else{
+                        $dia_pago = $ver['dia_pago'];
+                    } 
+                                
+
+                    if($ver['hora_pago'] == "" || $ver['hora_pago'] == NULL){
+                        $hora_pago = 0;
+                    }else{
+                        $hora_pago = $ver['hora_pago'];
+                    } 
+                                
+
+                                    
+                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
                         if($rest == 5){
                             $monto = $dia_pago;
                         }
@@ -608,81 +613,86 @@ class AsistenciaController extends Zend_Controller_Action{
                             // echo "menor";
                         }
 
-                }else{
-                    $rest = substr($diferencia, 0, -3);
-                    if($rest < 10){
-                        $total = $rest - 2;
-                        $monto = $total * $hora_pago;
-                        // echo "menor";
-                    }
 
-                    if($rest > 10){
-                        $total = $rest - 10;
-                        $multi = $total * $hora_pago;
-                        $monto = $dia_pago + $multi;
-                        // echo "mayor";
-                    }
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
 
-                    if($rest == 10){
-                        $monto = $dia_pago;
-                        // echo "igual";
-                    }
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $dia_pago + $multi;
+                            // echo "mayor";
+                        }
 
-                }
+                        if($rest == 10){
+                            $monto = $dia_pago;
+                            // echo "igual";
+                        }
+
+                    }
                                     
 
+                }else{ 
+                // <!-- D I A  E X T R A -->
+                                    
+                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
+                        if($rest == 5){
+                            $monto = 0;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $suma;
+                            // echo "menor";
+                        }
+
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $multi;
+                            // echo "mayor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                            // echo "igual";
+                        }
+
+                    }
+
+                } 
             }else{
-            // <!-- D I A  E X T R A -->
-                if($key['day_num'] == 6 || $key['day_num'] == 7){
-                    $rest = substr($diferencia, 0, -3);
 
-                    if($rest == 5){
-                        $monto = 0;
-                    }
-
-                    if($rest <= 9){
-                        $total = $rest - 5;
-                        $monto = $total * $hora_pago;
-                        // echo "menor";
-                    }
-
-                    if($rest == 10){
-                        $monto = 0;
-                    }
-
-                    if($rest > 10){
-                        $total = $rest - 10;
-                        $suma = $total * $hora_pago;
-                        $dia = $dia_pago*2;
-
-                        $monto = $suma;
-                        // echo "menor";
-                    }
-
-                }else{
-                    $rest = substr($diferencia, 0, -3);
-                    if($rest < 10){
-                        $total = $rest - 2;
-                        $monto = $total * $hora_pago;
-                        // echo "menor";
-                    }
-
-                    if($rest > 10){
-                        $total = $rest - 10;
-                        $multi = $total * $hora_pago;
-                        $monto = $multi;
-                        // echo "mayor";
-                    }
-
-                    if($rest == 10){
-                        $monto = 0;
-                        // echo "igual";
-                    }
-
-                }
-
+                $monto = $ver['monto_pago']; 
             } 
-
             $id = $key['id_pa'];
             $monto_pago = $monto;
             $table="personal_asistencia";

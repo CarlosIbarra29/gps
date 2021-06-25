@@ -223,15 +223,19 @@
     	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Prestamo</span>
     	<div class="row">
     		<div class="col m12 s12">
+		    <form action="/prestamo/requestaplicarprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
+		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
+		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
+		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
 		      <table class="table text-left table-hover">
 		          <thead>
 		            <tr>
 		                <th>NO.</th>
 		                <th>Fecha prestamo</th>
-		                <th>Monto</th> 
+		                <th>Monto Total</th> 
 		                <th>Cantidad</th>
 		                <th>Pagos</th>
-		                <th></th>
+		                <th>Descuento</th>
 		            </tr> 
 		          </thead>
 		          <?php
@@ -276,7 +280,8 @@
 		                    
 		        <?php } ?>
 		    </table>
-    		</div>
+		  	</form>
+    	</div>
     	</div>
     </div>
     <div class="modal-footer">
@@ -360,10 +365,20 @@
 
 			                	<?php if($usr['status_asistencia'] == 0){ ?>
 			                	<td>
-			                		<?php echo $usr['hora_entrada']; ?>
+			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                			<?php echo $usr['hora_entrada']; ?>
+			                		<?php }else{ ?>
+			                			Prestamo
+			                		<?php } ?>
+			                		
 			                	</td>
 			                	<td>
-			                		<?php echo $usr['hora_salida']; ?>
+			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                			<?php echo $usr['hora_salida']; ?>
+			                		<?php }else{ ?>
+			                			Prestamo
+			                		<?php } ?>
+
 			                	</td>
 			                        <?php 
 			                            $datetime1 = new DateTime($usr['hora_entrada']);
@@ -376,6 +391,7 @@
 			                  	</td>
 
 			                  	<td>
+			                  	<?php if($usr['solicitud_prestamo'] == 0){ ?>
 			                  		<?php if($usr['status_extra'] == 0){ ?>
 
 			                  		<?php 
@@ -499,10 +515,11 @@
 			                  			}
 			                  		?>
 
-
-
 			                  	<?php  } ?>
+			                <?php }else{ ?>
 
+			                	<?php $monto = $usr['monto_pago']; ?>
+			                <?php } ?>
 
 			                  	<?php if($usr['status_extra'] == 0){ ?>	
 			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
@@ -809,4 +826,21 @@
     $(".check_prestamo").click(function(){
     	$("#add_newprestamo").show();
     });
+
+    $("#add_newprestamo").click(function(){
+    	var user_prestamo = document.getElementById("user_prestamo").value; 
+
+        if(user_prestamo == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_addprestamo, 1500);     
+        }
+    });
+    function submit_addprestamo() { document.getElementById("submit_addprestamo").submit() }
 </script>

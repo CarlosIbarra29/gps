@@ -15,6 +15,7 @@
 
 
 <?php foreach ($this->personal as $key) {
+	$id_user = $key['id'];
 	$nombre = $key['nombre'];
 	$ap = $key['apellido_pa'];
 	$ma = $key['apellido_ma'];
@@ -121,22 +122,49 @@
           		<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pagos realizados</span>
           		<div class="row" style="margin-top: 20px;">
           			<div class="col m12 s12">
-      					<table>
-        					<thead>
-          						<tr>
-              						<th>No</th>
-              						<th>Pago</th>
-              						<th>Fecha Nomina</th>
-              						<th>Id nomina</th>
-          						</tr>
-        					</thead>
+					    <table class="table text-left table-hover">
+					      <thead>
+					        <tr>
+					          <th>Sitio</th>
+					          <th>Día</th>
+					          <th>Monto descuento</th>
+					          <th>Nomina</th>
+					        </tr> 
+					      </thead>
+					      <?php
+					      if ($this->pagos_realizados) { 
+					      foreach ($this->pagos_realizados as $usr) { ?>
+					      <tbody>
+			                <tr>
+			                    <td>
+			                    	<?php echo $usr['nombre'] ?>
+			                    </td>
+			                    <td>
+			                    	<?php echo $usr['dia'] ?>
+			                    </td>
+			                    <td>
+			                    	<?php $monto_pay = substr($usr['monto_pago'], 1);  ?>
+			                    	<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pay, 2, '.', ','); ?></span>
+			                    </td>
 
-        					<tbody>
-          						<tr>
+			                    <td>
+			                    	
+			                    	<a href="/nomina/detallenomina/id/<?php echo $usr['solicitud_nomina'] ?>/user/<?php echo $id_user; ?>">
+			                    		No. <?php echo $usr['solicitud_nomina'] ?>
+			                    	</a>
+			                    </td>
 
-          						</tr>
-        					</tbody>
-      					</table>
+			                </tr>
+					        <?php } }else{ ?>
+					        </tbody> 
+					        <tbody>
+					            <tr>
+					                <td class="text-center" colspan="6"><h4>No hay pagos realizados.</h4></td>
+					            </tr>
+					        </tbody>
+					                    
+					        <?php } ?>
+					    </table>
           			</div>
           		</div>
         	</div>

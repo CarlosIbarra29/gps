@@ -111,7 +111,7 @@
 									<th>Asistencia</th>
 									<th>Entrada</th>
 									<th>Salida</th>
-									<th>Horas trabajadas</th>
+									<th>Información dia</th>
 									<th>Pago</th>
 				                </tr> 
 				            </thead>
@@ -132,29 +132,75 @@
 
 				                	<?php if($usr['status_asistencia'] == 0){ ?>
 				                	<td>
-				                		<?php echo $usr['hora_entrada']; ?>
+				                		<?php if($usr['solicitud_prestamo']==0){ ?>
+				                			<?php echo $usr['hora_entrada']; ?>
+				                		<?php }else{ ?>
+				                			Prestamo
+				                		<?php } ?>
 				                	</td>
 				                	<td>
-				                		<?php echo $usr['hora_salida']; ?>
+				                		<?php if($usr['solicitud_prestamo']==0){ ?>
+				                			<?php echo $usr['hora_salida']; ?>
+				                		<?php }else{ ?>
+				                			Prestamo
+				                		<?php } ?>
 				                	</td>
-				                        <?php 
-				                            $datetime1 = new DateTime($usr['hora_entrada']);
-				                            $datetime2 = new DateTime($usr['hora_salida']);
-				                            $interval = $datetime1->diff($datetime2);
-				                            $diferencia = $interval->format("%H:%I");
-				                         ?>
+                                        <?php 
+                                            $datetime1 = new DateTime($usr['hora_entrada']);
+                                            $datetime2 = new DateTime($usr['hora_salida']);
+                                            $interval = $datetime1->diff($datetime2);
+                                            $diferencia = $interval->format("%H:%I");
+                                            $rest = substr($diferencia, 0, -3);
+                                            $day_num = $usr['day_num']; 
+
+                                                if($day_num == 6 || $day_num == 7){
+                                                    if($rest == 5){
+                                                        $op_day = "1 Día";
+                                                    } 
+                                                if($rest <= 9){
+                                                    $total = $rest - 5;
+                                                    $op_day = "1 dia ".$total."Hrs";
+                                                    // echo "menor";
+                                                }
+
+                                                }else{
+                                                    if($rest < 10){
+                                                        $total = $rest - 2;
+                                                        // echo "menor";
+                                                        $op_day = $total."Hrs";
+                                                    }
+
+                                                    if($rest > 10){
+                                                        $total = $rest - 10;
+                                                        // echo "mayor";
+                                                        $op_day = "1 día"." ".$total."Hrs";
+                                                    }
+
+                                                    if($rest == 10){
+                                                        $monto = $dia_pago;
+                                                        // echo "igual";
+                                                        $op_day = "1 día";
+                                                    }
+                                                }
+                                         ?>
 				                  	<td>
-				                  		<?php echo $diferencia; ?> Hrs
+                                        <?php if($usr['solicitud_prestamo']==0){ ?>
+                                            <?php echo $op_day; ?>
+                                        <?php } ?> 
 				                  	</td>
 
 				                  	<td>
 				                  		<?php $monto = $usr['monto_pago']; ?>
-				                  		<?php if($usr['status_extra'] == 0){ ?>
-				                  			<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+
+				                  		<?php if($usr['solicitud_prestamo']==0){ ?>
+					                  		<?php if($usr['status_extra'] == 0){ ?>
+					                  			<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+					                  		<?php }else{ ?>
+					                  			<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+					                  		<?php } ?>
 				                  		<?php }else{ ?>
-				                  			<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+				                  			<span  style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
 				                  		<?php } ?>
-				                  		
 				                  	</td>
 				                  <?php }else{ ?>
 				                  	<td>00:00</td>
@@ -166,8 +212,21 @@
 				                  	</td>
 				                  <?php } ?>
 				                  	<td>
-				                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+
+					                  	<?php if($usr['solicitud_prestamo'] == 0 ){ ?>
+
+					                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+					                  	<?php } ?>
+
+	                                    <?php if($usr['solicitud_prestamo'] != 0 ){ ?>
+	                                            <a style="font-size:15px; font-weight: bold;" href="/prestamo/detalleprestamo/id/<?php echo $usr['solicitud_prestamo']; ?>">
+	                                            	No. <?php echo $usr['solicitud_prestamo']; ?>
+	                                            </a>
+	                                    <?php }?>
+
 				                  	</td>
+
+
 <!-- 				                  	<td>
 				                  		<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
 				                  	</td> -->

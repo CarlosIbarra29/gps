@@ -73,6 +73,12 @@ class PrestamoController extends Zend_Controller_Action{
         $wh="id";
         $table="puestos_personal";
         $this->view->puestos = $this->_season->GetSpecific($table,$wh,$puesto);
+
+
+        $wh="solicitud_prestamo";
+        $table="personal_asistencia";
+        $this->view->pagos_realizados = $this->_season->GetSpecific($table,$wh,$id_solicitud);
+
     }
 
     public function pdfprestamoAction(){
@@ -150,6 +156,44 @@ class PrestamoController extends Zend_Controller_Action{
             print '</script>'; 
         } 
 
+    }
+
+
+    public function requestaplicarprestamoAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost(); 
+
+        foreach ($post['validar'] as $key) {
+            $id = $key;
+            $wh="id";
+            $table="personal_prestamos";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $descuento ="-".$usr[0]['monto'] / $usr[0]['cantidad_pagos'];
+            $num_pago =$usr[0]['cantidad_saldada'];
+            $new_num_pago = $num_pago + 1;
+            if($new_num_pago == $usr[0]['cantidad_pagos']){
+                $this->_prestamo->updatesolicituprestamouno($id,$table,$new_num_pago);
+            }else{
+                $this->_prestamo->updatesolicituprestamodos($id,$table,$new_num_pago); 
+            }
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y");
+
+            $table = "personal_asistencia";
+            $result = $this->_prestamo->insertnewprestamonomina($post,$table,$id,$descuento,$hoy); 
+        }
+
+        if ($result) {
+            return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+
+             
     }
 
 
