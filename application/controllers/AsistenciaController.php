@@ -115,7 +115,23 @@ class AsistenciaController extends Zend_Controller_Action{
         }
         $id=$this->_getParam('id');
         $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id);
-        $this->view->proyectos =$this->_sitio->tiposproyectospersonal();   
+        $this->view->proyectos =$this->_sitio->tiposproyectospersonal(); 
+
+        $wh="id_personal";
+        $table="personal_prestamos";
+        $sol = $this->view->solicitud_prestamo = $this->_season->GetSpecific($table,$wh,$id);
+        // var_dump($sol);exit;
+
+        if(empty($sol)){
+            // $op = "Sin datos";
+            $op = 0;
+            $this->view->op_solicitud = $op;
+        }else{          
+            // $op = "con datos";
+            $op = 1;
+            $this->view->op_solicitud = $op;
+        }
+
     }
 
     public function editregistroasistenciaAction(){
