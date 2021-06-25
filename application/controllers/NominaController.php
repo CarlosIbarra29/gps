@@ -16,6 +16,9 @@ class NominaController extends Zend_Controller_Action{
         $status = $this->_getParam('status');
         $this->view->status_documento = $status;
 
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
         $st = 0; $pago =0;
         $enproceo =$this->_nomina->getsolicitudnomina($st,$pago);
         $this->view->enproceso = count($enproceo);

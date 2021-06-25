@@ -125,6 +125,60 @@
 
 
 <div class="row">
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12">
+		<div class="row">
+			<div class="col m5 s6">
+				<div class="input-field col s12">
+			    	<select id="search_op">
+			      		<option value="1" selected>Personal</option>
+			      		<option value="2">Sitio</option>
+			      		<option value="3">Id solicitud</option>
+			    	</select>
+			    	<label>Buscar por:</label>
+			  	</div>
+			</div>
+			<div class="col m5 s6">
+				<div class="input-field col s12 op_person">
+					<select id="rol" name="rol" required>
+					    <option value="0" disabled selected>Selecciona una opcion:</option>
+					    <?php foreach ($this->select_personal as $rl) { ?>
+					    <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+					    <?php } ?>
+					</select>
+					<label>Personal</label>
+				</div>
+
+		        <div class="input-field col s12 oculto op_sitio">
+		          	<input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" class="validate">
+		          	<label for="sitio_search">Sitio</label>
+		        </div>
+
+		        <div class="input-field col s12 oculto op_id">
+		          	<input  id="id_search" type="number" class="validate">
+		          	<label for="id_search">Id solicitud</label>
+		        </div>
+
+			</div>
+			<div class="col m2 s12 text-center op_person">
+				<a class="btn" id="btn_person"><i class="material-icons right">search</i></a>
+			</div>
+
+			<div class="col m2 s12 text-center oculto op_sitio">
+				<a class="btn" id="btn_sitio"><i class="material-icons right">search</i></a>
+			</div>
+
+			<div class="col m2 s12 text-center oculto op_id">
+				<a class="btn" id="btn_id"><i class="material-icons right">search</i></a>
+			</div>
+
+		</div>
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+
+
+<div class="row">
   	<div class="col m12 s12">
 	    <div class="row">
 	      	<div class="col m8 s8">
@@ -238,3 +292,28 @@
         </div>
     </div> 
 </div>
+
+<input type="hidden" id="buscador" value="1">
+<script type="text/javascript">
+	$("#search_op").on('change', function() {
+		var value = this.value;
+		document.getElementById("buscador").value= value;
+
+		if(value == 1){
+			$(".op_person").show();
+			$(".op_sitio").hide();
+			$(".op_id").hide();
+		}
+		if(value == 2){
+			$(".op_sitio").show();
+			$(".op_person").hide();
+			$(".op_id").hide();
+		}
+		if(value == 3){
+			$(".op_id").show();
+			$(".op_person").hide();
+			$(".op_sitio").hide();
+		}
+	});
+
+</script>

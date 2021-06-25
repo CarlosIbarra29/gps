@@ -542,12 +542,135 @@ class AsistenciaController extends Zend_Controller_Action{
         $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
         $table = "personal_nomina";
         $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
-
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+        
+
         foreach ($ver as $key) {
+            $datetime1 = new DateTime($key['hora_entrada']);
+            $datetime2 = new DateTime($key['hora_salida']);
+            $interval = $datetime1->diff($datetime2);
+            $diferencia = $interval->format("%H:%I");
+
+            if($key['status_extra'] == 0){ 
+
+                if($key['dia_pago'] == "" || $key['dia_pago'] == NULL){
+                    $dia_pago = 0;
+                }else{
+                    $dia_pago = $key['dia_pago'];
+                } 
+                                     
+                if($key['hora_pago'] == "" || $key['hora_pago'] == NULL){
+                    $hora_pago = 0;
+                }else{
+                    $hora_pago = $key['hora_pago'];
+                } 
+                                    
+              
+                if($key['day_num'] == 6 || $key['day_num'] == 7){
+                    $rest = substr($diferencia, 0, -3);
+                        if($rest == 5){
+                            $monto = $dia_pago;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $suma = $total * $hora_pago;
+                            $monto = $dia_pago + $suma;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = $dia_pago * 2;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $dia + $suma;
+                            // echo "menor";
+                        }
+
+                }else{
+                    $rest = substr($diferencia, 0, -3);
+                    if($rest < 10){
+                        $total = $rest - 2;
+                        $monto = $total * $hora_pago;
+                        // echo "menor";
+                    }
+
+                    if($rest > 10){
+                        $total = $rest - 10;
+                        $multi = $total * $hora_pago;
+                        $monto = $dia_pago + $multi;
+                        // echo "mayor";
+                    }
+
+                    if($rest == 10){
+                        $monto = $dia_pago;
+                        // echo "igual";
+                    }
+
+                }
+                                    
+
+            }else{
+            // <!-- D I A  E X T R A -->
+                if($key['day_num'] == 6 || $key['day_num'] == 7){
+                    $rest = substr($diferencia, 0, -3);
+
+                    if($rest == 5){
+                        $monto = 0;
+                    }
+
+                    if($rest <= 9){
+                        $total = $rest - 5;
+                        $monto = $total * $hora_pago;
+                        // echo "menor";
+                    }
+
+                    if($rest == 10){
+                        $monto = 0;
+                    }
+
+                    if($rest > 10){
+                        $total = $rest - 10;
+                        $suma = $total * $hora_pago;
+                        $dia = $dia_pago*2;
+
+                        $monto = $suma;
+                        // echo "menor";
+                    }
+
+                }else{
+                    $rest = substr($diferencia, 0, -3);
+                    if($rest < 10){
+                        $total = $rest - 2;
+                        $monto = $total * $hora_pago;
+                        // echo "menor";
+                    }
+
+                    if($rest > 10){
+                        $total = $rest - 10;
+                        $multi = $total * $hora_pago;
+                        $monto = $multi;
+                        // echo "mayor";
+                    }
+
+                    if($rest == 10){
+                        $monto = 0;
+                        // echo "igual";
+                    }
+
+                }
+
+            } 
+
             $id = $key['id_pa'];
+            $monto_pago = $monto;
             $table="personal_asistencia";
-            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table);  
+            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table,$monto);  
         }
 
         if ($result) {

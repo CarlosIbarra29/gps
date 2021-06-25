@@ -19,23 +19,30 @@
         </div>
     </div>
  -->
-<?php foreach ($this->personal_nomina as $key) {
-    $id_user = $key['id'];
-    $name_user = $key['nombre'];
-    $app_user = $key['apellido_pa'];
-    $apm_user = $key['apellido_ma'];
+
+<?php foreach ($this->personal as $key) {
+    $nombre = $key['nombre'];
+    $ap = $key['apellido_pa'];
+    $ma = $key['apellido_ma'];
     $imagen = $key['imagen'];
-    $puesto = $key['puesto'];
-    $curp_user = $key['curp'];
-    $nss_user = $key['nss'];
-    $rfc_user = $key['rfc'];
+    $telefono = $key['telefono'];
+    $email = $key['email_personal'];
 } ?>
 
-<?php foreach ($this->solicitud_nomina as $key) {
-    $sitio_solicitud = $key['sitio'];
-    $monto_solicitud = $key['monto_nomina'];
-    $fecha_soliciutd = $key['solicitud_fecha'];
-    $user_solicitud = $key['solicitud_user'];
+<?php foreach ($this->puestos as $key) {
+    $puesto = $key['nombre'];
+} ?>
+
+<?php foreach ($this->solicitud as $value) {
+    $id = $value['id'];
+    $fecha_prestamo = $value['fecha_prestamo'];
+    $monto = $value['monto'];
+    $cantidad_pagos = $value['cantidad_pagos'];
+    $motivo = $value['motivo'];
+    $evidencia = $value['evidencia'];
+    $cantidad_saldada = $value['cantidad_saldada'];
+    $user_prestamo = $value['user_prestamo'];
+    $user_fecha = $value['user_fecha'];
 } ?>
 
 <div class="row" style="margin-top: 10px;">
@@ -62,11 +69,11 @@
 
                 <span class="invoice-number">
                     <img src="/img/logo-2.png" style="width: 125px;" /><br/>
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> No.<?php echo $this->solicitudid_nomina; ?></span>
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> No.<?php echo $this->id_solicitud; ?></span>
                 </span>
                 <div class="row">
                     <div class="company-logo col m12 s12 text-center">
-                        Pago Nomina
+                        Prestamo
                     </div>
                 </div>
             </div>
@@ -77,18 +84,16 @@
             </div>
             <div class="for" style="margin-top: 90px;">
                     <div class="col m12 s12">
-                        <span style="font-size:13px;">Personal: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_user; ?> <?php echo $app_user; ?> <?php echo $apm_user; ?></span> <br>
-                        <span style="font-size:13px;">CURP: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $curp_user; ?></span> <br>
-                        <span style="font-size:13px;">RFC: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $rfc_user; ?></span> <br>
-                        <span style="font-size:13px;">NSS: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nss_user; ?></span> <br>
-                        <span style="font-size:13px;">Puesto: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $puesto; ?></span> <br>
+                        <span style="font-size:14px;">Nombre: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $ma; ?></span> <br>
+                        <span style="font-size:14px;">Puesto: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $puesto; ?></span> <br>
+                        <span style="font-size:14px;">Telefono: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $telefono; ?></span> <br>
+                        <span style="font-size:14px;">Correo: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $email; ?></span> <br>
 
-                    </div> 
+                    </div>
             </div>
 
             <div class="from" style="margin-top: 90px;">
@@ -99,9 +104,16 @@
 
 
                 </p> -->
-                <div class="col m12 s12 text-right">
-                    <a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>"  alt="image-1" style="width: 150px; height: 150px;"/></a>
-                </div>
+                    <div class="col m12 s12">
+                        <span style="font-size:14px;">No: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $id; ?> </span> <br>
+                        <span style="font-size:14px;">Monto: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span> <br>
+                        <span style="font-size:14px;">Cantidad pagos: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $cantidad_pagos; ?></span> <br>
+                        <span style="font-size:14px;">Cantidad pagos saldados: </span>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $cantidad_saldada; ?></span> <br>
+                    </div>
             </div>
             <div class="pdf-body">
 <!--                 <div id="grid">
@@ -115,7 +127,7 @@
                          <table>
                             <thead>
                               <tr>
-                                  <th><span class="title-pdf">Lista de dias trabajados</span></th>
+                                  <th><span class="title-pdf">Motivo del Prestamo</span></th>
                               </tr>
                             </thead>
 
@@ -129,108 +141,58 @@
 
 
                     <div class="col m12 s12">
-                        <table class="table text-left table-hover">
+                        <table>
                             <thead>
                                 <tr>
-                                    <th>Sitio</th>
-                                    <th>Asistencia</th>
-                                    <th>Entrada</th>
-                                    <th>Salida</th>
-                                    <th>Horas trabajadas</th>
-                                    <th>Pago</th>
-                                </tr> 
+                                </tr>
                             </thead>
 
-                            <?php 
-                            $montos = 0;
-                            if ($this->detalle_nomina) { 
-                                foreach ($this->detalle_nomina as $usr) { ?>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <?php echo $usr['nombre']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $usr['dia']; ?>
-                                    </td>
-
-                                    <?php if($usr['status_asistencia'] == 0){ ?>
-                                    <td>
-                                        <?php echo $usr['hora_entrada']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $usr['hora_salida']; ?>
-                                    </td>
-                                        <?php 
-                                            $datetime1 = new DateTime($usr['hora_entrada']);
-                                            $datetime2 = new DateTime($usr['hora_salida']);
-                                            $interval = $datetime1->diff($datetime2);
-                                            $diferencia = $interval->format("%H:%I");
-                                         ?>
-                                    <td>
-                                        <?php echo $diferencia; ?> Hrs
-                                    </td>
-
-                                    <td>
-                                        <?php $monto = $usr['monto_pago']; ?>
-                                        <?php if($usr['status_extra'] == 0){ ?>
-                                            <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
-                                        <?php }else{ ?>
-                                            <span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
-                                        <?php } ?>
-                                        
-                                    
-                                    </td>
-
-                                    <?php if($usr['status_extra'] == 1){ ?>
-                                        <td>
-                                            <span style="font-size:10px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Horas extra</span>
-                                        </td>
-                                    <?php } else{?>
-                                        <td>
-                                            
-                                        </td>
-                                    <?php } ?>
-
-                                  <?php }else{ ?>
-                                    <td>00:00</td>
-                                    <td>00:00</td>
-                                    <td>Inasistencia</td>
-                                    <td>
-                                        <?php $monto = 0; ?>
-                                        <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-                                    </td>
-                                  <?php } ?>
-
-<!--                                    <td>
-                                        <a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
-                                    </td> -->
-                                    <?php $montos = $montos + $monto; ?>
+                                    <td class="text-center"><?php echo $motivo; ?></td>
                                 </tr>
                             </tbody>
-                            <?php } }else{ ?>
-                            <tbody>
-                                <tr>
-                                    <td>No hay registros de la asistencia </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                            <?php } ?>
                         </table>
                     </div>
 
                     <div class="row" >
-                        <div class="col m6 s6 text-center" style="margin-top: 50px;">
-                            <span style="font-size:17px;">Pago de Nomina: </span>
-                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_solicitud, 2, '.', ','); ?></span>
-                        </div>
-                        <div class="col m6 s6 text-right" style="margin-top: 50px;">
-                            <span>_______________________________________</span><br>
-                            <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Firma: <?php echo $name_user; ?> <?php echo $app_user; ?> <?php echo $apm_user; ?></span>
-                        </div>
+                        <!-- <div class="col m12 s12"> -->
+                            <div class="col m12 s12" style="margin-top: 5px;">
+                                 <table>
+                                    <thead>
+                                      <tr>
+                                          <th><span class="title-pdf">Pagos realizados</span></th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                      <tr>
+                                        <!-- <td class="text-center"><?php echo $condiciones_compra; ?></td> -->
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="row">
+                                <div class="col m12 s12">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Pago</th>
+                                                <th>Fecha Nomina</th>
+                                                <th>Id nomina</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <!-- </div> -->
                     </div>
 
                 </div>
@@ -288,7 +250,7 @@
     <script>
       function getPDF(selector) {
         kendo.drawing.drawDOM($(selector)).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "Pago Nomina No.<?php echo $this->solicitudid_nomina; ?> .pdf");
+          kendo.drawing.pdf.saveAs(group, "Prestamo No.<?php echo $this->id_solicitud; ?> .pdf");
         });
       }
 

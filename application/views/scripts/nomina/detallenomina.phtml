@@ -96,7 +96,7 @@
 	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Nomina</span>
 	        		</div>
 	        		<div class="col m6 s6 text-right">
-	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_nomina, 2, '.', ','); ?></span>
+	        			
 	        		</div>
 	        	</div>
 	          	
@@ -106,6 +106,7 @@
 				        <table class="table text-left table-hover">
 				            <thead>
 				                <tr>
+				                	<th>Id</th>
 									<th>Sitio</th>
 									<th>Asistencia</th>
 									<th>Entrada</th>
@@ -121,6 +122,7 @@
 				                foreach ($this->detalle_nomina as $usr) { ?>
 				            <tbody>
 				                <tr>
+				                	<td><?php echo $usr['id']; ?></td>
 				                	<td>
 				                		<?php echo $usr['nombre']; ?>
 				                	</td>
@@ -146,141 +148,13 @@
 				                  	</td>
 
 				                  	<td>
-
-			                  		<?php if($usr['status_extra'] == 0){ ?>
-
-			                  		<?php 
-				                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
-				                  			$dia_pago = 0;
-				                  		}else{
-				                  			$dia_pago = $usr['dia_pago'];
-				                  		} 
-			                  		?>
-
-		                  			<?php 
-				                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
-				                  			$hora_pago = 0;
-				                  		}else{
-				                  			$hora_pago = $usr['hora_pago'];
-				                  		} 
-			                  		?>
-
-			                  		<?php 
-			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
-			                  				$rest = substr($diferencia, 0, -3);
-
-			                  				if($rest == 5){
-			                  					$monto = $dia_pago;
-			                  				}
-
-				                  			if($rest <= 9){
-				                  				$total = $rest - 5;
-				                  				$suma = $total * $hora_pago;
-				                  				$monto = $dia_pago + $suma;
-				                  				// echo "menor";
-				                  			}
-
-			                  				if($rest == 10){
-			                  					$monto = $dia_pago * 2;
-			                  				}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$suma = $total * $hora_pago;
-				                  				$dia = $dia_pago*2;
-
-				                  				$monto = $dia + $suma;
-				                  				// echo "menor";
-				                  			}
-
-
-			                  			}else{
-				                  			$rest = substr($diferencia, 0, -3);
-				                  			if($rest < 10){
-				                  				$total = $rest - 2;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$multi = $total * $hora_pago;
-				                  				$monto = $dia_pago + $multi;
-				                  				// echo "mayor";
-				                  			}
-
-				                  			if($rest == 10){
-				                  				$monto = $dia_pago;
-				                  				// echo "igual";
-				                  			}
-
-			                  			}
-			                  		?>
-
-			                  	<?php }else{ ?>
-			                  		<!-- D I A  E X T R A -->
-			                  		<?php 
-			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
-			                  				$rest = substr($diferencia, 0, -3);
-
-			                  				if($rest == 5){
-			                  					$monto = 0;
-			                  				}
-
-				                  			if($rest <= 9){
-				                  				$total = $rest - 5;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-			                  				if($rest == 10){
-			                  					$monto = 0;
-			                  				}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$suma = $total * $hora_pago;
-				                  				$dia = $dia_pago*2;
-
-				                  				$monto = $suma;
-				                  				// echo "menor";
-				                  			}
-
-
-			                  			}else{
-				                  			$rest = substr($diferencia, 0, -3);
-				                  			if($rest < 10){
-				                  				$total = $rest - 2;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$multi = $total * $hora_pago;
-				                  				$monto = $multi;
-				                  				// echo "mayor";
-				                  			}
-
-				                  			if($rest == 10){
-				                  				$monto = 0;
-				                  				// echo "igual";
-				                  			}
-
-			                  			}
-			                  		?>
-
-
-
-			                  	<?php  } ?>
-
-
-			                  	<?php if($usr['status_extra'] == 0){ ?>	
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	<?php }else{ ?>
-			                  		<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	<?php } ?>
-			                  		
+				                  		<?php $monto = $usr['monto_pago']; ?>
+				                  		<?php if($usr['status_extra'] == 0){ ?>
+				                  			<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+				                  		<?php }else{ ?>
+				                  			<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
+				                  		<?php } ?>
+				                  		
 				                  	</td>
 				                  <?php }else{ ?>
 				                  	<td>00:00</td>
@@ -314,6 +188,14 @@
 				        </table>
 	          		</div>	
 	          	</div>
+
+	          	<div class="row">
+	          		<div class="col m12 s12 text-right">
+	          			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($montos, 2, '.', ','); ?></span>
+	          		</div>
+	          	</div>
+
+
 	        </div>
       	</div>
     </div>
