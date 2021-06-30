@@ -661,7 +661,7 @@ class HerramientaController extends Zend_Controller_Action{
         $table="cobro_herramientas";
         
         date_default_timezone_set('America/Mexico_City');
-        $hoy = date("d-m-Y");
+        $hoy = date("d-m-Y H:i:s");
 
         foreach ($idhr as $key => $value) {
             

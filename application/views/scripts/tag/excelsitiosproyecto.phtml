@@ -1,0 +1,140 @@
+<?php 
+function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+	display: none;
+}
+
+.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6">
+			<a href="/tag/addconsumo" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+	</div>
+	<div class="col m6 s6 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'Sitios_Proyecto.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Sitios-Proyecto</span>
+    </div>
+</div>
+
+
+<div class="row excel-div table_wrapper" id="tab1">
+	<table class="table text-left table-hover">
+		<thead>
+			<tr>
+				<th>Id Sitio</th>	
+				<th>Id cliente</th>
+				<th>Nombre</th>
+        		<th>Cliente</th>
+        		<!-- <th>Direccion</th> -->
+        		<th>Ciudad</th>
+        		<th>Estado</th>
+        		<th>Region</th>
+        		<th>Id Proyecto</th>
+        		<th>Tipo Proyecto</th>
+        		<th>Nombre Proyecto</th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->sitios as $usr) { ?>
+		<tbody>
+			<tr>
+				<td><?php echo $usr["id"]; ?></td>
+				<td><?php echo $usr["id_cliente"]; ?></td>
+				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+				<!-- <td><?php echo eliminar_acentos(preg_replace('/[.,]/', '', $usr['direccion'])); ?></td> -->
+				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+				<td><?php echo $usr["region"]; ?></td>
+        		<td><?php echo $usr["id_proyecto"]; ?></td>
+        		<td><?php echo $usr["id_tipoproyecto"]; ?></td>
+        		<td><?php echo $usr["nombre_proyecto"]; ?></td>
+			</tr>
+		</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+<script type="text/javascript">
+	function exportTableToCSV(html, filename) {
+	    var csv = [];
+	    var rows = document.querySelectorAll("table tr");
+	    for(var i = 0; i < rows.length; i++){
+	        var row = [], cols = rows[i].querySelectorAll("td, th");
+	        for(var j = 0; j < cols.length; j++){
+	            row.push(cols[j].innerText);
+	        }
+	        csv.push(row.join(","));
+	    }
+	    downloadCSV(csv.join("\n"), filename);
+	}
+
+	function downloadCSV(csv, filename) {
+	    var csvFile;
+	    var downloadLink;
+		if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+			alert("Your browser doesn't support Blobs");
+			return;
+		}
+	    csvFile = new Blob([csv], {type:"text/csvcsv"});
+	    downloadLink = document.createElement("a");
+	    downloadLink.download = filename;
+	    downloadLink.href = window.URL.createObjectURL(csvFile);
+	    downloadLink.style.display = "none";
+	    document.body.appendChild(downloadLink);
+	    downloadLink.click();
+	}
+</script>

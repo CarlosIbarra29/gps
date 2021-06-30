@@ -485,7 +485,7 @@ class VehiculosController extends Zend_Controller_Action{
         if($this->getRequest()->getPost()){
 
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
             
             $id = $post['responsable'];
             $table = "tarjeta_efecticard";
@@ -549,7 +549,7 @@ class VehiculosController extends Zend_Controller_Action{
         if($this->getRequest()->getPost()){
             
             date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d-m-Y");
+            $hoy = date("d-m-Y H:i:s");
 
             $table="vehiculos_operadores";
                 $name = $_FILES['archivo2']['name'];

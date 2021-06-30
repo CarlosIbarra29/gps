@@ -1,0 +1,287 @@
+<?php 
+  function isActhref($nameBtn,$urlname){
+      if($nameBtn==1 && $urlname==null){
+        return "active"; 
+      }
+      return ($nameBtn == $urlname)?"active":"";
+  }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+ ?>
+
+<style type="text/css">
+  .oculto{display: none;}
+
+  .table_wrapper{
+    overflow-x: auto;
+  }
+</style>
+
+<div class="row">
+  <div class="col m6 s6" style="margin-top: 10px;">
+   
+  </div>
+  
+
+  <div class="col m6 s6 text-right" style="margin-top: 10px;">
+    <a class="green btn modal-trigger" href="#modal1">Cargar Consumo TAG</a>
+  </div>
+</div>
+
+
+<div class="row" style="margin-top: 20px;">
+
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Consumos TAG</span>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col m12 s12">
+        
+        <div class="row" style="margin-top: 20px;">
+            <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">TAGS</span>
+            </div>
+        </div>
+
+
+        <div class="col m12 s12 table_wrapper">
+            <table class="table text-left table-hover ">
+                <thead>
+                    <tr>
+                        <th class="text-center"><b>No.</b></th>
+                        <th  class="text-center"><b>Número de TAG</b></th>
+                        <th  class="text-center"><b>Detalles</b></th>
+                        <th  class="text-center"><b>Eliminar</b></th>
+                    </tr> 
+                </thead>
+
+                <?php
+                if ($this->paginator) { 
+                foreach ($this->paginator as $tags) { ?>
+
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <?php echo @$contar+=1; ?>
+                            </td>
+                            <td  class="text-center">
+                                <?php echo $tags['tag']; ?>
+                            </td>
+                            <td  class="text-center">
+                                <a href="/tag/detailconsumo/id/<?php echo $tags["tag"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                            </td>
+
+                            <td  class="text-center">
+                                <a class="delete" data-id="<?php echo $tags["tag"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                            </td>
+                        </tr>
+                    <?php } }else{ ?>
+                </tbody> 
+
+                <tbody>
+                    <tr>
+                        <td class="text-center" colspan="6"><h4>No hay TAGS insertados.</h4></td>
+                    </tr>
+                </tbody>
+              <?php } ?>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Carga masiva Consumo TAG</span>
+        <div class="row">
+            <div class="col m12 s12" style="margin-top: 20px;">
+              <div class="col m6 s6">
+                <span>* Para realizar la carga masiva de forma adecuada es importante que se haga con el siguiente formato, el archivo debe tener la extensión .csv</span> <br>
+                <a title="Descargar Archivo" href="/img/cargamasiva_tag.csv" download="/img/cargamasiva_tag.csv" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Formato Consumo TAG </a>
+              </div>
+
+              <div class="col m6 s6">
+                <span>* Reporte de Sitios y poryectos.</span> <br>
+                <span><b>* Si el sitio es oficina, colocar 0 en sitio y proyecto</b></span><br><br>
+                <!-- <a class="btn" href="/tag/excelsitios"><i class="material-icons right">insert_drive_file</i>Ver excel</a> -->
+                <a title="Descargar Archivo" href="/tag/excelsitiosproyecto" style="color: blue; font-size:18px;"> <i class="material-icons left">insert_drive_file</i> Ir a Reporte </a>
+              </div>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m12 s12">
+                <form action="/tag/cargamasivafacturas" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cargatag">
+
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Agregar archivo</span>
+                            <input type="file" name="archivo">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="valida_file" type="text">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" id="add_consumo" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+
+</div>
+
+
+
+
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+      $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+  	});
+
+
+    $("#add_consumo").click(function(){
+      var validate = document.getElementById("valida_file").value;
+      if(validate == ""){
+            swal({
+              title: "Para continuar debes agregar un archivo",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+        setTimeout(submittag, 1500);   
+      }
+    });
+
+    function submittag() { document.getElementById("submit_cargatag").submit() }
+
+
+$(".delete").click(function(){
+  swal({
+    title: "¿Estás seguro de eliminar el tag y todos sus registros?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });  
+        var id = $(this).data('id')
+            var request = $.ajax({
+                url:"/tag/requestdeltag",
+                method:"POST",
+                data: { id: id },
+                processData: true,
+                // contentType: false,
+            });
+              //-------------------end de ajax---------------------------
+
+                //-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+                      //-------------------end de respuesta ajax---------------------
+             return false;
+
+
+    } else {
+      swal("El cambio de status fue cancelado!");
+    }
+
+  });
+
+});
+
+</script>
