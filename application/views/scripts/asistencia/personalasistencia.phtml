@@ -109,8 +109,16 @@
 </div>
 
 <div class="row">
-	<div class="col m12 s12 text-right">
-		  <a class=" btn modal-trigger" href="#modalasistencia">Agregar Asistencia</a>
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12 text-right">
+		<div class="col m6 s6">
+			<?php if($this->op_solicitud == 1){ ?>
+				<a class="red btn modal-trigger" href="#modalprestamo">+ Prestamo pendiente</a>
+			<?php } ?>
+		</div>
+		<div class="col m6 s6">
+			<a class=" btn modal-trigger" href="#modalasistencia">+ Agregar Asistencia</a>
+		</div>
 	</div>
 </div>
 
@@ -118,38 +126,90 @@
 <div id="modalasistencia" class="modal modal-fixed-footer">
     <div class="modal-content">
     	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Asistencia</span>
-
 	    <div class="row" style="margin-top: 30px;">
-	        <form action="/personal/requestasistencia" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addperson">
+	        <form action="/personal/requestasistencia" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_adddayextra">
+	        	<input type="hidden" name="user" value="<?php echo $this->personal_id; ?>">
+	        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
+	        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
+
 	          	<div class="col m12 s12">
+	          		<div class="row">
+				        <div class="input-field col m6 s12">
+				        	<input placeholder="" id="new_day" name="day" type="date" class="validate">
+				        	<label for="edit_day">Día</label>
+				        </div>    			
+	          		</div>
 
-			        <div class="input-field col s6">
-			        	<input placeholder="" id="new_day" name="day" type="date" class="validate">
-			        	<label for="edit_day">Día</label>
+			        <div class="row">
+			        	<div class="col m6 s12">
+			        		<div class="row">
+			        			<div class="col m12 s12">
+			        				<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Entrada</span>
+			        			</div>
+			        		</div>
+							<div class="input-field col m12 s12">
+							    <select id="new_proyecto" name="proyecto_entrada">
+							      	<option value="0" disabled selected>* Selecciona un Proyecto</option>
+							      	<?php foreach ($this->proyectos as $key){ ?>
+							      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+							      	<?php } ?>
+							    </select>
+							    <label>Proyecto entrada:</label>
+							</div>
+					        <div class="input-field col m12 s12">
+					        	<input id="new_horaentrada" name="hora_entrada" type="time">
+					        	<label for="new_horaentrada">Hora de entrada</label>
+					        </div>
+
+						    <div class="file-field input-field col m12 s12">
+						    	<div class="btn">
+						        	<span>Evidencia</span>
+						        	<input type="file" name="url_entrada">
+						    	</div>
+						    	<div class="file-path-wrapper">
+						        	<input class="file-path validate" type="text">
+						    	</div>
+						    </div>
+
+			        	</div>
+
+			        	<div class="col m6 s12">
+			        		<div class="row">
+			        			<div class="col m12 s12">
+			        				<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Salida</span>
+			        			</div>
+			        		</div>
+
+							<div class="input-field col m12 s12">
+							    <select id="new_proyectosalida" name="proyecto_salida">
+							      	<option value="0" disabled selected>* Selecciona un Proyecto</option>
+							      	<?php foreach ($this->proyectos as $key){ ?>
+							      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+							      	<?php } ?>
+							    </select>
+							    <label>Proyecto entrada:</label>
+							</div>
+
+					        <div class="input-field col m12 s12">
+					        	<input id="new_horasalida" name="hora_salida" type="time" >
+					        	<label for="new_horasalida">Hora de Salida</label>
+					        </div>	
+
+						    <div class="file-field input-field col m12 s12">
+						    	<div class="btn">
+						        	<span>Evidencia</span>
+						        	<input type="file" name="url_salida">
+						    	</div>
+						    	<div class="file-path-wrapper">
+						        	<input class="file-path validate" type="text">
+						    	</div>
+						    </div>
+			        	</div>
+	
 			        </div>
-					<div class="input-field col s6">
-					    <select id="new_proyecto" name="proyecto">
-					      	<option value="0" disabled selected>* Selecciona un Proyecto</option>
-					      	<?php foreach ($this->proyectos as $key){ ?>
-					      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
-					      	<?php } ?>
-					    </select>
-					    <label>Proyecto:</label>
-					</div>
-
-			        <div class="input-field col m6 s12">
-			        	<input id="new_horaentrada" name="hora_entrada" type="time">
-			        	<label for="new_horaentrada">Hora de entrada</label>
-			        </div>	
-
-			        <div class="input-field col m6 s12">
-			        	<input id="new_horasalida" name="hora_salida" type="time" >
-			        	<label for="new_horasalida">Hora de Salida</label>
-			        </div>	
 	          	</div>
 	        </form>
 	    </div>  
-
     </div>
     <div class="modal-footer">
         <button type="button" id="add_newasistencia" class="btn">Guardar</button>
@@ -157,6 +217,78 @@
     </div>
 </div>
           
+
+  <div id="modalprestamo" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Prestamo</span>
+    	<div class="row">
+    		<div class="col m12 s12">
+		    <form action="/prestamo/requestaplicarprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
+		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
+		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
+		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
+		      <table class="table text-left table-hover">
+		          <thead>
+		            <tr>
+		                <th>NO.</th>
+		                <th>Fecha prestamo</th>
+		                <th>Monto Total</th> 
+		                <th>Cantidad</th>
+		                <th>Pagos</th>
+		                <th>Descuento</th>
+		            </tr> 
+		          </thead>
+		          <?php
+		          if ($this->solicitud_prestamo) { 
+		          foreach ($this->solicitud_prestamo as $usr) { ?>
+		          <tbody>
+		            <tr>
+		              <td><?php echo $usr['id']; ?></td>
+		              <td><?php echo $usr['fecha_prestamo']; ?></td>
+		              <td>
+		                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>
+		              </td>
+		              <td>
+		                <?php echo $usr['cantidad_pagos']; ?>
+		              </td>
+		              <td>
+		                <?php echo $usr['cantidad_saldada']; ?>
+		              </td>
+		              	<?php 
+		              		$monto_pago = $usr['monto'] / $usr['cantidad_pagos'];
+		              	?>
+
+		              <td>
+		              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
+		              </td>
+		              <td>
+	 					<p>
+							<label>
+								<input type="checkbox" class="check_prestamo" name="validar[]" value="<?php echo $usr['id']; ?>" />
+								<span></span>
+							</label>
+						</p>
+		              </td>
+		            </tr>
+		          <?php } }else{ ?>
+		          </tbody> 
+		        <tbody>
+		            <tr>
+		                <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
+		            </tr>
+		        </tbody>
+		                    
+		        <?php } ?>
+		    </table>
+		  	</form>
+    	</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" id="add_newprestamo" class="btn oculto">Aplicar Descuento</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
 
 
 <!-- <div class="row">
@@ -201,7 +333,7 @@
 					<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
 				</div>
 				<div class="col m6 s6 text-right">
-					  <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a>
+					  <!-- <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a> -->
 				</div>
         	</div>
 			<div class="row">
@@ -233,10 +365,20 @@
 
 			                	<?php if($usr['status_asistencia'] == 0){ ?>
 			                	<td>
-			                		<?php echo $usr['hora_entrada']; ?>
+			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                			<?php echo $usr['hora_entrada']; ?>
+			                		<?php }else{ ?>
+			                			Prestamo
+			                		<?php } ?>
+			                		
 			                	</td>
 			                	<td>
-			                		<?php echo $usr['hora_salida']; ?>
+			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                			<?php echo $usr['hora_salida']; ?>
+			                		<?php }else{ ?>
+			                			Prestamo
+			                		<?php } ?>
+
 			                	</td>
 			                        <?php 
 			                            $datetime1 = new DateTime($usr['hora_entrada']);
@@ -249,6 +391,8 @@
 			                  	</td>
 
 			                  	<td>
+			                  	<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                  		<?php if($usr['status_extra'] == 0){ ?>
 
 			                  		<?php 
 				                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
@@ -258,7 +402,7 @@
 				                  		} 
 			                  		?>
 
-		                  		<?php 
+		                  			<?php 
 				                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
 				                  			$hora_pago = 0;
 				                  		}else{
@@ -318,7 +462,71 @@
 			                  			}
 			                  		?>
 
+			                  	<?php }else{ ?>
+			                  		<!-- D I A  E X T R A -->
+			                  		<?php 
+			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
+			                  				$rest = substr($diferencia, 0, -3);
+
+			                  				if($rest == 5){
+			                  					$monto = 0;
+			                  				}
+
+				                  			if($rest <= 9){
+				                  				$total = $rest - 5;
+				                  				$monto = $total * $hora_pago;
+				                  				// echo "menor";
+				                  			}
+
+			                  				if($rest == 10){
+			                  					$monto = 0;
+			                  				}
+
+				                  			if($rest > 10){
+				                  				$total = $rest - 10;
+				                  				$suma = $total * $hora_pago;
+				                  				$dia = $dia_pago*2;
+
+				                  				$monto = $suma;
+				                  				// echo "menor";
+				                  			}
+
+
+			                  			}else{
+				                  			$rest = substr($diferencia, 0, -3);
+				                  			if($rest < 10){
+				                  				$total = $rest - 2;
+				                  				$monto = $total * $hora_pago;
+				                  				// echo "menor";
+				                  			}
+
+				                  			if($rest > 10){
+				                  				$total = $rest - 10;
+				                  				$multi = $total * $hora_pago;
+				                  				$monto = $multi;
+				                  				// echo "mayor";
+				                  			}
+
+				                  			if($rest == 10){
+				                  				$monto = 0;
+				                  				// echo "igual";
+				                  			}
+
+			                  			}
+			                  		?>
+
+			                  	<?php  } ?>
+			                <?php }else{ ?>
+
+			                	<?php $monto = $usr['monto_pago']; ?>
+			                <?php } ?>
+
+			                  	<?php if($usr['status_extra'] == 0){ ?>	
 			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+			                  	<?php }else{ ?>
+			                  		<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+			                  	<?php } ?>
+			                  		
 			                  	</td>
 			                  <?php }else{ ?>
 			                  	<td>00:00</td>
@@ -590,10 +798,10 @@
                 icon: "success",
                 buttons: false,
             }); 
-            setTimeout(submitnewasistencia, 1500);     
+            setTimeout(submitnewhoraextra, 1500);     
         }
     });
-    function submitnewasistencia() { document.getElementById("submit_newasistencia").submit() }
+    function submitnewhoraextra() { document.getElementById("submit_adddayextra").submit() }
 
 
     $("#add_generarnomina").click(function(){
@@ -614,4 +822,25 @@
         }
     });
     function submitnomina() { document.getElementById("submit_addnomina").submit() }
+
+    $(".check_prestamo").click(function(){
+    	$("#add_newprestamo").show();
+    });
+
+    $("#add_newprestamo").click(function(){
+    	var user_prestamo = document.getElementById("user_prestamo").value; 
+
+        if(user_prestamo == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_addprestamo, 1500);     
+        }
+    });
+    function submit_addprestamo() { document.getElementById("submit_addprestamo").submit() }
 </script>

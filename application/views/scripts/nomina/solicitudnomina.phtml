@@ -91,6 +91,16 @@
 	    		</li>
   			<?php } ?>
 
+<!--   			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>	
+ -->
+
   			<?php if($status == 1){ ?>
   				<li class="tab col s3 active_menu">
   					<a href="/nomina/solicitudnomina/1"><h4>Auditadas</h4></a>
@@ -99,15 +109,6 @@
   			<?php }else{ ?>
   				<li class="tab col s3"><a href="/nomina/solicitudnomina/status/1"><h4>Auditadas</h4></a></li>
   			<?php } ?>
-
-  			<?php if($status == 2){ ?>
-  				<li class="tab col s3 active_menu">
-  					<a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a>
-  					<div></div>
-  				</li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a></li>
-  			<?php } ?>	
 
   			<?php if($status == 3){ ?>
   				<li class="tab col s3 active_menu">
@@ -124,75 +125,133 @@
 
 
 <div class="row">
-  <div class="col m12 s12">
-    <div class="row">
-      <div class="col m8 s8">
-        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de solicitudes de Nomina</span>
-      </div>
-      <div class="col m4 s4 text-right">
+	<div class="col m1 s12"></div>
+	<div class="col m10 s12">
+		<div class="row">
+			<div class="col m5 s6">
+				<div class="input-field col s12">
+			    	<select id="search_op">
+			      		<option value="1" selected>Personal</option>
+			      		<option value="2">Sitio</option>
+			      		<option value="3">Id solicitud</option>
+			    	</select>
+			    	<label>Buscar por:</label>
+			  	</div>
+			</div>
+			<div class="col m5 s6">
+				<div class="input-field col s12 op_person">
+					<select id="rol" name="rol" required>
+					    <option value="0" disabled selected>Selecciona una opcion:</option>
+					    <?php foreach ($this->select_personal as $rl) { ?>
+					    <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+					    <?php } ?>
+					</select>
+					<label>Personal</label>
+				</div>
 
-      </div>
-    </div>
-    <table class="table text-left table-hover">
-      <thead>
-        <tr>
-          <th>NO.</th>
-          <th>Sitio</th>
-          <th>Personal</th>
-          <th>Monto</th>  
-          <th>Status</th>
-        </tr> 
-      </thead>
-      <?php
-      if ($this->paginator) { 
-      foreach ($this->paginator as $usr) { ?>
-      <tbody>
-        <tr>
-          <td>
-            <h5><?php echo $usr['id']; ?></h5>
-          </td>
-          <td>
-            <h5><?php echo $usr['sitio']; ?></h5>
-          </td>
-          <td>
-            <h5>
-              <?php echo $usr['personal']; ?>
-            </h5>
-          </td>
-          <td>
-            <h5>
-            	<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_nomina'], 2, '.', ','); ?></span>		
-            </h5>
-          </td>
-          <td>
-            <?php if($usr['status_auditoria'] == 0){ ?>
-              <div class="chip" id="inactivo_personal">
-                  <img src="/img/gris.jpg" >
-                  En proceso
-                </div>
-            <?php } ?>
+		        <div class="input-field col s12 oculto op_sitio">
+		          	<input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" class="validate">
+		          	<label for="sitio_search">Sitio</label>
+		        </div>
 
-            <?php if($usr['status_auditoria'] == 1){ ?>
-              <div class="chip" id="activo_personal">
-                  <img src="/img/correct.png" >
-                  Auditada
-                </div>
-                
-            <?php } ?>
-          </td>
+		        <div class="input-field col s12 oculto op_id">
+		          	<input  id="id_search" type="number" class="validate">
+		          	<label for="id_search">Id solicitud</label>
+		        </div>
 
-          <td class="text-center">
-            <a href="/asistencia/detallesolicitudhoras/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-          </td>
+			</div>
+			<div class="col m2 s12 text-center op_person">
+				<a class="btn" id="btn_person"><i class="material-icons right">search</i></a>
+			</div>
+
+			<div class="col m2 s12 text-center oculto op_sitio">
+				<a class="btn" id="btn_sitio"><i class="material-icons right">search</i></a>
+			</div>
+
+			<div class="col m2 s12 text-center oculto op_id">
+				<a class="btn" id="btn_id"><i class="material-icons right">search</i></a>
+			</div>
+
+		</div>
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+
+
+<div class="row">
+  	<div class="col m12 s12">
+	    <div class="row">
+	      	<div class="col m8 s8">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de solicitudes de Nomina</span>
+	      	</div>
+	      	<div class="col m4 s4 text-right">
+
+	      	</div>
+	    </div>
+    	<table class="table text-left table-hover">
+      		<thead>
+        		<tr>
+          			<th>NO.</th>
+          			<th>Sitio</th>
+          			<th>Personal</th>
+          			<th>Fecha Solicitud</th>
+          			<th>Monto</th>  
+          			<th>Status</th>
+        		</tr> 
+      		</thead>
+      		<?php
+      		if ($this->paginator) { 
+      		foreach ($this->paginator as $usr) { ?>
+      		<tbody>
+        		<tr>
+          			<td>
+            			<h5><?php echo $usr['id']; ?></h5>
+          			</td>
+          			<td>
+            			<h5><?php echo $usr['sitio']; ?></h5>
+          			</td>
+          			<td>
+            			<h5>
+              				<?php echo $usr['personal']; ?>
+            			</h5>
+          			</td>
+          			<td>
+            			<h5>
+              				<?php echo $usr['solicitud_fecha']; ?>
+            			</h5>
+          			</td>
+
+          			<td>
+            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_nomina'], 2, '.', ','); ?></span>	
+          			</td>
+          			<td>
+            			<?php if($usr['status_auditoria'] == 0){ ?>
+              				<div class="chip" id="inactivo_personal">
+                  				<img src="/img/gris.jpg" >
+                  				En proceso
+                			</div>
+            			<?php } ?>
+
+            			<?php if($usr['status_auditoria'] == 1){ ?>
+              				<div class="chip" id="activo_personal">
+                  				<img src="/img/correct.png" >
+                  				Auditada
+                			</div>
+            			<?php } ?>
+          			</td>
+
+          			<td class="text-center">
+            			<a href="/nomina/detallenomina/id/<?php echo $usr["id"] ?>/user/<?php echo $usr['id_personal']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+          			</td>
 <!--          <td class="text-center">
             <a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
           </td> -->
-        </tr>
-        <?php } }else{ ?>
-        </tbody> 
+        		</tr>
+        	<?php } }else{ ?>
+        	</tbody> 
         <tbody>
             <tr>
-                <td class="text-center" colspan="6"><h4>No hay solicitudes de horas extra.</h4></td>
+                <td class="text-center" colspan="6"><h4>No hay solicitudes de Nominas.</h4></td>
             </tr>
         </tbody>
                     
@@ -233,3 +292,28 @@
         </div>
     </div> 
 </div>
+
+<input type="hidden" id="buscador" value="1">
+<script type="text/javascript">
+	$("#search_op").on('change', function() {
+		var value = this.value;
+		document.getElementById("buscador").value= value;
+
+		if(value == 1){
+			$(".op_person").show();
+			$(".op_sitio").hide();
+			$(".op_id").hide();
+		}
+		if(value == 2){
+			$(".op_sitio").show();
+			$(".op_person").hide();
+			$(".op_id").hide();
+		}
+		if(value == 3){
+			$(".op_id").show();
+			$(".op_person").hide();
+			$(".op_sitio").hide();
+		}
+	});
+
+</script>

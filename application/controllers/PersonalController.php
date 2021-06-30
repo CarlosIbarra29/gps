@@ -12,6 +12,7 @@ class PersonalController extends Zend_Controller_Action{
         $this->_panel = new Application_Model_GpsPanelModel;
         $this->_sitio = new Application_Model_GpsSitioModel;
         $this->_personal = new Application_Model_GpsPersonalModel;
+        $this->_nomina = new Application_Model_GpsNominaModel;
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -450,11 +451,96 @@ class PersonalController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
+        $day_num =  date('N', strtotime($post['day']));
 
-        $datetime1 = new DateTime($post['hora_entrada']);
-        $datetime2 = new DateTime($post['hora_salida']);
-        $interval = $datetime1->diff($datetime2);
-        var_dump($interval->format("%H:%I:%S"));exit;  
+            $name = $_FILES['url_entrada']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url_entrada']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url_entrada']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb_entrada = $url1.$info1;
+                    move_uploaded_file($_FILES['url_entrada']['tmp_name'],$urldb_entrada);
+                }
+            } // END  URLDB_ENTRADA
+
+            $name = $_FILES['url_salida']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url_salida']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url_salida']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb_salida = $url1.$info1;
+                    move_uploaded_file($_FILES['url_salida']['tmp_name'],$urldb_salida);
+                }
+            } // END  URLDB_ENTRADA
+
+
+            $year_dos = substr($post['day'], 0,4); 
+            $mes_dos = substr($post['day'], 5,2); 
+            $day_dos = substr($post['day'], 8,2); 
+            $fecha_fianl = $day_dos."-".$mes_dos."-".$year_dos;
+
+            $table="personal_asistencia";
+            $result = $this->_nomina->insertnominaextra($table,$post,$day_num,$urldb_entrada,$urldb_salida,$fecha_fianl);
+
+        if ($result) {
+            return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+          
     }
+
+    public function formatSizeUnits($bytes){
+        if ($bytes >= 1073741824)
+        {
+            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+        }
+        elseif ($bytes >= 1048576)
+        {
+            $bytes = number_format($bytes / 1048576, 2) . ' MB';
+        }
+        elseif ($bytes >= 1024)
+        {
+            $bytes = number_format($bytes / 1024, 2) . ' KB';
+        }
+        elseif ($bytes > 1)
+        {
+            $bytes = $bytes . ' bytes';
+        }
+        elseif ($bytes == 1)
+        {
+            $bytes = $bytes . ' byte';
+        }
+        else
+        {
+            $bytes = '0 bytes';
+        }
+        return $bytes;
+    }//END FUNCION DE TAMAÑO DE IMAGEN
+
 
 }

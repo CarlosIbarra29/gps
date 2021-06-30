@@ -810,6 +810,15 @@ setInterval(function() {
         if($actual_link == $urldetail){ return "active"; }
     }
 
+    function getprestamo($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+        $namebus = substr(strrchr($actual_link, "="), 1);
+
+        $urldetail = "/prestamo/solicitudprestamo/status/".$filename."";
+        if($actual_link == $urldetail){ return "active"; }
+    }
+
     function gethorasextra($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
         $filename = substr(strrchr($actual_link, "/"), 1);
@@ -906,6 +915,10 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
                     <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
+                <li class="bold moves <?php echo getUrl('/prestamo/solicitudprestamo',$actual_link); echo getprestamo($actual_link);?>">
+                    <a href="/prestamo/solicitudprestamo/status/0">Prestamos<i class="material-icons">attach_money</i></a>
+                </li>
+
 
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitios">Sitios<i class="material-icons">build</i></a>
@@ -1201,7 +1214,9 @@ setInterval(function() {
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
                 </li>
 
-
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
             <?php } ?>
             <!-- END ROL DE COMPRAS Y OFICINA DE PROYECTOS -->
 
@@ -1288,10 +1303,18 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/epp/listasolalmacen',$actual_link); echo getlistasolicitudalm($actual_link);?>">
                     <a href="/epp/listasolalmacen/status/0">Lista de Solicitudes EPP<i class="material-icons">nature_people</i></a>
                 </li>
+                <li class="bold moves <?php echo getUrl('/materiales/materiales',$actual_link);?>"> 
+                    <a href="/materiales/materiales">Solicitud Materiales<i class="material-icons">business_center</i></a>
+                </li> 
 
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
+                    <a href="/envios/solicitudespendientes">Solicitud de envío<i class="material-icons">flight_takeoff</i></a>
+                </li>
+
                 <li class="bold moves <?php echo getUrl('/envios/auditoriaenvios',$actual_link);echo getenvioaud($actual_link);?>">
                     <a href="/envios/auditoriaenvios/status/0">Lista de envíos<i class="material-icons">flight_takeoff</i></a>
                 </li>

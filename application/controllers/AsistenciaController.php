@@ -115,7 +115,23 @@ class AsistenciaController extends Zend_Controller_Action{
         }
         $id=$this->_getParam('id');
         $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id);
-        $this->view->proyectos =$this->_sitio->tiposproyectospersonal();   
+        $this->view->proyectos =$this->_sitio->tiposproyectospersonal(); 
+
+        $wh="id_personal";
+        $table="personal_prestamos";
+        $sol = $this->view->solicitud_prestamo = $this->_season->GetSpecific($table,$wh,$id);
+        // var_dump($sol);exit;
+
+        if(empty($sol)){
+            // $op = "Sin datos";
+            $op = 0;
+            $this->view->op_solicitud = $op;
+        }else{          
+            // $op = "con datos";
+            $op = 1;
+            $this->view->op_solicitud = $op;
+        }
+
     }
 
     public function editregistroasistenciaAction(){
@@ -148,7 +164,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status);
         }
 
         if($status == 1){
@@ -163,7 +179,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status); 
+            $this->view->paginator=$this->_asistencia->getcountsolhoras($offset,$no_of_records_per_page,$op_status);
         }
 
         if($status == 2){
@@ -207,7 +223,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
         
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y H:i:s");
@@ -248,7 +263,7 @@ class AsistenciaController extends Zend_Controller_Action{
         // }
 
         if ($result) {
-            return $this-> _redirect('/asistencia/horaextra/sitio/'.$post['sitio'].'');
+            return $this-> _redirect('/asistencia/horaextra/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].'');
         }else{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -341,17 +356,14 @@ class AsistenciaController extends Zend_Controller_Action{
 
             foreach ($post['ids'] as $key) {
                 $id= $key;
-
                 $wh="id";
                 $table="personal_campo";
                 $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
-
                 // $hora_inicio = $pagi_count[0]['hora_inicio'];
                 // $datetime1 = new DateTime($hora_inicio);
                 // $datetime2 = new DateTime($post['h_salida']);
                 // $interval = $datetime1->diff($datetime2);
                 // $diferencia = $interval->format("%H:%I");
-
                 $proyecto =$pagi_count[0]['sitio_tipoproyectopersonal'];
                 $table="personal_campo";
                 $result=$this->_asistencia->updatehorasalida($id,$table,$post,$proyecto,$urldb);
@@ -438,7 +450,6 @@ class AsistenciaController extends Zend_Controller_Action{
             $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
         }
 
-
         if($post['op_status'] == 0){
             $solicitud = $post['solicitud'];
             $table="personal_userhoras";
@@ -463,8 +474,6 @@ class AsistenciaController extends Zend_Controller_Action{
             $solicitud = $post['solicitud'];
             $result =$this->_asistencia->updaterolregistrohorasolicitud($solicitud,$table);
         }
-
-
 
         if ($result) {
             return $this-> _redirect('/asistencia/detallesolicitudhoras/id/'.$post['solicitud'].'');
@@ -549,13 +558,145 @@ class AsistenciaController extends Zend_Controller_Action{
         $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
         $table = "personal_nomina";
         $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
-
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+        
+
         foreach ($ver as $key) {
+            $datetime1 = new DateTime($key['hora_entrada']);
+            $datetime2 = new DateTime($key['hora_salida']);
+            $interval = $datetime1->diff($datetime2);
+            $diferencia = $interval->format("%H:%I");
+
+            if($ver['solicitud_prestamo'] == 0){ 
+                if($ver['status_extra'] == 0){ 
+
+                                    
+                    if($ver['dia_pago'] == "" || $ver['dia_pago'] == NULL){
+                        $dia_pago = 0;
+                    }else{
+                        $dia_pago = $ver['dia_pago'];
+                    } 
+                                
+
+                    if($ver['hora_pago'] == "" || $ver['hora_pago'] == NULL){
+                        $hora_pago = 0;
+                    }else{
+                        $hora_pago = $ver['hora_pago'];
+                    } 
+                                
+
+                                    
+                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
+                        if($rest == 5){
+                            $monto = $dia_pago;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $suma = $total * $hora_pago;
+                            $monto = $dia_pago + $suma;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = $dia_pago * 2;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $dia + $suma;
+                            // echo "menor";
+                        }
+
+
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $dia_pago + $multi;
+                            // echo "mayor";
+                        }
+
+                        if($rest == 10){
+                            $monto = $dia_pago;
+                            // echo "igual";
+                        }
+
+                    }
+                                    
+
+                }else{ 
+                // <!-- D I A  E X T R A -->
+                                    
+                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
+                        if($rest == 5){
+                            $monto = 0;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $suma;
+                            // echo "menor";
+                        }
+
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $multi;
+                            // echo "mayor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                            // echo "igual";
+                        }
+
+                    }
+
+                } 
+            }else{
+
+                $monto = $ver['monto_pago']; 
+            } 
             $id = $key['id_pa'];
+            $monto_pago = $monto;
             $table="personal_asistencia";
-            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table);
-            
+            $result= $this->_nomina->updatestatusnominauser($id_solicitud,$id,$table,$monto);  
         }
 
         if ($result) {
