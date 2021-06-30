@@ -458,8 +458,10 @@ class EnviosController extends Zend_Controller_Action{
         }
         // var_dump($ver_img);exit;
 
+        $id_vehiculo = 0;
+        $wh="id_status";
         $table="vehiculos";
-        $this->view->vehiculos = $this->_season->GetAll($table);
+        $carro= $this->view->vehiculos= $this->_season->GetSpecific($table,$wh,$id_vehiculo);
 
 
         if($ver[0]['vehiculo_final'] == 0){

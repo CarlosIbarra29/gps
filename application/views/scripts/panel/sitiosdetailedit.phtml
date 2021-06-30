@@ -90,12 +90,12 @@
 					    </select>
 					    <label>Ingeniero de proyecto</label>
 			        </div>
-<!-- 
+
 			        <div class="input-field col m6 s12">
 			          	<i class="material-icons prefix">date_range</i>
 			          	<input id="fecha_cliente" placeholder="dd/mm/yyyy" type="text" name="fecha_cliente" value="<?php echo $key['fecha_cliente'] ?>" class="datepicker">
-			          	<label for="fecha_cliente">Fecha de Inicio:</label>
-			        </div> -->
+			          	<label for="fecha_cliente">Fecha Requerida por el cliente:</label>
+			        </div>
 
 		      	</div>
 
@@ -133,6 +133,7 @@
     		var ingeniero = document.getElementById("ingeniero").value;
     		var sitio = document.getElementById("sitio").value;
     		var residente = document.getElementById("residente").value;
+    		var fecha_clientes = document.getElementById("fecha_cliente").value;
 
 	swal({
 	  title: "Estas seguro de modificar la información?",
@@ -155,7 +156,7 @@
             var request = $.ajax({
                 url:"/panel/requestupdatesitioproyecto",
                 method:"POST",
-                data: { sitio : sitio, operador: operador, id_operador:id_operador, coordinador:coordinador, ingeniero:ingeniero, fecha: fecha_inicio, residente:res, pm_cliente: pm_cliente, fecha_cliente:fecha_inicio },
+                data: { sitio : sitio, operador: operador, id_operador:id_operador, coordinador:coordinador, ingeniero:ingeniero, fecha: fecha_inicio, residente:res, pm_cliente: pm_cliente, fecha_cliente:fecha_inicio, fecha_clientes:fecha_clientes },
                 processData: true,
                 // contentType: false,
             });

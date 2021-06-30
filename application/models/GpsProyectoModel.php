@@ -172,7 +172,7 @@ class Application_Model_GpsProyectoModel extends Zend_Db_Table_Abstract{
                 $ingeniero_id,
                 $ingproyecto_name,
                 $post['fecha'],
-                $post['fecha_cliente'],
+                $post['fecha_clientes'],
                 $post["sitio"]));
             $db->closeConnection();               
             return $qry;
