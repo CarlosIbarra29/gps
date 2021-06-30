@@ -20,7 +20,7 @@ class ComprobacionController extends Zend_Controller_Action{
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
         }    
-    }
+    } 
 
     public function listafacturasAction(){
         $actualpagina=$this->_getParam('pagina');

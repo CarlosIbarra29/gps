@@ -1,0 +1,461 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else { 
+		$pagina = 1;
+	}  
+?> 
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+	if ($this->total >= 1 && $pagina <= $this->total) {
+
+		if (isset($_GET['pagina']) && $this->actpage != 1) {
+			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}else{
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}
+
+		$i = max(2, $pagina - 3);
+		if ($i > 2)
+			$links .= " <li><a>...</a></li> ";
+		for (; $i < min($pagina + 3, $this->total); $i++) {
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}
+		}
+		if ($i != $this->total)
+			$links .= " <li><a>...</a></li> ";
+		if($i ==$this->actpage){
+			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}else{
+			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}
+
+	}           
+}
+
+?>
+
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<!-- Inicio Botones -->
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-left">
+        <a href="/tag/addconsumo" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>   
+    </div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">TAG No. <?php echo $this->tagnumber ?>
+	</div>
+</div>
+<!-- End botones -->
+
+<input type="hidden" name="tagn" id = "tagn" value="<?php echo $this->tagnumber ?>">
+
+<!-- Buscador -->
+<div class="row" style="margin-top:10px;">
+	<div class="col m1 s12"></div>
+	<div class="col m4 s12">
+	  	<div class="input-field col s12">
+	    	<select id="search_tipo">
+	      		<option value="1" selected>Sitio</option>
+	      		<option value="2">Proyecto</option>
+	      		<option value="3">Mes</option>
+	    	</select>
+	    	<label>Buscar por:</label>
+	  	</div>
+	</div>
+	<div class="col m6 s12"> 
+		<div class="col m12 s12" id="search_sitio">
+		    <div class="input-field col m10 s8">
+				<select id="sitio" name="sitio" required>
+					<option value="" disabled selected>* Selecciona una opcion:</option>
+					<option value="0">Oficina</option>
+					<?php foreach ($this->sitio as $sitio) { ?>
+					<option value="<?php echo $sitio["id"]; ?>"><?php echo $sitio["nombre"]; ?> - <?php echo $sitio["id_cliente"]; ?> </option>
+					<?php } ?>
+				</select>
+				<label>Sitio</label>
+		    </div>
+		    <!-- <input type="hidden" id="status_search" value="<?php echo $status; ?>"> -->
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+
+		<div class="col m12 s12 oculto" id="search_proyecto">
+			<div class="input-field col m10 s8">
+				<select id="proyecto" name="proyecto">
+					<option value="0" disabled selected>* Selecciona un Proyecto</option>
+						<?php foreach ($this->proyectos as $key){ ?>
+				      		<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> / <?php echo $key['nombre_proyecto']; ?> - Cliente: <?php echo $key['id_cliente']; ?></option>
+				      	<?php } ?>
+				</select>
+				<label>Proyecto</label>
+			</div>
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador_proyecto" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+
+		<div class="col m12 s12 oculto" id="search_mes">
+			<div class="input-field col m5 s8">
+				<select id="mes" name="mes" required>
+					<option value="" disabled selected>* Selecciona el mes:</option>
+					<?php foreach ($this->meses as $mes) { ?>
+					<option value="<?php echo $mes["id"]; ?>"><?php echo $mes["mes"]; ?></option>
+					<?php } ?>
+				</select>
+				<label>Mes</label>
+		    </div>
+
+		    <div class="input-field col m5 s8">
+				<select id="año" name="año" required>
+					<option value="" disabled selected>* Selecciona el año:</option>
+					<?php foreach ($this->años as $año) { ?>
+					<option value="<?php echo $año["año"]; ?>"><?php echo $año["año"]; ?></option>
+					<?php } ?>
+				</select>
+				<label>Año</label>
+		    </div>
+
+<!-- 		    <div class="input-field col m10 s8">
+		        <input placeholder="Ingresa el usuario" name="usuario" id="name_usuario" type="text" class="validate">
+		        <label for="name_usuario">Buscar por usuario</label>
+		    </div> -->
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador_mes" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+	</div>
+	<div class="col m1 s12"></div>
+</div>
+<!-- End Buscador -->
+
+
+<!-- Table TAG-->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s6 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Consumos TAG</span>
+		</div>
+		<div class="col m6 s6 text-right">
+			<?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
+					<?php  
+					 $suma = 0;
+					if ($this->tag_cont) { 
+						foreach ($this->tag_cont as $tagimp) { ?>
+							<?php $suma = $suma + $tagimp['importe']; ?>
+					<?php } }else{ ?>
+
+					<?php } ?>
+					<span style="font-size: 19px;">Total de consumo histórico:</span>
+					<span style="font-size: 19px; font-weight: bold;">$<?php echo number_format($suma, 2, '.', ','); ?></span>
+
+				<?php }else{ ?>
+			<?php } ?>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Concesionaria</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+					<th>Importe</th>
+					<th>Sitio</th>
+					<th>Proyecto</th>	
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $tag) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $tag["fecha"]; ?></td>
+							<td><?php echo $tag["concesionaria"]; ?></td>
+							<td><?php echo $tag["entrada"]; ?></td>
+							<td><?php echo $tag["salida"]; ?></td>
+							<td><b>$ <?php echo $tag["importe"]; ?></b></td>
+							<td><?php echo $tag["nombre"]; ?> - <?php echo $tag["id_cliente"]; ?></td>
+							<td><?php echo $tag["nombre_proyecto"]; ?></td>
+
+							<!-- <td>
+								<a href="/tag/eppdetail/id/<?php echo $tag["idepp"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+							</td>
+							<td>
+								<a href="/tag/tagedit/id/<?php echo $tag["tag"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+							</td>
+							<td>
+								<a class="delete" data-id="<?php echo $tag["tag"]; ?>" data-nombre="<?php echo $tag["concesionaria"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+							</td> -->
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No se consumo en esté TAG</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+<!-- End Table TAG -->
+
+
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+					<li class="page-item">
+						<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+					</li>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+ 	});
+
+ 	// Inicio Add epp
+
+	$("#addepp").click(function(){
+		var name = document.getElementById("name").value;
+		var talla = document.getElementById("talla").value;
+		var stock = document.getElementById("stock").value;
+		var vida = document.getElementById("vida").value;
+
+		if(name == "" || talla == "" || stock == "" || vida == ""){
+			swal({
+				title: "Para agregar una epp, llena los campos (*)",
+			});
+		}else{
+			swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});
+			setTimeout(submitForm, 500);     
+		}
+	});
+
+	function submitForm() {
+		document.getElementById("submit_epp").submit()
+	}
+	// End Add epp
+
+	//Inicio Delete Ajax
+	$(".delete").click(function(){
+		id=$(this).data('id');
+		nombre=$(this).data('nombre');
+		swal({
+			title: "Estas seguro de eliminar el EPP "+nombre+"?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espera un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+
+				var request = $.ajax({
+					url:"/epp/requestdeleteepp",
+					method:"POST",
+					data: { id : id },
+					processData: true,
+				});
+		//-------------------end de ajax---------------------------
+
+		//-------------peticion de respuesta de ajax------------------
+				request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+		//-------------------end de respuesta ajax---------------------
+			return false;
+
+			} else {
+				swal("La accion fue cancelada!");
+			}
+		});
+	});
+	// End Delete Ajax
+
+
+	$('#search_tipo').on('change', function() {
+		var value = this.value;
+
+		if(value == 1){
+			$("#search_sitio").show();
+			$("#search_proyecto").hide();
+			$("#search_mes").hide();
+		}
+
+		if(value == 2){
+			$("#search_proyecto").show();	
+			$("#search_sitio").hide();
+			$("#search_mes").hide();
+
+		}
+
+		if(value == 3){
+			$("#search_mes").show();
+			$("#search_proyecto").hide();
+			$("#search_sitio").hide();
+
+		}
+	});
+
+
+
+   	$("#buscador").click(function(){
+   		var sitio = document.getElementById("sitio").value;
+   		// var status = document.getElementById("status_search").value;
+   		var tagn = document.getElementById("tagn").value
+		swal({
+			title: "La busqueda será para el sitio con id "+sitio+", Desea continuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+
+			window.location.href = "/tag/consumobuscar/id/"+tagn+"/sitio/"+sitio+"/op/1";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});	
+
+
+   	$("#buscador_proyecto").click(function(){
+   		var proyecto = document.getElementById("proyecto").value;
+   		var tagn = document.getElementById("tagn").value
+   		// var status = document.getElementById("status_search").value;
+		swal({
+			title: "La busqueda sera por proyecto "+proyecto+", Desea continuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+
+			window.location.href = "/tag/consumobuscar/id/"+tagn+"/proyecto/"+proyecto+"/op/2";
+			// window.location.href = "/epp/listasolbuscar/status/"+status+"/id/"+id+"/op/2";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});
+
+   	$("#buscador_mes").click(function(){
+   		var mes = document.getElementById("mes").value;
+   		var año = document.getElementById("año").value;
+   		var tagn = document.getElementById("tagn").value
+   		// var status = document.getElementById("status_search").value;
+
+		swal({
+			title: "La busqueda sera por el mes "+mes+" y el año "+año+", Desea continuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+			window.location.href = "/tag/consumobuscar/id/"+tagn+"/mes/"+mes+"/año/"+año+"/op/3";
+
+			// window.location.href = "/epp/listasolbuscar/status/"+status+"/usuario/"+id+"/op/3";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});
+
+</script>
+
