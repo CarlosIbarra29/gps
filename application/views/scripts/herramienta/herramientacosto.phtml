@@ -79,7 +79,7 @@ if($this->total== 1){
 
 <div class="row">
 	<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cobro sobre Nómina Herramientas
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cobro sobre Nómina Herramientas </span>
 	</div>
 </div>
 <!-- End botones -->
@@ -91,7 +91,7 @@ if($this->total== 1){
   			<?php if($status == 1){ ?>
 	    		<li class="tab col s3 active_menu">
 	    			<a class="" href="/herramienta/herramientacosto/status/1">
-	    			<h4>Pendientes
+	    			<h4>Pendiente
 	  					<div class="chip">
 	    					<?php echo $this->enproceso; ?>
 	  					</div>
@@ -101,7 +101,7 @@ if($this->total== 1){
   			<?php }else{ ?>
 	    		<li class="tab col s3">
 	    			<a class="" href="/herramienta/herramientacosto/status/1">
-	    			<h4>Pendientes
+	    			<h4>Pendiente
 	  					<div class="chip">
 	    					<?php echo $this->enproceso; ?>
 	  					</div>
@@ -109,6 +109,19 @@ if($this->total== 1){
 	    			</a>
 	    		</li>
   			<?php } ?>
+
+  			<?php if($status == 4){ ?>
+  				<li class="tab col s3 active_menu"><a href="/herramienta/herramientacosto/status/4"><h4>Rechazadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/herramienta/herramientacosto/status/4"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+  			<?php if($status == 3){ ?>
+  				<li class="tab col s3 active_menu"><a href="/herramienta/herramientacosto/status/3"><h4>En proceso</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/herramienta/herramientacosto/status/3"><h4>En proceso</h4></a></li>
+  			<?php } ?>
+
 
   			<?php if($status == 2){ ?>
   				<li class="tab col s3 active_menu"><a href="/herramienta/herramientacosto/status/2"><h4>Descontadas</h4></a></li>
@@ -144,7 +157,7 @@ if($this->total== 1){
 <div class="col m12 s12">
 	<div class="row">
 		<div class="col m6 s12 text-left" style="margin-top: 10px;">
-			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Personal
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Herramientas para descuento
 		</div>
 		<!-- <div class="col m6 s6 text-right">
 			<a href="/epp/excelepp"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
@@ -154,10 +167,11 @@ if($this->total== 1){
 		<table class="table text-left table-hover">
 			<thead>
 				<tr>
-					<th>Nombre</th>
-					<th>Apellido Paterno</th>
-					<th>Apellido Materno</th>
-					<th>Puesto</th>
+					<th>id</th>
+					<th>Herramienta</th>
+					<th>Codigo Herramienta</th>
+					<th>Personal</th>
+					<th>Fecha baja</th>
 					<th></th>
 				</tr> 
 			</thead>
@@ -166,16 +180,21 @@ if($this->total== 1){
 				foreach ($this->paginator as $hrc) { ?>
 					<tbody>
 						<tr>
+							<td><?php echo $hrc["id_cobro"]; ?></td>
 							<td><?php echo $hrc["nombre"]; ?></td>
-							<td><?php echo $hrc["apellido_pa"]; ?></td>
-							<td><?php echo $hrc["apellido_ma"]; ?></td>
-							<td><?php echo $hrc["name_puesto"]; ?></td>
+							<td><?php echo $hrc["codigo"]; ?></td>
+							<td>
+								<?php echo $hrc["name_person"]; ?> <?php echo $hrc["apellido_pa"]; ?> <?php echo $hrc["apellido_ma"]; ?>
+							</td>
+							<td>
+								<?php echo $hrc["fecha"]; ?>
+							</td>
 							<td>
 								<?php if ($status == 1) { ?>
-								<a href="/herramienta/costodetail/id/<?php echo $hrc["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								<a href="/herramienta/costodetail/id/<?php echo $hrc["id_cobro"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 								<?php } ?>
 								<?php if ($status == 2) { ?>
-								<a href="/herramienta/costodetailp/id/<?php echo $hrc["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								<a href="/herramienta/costodetailp/id/<?php echo $hrc["id_cobro"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 								<?php } ?>
 							</td>
 						</tr>

@@ -1186,6 +1186,22 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         }
     }   //  Update Status Cobro
 
+     public function Updateagregarmontoherramienta($post,$table){
+        $cobro=2; 
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_cobro = ? WHERE id_herramienta = ?",array(
+                $cobro,
+                $post));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Status Cobro
+
+
 
     public function insertcobroH($post,$table,$urldb,$hoy){
         try {
@@ -1221,7 +1237,41 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
 
 
 
+    public function getallcobroherramientasstatus($status){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ch.id_cobro, ch.id_herramienta, ch.id_personal, ch.status_cobro, ch.fecha, 
+                        hi.codigo, hi.nombre, pc.nombre as name_person, pc.apellido_pa, pc.apellido_ma
+                        FROM cobro_herramientas ch
+                        LEFT JOIN herramienta_inventario hi on hi.id_herramienta = ch.id_herramienta
+                        LEFT JOIN personal_campo pc on pc.id = ch.id_personal 
+                        WHERE ch.status_cobro = ? ",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Consulta Personal deudas Herramientas 
 
+
+    public function getcobroherramientasstatuspag($status,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ch.id_cobro, ch.id_herramienta, ch.id_personal, ch.status_cobro, ch.fecha, 
+                        hi.codigo, hi.nombre, pc.nombre as name_person, pc.apellido_pa, pc.apellido_ma
+                        FROM cobro_herramientas ch
+                        LEFT JOIN herramienta_inventario hi on hi.id_herramienta = ch.id_herramienta
+                        LEFT JOIN personal_campo pc on pc.id = ch.id_personal 
+                        WHERE ch.status_cobro = ?
+                        ORDER BY ch.id_cobro DESC LIMIT $offset,$no_of_records_per_page",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
 
 
 } 

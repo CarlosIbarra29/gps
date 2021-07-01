@@ -630,6 +630,18 @@ setInterval(function() {
         if($actual_link == $getstatus){ return "active"; }
     }
 
+    function getPeticiones($actual_link){
+        $actual_link = "$_SERVER[REQUEST_URI]";
+        $filename = substr(strrchr($actual_link, "/"), 1);
+
+        $namePer = "/peticiones/desarrolladores/status/".$filename."";
+        if($actual_link == $namePer){ return "active"; }
+
+
+        $namePer = "/peticiones/detallepeticion/id/".$filename."";
+        if($actual_link == $namePer){ return "active"; }
+    }
+
     function getTipoproyecto($actual_link){
         $actual_link = "$_SERVER[REQUEST_URI]";
         $filename = substr(strrchr($actual_link, "/"), 1);
@@ -884,6 +896,10 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/panel',$actual_link);?>">
                     <a href="/panel/index/year/<?php echo $year; ?>">Dashboard <i class="material-icons">extension</i></a>
                 </li>
+                <li class="bold moves <?php echo getUrl('/peticiones/desarrolladores',$actual_link);echo getPeticiones($actual_link);?> ?>">
+                    <a href="/peticiones/desarrolladores/status/0">Peticiones del Sistema<i class="material-icons">device_hub</i></a>
+                </li>
+
                 <li class="bold moves <?php echo getUrl('/panel/directorio',$actual_link); ?>">
                     <a href="/panel/directorio">Directorio <i class="material-icons">assignment_ind</i></a>
                 </li>
@@ -1033,6 +1049,9 @@ setInterval(function() {
                     <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
                 </li>
 
+                <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
+                    <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
+                </li>
                 <li class="bold moves <?php echo getUrl('/epp/catalogo',$actual_link); echo getepp($actual_link);?>">
                     <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
                 </li>
@@ -1043,6 +1062,9 @@ setInterval(function() {
                 
                 <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
                     <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
+                    <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/envios/solicitudespendientes',$actual_link);echo getenvio($actual_link);?>">
@@ -1084,12 +1106,7 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>">
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a>
                 </li>
-                <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
-                    <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
-                </li>
-                <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
-                    <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
-                </li>
+
                 
             <?php } ?>
 
@@ -1157,6 +1174,9 @@ setInterval(function() {
             <?php if ($usuarios[0]['fkroles'] == 9) { ?>
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
+                    <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">

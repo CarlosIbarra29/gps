@@ -1218,18 +1218,15 @@ class HerramientaController extends Zend_Controller_Action{
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
-        $table="personal_campo";
-        $sql = $this->_her->GetPersonalCobroH($table);
+        $st= 1;
+        $sql = $this->_her->getallcobroherramientasstatus($st);
         $total = count($sql);
         $this->view->enproceso=$total;
 
         $status = $this->_getParam('status');
         $this->view->status_cobro=$status;
 
-        if($status == 1){
-
-            $table="personal_campo";
-            $herracobros=$this->_her->GetPersonalCobroH($table);
+            $herracobros=$this->_her->getallcobroherramientasstatus($status);
             $count=count($herracobros);
 
             if (isset($_GET['pagina'])) {
@@ -1245,30 +1242,7 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $table="personal_campo";
-            $sql= $this->view->paginator= $this->_her->GetpaginationcobroH($table,$offset,$no_of_records_per_page);  
-        }
-
-        if($status == 2){
-
-            $table="personal_campo";
-            $herracobros=$this->_her->GetPersonalPagoH($table);
-            $count=count($herracobros);
-
-            if (isset($_GET['pagina'])) {
-                $pagina = $_GET['pagina'];
-            } else {
-                $pagina= $this->view->pagina = 1;
-            } 
-
-            $no_of_records_per_page = 15;
-            $offset = ($pagina-1) * $no_of_records_per_page; 
-            $total_pages= $count;
-
-            $this->view->totalpage = $total_pages;
-            $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $table="personal_campo";
-            $sql= $this->view->paginator= $this->_her->GetpaginationPagoH($table,$offset,$no_of_records_per_page); 
-        }
+            $sql= $this->view->paginator= $this->_her->getcobroherramientasstatuspag($status,$offset,$no_of_records_per_page);  
 
     }// END Cobro EPP
 
@@ -1339,21 +1313,60 @@ class HerramientaController extends Zend_Controller_Action{
         }
     }
 
-
     public function costodetailAction(){
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
-            $this->view->personal= $this->_her->GetPersonal($id);
-
+            $wh="id_cobro";
             $table="cobro_herramientas";
-            $wh="id_personal";
-            $cobro=1;
-            $this->view->hercobro = $this->_her->GetHerCobro($table,$wh,$id,$cobro);
+            $inf_user =$this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+            $id_herramienta = $inf_user[0]['id_herramienta'];
+            $id_user = $inf_user[0]['id_personal'];
+
+            $table="personal_campo";
+            $wh="id";
+            $per =$this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
+            $table="herramienta_inventario";
+            $wh="id_herramienta";
+            $this->view->herramienta = $this->_season->GetSpecific($table,$wh,$id_herramienta);
+
+            $puesto = $per[0]['puesto'];
+            $wh="id";
+            $table="puestos_personal";
+            $this->view->puestos = $this->_season->GetSpecific($table,$wh,$puesto);
 
         }else {
             return $this-> _redirect('/');
         }  
     } // Detalles de Herramienta a Cobrar
+
+
+    public function pdfherramientacobroAction(){
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $wh="id_cobro";
+            $table="cobro_herramientas";
+            $inf_user =$this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+            $id_herramienta = $inf_user[0]['id_herramienta'];
+            $id_user = $inf_user[0]['id_personal'];
+
+            $table="personal_campo";
+            $wh="id";
+            $per =$this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
+            $table="herramienta_inventario";
+            $wh="id_herramienta";
+            $this->view->herramienta = $this->_season->GetSpecific($table,$wh,$id_herramienta);
+
+            $puesto = $per[0]['puesto'];
+            $wh="id";
+            $table="puestos_personal";
+            $this->view->puestos = $this->_season->GetSpecific($table,$wh,$puesto);
+
+        }else {
+            return $this-> _redirect('/');
+        }        
+    }
 
     public function costodetailpAction(){
         if($this->_hasParam('id')){
@@ -1493,10 +1506,53 @@ class HerramientaController extends Zend_Controller_Action{
     }
 
 
+    public function requestaddpagoherramientaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
 
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $nombre_usuario = $usr[0]['nombre']. " " .$usr[0]['ap']. " ".$usr[0]['am'];
 
-    
+            $name = $_FILES['url']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/herramienta/cobros/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                }
+            }
 
+        var_dump($post);exit;
+
+        $table="cobro_herramientas";
+        $result = $this->_her->Updateagregarmontoherramienta($post,$table,$urldb,$hoy);
+        if ($result) {
+            return $this-> _redirect('/herramienta/costodetail/id/'.$post['id_solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }
+
+    } 
 
 
 
