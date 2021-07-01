@@ -27,6 +27,12 @@ class EppController extends Zend_Controller_Action{
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
+        $table = "epp_catalogo"; 
+        $this->view->alertas=$this->_epp->GetEPPxVen($table);
+
+        $table = "epp_catalogo"; 
+        $this->view->alertasvencidas=$this->_epp->GetEPPSinStock($table);
+
         $table="epp_tipo";
         $this->view->eppt = $this->_season->GetAll($table);
 
@@ -488,6 +494,52 @@ class EppController extends Zend_Controller_Action{
             $letra = $post['epp'];
         
             $result = $this->_epp->consultaTallas($letra);
+
+            print json_encode($result);
+
+            exit;
+            
+            // return $html;
+
+            // $html="";
+
+            // // foreach ($result as $key => $value) {
+        
+            //     $html.="<option value='".$value['idepp']."'>".$value['talla']."</option>";
+        
+            // }
+        
+        //     echo $html;
+
+        //     if ($result) {
+        
+        //         echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
+        //     }else{
+        
+        //         print '<script language="JavaScript">';
+        //         print 'alert("Ocurrio un error: Comprueba los datos.");';
+        //         print '</script>';
+        
+        //     }
+        
+         }
+    }//END REQUEST get TALLAS
+
+
+    public function gettallassinAction(){
+
+        $this->_helper->layout()->disableLayout();
+
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+        
+            $letra = $post['epp'];
+        
+            $result = $this->_epp->consultaTallassin($letra);
 
             print json_encode($result);
 
@@ -1092,7 +1144,7 @@ class EppController extends Zend_Controller_Action{
         $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
 
         $table="epp_catalogo";
-        $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
+        $hola=$this->view->eppn= $this->_epp->GetcatalogoSol($table);
 
         $this->view->eppxasignar = $this->_epp->GetEppXasg($id);
         
@@ -1257,7 +1309,7 @@ class EppController extends Zend_Controller_Action{
         $this->view->eppasignado = $this->_epp->GetEppAsgAct($id_personal);
 
         $table="epp_catalogo";
-        $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
+        $hola=$this->view->eppn= $this->_epp->GetcatalogoSol($table);
 
         $this->view->eppxasignar = $this->_epp->GetEppXasg($id);
 

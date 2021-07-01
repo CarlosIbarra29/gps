@@ -28,6 +28,14 @@ class TagController extends Zend_Controller_Action{
 
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
+
+        $id_user=$this->_session->id;
+        $this->view->user_list=$id_user;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id_user);
+        $this->view->user_rol=$usr[0]['fkroles'];
         
         $solicitud = $this->_tag->GetTags();
         $count=count($solicitud);
@@ -108,6 +116,28 @@ class TagController extends Zend_Controller_Action{
             }
         }   
     }//END REQUEST DELETE TODO
+
+
+     public function requestdeltagconsumoAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+            $id =  $post['id'];
+            $table="tag";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+            if ($result) {
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            }else{
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            }
+        }   
+    }//END REQUEST DELETE REGISTRO
+    
 
     
     public function detailconsumoAction(){

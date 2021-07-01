@@ -260,6 +260,48 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     } // Consulta Epp Nombre
 
+
+    public function GetcatalogoSol($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT DISTINCT nombre
+                FROM $table
+                where stock >= 1");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Consulta Epp Nombre
+
+
+    public function GetEPPxVen($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM epp_catalogo
+            WHERE stock <= 2 and stock >=1");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // EPP con poco stock.
+
+    public function GetEPPSinStock($table){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM epp_catalogo
+            WHERE stock <= 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // EPP con poco stock.
+
     public function GetEppAsignado($table,$wh,$id,$status){
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -404,11 +446,24 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }   //  Update Stock de EPP
     
-
+// 
     public function consultaTallas($letra){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT idepp, talla FROM epp_catalogo WHERE nombre like '%{$letra}%'");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }// Obetener tallas
+
+
+    public function consultaTallassin($letra){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT idepp, talla FROM epp_catalogo WHERE nombre like '%{$letra}%' and stock >=1");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
