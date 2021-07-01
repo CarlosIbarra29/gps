@@ -192,6 +192,9 @@ if($this->total== 1){
 					<th>Importe</th>
 					<th>Sitio</th>
 					<th>Proyecto</th>	
+					<?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>	
+						<th>Eliminar</th>
+					<?php }else{ } ?>
 				</tr> 
 			</thead>
 			<?php if ($this->paginator ) {
@@ -204,18 +207,32 @@ if($this->total== 1){
 							<td><?php echo $tag["entrada"]; ?></td>
 							<td><?php echo $tag["salida"]; ?></td>
 							<td><b>$ <?php echo $tag["importe"]; ?></b></td>
-							<td><?php echo $tag["nombre"]; ?> - <?php echo $tag["id_cliente"]; ?></td>
-							<td><?php echo $tag["nombre_proyecto"]; ?></td>
+							<td>
+								<?php if($tag['id_sitio'] == 0) { ?>
+									Oficina
+								<?php } else { ?>
+									<?php echo $tag["nombre"]; ?> - <?php echo $tag["id_cliente"]; ?></td>
+								<?php } ?>	
+							<td>
+								<?php if($tag['id_proyecto'] == 0) { ?>
+									Oficina
+								<?php } else { ?>
+									<?php echo $tag["nombre_proyecto"]; ?>
+								<?php } ?>
+
+							</td>
 
 							<!-- <td>
 								<a href="/tag/eppdetail/id/<?php echo $tag["idepp"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
 							</td>
 							<td>
 								<a href="/tag/tagedit/id/<?php echo $tag["tag"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-							</td>
+							</td>-->
+							<?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
 							<td>
-								<a class="delete" data-id="<?php echo $tag["tag"]; ?>" data-nombre="<?php echo $tag["concesionaria"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-							</td> -->
+								<a class="delete" data-id="<?php echo $tag["id"]; ?>" data-nombre="<?php echo $tag["tag"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+							</td> 
+							<?php }else{ } ?>
 						</tr>
 					</tbody>
 				<?php } }else{?>
@@ -311,48 +328,46 @@ if($this->total== 1){
 	}
 	// End Add epp
 
-	//Inicio Delete Ajax
 	$(".delete").click(function(){
-		id=$(this).data('id');
-		nombre=$(this).data('nombre');
 		swal({
-			title: "Estas seguro de eliminar el EPP "+nombre+"?",
-			icon: "warning",
-			buttons: true,
-			dangerMode: true,
-		})
-
+		    title: "¿Estás seguro de eliminar el registro?",
+		    icon: "warning",
+		    buttons: true,
+		    dangerMode: true,
+		 })
 		.then((willDelete) => {
-			if (willDelete) {
-				swal("Espera un momento, la información esta siendo procesada", {
-					icon: "success",
-					buttons: false,
-				});
+		    if (willDelete) {
+		      	swal("Espere un momento, la información esta siendo procesada", {
+		        	icon: "success",
+		        	buttons: false,
+		    	});  
 
-				var request = $.ajax({
-					url:"/epp/requestdeleteepp",
-					method:"POST",
-					data: { id : id },
-					processData: true,
-				});
-		//-------------------end de ajax---------------------------
+		      	var id = $(this).data('id')
+		        var request = $.ajax({
+		            url:"/tag/requestdeltagconsumo",
+		            method:"POST",
+		            data: { id: id },
+		            processData: true,
+		                // contentType: false,
+		        });
+		              //-------------------end de ajax---------------------------
 
-		//-------------peticion de respuesta de ajax------------------
-				request.done(function(response) {
-	                console.log(response);//imprime lo que responde el ajax
-	                // alert
-	                window.location.reload(true);
-	            });
-		//-------------------end de respuesta ajax---------------------
-			return false;
+		                //-------------peticion de respuesta de ajax------------------
+		        request.done(function(response) {
+		            console.log(response);//imprime lo que responde el ajax
+		                // alert
+		            window.location.reload(true);
+		        });
+		                      //-------------------end de respuesta ajax---------------------
+		        return false;
 
-			} else {
-				swal("La accion fue cancelada!");
-			}
+
+		    } else {
+		    	swal("El cambio de status fue cancelado!");
+		    }
+
 		});
 	});
-	// End Delete Ajax
-
 
 	$('#search_tipo').on('change', function() {
 		var value = this.value;

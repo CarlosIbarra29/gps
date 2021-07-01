@@ -58,6 +58,32 @@ if($this->total== 1){
 	.table_wrapper{
 		overflow-x: auto;
 	}
+
+	.icon_style{
+	    font-size: 17px;
+	    font-family: "Nunito", sans-serif;
+	    cursor:pointer; 
+	}
+
+	.colorfont strong{
+		color: rgb(169,68,66);
+		font-weight: bold;
+	}
+
+	.colorfont span{
+		color: rgb(169,68,66);
+		font-weight: 350;
+	}
+
+	.colorfont1 strong{
+		color: rgb(114,97,40);
+		font-weight: bold;
+	}
+
+	.colorfont1 span{
+		color: rgb(114,97,40);
+		font-weight: 350;
+	}
 </style>
 
 
@@ -75,6 +101,56 @@ if($this->total== 1){
 	</div>
 </div>
 <!-- End botones -->
+ 
+<!-- Notificaciones -->
+
+<div class="col m12 s12">
+    <div class="row">
+        <div class="col m12 s12" id="alert_box">
+            <?php if ($this->alertas || $this->alertasvencidas) { ?>
+                <!-- <div class="col m12 s12 text-right">
+                    <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i>
+                </div> -->
+
+                <?php foreach ($this->alertasvencidas as $vencidas) { ?>
+                    <div style="background: rgb(242,222,222);"  class="card darken-1">
+                        <div style="padding: 10px;" class="card-content white-text colorfont">
+                            <strong>¡Cuidado!</strong> 
+                            <span>
+                                El Epp <b><?php echo $vencidas['nombre']; ?></b> con talla <b><?php echo $vencidas['talla']; ?></b> no cuenta con stock !Verificalo!
+                            </span> &nbsp; 
+                            <a href="/epp/eppedit/id/<?php echo $vencidas["idepp"] ?>">
+                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                            </a>
+                        </div>    
+                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                    </div>              
+                <?php } ?>
+
+                <?php foreach ($this->alertas as $not) { ?>
+                    <div style="background: rgb(250,252,217);"  class="card darken-1">
+                        <div style="padding: 10px;" class="card-content white-text colorfont1">
+                            <strong>¡Advertencia!</strong> 
+                            <span>
+                               El EPP <b><?php echo $not['nombre']; ?></b> con talla <b><?php echo $not['talla']; ?></b> tiene un stock de <b><?php echo $not['stock']; ?></b> piezas, Atíendelo
+                            </span> &nbsp; 
+                            <a href="/epp/eppedit/id/<?php echo $not["idepp"] ?>">
+                               <i style="color: rgb(114,97,40);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                            </a>
+                        </div>    
+                        <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                    </div>              
+                <?php } ?>
+
+                <div class="col m12 s12 text-right">
+                    <a><i class="icon_style"  id="alert_close" aria-hidden="true"> Cerrar todo </i></a>
+                </div> 
+            <?php } else { } ?>
+        </div>
+    </div>
+</div>
+
+<!-- end notificaciones  -->
 
 <!-- Buscador -->
 <div class="row">
@@ -372,6 +448,10 @@ if($this->total== 1){
 		}
 	});
 	// End Selected
+
+	$('#alert_close').click(function(){
+	    $( "#alert_box" ).fadeOut( );
+	});
 
 </script>
 

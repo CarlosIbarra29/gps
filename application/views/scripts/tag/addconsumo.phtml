@@ -95,7 +95,9 @@
                         <th class="text-center"><b>No.</b></th>
                         <th  class="text-center"><b>Número de TAG</b></th>
                         <th  class="text-center"><b>Detalles</b></th>
+                        <?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
                         <th  class="text-center"><b>Eliminar</b></th>
+                        <?php }else{ } ?>
                     </tr> 
                 </thead>
 
@@ -114,10 +116,12 @@
                             <td  class="text-center">
                                 <a href="/tag/detailconsumo/id/<?php echo $tags["tag"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
                             </td>
+                            <?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
 
-                            <td  class="text-center">
-                                <a class="delete" data-id="<?php echo $tags["tag"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-                            </td>
+                                <td  class="text-center">
+                                    <a class="delete" data-id="<?php echo $tags["tag"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                </td>
+                            <?php }else{ } ?>
                         </tr>
                     <?php } }else{ ?>
                 </tbody> 
