@@ -20,6 +20,25 @@ class Application_Model_GpsPeticionesModel extends Zend_Db_Table_Abstract{
         }
     }// END INSERT PETICION
 
+
+    public function updatesolicitudpeticiones($post,$table,$hoy,$name_user,$status,$motivo){
+            try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_peticion = ?, user_resolver = ?, fecha_resolver = ?, comentario = ? WHERE id = ?",array(
+                $status,
+                $name_user,
+                $hoy,
+                $motivo,
+                $post['id_solicitud']
+            ));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }// END UPDATE PETICIONES
+
     public function getpeticionesadmin($status){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

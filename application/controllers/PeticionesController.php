@@ -131,9 +131,57 @@ class PeticionesController extends Zend_Controller_Action{
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         }
-
     }
 
+    public function requestupdaterechazarsolicitudAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $id_user = $this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $user= $this->view->rol = $this->_season->GetSpecific($table,$wh,$id_user);
+        $name_user = $user[0]['nombre']." ".$user[0]['ap']." ".$user[0]['am'];
+        $motivo = $post['motivo'];
+        $status = 1;
+        $table="add_peticiones";
+        $result = $this->_peticion->updatesolicitudpeticiones($post,$table,$hoy,$name_user,$status,$motivo);
+        if ($result) {
+            return $this-> _redirect('peticiones/detallepeticion/id/'.$post['id_solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }
+    }
+
+    public function requestupdaterechazarsolicitudautorizarAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $id_user = $this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $user= $this->view->rol = $this->_season->GetSpecific($table,$wh,$id_user);
+        $name_user = $user[0]['nombre']." ".$user[0]['ap']." ".$user[0]['am'];
+        $status = 2;
+        $motivo = NULL;
+        $table="add_peticiones";
+        $result = $this->_peticion->updatesolicitudpeticiones($post,$table,$hoy,$name_user,$status,$motivo);
+        if ($result) {
+            return $this-> _redirect('peticiones/detallepeticion/id/'.$post['id_solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }
+    }
 
 
     public function formatSizeUnits($bytes){

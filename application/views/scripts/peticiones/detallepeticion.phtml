@@ -12,6 +12,7 @@
 	$descripcion = $key['descripcion'];
 	$fecha_peticion = $key['fecha_peticion'];
 	$evidencia = $key['evidencia'];
+	$status_peticion = $key['status_peticion'];
 } ?>
 	
 <?php foreach ($this->usuario as $value) {
@@ -37,34 +38,60 @@
 	<div class="row">
 		<div class="col m6 s12"></div>
 		<div class="col m6 s12">
-			<div class="row">
-				<div class="col m6 s6 text-center">
-					<div class="chip" id="agregar_pago">
-						<img src="/img/gris.jpg" >
-						Finalizada
+
+			<?php if($status_peticion == 0){ ?>
+				<div class="row">
+					<div class="col m6 s6 text-center">
+						<div class="chip" id="agregar_pago">
+							<img src="/img/gris.jpg" >
+							Finalizada
+						</div>
+					</div>
+					<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
+							<img src="/img/gris.jpg" >
+							Rechazar
+						</div>
 					</div>
 				</div>
-				<div class="col m6 s6 text-center">
-					<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
-						<img src="/img/gris.jpg" >
-						Rechazar
+			<?php } ?>
+
+
+			<?php if($status_peticion == 1){ ?>
+				<div class="row">
+					<div class="col m6 s6 text-center">
+					</div>
+					<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
+							<img src="/img/rojo.png" >
+							Rechazada
+						</div>
 					</div>
 				</div>
-			</div>
+			<?php } ?>
+
+
+			<?php if($status_peticion == 2){ ?>
+				<div class="row">
+					<div class="col m6 s6 text-center">
+					</div>
+					<div class="col m6 s6 text-center">
+						<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
+							<img src="/img/correct.png" >
+							Finalizada
+						</div>
+					</div>
+				</div>
+			<?php } ?>
 		</div>	
 	</div>
 <?php } ?>
-
-
-
-
 
 <div class="row">
     <div class="col s12 m12">
       	<div class="card">
 	        <div class="card-content">
 	        	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del usuario</span>
-
 	        	<div class="row" style="margin-top: 10px;">
 	        		<div class="col m12 s12">
 					    <table>
@@ -138,29 +165,78 @@
   	<div id="rechazar" class="modal modal-fixed-footer">
 	    <div class="modal-content">
 	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud </span>
-
 	    	<div class="row" style="margin-top: 20px;">
-	    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
-	    		<div class="col m12 s12">
-			        <div class="input-field col s12">
-			        	<input id="motivo" type="text" class="validate">
-			        	<label for="motivo">Motivo</label>
-			        </div>
-	    		</div>
+	    		<form action="/peticiones/requestupdaterechazarsolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_rechazo">
+		    		<input type="hidden" id="id_solicitud" name="id_solicitud" value="<?php echo $this->id_solicitud; ?>">
+		    		<div class="col m12 s12">
+				        <div class="input-field col s12">
+				        	<input id="motivo_rechazo" name="motivo" type="text" class="validate">
+				        	<label for="motivo_rechazo">Motivo</label>
+				        </div>
+		    		</div>
+	    		</form>
 	    	</div>
-
 	    </div>
 	    <div class="modal-footer">
-    		<button type="button" id="add_generarprestamo" class="btn">Guardar</button>
+    		<button type="button" id="rechazar_peticion" class="btn">Guardar</button>
     		<button  class="modal-close red btn">Cerrar</button>
 	    </div>
   	</div>
-
 
 <script src="/js/lightbox.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
     	$('.modal').modal();
   	});
-       
+
+    $("#rechazar_peticion").click(function(){
+        var motivo = document.getElementById("motivo_rechazo").value;
+
+        if(motivo == ""){
+            swal({
+                title: "Para continuar es necesario agregar el motivo",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_rechazo, 1500);     
+        }
+    });
+    function submit_rechazo() { document.getElementById("submit_rechazo").submit() }
+
+
+   	$("#agregar_pago").click(function(){
+    	id_solicitud = document.getElementById("id_solicitud").value;
+		swal({
+			title: "Estas de cambiar el status de la petición?",
+		  	icon: "warning",
+		  	buttons: true,
+		  	dangerMode: true,
+		})
+		.then((willDelete) => {
+	  		if (willDelete) {
+	    		swal("Bien! La solicitud se elimino!", {
+	      			icon: "success",
+	    		});
+
+            	var request = $.ajax({
+	                url:"/peticiones/requestupdaterechazarsolicitudautorizar",
+	                method:"POST",
+	                data: { id_solicitud : id_solicitud },
+	                processData: true,
+            	});
+		        request.done(function(response) {
+		            console.log(response);
+		            window.location.reload(true);
+		        });
+				//-------------------end de respuesta ajax---------------------
+             	return false;
+	  		} else {
+	    		swal("La accion fue cancelada!");
+	  		}
+		});
+   	});
+
 </script>
