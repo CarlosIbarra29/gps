@@ -4,140 +4,212 @@
 	}
 </style>
 
+
+<?php foreach ($this->user as $key) {	
+	$nombre = $key['nombre'];
+	$ap = $key['apellido_pa'];
+	$ma = $key['apellido_ma'];
+	$telefono = $key['telefono'];
+	$email = $key['email_personal'];
+	$imagen = $key['imagen'];
+} ?>
+
+<?php foreach ($this->puestos as $value) {
+	$puesto= $value['nombre'];
+} ?>
+
+<?php foreach ($this->herramienta as $her) {
+	$nombre_herramienta = $her['nombre'];
+	$codigo = $her['codigo'];
+	$modelo = $her['modelo'];
+	$marca = $her['marca'];
+	$no_serie = $her['no_serie'];
+	$imagen_herramienta = $her['imagen'];
+} ?>
+
+<?php foreach ($this->solicitud as $value) {
+	$fecha_solicitud = $value['fecha'];
+	$id_solicitud = $value['id_cobro']; 
+} ?>
+
+
 <!-- INICIO DETAIL-->
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
-        <a href="/herramienta/herramientacosto/status/1" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
     </div>     
+    <div class="col m6 s6 text-right">
+    	<a class="btn" href="/herramienta/pdfherramientacobro/id/<?php echo $id_solicitud; ?>"><i class="material-icons right">file_download</i>Documento</a>
+    </div>
 </div>
 
 <div class="row">
 	<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">HERRAMIENTA POR COBRAR </span>
-	</div>
-</div>
-
-<div class="row" >
-	<div class="col m12 s12 text-left" style="margin-top: 10px;">
-		<?php foreach ($this->personal as $per) { ?>
-			<span>Personal <br><b><?php echo $per['nombre'];?> <?php echo $per['apellido_pa'];?> <?php echo $per['apellido_ma'];?></b></span>
-		<?php } ?>
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta por cobrar </span> <br>
+		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $id_solicitud; ?></span>
 	</div>
 </div>
 
 <!-- END INICIO DETAIL-->
 
 
-<!-- Inicio Informacion General-->
-<div class="col m12 s12 text-center">
-	<div class="row">
-		<div class="col s12 m12">
-			<div class="card darken-1">
-				<div class="card-content">
-					<div class="row">
-						<div class="col m12 s12 text-left">
-							<h3 class="card-title">Lista de Herramientas</h3>
-							<hr>
-						</div>
-					</div>
-					<div class="row">
-		                    <div class="col m12 s12">
-		                        <table style="font-size:15px;">
-		                            <thead>
-		                                <tr>
-		                                    <th class="text-center"><span>Articulo No.</span></th>
-		                                    <th class="text-center"><span>Código</span></th>
-		                                    <th class="text-center"><span>Nombre</span></th>
-		                                    <th class="text-center"><span>Marca</span></th>
-		                                    <th class="text-center"><span>Modelo</span></th>
-		                                    <th class="text-center"><span>Fecha Descuento</span></th>
-		                                </tr>
-		                            </thead>
-		                            <?php if ($this->hercobro) { ?>
-		                            <?php foreach ($this->hercobro as $hrc){ ?>
-		                            	<input type="hidden" name="idp" value="<?php echo $hrc['id_personal']; ?>">
-		                                <tbody>
-		                                    <tr>
-		                                        <td class="text-center"><?php echo @$contado+=1; ?></td>
-		                                        <td class="text-center"><?php echo $hrc['codigo']; ?></td>
-		                                        <td class="text-center"><?php echo $hrc['nombre']; ?></td>
-		                                        <td class="text-center"><?php echo $hrc['marca']; ?></td>
-		                                        <td class="text-center"><?php echo $hrc['modelo']; ?></td>
-		                                        <td class="text-center"><?php echo $hrc['fecha']; ?></td>
-		                                    </tr>
-		                                </tbody>
-		                            <?php } }else{ ?>
-										<tbody>
-											<tr>
-												<td></td>
-												<td></td>
-												<td>No hay EPP a cobrar</td>
-												<td></td>
-												<td></td>
-											</tr>
-										</tbody>
-									<?php } ?>
-		                        </table>
-		                    </div>
-		                </form>
-					</div>
-					<?php if ($this->hercobro) { ?>
-		                <div class="row">
-		                	<div class="col s12 m12 text-center">
-								<button class="waves-effect btn modal-trigger"  href="#modal1">Liberar Cobro</button>
-							</div>
-						</div>
-					<?php  }else{ }?>
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12">
+		<div class="row">
+			<div class="col m6 s6 text-center">
+				<div class="chip modal-trigger" href="#pago" id="agregar_pago">
+					<img src="/img/gris.jpg" >
+					Agregar pago
+				</div>
+			</div>
+			<div class="col m6 s6 text-center">
+				<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
+					<img src="/img/gris.jpg" >
+					Rechazar
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 </div>
-<!-- End Datos Herramientas-->
 
-<div id="modal1" class="modal modal-fixed-footer">
-	<div class="modal-content">
-		<div class="col m12 s12" style="margin-top: 10px;">
-			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Liberar Cobro
-      	</div>
+  	<div id="pago" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Pago </span>
 
-      	<div class="col m12 s12">
-      		<form action="/herramienta/requestcostoh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cobro">
-      			<?php if ($this->hercobro) { 
-      				foreach ($this->hercobro as $hrc) { ?> 
-      					<input type="hidden" name="idpe" value="<?php echo $hrc['id_personal']; ?>">
-      			<?php } }else{ }?>
-      			<div class="row">
-      				<div class="input-field col m12 s12">
-  						<i class="material-icons prefix">assignment</i>
-  						<input id="name" type="text" name="name" class="validate" required>
-			          	<label for="name">* Nota de descuento:</label>
+	    	<div class="row" style="margin-top: 20px;">
+	    		<form action="/herramienta/requestaddpagoherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
+		    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
+		    		<div class="col m12 s12">
+				        <div class="input-field col m6 s12">
+				        	<input id="monto_pago" name="monto" type="number" class="validate">
+				        	<label for="monto_pago">* Monto</label>
+				        </div>
+
+				        <div class="input-field col m6 s12">
+				        	<input id="parcialidad" name="cantidad" type="number" class="validate">
+				        	<label for="parcialidad">* Parcialidad</label>
+				        </div>
+
+					    <div class="file-field input-field col m12 s12">
+					      <div class="btn">
+					        <span>* Evidencia</span>
+					        <input type="file" name="url">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" id="validate_url" type="text">
+					      </div>
+					    </div>
+
+				        <div class="input-field col s12">
+				        	<input id="comentario_pago" type="text" class="validate">
+				        	<label for="comentario_pago">Comentario</label>
+				        </div>
+		    		</div>
+	    		</form>
+	    	</div>
+
+
+	    </div>
+	    <div class="modal-footer">
+		    <button type="button" id="add_aplicarpago" class="btn">Guardar</button>
+		    <button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
+  	<div id="rechazar" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud </span>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
+	    		<div class="col m12 s12">
+			        <div class="input-field col s12">
+			        	<input id="motivo" type="text" class="validate">
+			        	<label for="motivo">Motivo</label>
 			        </div>
+	    		</div>
+	    	</div>
 
-			        <div class="file-field input-field col m12 s12">
-				    	<div class="btn">
-				        	<span>Comprobante de Descuento</span>
-				        	<input type="file" name="url">
-				      	</div>
-				      	<div class="file-path-wrapper">
-				        	<input class="file-path validate" type="text">
-				      	</div>
-				    </div>
-				</div>
-		</div>
-	</div>
+	    </div>
+	    <div class="modal-footer">
+    		<button type="button" id="add_generarprestamo" class="btn">Guardar</button>
+    		<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
 
-	<div class="modal-footer">
-    		</form>
-    	<button class=" btn" id="addcosto">Guardar</button>	
-    	<button  class="modal-close red btn">Cerrar</button>
+<div class="row">
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Personal </span>
+
+	        	<div class="row" style="margin-top: 20px;">
+	        		<div class="col m12 s12">
+	          			<span style="font-size:14px;">Nombre: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $ma; ?></span> <br>
+	          			<span style="font-size:14px;">Puesto: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $puesto; ?></span> <br>
+	          			<span style="font-size:14px;">Telefono: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $telefono; ?></span> <br>
+	          			<span style="font-size:14px;">Correo: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $email; ?></span> <br>
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-center">
+	        			<?php if($imagen == "" || $imagen == NULL){ ?>
+	        				<a class="example-image-link" href="/img/no_disponible1.png" data-lightbox="example-1"><img class="example-image oculto" src="/img/no_disponible1.png"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+	        			<?php }else{ ?>
+	        			<a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+	        			<?php } ?>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+
+
+    <div class="col s12 m6">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información de la Herramienta </span>
+
+	        	<div class="row" style="margin-top: 20px;">
+	        		<div class="col m12 s12">
+	          			<span style="font-size:14px;">Nombre: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_herramienta; ?> <br>
+	          			<span style="font-size:14px;">Codigo: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $codigo; ?></span> <br>
+	          			<span style="font-size:14px;">Modelo: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $modelo; ?></span> <br>
+	          			<span style="font-size:14px;">Marca: </span>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $marca; ?></span> <br>	        			
+	        		</div>
+	        	</div>
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-center">
+	        			<?php if($imagen_herramienta == "" || $imagen_herramienta == NULL){ ?>
+	        				<a class="example-image-link" href="/img/no_disponible1.png" data-lightbox="example-1"><img class="example-image oculto" src="/img/no_disponible1.png"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+	        			<?php }else{ ?>
+	        				<a class="example-image-link" href="/<?php echo $imagen_herramienta; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen_herramienta; ?>"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+	        			<?php } ?>
+	        		</div>
+	        	</div>
+
+	        </div>
+      	</div>
     </div>
 </div>
 
+      		<!-- <form action="/herramienta/requestcostoh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cobro"> -->
+
+
 
 <script src="/js/lightbox.js"></script>
-
 <script type="text/javascript">
 
     lightbox.option({
@@ -156,26 +228,23 @@
 		});
 	});
 
- 	$("#addcosto").click(function(){
- 		var name = document.getElementById("name").value;
 
- 		if(name == ""){
- 			swal({
- 				title: "Para Liberar un cobro llena los datos requeridos (*)",
+    $("#add_aplicarpago").click(function(){
+        var monto_pago = document.getElementById("monto_pago").value;
+        var parcialidad = document.getElementById("parcialidad").value;
+        var validate_url = document.getElementById("validate_url").value;
+
+        if(monto_pago == "" || parcialidad == "" || validate_url == ""){
+            swal({
+                title: "Para continuar es necesario agregar los datos marcados con un *",
             });
         }else{
-        	swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-                setTimeout(submitForm, 500);     
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitaddpago, 1500);     
         }
     });
-
-        function submitForm() {
-            document.getElementById("submit_cobro").submit()
-      	}
-        //Agregar Categoría Script
-
-
+    function submitaddpago() { document.getElementById("submit_pago").submit() }
 </script>

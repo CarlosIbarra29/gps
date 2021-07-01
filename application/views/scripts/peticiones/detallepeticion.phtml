@@ -1,0 +1,166 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+    <div class="col m6 s6 text-right">
+     	<!-- <a class="btn" href=""><i class="material-icons right">insert_drive_file</i>Documento</a> -->
+    </div>
+</div>
+
+<?php foreach ($this->peticion as $key){
+	$modulo = $key['modulo'];
+	$descripcion = $key['descripcion'];
+	$fecha_peticion = $key['fecha_peticion'];
+	$evidencia = $key['evidencia'];
+} ?>
+	
+<?php foreach ($this->usuario as $value) {
+	$nombre = $value['nombre'];
+	$ap = $value['ap'];
+	$am = $value['am'];
+	$correo = $value['correo'];
+	$telefono = $value['telefono'];
+} ?>
+
+<?php foreach ($this->rol as $key) {
+	$rol = $key['nombre'];
+	$id_rol = $key['id'];
+} ?>
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la petición</span>
+    </div>
+</div>
+
+<?php if($this->us_fk == 1){ ?>
+	<div class="row">
+		<div class="col m6 s12"></div>
+		<div class="col m6 s12">
+			<div class="row">
+				<div class="col m6 s6 text-center">
+					<div class="chip" id="agregar_pago">
+						<img src="/img/gris.jpg" >
+						Finalizada
+					</div>
+				</div>
+				<div class="col m6 s6 text-center">
+					<div class="chip modal-trigger" href="#rechazar" id="rechazar_solicitud">
+						<img src="/img/gris.jpg" >
+						Rechazar
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+<?php } ?>
+
+
+
+
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del usuario</span>
+
+	        	<div class="row" style="margin-top: 10px;">
+	        		<div class="col m12 s12">
+					    <table>
+					        <thead>
+					          <tr>
+					              <th>Usuario</th>
+					              <th>Correo</th>
+					              <th>Telefono</th>
+					              <th>Rol</th>
+					          </tr>
+					        </thead>
+
+					        <tbody>
+					          	<tr>
+						            <td><?php echo $nombre; ?> <?php echo $ap; ?> <?php echo $am; ?></td>
+						            <td><?php echo $correo; ?></td>
+						            <td><?php echo $telefono; ?></td>
+						            <td><?php echo $rol; ?></td>
+					          	</tr>
+					        </tbody>
+					    </table>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información de la petición</span>
+
+	        	<div class="row" style="margin-top: 10px;">
+	        		<div class="col m12 s12">
+					    <table>
+					        <thead>
+					          <tr>
+					              <th>Modulo</th>
+					              <th>Descripción</th>
+					              <th>Fecha peticion</th>
+					              <th>Evidencia</th>
+					          </tr>
+					        </thead>
+
+					        <tbody>
+					          	<tr>
+						            <td>
+						            	<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $modulo; ?></span>		
+						            </td>
+						            <td><?php echo $descripcion; ?></td>
+						            <td><?php echo $fecha_peticion; ?></td>
+						            <td>
+						            	<?php if($evidencia == "" || $evidencia == NULL){ ?>
+						            		<a class="example-image-link" href="/img/no_disponible1.png" data-lightbox="example-1"><img class="example-image oculto" src="/img/no_disponible1.png"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+						            	<?php }else{?>
+						            		<a class="example-image-link" href="/<?php echo $evidencia; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $evidencia; ?>"  alt="image-1" style="width: 120px; height: 115px;"/></a>
+						            	<?php } ?>
+						            </td>
+					          	</tr>
+					        </tbody>
+					    </table>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+
+  	<div id="rechazar" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud </span>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
+	    		<div class="col m12 s12">
+			        <div class="input-field col s12">
+			        	<input id="motivo" type="text" class="validate">
+			        	<label for="motivo">Motivo</label>
+			        </div>
+	    		</div>
+	    	</div>
+
+	    </div>
+	    <div class="modal-footer">
+    		<button type="button" id="add_generarprestamo" class="btn">Guardar</button>
+    		<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+       
+</script>

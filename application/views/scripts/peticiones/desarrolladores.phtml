@@ -1,0 +1,305 @@
+<?php 
+function isActhref($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "active"; 
+	}
+	return ($nameBtn == $urlname)?"active":"";
+}
+
+	if (isset($_GET['pagina'])) {
+		$pagina = $_GET['pagina'];
+	} else {
+		$pagina = 1;
+	}  
+
+function isSelected($nameBtn,$urlname){
+	if($nameBtn==1 && $urlname==null){
+		return "selected"; 
+	}
+	return ($nameBtn == $urlname)?"selected":"";
+}
+
+?>
+<?php 
+
+$links = "";
+$url="";
+
+if($this->total== 1){
+	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+}else{
+	if ($this->total >= 1 && $pagina <= $this->total) {
+
+		if (isset($_GET['pagina']) && $this->actpage != 1) {
+			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}else{
+			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+		}
+
+		$i = max(2, $pagina - 3);
+		if ($i > 2)
+			$links .= " <li><a>...</a></li> ";
+		for (; $i < min($pagina + 3, $this->total); $i++) {
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			}
+		}
+		if ($i != $this->total)
+			$links .= " <li><a>...</a></li> ";
+		if($i ==$this->actpage){
+			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}else{
+			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+		}
+
+	}           
+}
+
+?>
+
+<style type="text/css">
+	.active_menu{
+		-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+
+<?php $status = $this->status; ?>
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/peticiones/desarrolladores/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/peticiones/desarrolladores/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu"><a href="/peticiones/desarrolladores/status/1"><h4>Rechazadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/peticiones/desarrolladores/status/1"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu"><a href="/peticiones/desarrolladores/status/2"><h4>Concluidas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/peticiones/desarrolladores/status/2"><h4>Concluidas</h4></a></li>
+  			<?php } ?>
+  		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m6 s6"></div>
+	<div class="col m6 s6 text-right">
+		
+	</div>
+</div>
+
+
+
+
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m6 s12 text-left" style="margin-top: 10px;">
+			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de peticiones</span>
+		</div>
+		<div class="col m6 s6 text-right">
+			<a class="green btn modal-trigger" href="#peticion"><i class="material-icons right">device_hub</i>Agregar Petición</a>
+		</div>
+	</div>
+	<div class="col m12 s12 text-right table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Modulo</th>
+					<th>Descripcion</th>
+					<th>Fecha</th>
+					<th>Usuario</th>
+					<th></th>
+				</tr> 
+			</thead>
+			<?php if ($this->paginator ) {
+
+				foreach ($this->paginator as $hrc) { ?>
+					<tbody>
+						<tr>
+							<td><?php echo $hrc["id"]; ?></td>
+							<td>
+								<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $hrc["modulo"]; ?></span>
+							</td>
+							<td><?php echo $hrc["descripcion"]; ?></td>
+							<td>
+								<?php echo $hrc["fecha_peticion"]; ?>
+							</td>
+							<td>
+								<?php echo $hrc["nombre"]; ?> <?php echo $hrc["ap"]; ?> <?php echo $hrc["am"]; ?>
+							</td>
+
+							<td>
+								<a href="/peticiones/detallepeticion/id/<?php echo $hrc["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				<?php } }else{?>
+					<tbody>
+						<td></td>
+						<td></td>
+						<td>
+							<h4>No hay ninguna peticion</h4>
+						</td>
+						<td></td>
+						<td></td>
+					</tbody>
+				<?php } ?>
+		</table>
+	</div>
+</div>
+
+	<!-- Paginador -->
+<div class="row">
+	<div class="col m12 s12 text-center">
+		<div class="white-box">
+			<div class="paginationControl">
+				<ul class="pagination justify-content-center">
+					<?php if($pagina - 1 == 0){ ?>
+					<li class="page-item disabled">
+						<span class="page-link">Anterior</span>
+					</li>
+					<?php }else{ ?>
+					<li class="page-item">
+						<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+					</li>
+					<?php } ?>
+					<li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+						<?php echo $links; ?>
+					</li>
+					<?php if($pagina >= $this->total): ?>
+					<li class="page-item disabled">
+						<span class="page-link">Siguente</span>
+					</li>
+					<?php else: ?>
+						<li class="page-item">
+							<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+	<!-- End Paginator -->
+
+<div id="peticion" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar petición sobre el sistema </span>
+      
+
+    	<div class="row" style="margin-top: 20px;">
+    		<form action="/peticiones/requestaddpeticion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
+	    		<div class="col m12 s12">
+					<div class="input-field col s12">
+				    	<select id="modulo" name="modulo">
+				      		<option value="0" disabled selected>* Selecciona una opción</option>
+				      		<option value="Asignación de Cuadrillas">Asignacion de Cuadrillas</option>
+				      		<option value="Asistencia">Asistencia</option>
+				      		<option value="Campamentos">Campamentos</option>
+				      		<option value="Comprobaciones">Comprobaciones (Caja chica)</option>
+				      		<option value="EPP">EPP</option>
+				      		<option value="Envios">Envios</option>
+				      		<option value="Gasolina">Gasolina</option>
+				      		<option value="Herramientas">Herramientas</option>
+				      		<option value="Materiales">Materiales</option>
+				      		<option value="Personal">Personal</option>
+				      		<option value="Proveedores">Proveedores</option>
+				      		<option value="Reportes">Reportes</option>
+				      		<option value="Sitios">Sitios</option>
+				      		<option value="Orden de compras">Solicitudes Orden de compras</option>
+				      		<option value="TAG">TAG</option>
+				      		<option value="Vehiculos">Vehiculos</option>
+				    	</select>
+				    	<label>Modulo</label>
+				  	</div>
+
+			        <div class="input-field col s12">
+			        	<input placeholder="Agrega la peticion detalladamente" id="descripcion" name="descripcion" type="text" class="validate">
+			        	<label for="descripcion">* Descripción</label>
+			        </div>
+
+
+				    <div class="file-field input-field col m12">
+				    	<div class="btn">
+				        	<span>Evidencia (opcional)</span>
+				        	<input type="file" name="url">
+				    	</div>
+				    	<div class="file-path-wrapper">
+				        	<input class="file-path validate" name="url_validate" type="text">
+				    	</div>
+				    </div>
+
+	    		</div>
+    		</form>
+    	</div>
+
+    </div>
+    <div class="modal-footer">
+		<button type="button" id="add_newpeticion" class="btn">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('.modal').modal();
+  	});
+
+    $("#add_newpeticion").click(function(){
+        var modulo = document.getElementById("modulo").value;
+        var descripcion = document.getElementById("descripcion").value;
+
+        if(modulo == 0 || descripcion == "" ){
+            swal({
+                title: "Para continuar es necesario agregar los datos marcados con un *",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitaddpago, 1500);     
+        }
+    });
+    function submitaddpago() { document.getElementById("submit_pago").submit() }
+
+</script>
