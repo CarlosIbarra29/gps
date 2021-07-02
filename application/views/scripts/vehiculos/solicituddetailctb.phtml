@@ -133,16 +133,22 @@
         $email = $key ['email']; 
 	}?>
 
-<div class="row" style="margin-top: 10px;">
-    <div class="col m12 s12">
-        <a href="/vehiculos/listasolcontabilidad/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
-    </div>
-</div>
-
 <?php foreach ($this->user as $value) {
 	$rol_user = $value['fkroles'];
 	// echo $rol_user;
 } ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+    	<?php if($rol_user == 9){ ?> 
+        	<a href="/vehiculos/listasolcontafact/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+        <?php } else { ?>
+        	 <a href="/vehiculos/listasolcontabilidad/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+        <?php } ?>  
+    </div>
+</div>
+
+
 
 <input type="hidden" id="id_solicitud" value="<?php echo $this->id_solicitud; ?>">
 <input type="hidden" id="id_user" name="id_user" value="<?php echo $this->usuario; ?>">
@@ -158,7 +164,7 @@
 	          		</div>
 	          		<div class="col m6 s12">
 	          			<div class="row">	
-	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4 || $rol_user == 9){ ?> 
 <!-- 	          					<?php if($status_sol == 0){ ?>
 	          						<div class="col m6 s6">
 	          							<form action="/vehiculos/requestchangeaceptsol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
@@ -339,7 +345,7 @@
 	          	</div>
 
 	          	<div class="col m4 s12 text-center">
-		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4 || $rol_user == 9){ ?> 
 		          		<?php if($status_sol == 1 && $status_comprobante == 0){ ?>
 		          			<div>
 		          				<span>* Esta opción solo esta disponible si el pago no se ha realizado</span>
@@ -853,7 +859,7 @@
 } ?>
 
 <!-- Pago -->
-<?php if($rol_user == 4 || $rol_user == 1 || $rol_user == 8){ ?>
+<?php if($rol_user == 4 || $rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 	<div class="row">
 		<div class="col m12 s12">
 			<div class="card  darken-1">
@@ -879,7 +885,12 @@
 	        					<div class="col m12 s12 text-center">
 				        			<div class="row">
 				        				<div class="col m8 s12">
-				        					<form action="/vehiculos/requestaddcomprobantedepagov" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
+				        					<?php if($rol_user == 9){ ?>
+				        						<form action="/vehiculos/requestaddcompnofact" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobantenofact">
+				        					<?php }else{ ?>
+				        						<form action="/vehiculos/requestaddcomprobantedepagov" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
+				        					<?php } ?>
+				        					
 				        						<input type="hidden" name="monto" id="monto_form">
 				        						<input type="hidden" name="status_pago" id="status_form">
 
@@ -916,7 +927,11 @@
 				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
 				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
 				        					<div class="col m12 s12 text-center">
-				        						<a class="btn" id="btcomprobante">Subir Pago</a>
+				        						<?php if($rol_user == 9){ ?>
+				        							<a class="btn" id="btcomprobantenofac">Subir Pago</a>
+				        						<?php }else{ ?>
+				        							<a class="btn" id="btcomprobante">Subir Pago</a>
+				        						<?php } ?>
 											</div>
 		        						</div>
 				        			</div>
@@ -1060,7 +1075,7 @@
         						Solicitud aún no pagada.<br>
         						Espera a que sea pagada...
         					</h4>
-        				</div>>
+        				</div>
 						<?php } ?>
 
 						<?php if ($status_comprobante == 1) { ?>
@@ -1171,7 +1186,7 @@
 	    		var dato = "2";
 	    		var	comentario = document.getElementById("cancels").value;
 	            var request = $.ajax({
-	                url:"/vehiculos/requestchangecancelarsol",
+	                url:"/vehiculos/requestchangecancelarsolconta",
 	                method:"POST",
 	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
 	                processData: true,
@@ -1207,5 +1222,26 @@
     });
     	
     function submitfileprede() { document.getElementById("submit_comprobante").submit() }
+
+
+    $("#btcomprobantenofac").click(function(){
+    	var file = document.getElementById("file_comprobante").value;
+    	var monto = document.getElementById("monto").value;
+    	var pago_conta = document.getElementById("pago_conta").value;
+
+    	if(monto == "" || file == "" || pago_conta == 0){
+            swal({
+              title: "Para continuar debes llenar todos los datos (Monto y Comprobante de pago)",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitfilenofact, 1500);
+    	}
+    });
+    	
+    function submitfilenofact() { document.getElementById("submit_comprobantenofact").submit() }
 
 </script>

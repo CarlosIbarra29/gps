@@ -1258,6 +1258,50 @@ where id not in (
     }   //Paginacion Solicitudes en Canceladas 
 
 
+    public function GetSolCancelCountFact(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov, vs.status_comprobante
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 2 and vs.status_comprobante = 0 and vs.facturable = 2 order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Solicitudes Canceladas Facturable.
+
+
+    public function GetPagSolCancelFact($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov, vs.status_comprobante
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 2 and vs.status_comprobante = 0 and vs.facturable = 2 order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Paginacion Solicitudes en Canceladas Facturable.
+
+
     public function GetSolFinCount(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -1303,6 +1347,52 @@ where id not in (
         }
     }   //Paginacion Solicitudes en Terminada 
 
+
+    public function GetSolFinCountFact(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.status_comprobante, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh,
+                vs.motivos, vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, 
+                v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 1 and vs.status_comprobante = 1 and vs.facturable = 2 order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Solicitudes Terminada Facturacion
+
+
+    public function GetPagSolFinFact($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.status_comprobante,vs.fecha_sol, vs.fecha_pagada, vs.step_veh, 
+                vs.motivos, vs.iva, vs.total, vs.monto, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, 
+                v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 1 and vs.status_comprobante = 1 and vs.facturable = 2 order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Paginacion Solicitudes en Terminada  Facturacion
+
     ////////////////////////////////////////////BUSCADOR/////////////////////////////////////////////////
 
     public function GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom){
@@ -1347,6 +1437,52 @@ where id not in (
         }
     }   //Buscardor en Paginacion por vehiculo 
 
+
+
+    public function GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND vs.id_vehiculo = ? order by vs.id DESC",array($vehiculo));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por vehiculo facturable
+
+    public function GetSolVehiculoBuscarFactPag($table,$offset,$no_of_records_per_page,$vehiculo,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable, 
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND  vs.id_vehiculo = ? order by vs.id DESC LIMIT $offset,$no_of_records_per_page",array($vehiculo));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por vehiculo  facturable
+
+
+
     public function GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -1382,6 +1518,50 @@ where id not in (
                 LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
                 LEFT JOIN proveedor p ON p.id = vs.id_proveedor
                 where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom AND p.nombre_prov like '%{$prov}%' order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por proveedor
+
+
+    public function GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND p.nombre_prov like '%{$prov}%' order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por PROVEEDOR 
+
+
+     public function GetSolProvBuscarPagFact($table,$offset,$no_of_records_per_page,$prov,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND p.nombre_prov like '%{$prov}%' order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -1433,6 +1613,48 @@ where id not in (
         }
     }   //Buscardor en Paginacion por ID
 
+    public function GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND vs.id = ? order by vs.id DESC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por ID Facturacion 
+
+    public function GetSolIdBuscarPagFact($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND  vs.id = ? order by vs.id DESC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por ID Facturacion 
+
 
     public function GetSolUserBuscar($user,$statusstep,$statussol,$statuscom){
         try{
@@ -1476,6 +1698,50 @@ where id not in (
             echo $e;
         }
     }   //Buscardor en Paginacion por Usuario
+
+    public function GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND u.nombre like '%{$user}%' order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Usuario Fact
+
+
+     public function GetSolUserBuscarFactPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND u.nombre like '%{$user}%' order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Usuario Fact
+
 
 
     public function GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom){
@@ -1521,6 +1787,49 @@ where id not in (
     }   //Buscardor en Paginacion por servicios 
 
 
+    public function GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND vs.id_servicios = ? order by vs.id DESC",array($servicio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por servicios Facturable
+
+    public function GetSolServicioBuscarFactPag($table,$offset,$no_of_records_per_page,$servicio,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND  vs.id_servicios = ? order by vs.id DESC LIMIT $offset,$no_of_records_per_page",array($servicio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por servicios  Facturable
+
+
     public function GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -1563,6 +1872,49 @@ where id not in (
             echo $e;
         }
     }   //Buscardor en Paginacion por Placas
+
+    public function GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND v.placas like '%{$placas}%' order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor por Placas Facturacion
+
+
+     public function GetSolPlacasBuscarfactPag($table,$offset,$no_of_records_per_page,$placas,$statusstep,$statussol,$statuscom){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh = $statusstep and vs.status_solicitud = $statussol and vs.status_comprobante = $statuscom and vs.facturable = 2 AND v.placas like '%{$placas}%' order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Buscardor en Paginacion por Placas Facturacion
 
     ////////////////////////////////////// End Buscadores ////////////////////////////////////////////////////////
 
@@ -1893,6 +2245,50 @@ where id not in (
             echo $e;
         }
     }   //Paginacion Solicitudes en Proceso Contabilidad
+
+
+     public function GetUserSolicitudContFact(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.id_proveedor, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, p.nombre_prov, vs.status_comprobante,
+                u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, v.placas, sv.nombre_servicio
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 1 and vs.status_comprobante = 0 and vs.facturable = 2 order by vs.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Consulta Solicitudes en Proceso Contabilidad  Sin Facturacion
+
+
+    public function GetPagSolProcesoContFact($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.id_responsable, vs.id_usuario, vs.id_vehiculo, vs.id_servicios, vs.facturable,
+                vs.status_solicitud, vs.referencia, vs.fecha_sol, vs.fecha_pagada, vs.step_veh, vs.motivos, 
+                vs.monto, vs.iva, vs.total, vs.id_proveedor, u.nombre, u.ap, u.am, v.marca, v.submarca, v.modelo, v.color, 
+                v.placas, sv.nombre_servicio, p.nombre_prov, vs.status_comprobante
+                FROM vehiculos_solicitudes vs 
+                LEFT JOIN usuario u ON u.id = vs.id_usuario
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
+                LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
+                LEFT JOIN proveedor p ON p.id = vs.id_proveedor
+                where vs.step_veh= 1 and vs.status_solicitud = 1 and vs.status_comprobante = 0 and vs.facturable = 2 order by vs.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   //Paginacion Solicitudes en Proceso Contabilidad Sin Facturacion
 
 
     public function GetVigencias($table){

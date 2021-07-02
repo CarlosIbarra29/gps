@@ -3505,6 +3505,35 @@ class VehiculosController extends Zend_Controller_Action{
     }   // END REQUEST CANCELAR SOLICITUD
 
 
+    public function requestchangecancelarsolcontaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $dato = date("Y-m-d H:i:s");
+
+            // var_dump($post);
+            // die();
+
+        if($this->getRequest()->getPost()){
+
+            $table="vehiculos_solicitudes";
+            $result=$this->_veh->UpdateRechazarSol($post,$table,$hoy);
+
+
+            if ($result) {
+                return $this->_redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }   // END REQUEST CANCELAR SOLICITUD
+
+
     public function solicitudvehiculoAction(){
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
@@ -3708,6 +3737,116 @@ class VehiculosController extends Zend_Controller_Action{
     }
 
 
+    public function requestaddcompnofactAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+
+            $status_conta = $post['pago_conta'];
+
+            if ($status_conta == 1) {
+      
+                $name = $_FILES['url']['name'];
+                if(empty($name)){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Agrega una imagen");'; 
+                    print '</script>'; 
+                }else{
+                    $bytes = $_FILES['url']['size'];
+                    $res = $this->formatSizeUnits($bytes);
+                    if($res == 0){ 
+                        print '<script language="JavaScript">'; 
+                        print 'alert("El pdf supera el maximo de tamaño");'; 
+                        print '</script>'; 
+                    }else{
+                        $info1 = new SplFileInfo($_FILES['url']['name']);
+                        $ext1 = $info1->getExtension();
+                        $url1 = 'pdf/sol_vehiculos/';
+                        $urldb = $url1.$info1;
+                        move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                    }
+                }
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y H:i:s");
+                $status_pago = 1;
+
+                $id=$this->_session->id; 
+                $wh="id";
+                $table="usuario";
+                $usr = $this->_season->GetSpecific($table,$wh,$id);
+                $nombre= $usr[0]['nombre']." ".$usr[0]['ap'];
+                $id_usuario = $usr[0]['id'];
+                
+                $table="vehiculos_solicitudes";
+                $this->_veh->UpdatePagoSolV($post,$table,$hoy,$status_pago,$id_usuario);
+
+                $table="vehiculos_pagos";
+                $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+                if ($result) {
+                    // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
+                    return $this-> _redirect('/vehiculos/listasolcontafact/status/0');
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                }
+            } else {
+
+
+                $name = $_FILES['url']['name'];
+                if(empty($name)){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Agrega una imagen");'; 
+                    print '</script>'; 
+                }else{
+                    $bytes = $_FILES['url']['size'];
+                    $res = $this->formatSizeUnits($bytes);
+                    if($res == 0){ 
+                        print '<script language="JavaScript">'; 
+                        print 'alert("El pdf supera el maximo de tamaño");'; 
+                        print '</script>'; 
+                    }else{
+                        $info1 = new SplFileInfo($_FILES['url']['name']);
+                        $ext1 = $info1->getExtension();
+                        $url1 = 'pdf/sol_vehiculos/';
+                        $urldb = $url1.$info1;
+                        move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                    }
+                }
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y H:i:s");
+                $status_pago = 0;
+
+                $id=$this->_session->id;
+                $wh="id";
+                $table="usuario";
+                $usr = $this->_season->GetSpecific($table,$wh,$id);
+                $nombre= $usr[0]['nombre']." ".$usr[0]['ap'];
+                $id_usuario = $usr[0]['id'];
+                
+                $table="vehiculos_solicitudes";
+                $this->_veh->UpdatePagoSolV($post,$table,$hoy,$status_pago,$id_usuario);
+
+                $table="vehiculos_pagos";
+                $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+                if ($result) {
+                    // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/0');
+                    return $this-> _redirect('/vehiculos/listasolcontafact/status/0');
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                }
+
+
+            }
+        }
+    }
+
+    
+
+
     public function listasolcontabilidadAction(){
 
          $id=$this->_session->id;
@@ -3807,6 +3946,110 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
     }
+
+
+    public function listasolcontafactAction(){
+
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="vehiculos_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        // status_documento  enproceso
+        
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $sql = $this->_veh->GetUserSolicitudContFact();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="proveedor";
+        $this->view->prov = $this->_season->GetAll($table);
+
+        $table="vehiculos";
+        $this->view->vehiculos = $this->_season->GetAll($table);
+
+        $table="vehiculo_servicios";
+        $this->view->servicios = $this->_season->GetAll($table);
+
+
+        if($status == 0) {
+
+            $solicitud=$this->_veh->GetUserSolicitudContFact();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="vehiculos_solicitudes";
+            $sql=$this->view->paginator= $this->_veh->GetPagSolProcesoContFact($table,$offset,$no_of_records_per_page);
+            // var_dump($sql);exit;
+        }
+
+        if($status == 1){
+            $solicitud=$this->_veh->GetSolCancelCountFact();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="vehiculos_solicitudes";
+            $this->view->paginator= $this->_veh->GetPagSolCancelFact($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 2){
+            $solicitud=$this->_veh->GetSolFinCountFact();
+            // var_dump($solicitud);exit;
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="vehiculos_solicitudes";
+            $sql= $this->view->paginator= $this->_veh->GetPagSolFinFact($table,$offset,$no_of_records_per_page);
+        }
+
+    }
+
+
+
 
 
     public function listasolbuscarcontAction(){
@@ -4287,6 +4530,490 @@ class VehiculosController extends Zend_Controller_Action{
             }
         }
     }
+
+
+    public function listasolbuscarcontfAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="vehiculos_solicitudes";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $sql = $this->_veh->GetUserSolicitudContFact();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="vehiculo_servicios";
+        $this->view->servicios = $this->_season->GetAll($table);
+
+        $table="proveedor";
+        $this->view->prov = $this->_season->GetAll($table);
+
+        $table="vehiculos";
+        $this->view->vehiculos = $this->_season->GetAll($table);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($status == 0) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $vehiculo = $this->_getParam('vehiculo');
+                $this->view->vehiculosol=$vehiculo;
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolVehiculoBuscarFactPag($table,$offset,$no_of_records_per_page,$vehiculo,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov; 
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolProvBuscarPagFact($table,$offset,$no_of_records_per_page,$prov,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolIdBuscarPagFact($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolUserBuscarFactPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolServicioBuscarFactPag($table,$offset,$no_of_records_per_page,$servicio,$statusstep,$statussol,$statuscom);    
+            }
+
+            if($opcion == 6){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $placas = $this->_getParam('placas'); 
+                $this->view->placas_search=$placas; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolPlacasBuscarfactPag($table,$offset,$no_of_records_per_page,$placas,$statusstep,$statussol,$statuscom);
+            }
+        }
+
+
+        if($status == 1) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $vehiculo = $this->_getParam('vehiculo');
+                $this->view->vehiculosol=$vehiculo;
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolVehiculoBuscarFactPag($table,$offset,$no_of_records_per_page,$vehiculo,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov; 
+                
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolProvBuscarPagFact($table,$offset,$no_of_records_per_page,$prov,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolIdBuscarPagFact($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolUserBuscarFactPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolServicioBuscarFactPag($table,$offset,$no_of_records_per_page,$servicio,$statusstep,$statussol,$statuscom);    
+            }
+
+            if($opcion == 6){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $placas = $this->_getParam('placas'); 
+                $this->view->placas_search=$placas; 
+                $statusstep = 1;
+                $statussol = 2;
+                $statuscom = 0;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolPlacasBuscarfactPag($table,$offset,$no_of_records_per_page,$placas,$statusstep,$statussol,$statuscom);
+            }
+        }
+
+
+        if($status == 2) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $vehiculo = $this->_getParam('vehiculo');
+                $this->view->vehiculosol=$vehiculo;
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolVehiculoBuscarFactPag($table,$offset,$no_of_records_per_page,$vehiculo,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov; 
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolProvBuscarPagFact($table,$offset,$no_of_records_per_page,$prov,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolIdBuscarPagFact($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolUserBuscarFactPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statuscom);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolServicioBuscarFactPag($table,$offset,$no_of_records_per_page,$servicio,$statusstep,$statussol,$statuscom);    
+            }
+
+            if($opcion == 6){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $placas = $this->_getParam('placas'); 
+                $this->view->placas_search=$placas; 
+                $statusstep = 1;
+                $statussol = 1;
+                $statuscom = 1;
+
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="vehiculos_solicitudes";
+                $this->view->paginator= $this->_veh->GetSolPlacasBuscarfactPag($table,$offset,$no_of_records_per_page,$placas,$statusstep,$statussol,$statuscom);
+            }
+        }
+    }
+
+
+    
+
 
     public function notificacionesAction() {
 
