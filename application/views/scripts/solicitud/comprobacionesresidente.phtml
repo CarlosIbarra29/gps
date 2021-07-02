@@ -377,13 +377,13 @@
 <div class="row">
 	<div class="col m12 s12">
 		<div class="row">
-			<div class="col m8 s6">
-        <!-- <span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de comprobaciones pendientes</span> -->
+      <div class="col m4 s6 text-right">
+        <a class="waves-effect waves-light btn modal-trigger" href="#modalasignaepp">Asignar Epp</a>
+      </div>
+			<div class="col m4 s6 text-right">
+        <a class="waves-effect waves-light btn modal-trigger" href="#herramienta">+ Agregar Herramienta</a>
 			</div>
 			<div class="col m4 s6">
-          <!-- <input placeholder="Placeholder" id="ver_monto" type="text" class="validate" > -->
-          <!-- <label for="ver_monto">First Name</label> -->
-
         <div class="input-field col s12">
           <input placeholder="Placeholder" disabled id="ver_monto" type="text" class="validate" style="font-weight: bold;">
           <label for="ver_monto">Monto a Comprobar</label>
@@ -553,6 +553,241 @@
     </div> 
 </div>
 
+
+
+<div id="herramienta" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <div class="col m12 s12 text-left" style="margin-top: 10px;">
+      <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Herramienta
+    </div>
+    <div class="col m12 s12">
+      <form action="/solicitud/requestaddherramientasolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_herramienta">
+        <div class="row">
+          <div class="file-field input-field col m12 s12">
+            <div class="btn">
+              <span>Añade Imagen</span>
+              <input type="file" name="url">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          <div class="input-field col s12">
+            <select id="cat" name="cat" required>
+              <option value="0" disabled selected>* Selecciona una opcion:</option>
+              <?php foreach ($this->cat as $cate) { ?>
+                <option value="<?php echo $cate["id_cat"]; ?>"><?php echo $cate["nombre"]; ?></option>
+              <?php } ?>
+            </select>
+            <label>Categoria Herramienta</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="cod" type="text" name="cod" class="validate" required>
+            <label for="cod">Código Herramienta:</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="name" type="text" name="name" class="validate" required>
+            <label for="name">*Nombre: </label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="marca" type="text" name="marca" class="validate" required>
+            <label for="marca">Marca: </label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="modelo" type="text" name="modelo" class="validate" required>
+            <label for="modelo">Modelo: </label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="serie" type="text" name="serie" class="validate" required>
+            <label for="serie">Número de serie: </label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="uni" type="text" name="uni" class="validate" required>
+            <label for="uni">Unidad: (Pza/tramo)</label>
+          </div>
+          <div class="input-field col m12 s12">
+            <i class="material-icons prefix">event_available</i>
+            <input id="desc" type="text" name="desc" class="validate">
+            <label for="desc">Descripción:</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">today</i>
+            <input id="fcompra" type="date" name="fcompra" class="validate">
+            <label for="fcompra">Fecha Compra: dd/mm/yyyy</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">event_available</i>
+            <input id="vida" type="text" name="vida" class="validate">
+            <label for="vida">Tiempo de vida:</label>
+          </div>
+          <div class="file-field input-field col m12 s12">
+            <div class="btn">
+              <span>Añade Factura</span>
+              <input type="file" name="factura">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">today</i>
+            <input id="factura_no" type="text" name="factura_no" class="validate">
+            <label for="factura_no">Número de Factura:</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">today</i>
+            <input id="vencimiento" type="date" name="vencimiento" class="validate">
+            <label for="vencimiento">Vencimiento Garantia: dd/mm/yyyy</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">today</i>
+            <input id="fecha_salida" type="date" name="fecha_salida" class="validate">
+            <label for="fecha_salida">Fecha salida: dd/mm/yyyy</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">today</i>
+            <input id="fecha_entrega" type="date" name="fecha_entrega" class="validate">
+            <label for="fecha_entrega">Fecha entrega: dd/mm/yyyy</label>
+          </div>
+          <div class="input-field col s12">
+<!--             <select id="responsable" name="responsable" required>
+              <option value="0" disabled selected>* Selecciona una opcion:</option>
+              <?php foreach ($this->per as $personal) { ?>
+                <option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+              <?php } ?>
+            </select>
+            <label>Responsable</label> -->
+            <input type="hidden" name="responsable" value="<?php echo $this->user; ?>">
+          </div>
+          <div class="input-field col s12">
+            <select id="sitio" name="sitio" required>
+              <option value="0" disabled selected>Selecciona una opcion:</option>
+              <?php foreach ($this->sitio as $sitioa) { ?>
+                <option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+              <?php } ?>
+            </select>
+            <label>Sitio</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </form>
+    <button class=" btn" id="addherramienta">Guardar</button>
+    <button  class="modal-close red btn">Cerrar</button>
+  </div>
+</div>
+<!-- End Module -->
+
+
+
+
+<div id="modalasignaepp" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col m12 s12 text-left" style="margin-top: 5px;">
+                <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar EPP
+            </div>
+        </div>
+        <div class="row">
+            <form action="/solicitud/requestasignareppsolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asigna">
+
+                    <input type="hidden" name="idhs" value="<?php echo $this->user; ?>">
+                <div class="row">
+
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input type="date" id="fecha" name="fecha"  class="validate">
+                        <label for="fecha">*Fecha de entrega: dd/mm/yyyy</label>
+                    </div>
+
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">event_available</i>
+                        <select id="tipo" name="tipo" required>
+                            <option value="0" disabled selected>* Selecciona una opcion:</option>
+                            <?php foreach ($this->tipo_epp as $tipo) { ?>
+                            <option value="<?php echo $tipo["id_tipo"]; ?>"><?php echo $tipo["nombre"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Tipo de EPP</label>
+                    </div>
+
+                   <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">accessibility</i>
+                        <select id="epp" name="epp" required>
+                            <option value="0" disabled selected>* Selecciona una opcion:</option>
+                            <?php foreach ($this->eppn as $epp) { ?>
+                            <option value="<?php echo $epp["nombre"]; ?>"><?php echo $epp["nombre"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>EPP</label>
+                    </div>
+
+                    <!-- <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">photo_size_select_small</i>
+                        <input type="text" id="input-tallas" list="tallas_lista" class="validanumeros" name="talla" >
+                        <datalist id="tallas_lista"></datalist> 
+                        <label>*Talla</label>
+                    </div> -->
+
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">format_list_numbered</i>
+                        <input type="number" id="cantidad" name="cantidad" min="1" class="validanumeros">
+                        <label for="cantidad">Cantidad:</label>
+                    </div>
+
+                    <div class="input-field col m6 s12">
+                        <div class="col m2 s12">
+                            <input type="hidden" id="input-tallas" list="tallas_lista">  
+                            <span style="color: #9e9e9e; font-weight: bold;">*Talla</span>
+                            <!-- <i class="material-icons prefix">photo_size_select_small</i> -->
+                        </div>
+                        <div class="col m10 s12">
+                            <select style="background: #FAFAFA; border-bottom-color: #686868;" class="browser-default" id="tallas_lista" name="talla" ></select>
+                        </div>
+                    </div>
+
+                    
+                    <!-- <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">format_list_numbered</i>
+                        <input type="number" id="cantidad" name="cantidad" min="1" class="validanumeros">
+                        <label for="cantidad">Cantidad:</label>
+                    </div> -->
+
+                    <div class="input-field col m3 s12 text-center">
+                        <label>
+                            <input type="checkbox"  name="cobro">
+                            <span>¿Cobro Extra?</span>
+                        </label>
+                    </div>
+
+                    <div class="input-field col m3 s12 text-center">
+                        <label>
+                            <input type="checkbox"  name="campo">
+                            <span>Comprado en Campo</span> 
+                        </label>
+                    </div>
+                    <div class="input-field col s12"></div>
+                    <div class="input-field col m12 s12">
+                        <textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+                        <label for="comentarios">*Comentarios: </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="asignarepp" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Modal Asignar Epp-->
 <script type="text/javascript">
   	$(document).ready(function(){
     	$('.modal').modal();
@@ -738,4 +973,102 @@
     function submitefilettv() { document.getElementById("submit_file_ttv").submit() }
 
 
+  $("#addherramienta").click(function(){
+    var name = document.getElementById("name").value;
+
+    if(name == ""){
+      swal({
+        title: "Para agregar una herramienta, llena los campos",
+      });
+    }else{
+      swal("Espera un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      });
+      setTimeout(submitherramientaadd, 500);     
+    }
+  });
+
+  function submitherramientaadd() {
+    document.getElementById("submit_herramienta").submit()
+  }
+
+
+    $('#epp').change(function(){
+
+        limpiar();       
+
+        epp = document.getElementById("epp").value;
+
+        $.ajax({
+
+            url: "/epp/gettallas/",
+        
+            data: { epp: epp },
+        
+            type: "POST",
+
+            success: function(data) {
+
+              $("#id-talla").find('option').remove();
+
+              var aData = JSON.parse(data);
+
+              console.log(aData);
+
+              var sOptions = '';
+
+              $.each(aData, function(i, v) {
+
+                sOptions += '<option value="' + v.idepp + '">' + v.talla + '</option>';
+
+                // console.log(sOptions);
+              });
+
+              console.log(sOptions);
+
+              $('#tallas_lista').html( sOptions );
+            },
+
+            error: function(a, b, c) {
+
+                console.log(a);
+        
+                console.log(b);
+        
+                console.log(c);
+            }
+        });
+    });
+
+
+    function limpiar(){
+
+        document.getElementById('input-tallas').value='';
+
+    }
+
+
+    $("#asignarepp").click(function(){
+        var comentarios = document.getElementById("comentarios").value;
+        var fecha =  document.getElementById("fecha").value;
+
+        if(comentarios == "" || fecha == ""){
+            swal({
+                title: "Llena los campos, para asignar el EPP(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitepp, 500);     
+        }    
+    }); 
+
+    function submitepp() {
+
+        document.getElementById("submit_asigna").submit()
+
+    }
 </script>

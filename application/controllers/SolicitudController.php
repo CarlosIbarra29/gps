@@ -11,6 +11,8 @@ class SolicitudController extends Zend_Controller_Action{
         $this->_ordencompra = new Application_Model_GpsSolicitudOrdenModel;
         $this->_comprobacion = new Application_Model_GpsComprobacionModel;
         $this->_cajachica = new Application_Model_GpsCajachicaModel;
+        $this->_cat = new Application_Model_GpsHerramientaModel;
+        $this->_epp = new Application_Model_GpsEppModel;
 
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
@@ -2745,12 +2747,25 @@ class SolicitudController extends Zend_Controller_Action{
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
         if($this->_hasParam('id')){
+        $table="categoria_herramienta";
+        $this->view->cat = $this->_season->GetAll($table);
+        $table="sitios";
+        $this->view->sitio = $this->_season->GetAll($table);
+        $table="personal_campo";
+        $this->view->per = $this->_season->GetAll($table);
+
+            $table="epp_tipo";
+            $this->view->tipo_epp= $this->_season->GetAll($table);
+
+            $table="epp_catalogo";
+            $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
 
             $table = "sitios";
             $this->view->sitios = $this->_sitio->Getordernombresitios();
 
             $id = $this->_getParam('id');
             $this->view->user = $id; 
+            $this->view->personal_epp= $this->_epp->GetPersonalEpp($id);
             $wh="id";
             $table="personal_campo";
             $this->view->residente_info = $this->_season->GetSpecific($table,$wh,$id);
@@ -3982,6 +3997,145 @@ class SolicitudController extends Zend_Controller_Action{
             }
         }
     }//END REQUEST ADD ROL 
+
+
+    public function requestaddherramientasolicitudAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+            $table="herramienta_inventario";
+            $name = $_FILES['url']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/herramienta/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                }
+            }
+
+            $name = $_FILES['factura']['name'];
+            if(empty($name)){ 
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            }else{
+                $bytes = $_FILES['factura']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['factura']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/herramienta/factura/';
+                    $urldb1 = $url1.$info1;
+                    move_uploaded_file($_FILES['factura']['tmp_name'],$urldb1);
+                }
+            }
+
+            $responsable=$post['responsable'];
+            if ($responsable == 0) {
+                $status = 0;
+            }else{
+                $status=1;
+            }
+
+            $result = $this->_cat->insertherramienta($post,$table,$urldb,$urldb1,$status);
+
+            if ($result) {
+                return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['responsable'].'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+    }//END add herramienta
+
+
+    public function requestasignareppsolicitudAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+                
+            $encampo = $post ['campo'];
+            if ($encampo == true) {
+
+                $id=$post['talla'];
+                $table="epp_catalogo";
+                $vida=$this->_epp->buscarrep($id,$table);
+                
+                $vidap=implode($vida[0]);
+                $date=$post['fecha'];
+                $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
+
+                $cobro=$post['cobro']; 
+                if ($cobro == true) {
+                    $statusc = 1;
+                }else{
+                    $statusc=0;
+                }
+
+                $table="epp_asignar";
+                $result = $this->_epp->insertasgcompra($post,$table,$fechanew,$statusc);
+
+                if ($result) {
+                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhs'].''); 
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                }
+
+            } else {
+
+                $id=$post['talla'];
+                $table="epp_catalogo";
+                $vida=$this->_epp->buscarrep($id,$table);
+                
+                $vidap=implode($vida[0]);
+                $date=$post['fecha'];
+                $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
+
+                $cobro=$post['cobro']; 
+                if ($cobro == true) {
+                    $statusc = 1;
+                }else{
+                    $statusc=0;
+                }
+
+                $table="epp_asignar";
+                $this->_epp->insertasignacion($post,$table,$fechanew,$statusc);
+
+
+                $table="epp_catalogo";
+                $result = $this->_epp->UpdateStock($post,$table);
+
+                if ($result) {
+                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhs'].''); 
+                }else{
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                }
+            }
+        }        
+    }// End Request Asignar -herramienta
 
 
     public function formatSizeUnits($bytes){
