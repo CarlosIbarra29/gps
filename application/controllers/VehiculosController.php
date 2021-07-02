@@ -5259,6 +5259,25 @@ class VehiculosController extends Zend_Controller_Action{
         }
     }   //END REQUEST UPDATE DOCUMENTO
 
+
+    public function entregavehAction(){
+
+         if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->vehiculo=$id;
+                        
+
+            $table="vehiculos_operadores";
+            $status=1;
+            $this->view->vehasignado = $this->_veh->GetVehAsigOperador($table,$id,$status);
+
+            
+        }else {
+            return $this-> _redirect('/');
+        }  
+
+    }
+
     public function formatSizeUnits($bytes){ 
 
         if ($bytes >= 1073741824) {

@@ -331,7 +331,8 @@ where id not in (
                 'fecha_asignacion'=>$hoy,
                 'archivo'=>$urldb,
                 'tarjeta_efecticard'=>$efecticard,
-                'id_vehiculo'=>$post['idveh']
+                'id_vehiculo'=>$post['idveh'],
+                'comentarios'=>$post['comentarios']
             ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
@@ -2447,4 +2448,24 @@ where id not in (
             echo $e;
         }
     }   // END UPDATE DOCUMENTO
+
+
+    public function GetVehAsigOperador($table,$id,$status){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vo.id, vo.id_responsable , vo.status_veh , vo.fecha_asignacion , vo.fecha_entrega , vo.id_vehiculo , vo.tarjeta_efecticard,
+                vo.comentarios, v.id_vehiculos , v.marca , v.submarca , v.modelo , v.placas , v.color , v.imagen, pc.id as id_personal , pc.nombre , 
+                pc.apellido_pa , pc.apellido_ma , pc.imagen as imagenper , pc.telefono , pc.puesto , pc.email_personal, pp.nombre as nombre_puesto
+                FROM vehiculos_operadores vo 
+                LEFT JOIN vehiculos v ON v.id_vehiculos = vo.id_vehiculo
+                LEFT JOIN personal_campo pc ON pc.id = vo.id_responsable
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                WHERE vo.id_vehiculo = ? AND vo.status_veh = $status ORDER BY vo.fecha_asignacion ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Asignado
 } 
