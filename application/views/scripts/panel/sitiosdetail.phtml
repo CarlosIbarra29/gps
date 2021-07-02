@@ -527,7 +527,7 @@
 									<?php } ?>
 
 									
-									<?php if($this->rol_user == 13 || $this->rol_user == 2 || $this->rol_user == 17 || $this->rol_user == 4 || $this->rol_user == 7){ ?>
+									<?php if($this->rol_user == 13 || $this->rol_user == 2 || $this->rol_user == 17 || $this->rol_user == 4 || $this->rol_user == 7 || $this->rol_user == 9){ ?>
 <!-- 										<td>
 											<a href="/panel/asignardetallesview/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
 										</td>
@@ -542,7 +542,7 @@
 										</td>
 									<?php } ?>
 
-									<?php if($this->rol_user != 13 || $this->rol_user != 2 || $this->rol_user != 17 || $this->rol_user != 4 || $this->rol_user == 7){ ?>
+									<?php if($this->rol_user != 13 || $this->rol_user != 2 || $this->rol_user != 17 || $this->rol_user != 4 || $this->rol_user == 7 ){ ?>
 										<?php if($usr["id_tipoproyecto"] == 1){ ?>
 											<td><a href="/grafica/btsproject/id/<?php echo $this->id_sitio; ?>/proyecto/<?php echo $usr["id_tipoproyecto"]; ?>/sitio/<?php echo $usr["idtipo"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
 										<?php } ?>
