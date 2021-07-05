@@ -214,7 +214,7 @@
                   <option value="" disabled selected>* Selecciona una opcion:</option>
                   <option value="0">Oficina</option>
                     <?php foreach ($this->sitios as $rl) { ?>
-                      <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?></option>
+                      <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> - Id cliente: <?php echo $rl['id_cliente']; ?></option>
                     <?php } ?>
                 </select>
                 <label>Sitios</label>
@@ -231,9 +231,9 @@
                         <?php } ?>
                       <?php foreach ($this->sitios as $mar) { 
                         if ($mar['id']==$key['id_sitio']) { ?>
-                                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?></option>
+                                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar["nombre"]; ?> - Id lciente: <?php echo $mar["id_cliente"]; ?></option>
                       <?php } if ($mar['id']!=$key['sitio_id']) { ?>
-                                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?></option>
+                                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar["nombre"]; ?> - Id lciente: <?php echo $mar["id_cliente"]; ?></option>
                       <?php } } ?>  
                     </select>
                     <label>Sitio:</label>
