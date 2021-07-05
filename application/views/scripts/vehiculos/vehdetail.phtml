@@ -268,9 +268,15 @@
 						      			<?php } ?>
 		
 			          				</select>
-			          				<label>Responsable</label>
+			          				<label>Responsable</label> 
 			          			</div>
-			          			<div class="file-field input-field col m6 s12 ">
+
+			          			<div class="input-field col m6 s12">
+                        			<textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+                        			<label for="comentarios">*Comentarios: </label>
+                    			</div>
+
+			          			<div class="file-field input-field col m12 s12 ">
 									<div class="btn">
 										<span>Archivo</span>
 										<input type="file" name="archivo" required>
@@ -330,8 +336,12 @@
 										</div>
 									</div>
 								</form>
-			          			<div class="input-field col m12 s12">
+			          			<div class="input-field col m6 s12">
 			          				<a class="waves-effect darken-1 waves-light lighten-4 btn" id="liberarveh">Regresar Vehículo</a>
+			          			</div>
+
+			          			<div class="input-field col m6 s12">
+			          				<a href="/vehiculos/entregaveh/id/<?php echo $idv; ?>" class="waves-effect green btn modal-trigger">Responsiva</a>
 			          			</div>
 		          			</div>
 		          		</div>
@@ -883,10 +893,12 @@
 
 	$("#asignarveh").click(function(){
 		var responsable = document.getElementById("responsable").value;
+		var comentarios = document.getElementById("comentarios").value;
+		var archivo = document.getElementById("archivo").value;
 
-		if(responsable == ""){
+		if(responsable == "" || comentarios == "" || archivo == ""){
 			swal({
-				title: "Elige un responsable para asignar un vehículo.",
+				title: "Llena todos los campos, para asignar vehículo.",
 			});
 		}else{
 			swal("Espera un momento, la información esta siendo procesada", {
