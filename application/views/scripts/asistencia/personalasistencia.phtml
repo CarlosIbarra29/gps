@@ -109,7 +109,15 @@
 </div>
 
 <div class="row">
-	<div class="col m6 s12"></div>
+	<div class="col m6 s12">
+		<div class="col m6 s6"></div>
+		<div class="col m6 s6">
+			
+			<?php if($this->herramienta_op == 1){ ?>
+				<a class="red btn modal-trigger" href="#modalherramienta">+ Cobro Herramienta</a>
+			<?php } ?>
+		</div>
+	</div>
 	<div class="col m6 s12 text-right">
 		<div class="col m6 s6">
 			<?php if($this->op_solicitud == 1){ ?>
@@ -290,6 +298,86 @@
     </div>
   </div>
 
+  <!-- Modal Structure -->
+  	<div id="modalherramienta" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+	    	<div class="row">
+	    		<div class="col m12 s12">
+	    			<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta</span>
+	    		</div>
+	    	</div>
+
+	    	<div class="row">
+	    		<div class="col m12 s12">
+		    		<form action="/herramienta/requestaplicarcobroherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addherramienta">
+		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
+		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
+		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
+				    <table class="table text-left table-hover">
+				          <thead>
+				            <tr>
+				                <th>NO.</th>
+				                <th>Codigo Herramienta</th>
+				                <th>Herramienta</th> 
+				                <th>Monto</th>
+				                <th>Parcialidad</th>
+				                <th>Pagos</th>
+				                <th>Descuento</th>
+				            </tr> 
+				          </thead>
+				          <?php
+				          if ($this->herramienta_cobro) { 
+				          foreach ($this->herramienta_cobro as $usr) { ?>
+				          <tbody>
+				            <tr>
+				              <td><?php echo $usr['id_cobro']; ?></td>
+				              <td><?php echo $usr['codigo']; ?></td>
+				              <td><?php echo $usr['nombre']; ?></td>
+				              <td>
+				                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_pago'], 2, '.', ','); ?></span>
+				              </td>
+				              <td>
+				                <?php echo $usr['parcialidad']; ?>
+				              </td>
+				              <td>
+				                <?php echo $usr['cantidad_pago']; ?>
+				              </td>
+				              	<?php 
+				              		$monto_pago = $usr['monto_pago'] / $usr['parcialidad'];
+				              	?>
+
+				              <td>
+				              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
+				              </td>
+				              <td>
+			 					<p>
+									<label>
+										<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
+										<span></span>
+									</label>
+								</p>
+				              </td>
+				            </tr>
+				          <?php } }else{ ?>
+				          </tbody> 
+				        <tbody>
+				            <tr>
+				                <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
+				            </tr>
+				        </tbody>
+				                    
+				        <?php } ?>
+				    </table>
+					</form>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="modal-footer">
+	    	<button type="button" id="add_newherramienta" class="btn oculto">Aplicar Descuento</button>
+	     	<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
 
 <!-- <div class="row">
     <div class="col s12 m12">
@@ -365,19 +453,38 @@
 
 			                	<?php if($usr['status_asistencia'] == 0){ ?>
 			                	<td>
-			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+			                		<?php if($usr['status_tipos'] == 0){ ?>
 			                			<?php echo $usr['hora_entrada']; ?>
-			                		<?php }else{ ?>
-			                			Prestamo
-			                		<?php } ?>
-			                		
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 1){ ?>
+			                			Prestamos
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 2){ ?>
+			                			Herramientas
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 3){ ?>
+			                			EPP
+			                		<?php }?>
 			                	</td>
 			                	<td>
 			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
 			                			<?php echo $usr['hora_salida']; ?>
-			                		<?php }else{ ?>
-			                			Prestamo
-			                		<?php } ?>
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 1){ ?>
+			                			Prestamos
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 2){ ?>
+			                			Herramientas
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 3){ ?>
+			                			EPP
+			                		<?php }?>
 
 			                	</td>
 			                        <?php 
@@ -843,4 +950,25 @@
         }
     });
     function submit_addprestamo() { document.getElementById("submit_addprestamo").submit() }
+
+    $(".check_herramienta").click(function(){
+    	$("#add_newherramienta").show();
+    });
+
+    $("#add_newherramienta").click(function(){
+    	var user_prestamo = document.getElementById("user_prestamo").value; 
+
+        if(user_prestamo == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_addherramienta, 1500);     
+        }
+    });
+	function submit_addherramienta() { document.getElementById("submit_addherramienta").submit() }
 </script>
