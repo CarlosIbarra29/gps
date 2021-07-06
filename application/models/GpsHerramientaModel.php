@@ -1186,13 +1186,16 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
         }
     }   //  Update Status Cobro
 
-     public function Updateagregarmontoherramienta($post,$table){
-        $cobro=2; 
+     public function Updateagregarmontoherramienta($post,$table,$urldb,$hoy){
+        $cobro=3; 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET status_cobro = ? WHERE id_herramienta = ?",array(
+            $qry = $db->query("UPDATE $table SET monto_pago =?, parcialidad =? ,status_cobro = ?, evidencia =? WHERE id_cobro = ?",array(
+                $post['monto'],
+                $post['cantidad'],
                 $cobro,
-                $post));
+                $urldb,
+                $post['id_solicitud']));
             $db->closeConnection();               
             return $qry;
         } 
@@ -1200,6 +1203,54 @@ class Application_Model_GpsHerramientaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   //  Update Status Cobro
+
+    public function updatesolicitudherramientacobroouno($id,$table,$num_pago){
+        $status= 2;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago = ?, status_cobro = ? WHERE id_cobro = ?",array($num_pago,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
+    public function updatesolicitudherramientacobroodos($id,$table,$num_pago){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago =? WHERE id_cobro = ?",array($num_pago,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function insertnewherramientanomina($post,$table,$id,$descuento,$hoy){
+        $tipo = 2;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$post['user'],
+                'nombre'=>$post['sitio'],
+                'dia'=>$hoy,
+                'id_proyecto'=>$post['id_proyecto'],
+                'id_proyecto_salida'=>$post['id_proyecto'],
+                'monto_pago'=>$descuento,
+                'status_tipos' => $tipo,
+                'solicitud_prestamo'=>$id
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
 
 
 

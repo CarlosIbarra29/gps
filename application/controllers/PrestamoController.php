@@ -191,9 +191,7 @@ class PrestamoController extends Zend_Controller_Action{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
-        } 
-
-             
+        }       
     }
 
 

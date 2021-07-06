@@ -397,9 +397,9 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pa.id as id_pa, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, 
                         pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
-                        pa.ev_entrada, pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
+                        pa.ev_entrada, pa.ev_salida, pa.status_asistencia,pa.motivo_inasistencia,pa.status_nomina, 
                         pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma, 
-                        pa.status_extra, pa.solicitud_prestamo, pa.monto_pago
+                        pa.status_extra, pa.solicitud_prestamo, pa.monto_pago, pa.status_tipos
                         FROM personal_asistencia pa 
                         LEFT JOIN personal_campo pc on pc.id = pa.id_personal
                         where pa.id_personal = ? and status_nomina = 0",array($id));
@@ -410,6 +410,23 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET ASISTENCIA PENDIENTE
+
+    public function getcobroherramientapendienteuser($id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ch.id_cobro, ch.id_herramienta, ch.id_personal, ch.status_cobro, ch.fecha, 
+                        ch.monto_pago, ch.parcialidad, ch.cantidad_pago, ch.comentario, ch.evidencia, h.codigo, 
+                        h.nombre
+                        FROM cobro_herramientas ch 
+                        LEFT JOIN herramienta_inventario h on h.id_herramienta = ch.id_herramienta
+                        where ch.status_cobro = 3 AND id_personal =  ?",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET COBRO HERRAMIENTA PENDIENTE USER
 
 
     public function getpersonalasistencianominaregistro($id){

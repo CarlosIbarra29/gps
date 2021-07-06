@@ -205,6 +205,114 @@ class SolicitudController extends Zend_Controller_Action{
     }
 
 
+    public function ordencompranofacturableAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="solicitud_ordencompra";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $sql = $this->_ordencompra->getsolicitudnofacturable();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="proveedor";
+        $this->view->prov = $this->_season->GetAll($table);
+
+        $table="servicios";
+        $this->view->servicios = $this->_season->GetAll($table);
+
+
+        if($status == 0) {
+            $solicitud=$this->_ordencompra->getsolicitudnofacturable();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $sql=$this->view->paginator= $this->_ordencompra->getusernamesolicitudnofacturable($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 1){
+            $solicitud=$this->_ordencompra->getusernamesolicitudcountaceptfacturable();
+            $count=count($solicitud);
+
+            if(isset($_GET['pagina'])) { $pagina = $_GET['pagina']; }else { $pagina= $this->view->pagina = 1; }
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptnofact($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 2){
+            $solicitud=$this->_ordencompra->getusernamesolicitudcountcancelfacturable();
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelfact($table,$offset,$no_of_records_per_page);
+        }
+
+        if($status == 3){
+            $solicitud=$this->_ordencompra->getusernamesolicitudcountaceptpagonofact();
+            // var_dump($solicitud);exit;
+            $count=count($solicitud);
+
+            if (isset($_GET['pagina'])) {
+                $pagina = $_GET['pagina'];
+            } else {
+                $pagina= $this->view->pagina = 1;
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagonofact($table,$offset,$no_of_records_per_page);
+        }        
+    }
+
+
     public function missolicitudescontabilidadAction(){
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
@@ -340,6 +448,458 @@ class SolicitudController extends Zend_Controller_Action{
             $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpago($table,$offset,$no_of_records_per_page);
         }
    	}
+
+    public function listaordencomprasitionofacturableAction(){
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="solicitud_ordencompra";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $sql = $this->_ordencompra->getusernamesolicitudcount();
+        $total = count($sql);
+        $this->view->enproceso=$total;
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento=$status;
+
+        $table="servicios";
+        $this->view->servicios = $this->_season->GetAll($table);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+        // var_dump($opcion);exit;
+        if($status == 0) {
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sitio=$sitio;
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountsearchnofact($sitio);
+                // var_dump($solicitud);exit;
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchnofact($table,$offset,$no_of_records_per_page,$sitio);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $prov = $this->_getParam('proveedor');
+                // var_dump($prov);exit;
+                $this->view->nombre_prov=$prov; 
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountsearchproveedornofact($prov);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchprovnofact($table,$offset,$no_of_records_per_page,$prov);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                // var_dump($id);exit;
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountsearchidnofact($id);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchidpagnofact($table,$offset,$no_of_records_per_page,$id);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountsearchusernofact($user);
+                 // var_dump($solicitud);exit;
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchprovnofact($table,$offset,$no_of_records_per_page,$user);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountsearchservicionofact($servicio);
+
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchservicionofact($table,$offset,$no_of_records_per_page,$servicio);     
+            }
+
+        }
+
+        if($status == 1){
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sitio=$sitio;
+
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchnofact($sitio);
+                // var_dump($solicitud);exit;
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) {
+                    $pagina = $_GET['pagina'];
+                } else {
+                    $pagina= $this->view->pagina = 1;
+                } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptsitionofact($table,$offset,$no_of_records_per_page,$sitio);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov;
+
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchprovnofact($prov);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptprovnofact($table,$offset,$no_of_records_per_page,$prov);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                $this->view->id_search=$id; 
+
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchidnofact($id);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptidnofacturable($table,$offset,$no_of_records_per_page,$id);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchusernofacturable($user);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptusernofact($table,$offset,$no_of_records_per_page,$user);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchserviciofact($servicio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptservicionofact($table,$offset,$no_of_records_per_page,$servicio);
+            }
+
+        }
+
+        if($status == 2){
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sitio=$sitio;
+
+                $solicitud=$this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountcancelsitionofact($sitio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelsitionofact($table,$offset,$no_of_records_per_page,$sitio);
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov;
+                $solicitud=$this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountcancelprovnofact($prov);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelprovnofact($table,$offset,$no_of_records_per_page,$prov);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                $this->view->id_search=$id; 
+
+                $solicitud=$this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountcancelidnofact($id);
+                $count=count($solicitud);
+                // var_dump($solicitud);exit;
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelidnofact($table,$offset,$no_of_records_per_page,$id);
+
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+
+                $solicitud=$this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountcancelusernofact($user);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelusernofact($table,$offset,$no_of_records_per_page,$user);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+                $solicitud=$this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountcancelservicionofact($servicio);
+                $count=count($solicitud);
+
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudcancelservicionofact($table,$offset,$no_of_records_per_page,$servicio);
+            }
+
+        }
+
+        if($status == 3){
+            if($opcion == 1){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sitio=$sitio;
+
+                $solicitud= $this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountaceptpagositionofact($sitio);
+                $count=count($solicitud);
+                // var_dump($count);exit;
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagositionofact($table,$offset,$no_of_records_per_page,$sitio);
+               
+            }
+
+            if($opcion == 2){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+
+                $prov = $this->_getParam('proveedor');
+                $this->view->nombre_prov=$prov;
+
+                $solicitud= $this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountaceptpagoprovnofact($prov);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagoprovnofact($table,$offset,$no_of_records_per_page,$prov);
+            }
+
+            if($opcion == 3){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                $this->view->id_search=$id; 
+
+                $solicitud= $this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountaceptpagoidnofact($id);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagoidnofact($table,$offset,$no_of_records_per_page,$id);
+            }
+
+            if($opcion == 4){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $user = $this->_getParam('usuario'); 
+                $this->view->user_search=$user; 
+
+                $solicitud= $this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountaceptpagousernofact($user);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagousernofact($table,$offset,$no_of_records_per_page,$user);
+            }
+
+            if($opcion == 5){
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $servicio = $this->_getParam('servicio'); 
+                $this->view->servicio_search=$servicio; 
+
+                $solicitud= $this->view->total_sitio= $this->_ordencompra->getusernamesolicitudcountaceptpagoservicionofact($servicio);
+                $count=count($solicitud);
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="solicitud_ordencompra";
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptpagoserviciopnofact($table,$offset,$no_of_records_per_page,$servicio);
+            }
+
+
+        }
+    }
+
 
     public function listaordencomprasitioAction(){
         $id=$this->_session->id;

@@ -120,16 +120,18 @@ class AsistenciaController extends Zend_Controller_Action{
         $wh="id_personal";
         $table="personal_prestamos";
         $sol = $this->view->solicitud_prestamo = $this->_season->GetSpecific($table,$wh,$id);
-        // var_dump($sol);exit;
 
         if(empty($sol)){
-            // $op = "Sin datos";
-            $op = 0;
-            $this->view->op_solicitud = $op;
+            $op = 0; $this->view->op_solicitud = $op;   // $op = "Sin datos";
         }else{          
-            // $op = "con datos";
-            $op = 1;
-            $this->view->op_solicitud = $op;
+            $op = 1; $this->view->op_solicitud = $op;  // $op = "con datos";
+        }
+
+        $rest = $this->view->herramienta_cobro = $this->_asistencia->getcobroherramientapendienteuser($id);
+        if(empty($rest)){
+            $op = 0; $this->view->herramienta_op = $op;   // $op = "Sin datos";
+        }else{          
+            $op = 1; $this->view->herramienta_op = $op;  // $op = "con datos";
         }
 
     }

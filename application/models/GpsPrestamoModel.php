@@ -27,6 +27,7 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
     }// END INSERT USER
 
     public function insertnewprestamonomina($post,$table,$id,$descuento,$hoy){
+        $tipo = 1;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -36,8 +37,8 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
                 'id_proyecto'=>$post['id_proyecto'],
                 'id_proyecto_salida'=>$post['id_proyecto'],
                 'monto_pago'=>$descuento,
+                'status_tipos' => $tipo,
                 'solicitud_prestamo'=>$id
-
             ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
