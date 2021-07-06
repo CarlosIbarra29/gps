@@ -4632,11 +4632,11 @@ class SolicitudController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
-                
+            
             $encampo = $post ['campo'];
             if ($encampo == true) {
 
-                $id=$post['talla'];
+                $id=$post['talla']; 
                 $table="epp_catalogo";
                 $vida=$this->_epp->buscarrep($id,$table);
                 
@@ -4655,7 +4655,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $result = $this->_epp->insertasgcompra($post,$table,$fechanew,$statusc);
 
                 if ($result) {
-                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhs'].''); 
+                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhsol'].''); 
                 }else{
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -4687,7 +4687,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $result = $this->_epp->UpdateStock($post,$table);
 
                 if ($result) {
-                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhs'].''); 
+                    return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['idhsol'].''); 
                 }else{
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 

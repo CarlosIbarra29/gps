@@ -414,7 +414,7 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
-                
+            
             $encampo = $post ['campo'];
             if ($encampo == true) {
 
