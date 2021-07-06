@@ -749,8 +749,8 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                         cs.user_solicitud 
                         FROM comprobacion_solicitud cs 
                         WHERE cs.autorizacion_status = ? 
-                        AND cs.pago_status = ? 
-                        AND $opcion like '%{$nombre}%' LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+                        AND cs.pago_status = ?  
+                        AND $opcion  like '%{$nombre}%' ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -768,8 +768,8 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                         FROM comprobacion_solicitud cs 
                         WHERE cs.autorizacion_status = ? 
                         AND cs.pago_status = ? 
-                        AND cs.id_residente = ? 
-                        LIMIT $offset,$no_of_records_per_page",array($status,$pago,$nombre));
+                        AND cs.id_residente = ?  ORDER BY cs.id DESC
+                        LIMIT $offset,$no_of_records_per_page ",array($status,$pago,$nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
