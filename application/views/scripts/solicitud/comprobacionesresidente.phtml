@@ -698,7 +698,7 @@
         <div class="row">
             <form action="/solicitud/requestasignareppsolicitud" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asigna">
 
-                    <input type="hidden" name="idhs" value="<?php echo $this->user; ?>">
+                    <input type="hidden" name="idhsol" value="<?php echo $this->user; ?>">
                 <div class="row">
 
                     <div class="input-field col m6 s12">
@@ -774,6 +774,15 @@
                         </label>
                     </div>
                     <div class="input-field col s12"></div>
+                    <div class="input-field col s12">
+                      <select id="idhs" name="idhs" required>
+                        <option value="0" disabled selected>* Selecciona una opcion:</option>
+                          <?php foreach ($this->per as $personal) { ?>
+                            <option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+                          <?php } ?>
+                      </select>
+                      <label>Responsable</label>
+                    </div>
                     <div class="input-field col m12 s12">
                         <textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
                         <label for="comentarios">*Comentarios: </label>
