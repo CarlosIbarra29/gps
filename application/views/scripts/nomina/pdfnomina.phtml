@@ -76,19 +76,19 @@
                 </p>
             </div>
             <div class="for" style="margin-top: 90px;">
-                    <div class="col m12 s12">
-                        <span style="font-size:13px;">Personal: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_user; ?> <?php echo $app_user; ?> <?php echo $apm_user; ?></span> <br>
-                        <span style="font-size:13px;">CURP: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $curp_user; ?></span> <br>
-                        <span style="font-size:13px;">RFC: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $rfc_user; ?></span> <br>
-                        <span style="font-size:13px;">NSS: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nss_user; ?></span> <br>
-                        <span style="font-size:13px;">Puesto: </span>
-                        <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $puesto; ?></span> <br>
+                <div class="col m12 s12">
+                    <span style="font-size:13px;">Personal: </span>
+                    <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_user; ?> <?php echo $app_user; ?> <?php echo $apm_user; ?></span> <br>
+                    <span style="font-size:13px;">CURP: </span>
+                    <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $curp_user; ?></span> <br>
+                    <span style="font-size:13px;">RFC: </span>
+                    <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $rfc_user; ?></span> <br>
+                    <span style="font-size:13px;">NSS: </span>
+                    <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nss_user; ?></span> <br>
+                    <span style="font-size:13px;">Puesto: </span>
+                    <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $puesto; ?></span> <br>
 
-                    </div> 
+                </div> 
             </div>
 
             <div class="from" style="margin-top: 90px;">
@@ -112,19 +112,19 @@
                         <span style="color:red; font-size: 10px;">DESCRIPCION BREVE DEL MATERIAL (SE TIENE QUE ADJUNTAR LA COTIZACION DEL PROVEEDOR).</span>
                     </div> -->
                 	<div class="col m12 s12" style="margin-top: 75px;">
-                         <table>
+                        <table>
                             <thead>
-                              <tr>
-                                  <th><span class="title-pdf">Lista de dias trabajados</span></th>
-                              </tr>
+                                <tr>
+                                    <th><span class="title-pdf">Lista de dias trabajados</span></th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                              <tr>
-                                <!-- <td class="text-center"><?php echo $condiciones_compra; ?></td> -->
-                              </tr>
+                                <tr>
+                                    <!-- <td class="text-center"><?php echo $condiciones_compra; ?></td> -->
+                                </tr>
                             </tbody>
-                          </table>
+                        </table>
                 	</div>
 
 
@@ -151,23 +151,43 @@
                                         <?php echo $usr['nombre']; ?>
                                     </td>
                                     <td>
-                                        <?php echo $usr['dia']; ?>
+                                        <span style="font-size: 11px; font-weight: bold;"><?php echo $usr['dia']; ?></span>
                                     </td>
 
                                     <?php if($usr['status_asistencia'] == 0){ ?>
                                     <td>
-                                        <?php if($usr['solicitud_prestamo']==0){ ?>
+                                        <?php if($usr['status_tipos'] == 0){ ?>
                                             <?php echo $usr['hora_entrada']; ?>
-                                        <?php }else{ ?>
-                                            Prestamo
-                                        <?php } ?>
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 1){ ?>
+                                            Prestamos
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 2){ ?>
+                                            Herramientas
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 3){ ?>
+                                            EPP
+                                        <?php }?>
                                     </td>
                                     <td>
-                                        <?php if($usr['solicitud_prestamo']==0){ ?>
+                                        <?php if($usr['solicitud_prestamo'] == 0){ ?>
                                             <?php echo $usr['hora_salida']; ?>
-                                        <?php }else{ ?>
-                                            Prestamo
-                                        <?php } ?>
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 1){ ?>
+                                            Prestamos
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 2){ ?>
+                                            Herramientas
+                                        <?php }?>
+
+                                        <?php if($usr['status_tipos'] == 3){ ?>
+                                            EPP
+                                        <?php }?>
                                     </td>
                                         <?php 
                                             $datetime1 = new DateTime($usr['hora_entrada']);

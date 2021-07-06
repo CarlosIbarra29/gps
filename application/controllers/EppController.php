@@ -766,17 +766,11 @@ class EppController extends Zend_Controller_Action{
         $this->view->status_cobro=$status;
 
         if($status == 1){
-
             $table="personal_campo";
-            $eppcobros=$this->_epp->GetPersonalCobro($table);
+            $eppcobros=$this->_epp->Getcobroeppnomina($status);
             $count=count($eppcobros);
 
-            if (isset($_GET['pagina'])) {
-                $pagina = $_GET['pagina'];
-            } else {
-                $pagina= $this->view->pagina = 1;
-            } 
-
+            if (isset($_GET['pagina'])){ $pagina =$_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -784,7 +778,7 @@ class EppController extends Zend_Controller_Action{
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $table="personal_campo";
-            $sql= $this->view->paginator= $this->_epp->Getpaginationcobro($table,$offset,$no_of_records_per_page);  
+            $sql= $this->view->paginator= $this->_epp->getnominacobroepppaginator($status,$offset,$no_of_records_per_page);  
         }
 
         if($status == 2){
@@ -883,13 +877,14 @@ class EppController extends Zend_Controller_Action{
     public function eppdetailcostoAction(){
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
             $this->view->personal_epp= $this->_epp->GetPersonalEpp($id);
 
             $table="epp_asignar";
-            $wh="id_personal";
+            $wh="id";
             $status=0;
             $cobro=1;
-            $this->view->eppcobro = $this->_epp->GetEppCobro($table,$wh,$id,$status,$cobro);
+            $this->view->eppcobro = $this->_epp->GetEppCobronomina($table,$wh,$id,$status,$cobro);
 
         }else {
             return $this-> _redirect('/');
