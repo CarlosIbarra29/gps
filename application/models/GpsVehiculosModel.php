@@ -146,6 +146,8 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 'modelo'=>$post['modelo'],
                 'placas'=>$post['placas'],
                 'color'=>$post['color'],
+                'tag'=>$post['tag'],
+                'efecticard'=>$post['efecticard'],
                 'comentarios'=>$post['com'],
                 'id_status'=>$status,
                 'id_grupo'=>$post['grupo']
@@ -161,7 +163,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
     public function updateveh($post,$table,$urldb,$urldb2){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET imagen = ?, tarjeta_circulacion = ?, marca = ?, submarca = ?, modelo = ?, placas = ?, color = ?, comentarios = ?, id_grupo = ? WHERE id_vehiculos = ? ",
+            $qry = $db->query("UPDATE $table SET imagen = ?, tarjeta_circulacion = ?, marca = ?, submarca = ?, modelo = ?, placas = ?, color = ?, tag = ?, efecticard = ?, comentarios = ?, id_grupo = ? WHERE id_vehiculos = ? ",
                 array(
                     $urldb,
                     $urldb2,
@@ -170,6 +172,8 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                     $post['modelo'],
                     $post['placas'],
                     $post['color'],
+                    $post['tag'],
+                    $post['efecticard'],
                     $post['com'],
                     $post['grupo'],
                     $post['ids']));
@@ -244,7 +248,7 @@ where id not in (
     public function GetVehiculos($table,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion, v.porcentaje_doc,
+            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion, v.porcentaje_doc, v.tag, v.efecticard,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo
                 FROM vehiculos v 
                 LEFT JOIN vehiculos_grupo vg ON vg.id_grupo = v.id_grupo
@@ -2454,12 +2458,17 @@ where id not in (
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT vo.id, vo.id_responsable , vo.status_veh , vo.fecha_asignacion , vo.fecha_entrega , vo.id_vehiculo , vo.tarjeta_efecticard,
-                vo.comentarios, v.id_vehiculos , v.marca , v.submarca , v.modelo , v.placas , v.color , v.imagen, pc.id as id_personal , pc.nombre , 
-                pc.apellido_pa , pc.apellido_ma , pc.imagen as imagenper , pc.telefono , pc.puesto , pc.email_personal, pp.nombre as nombre_puesto
+                vo.comentarios, v.id_vehiculos , v.marca , v.submarca , v.modelo , v.placas , v.tag, v.efecticard, v.color , v.imagen, 
+                pc.id as id_personal , pc.nombre , pc.apellido_pa , pc.apellido_ma , pc.imagen as imagenper , pc.telefono , pc.puesto , pc.email_personal, 
+                pc.id_sitiopersonal, pc.name_sitio, pc.sitio_tipoproyectopersonal, pp.nombre as nombre_puesto, s.id_cliente, s.nombre as nombresitio, 
+                st.id_tipoproyecto, tp.nombre_proyecto
                 FROM vehiculos_operadores vo 
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vo.id_vehiculo
                 LEFT JOIN personal_campo pc ON pc.id = vo.id_responsable
                 LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                LEFT JOIN sitios s ON s.id = pc.id_sitiopersonal
+                LEFT JOIN sitios_tipoproyecto st ON st.id = pc.sitio_tipoproyectopersonal
+                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
                 WHERE vo.id_vehiculo = ? AND vo.status_veh = $status ORDER BY vo.fecha_asignacion ASC",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
