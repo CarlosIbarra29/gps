@@ -1992,5 +1992,22 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   //  Update Status Cobro
+
+
+    public function geteppasignarcobronomina($user){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal,
+                        ea.comentario, ea.monto_pago, ea.parcialidad, ea.cantidad_pago
+                        FROM epp_asignar ea 
+                        where cobro = 3 AND id_personal = ? order by ea.id ASC",array($user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }   // Detalles de solicitud
+
       
 } 

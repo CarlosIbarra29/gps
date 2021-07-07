@@ -34,6 +34,8 @@
     $fecha_auditoria = $key['fecha_auditoria'];
     $comentario = $key['comentario'];
 
+    $tarjeta_no = $key['tarjeta'];
+    $tag = $key['tag'];
 } ?>
 
 <?php foreach ($this->vehiculo as $value) {
@@ -107,6 +109,8 @@
                     <span class="title-pdf">Submarca:</span> <?php echo $submarca; ?><br />
                     <span class="title-pdf">Modelo:</span> <?php echo $modelo; ?><br />
                     <span class="title-pdf">Placas:</span> <?php echo $placas; ?> <br />
+                    <span class="title-pdf">Efecticard:</span> <?php echo $tarjeta_no; ?><br />
+                    <span class="title-pdf">Tag:</span> <?php echo $tag; ?>
                 </p>
 
             </div>

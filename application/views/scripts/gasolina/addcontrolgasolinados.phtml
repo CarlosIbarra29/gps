@@ -41,7 +41,7 @@
 				<?php if($this->if_datos == 0){ ?>
 					
 				<?php }else{ ?>
-					<div class="input-field col m6 s12">
+<!-- 					<div class="input-field col m6 s12">
 						<select id="tarjeta" name="tarjeta" required>
 							<option value="" disabled selected>Selecciona una opcion:</option>
 							<?php foreach ($this->tarjetas as $rl) { ?>
@@ -50,7 +50,7 @@
 						</select>
 						<label>Tarjeta de Efecticard</label>
 					</div>
-				<?php } ?>
+ -->				<?php } ?>
 
 			<?php } else{?>
 				<input type="hidden" name="tarjeta" id="tarjeta" value="0">
@@ -105,9 +105,12 @@
                 </form>
           		</div>
 
-		<?php if($this->if_datos == 0 && $this->forma_pago == 1){ ?>
+		<?php if($this->if_datos == 0){ ?>
 			<div class="row">
-				<span>El usuario asignado no tiene efecticard asignada, notificar al area de control de proyectos para asignarle una tarjeta y poder continuar con el registro.</span>
+				<div class="col m12 s12 text-center">
+					<span>Para continuar es necesario que el vehiculo tenga asignada una </span>
+				<span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Efecticard</span> <span>y un </span> <span style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tag</span>
+				</div>
 			</div>
 		<?php }else{ ?>
 		<?php } ?>
@@ -117,7 +120,7 @@
 				<div class="row">
 					<div class="col m12 s12 text-right">
 						<a href="/gasolina/controlgasolina" class="red btn">Salir</a>
-						<?php if($this->if_datos == 0 && $this->forma_pago == 1){ ?>
+						<?php if($this->if_datos == 0){ ?>
 						<?php }else{ ?>
 							<button  id="sendpasodos" class="btn">Terminar Control</button>
 						<?php } ?>

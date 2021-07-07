@@ -105,12 +105,15 @@ class GasolinaController extends Zend_Controller_Action{
         $id_sitio = $usr[0]['id_sitios'];
         $this->view->id_sitio = $id_sitio;
         $this->view->forma_pago = $usr[0]['forma_pago'];
-
+        $vehi = $usr[0]['id_vehiculo'];
+        
         $id = $usr[0]['id_responsable'];
-        $wh="id_responsable";
-        $table="tarjeta_efecticard";
-        $tarjetas = $this->_season->GetSpecific($table,$wh,$id);
-        if(empty($tarjetas)){
+        $wh="id_vehiculos";
+        $table="vehiculos";
+        $tarjetas = $this->_season->GetSpecific($table,$wh,$vehi);
+        // var_dump($tarjetas);exit;
+
+        if($tarjetas[0]['efecticard'] == NULL || $tarjetas[0]['tag'] == NULL){
             $valor = 0; //vacio
             $this->view->if_datos = $valor;
         }else{
@@ -727,19 +730,16 @@ class GasolinaController extends Zend_Controller_Action{
             $table="add_gasolina";
             $usr = $this->_season->GetSpecific($table,$wh,$id);
 
-            if($usr[0]['forma_pago'] == 1){
-                $id_tarjeta = $post['tarjeta'];
 
-                $id=$post['tarjeta'];
-                $wh="id";
-                $table="tarjeta_efecticard";
-                $usr = $this->_season->GetSpecific($table,$wh,$id);
-                $nombre_tarjeta = $usr[0]['no_tarjeta'];
+            $ve=$usr[0]['id_vehiculo'];
+            $wh="id_vehiculos";
+            $table="vehiculos";
+            $vehiculo = $this->_season->GetSpecific($table,$wh,$ve);
 
-            }else{
-                $id_tarjeta = 0;
-                $nombre_tarjeta = "";
-            }
+            $nombre_tarjeta = $vehiculo[0]['efecticard'];
+            $tag = $vehiculo[0]['tag'];
+
+            $id_tarjeta = 0;
 
             $name = $_FILES['odometro']['name'];
             if(empty($name)){ 
@@ -804,9 +804,8 @@ class GasolinaController extends Zend_Controller_Action{
                 }
             } 
 
-            // var_dump($post);exit;
             $table="add_gasolina";
-            $result = $this->_gasolina->updategasolinacontroldos($post,$table,$odometro,$bomba,$ticket,$id_tarjeta,$nombre_tarjeta);
+            $result = $this->_gasolina->updategasolinacontroldos($post,$table,$odometro,$bomba,$ticket,$id_tarjeta,$nombre_tarjeta,$tag);
             if ($result) {
                 return $this-> _redirect('/gasolina/controlgasolina');
             }else{

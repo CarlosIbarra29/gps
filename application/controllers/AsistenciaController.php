@@ -9,6 +9,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_personal = new Application_Model_GpsPersonalModel;
         $this->_asistencia = new Application_Model_GpsAsistenciaModel;
         $this->_nomina = new Application_Model_GpsNominaModel;
+        $this->_epp = new Application_Model_GpsEppModel;
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -133,6 +134,14 @@ class AsistenciaController extends Zend_Controller_Action{
         }else{          
             $op = 1; $this->view->herramienta_op = $op;  // $op = "con datos";
         }
+
+        $epp = $this->view->nomina_epp = $this->_epp->geteppasignarcobronomina($id);
+        if(empty($epp)){
+            $op = 0; $this->view->epp_op = $op;   // $op = "Sin datos";
+        }else{          
+            $op = 1; $this->view->epp_op = $op;  // $op = "con datos";
+        }
+
 
     }
 

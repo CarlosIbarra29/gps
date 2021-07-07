@@ -35,6 +35,7 @@
 	$status_gasolina = $key['status_gasolina'];
 	$id_solicitud = $key['id'];
 	$tarjeta_no = $key['tarjeta'];
+	$tag = $key['tag'];
 } ?>
 
 <?php foreach ($this->vehiculo as $value) {
@@ -148,23 +149,14 @@
 	          			<span class="titulo_info">Responsable: </span><span class="titulo_dato"><?php echo $responsable; ?></span><br>
 	          			<span class="titulo_info">Fecha de Ticket: </span><span class="titulo_dato"><?php echo $fecha_requerida; ?></span><br>
 	          			<span class="titulo_info">Importe: </span><span class="titulo_dato">$<?php echo number_format($importe, 2, '.', ','); ?></span><br>
+	          			<span class="titulo_info">Efecticard: </span><span class="titulo_dato"><?php echo $tarjeta_no; ?></span><br>
+	          			<span class="titulo_info">Tag: </span><span class="titulo_dato"><?php echo $tag; ?></span>
 	          		</div>
 	          		<div class="col m6 s12">
 	          			<span class="titulo_info">Odometro Inicial: </span><span class="titulo_dato"><?php echo $odometro_inicial; ?></span><br>
 	          			<span class="titulo_info">Odometro Final: </span><span class="titulo_dato"><?php echo $odometro_final; ?></span><br>
 	          			<span class="titulo_info">Estación: </span><span class="titulo_dato"><?php echo $estacion; ?></span><br>
-	          			<?php if($forma_pago == 1){ ?>
-	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Efecticard</span><br>
-	          				<span class="titulo_info">Tarjeta No: </span><span class="titulo_dato"><?php echo $tarjeta_no; ?></span><br>
-	          			<?php } ?>
-
-	          			<?php if($forma_pago == 2){ ?>
-	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Tarjeta de Debito</span><br>
-	          			<?php } ?>
-
-	          			<?php if($forma_pago == 3){ ?>
-	          				<span class="titulo_info">Forma de Pago: </span><span class="titulo_dato">Otra...</span><br>
-	          			<?php } ?>
+	          			
 	          		</div>
 	          	</div>
 

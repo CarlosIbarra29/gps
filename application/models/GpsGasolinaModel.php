@@ -83,11 +83,11 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
     }// END UPDATE USER
 
 
-    public function updategasolinacontroldos($post,$table,$odometro,$bomba,$ticket,$id_tarjeta,$nombre_tarjeta){
+    public function updategasolinacontroldos($post,$table,$odometro,$bomba,$ticket,$id_tarjeta,$nombre_tarjeta,$tag){
     	$paso = 1; 
             try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET id_proyecto = ?, step_gasolina = ?, consumo = ?, odometro_inicial = ?, odometro_final = ?, odometro_file= ?, bomba_file = ?, ticket_file = ?, id_tarjeta = ?, tarjeta = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET id_proyecto = ?, step_gasolina = ?, consumo = ?, odometro_inicial = ?, odometro_final = ?, odometro_file= ?, bomba_file = ?, ticket_file = ?, id_tarjeta = ?, tarjeta = ?, tag =? WHERE id = ?",array(
                 $post['proyecto'],
                 $paso,
                 $post['consumo'],
@@ -98,6 +98,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                 $ticket,
                 $id_tarjeta,
                 $nombre_tarjeta,
+                $tag,
                 $post['ids']));
             $db->closeConnection();              
             return $qry;
@@ -268,7 +269,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                         g.step_gasolina, g.consumo, g.status_gasolina, g.id_vehiculo, g.tarjeta, v.placas
                         FROM add_gasolina g 
                         LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
-                        WHERE g.step_gasolina = 1 AND g.status_gasolina = ? 
+                        WHERE g.step_gasolina = 1 AND g.status_gasolina = ? ORDER BY g.id DESC 
                         LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
@@ -287,7 +288,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                         FROM add_gasolina g 
                         LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
                         WHERE g.step_gasolina = 1 AND name_sitio like '%{$nombre}%'
-                        AND g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+                        AND g.status_gasolina = ? ORDER BY g.id DESC LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -305,7 +306,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                         FROM add_gasolina g 
                         LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
                         WHERE g.step_gasolina = 1 AND name_responsable like '%{$nombre}%' 
-                        AND g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+                        AND g.status_gasolina = ? ORDER BY g.id DESC LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -323,7 +324,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                         FROM add_gasolina g 
                         LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
                         WHERE g.step_gasolina = 1 AND g.placas like '%{$nombre}%'
-                        AND g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($estado));
+                        AND g.status_gasolina = ? ORDER BY g.id DESC LIMIT $offset,$no_of_records_per_page",array($estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -341,7 +342,7 @@ class Application_Model_GpsGasolinaModel extends Zend_Db_Table_Abstract{
                         FROM add_gasolina g 
                         LEFT JOIN vehiculos v on g.id_vehiculo = v.id_vehiculos 
                         WHERE g.step_gasolina = 1 AND g.id_tarjeta = ? 
-                        AND g.status_gasolina = ? LIMIT $offset,$no_of_records_per_page",array($nombre,$estado));
+                        AND g.status_gasolina = ? ORDER BY g.id DESC LIMIT $offset,$no_of_records_per_page",array($nombre,$estado));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

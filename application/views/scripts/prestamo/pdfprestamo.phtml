@@ -73,7 +73,7 @@
                 </span>
                 <div class="row">
                     <div class="company-logo col m12 s12 text-center">
-                        Prestamo
+                        Descuento
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                          <table>
                             <thead>
                               <tr>
-                                  <th><span class="title-pdf">Motivo del Prestamo</span></th>
+                                  <th><span class="title-pdf">Motivo del Descuento</span></th>
                               </tr>
                             </thead>
 
@@ -250,7 +250,7 @@
     <script>
       function getPDF(selector) {
         kendo.drawing.drawDOM($(selector)).then(function(group){
-          kendo.drawing.pdf.saveAs(group, "Prestamo No.<?php echo $this->id_solicitud; ?> .pdf");
+          kendo.drawing.pdf.saveAs(group, "Descuento No.<?php echo $this->id_solicitud; ?> .pdf");
         });
       }
 
