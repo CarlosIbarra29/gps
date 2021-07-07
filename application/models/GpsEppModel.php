@@ -602,7 +602,8 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, ea.comentario, ea.talla, 
                         ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, 
                         ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, 
-                        ec.costo_aprobado, ec.tiempo_vida, ea.cobro
+                        ec.costo_aprobado, ec.tiempo_vida, ea.cobro, ea.comentario_rechazo, ea.user_monto,
+                        ea.fecha_monto
                         FROM epp_asignar ea 
                         LEFT JOIN
                         epp_catalogo ec ON ea.id_epp = ec.idepp
@@ -779,6 +780,25 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   //  Update Status Cobro
+
+    public function UpdateCobronomina($post,$table,$nombre_usuario,$hoy){
+        $cobro=4; 
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cobro = ?, comentario_rechazo = ?, fecha_monto = ?, user_monto =? WHERE id = ?",array(
+                $cobro,
+                $post['motivo_rechazo'],
+                $hoy,
+                $nombre_usuario,
+                $post['id_solicitud']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Status Cobro
+
 
     public function GetPersonalCobroB($table,$nombre){
         $cobro = 1;
