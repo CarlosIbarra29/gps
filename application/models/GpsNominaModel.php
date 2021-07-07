@@ -98,9 +98,9 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pa.id, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, pa.dia, 
             			pa.day_num, pa.hora_extra, pa.id_solicitudhora, pa.id_proyecto, pa.id_proyecto_salida, 
-            			pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia, pa.status_nomina, 
+            			pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
 						pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra, pa.monto_pago, 
-                        pa.solicitud_prestamo
+                        pa.solicitud_prestamo, pa.status_tipos
 						FROM personal_asistencia pa
 						INNER JOIN personal_campo pc on pc.id=pa.id_personal 
 						where pa.solicitud_nomina = ?",array($id));

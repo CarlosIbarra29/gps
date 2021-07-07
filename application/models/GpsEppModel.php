@@ -596,6 +596,26 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     } // Consulta Epp Asignado
 
+    public function GetEppCobronomina($table,$wh,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, ea.comentario, ea.talla, 
+                        ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, 
+                        ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, 
+                        ec.costo_aprobado, ec.tiempo_vida, ea.cobro
+                        FROM epp_asignar ea 
+                        LEFT JOIN
+                        epp_catalogo ec ON ea.id_epp = ec.idepp
+                        WHERE id = ? ",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Consulta Epp Asignado
+
+
 
     public function GetPersonalCobro($table){
         $cobro = 1;
@@ -620,6 +640,24 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } // Consulta Personal
+
+    public function Getcobroeppnomina($cobro){
+        $cobro = 1;
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal, 
+                        ea.id_personal, ea.tipo_epp,pc.nombre, pc.apellido_pa,pc.apellido_ma
+                        FROM epp_asignar ea 
+                        LEFT JOIN personal_campo pc on pc.id = ea.id_personal
+                        where ea.cobro = ?",array($cobro));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Consulta Personal
+
 
     public function GetPersonalCobroPag($table){
         $cobro = 2;
@@ -668,6 +706,24 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }// CONSULTA Cobro
+
+    public function getnominacobroepppaginator($cobro,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal,
+                        ea.id_personal, ea.tipo_epp, pc.nombre, pc.apellido_pa,pc.apellido_ma
+                        FROM epp_asignar ea 
+                        LEFT JOIN personal_campo pc on pc.id = ea.id_personal
+                        where ea.cobro = ?
+                        ORDER BY pc.nombre ASC LIMIT $offset,$no_of_records_per_page",array($cobro));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }// CONSULTA Cobro
+
 
     public function GetpaginationcobroPag($table,$offset,$no_of_records_per_page){
         $cobro = 2;
@@ -1897,5 +1953,24 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     }   //  Update UpdEppxAsg
 
 
+     public function Updateagregarmontoeppnomina($post,$table,$urldb,$hoy,$nombre_usuario){
+        $cobro=3; 
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET monto_pago =?, parcialidad =? ,cobro = ?, fecha_monto = ?, user_monto =? ,evidencia =? WHERE id = ?",array(
+                $post['monto'],
+                $post['cantidad'],
+                $cobro,
+                $hoy,
+                $nombre_usuario,
+                $urldb,
+                $post['id_solicitud']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }   //  Update Status Cobro
       
 } 

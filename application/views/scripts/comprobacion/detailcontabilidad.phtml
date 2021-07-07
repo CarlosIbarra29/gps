@@ -1,9 +1,9 @@
 <div class="row" style="margin-top: 10px;">
   <div class="col m12 s12">
     <?php if($this->fk_rol == 4){ ?>
-      <a href="/comprobacion/cajachicacontabilidad/status/<?php echo $this->status_documento; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+      <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
     <?php }else{ ?>
-      <a href="/comprobacion/cajachicacontabilidad/status/<?php echo $this->status_documento; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+      <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
     <?php } ?>   
   </div>
 </div>
@@ -29,8 +29,7 @@
     $total = $monto_comprobado;
   }
 
-  
-  
+
 }?>
 
 <style type="text/css">

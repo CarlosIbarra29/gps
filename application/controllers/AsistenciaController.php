@@ -562,33 +562,30 @@ class AsistenciaController extends Zend_Controller_Action{
         $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
         
-
         foreach ($ver as $key) {
             $datetime1 = new DateTime($key['hora_entrada']);
             $datetime2 = new DateTime($key['hora_salida']);
             $interval = $datetime1->diff($datetime2);
             $diferencia = $interval->format("%H:%I");
 
-            if($ver['solicitud_prestamo'] == 0){ 
-                if($ver['status_extra'] == 0){ 
-
-                                    
-                    if($ver['dia_pago'] == "" || $ver['dia_pago'] == NULL){
+            if($key['solicitud_prestamo'] == 0){ 
+                if($key['status_extra'] == 0){ 
+               
+                    if($key['dia_pago'] == "" || $key['dia_pago'] == NULL){
                         $dia_pago = 0;
                     }else{
-                        $dia_pago = $ver['dia_pago'];
+                        $dia_pago = $key['dia_pago'];
                     } 
                                 
 
-                    if($ver['hora_pago'] == "" || $ver['hora_pago'] == NULL){
+                    if($key['hora_pago'] == "" || $key['hora_pago'] == NULL){
                         $hora_pago = 0;
                     }else{
-                        $hora_pago = $ver['hora_pago'];
+                        $hora_pago = $key['hora_pago'];
                     } 
                                 
-
-                                    
-                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+             
+                    if($key['day_num'] == 6 || $key['day_num'] == 7){
                         $rest = substr($diferencia, 0, -3);
 
                         if($rest == 5){
@@ -615,7 +612,6 @@ class AsistenciaController extends Zend_Controller_Action{
                             // echo "menor";
                         }
 
-
                     }else{
                         $rest = substr($diferencia, 0, -3);
                         if($rest < 10){
@@ -638,11 +634,10 @@ class AsistenciaController extends Zend_Controller_Action{
 
                     }
                                     
-
                 }else{ 
                 // <!-- D I A  E X T R A -->
                                     
-                    if($ver['day_num'] == 6 || $ver['day_num'] == 7){
+                    if($key['day_num'] == 6 || $key['day_num'] == 7){
                         $rest = substr($diferencia, 0, -3);
 
                         if($rest == 5){
@@ -693,7 +688,7 @@ class AsistenciaController extends Zend_Controller_Action{
                 } 
             }else{
 
-                $monto = $ver['monto_pago']; 
+                $monto = $key['monto_pago']; 
             } 
             $id = $key['id_pa'];
             $monto_pago = $monto;
