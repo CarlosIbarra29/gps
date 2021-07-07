@@ -60,7 +60,7 @@ $hoy = date("Y-m-d");
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
                             <th>Puesto</th>
-                            <th>Telefono</th>
+                            <th>Status Personal</th>
                         </tr>
                     </thead>
                     <?php if ($this->personal_epp) { 
@@ -80,7 +80,15 @@ $hoy = date("Y-m-d");
                                     <?php echo $peep['name_puesto']; ?>
                                 </td>
                                 <td>
-                                    <?php echo $peep['telefono']; ?>
+                                    <?php if ($peep['status_personal'] == 0) { ?>
+                                        Activo
+                                    <?php } else if ($peep['status_personal'] == 1) { ?>
+                                        Inactivo
+                                    <?php } else if ($peep['status_personal'] == 2) { ?>
+                                        Baja
+                                    <?php } else { ?>
+                                        Sin Status
+                                    <?php } ?>
                                 </td>
                             </tr>
                         </tbody>
