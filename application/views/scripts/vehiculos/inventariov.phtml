@@ -14,7 +14,7 @@ function isActhref($nameBtn,$urlname){
 <?php 
 
 $links = "";
-$url="";
+$url=""; 
 
 if($this->total== 1){
 	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
@@ -305,6 +305,16 @@ if($this->total== 1){
 						<input id="color" type="text" name="color" class="validate" required>
 						<label for="color"> Color: </label>
 					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">card_membership</i>
+						<input id="tag" type="text" name="tag" class="validate" required>
+						<label for="tag">* No. Tag: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">call_to_action</i>
+						<input id="efecticard" type="text" name="efecticard" class="validate" required>
+						<label for="efecticard">* Efecticard: </label>
+					</div>
 					<div class="input-field col m12 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input id="com" type="text" name="com" class="validate">
@@ -528,8 +538,11 @@ if($this->total== 1){
 
 	$("#addveh").click(function(){
 		var marca = document.getElementById("marca").value;
+		var tag = document.getElementById("tag").value;
+		var efecticard = document.getElementById("efecticard").value;
 		
-		if(marca == ""){
+		
+		if(marca == "" || efecticard == "" || tag == ""){
 			swal({
 				title: "Para agregar un vehículo, llena los campos (*)",
 			});

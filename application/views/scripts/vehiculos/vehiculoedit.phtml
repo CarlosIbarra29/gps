@@ -11,7 +11,7 @@
 		<?php if($this->op_sel == 2){ ?>
 			<a href="/vehiculos/buscarvehiculo?placas=<?php echo $this->placas; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
 		<?php } ?>
-				
+				 
 		<?php if($this->op_sel == 3){ ?>
 			<a href="/vehiculos/buscarvehiculo?status=<?php echo $this->status; ?>"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
 		<?php } ?>
@@ -88,6 +88,16 @@
 						<i class="material-icons prefix">invert_colors</i>
 						<input id="color" type="text" name="color" value="<?php echo $vh["color"]; ?>" class="validate" required>
 						<label for="color"> Color: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">card_membership</i>
+						<input id="tag" type="text" value="<?php echo $vh["tag"]; ?>" name="tag" class="validate" required>
+						<label for="tag">* No. Tag: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">call_to_action</i>
+						<input id="efecticard" type="text" value="<?php echo $vh["efecticard"]; ?>" name="efecticard" class="validate" required>
+						<label for="efecticard">* Efecticard: </label>
 					</div>
 					<div class="input-field col m12 s12">
 						<i class="material-icons prefix">event_available</i>

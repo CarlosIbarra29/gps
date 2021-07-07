@@ -31,7 +31,9 @@
         $marca = $veh['marca'];
         $submarca = $veh['submarca'];
         $modelo = $veh['modelo'];
-        
+        $tag = $veh['tag'];
+        $efecticard = $veh['efecticard'];
+
         $placas = $veh['placas'];
         $color = $veh['color'];
         $imagen = $veh['imagen'];
@@ -45,6 +47,11 @@
         $telefono = $veh['telefono'];
         $puesto = $veh['puesto'];
         $nombre_puesto = $veh['nombre_puesto'];
+
+        $id_sitiopersonal = $veh['id_sitiopersonal'];
+        $id_cliente = $veh['id_cliente'];
+        $nombresitio = $veh['nombresitio'];
+        $nombre_proyecto = $veh['nombre_proyecto'];
 
     } ?>
 
@@ -110,7 +117,18 @@
                 <?php } else { ?>
                     <?php echo $email_personal; ?><br />
                 <?php } ?>
-
+                <span class="title-pdf">Sitio:</span>
+                <?php if($id_sitiopersonal == "" || $id_sitiopersonal == 0 ) { ?> 
+                    Sin Sitio<br />
+                <?php } else { ?>
+                    <?php echo $nombresitio; ?> - <?php echo $id_cliente; ?> <br />
+                <?php } ?>
+                <span class="title-pdf">Proyecto:</span>
+                <?php if($id_sitiopersonal == "" || $id_sitiopersonal == 0 ) { ?> 
+                    Sin Proyecto Asignado<br />
+                <?php } else { ?>
+                    <?php echo $nombre_proyecto; ?><br />
+                <?php } ?>
                  <p class="text-center">
                 <?php if($imagenper ==  NULL || $imagenper ==""){ ?>
                     <img class="text-center" src="/img/no_disponible1.png" class="responsive-img" style="width: 120px; margin-top: 5px;">
@@ -119,7 +137,7 @@
                 <?php } ?>
                 </p>
             </p>
-
+ 
         </div>
 
         <div class="from" style="margin-top: 60px;">
@@ -129,7 +147,10 @@
                 <span class="title-pdf">Marca: </span><?php echo $marca; ?> <br />
                 <span class="title-pdf">Submarca: </span><?php echo $submarca; ?><br />
                 <span class="title-pdf">Modelo: </span><?php echo $modelo; ?><br />
-                 <span class="title-pdf">Placas: </span><?php echo $placas; ?><br />
+                <span class="title-pdf">Placas: </span><?php echo $placas; ?><br />
+                <span class="title-pdf">Tag: </span><?php echo $tag; ?><br />
+                <span class="title-pdf">Efecticard: </span><?php echo $efecticard; ?><br />
+   
 
                  <p class="text-center">
                 <?php if($imagen ==  NULL || $imagen ==""){ ?>
@@ -141,7 +162,7 @@
             </p>
         </div>
 
-        <div class="pdf-body" style="margin-top:240px;">
+        <div class="pdf-body" style="margin-top:260px;">
 
             <div class="row">
 
