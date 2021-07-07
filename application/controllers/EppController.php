@@ -895,7 +895,6 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         if($this->getRequest()->getPost()){
-
             $table="epp_asignar";
             $wh="id_personal";
             $status=0;
@@ -946,6 +945,31 @@ class EppController extends Zend_Controller_Action{
             }
         }
     }//END Add Comprobante Pago
+
+    public function requestadddeleteeppcobroAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $nombre_usuario = $usr[0]['nombre']. " " .$usr[0]['ap']. " ".$usr[0]['am'];
+
+        $table="epp_asignar";
+        $result = $this->_epp->UpdateCobronomina($post,$table,$nombre_usuario,$hoy);
+        if ($result) {
+            return $this-> _redirect('/epp/eppdetailcosto/id/'.$post['id_solicitud'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }
+
+    }
 
 
     public function eppdetailAction(){

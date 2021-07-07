@@ -1196,7 +1196,11 @@ setInterval(function() {
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
-                    <a href="/solicitud/ordencompranofacturable">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                    <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF<i class="material-icons">assignment</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
@@ -1325,8 +1329,12 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
                     <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
                 </li>
-                <li class="bold moves <?php echo getUrl('/solicitud/listaordencompracoordinador',$actual_link); echo getlistasolicitudcoord($actual_link);?>">
+<!--                 <li class="bold moves <?php echo getUrl('/solicitud/listaordencompracoordinador',$actual_link); echo getlistasolicitudcoord($actual_link);?>">
                     <a href="/solicitud/listaordencompracoordinador/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li> -->
+
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/solicitud/solicitudescompras/status/0',$actual_link); ?>">
