@@ -152,7 +152,7 @@
 	          		</div>
 	          		<div class="col m6 s12">
 	          			<div class="row">	
-	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4 || $rol_user == 9){ ?> 
 	          					<?php if($status_sol == 0){ ?>
 	          						<div class="col m6 s6">
 	          							<form action="/epp/requestchgaceptsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
@@ -314,7 +314,7 @@
 	          	</div>
 
 	          	<div class="col m4 s12 text-center">
-		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13){ ?> 
+		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13 || $rol_user == 9){ ?> 
 		          		<?php if($status_sol == 1 && $status_surtido == 0){ ?>
 		          			<!-- Validacion de rechazada -->
 		          			<div>
@@ -511,7 +511,7 @@
 		          	</div>
 		          	<div class="col m6 text-right s12">
 		          		<?php if($status_sol == 0 && $status_surtido == 0){ ?>
-		          			<?php if($rol_user == 1 || $rol_user == 8){ ?>
+		          			<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 				          		<form action="/epp/limpiarcobro" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="limpiarcepp">
 				          			<input type="hidden" name="sol" value="<?php echo $idsolicitud ?>">
 				          			<input type="submit" class="btn" id="limpiezaepp" value="Reestablecer"  dir="/epp/limpiarcobro" />
@@ -532,7 +532,7 @@
 	                                    	<th class="text-center"><b>Talla</b></th>
 	                                    	<th class="text-center"><b>Tipo EPP</b></th>
 	                                    	<?php if($status_sol == 0 && $status_surtido == 0){ ?>
-	                                    		<?php if($rol_user == 1 || $rol_user == 8){ ?>
+	                                    		<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 	                                    			<th class="text-center"><b>Cobro</b></th>
 	                                    		<?php } else { } ?>
 	                                    	<?php } else {  ?>
@@ -564,7 +564,7 @@
 			                                        </td>
 			                                        <?php if($status_sol == 0 && $status_surtido == 0){ ?>
 
-				                                        <?php if($rol_user == 1 || $rol_user == 8){ ?>
+				                                        <?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 				                                        	<td class="text-center">
 				                                        		<?php if($eppreq['cobro'] == 1){ ?>
 				                                        			<!-- <input type="hidden" name="status_cobro" value="0"> -->
@@ -629,7 +629,7 @@
 									<?php } ?>
 				      			</table><br/>
 				      			<?php if($status_sol == 0 && $status_surtido == 0){ ?>
-					      			<?php if($rol_user == 1 || $rol_user == 8){ ?>
+					      			<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 		                                <?php if ($this->epp_requerido) { ?> 
 		                                	<div class="col s12 m6 text-left"></div>
 											<div class="col s12 m6 text-right">
@@ -675,7 +675,7 @@
                                     	<th class="text-center"><b>Fecha Asignación</b></th>
                                     	<th class="text-center"><b>Reposición</b></th>
                                     	<?php if($status_sol == 0 && $status_surtido == 0){ ?>
-	                                    	<?php if($rol_user == 1 || $rol_user == 8){ ?>
+	                                    	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 	                                    		<th class="text-center"><b>Operaciones</b></th>
 	                                    	<?php } else { } ?>
 	                                    <?php } else { } ?>
@@ -705,7 +705,7 @@
 	                                            	<?php } ?>
 	                                            </td>
 	                                            <?php if($status_sol == 0 && $status_surtido == 0){ ?>
-		                                            <?php if($rol_user == 1 || $rol_user == 8){ ?>
+		                                            <?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 		                                            	<td class="text-center">
 	                                            			<a class="regresar" data-id="<?php echo $eppasg["id"]; ?>" data-nombre="<?php echo $eppasg["descripcion"]; ?>"><span class="warning"><i class="material-icons" style="color: green;">redo</i></span></a>
 	                                             			<a class="delete" data-id="<?php echo $eppasg["id"]; ?>" data-nombre="<?php echo $eppasg["descripcion"]; ?>"><span class="warning"><i class="material-icons" style="color: red;">delete</i></span></a>
@@ -809,7 +809,7 @@
 } ?>
 
 <!-- Surtir -->
-<?php if($rol_user == 13 || $rol_user == 1 || $rol_user == 8){ ?>
+<?php if($rol_user == 13 || $rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 	<div class="row">
 		<div class="col m12 s12">
 			<div class="card  darken-1">

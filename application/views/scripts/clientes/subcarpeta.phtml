@@ -171,13 +171,17 @@
 		    						<div class="col m6 s12 text-center" style="padding: 2px;">
 			          					<span class="text-center" style="font-size:12px; color: rgb(74,79,84); text-align: center; letter-spacing: 0em; font-weight: bold;"><?php echo $carpeta["nombre_carpeta"]; ?></span>
 			          				</div>
-				          			<div class="col m6 s12 text-right" style="padding: 2px;">
-                            <a href="/clientes/subcarpeta2/id/<?php echo $carpeta["id"]?>/cliente/<?php echo $carpeta["id_cliente"]?>/carpeta/<?php echo $carpeta["idc"]?>"><i class="fa fa-2x fa-folder-open"></i></a>
-				          			    <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                        <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+				          			    <div class="col m6 s12 text-right" style="padding: 2px;">
+                                <a href="/clientes/subcarpeta2/id/<?php echo $carpeta["id"]?>/cliente/<?php echo $carpeta["id_cliente"]?>/carpeta/<?php echo $carpeta["idc"]?>"><i class="fa fa-2x fa-folder-open"></i></a>
                                 <a href="/clientes/carpetaedit2/id/<?php echo $carpeta["id"] ?>/carpeta/<?php echo $carpeta["idc"]?>/cliente/<?php echo $carpeta["id_cliente"]?>"><i class="fa fa-2x fa-edit"></i></a>
 										            <a class="deletecarpeta" data-id="<?php echo $carpeta["id"]; ?>" data-nombre="<?php echo $carpeta["nombre_carpeta"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-                            <?php } else { } ?>
-				          			</div>
+				          			    </div>
+                        <?php } else { ?>
+                            <div class="col m6 s12 text-center" style="padding: 2px;">
+                                <a href="/clientes/subcarpeta2/id/<?php echo $carpeta["id"]?>/cliente/<?php echo $carpeta["id_cliente"]?>/carpeta/<?php echo $carpeta["idc"]?>"><i class="fa fa-2x fa-folder-open"></i></a>
+                            </div>
+                        <?php } ?>
 			          			</div>
 		          			</div>
 		          		</div>
