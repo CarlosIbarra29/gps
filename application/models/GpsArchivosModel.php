@@ -74,10 +74,10 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN personal_campo p ON p.id = vs.id_responsable
                         LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
                         LEFT JOIN proveedor pr ON pr.id = vs.id_proveedor
-                        LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vs.id_vehiculo
+                        LEFT JOIN vehiculos_pagos vp ON vp.id_solicitud = vs.id
                         LEFT JOIN vehiculos vi on vi.id_vehiculos = vs.id_vehiculo
                         LEFT JOIN usuario u on u.id = vs.id_usuario 
-                        having mes = ? AND years = ?  order by vs.id ASC",array($month,$year));
+                        having mes = ? AND years = ? and status_comprobante = 1 order by vs.id ASC",array($month,$year));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
