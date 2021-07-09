@@ -240,13 +240,14 @@
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
 		      <table class="table text-left table-hover">
 		          <thead>
-		            <tr>
+		            <tr style="background-color: #EDEDED">
 		                <th>NO.</th>
 		                <th>Fecha Descuento</th>
 		                <th>Monto Total</th> 
 		                <th>Cantidad</th>
 		                <th>Pagos</th>
 		                <th>Descuento</th>
+		                <th></th>
 		            </tr> 
 		          </thead>
 		          <?php
@@ -321,7 +322,7 @@
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
 				    <table class="table text-left table-hover">
 				          <thead>
-				            <tr>
+				            <tr style="background-color: #EDEDED">
 				                <th>NO.</th>
 				                <th>Codigo Herramienta</th>
 				                <th>Herramienta</th> 
@@ -329,6 +330,7 @@
 				                <th>Parcialidad</th>
 				                <th>Pagos</th>
 				                <th>Descuento</th>
+				                <th></th>
 				            </tr> 
 				          </thead>
 				          <?php
@@ -404,7 +406,7 @@
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
 				    <table class="table text-left table-hover">
 				          <thead>
-				            <tr>
+				            <tr style="background-color: #EDEDED">
 				                <th>NO.</th>
 				                <th>Cantidad</th>
 				                <th>Descripción</th> 
@@ -413,6 +415,7 @@
 				                <th>Parcialidad</th>
 				                <th>Pagos</th>
 				                <th>Descuento</th>
+				                <th></th>
 				            </tr> 
 				          </thead>
 				          <?php
@@ -521,7 +524,7 @@
 				<div class="col m12 s12"> 
 			        <table class="table text-left table-hover">
 			            <thead>
-			                <tr>
+			                <tr style="background-color: #EDEDED">
 								<th>Sitio</th>
 								<th>Asistencia</th>
 								<th>Entrada</th>
@@ -585,7 +588,7 @@
 			                            $datetime2 = new DateTime($usr['hora_salida']);
 			                            $interval = $datetime1->diff($datetime2);
 			                            $diferencia = $interval->format("%H:%I");
-			                         ?>
+			                        ?>
 			                  	<td>
 			                  		<?php echo $diferencia; ?> Hrs
 			                  	</td>

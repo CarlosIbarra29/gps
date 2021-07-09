@@ -4,8 +4,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
 
     protected $_name = 'personal_nomina';
     protected $_primary = 'id';
-
-    public function insertnominasolicitud($id_user,$name_user,$post,$table){
+    public function insertnominasolicitud($id_user,$name_user,$post,$table,$hoy,$solicitud_user){
         try {
             $row = $this->createRow();
             $row->id_personal = $id_user;
@@ -13,6 +12,8 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             $row->sitio = $post['sitio'];
             $row->id_proyecto = $post['id_proyecto'];
             $row->monto_nomina = $post['monto'];
+            $row->solicitud_fecha = $hoy;
+            $row->solicitud_user = $solicitud_user;
             $res = $row->save();              
             return $res;
         } catch (Exception $e) {
@@ -96,8 +97,8 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
              			pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
              			pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
 						FROM personal_nomina pn
-						 where pn.status_auditoria = ? and status_pago = ?
-                        ORDER BY pn.sitio ASC
+						where pn.status_auditoria = ? and status_pago = ?
+                        ORDER BY pn.sitio DESC
                         LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
@@ -130,10 +131,10 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, 
-            		pp.nombre as puesto, pc.curp, pc.nss,pc.rfc
-					FROM personal_campo pc
-					INNER JOIN puestos_personal pp on pp.id = pc.puesto 
-					where pc.id = ?",array($id));
+            		   pp.nombre as puesto, pc.curp, pc.nss,pc.rfc
+					   FROM personal_campo pc
+					   INNER JOIN puestos_personal pp on pp.id = pc.puesto 
+					   where pc.id = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -147,7 +148,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
-                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal,pc.nss, pc.rfc,pc.dia_pago, 
                         pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
                         pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, 
                         pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,  

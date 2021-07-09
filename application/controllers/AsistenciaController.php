@@ -564,13 +564,22 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $us=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $pre = $this->_season->GetSpecific($table,$wh,$us);
+            $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+
+
         $id_user = $post['user'];
         $wh = "id";
         $table = "personal_campo";
         $usr = $this->_season->GetSpecific($table,$wh,$id_user);
         $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
         $table = "personal_nomina";
-        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
+        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table,$hoy,$solicitud_user);
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
         
         foreach ($ver as $key) {
@@ -698,7 +707,6 @@ class AsistenciaController extends Zend_Controller_Action{
 
                 } 
             }else{
-
                 $monto = $key['monto_pago']; 
             } 
             $id = $key['id_pa'];
