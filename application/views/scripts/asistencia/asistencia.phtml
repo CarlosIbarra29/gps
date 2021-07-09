@@ -87,7 +87,7 @@
                     <div class="col m12 s12">
                         <table>
                             <thead>
-                                <tr>
+                                <tr style="background-color: #EDEDED">
                                   <th>No.</th>
                                   <th>Sitio</th>
                                   <th>Usuario</th>
@@ -244,7 +244,7 @@
 		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
         <table class="table text-left table-hover">
             <thead>
-                <tr >
+                <tr style="background-color: #EDEDED">
 					<th>id</th>
 					<th>Nombre</th>
 					<th>Puesto</th>
@@ -254,6 +254,7 @@
 					<th>Hora Salida</th>
                     <th>Horas Trabajadas</th>
 					<th></th>
+                    <th></th>
                 </tr> 
             </thead>
 
@@ -362,6 +363,7 @@
                 <div class="col m12 s12" style="margin-top: 30px;">
                     <div class="input-field col s12">
                         <input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
+                        <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
                         <input type="hidden" name="ids" id="id_userinasistencia">
                         <input placeholder="Agregar el motivo de la inasistencia" name="motivo" id="motivo_form" type="text" class="validate">
                       <label for="motivo_form">Motivo</label>

@@ -3253,7 +3253,43 @@ class EppController extends Zend_Controller_Action{
 
     } 
 
+    public function requestaddeppnominauserAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        // var_dump($post);exit;   
+        
+        foreach ($post['validar'] as $key) {
+            $id = $key;
+            $wh="id";
+            $table="epp_asignar";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $descuento ="-".$usr[0]['monto_pago'] / $usr[0]['parcialidad'];
+            $num_pago =$usr[0]['cantidad_pago'];
+            $new_num_pago = $num_pago + 1;
 
+            if($new_num_pago == $usr[0]['parcialidad']){
+                $this->_epp->updatesolicitudcobroounoepp($id,$table,$new_num_pago);
+            }else{
+                $this->_epp->updatesolicitudcobroodosepp($id,$table,$new_num_pago); 
+            }
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y");
+
+            $table = "personal_asistencia";
+            $result = $this->_epp->insertneweppnomina($post,$table,$id,$descuento,$hoy); 
+        }
+
+        if ($result) {
+            return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }  
+
+    }
 
 
     public function formatSizeUnits($bytes){ 

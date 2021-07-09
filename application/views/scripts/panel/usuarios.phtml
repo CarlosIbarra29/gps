@@ -53,9 +53,6 @@
 
  ?>
 
-
-
-
 <div class="row mt-4">
 	<div class="col m4 s12 text-center">
 		<!-- <h2>Usuarios</h2> -->
@@ -171,12 +168,15 @@
 		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de usuarios</span>
 			<table class="table text-left table-hover">
 			<thead>
-				<tr>
+				<tr style="background-color: #EDEDED">
 					<th>Nombre</th>	
 					<th>Apellido Paterno</th>	
 					<!-- <th>Telefono</th> -->
 					<th>Correo</th>
 					<th>Rol</th>
+					<th></th>
+					<th></th>
+					<th></th>
 				</tr> 
 			</thead>
 			<?php foreach ($this->paginator as $usr) { ?>

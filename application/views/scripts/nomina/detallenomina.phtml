@@ -238,13 +238,25 @@
 					                  	<?php } ?>
 
 	                                    <?php if($usr['solicitud_prestamo'] != 0 ){ ?>
+					                		<?php if($usr['status_tipos'] == 1){ ?>
 	                                            <a style="font-size:15px; font-weight: bold;" href="/prestamo/detalleprestamo/id/<?php echo $usr['solicitud_prestamo']; ?>">
 	                                            	No. <?php echo $usr['solicitud_prestamo']; ?>
 	                                            </a>
+					                		<?php }?>
+
+					                		<?php if($usr['status_tipos'] == 2){ ?>
+	                                            <a style="font-size:15px; font-weight: bold;" href="/herramienta/costodetail/id/<?php echo $usr['solicitud_prestamo']; ?>">
+	                                            	No. <?php echo $usr['solicitud_prestamo']; ?>
+	                                            </a>
+					                		<?php }?>
+
+					                		<?php if($usr['status_tipos'] == 3){ ?>
+	                                            <a style="font-size:15px; font-weight: bold;" href="/epp/eppdetailcosto/id/<?php echo $usr['solicitud_prestamo']; ?>">
+	                                            	No. <?php echo $usr['solicitud_prestamo']; ?>
+	                                            </a>
+					                		<?php }?>
 	                                    <?php }?>
-
 				                  	</td>
-
 
 <!-- 				                  	<td>
 				                  		<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>

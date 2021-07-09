@@ -10,6 +10,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_asistencia = new Application_Model_GpsAsistenciaModel;
         $this->_nomina = new Application_Model_GpsNominaModel;
         $this->_epp = new Application_Model_GpsEppModel;
+        $this->_prestamo = new Application_Model_GpsPrestamoModel;
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -120,7 +121,7 @@ class AsistenciaController extends Zend_Controller_Action{
 
         $wh="id_personal";
         $table="personal_prestamos";
-        $sol = $this->view->solicitud_prestamo = $this->_season->GetSpecific($table,$wh,$id);
+        $sol = $this->view->solicitud_prestamo = $this->_prestamo->getprestamossolicitudnomina($id);
 
         if(empty($sol)){
             $op = 0; $this->view->op_solicitud = $op;   // $op = "Sin datos";
@@ -149,6 +150,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $user=$this->_getParam('user'); $this->view->personal_id=$user;
         $sitio = $this->_getParam('sitio');  $this->view->sitio_name = $sitio;
         $proyecto = $this->_getParam('proyecto');  $this->view->proyecto = $proyecto;
+        $id_sol = $this->_getParam('id');  $this->view->id_solicitud = $id_sol;
         $this->view->proyectos =$this->_sitio->tiposproyectospersonal();  
 
         $id=$this->_getParam('id');
@@ -405,7 +407,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $result=$this->_asistencia->updateinasistencia($id,$table,$post,$fecha,$proyecto,$hoy);
         
         if ($result) {
-            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'');
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].'');
         }else{
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
@@ -562,13 +564,22 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $us=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $pre = $this->_season->GetSpecific($table,$wh,$us);
+            $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+
+
         $id_user = $post['user'];
         $wh = "id";
         $table = "personal_campo";
         $usr = $this->_season->GetSpecific($table,$wh,$id_user);
         $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
         $table = "personal_nomina";
-        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table);
+        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table,$hoy,$solicitud_user);
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
         
         foreach ($ver as $key) {
@@ -696,7 +707,6 @@ class AsistenciaController extends Zend_Controller_Action{
 
                 } 
             }else{
-
                 $monto = $key['monto_pago']; 
             } 
             $id = $key['id_pa'];
@@ -714,6 +724,280 @@ class AsistenciaController extends Zend_Controller_Action{
         } 
              
     }
+
+
+    public function requestaupdatesolicitudnominaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        $id_user = $post['user'];
+        $wh = "id";
+        $table = "personal_campo";
+        $usr = $this->_season->GetSpecific($table,$wh,$id_user);
+        $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
+        $table = "personal_nomina";
+        $key = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+
+            $datetime1 = new DateTime($post['hora_entrada']);
+            $datetime2 = new DateTime($post['hora_salida']);
+            $interval = $datetime1->diff($datetime2);
+            $diferencia = $interval->format("%H:%I");
+
+            if($key[0]['solicitud_prestamo'] == 0){ 
+                if($key[0]['status_extra'] == 0){ 
+               
+                    if($key[0]['dia_pago'] == "" || $key[0]['dia_pago'] == NULL){
+                        $dia_pago = 0;
+                    }else{
+                        $dia_pago = $key[0]['dia_pago'];
+                    } 
+                                
+
+                    if($key[0]['hora_pago'] == "" || $key[0]['hora_pago'] == NULL){
+                        $hora_pago = 0;
+                    }else{
+                        $hora_pago = $key[0]['hora_pago'];
+                    } 
+                                
+             
+                    if($key[0]['day_num'] == 6 || $key[0]['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
+                        if($rest == 5){
+                            $monto = $dia_pago;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $suma = $total * $hora_pago;
+                            $monto = $dia_pago + $suma;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = $dia_pago * 2;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $dia + $suma;
+                            // echo "menor";
+                        }
+
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $dia_pago + $multi;
+                            // echo "mayor";
+                        }
+
+                        if($rest == 10){
+                            $monto = $dia_pago;
+                            // echo "igual";
+                        }
+
+                    }
+                                    
+                }else{ 
+                // <!-- D I A  E X T R A -->     
+                    if($key[0]['day_num'] == 6 || $key[0]['day_num'] == 7){
+                        $rest = substr($diferencia, 0, -3);
+
+                        if($rest == 5){
+                            $monto = 0;
+                        }
+
+                        if($rest <= 9){
+                            $total = $rest - 5;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $suma = $total * $hora_pago;
+                            $dia = $dia_pago*2;
+
+                            $monto = $suma;
+                            // echo "menor";
+                        }
+
+                    }else{
+                        $rest = substr($diferencia, 0, -3);
+                        if($rest < 10){
+                            $total = $rest - 2;
+                            $monto = $total * $hora_pago;
+                            // echo "menor";
+                        }
+
+                        if($rest > 10){
+                            $total = $rest - 10;
+                            $multi = $total * $hora_pago;
+                            $monto = $multi;
+                            // echo "mayor";
+                        }
+
+                        if($rest == 10){
+                            $monto = 0;
+                            // echo "igual";
+                        }
+
+                    }
+
+                } 
+            }else{
+                $monto = $key[0]['monto_pago']; 
+            }
+
+            if($post['day'] == NULL){ $dia = $post['dia_registro']; }else{ $dia = $post['day']; }
+            $day_num =  date('N', strtotime($dia));
+            
+
+            $name = $_FILES['evi_entrada']['name'];
+            if(empty($name)){ 
+                $urldb = $post['validate_entrada']; 
+            }else{
+                $bytes = $_FILES['evi_entrada']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['evi_entrada']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['evi_entrada']['tmp_name'],$urldb);
+                }
+            }
+
+
+            $name = $_FILES['evi_salida']['name'];
+            if(empty($name)){ 
+                $urldb_s = $post['validate_salida']; 
+            }else{
+                $bytes = $_FILES['evi_salida']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                if($res == 0){ 
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                }else{
+                    $info1 = new SplFileInfo($_FILES['evi_salida']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/asistencia_personal/';
+                    $urldb_s = $url1.$info1;
+                    move_uploaded_file($_FILES['evi_salida']['tmp_name'],$urldb_s);
+                }
+            }
+
+            $table="personal_asistencia";
+            $result= $this->_nomina->updateasistendiadaynomina($table,$post,$monto,$day_num,$urldb,$urldb_s);  
+
+        if ($result) {
+            return $this->_redirect('/asistencia/editregistroasistencia/user/'.$post['user'].'/sitio/'.$post['sitio'].'/id/'.$post['id_solicitud'].'/proyecto/'.$post['proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+
+    }
+
+    public function requestdeleteregistronominanormalAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        $id=$post['id'];
+        $table="personal_asistencia";
+        $wh="id";
+        $result = $this->_season->deleteAll($id,$table,$wh);
+
+        if ($result) {
+            echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        }else{
+            print '<script language="JavaScript">';
+            print 'alert("Ocurrio un error: Comprueba los datos.");';
+            print '</script>';
+        }
+
+    }
+
+
+    public function requestdeleteregistroasistencianominaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        if($this->getRequest()->getPost()){
+            $id=$post['id'];
+            $wh="id";
+            $table="personal_asistencia";
+            $pre = $this->_season->GetSpecific($table,$wh,$id);
+
+            if($post['op'] == 1){
+                $id_prestamo = $pre[0]['solicitud_prestamo'];
+                $wh="id";
+                $table="personal_prestamos";
+                $usr = $this->_season->GetSpecific($table,$wh,$id_prestamo);
+                $cantidad  = $usr[0]['cantidad_saldada'];
+                $cantidadsaldada = $cantidad - 1;
+                $this->_asistencia->updatedeleteprestamoasistencia($table,$cantidadsaldada,$id_prestamo);    
+            }
+
+            if($post['op'] == 2){
+                $id_herramienta = $pre[0]['solicitud_prestamo'];
+                $wh="id_cobro";
+                $table="cobro_herramientas";
+                $usr = $this->_season->GetSpecific($table,$wh,$id_herramienta);
+                $cantidad  = $usr[0]['cantidad_pago'];
+                $cantidadsaldada = $cantidad - 1;
+                $this->_asistencia->updatedeleteherramientaasistencia($table,$cantidadsaldada,$id_herramienta);
+            }
+
+            if($post['op'] == 3){
+                $id_epp = $pre[0]['solicitud_prestamo'];
+                $wh="id";
+                $table="epp_asignar";
+                $usr = $this->_season->GetSpecific($table,$wh,$id_epp);
+                $cantidad  = $usr[0]['cantidad_pago'];
+                $cantidadsaldada = $cantidad - 1;
+                $this->_asistencia->updatedeleteeppasistencia($table,$cantidadsaldada,$id_epp);
+            }
+
+
+
+            $table="personal_asistencia";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+
+            if ($result) {
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            }else{
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            }
+        }
+    }//END REQUEST DELETE PERSONAL
+
 
     public function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)
