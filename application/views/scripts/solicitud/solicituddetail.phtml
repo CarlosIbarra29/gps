@@ -1033,7 +1033,7 @@ foreach ($this->documentos as $key ){
         			</form>
         		<?php } ?>
 
-        		<?php if($status_documento == 1){ ?>
+        		<?php if($status_documento == 1 ){ ?>
         		<div class="row">
         			<?php if($status_pago == 1){?>
         			<?php }else{ ?>
@@ -1363,5 +1363,28 @@ foreach ($this->documentos as $key ){
    	});
 
 
+    $("#btcomprobante").click(function(){
+    	// var file = document.getElementById("file_comprobante").value;
+    	var status_pago = document.getElementById("pago_conta").value;
+    	var monto = document.getElementById("monto").value;
 
+    	// alert(status_pago);
+
+
+    	if(status_pago == 0 || monto == ""){
+            swal({
+              title: "Para continuar debes llenar todos los datos (Monto, Comprobante de pago y Status pago)",
+            });
+    	}else{
+    		document.getElementById("monto_form").value= monto;
+    		document.getElementById("status_form").value = status_pago;
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitfileprede, 1500);
+    	}
+    });
+    	
+    function submitfileprede() { document.getElementById("submit_comprobante").submit() }
 </script>
