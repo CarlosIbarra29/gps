@@ -1057,7 +1057,7 @@ setInterval(function() {
                 </li>
 
                 <li class="bold moves <?php echo getUrl('/epp/eppsol',$actual_link); echo getSolEppAdm($actual_link);?>">
-                    <a href="/epp/eppsol">EPP Solicitides<i class="material-icons">nature_people</i></a>
+                    <a href="/epp/eppsol">EPP Solicitudes<i class="material-icons">nature_people</i></a>
                 </li>
                 
                 <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
@@ -1230,6 +1230,18 @@ setInterval(function() {
                 
                 <li class="bold moves <?php echo getUrl('/gasolina/efecticard',$actual_link); echo getefecticard($actual_link);?>">
                     <a href="/gasolina/efecticard">Efecticard<i class="material-icons">call_to_action</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/catalogo',$actual_link); echo getepp($actual_link);?>">
+                    <a href="/epp/catalogo">EPP<i class="material-icons">accessibility</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/epp/eppsol',$actual_link); echo getSolEppAdm($actual_link);?>">
+                    <a href="/epp/eppsol">EPP Solicitudes<i class="material-icons">nature_people</i></a>
+                </li>
+                
+                <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                    <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
                 </li>
 
             <?php } ?>
