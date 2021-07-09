@@ -895,6 +895,12 @@ setInterval(function() {
         $urldetail = "/solicitud/comprobacionesresidente/id/".$filename."";
         if($actual_link == $urldetail){ return "active"; }
     }
+
+              
+    $instance = new Application_Model_GpsSolicitudOrdenModel();
+    $requestcuadros = $instance->getusernamesolicitudcount();
+    $total_admin = count($requestcuadros);
+
 ?>
     <?php $year=date("Y"); ?>
         <div class="container">
@@ -967,9 +973,16 @@ setInterval(function() {
                         <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
                     </li>
 
-                    <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
-                        <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
-                    </li>
+                    <?php if($total_admin == 0){ ?>
+                        <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                            <a href="/solicitud/listaordencompra/status/0">Lista de solicitudes<i class="material-icons">format_list_numbered</i></a>
+                        </li>
+                    <?php }else{ ?>
+                        <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                            <a href="/solicitud/listaordencompra/status/0">Lista de solicitudes <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_admin ?></span><i class="material-icons">format_list_numbered</i></a>
+                        </li>
+                    <?php } ?>
+
                     <!-- <p>Orden</p> -->
                     <!-- <li class="bold">Solicitudes orden compra</li> -->
                 <li class="divider" tabindex="-1"></li>
@@ -1436,10 +1449,19 @@ setInterval(function() {
                 </li>
                 <li class="bold moves <?php echo getUrl('/seguimiento/seguimientoproyectos/sp/0',$actual_link); ?>">
                     <a href="/seguimiento/seguimientoproyectos/sp/0">Seguimiento Proyectos<i class="material-icons">developer_board</i></a>
-                </li>    
-                <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
-                    <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
-                </li>
+                </li>   
+
+                <?php if($total_admin == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                        <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php }else{ ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listaordencompra',$actual_link); echo getlistasolicitudadmin($actual_link)?>">
+                        <a href="/solicitud/listaordencompra/status/0">Lista de Solicitudes <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_admin ?></span><i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php } ?>
+
+
                 <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
                     <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
                 </li>
