@@ -118,6 +118,48 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+
+
+    public function updatedeleteprestamoasistencia($table,$cantidadsaldada,$id){
+        $status = 0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_saldada = ?, status_prestamo = ? WHERE id = ?",array($cantidadsaldada,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updatedeleteherramientaasistencia($table,$cantidad_saldada,$id){
+        $status = 3 ;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago = ?, status_cobro = ? WHERE id_cobro = ?",array($cantidad_saldada,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updatedeleteeppasistencia($table,$cantidad_saldada,$id){
+        $status = 3;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago = ?, cobro = ? WHERE id = ?",array($cantidad_saldada,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function updaterolregistrohorapersonaldos($solicitud,$table){
         $value= 0;
         try {
@@ -434,7 +476,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pa.id as id_pa, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, 
                         pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
-                        pa.ev_entrada, pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
+                        pa.ev_entrada, pa.ev_salida, pa.status_asistencia,pa.motivo_inasistencia,pa.status_nomina, 
                         pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma
                         FROM personal_asistencia pa 
                         LEFT JOIN personal_campo pc on pc.id = pa.id_personal

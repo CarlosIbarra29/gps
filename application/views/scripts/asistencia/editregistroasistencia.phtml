@@ -14,6 +14,7 @@
 
 <div class="row">
 	<div class="col m12 s12">
+		<form action="/asistencia/requestaupdatesolicitudnomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_updatenomina">
 		<?php foreach ($this->asistencia as $key) { ?>
 			<?php 
 				$year_uno = substr($key['dia'], 6); 
@@ -26,6 +27,11 @@
 	        	<input id="day_registro" name="day" type="date">
 	        	<label for="day_registro">Día: <?php echo $date; ?></label>
 	        	<input type="hidden" name="dia_registro" value="<?php echo $key['dia']; ?>">
+
+	        	<input type="hidden" name="id_solicitud" value="<?php echo $this->id_solicitud; ?>">
+	        	<input type="hidden" name="user" value="<?php echo $this->personal_id; ?>">
+	        	<input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+	        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
 	        </div>
 
 <!-- 	        <div class="input-field col  m6 s6">
@@ -56,7 +62,7 @@
 			</div>	
 
 			<div class="input-field col m6 s12">
-				<select id="sitio_entrada" name="sitio_entrada" required>
+				<select id="sitio_entrada" name="sitio_salida" required>
 			    	<?php foreach ($this->proyectos as $mar) { 
 			     		if ($mar['id']==$key['id_proyecto_salida']) { ?>
 			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
@@ -67,6 +73,70 @@
 				<label>Sitio Salida</label>
 			</div>
 
+
+		    <div class="file-field input-field col m6 s12">
+		      	<div class="btn">
+		        	<span>Evidencia Entrada</span>
+		        	<input type="file" name="evi_entrada">
+		      	</div>
+			    <div class="file-path-wrapper">
+			        <input class="file-path validate" type="text">
+			        <input type="hidden" name="validate_entrada" value="<?php echo $key["ev_entrada"]; ?>">
+			    </div>
+		    </div>
+
+
+		    <div class="file-field input-field col m6 s12">
+		      	<div class="btn">
+		        	<span>Evidencia Salida</span>
+		        	<input type="file" name="evi_salida">
+		      	</div>
+			    <div class="file-path-wrapper">
+			        <input class="file-path validate" type="text">
+			        <input type="hidden" name="validate_salida" value="<?php echo $key["ev_salida"]; ?>">
+			    </div>
+		    </div>
+
+
     	<?php } ?>
+    	</form>
+
+    	<div class="input-field col m6 s12 text-center">
+    		<a class="btn" id="add_generarnomina"><i class="material-icons right">send</i>Guardar</a>
+    	</div>
+
 	</div>
 </div>
+
+<div class="row">
+	<?php foreach ($this->asistencia as $key) { ?>
+	<div class="col m6 s12 text-center">
+		<a class="example-image-link" href="/<?php echo $key['ev_entrada']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['ev_entrada']; ?>"  alt="image-1" style="width: 220px; height: 150px;"/></a>
+	</div>
+	<div class="col m6 s12 text-center">
+		<a class="example-image-link" href="/<?php echo $key['ev_salida']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $key['ev_salida']; ?>"  alt="image-1" style="width: 220px; height: 150px;"/></a>
+	</div>
+	<?php } ?>
+</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+    $("#add_generarnomina").click(function(){
+    	var new_horaentrada = document.getElementById("new_horaentrada").value;
+    	var new_horasalida = document.getElementById("new_horasalida").value;
+
+        if(new_horaentrada == "" ||  new_horasalida== ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitnomina, 1500);     
+        }
+    });
+    function submitnomina() { document.getElementById("submit_updatenomina").submit() }
+</script>

@@ -1994,6 +1994,54 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     }   //  Update Status Cobro
 
 
+    public function updatesolicitudcobroounoepp($id,$table,$num_pago){
+        $status= 2;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago = ?, cobro = ? WHERE id = ?",array($num_pago,$status,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updatesolicitudcobroodosepp($id,$table,$num_pago){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET cantidad_pago =? WHERE cobro = ?",array($num_pago,$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function insertneweppnomina($post,$table,$id,$descuento,$hoy){
+        $tipo = 3;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$post['user'],
+                'nombre'=>$post['sitio'],
+                'dia'=>$hoy,
+                'id_proyecto'=>$post['id_proyecto'],
+                'id_proyecto_salida'=>$post['id_proyecto'],
+                'monto_pago'=>$descuento,
+                'status_tipos' => $tipo,
+                'solicitud_prestamo'=>$id
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
+
+
     public function geteppasignarcobronomina($user){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

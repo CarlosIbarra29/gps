@@ -128,7 +128,7 @@
 			<?php } ?>
 		</div>
 		<div class="col m6 s6 text-center">
-			<a class=" btn modal-trigger" href="#modalasistencia">+ Agregar Asistencia</a>
+			<a class=" btn modal-trigger" href="#modalasistencia">+ Horas Extra</a>
 		</div>
 	</div>
 </div>
@@ -273,12 +273,15 @@
 		              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
 		              </td>
 		              <td>
-	 					<p>
-							<label>
-								<input type="checkbox" class="check_prestamo" name="validar[]" value="<?php echo $usr['id']; ?>" />
-								<span></span>
-							</label>
-						</p>
+		              	<?php if($usr['cantidad_pagos'] == $usr['cantidad_saldada']){ ?>
+		              	<?php }else{ ?>
+		 					<p>
+								<label>
+									<input type="checkbox" class="check_prestamo" name="validar[]" value="<?php echo $usr['id']; ?>" />
+									<span></span>
+								</label>
+							</p>
+						<?php } ?>
 		              </td>
 		            </tr>
 		          <?php } }else{ ?>
@@ -353,12 +356,15 @@
 				              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
 				              </td>
 				              <td>
-			 					<p>
-									<label>
-										<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
-										<span></span>
-									</label>
-								</p>
+				              	<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
+				              	<?php }else{ ?>
+				 					<p>
+										<label>
+											<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
+											<span></span>
+										</label>
+									</p>
+								<?php } ?>
 				              </td>
 				            </tr>
 				          <?php } }else{ ?>
@@ -392,7 +398,7 @@
 
 	    	<div class="row">
 	    		<div class="col m12 s12">
-		    		<form action="/herramienta/requestaplicarcobroherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addherramienta">
+		    		<form action="/epp/requestaddeppnominauser" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addepp">
 		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
 		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
@@ -435,12 +441,15 @@
 				              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
 				              </td>
 				              <td>
-			 					<p>
-									<label>
-										<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
-										<span></span>
-									</label>
-								</p>
+				              	<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
+				              	<?php }else{ ?>
+				 					<p>
+										<label>
+											<input type="checkbox" class="check_epp" name="validar[]" value="<?php echo $usr['id']; ?>" />
+											<span></span>
+										</label>
+									</p>
+								<?php } ?>
 				              </td>
 				            </tr>
 				          <?php } }else{ ?>
@@ -458,7 +467,7 @@
 	    	</div>
 	    </div>
 	    <div class="modal-footer">
-	    	<button type="button" id="add_newherramienta" class="btn oculto">Aplicar Descuento</button>
+	    	<button type="button" id="add_newepp" class="btn oculto">Aplicar Descuento</button>
 	     	<button  class="modal-close red btn">Cerrar</button>
 	    </div>
   	</div>
@@ -731,16 +740,36 @@
 			                  	<td>
 			                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
 			                  	</td>
+
 			                  	<td>
-			                  		<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
+			                		<?php if($usr['status_tipos'] == 0){ ?>
+			                			<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
+			                			<a class="delete_registro" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red; padding-left: 7px;"></i></span></a>
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 1){ ?>
+			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+			                			<!-- DESCUENTO -->
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 2){ ?>
+			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+			                			<!-- HERRAMIENTA -->
+			                		<?php }?>
+
+			                		<?php if($usr['status_tipos'] == 3){ ?>
+			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="3"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+			                			<!-- EPP -->
+			                		<?php }?>
 			                  	</td>
+
 			                  	<?php $montos = $montos + $monto; ?>
 			                </tr>
 			            </tbody>
 			            <?php } }else{ ?>
 			            <tbody>
 			                <tr>
-			                    <td>No hay registros de la asistencia </td>
+			                    <td><h3>No hay registros de la asistencia</h3> </td>
 			                    <td></td>
 			                    <td></td>
 			                    <td></td>
@@ -767,7 +796,11 @@
         <div class="card-action">
         	<div class="row">
         		<div class="col m12 s12 text-center">
-        			<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
+			        <?php if ($this->asistencia) { 
+			            foreach ($this->asistencia as $usr) { ?>
+        					<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
+			            <?php } }else{ ?>
+			        <?php } ?>
         		</div>
         	</div>
         </div>
@@ -1055,4 +1088,99 @@
         }
     });
 	function submit_addherramienta() { document.getElementById("submit_addherramienta").submit() }
+
+
+    $(".check_epp").click(function(){
+    	$("#add_newepp").show();
+    });
+
+    $("#add_newepp").click(function(){
+    	var user_prestamo = document.getElementById("user_prestamo").value; 
+
+        if(user_prestamo == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_addepp, 1500);     
+        }
+    });
+	function submit_addepp() { document.getElementById("submit_addepp").submit() }
+
+
+    $(".delete_file").click(function(){
+    	var id = $(this).data('id');
+    	var op = $(this).data('op');
+
+		swal({
+			title: "Estas seguro de eliminar el registro?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+	            var request = $.ajax({
+	                url:"/asistencia/requestdeleteregistroasistencianomina",
+	                method:"POST",
+	                data: { id : id, op : op},
+	                processData: true,
+	            });
+				//-------------------end de ajax---------------------------
+				//---------	----peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                window.location.reload(true);
+	            });
+				//-------------------end de respuesta ajax---------------------
+	             return false;
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
+		});
+    });
+
+    $(".delete_registro").click(function(){
+    	var id = $(this).data('id');
+		swal({
+			title: "Estas seguro de eliminar el registro?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});
+	            var request = $.ajax({
+	                url:"/asistencia/requestdeleteregistronominanormal",
+	                method:"POST",
+	                data: { id : id},
+	                processData: true,
+	            });
+				//-------------------end de ajax---------------------------
+				//---------	----peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                window.location.reload(true);
+	            });
+				//-------------------end de respuesta ajax---------------------
+	             return false;
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
+		});
+    });
+
+
 </script>

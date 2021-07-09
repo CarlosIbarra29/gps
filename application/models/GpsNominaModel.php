@@ -59,6 +59,20 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+    public function updateasistendiadaynomina($table,$post,$monto,$day_num,$urldb,$urldb_s){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET hora_entrada =?, hora_salida = ?, dia =?, day_num = ?, id_proyecto =?, id_proyecto_salida = ?, ev_entrada = ?, ev_salida = ? WHERE id = ?",
+                array($post['hora_entrada'],$post['hora_salida'],$post['dia_registro'],$day_num,$post['sitio_entrada'],$post['sitio_salida'],$urldb,$urldb_s,$post['id_solicitud']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function getsolicitudnomina($status,$pago){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

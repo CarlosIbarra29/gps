@@ -92,6 +92,22 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
         }
     } //END GET PRESTAMO
 
+
+    public function getprestamossolicitudnomina($user){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
+                        pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
+                        pp.fecha_liquidacion, pp.user_prestamo, pp.user_fecha
+                        FROM personal_prestamos pp 
+                        where pp.id_personal = ? AND pp.status_prestamo = 0;",array($user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PRESTAMO
     public function getprestamosolicitud($offset,$no_of_records_per_page,$op_status){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
