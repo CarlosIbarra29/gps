@@ -57,11 +57,25 @@
   .table_wrapper{
     overflow-x: auto;
   }
+  .buttonimg{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+.centrado{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 </style>
 
 <div class="row">
   <div class="col m6 s6" style="margin-top: 10px;">
-   <!-- <input class=" modal-trigger" href="#modal1" type="image" name="botondeenvio" src="/img/botonprueba.jpg" alt="Enviar formulario"> -->
+    <div class="buttonimg"> 
+      <a  class=" modal-trigger" href="#modal1"><img style="width: 200px; height: 40px; border-radius: 10px" src="/img/botonprueba.jpg" /></a>
+      <div class="centrado"><span style="font-size:14px; color: rgb(74,79,84); font-weight: bold;">CARGAR CONSUMO TAG</span></div>
+    </div>
   </div>
   
 

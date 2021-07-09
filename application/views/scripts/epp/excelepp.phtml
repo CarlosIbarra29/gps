@@ -81,11 +81,11 @@ function eliminar_acentos($cadena){
 				<td><?php echo $epp["idepp"]; ?></td>
 				<td><?php echo eliminar_acentos( $epp["nombre"]); ?></td>
 				<td><?php echo $epp["talla"]; ?></td>
-				<td><?php echo $epp["descripcion"]; ?></td>
+				<td><?php echo eliminar_acentos( $epp["descripcion"]); ?></td>
 				<td><?php echo $epp["stock"]; ?></td>
 				<td>$<?php echo $epp["costoa"]; ?></td>
 				<td><?php echo $epp["tiempo_vida"]; ?></td>
-				<td><?php echo $epp["tiponombre"]; ?></td>
+				<td><?php echo eliminar_acentos( $epp["tiponombre"]); ?></td>
 			</tr>
 		</tbody>
 		<?php } ?>
