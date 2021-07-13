@@ -33,7 +33,7 @@ class MaterialesController extends Zend_Controller_Action{
 
     public function crearsolicitudmaterialesAction(){
         $table="sitios";
-        $this->view->sitios = $this->_season->GetAll($table);
+        $this->view->sitios = $this->_material->getsitios($table);
     }
 
     public function solicitudmaterialdosAction(){
