@@ -899,7 +899,35 @@ setInterval(function() {
               
     $instance = new Application_Model_GpsSolicitudOrdenModel();
     $requestcuadros = $instance->getusernamesolicitudcount();
-    $total_admin = count($requestcuadros);
+    $total_admin = count($requestcuadros); 
+
+    $requestsolnf = $instance->getsolicitudnofacturable();
+    $total_nf = count($requestsolnf); 
+
+    $instanceveh = new Application_Model_GpsVehiculosModel();
+    $veh_solicitudes = $instanceveh->GetUserSolicitudCount();
+    $total_solveh = count($veh_solicitudes);
+
+    $vehsol_contanf = $instanceveh->GetUserSolicitudContFact();
+    $total_solvehnf = count($vehsol_contanf);
+
+    $vehsol_conta = $instanceveh->GetUserSolicitudContCount();
+    $total_solvehconta = count($vehsol_conta);
+
+    $instanceepp = new Application_Model_GpsEppModel();
+    $epp_solicitudes = $instanceepp->GetSolCount();
+    $total_solepp = count($epp_solicitudes);
+
+    $instance_cajachica = new Application_Model_GpsComprobacionModel();
+    $proceso = 0;
+    $pago = 0;
+    $cajasol = $instance_cajachica->getcomprobacionproceso($proceso,$pago);
+    $total_cajasol = count($cajasol);
+
+    $aceptada = 2;
+    $pago = 0;
+    $cajasolconta = $instance_cajachica->getcomprobacionproceso($aceptada,$pago);
+    $total_cajasolconta = count($cajasolconta);
 
 ?>
     <?php $year=date("Y"); ?>
@@ -987,9 +1015,16 @@ setInterval(function() {
                     <!-- <li class="bold">Solicitudes orden compra</li> -->
                 <li class="divider" tabindex="-1"></li>
                 <!-- solicitudes orden compra -->
-                <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
-                    <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
-                </li>
+                <?php if($total_cajasol == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                        <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                        <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_cajasol; ?></span><i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } ?>
+
                 <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
                     <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
                 </li>
@@ -1088,10 +1123,17 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/epp/eppsol',$actual_link); echo getSolEppAdm($actual_link);?>">
                     <a href="/epp/eppsol">EPP Solicitudes<i class="material-icons">nature_people</i></a>
                 </li>
+
+                <?php if($total_solepp == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                        <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                        <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solepp; ?></span><i class="material-icons">nature_people</i></a>
+                    </li>
+                <?php } ?>
                 
-                <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
-                    <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
-                </li>
                 <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
                     <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
                 </li>
@@ -1108,9 +1150,17 @@ setInterval(function() {
                 </li> -->
 
                 <li class="divider" tabindex="-1"></li>
-                <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
-                    <a href="/vehiculos/listasolicitudes/status/0">Auditoria Vehículos<i class="material-icons">local_car_wash</i></a>
-                </li>
+
+                <?php if($total_solveh == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolicitudes/status/0">Auditoria Vehículos<i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php }else{ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolicitudes/status/0">Auditoria Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solveh; ?></span><i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } ?>
+
                 <li class="bold moves <?php echo getUrl('/vehiculos/solservicio',$actual_link);?>">
                     <a href="/vehiculos/solservicio">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
                 </li>
@@ -1220,13 +1270,25 @@ setInterval(function() {
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
                 </li>
 
-                <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontafact',$actual_link);?>">
-                    <a href="/vehiculos/listasolcontafact">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
-                </li>
+                <?php if($total_solvehnf == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontafact',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontafact">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontafact',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontafact">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solvehnf; ?></span><i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } ?>
 
-                <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
-                    <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF<i class="material-icons">assignment</i></a>
-                </li>
+                <?php if($total_nf == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
+                        <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF<i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
+                        <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_nf; ?></span><i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } ?>
 
                 <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
                     <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
@@ -1242,9 +1304,15 @@ setInterval(function() {
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
 
-                <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
-                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
-                </li>
+                <?php if($total_cajasolconta == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                        <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                        <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_cajasolconta; ?></span><i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } ?>
 
                 <li class="bold moves <?php echo getUrl('/solicitud/generarcombrobaciones',$actual_link);?>">
                     <a href="/solicitud/generarcombrobaciones">Ingresar Factura<i class="material-icons">assignment_turned_in</i></a>
@@ -1269,9 +1337,15 @@ setInterval(function() {
                     <a href="/epp/eppsol">EPP Solicitudes<i class="material-icons">nature_people</i></a>
                 </li>
                 
-                <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
-                    <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
-                </li>
+                <?php if($total_solepp == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                        <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP<i class="material-icons">nature_people</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/epp/listasolicitudes/status/0',$actual_link);echo getListaSolEppAdm($actual_link);?>">
+                        <a href="/epp/listasolicitudes/status/0">Lista Solicitudes EPP <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solepp; ?></span><i class="material-icons">nature_people</i></a>
+                    </li>
+                <?php } ?>
 
             <?php } ?>
 
@@ -1322,9 +1396,17 @@ setInterval(function() {
                 <li class="bold <?php echo getUrl('/comprobacion/listafacturas',$actual_link);?>">
                     <a href="/comprobacion/listafacturas">Lista de Facturas<i class="material-icons">assignment_turned_in</i></a>
                 </li>
-                <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
-                    <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
-                </li>
+                
+                <?php if($total_cajasolconta == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                        <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
+                        <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_cajasolconta; ?></span><i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } ?>
+
                 <li class="bold moves <?php echo getUrl('/panel/proveedores',$actual_link); echo getProveedor($actual_link);?>">
                     <a href="/panel/proveedores">Proveedores<i class="material-icons">local_shipping</i></a>
                 </li>
@@ -1349,9 +1431,17 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
                     <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
-                <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
-                    <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
-                </li>
+
+                <?php if($total_solvehconta == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php }else{ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solvehconta; ?></span><i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } ?>
+
 <!--                 <li class="bold <?php echo getauditorigasolina($actual_link);?>">
                     <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
@@ -1461,13 +1551,27 @@ setInterval(function() {
                     </li>
                 <?php } ?>
 
+                <?php if($total_cajasol == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                        <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
+                        <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_cajasol; ?></span><i class="material-icons">credit_card</i></a>
+                    </li>
+                <?php } ?>
 
-                <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
-                    <a href="/comprobacion/solicitudescajachica/status/0">Solicitudes Caja chica<i class="material-icons">credit_card</i></a>
-                </li>
-                <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
-                    <a href="/vehiculos/listasolicitudes/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
-                </li>
+                <?php if($total_solveh == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolicitudes/status/0">Solicitudes Vehículos<i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php }else{ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolicitudes/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolicitudes/status/0">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solveh; ?></span><i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } ?>
+
+                
                 <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>
                 </li>
