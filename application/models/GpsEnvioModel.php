@@ -656,4 +656,33 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function getfabricacionindex(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_sitio,e.name_sitio,e.id_cliente,e.fecha_solicitud,e.fecha_envio, 
+                        e.user_solicitud, e.prioridad, e.tipo_envio, e.vehiculo, e.direccion, e.step_envio, 
+                        e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado,e.dimensiones, e.comentarios, 
+                        e.status_solicitud, e.vehiculo_final,e.operador, e.acuse,e.descripcion, e.id_tipoproyecto, 
+                        year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', 
+                        SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
+                        month(date(CONCAT(SUBSTRING(fecha_solicitud,7,4),  '-', SUBSTRING(fecha_solicitud,4,2), '-', 
+                        SUBSTRING(fecha_solicitud,1,2)))) AS mes,
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud,7,4), '-', 
+                        SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia,
+                        e.solicitud_materiales, m.file as archivo, stp.id_tipoproyecto as proyecto
+                        FROM envios_solicitud e 
+                        LEFT JOIN materiales_solicitud m on m.id = e.solicitud_materiales
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = e.id_tipoproyecto
+                        having step_envio = 1 AND status_solicitud = 0 AND stp.id_tipoproyecto = 5
+                        ORDER BY years,mes, dia ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+
 }

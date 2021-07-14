@@ -20,6 +20,7 @@ class PanelController extends Zend_Controller_Action{
         $this->_epp = new Application_Model_GpsEppModel;
         $this->_gasolina = new Application_Model_GpsGasolinaModel;
         $this->_archivo = new Application_Model_GpsArchivosModel;
+        $this->_envio = new Application_Model_GpsEnvioModel;
 
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
@@ -218,6 +219,139 @@ class PanelController extends Zend_Controller_Action{
         $month= 12;
         $vehiculo_diciembre = $this->view->vehiculo_diciembre = $this->_archivo->getvehculossolicitudes($year,$month);
         $this->view->count_vehiculodiciembre = count($vehiculo_diciembre);
+
+
+
+        $envios = $this->view->fabricacion = $this->_envio->getfabricacionindex();
+        // STATUS PROYECTOS
+        $tipo = 1;$status = 9; $bts_uno=$this->view->bts_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_unocount = count($bts_uno);
+        $tipo = 1; $status = 10; $bts_dos=$this->view->bts_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_doscount = count($bts_dos);
+        $tipo = 1; $status = 11; $bts_tres=$this->view->bts_tres = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_trescount = count($bts_tres);
+        $tipo = 1; $status = 12; $bts_cuatro=$this->view->bts_cuatro= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_cuatrocount = count($bts_cuatro);
+        $tipo = 1; $status = 13; $bts_cinco=$this->view->bts_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_cincocount = count($bts_cinco);
+        $tipo = 1; $status = 14; $bts_seis=$this->view->bts_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_seiscount = count($bts_seis);
+        $tipo = 1; $status = 15; $bts_siete=$this->view->bts_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_sietecount = count($bts_siete);
+        $tipo = 1; $status = 16; $bts_ocho=$this->view->bts_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_ochocount = count($bts_ocho);
+        $tipo = 1; $status = 17; $bts_nueve=$this->view->bts_nueve = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_nuevecount = count($bts_nueve);
+        $tipo = 1; $status = 18; $bts_diez=$this->view->bts_diez = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_diezcount= count($bts_diez);
+        $tipo = 1; $status = 19; $bts_once=$this->view->bts_once = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_oncecount= count($bts_once);
+        $tipo = 1; $status = 20; $bts_doce=$this->view->bts_doce = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_docecount= count($bts_doce);
+        $tipo = 1; $status = 21; $bts_trece=$this->view->bts_trece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_trececount= count($bts_trece);
+        $tipo=1; $status = 22; $bts_catorece=$this->view->bts_catorece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_catorcecount= count($bts_catorece);
+        $tipo = 1; $status = 23; $bts_quince=$this->view->bts_quince = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_quincecount= count($bts_quince);
+        $tipo = 1;$status=24; $bts_diesiseis=$this->view->bts_diesiseis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_diesiseiscount= count($bts_diesiseis);
+        $tipo=1;$status=25;$bts_diesisiete=$this->view->bts_diesisiete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_diesisietecount= count($bts_diesisiete);
+        $tipo = 1;$status=77;$bts_diesiocho=$this->view->bts_diesiocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->bts_diesiochocount= count($bts_diesiocho);
+
+        // C O L O C A C I O N
+        $tipo = 2; $status = 31; $colo_uno=$this->view->colo_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_unocount= count($colo_uno);
+        $tipo = 2; $status = 32; $colo_dos=$this->view->colo_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_doscount= count($colo_dos);
+        $tipo = 2; $status = 33; $colo_tres=$this->view->colo_tres = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_trescount= count($colo_tres);
+        $tipo = 2; $status = 34; $colo_cuatro=$this->view->colo_cuatro= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_cuatrocount= count($colo_cuatro);
+        $tipo = 2; $status = 35; $colo_cinco=$this->view->colo_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_cincocount= count($colo_cinco);
+        $tipo = 2; $status = 36; $colo_seis=$this->view->colo_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_seiscount= count($colo_seis);
+        $tipo = 2; $status = 37; $colo_siete=$this->view->colo_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_sietecount= count($colo_siete);
+        $tipo = 2; $status = 38; $colo_ocho=$this->view->colo_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_ochocount= count($colo_ocho);
+        $tipo = 2; $status = 39; $colo_nueve=$this->view->colo_nueve = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_nuevecount= count($colo_nueve);
+        $tipo = 2; $status = 40; $colo_diez=$this->view->colo_diez = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_diezcount= count($colo_diez);
+        $tipo = 2; $status = 41; $colo_once=$this->view->colo_once = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_oncecount= count($colo_once);
+        $tipo = 2; $status = 42; $colo_doce=$this->view->colo_doce = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_docecount= count($colo_doce);
+        $tipo = 2; $status = 43; $colo_trece=$this->view->colo_trece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_trececount= count($colo_trece);
+        $tipo = 2; $status = 44; $colo_catorce=$this->view->colo_catorece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_catorcecount= count($colo_catorce);
+        $tipo = 2; $status = 45; $colo_quince=$this->view->colo_quince = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_quincecount= count($colo_quince);
+        $tipo = 2;$status = 47; $colo_diesiseis=$this->view->colo_diesiseis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_diesiseiscount= count($colo_diesiseis);
+        $tipo =2;$status=88; $colo_diesisiete=$this->view->colo_diesisiete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->colo_diesisietecount= count($colo_diesisiete);
+        // C O L O C A C I O N
+
+        // R E F O R Z A M I E N T O
+        $tipo = 3; $status = 1; $refo_uno=$this->view->refo_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_unocount= count($refo_uno);
+        $tipo = 3; $status = 64; $refo_dos=$this->view->refo_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_doscount= count($refo_dos);
+        $tipo = 3; $status = 2; $refo_tres=$this->view->refo_tres = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_trescount= count($refo_tres);
+        $tipo = 3; $status = 3; $refo_cuatro=$this->view->refo_cuatro= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_cuatrocount= count($refo_cuatro);
+        $tipo = 3; $status = 4; $refo_cinco=$this->view->refo_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_cincocount= count($refo_cinco);
+        $tipo = 3; $status = 6; $refo_seis=$this->view->refo_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_seiscount= count($refo_seis);
+        $tipo = 3; $status = 7; $refo_siete=$this->view->refo_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_sietecount= count($refo_siete);
+        $tipo = 3; $status = 57; $refo_ocho=$this->view->refo_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_ochocount= count($refo_ocho);
+        $tipo = 3; $status = 8; $refo_nueve=$this->view->refo_nueve = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_nuevecount= count($refo_nueve);
+        $tipo = 3; $status = 48; $refo_diez=$this->view->refo_diez = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_diezcount= count($refo_diez);
+        $tipo = 3; $status = 65; $refo_once=$this->view->refo_once = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_oncecount= count($refo_once);
+        $tipo = 3; $status = 66; $refo_doce=$this->view->refo_doce = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_docecount= count($refo_doce);
+        $tipo = 3; $status = 5; $refo_trece=$this->view->refo_trece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_trececount= count($refo_trece);
+        $tipo = 3; $status = 71; $refo_catorece=$this->view->refo_catorece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_catorececount= count($refo_catorece);
+        $tipo = 3; $status = 68; $refo_quince=$this->view->refo_quince = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_quincecount= count($refo_quince);
+        $tipo =3; $status =69; $refo_diesiseis=$this->view->refo_diesiseis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_diesiseiscount= count($refo_diesiseis);
+        $tipo=3; $status=70; $refo_diesisiete=$this->view->refo_diesisiete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_diesisietecount= count($refo_diesisiete);
+        $tipo=3; $status=71; $refo_diesisiocho=$this->view->refo_diesisiocho=$this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_diesisiochocount= count($refo_diesisiocho);
+        $tipo=3; $status=80; $refo_diesinueve=$this->view->refo_diesinueve=$this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->refo_diesinuevecount= count($refo_diesinueve);
+        // R E F O R Z A M I E N T O
+
+        // C A M B I O  D E  T O R R E
+        $tipo = 4; $status = 26; $cambio_uno=$this->view->cambio_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 27; $cambio_dos=$this->view->cambio_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 28; $cambio_tres=$this->view->cambio_tres= $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 29; $cambio_cuatro=$this->view->cambio_cuatro = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 30; $cambio_cinco=$this->view->cambio_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 58; $cambio_seis=$this->view->cambio_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 78; $cambio_siete=$this->view->cambio_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $tipo = 4; $status = 79; $cambio_ocho=$this->view->cambio_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        // C A M B I O  D E  T O R R E
+
+
+        // END STATUS PROYECTOS 
 
      }//END INDEX
 
