@@ -1254,6 +1254,11 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/personal/listapersonal',$actual_link);?>">
+                    <a href="/personal/listapersonal">Asignación de Cuadrillas<i class="material-icons">accessibility</i></a>
+                </li>
+                
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
                 </li>
@@ -1528,6 +1533,11 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
                     <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/personal/listapersonal',$actual_link);?>">
+                    <a href="/personal/listapersonal">Asignación de Cuadrillas<i class="material-icons">accessibility</i></a>
+                </li>
+
             <?php } ?> 
 
             <?php if($usuarios[0]['fkroles'] == 8){ ?>

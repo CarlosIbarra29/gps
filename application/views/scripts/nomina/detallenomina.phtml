@@ -33,7 +33,109 @@
 	$monto_solicitud = $key['monto_nomina'];
 	$fecha_soliciutd = $key['solicitud_fecha'];
 	$user_solicitud = $key['solicitud_user'];
+	$status_aud = $key['status_auditoria'];
+	$user_auditoria = $key['user_auditoria'];
+	$fecha_auditoria = $key['fecha_auditoria'];
+	$comentario_rechazo = $key['comentario_auditoria'];
+	$status_pago = $key['status_pago'];
 } ?>
+
+
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12 text-center">
+		<div class="row">
+			<?php if($status_aud == 0){ ?>
+				<?php if($this->rol_user == 1 || $this->rol_user == 8) ?>
+				<div class="col m6 s6">
+					<div class="chip" id="activo_personal">
+						<img src="/img/gris.jpg">
+						Autorizar
+					</div>
+				</div>
+				<div class="col m6 s6">
+					<div class="chip modal-trigger" href="#rechazo_personal">
+						<img src="/img/gris.jpg">
+						Rechazar
+					</div>
+				</div>
+			<?php } ?>
+
+			<?php if($status_aud == 1){ ?>
+				<div class="col m12 s12 text-center">
+					<div class="chip">
+						<img src="/img/correct.png">
+						Autorizada
+					</div>					
+				</div>
+
+				<div class="row">
+					<div class="col m6 s12">
+	          			<span style="font-size:16px;">Auditoria: </span> <br>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	          				<?php echo $user_auditoria; ?>		
+	          			</span> 
+					</div>
+					<div class="col m6 s12">
+	          			<span style="font-size:16px;">Fecha: </span> <br>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	          				<?php echo $fecha_auditoria; ?>		
+	          			</span> 
+					</div>
+				</div>
+			<?php } ?>
+
+			<?php if($status_aud == 2){ ?>
+				<div class="col m12 s12 text-center">
+					<div class="chip">
+						<img src="/img/rojo.png">
+						Rechazada
+					</div>					
+				</div>
+
+				<div class="row">
+					<div class="col m6 s12">
+	          			<span style="font-size:16px;">Auditoria: </span> <br>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	          				<?php echo $user_auditoria; ?>		
+	          			</span> 
+					</div>
+					<div class="col m6 s12">
+	          			<span style="font-size:16px;">Fecha: </span> <br>
+	          			<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	          				<?php echo $fecha_auditoria; ?>		
+	          			</span> 
+					</div>
+				</div>
+			<?php } ?>
+
+		</div>
+	</div>
+</div>
+
+<div id="rechazo_personal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+	    <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar Solicitud</span> 
+	    <form action="/nomina/requestchangecambiostatusnominapost" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
+		<input type="hidden" name="id" value="<?php echo $this->solicitudid_nomina; ?>">
+		<input type="hidden" name="comentario" value="">
+		<input type="hidden" name="status" value="2">
+		<input type="hidden" name="user" value="<?php echo $this->user_solicitud; ?>">
+
+	    <div class="row">
+	        <div class="input-field col s12">
+	        	<input id="motivo_rechazo" name="comentario" type="text" class="validate">
+	        	<label for="motivo_rechazo">Motivo del Rechazo</label>
+	        </div>	    	
+	    </div>
+		</form>
+    </div>
+    <div class="modal-footer">
+		<button type="button" id="rechazada_form" class="btn">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
 
 <div class="row">
     <div class="col s12 m6">
@@ -86,6 +188,31 @@
 }?>
 
 
+<?php if($status_aud == 2){ ?>
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Motivo del Rechazo</span>
+
+	        	<div class="row" style="margin-top: 20px;">
+	        		<div class="col m12 s12">
+			      		<table>
+			        		<thead>
+			          			<tr>
+			              			<th><?php echo $comentario_rechazo; ?></th>
+			          			</tr>
+			        		</thead>
+			      		</table>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+<?php } ?>
+
+
 <div class="row">
     <div class="col s12 m12">
       	<div class="card">
@@ -112,6 +239,7 @@
 									<th>Salida</th>
 									<th>Información dia</th>
 									<th>Pago</th>
+									<th></th>
 				                </tr> 
 				            </thead>
 
@@ -290,6 +418,113 @@
     </div>
 </div>
 
+
+
+<?php if($status_aud == 1){ ?>
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m6 s6">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pago de la Nomina</span>
+	        		</div>
+	        		<div class="col m6 s6 text-right">
+	        			<?php if($status_pago != 0){?>
+	        				<?php if($this->rol_user == 1 || $this->rol_user == 4){ ?>
+	        					<a class="btn red" id="delete_pago"><i class="material-icons right">clear</i>Eliminar Pago</a>
+	        				<?php } ?>
+	        			<?php } ?>
+	        		</div>
+	        	</div>
+
+	        	<?php if($status_pago == 0){?>
+		        	<div class="row">
+		        		<form action="/nomina/requestaddstatuspagonomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
+		        		<div class="col m12 s12">
+					        <div class="input-field col m6 s12">
+					          	<input id="pagonomina" name="monto" type="number" class="validate">
+					          	<label for="pagonomina">Monto Autorizado</label>
+					        </div>
+							<input type="hidden" name="id_solicitud" value="<?php echo $this->solicitudid_nomina; ?>">
+							<input type="hidden" name="user" value="<?php echo $this->user_solicitud; ?>">
+						    <div class="file-field input-field col m6 s12">
+						    	<div class="btn">
+						        	<span>Evidencia</span>
+						        	<input type="file" name="url">
+						    	</div>
+						    	<div class="file-path-wrapper">
+						        	<input class="file-path validate" id="valdiation_file" type="text">
+						    	</div>
+						    </div>
+		        		</div>
+		        		</form>
+		        	</div>
+
+		        	<div class="row">
+		        		<div class="col m12 s12 text-center">
+		        			<a class="btn" id="add_pagonomina"><i class="material-icons right">send</i>Guardar Pago</a>
+		        		</div>
+		        	</div>
+	        	<?php } ?>
+
+
+	        	<div class="row" style="margin-top: 20px;">
+	        		<div class="col m12 s12">
+			      		<table>
+			        		<thead>
+					        	<tr>
+					            	<th>Id</th>
+					            	<th>Evidencia</th>
+					            	<th>Fecha pago</th>
+					            	<th>Usuario pago</th>
+					            	<th>Pago</th>
+					          	</tr>
+			        		</thead>
+
+							<?php
+							if ($this->pago_nomina) { 
+							foreach ($this->pago_nomina as $usr) { ?>
+							<tbody>
+								<tr>
+									<td>
+										<h5><?php echo $usr['id']; ?></h5>
+									</td>
+									<td>
+										<?php echo $usr['evidencia_pago']; ?>
+									</td>
+									<td>
+										<?php echo $usr['fecha_pago']; ?>
+									</td>
+									<td>
+										<?php echo $usr['user_pago']; ?>
+									</td>
+									<td>
+										<h4 style="font-weight: bold;">
+											$<?php echo number_format($usr['pago_nomina'], 2, '.', ','); ?>
+										</h4>
+									</td>
+								</tr>
+						    <?php } }else{ ?>
+						    </tbody> 
+						    <tbody>
+						        <tr>
+						            <td class="text-center" colspan="6"><h4>No hay Pagos realizados.</h4></td>
+						        </tr>
+						    </tbody>
+						                
+						    <?php } ?>
+
+			      		</table>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+<?php } ?>
+
+
 <!-- Modal Structure -->
 <div id="modaldelete" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -350,8 +585,14 @@
     </div>
 </div>
 
-<script src="/js/lightbox.js"></script>
+<form>
 
+	<input type="hidden" id="sol_nomina" value="<?php echo $this->solicitudid_nomina; ?>">
+	<input type="hidden" id="comentario_nomina" value="">
+	<input type="hidden" id="status_nomina" value="1">
+
+
+<script src="/js/lightbox.js"></script>
 <script type="text/javascript">
   	$(document).ready(function(){
   		$('.timepicker').timepicker();
@@ -410,6 +651,125 @@
     	}else{
     		$("#extra_modal").hide();
     	}
+    });
+
+
+    $("#activo_personal").click(function(){
+    	var id = document.getElementById("sol_nomina").value;
+    	var status = document.getElementById("status_nomina").value;
+    	var comentario = document.getElementById("comentario_nomina").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		        swal("Espere un momento, la información esta siendo procesada", {
+		          icon: "success",
+		          buttons: false,
+		        });  
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/nomina/requestchangecambiostatusnomina",
+	                method:"POST",
+	                data: {id:id, status:status, comentario:comentario },
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
+    });
+
+    $("#rechazada_form").click(function(){
+    	var motivo_rechazo = document.getElementById("motivo_rechazo").value;
+
+    	if(motivo_rechazo == ""){
+            swal({
+              title: "Para continuar debes agregar el motivo por el cual se rechazara la solicitud",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitrechzar, 1500);
+    	}
+    });
+
+    function submitrechzar() { document.getElementById("submit_comprobante").submit() }
+
+    $("#add_pagonomina").click(function(){
+    	var file = document.getElementById("valdiation_file").value;
+    	var pagonomina = document.getElementById("pagonomina").value;
+
+    	if(motivo_rechazo == ""){
+            swal({
+              title: "Para continuar debes agregar el motivo por el cual se rechazara la solicitud",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitpagonomina, 1500);
+    	}
+    });
+
+    function submitpagonomina() { document.getElementById("submit_pago").submit() }
+
+
+    $("#delete_pago").click(function(){
+    	var id = document.getElementById("sol_nomina").value;
+		swal({
+			title: "Estas seguro de eliminar el pago?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		        swal("Espere un momento, la información esta siendo procesada", {
+		          icon: "success",
+		          buttons: false,
+		        });  
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/nomina/requestdeletepagonomina",
+	                method:"POST",
+	                data: {id:id},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
     });
 
 </script>

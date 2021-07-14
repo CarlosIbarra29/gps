@@ -46,6 +46,77 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     }// END INSERT USER
 
+    public function insertpagonomina($post,$table,$hoy,$nombre_usuario,$urldb){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'pago_nomina'=>$post['monto'],
+                'evidencia_pago'=>$urldb,
+                'user_pago'=>$nombre_usuario,
+                'fecha_pago'=>$hoy,
+                'usuario_nomina'=>$post['user'],
+                'solicitud_nomina'=>$post['id_solicitud']
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }// END INSERT USER
+
+
+    public function updatenominstatus($post,$table,$hoy,$nombre_usuario){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_auditoria = ?, user_auditoria=?, fecha_auditoria = ? WHERE id = ?",array($post['status'],$nombre_usuario,$hoy,$post['id']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updatenominstatuscomentario($post,$table,$hoy,$nombre_usuario){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_auditoria = ?, user_auditoria=?, fecha_auditoria = ?, comentario_auditoria = ? WHERE id = ?",array($post['status'],$nombre_usuario,$hoy,$post['comentario'],$post['id']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    public function updateevidenciapagonomina($post,$table,$hoy,$nombre_usuario){
+        $status = 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_pago = ?, fecha_pago = ?, user_pago = ? WHERE id = ?",array($status,$hoy,$nombre_usuario,$post['id_solicitud']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
+    public function updatedeleteevidenciapagonomina($post,$table,$hoy,$nombre_usuario){
+        $status = 0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_pago = ?, fecha_pago = ?, user_pago = ? WHERE id = ?",array($status,$hoy,$nombre_usuario,$post['id']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
 
     public function updatestatusnominauser($id_solicitud,$id,$table,$monto){
         $status= 1;
