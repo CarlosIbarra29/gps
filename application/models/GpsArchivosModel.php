@@ -86,5 +86,54 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
         }
     }  
 
+    public function getnomiasolicitudes($year,$month){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pa.id, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, pa.dia, 
+                        pa.day_num, pa.hora_extra, pa.id_solicitudhora, pa.id_proyecto, pa.id_proyecto_salida, 
+                        pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
+                        pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra, pa.monto_pago, pn.personal,
+                        pa.solicitud_prestamo, pa.status_tipos, pa.id_proyecto, pn.status_pago, pn.fecha_pago,
+                        year(date(CONCAT(SUBSTRING(pn.fecha_pago, 7, 4),  '-', SUBSTRING(pn.fecha_pago, 4, 2), '-', SUBSTRING(pn.fecha_pago, 1, 2)))) AS years,
+                        month(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS mes ,
+                        day(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS dia_count
+                        FROM personal_asistencia pa
+                        LEFT JOIN personal_campo pc on pc.id=pa.id_personal 
+                        LEFT JOIN personal_nomina pn on pn.id = pa.solicitud_nomina
+                        having mes = ? AND years = ? 
+                        AND pa.solicitud_nomina = 9 AND pn.status_pago = 1",array($month,$year));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } 
+
+
+    public function getnomiasolicitudesproyecto($year,$month,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pa.id, pa.id_personal, pa.nombre, pa.hora_entrada, pa.hora_salida, pa.dia, 
+                        pa.day_num, pa.hora_extra, pa.id_solicitudhora, pa.id_proyecto, pa.id_proyecto_salida, 
+                        pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
+                        pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra, pa.monto_pago, pn.personal,
+                        pa.solicitud_prestamo, pa.status_tipos, pa.id_proyecto, pn.status_pago, pn.fecha_pago,
+                        year(date(CONCAT(SUBSTRING(pn.fecha_pago, 7, 4),  '-', SUBSTRING(pn.fecha_pago, 4, 2), '-', SUBSTRING(pn.fecha_pago, 1, 2)))) AS years,
+                        month(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS mes ,
+                        day(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS dia_count
+                        FROM personal_asistencia pa
+                        LEFT JOIN personal_campo pc on pc.id=pa.id_personal 
+                        LEFT JOIN personal_nomina pn on pn.id = pa.solicitud_nomina
+                        having mes = ? AND years = ? 
+                        AND pa.solicitud_nomina = 9 AND pn.status_pago = 1 
+                        AND pa.id_proyecto = ? AND pa.status_tipos = 0",array($month,$year,$sitio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } 
 
 }

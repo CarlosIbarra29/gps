@@ -226,8 +226,15 @@ function eliminar_acentos($cadena){
         }
     ?>
 
+    <?php 
+        $nomina = 0;
+        foreach ($this->nomina as $key){ 
+        	$nomina = $nomina + $key['monto_pago'];
+        }
+    ?>
 
-    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo; ?>
+
+    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo + $nomina; ?>
 
 <div class="row">
     <div class="col m12 s12 text-right" style="margin-top: 20px;">
@@ -443,6 +450,57 @@ function eliminar_acentos($cadena){
       </div>
     </div>
 
+</div>
+
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nomina</span>
+          <div class="row">
+          	<div class="col m12 s12">
+          		<div class="row" style="margin-top: 20px;">
+          			<div class="col m6 s12 text-center">
+		          		<div style=" margin-top: 20px;">
+			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 $<?php echo number_format($nomina, 2, '.', ','); ?> 
+			          		</span>
+		          		</div>
+
+		          		<div class="row" style="margin-top: 20px;">
+		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn green" id="exportBtn6">Excel</a><br>
+		          				<span>Reporte de Nomina</span>
+		          			</div>
+<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          				<a class="btn red">PDF</a>
+		          			</div> -->
+		          		</div>
+          			</div>
+
+          			<div class="col m6 s12 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 40px">
+				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->nomina); ?>" readonly>
+				               	</h2>
+				            </div>
+				        </div>
+				        	<h4>Total de Nomina</h4>
+          			</div>
+          		</div>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 
 
@@ -731,6 +789,56 @@ function eliminar_acentos($cadena){
 
 	<!-- E N D    E X C E L    S O L I C I T U D E S   V E H I C U L O S -->
 
+	<!--  E X C E L    S O L I C I T U D E S   N O M I N A-->
+<div class="row oculto">
+	<div class="row excel-div" id="tab6">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Usuario</th>
+					<th>Sitio</th>
+					<th>Asistencia</th>
+					<th>Hora entrada</th>
+					<th>Hora salida</th>
+					<th>Pago</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->nomina as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+	<!-- E N D    E X C E L    S O L I C I T U D E S   N O M I N A -->
+
 
 <input type="hidden" id="op_year" value="<?php echo $this->year_op; ?>">
 
@@ -813,4 +921,16 @@ function eliminar_acentos($cadena){
         });
     });
 
+
+    $("#exportBtn6").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab6"), {
+            name: "Nomina "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Nomina "+mes+" "+year+" "
+            }
+        });
+    });
 </script>

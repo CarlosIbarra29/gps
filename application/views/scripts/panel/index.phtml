@@ -137,6 +137,20 @@ function eliminar_acentos($cadena){
 <?php  $vehiculo_diciembre=0; foreach($this->vehiculo_diciembre as $usr){ $vehiculo_diciembre=$vehiculo_diciembre+$usr['monto']; } ?>
 
 
+<?php  $nomina_enero=0; foreach($this->nomina_enero as $usr){ $nomina_enero=$nomina_enero+$usr['monto_pago']; } ?>
+<?php  $nomina_febrero=0; foreach($this->nomina_febrero as $usr){ $nomina_febrero=$nomina_febrero+$usr['monto_pago']; } ?>
+<?php  $nomina_marzo=0; foreach($this->nomina_marzo as $usr){ $nomina_marzo=$nomina_marzo+$usr['monto_pago']; } ?>
+<?php  $nomina_abril=0; foreach($this->nomina_abril as $usr){ $nomina_abril=$nomina_abril+$usr['monto_pago']; } ?>
+<?php  $nomina_mayo=0; foreach($this->nomina_mayo as $usr){ $nomina_mayo=$nomina_mayo+$usr['monto_pago']; } ?>
+<?php  $nomina_junio=0; foreach($this->nomina_junio as $usr){ $nomina_junio=$nomina_junio+$usr['monto_pago']; } ?>
+<?php  $nomina_julio=0; foreach($this->nomina_julio as $usr){ $nomina_julio=$nomina_julio+$usr['monto_pago']; } ?>
+<?php  $nomina_agosto=0; foreach($this->nomina_agosto as $usr){ $nomina_agosto=$nomina_agosto+$usr['monto_pago']; } ?>
+<?php  $nomina_septiembre=0; foreach($this->nomina_septiembre as $usr){ $nomina_septiembre=$nomina_septiembre+$usr['monto_pago']; } ?>
+<?php  $nomina_octubre=0; foreach($this->nomina_octubre as $usr){ $nomina_octubre=$nomina_octubre+$usr['monto_pago']; } ?>
+<?php  $nomina_noviembre=0; foreach($this->nomina_noviembre as $usr){  $nomina_noviembre=$nomina_noviembre+$usr['monto_pago']; }?>
+<?php  $nomina_diciembre=0; foreach($this->nomina_diciembre as $usr){ $nomina_diciembre=$nomina_diciembre+$usr['monto_pago']; } ?>
+
+
 <!-- <div class="row">
     <div class="col m12 s12">
         <div class="input-field col m4 m4 text-center">
@@ -231,19 +245,19 @@ function eliminar_acentos($cadena){
 
     <?php 
 
-        $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero + $vehiculo_enero;
-        $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero + $vehiculo_febrero;
-        $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo + $vehiculo_marzo;
-        $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril + $vehiculo_abril;
-        $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo + $vehiculo_mayo;
-        $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio + $vehiculo_junio;
-        $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio + $vehiculo_julio;
+        $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero + $vehiculo_enero + $nomina_enero;
+        $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero + $vehiculo_febrero + $nomina_febrero;
+        $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo + $vehiculo_marzo + $nomina_marzo;
+        $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril + $vehiculo_abril + $nomina_abril;
+        $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo + $vehiculo_mayo + $nomina_mayo;
+        $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio + $vehiculo_junio + $nomina_junio;
+        $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio + $vehiculo_julio + $nomina_julio;
 
-        $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto + $vehiculo_agosto;
-        $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre + $vehiculo_septiembre;
-        $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre + $vehiculo_octubre;
-        $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre + $vehiculo_noviembre;
-        $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre + $vehiculo_diciembre;
+        $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto + $vehiculo_agosto + $nomina_agosto;
+        $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre + $vehiculo_septiembre + $nomina_septiembre;
+        $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre + $vehiculo_octubre + $nomina_octubre;
+        $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre + $vehiculo_noviembre + $nomina_noviembre;
+        $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre + $vehiculo_diciembre + $nomina_diciembre;
 
     ?>
 
@@ -262,7 +276,9 @@ function eliminar_acentos($cadena){
                         <th>Solicitudes compra</th>
                         <th>Comprobaciones</th>
                         <th>Vehículos</th>
+                        <th>Nomina</th>
                         <th>Total</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -282,6 +298,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_enero, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_enero, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_enero, 2, '.', ','); ?>
@@ -306,6 +325,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_febrero, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_febrero, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_feb, 2, '.', ','); ?>
                         </td>
@@ -326,6 +348,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_marzo, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_marzo, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_marz, 2, '.', ','); ?> 
@@ -348,6 +373,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_abril, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_abril, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_abril, 2, '.', ','); ?> 
                         </td>
@@ -366,6 +394,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_mayo, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_mayo, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_mayo, 2, '.', ','); ?> 
@@ -386,6 +417,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_junio, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_junio, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_junio, 2, '.', ','); ?> 
                         </td>
@@ -404,6 +438,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_julio, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_julio, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_julio, 2, '.', ','); ?> 
@@ -424,6 +461,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_agosto, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_agosto, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_agosto, 2, '.', ','); ?> 
                         </td>
@@ -442,6 +482,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_septiembre, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_septiembre, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_septiembre, 2, '.', ','); ?> 
@@ -462,6 +505,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_octubre, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_octubre, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_octubre, 2, '.', ','); ?> 
                         </td>
@@ -481,6 +527,9 @@ function eliminar_acentos($cadena){
                         <td>
                             $<?php echo number_format($vehiculo_noviembre, 2, '.', ','); ?>    
                         </td>
+                        <td>
+                            $<?php echo number_format($nomina_noviembre, 2, '.', ','); ?>    
+                        </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_noviembre, 2, '.', ','); ?> 
                         </td>
@@ -499,6 +548,9 @@ function eliminar_acentos($cadena){
                         </td>
                         <td>
                             $<?php echo number_format($vehiculo_diciembre, 2, '.', ','); ?>    
+                        </td>
+                        <td>
+                            $<?php echo number_format($nomina_diciembre, 2, '.', ','); ?>    
                         </td>
                         <td style="font-size: 16px; font-weight: bold;">
                             $<?php echo number_format($sum_diciembre, 2, '.', ','); ?> 

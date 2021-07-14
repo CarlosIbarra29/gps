@@ -337,6 +337,55 @@ class GraficaController extends Zend_Controller_Action{
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
+
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
+
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
 
@@ -503,6 +552,54 @@ class GraficaController extends Zend_Controller_Action{
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
 
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
+
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
 
@@ -667,6 +764,56 @@ class GraficaController extends Zend_Controller_Action{
         $month= 12;
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
+
+
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
+
 
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
@@ -833,6 +980,54 @@ class GraficaController extends Zend_Controller_Action{
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
+
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
 
@@ -998,6 +1193,57 @@ class GraficaController extends Zend_Controller_Action{
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
+        // var_dump($sitio);exit;
+
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
+
+
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
 
@@ -1162,6 +1408,54 @@ class GraficaController extends Zend_Controller_Action{
         $cajachica_diciembre = $this->view->cajachicadiciembre=$this->_comprobacion->getmessitio($year,$month,$sitio);
         $this->view->count_cajachicadiciembre = count($cajachica_diciembre);
 
+
+        $month= 1;
+        $nomina_enero=$this->view->nomina_enero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaenero = count($nomina_enero);
+
+        $month= 2;
+        $nomina_febrero=$this->view->nomina_febrero=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominafebrero = count($nomina_febrero);
+
+        $month= 3;
+        $nomina_marzo=$this->view->nomina_marzo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamarzo = count($nomina_marzo);
+
+        $month= 4;
+        $nomina_abril=$this->view->nomina_abril=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaabril = count($nomina_abril);
+
+        $month= 5;
+        $nomina_mayo=$this->view->nomina_mayo=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominamayo = count($nomina_mayo);
+
+        $month= 6;
+        $nomina_junio=$this->view->nomina_junio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajunio = count($nomina_junio);
+
+        $month= 7;
+        $nomina_julio=$this->view->nomina_julio=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominajulio = count($nomina_julio);
+
+        $month= 8;
+        $nomina_agosto=$this->view->nomina_agosto=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaagosto = count($nomina_agosto);
+
+        $month= 9;
+        $nomina_septiembre=$this->view->nomina_septiembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaseptiembre = count($nomina_septiembre);
+
+        $month= 10;
+        $nomina_octubre=$this->view->nomina_octubre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominaoctubre = count($nomina_octubre);
+
+        $month= 11;
+        $nomina_noviembre=$this->view->nomina_noviembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominanoviembre = count($nomina_noviembre);
+
+        $month= 12;
+        $nomina_diciembre=$this->view->nomina_diciembre=$this->_archivo->getnomiasolicitudesproyecto($year,$month,$sitio);
+        $this->view->count_nominadiciembre = count($nomina_diciembre);
 
         // F A C T U R A S
         $this->view->cajachica_factura = $this->_comprobacion->getmesfacturapanelsitio($sitio);
@@ -1547,6 +1841,7 @@ class GraficaController extends Zend_Controller_Action{
         $this->view->cajachica = $this->_comprobacion->getmesfacturapanel($year,$month);
         $this->view->sol_cajachica = $this->_comprobacion->getmessolicitudpanel($year,$month);
         $this->view->vehiculos = $this->_archivo->getvehculossolicitudes($year,$month);
+        $this->view->nomina = $this->_archivo->getnomiasolicitudes($year,$month);
     }
 
 

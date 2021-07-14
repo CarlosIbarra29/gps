@@ -167,20 +167,43 @@ function eliminar_acentos($cadena){
 
 	$suma_cajachica = $cajachica_enero+ $cajachica_febrero+ $cajachica_marzo+ $cajachica_abril+ $cajachica_mayo + $cajachica_junio + $cajachica_julio + $cajachica_agosto + $cajachica_septiembre + $cajachica_octubre + $cajachica_noviembre + $cajachica_diciembre;
 
-    $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero;
-    $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero;
-    $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo;
-    $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril;
-    $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo;
-    $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio;
-    $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio;
-    $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto;
-    $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre;
-    $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre;
-    $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre;
-    $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre;
+// N O M I N A
+ $nomina_enero=0; foreach($this->nomina_enero as $usr){ $nomina_enero=$nomina_enero+$usr['monto_pago']; } ?>
+<?php  $nomina_febrero=0; foreach($this->nomina_febrero as $usr){$nomina_febrero=$nomina_febrero+$usr['monto_pago']; } ?>
+<?php  $nomina_marzo=0; foreach($this->nomina_marzo as $usr){ $nomina_marzo=$nomina_marzo+$usr['monto_pago']; } ?>
+<?php  $nomina_abril=0; foreach($this->nomina_abril as $usr){ $nomina_abril=$nomina_abril+$usr['monto_pago']; } ?>
+<?php  $nomina_mayo=0; foreach($this->nomina_mayo as $usr){ $nomina_mayo=$nomina_mayo+$usr['monto_pago']; } ?>
+<?php  $nomina_junio=0; foreach($this->nomina_junio as $usr){ $nomina_junio=$nomina_junio+$usr['monto_pago']; } ?>
+<?php  $nomina_julio=0; foreach($this->nomina_julio as $usr){ $nomina_julio=$nomina_julio+$usr['monto_pago']; } ?>
+<?php  $nomina_agosto=0; foreach($this->nomina_agosto as $usr){ $nomina_agosto=$nomina_agosto+$usr['monto_pago']; } ?>
+<?php  $nomina_septiembre=0; foreach($this->nomina_septiembre as $usr){ $nomina_septiembre=$nomina_septiembre+$usr['monto_pago']; } ?>
+<?php  $nomina_octubre=0; foreach($this->nomina_octubre as $usr){ $nomina_octubre=$nomina_octubre+$usr['monto_pago']; } ?>
 
-    $total = $suma_cajachica + $suma_totalgas + $suma_total;
+<?php  $nomina_noviembre=0; 
+    foreach($this->nomina_noviembre as $usr){ 
+        $nomina_noviembre=$nomina_noviembre+$usr['monto_pago']; 
+    } 
+?>
+<?php  $nomina_diciembre=0; foreach($this->nomina_diciembre as $usr){ $nomina_diciembre=$nomina_diciembre+$usr['monto_pago']; } 
+
+	$suma_nomina = $nomina_enero+ $nomina_febrero+ $nomina_marzo+ $nomina_abril+ $nomina_mayo + $nomina_junio + $nomina_julio + $nomina_agosto + $nomina_septiembre + $nomina_octubre + $nomina_noviembre + $nomina_diciembre;
+// E N D  N O M I N A
+
+
+    $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero + $nomina_enero;
+    $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero + $nomina_febrero;
+    $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo + $nomina_marzo;
+    $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril + $nomina_abril;
+    $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo + $nomina_mayo;
+    $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio + $nomina_junio;
+    $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio + $nomina_julio;
+    $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto + $nomina_agosto;
+    $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre + $nomina_septiembre;
+    $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre + $nomina_octubre;
+    $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre + $nomina_noviembre;
+    $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre + $nomina_diciembre;
+
+    $total = $suma_cajachica + $suma_totalgas + $suma_total + $suma_nomina;
  ?>
 
 
@@ -192,6 +215,7 @@ $count_cajachica = $this->count_cajachicaenero + $this->count_cajachicafebrero +
 
 $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasmarzo + $this->count_gasabril + $this->count_gasmayo + $this->count_gasjunio + $this->count_gasjulio + $this->count_gasagosto + $this->count_gasseptiembre + $this->count_gasoctubre + $this->count_gasnoviembre + $this->count_gasdiciembre; 
 
+$count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->count_nominamarzo + $this->count_nominaabril + $this->count_nominamayo + $this->count_nominajunio + $this->count_nominajulio + $this->count_nominaagosto + $this->count_nominaseptiembre + $this->count_nominaoctubre + $this->count_nominanoviembre + $this->count_nominadiciembre; 
 ?>
 
 
@@ -421,6 +445,59 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
 	        </div>
 	    </div>
     </div>
+
+
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nomina</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s6 text-center">
+	        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				$<?php echo number_format($suma_nomina, 2, '.', ','); ?>
+	        			</span>
+
+	        			<div style="margin-top: 10px;">
+	        				<a class="btn green" id="exportBtn4">Excel</a><br>
+	        				<span>Nomina</span>
+	        			</div>
+
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 45px">
+				               		<input type="text" value="<?php echo $count_nomina; ?>" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>	
+				        Total de Nomina
+	        		</div>
+
+
+	        	</div>
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="nominas" style="width: 100px;"></canvas>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+
 </div>
 <?php } ?>
 
@@ -1325,6 +1402,388 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
 <!-- E N D   E X C E L  G A S O L I N A -->
 
 
+<!-- N O M I N A -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab4">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Usuario</th>
+					<th>Sitio</th>
+					<th>Asistencia</th>
+					<th>Hora entrada</th>
+					<th>Hora salida</th>
+					<th>Pago</th>
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->nomina_enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_junio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_julio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->nomina_agosto as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_septiembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->nomina_octubre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_noviembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->nomina_diciembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["dia"]); ?></td>
+				    <td>
+				        <?php if($usr['status_tipos'] == 0){ ?>
+				            <?php echo eliminar_acentos($usr["hora_entrada"]); ?>
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 1){ ?>
+				            Descuento
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 2){ ?>
+				            Descuento Herramientas
+				        <?php }?>
+
+				        <?php if($usr['status_tipos'] == 3){ ?>
+				            Descuento EPP
+				        <?php }?>
+				    </td>
+					<td><?php echo eliminar_acentos($usr["hora_salida"]); ?></td>
+					<td>$<?php echo number_format($usr["monto_pago"], 2, '.', ','); ?> </td>	
+				</tr>
+			</tbody>
+			<?php } ?>
+
+		</table>	
+	</div>
+</div>
+
+<!-- E  N D  N O M I N A -->
+
 
     <input type="hidden" id="enero" value="<?php echo $sum_enero; ?> ">
     <input type="hidden" id="febrero" value="<?php echo $sum_feb; ?>">
@@ -1381,6 +1840,18 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
     <input type="hidden" id="noviembre_gas" value="<?php echo $sugas_noviembre ?>">
     <input type="hidden" id="diciembre_gas" value="<?php echo $sugas_diciembre; ?>">
 
+    <input type="hidden" id="enero_nomina" value="<?php echo $nomina_enero; ?> ">
+    <input type="hidden" id="febrero_nomina" value="<?php echo $nomina_febrero; ?>">
+    <input type="hidden" id="marzo_nomina" value="<?php echo $nomina_marzo; ?>">
+    <input type="hidden" id="abril_nomina" value="<?php echo $nomina_abril; ?>">
+    <input type="hidden" id="mayo_nomina" value="<?php echo $nomina_mayo; ?>">
+    <input type="hidden" id="junio_nomina" value="<?php echo $nomina_junio; ?>">
+    <input type="hidden" id="julio_nomina" value="<?php echo $nomina_julio; ?>">
+    <input type="hidden" id="agosto_nomina" value="<?php echo $nomina_agosto; ?>">
+    <input type="hidden" id="septiembre_nomina" value="<?php echo $nomina_septiembre; ?>">
+    <input type="hidden" id="octubre_nomina" value="<?php echo $nomina_octubre; ?>">
+    <input type="hidden" id="noviembre_nomina" value="<?php echo $nomina_noviembre ?>">
+    <input type="hidden" id="diciembre_nomina" value="<?php echo $nomina_diciembre; ?>">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     <script type="text/javascript">
@@ -1590,6 +2061,61 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
 	        }
 	    }
 	});
+
+
+
+    var enero = document.getElementById("enero_nomina").value;
+    var febrero = document.getElementById("febrero_nomina").value;
+    var marzo = document.getElementById("marzo_nomina").value;
+    var abril = document.getElementById("abril_nomina").value;
+    var mayo = document.getElementById("mayo_nomina").value;
+    var junio = document.getElementById("junio_nomina").value;
+    var julio = document.getElementById("julio_nomina").value;
+    var agosto = document.getElementById("agosto_nomina").value;
+    var septiembre = document.getElementById("septiembre_nomina").value;
+    var octubre = document.getElementById("octubre_nomina").value;
+    var noviembre = document.getElementById("noviembre_nomina").value;
+    var diciembre = document.getElementById("diciembre_nomina").value;
+
+	var ctx = document.getElementById('nominas').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
@@ -1623,4 +2149,15 @@ $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasm
             }
         });
     });
+
+
+    $("#exportBtn4").click(function(){
+        TableToExcel.convert(document.getElementById("tab4"), {
+            name: "Nomina.xlsx",
+            sheet: {
+            	name: "Nomina"
+            }
+        });
+    });
+
 </script>
