@@ -494,4 +494,16 @@ class Application_Model_GpsMaterialesModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getsitios(){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM sitios ORDER BY nombre ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
 }
