@@ -579,7 +579,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $usr = $this->_season->GetSpecific($table,$wh,$id_user);
         $name_user = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
         $table = "personal_nomina";
-        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table,$hoy,);
+        $id_solicitud = $this->_nomina->insertnominasolicitud($id_user,$name_user,$post,$table,$hoy,$name_user);
         $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
         
         foreach ($ver as $key) {
@@ -981,8 +981,6 @@ class AsistenciaController extends Zend_Controller_Action{
                 $cantidadsaldada = $cantidad - 1;
                 $this->_asistencia->updatedeleteeppasistencia($table,$cantidadsaldada,$id_epp);
             }
-
-
 
             $table="personal_asistencia";
             $wh="id";

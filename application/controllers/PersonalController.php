@@ -17,6 +17,7 @@ class PersonalController extends Zend_Controller_Action{
     }
 
     public function listapersonalAction(){
+        $this->view->personal_excel = $this->_personal->getallpersonalexcel(); 
         $this->view->puesto = $this->_personal->getallpersonal(); 
         $table="sitios";
         $this->view->sitios = $this->_season->GetAll($table); 
@@ -165,7 +166,7 @@ class PersonalController extends Zend_Controller_Action{
             $count=count($pagi_count);
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
 
-            $no_of_records_per_page = 40;
+            $no_of_records_per_page = 140;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
 
@@ -239,7 +240,6 @@ class PersonalController extends Zend_Controller_Action{
         $this->view->count=$count;
 
         if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
-
         $no_of_records_per_page = 40;
         $offset = ($pagina-1) * $no_of_records_per_page; 
         $total_pages= $count;

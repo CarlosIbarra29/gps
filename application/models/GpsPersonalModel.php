@@ -34,6 +34,23 @@ class Application_Model_GpsPersonalModel extends Zend_Db_Table_Abstract{
     } //END GET PAGINATOR PERSONAL
 
 
+    public function getallpersonalexcel(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.curp, pc.nss, pc.rfc, pc.telefono, 
+                        pc.email_personal, pc.status_cuadrilla,pc.sitio_tipoproyectopersonal, pc.id_sitiopersonal, pc.name_sitio,
+                        pc.fechainicio_asignacion, pc.fechafinal_asignacion, pp.nombre as puesto
+                        FROM personal_campo pc
+                        LEFT JOIN puestos_personal pp on pp.id = pc.puesto where pc.status_personal = 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
+
+
     public function getpersonalcuadrilla($offset,$no_of_records_per_page,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
