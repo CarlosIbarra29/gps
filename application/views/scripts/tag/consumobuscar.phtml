@@ -176,12 +176,12 @@ if($this->total== 1){
 		    </div>
 
 		    <div class="input-field col m5 s8">
-				<select id="año" name="año" required>
-					<?php foreach ($this->años as $año) { 
-			     		if ($año['año']==$this->añosel) { ?>
-			                <option value="<?php echo $año["año"]; ?>" selected><?php echo $año['año']; ?></option>
-			     	<?php } if ($año['año']!=$this->añosel) { ?>
-			                <option value="<?php echo $año["año"]; ?>" ><?php echo $año['año']; ?></option>
+				<select id="year" name="year" required>
+					<?php foreach ($this->years as $year) { 
+			     		if ($year['year']==$this->yearsel) { ?>
+			                <option value="<?php echo $year["year"]; ?>" selected><?php echo $year['year']; ?></option>
+			     	<?php } if ($year['year']!=$this->yearsel) { ?>
+			                <option value="<?php echo $year["year"]; ?>" ><?php echo $year['year']; ?></option>
 			     	<?php } } ?>  
 				</select>
 				<label>Año</label>
@@ -458,12 +458,12 @@ if($this->total== 1){
 
    	$("#buscador_mes").click(function(){
    		var mes = document.getElementById("mes").value;
-   		var año = document.getElementById("año").value;
+   		var year = document.getElementById("year").value;
    		var tagn = document.getElementById("tagn").value
    		// var status = document.getElementById("status_search").value;
 
 		swal({
-			title: "La busqueda sera por el mes "+mes+" y el año "+año+", Desea continuar?",
+			title: "La busqueda sera por el mes "+mes+" y el año "+year+", Desea continuar?",
 			icon: "warning",
 			buttons: true,
 			dangerMode: true,
@@ -474,7 +474,7 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				});
-			window.location.href = "/tag/consumobuscar/id/"+tagn+"/mes/"+mes+"/año/"+año+"/op/3";
+			window.location.href = "/tag/consumobuscar/id/"+tagn+"/mes/"+mes+"/year/"+year+"/op/3";
 
 			// window.location.href = "/epp/listasolbuscar/status/"+status+"/usuario/"+id+"/op/3";
 		  } else {

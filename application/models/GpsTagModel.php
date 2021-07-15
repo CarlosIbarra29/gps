@@ -197,7 +197,7 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     }   //Buscardor en Paginacion por Proyecto 
 
 
-    public function GetTagMes($id,$mes,$año){
+    public function GetTagMes($id,$mes,$year){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
@@ -222,7 +222,7 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
                 LEFT JOIN sitios s ON s.id = t.id_sitio
                 LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
                 LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $año ORDER BY t.fecha",array($mes));
+                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha",array($mes));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -232,7 +232,7 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     }   //Buscardor por Mes
     
 
-    public function GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$año){
+    public function GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$year){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
@@ -257,7 +257,7 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
                 LEFT JOIN sitios s ON s.id = t.id_sitio
                 LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
                 LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $año ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($mes));
+                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($mes));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

@@ -134,6 +134,41 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
         }catch (Exception $e){
             echo $e;
         }
+    }
+
+
+    public function gettagconsumosm($year,$month){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
+                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
+                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto,
+                YEAR(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
+                    '-',
+                    SUBSTRING(t.fecha, 4, 2),
+                    '-',
+                    SUBSTRING(t.fecha, 1, 2)))) AS AÑO,
+                MONTH(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
+                    '-',
+                    SUBSTRING(t.fecha, 4, 2),
+                    '-',
+                    SUBSTRING(t.fecha, 1, 2)))) AS MES,
+                DAY(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
+                    '-',
+                    SUBSTRING(t.fecha, 4, 2),
+                    '-',
+                    SUBSTRING(t.fecha, 1, 2)))) AS DIA
+                FROM tag t
+                LEFT JOIN sitios s ON s.id = t.id_sitio
+                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                HAVING MES = ? And AÑO = ? ORDER BY t.fecha",array($month,$year));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
     } 
 
 }

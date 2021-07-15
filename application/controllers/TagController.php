@@ -154,8 +154,8 @@ class TagController extends Zend_Controller_Action{
             $table="meses";
             $this->view->meses = $this->_season->GetAll($table);
 
-            $table="años";
-            $this->view->años = $this->_season->GetAll($table);
+            $table="years";
+            $this->view->years = $this->_season->GetAll($table);
 
             $id = $this->_getParam('id');
             $table="tag";
@@ -221,8 +221,8 @@ class TagController extends Zend_Controller_Action{
         $table="meses";
         $this->view->meses = $this->_season->GetAll($table);
 
-        $table="años";
-        $this->view->años = $this->_season->GetAll($table);
+        $table="years";
+        $this->view->years = $this->_season->GetAll($table);
 
         $tid = $this->_getParam('id');
         $table="tag";
@@ -295,16 +295,16 @@ class TagController extends Zend_Controller_Action{
 
                 $id = $this->_getParam('id');
 
-                $año = $this->_getParam('año');
-                $this->view->añosel=$año;
+                $year = $this->_getParam('year');
+                $this->view->yearsel=$year;
                 
                 $mes = $this->_getParam('mes'); 
                 $this->view->messel=$mes; 
-                var_dump($id);
-                var_dump($mes);
-                var_dump($año);
+                // var_dump($id);
+                // var_dump($mes);
+                // var_dump($año);
 
-                $tag_contador=$this->view->tagcount=$this->_tag->GetTagMes($id,$mes,$año);
+                $tag_contador=$this->view->tagcount=$this->_tag->GetTagMes($id,$mes,$year);
 
                 $count=count($tag_contador);
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
@@ -316,7 +316,7 @@ class TagController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="tag";
-                $this->view->paginator= $this->_tag->GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$año);
+                $this->view->paginator= $this->_tag->GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$year);
             }
 
     }   

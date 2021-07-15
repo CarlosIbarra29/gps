@@ -1842,6 +1842,7 @@ class GraficaController extends Zend_Controller_Action{
         $this->view->sol_cajachica = $this->_comprobacion->getmessolicitudpanel($year,$month);
         $this->view->vehiculos = $this->_archivo->getvehculossolicitudes($year,$month);
         $this->view->nomina = $this->_archivo->getnomiasolicitudes($year,$month);
+        $this->view->tag = $this->_archivo->gettagconsumosm($year,$month);
     }
 
 
