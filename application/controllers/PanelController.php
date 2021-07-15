@@ -270,6 +270,57 @@ class PanelController extends Zend_Controller_Action{
         $this->view->count_nominadiciembre = count($nomina_diciembre);
 
 
+        // T A G  C O N S U M O S
+        $month= 1;
+        $tag_enero = $this->view->tag_enero = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagenero = count($tag_enero);
+
+        $month= 2;
+        $tag_febrero = $this->view->tag_febrero = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagfebrero = count($tag_febrero);
+
+        $month= 3;
+        $tag_marzo = $this->view->tag_marzo = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagmarzo = count($tag_marzo);
+
+        $month= 4;
+        $tag_abril = $this->view->tag_abril = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagabril = count($tag_abril);
+
+        $month= 5;
+        $tag_mayo = $this->view->tag_mayo = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagmayo = count($tag_mayo);
+
+        $month= 6;
+        $tag_junio = $this->view->tag_junio = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagjunio = count($tag_junio);
+
+        $month= 7;
+        $tag_julio = $this->view->tag_julio = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagjulio = count($tag_julio);
+
+        $month= 8;
+        $tag_agosto = $this->view->tag_agosto = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagagosto = count($tag_agosto);
+
+        $month= 9;
+        $tag_septiembre = $this->view->tag_septiembre = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagseptiembre = count($tag_septiembre);
+
+        $month= 10;
+        $tag_octubre = $this->view->tag_octubre = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagoctubre = count($tag_octubre);
+
+        $month= 11;
+        $tag_noviembre = $this->view->tag_noviembre = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagnoviembre = count($tag_noviembre);
+
+        $month= 12;
+        $tag_diciembre = $this->view->tag_diciembre = $this->_archivo->gettagconsumosm($year,$month);
+        $this->view->count_tagdiciembre = count($tag_diciembre);
+
+        // E N D  T A G  C O N S U M O S
+
 
         $envios = $this->view->fabricacion = $this->_envio->getfabricacionindex();
         // STATUS PROYECTOS

@@ -233,8 +233,15 @@ function eliminar_acentos($cadena){
         }
     ?>
 
+    <?php 
+        $tag = 0;
+        foreach ($this->tag as $key){ 
+        	$tag = $tag + $key['importe'];
+        }
+    ?>
 
-    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo + $nomina; ?>
+
+    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo + $nomina + $tag; ?>
 
 <div class="row">
     <div class="col m12 s12 text-right" style="margin-top: 20px;">
@@ -246,260 +253,314 @@ function eliminar_acentos($cadena){
 
 
 <div class="row">
+
+	<!-- S O L I C I T U D E S -->
     <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes orden compra</span>
+      	<div class="card">
+	        <div class="card-content">
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes orden compra</span>
 
-          <div class="row">
-          	<div class="col m12 s12">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<div class="row" style="margin-top: 20px;">
 
+	        				<div class="col m6 s12 text-center">
+	        					<div style=" margin-top: 20px;">
+	        						<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+				          				$<?php echo number_format($solicitud, 2, '.', ','); ?> 
+				          			</span>
+			          			</div>
 
-          		<div class="row" style="margin-top: 20px;">
-          			<div class="col m6 s12 text-center">
-		          		<div style=" margin-top: 20px;">
-			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-			          			 $<?php echo number_format($solicitud, 2, '.', ','); ?> 
-			          		</span>
-		          		</div>
+			          			<div class="row" style="margin-top: 20px;">
+			          				<div class="col m12 s12 text-center" style="margin-top: 10px;">
+			          					<a class="btn green" id="exportBtn1">Excel</a><br>
+			          					<span>Solicitudes</span>
+			          				</div>
+	                            	<!-- <div class="col m6 s12 text-center" style="margin-top: 10px;">
+			          					<a class="btn red">PDF</a>
+			          				</div> -->
+			          			</div>
+	          				</div>
 
-		          		<div class="row" style="margin-top: 20px;">
-		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn1">Excel</a><br>
-		          				<span>Solicitudes</span>
-		          			</div>
-<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn red">PDF</a>
-		          			</div> -->
-		          		</div>
-          			</div>
+	          				<div class="col m6 s12 text-center">
+	          					<div class="progress green colorbar">
+	          						<span class="progress-left">
+	          							<span class="progress-bar"></span>
+					            	</span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
 
-          			<div class="col m6 s12 text-center">
-				        <div class="progress green colorbar">
-				            <span class="progress-left">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <span class="progress-right">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <div class="progress-value">
-				               	<h2 class="barra" style="margin-left: 40px">
-				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->solicitudes); ?>" readonly>
-				               	</h2>
-				            </div>
-				        </div>
-				        	<h4>Total de Solicitudes</h4>
-          			</div>
-          		</div>
-          	</div>
-          </div>
-        </div>
-      </div>
+						            <div class="progress-value">
+					               		<h2 class="barra" style="margin-left: 40px">
+					               			<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->solicitudes); ?>" readonly>
+					               		</h2>
+					            	</div>
+					        	</div>
+					        	<h4>Total de Solicitudes</h4>
+					        </div>
+	          			</div>
+	          		</div>
+	          	</div>
+	        </div>
+      	</div>
     </div>
 
+    <!-- G A S O L I N A -->
     <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gasolina</span>
-          <div class="row">
-          	<div class="col m12 s12">
-          		<div class="row" style="margin-top: 20px;">
-          			<div class="col m6 s12 text-center">
-		          		<div style=" margin-top: 20px;">
-			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-			          			 $<?php echo number_format($gasolina, 2, '.', ','); ?> 
-			          		</span>
-		          		</div>
+    	<div class="card">
+    		<div class="card-content">
+    			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gasolina</span>
 
-		          		<div class="row" style="margin-top: 20px;">
-		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn2">Excel</a><br>
-		          				<span>Cargas de gasolina</span>
-		          			</div>
-<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn red">PDF</a>
-		          			</div> -->
-		          		</div>
-          			</div>
+    			<div class="row">
+    				<div class="col m12 s12">
+    					<div class="row" style="margin-top: 20px;">
+    						
+    						<div class="col m6 s12 text-center">
+    							<div style=" margin-top: 20px;">
+			          				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+			          			 		$<?php echo number_format($gasolina, 2, '.', ','); ?> 
+			          				</span>
+		          				</div>
 
-          			<div class="col m6 s12 text-center">
-				        <div class="progress green colorbar">
-				            <span class="progress-left">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <span class="progress-right">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <div class="progress-value">
-				               	<h2 class="barra" style="margin-left: 40px">
-				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->gasolina); ?>" readonly>
-				               	</h2>
-				            </div>
-				        </div>
-				        	<h4>Total de Gasolina</h4>
+		          				<div class="row" style="margin-top: 20px;">
+		          					<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		          						<a class="btn green" id="exportBtn2">Excel</a><br>
+		          						<span>Cargas de gasolina</span>
+		          					</div>
+									<!-- <div class="col m6 s12 text-center" style="margin-top: 10px;">
+		          						<a class="btn red">PDF</a>
+		          					</div> -->
+		          				</div>
+          					</div>
+
+          					<div class="col m6 s12 text-center">
+          						<div class="progress green colorbar">
+          							<span class="progress-left">
+				                		<span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+
+						            <div class="progress-value">
+				               			<h2 class="barra" style="margin-left: 40px">
+				               				<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->gasolina); ?>" readonly>
+				               			</h2>
+				            		</div>
+				        		</div>
+				        		<h4>Total de Gasolina</h4>
+          					</div>
+          				</div>
           			</div>
           		</div>
-          	</div>
-          </div>
-        </div>
-      </div>
+        	</div>
+      	</div>
     </div>
 </div>
 
 <div class="row">
+
+	<!-- C O M P R O B A C I O N E S -->
     <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobaciones Caja chica </span>
-          <div class="row">
-          	<div class="col m12 s12">
+    	<div class="card">
+    		<div class="card-content">
+    			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comprobaciones Caja chica </span>
 
+    			<div class="row">
+    				<div class="col m12 s12">
+    					<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center">
+				          		<div style=" margin-top: 20px;">
+					          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					          			 $<?php echo number_format($cajachica, 2, '.', ','); ?> 
+					          		</span>
+				          		</div>
 
-          		<div class="row" style="margin-top: 20px;">
-          			<div class="col m6 s12 text-center">
-		          		<div style=" margin-top: 20px;">
-			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-			          			 $<?php echo number_format($cajachica, 2, '.', ','); ?> 
-			          		</span>
-		          		</div>
-
-		          		<div class="row" style="margin-top: 20px;">
-		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn3">Excel</a>
-		          				<span>Solicitudes</span>
+				          		<div class="row" style="margin-top: 20px;">
+				          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn3">Excel</a>
+				          				<span>Solicitudes</span>
+				          			</div>
+				          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn4">Excel</a>
+				          				<span>Facturas</span>
+				          			</div>
+				          		</div>
 		          			</div>
-		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn4">Excel</a>
-		          				<span>Facturas</span>
+
+		          			<div class="col m6 s12 text-center">
+						        <div class="progress green colorbar">
+						            <span class="progress-left">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <div class="progress-value">
+						               	<h2 class="barra" style="margin-left: 40px">
+						               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->sol_cajachica); ?>" readonly>
+						               	</h2>
+						            </div>
+						        </div>
+						        <h4>Total de Caja chica</h4>
 		          			</div>
 		          		</div>
-          			</div>
-
-          			<div class="col m6 s12 text-center">
-				        <div class="progress green colorbar">
-				            <span class="progress-left">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <span class="progress-right">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <div class="progress-value">
-				               	<h2 class="barra" style="margin-left: 40px">
-				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->sol_cajachica); ?>" readonly>
-				               	</h2>
-				            </div>
-				        </div>
-				        	<h4>Total de Caja chica</h4>
           			</div>
           		</div>
-          	</div>
-          </div>
-
-
-        </div>
-      </div>
+        	</div>
+      	</div>
     </div>
 
-
+    <!-- V E H Í C U L O S -->
     <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Solicitudes de Vehículos </span>
-          <div class="row">
-          	<div class="col m12 s12">
+      	<div class="card">
+      		<div class="card-content">
+      			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Solicitudes de Vehículos </span>
 
+      			<div class="row">
+          			<div class="col m12 s12">
 
-          		<div class="row" style="margin-top: 20px;">
-          			<div class="col m6 s12 text-center">
-		          		<div style=" margin-top: 20px;">
-			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-			          			 $<?php echo number_format($vehiculo, 2, '.', ','); ?> 
-			          		</span>
-		          		</div>
+          				<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center">
+				          		<div style=" margin-top: 20px;">
+					          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					          			 $<?php echo number_format($vehiculo, 2, '.', ','); ?> 
+					          		</span>
+				          		</div>
 
-		          		<div class="row" style="margin-top: 20px;">
-		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn5">Excel</a><br>
-		          				<span>Solicitudes</span>
+				          		<div class="row" style="margin-top: 20px;">
+				          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn5">Excel</a><br>
+				          				<span>Solicitudes</span>
+				          			</div>
+				          		</div>
+		          			</div>
+
+		          			<div class="col m6 s12 text-center">
+						        <div class="progress green colorbar">
+						            <span class="progress-left">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <div class="progress-value">
+						               	<h2 class="barra" style="margin-left: 40px">
+						               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->vehiculos); ?>" readonly>
+						               	</h2>
+						            </div>
+						        </div>
+						        <h4>Total de solicitudes</h4>
 		          			</div>
 		          		</div>
-          			</div>
-
-          			<div class="col m6 s12 text-center">
-				        <div class="progress green colorbar">
-				            <span class="progress-left">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <span class="progress-right">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <div class="progress-value">
-				               	<h2 class="barra" style="margin-left: 40px">
-				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->vehiculos); ?>" readonly>
-				               	</h2>
-				            </div>
-				        </div>
-				        	<h4>Total de solicitudes</h4>
-          			</div>
+		          	</div>
           		</div>
-          	</div>
-          </div>
-
-
-        </div>
-      </div>
+        	</div>
+      	</div>
     </div>
-
 </div>
 
 
 <div class="row">
+    
+	<!-- N Ó M I N A -->
     <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nomina</span>
-          <div class="row">
-          	<div class="col m12 s12">
-          		<div class="row" style="margin-top: 20px;">
-          			<div class="col m6 s12 text-center">
-		          		<div style=" margin-top: 20px;">
-			          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-			          			 $<?php echo number_format($nomina, 2, '.', ','); ?> 
-			          		</span>
-		          		</div>
+    	<div class="card">
+    		<div class="card-content">
+    			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nómina</span>
 
-		          		<div class="row" style="margin-top: 20px;">
-		          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn green" id="exportBtn6">Excel</a><br>
-		          				<span>Reporte de Nomina</span>
+    			<div class="row">
+          			<div class="col m12 s12">
+          				
+          				<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center">
+				          		<div style=" margin-top: 20px;">
+					          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					          			 $<?php echo number_format($nomina, 2, '.', ','); ?> 
+					          		</span>
+				          		</div>
+
+				          		<div class="row" style="margin-top: 20px;">
+				          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn6">Excel</a><br>
+				          				<span>Reporte de Nomina</span>
+				          			</div>
+									<!-- <div class="col m6 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn red">PDF</a>
+				          			</div> -->
+				          		</div>
 		          			</div>
-<!-- 		          			<div class="col m6 s12 text-center" style="margin-top: 10px;">
-		          				<a class="btn red">PDF</a>
-		          			</div> -->
-		          		</div>
-          			</div>
 
-          			<div class="col m6 s12 text-center">
-				        <div class="progress green colorbar">
-				            <span class="progress-left">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <span class="progress-right">
-				                <span class="progress-bar"></span>
-				            </span>
-				            <div class="progress-value">
-				               	<h2 class="barra" style="margin-left: 40px">
-				               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->nomina); ?>" readonly>
-				               	</h2>
-				            </div>
-				        </div>
-				        	<h4>Total de Nomina</h4>
-          			</div>
-          		</div>
-          	</div>
-          </div>
-        </div>
-      </div>
+		          			<div class="col m6 s12 text-center">
+						        <div class="progress green colorbar">
+						            <span class="progress-left">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <div class="progress-value">
+						               	<h2 class="barra" style="margin-left: 40px">
+						               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->nomina); ?>" readonly>
+						               	</h2>
+						            </div>
+						        </div>
+						        <h4>Total de Nomina</h4>
+		          			</div>
+		          		</div>
+		          	</div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+
+    <!-- T A G -->
+    <div class="col s12 m6">
+    	<div class="card">
+    		<div class="card-content">
+    			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">TAG</span>
+
+    			<div class="row">
+          			<div class="col m12 s12">
+          				
+          				<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center">
+				          		<div style=" margin-top: 20px;">
+					          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					          			 $<?php echo number_format($tag, 2, '.', ','); ?> 
+					          		</span>
+				          		</div>
+
+				          		<div class="row" style="margin-top: 20px;">
+				          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn7">Excel</a><br>
+				          				<span>Consumos TAG</span>
+				          			</div>
+				          		</div>
+		          			</div>
+
+		          			<div class="col m6 s12 text-center">
+						        <div class="progress green colorbar">
+						            <span class="progress-left">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <div class="progress-value">
+						               	<h2 class="barra" style="margin-left: 40px">
+						               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->tag); ?>" readonly>
+						               	</h2>
+						            </div>
+						        </div>
+						        <h4>Total de Consumos</h4>
+		          			</div>
+		          		</div>
+		          	</div>
+		        </div>
+		    </div>
+		</div>
     </div>
 </div>
 
@@ -786,10 +847,9 @@ function eliminar_acentos($cadena){
 		</table>	
 	</div>
 </div>
+<!-- E N D    E X C E L    S O L I C I T U D E S   V E H I C U L O S -->
 
-	<!-- E N D    E X C E L    S O L I C I T U D E S   V E H I C U L O S -->
-
-	<!--  E X C E L    S O L I C I T U D E S   N O M I N A-->
+<!--  E X C E L    S O L I C I T U D E S   N O M I N A-->
 <div class="row oculto">
 	<div class="row excel-div" id="tab6">
 		<table class="table text-left table-hover" >
@@ -837,7 +897,72 @@ function eliminar_acentos($cadena){
 		</table>	
 	</div>
 </div>
-	<!-- E N D    E X C E L    S O L I C I T U D E S   N O M I N A -->
+<!-- E N D    E X C E L    S O L I C I T U D E S   N O M I N A -->
+
+<!--  E X C E L    C O N S U M O S   T A G-->
+<div class="row oculto">
+	<div class="row excel-div" id="tab7">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>No TAG</th>
+					<th>Fecha</th>
+					<th>Concesionaria</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+					<th>Importe</th>
+					<th>Sitio</th>
+					<th>Id Cliente</th>
+					<th>Tipo Proyecto</th>
+
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->tag as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+<!--E N D   E X C E L    C O N S U M O S   T A G-->
+
 
 
 <input type="hidden" id="op_year" value="<?php echo $this->year_op; ?>">
@@ -930,6 +1055,18 @@ function eliminar_acentos($cadena){
             name: "Nomina "+mes+" "+year+".xlsx",
             sheet: {
             	name: "Nomina "+mes+" "+year+" "
+            }
+        });
+    });
+
+    $("#exportBtn7").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab7"), {
+            name: "Consumos TAG "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Consumos TAG "+mes+" "+year+" "
             }
         });
     });
