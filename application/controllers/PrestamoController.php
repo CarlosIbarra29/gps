@@ -57,6 +57,12 @@ class PrestamoController extends Zend_Controller_Action{
 
     }
 
+
+    public function searchsolicitudprestamoAction(){
+        
+    }
+
+
     public function detalleprestamoAction(){
         $id_solicitud = $this->_getParam('id');
         $this->view->id_solicitud = $id_solicitud;
@@ -194,6 +200,25 @@ class PrestamoController extends Zend_Controller_Action{
         }       
     }
 
+
+    public function requestdeleteprestamonuevoAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        $id=$post['id'];
+        $table="personal_prestamos";
+        $wh="id";
+        $result = $this->_season->deleteAll($id,$table,$wh);
+
+        if ($result) {
+            echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        }else{
+            print '<script language="JavaScript">';
+            print 'alert("Ocurrio un error: Comprueba los datos.");';
+            print '</script>';
+        }
+    }
 
     public function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)
