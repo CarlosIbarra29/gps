@@ -85,6 +85,235 @@ class NominaController extends Zend_Controller_Action{
 
     }
 
+
+    public function searchsolicitudnominaAction(){
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
+        $st = 0; $pago =0;
+        $enproceo =$this->_nomina->getsolicitudnomina($st,$pago);
+        $this->view->enproceso = count($enproceo);  
+
+        $op = $this->_getParam('op');
+        $this->view->op_search = $op;
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        if($status == 0){
+            if($op == 1){
+                $st = 0; $pago =0;
+                $personal = $this->_getParam('usuario');
+                $this->view->user = $personal;
+                $enproceo =$this->_nomina->getsolicitudnominausuario($st,$pago,$personal);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador($offset,$no_of_records_per_page,$st,$pago,$personal);
+            }
+
+            if($op == 2){
+                $st = 0; $pago =0;
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolicitudnominasitio($st,$pago,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$st,$pago,$sitio);
+            }
+
+            if($op == 3){
+                $st = 0; $pago =0;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaid($st,$pago,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$st,$pago,$id);
+            }
+        }
+
+        if($status == 1){
+            if($op == 1){
+                $st = 1; $pago =0;
+                $personal = $this->_getParam('usuario');
+                $this->view->user = $personal;
+                $enproceo =$this->_nomina->getsolicitudnominausuario($st,$pago,$personal);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador($offset,$no_of_records_per_page,$st,$pago,$personal);
+            }
+
+            if($op == 2){
+                $st = 1; $pago =0;
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolicitudnominasitio($st,$pago,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$st,$pago,$sitio);
+            }
+
+            if($op == 3){
+                $st = 1; $pago =0;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaid($st,$pago,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$st,$pago,$id);
+            }           
+        }
+
+        if($status == 2){
+            if($op == 1){
+                $st = 2; $pago =0;
+                $personal = $this->_getParam('usuario');
+                $this->view->user = $personal;
+                $enproceo =$this->_nomina->getsolicitudnominausuario($st,$pago,$personal);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador($offset,$no_of_records_per_page,$st,$pago,$personal);
+            }
+
+            if($op == 2){
+                $st = 2; $pago =0;
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolicitudnominasitio($st,$pago,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$st,$pago,$sitio);
+            }
+
+            if($op == 3){
+                $st = 2; $pago =0;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaid($st,$pago,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$st,$pago,$id);
+            }           
+        }     
+
+        if($status == 3){
+            if($op == 1){
+                $st = 1; $pago =1;
+                $personal = $this->_getParam('usuario');
+                $this->view->user = $personal;
+                $enproceo =$this->_nomina->getsolicitudnominausuario($st,$pago,$personal);
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador($offset,$no_of_records_per_page,$st,$pago,$personal);
+
+            }
+
+            if($op == 2){
+                $st = 1; $pago =1;
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolicitudnominasitio($st,$pago,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$st,$pago,$sitio);
+            }
+
+            if($op == 3){
+                $st = 1; $pago =1;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaid($st,$pago,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$st,$pago,$id);
+            }            
+        }
+
+    }
+
     public function detallenominaAction(){
         $user = $this->_getParam('user');
         $this->view->user_solicitud = $user;

@@ -161,6 +161,56 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     } //END GET ASISTENCIA
 
+
+    public function getsolicitudnominausuario($status,$pago,$personal){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user,pn.status_auditoria,pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn 
+                        where pn.status_auditoria = ? AND status_pago = ? AND pn.id_personal = ?",array($status,$pago,$personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
+    public function getsolicitudnominasitio($status,$pago,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user,pn.status_auditoria,pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn 
+                        where pn.status_auditoria = ? AND status_pago = ? AND pn.sitio = ?",array($status,$pago,$sitio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
+    public function getsolicitudnominaid($status,$pago,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user,pn.status_auditoria,pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn 
+                        where pn.status_auditoria = ? AND status_pago = ? AND pn.id = ?",array($status,$pago,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
+
     public function getnominasolicitud($offset,$no_of_records_per_page,$status,$pago){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -169,7 +219,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
              			pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
 						FROM personal_nomina pn
 						where pn.status_auditoria = ? and status_pago = ?
-                        ORDER BY pn.sitio DESC
+                        ORDER BY pn.id DESC
                         LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
@@ -178,6 +228,62 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET PAGINATOR PERSONAL
+
+    public function getnominasolicitudbuscador($offset,$no_of_records_per_page,$status,$pago,$personal){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn
+                        where pn.status_auditoria = ? and status_pago = ? AND pn.id_personal = ?
+                        ORDER BY pn.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($status,$pago,$personal));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
+
+    public function getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$status,$pago,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn
+                        where pn.status_auditoria = ? and status_pago = ? AND pn.sitio = ?
+                        ORDER BY pn.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($status,$pago,$sitio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
+
+
+    public function getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$status,$pago,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.id_personal, pn.personal, pn.sitio, pn.id_proyecto,pn.monto_nomina,
+                        pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
+                        pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
+                        FROM personal_nomina pn
+                        where pn.status_auditoria = ? and status_pago = ? AND pn.id = ?
+                        ORDER BY pn.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($status,$pago,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
+
 
     public function getdetailnomina($id){
         try{

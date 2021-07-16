@@ -131,44 +131,87 @@
 			<div class="col m5 s6">
 				<div class="input-field col s12">
 			    	<select id="search_op">
-			      		<option value="1" selected>Personal</option>
-			      		<option value="2">Sitio</option>
-			      		<option value="3">Id solicitud</option>
+              <?php if($this->op_search == 1){?>
+                  <option value="1" selected>Personal</option>
+                  <option value="2">Sitio</option>
+                  <option value="3">Id solicitud</option>
+              <?php } ?>
+
+              <?php if($this->op_search == 2){?>
+                  <option value="1">Personal</option>
+                  <option value="2" selected>Sitio</option>
+                  <option value="3">Id solicitud</option>
+              <?php } ?>
+
+              <?php if($this->op_search == 3){?>
+                  <option value="1">Personal</option>
+                  <option value="2">Sitio</option>
+                  <option value="3" selected>Id solicitud</option>
+              <?php } ?>
 			    	</select>
 			    	<label>Buscar por:</label>
 			  	</div>
 			</div>
 			<div class="col m5 s6">
-				<div class="input-field col s12 op_person">
-					<select id="rol" name="rol" required>
-					    <option value="0" disabled selected>Selecciona una opcion:</option>
-					    <?php foreach ($this->select_personal as $rl) { ?>
-					    <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
-					    <?php } ?>
-					</select>
-					<label>Personal</label>
-				</div>
 
-		        <div class="input-field col s12 oculto op_sitio">
-		          	<input placeholder="Ingresa el nombre del sitio" id="sitio_search" type="text" class="validate">
+        <?php if($this->op_search == 1){?>
+  				<div class="input-field col s12 op_person">
+        <?php }else{ ?>
+          <div class="input-field col s12 op_person oculto">
+        <?php } ?>
+          <select id="rol" name="rol" required>
+              <?php foreach ($this->select_personal as $rl) { 
+                if ($rl['id']==$this->user) { ?>
+                  <option value="<?php echo $rl["id"]; ?>" selected><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+              <?php } if ($rl['id']!=$this->user) { ?>
+                  <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+              <?php } } ?>  
+          </select>
+          <label>Personal</label>
+
+  				</div>
+
+          <?php if($this->op_search == 2){?>
+            <div class="input-field col s12 op_sitio">
+          <?php }else{ ?>
+            <div class="input-field col s12 oculto op_sitio">
+          <?php } ?>
+		          	<input placeholder="Ingresa el nombre del sitio" value="<?php echo $this->sitio; ?>" id="sitio_search" type="text" class="validate">
 		          	<label for="sitio_search">Sitio</label>
 		        </div>
 
-		        <div class="input-field col s12 oculto op_id">
-		          	<input  id="id_search" type="number" class="validate">
+          <?php if($this->op_search == 3){?>
+            <div class="input-field col s12 op_id">
+          <?php }else{ ?>
+            <div class="input-field col s12 oculto op_id">
+          <?php } ?>
+		          	<input  id="id_search" type="number" value="<?php echo $this->id; ?>" class="validate">
 		          	<label for="id_search">Id solicitud</label>
 		        </div>
 
 			</div>
-			<div class="col m2 s12 text-center op_person">
+
+      <?php if($this->op_search == 1){?>
+        <div class="col m2 s12 text-center op_person">
+      <?php }else{ ?>
+        <div class="col m2 s12 text-center op_person oculto">
+      <?php } ?>
 				<a class="btn" id="btn_person"><i class="material-icons right">search</i></a>
 			</div>
 
-			<div class="col m2 s12 text-center oculto op_sitio">
+      <?php if($this->op_search == 2){?>
+        <div class="col m2 s12 text-center op_sitio">
+      <?php }else{ ?>
+        <div class="col m2 s12 text-center oculto op_sitio">
+      <?php } ?>
 				<a class="btn" id="btn_sitio"><i class="material-icons right">search</i></a>
 			</div>
 
-			<div class="col m2 s12 text-center oculto op_id">
+      <?php if($this->op_search == 3){?>
+        <div class="col m2 s12 text-center op_id">
+      <?php }else{ ?>
+        <div class="col m2 s12 text-center oculto op_id">
+      <?php } ?>
 				<a class="btn" id="btn_id"><i class="material-icons right">search</i></a>
 			</div>
 
