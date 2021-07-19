@@ -684,26 +684,21 @@
 								<h3>
 									<strong><span class="font_tittle">Efecticard: </span></strong>
 									<?php echo $veh['efecticard']; ?>
-								</h3>	
-								<h3>
-									<strong><span class="font_tittle">Status: </span> </strong>
-									<?php if($veh['id_status'] == 0){ ?>
-										Disponible
-									<?php } ?>
-									<?php if($veh['id_status'] == 1){ ?>
-										Ocupado
-									<?php } ?>
-									<?php if($veh['id_status'] == 2){ ?>
-										En reparación
-									<?php } ?>
-									<?php if($veh['id_status'] == 3){ ?>
-										Baja
-									<?php } ?>
 								</h3>
+
 								<h3>
 									<strong><span class="font_tittle">Placas: </span> </strong>
 									<?php echo $veh['placas']; ?>
+								</h3>	
+								<h3>
+									<strong><span class="font_tittle">No Serie: </span> </strong>
+									<?php if($veh['no_serie'] == "" || $veh['no_serie'] == null){ ?>
+										No se ha insertado.
+									<?php } else { ?>
+										<?php echo $veh['no_serie']; ?>
+									<?php } ?>
 								</h3>
+								
 								<h3>
 									<strong><span class="font_tittle">Comentarios: </span> </strong>
 									<?php echo $veh['comentarios']; ?>

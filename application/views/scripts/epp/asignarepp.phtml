@@ -22,7 +22,7 @@ $hoy = date("Y-m-d");
 <!-- INICIO DETAIL-->
 <div class="row" style="margin-top: 10px;">
     <div class="col m5 s5">
-        <?php if ($rol_user == 13) { ?>
+        <?php if ($rol_user == 13 || $rol_user == 9 ) { ?>
 
         <?php } else { ?>       
             <?php foreach ($this->personal_epp as $regresar) { ?>
@@ -31,7 +31,7 @@ $hoy = date("Y-m-d");
         <?php } ?>   
     </div>
      <div class="col m7 s7 text-right">
-        <?php if ($rol_user == 13 || $rol_user == 1 || $rol_user == 8) { ?>
+        <?php if ($rol_user == 13 || $rol_user == 1 || $rol_user == 8 || $rol_user == 9) { ?>
             <a href="/epp/catalogo" class="waves-effect darken-1 waves-light btn">Inventario</a>
             <a href="/epp/personal" class="waves-effect darken-1 waves-light btn">Buscar Personal</a>
         <?php } else { ?>       

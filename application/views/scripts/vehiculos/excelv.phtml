@@ -39,7 +39,7 @@ function eliminar_acentos($cadena){
  .table_wrapper{
     overflow-x: auto;
 }
-</style>
+</style> 
 
 	<div class="row" style="margin-top: 10px;">
 		<div class="col m6 s12 text-left">
@@ -68,6 +68,7 @@ function eliminar_acentos($cadena){
 				<th>Submarca</th>
 				<th>Modelo</th>
         		<th>Placas</th>
+        		<th>No Serie</th>
         		<th>Color</th>
         		<th>Status</th>
         		<th>Grupo</th>
@@ -84,6 +85,7 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos( $vehiculo["submarca"]); ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["modelo"]); ?></td>
 				<td><?php echo $vehiculo["placas"]; ?></td>
+				<td><?php echo eliminar_acentos( $vehiculo["no_serie"]); ?></td>
 				<td><?php echo $vehiculo["color"]; ?></td>
 				<td><?php echo $vehiculo["nstatus"]; ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["grupo"]); ?></td>

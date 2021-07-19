@@ -145,6 +145,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 'submarca'=>$post['submarca'],
                 'modelo'=>$post['modelo'],
                 'placas'=>$post['placas'],
+                'no_serie'=>$post['serie'],
                 'color'=>$post['color'],
                 'tag'=>$post['tag'],
                 'efecticard'=>$post['efecticard'],
@@ -163,7 +164,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
     public function updateveh($post,$table,$urldb,$urldb2){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET imagen = ?, tarjeta_circulacion = ?, marca = ?, submarca = ?, modelo = ?, placas = ?, color = ?, tag = ?, efecticard = ?, comentarios = ?, id_grupo = ? WHERE id_vehiculos = ? ",
+            $qry = $db->query("UPDATE $table SET imagen = ?, tarjeta_circulacion = ?, marca = ?, submarca = ?, modelo = ?, placas = ?, no_serie = ?, color = ?, tag = ?, efecticard = ?, comentarios = ?, id_grupo = ? WHERE id_vehiculos = ? ",
                 array(
                     $urldb,
                     $urldb2,
@@ -171,6 +172,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                     $post['submarca'],
                     $post['modelo'],
                     $post['placas'],
+                    $post['serie'],
                     $post['color'],
                     $post['tag'],
                     $post['efecticard'],
@@ -248,7 +250,7 @@ where id not in (
     public function GetVehiculos($table,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion, v.porcentaje_doc, v.tag, v.efecticard,
+            $qry = $db->query("SELECT v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.created_at, v.id_responsable, v.id_status, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.tarjeta_circulacion, v.porcentaje_doc, v.tag, v.efecticard, v.no_serie,
                 v.fechab, v.comentariob, v.evidenciab, IF(vg.nombre is null, 'Sin Asignar', vg.nombre) as grupo
                 FROM vehiculos v 
                 LEFT JOIN vehiculos_grupo vg ON vg.id_grupo = v.id_grupo
@@ -752,7 +754,7 @@ where id not in (
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT  v.id_vehiculos, v.marca, v.submarca, v.modelo, v.placas, v.color, v.id_responsable, 
-                v.id_status, IF(v.id_status != 2, IF(v.id_status != 1, IF(v.id_status = 0, 'Disponible', 'Baja'), 'Ocupado'),'En Taller') AS nstatus, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior,
+                v.id_status, IF(v.id_status != 2, IF(v.id_status != 1, IF(v.id_status = 0, 'Disponible', 'Baja'), 'Ocupado'),'En Taller') AS nstatus, v.id_grupo, v.imagen, v.comentarios, v.fecha, v.fechar, v.comentarior, v.no_serie,
                 v.fechab, v.comentariob, v.evidenciab, 
                 IF(vg.nombre IS NULL, 'Sin Asignar', vg.nombre) AS grupo,
                 IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma 

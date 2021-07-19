@@ -315,7 +315,14 @@ if($this->total== 1){
 						<input id="efecticard" type="text" name="efecticard" class="validate" required>
 						<label for="efecticard">* Efecticard: </label>
 					</div>
-					<div class="input-field col m12 s12">
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">filter_frames</i>
+						<input id="serie" type="text" name="serie" class="validate" required>
+						<label for="serie">* No Serie: </label>
+					</div>
+
+					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input id="com" type="text" name="com" class="validate">
 						<label for="com">Comentarios: </label>
@@ -540,9 +547,9 @@ if($this->total== 1){
 		var marca = document.getElementById("marca").value;
 		var tag = document.getElementById("tag").value;
 		var efecticard = document.getElementById("efecticard").value;
+		var serie = document.getElementById("serie").value;
 		
-		
-		if(marca == "" || efecticard == "" || tag == ""){
+		if(marca == "" || efecticard == "" || tag == "" || serie == ""){
 			swal({
 				title: "Para agregar un vehículo, llena los campos (*)",
 			});
