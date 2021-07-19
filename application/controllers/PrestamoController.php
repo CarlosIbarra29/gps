@@ -59,7 +59,101 @@ class PrestamoController extends Zend_Controller_Action{
 
 
     public function searchsolicitudprestamoAction(){
-        
+        $op = 1;
+        $this->view->prestamo_user = $this->_prestamo->getpersonalprestamo($op);
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        $op_status = 0;
+        $sol =$this->_prestamo->getprestamos($op_status);
+        $this->view->enproceso = count($sol);
+
+        $op = $this->_getParam('op');
+        $this->view->op_search = $op;
+
+        if($status == 0){
+            if($op == 1){
+                $user = $this->_getParam('usuario');
+                $this->view->user = $user;
+                $op_status = 0; 
+                $enproceo =$this->_prestamo->getprestamosusuario($op_status,$user);   
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_prestamo->getprestamosolicituduser($offset,$no_of_records_per_page,$op_status,$user);
+            }
+
+            if($op == 2){
+                $dia = $this->_getParam('dia');
+                $this->view->dia = $dia;
+                $mes = $this->_getParam('mes');
+                $this->view->mes = $mes;
+                $year = $this->_getParam('year');
+                $this->view->year = $year;
+                $op_status = 0; 
+                $fecha =$dia."-".$mes."-".$year;
+                $enproceo =$this->_prestamo->getprestamosyear($op_status,$fecha);   
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_prestamo->getprestamosolicituddia($offset,$no_of_records_per_page,$op_status,$fecha);
+            }
+        }
+
+
+        if($status == 1){
+            if($op == 1){
+                $user = $this->_getParam('usuario');
+                $this->view->user = $user;
+                $op_status = 1; 
+                $enproceo =$this->_prestamo->getprestamosusuario($op_status,$user);   
+
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_prestamo->getprestamosolicituduser($offset,$no_of_records_per_page,$op_status,$user);
+            }
+
+            if($op == 2){
+                $dia = $this->_getParam('dia');
+                $mes = $this->_getParam('mes');
+                $year = $this->_getParam('year');
+                $op_status = 1; 
+                $fecha =$dia."-".$mes."-".$year;
+                $this->view->fecha_user = $fecha;
+                $enproceo =$this->_prestamo->getprestamosyear($op_status,$fecha);   
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_prestamo->getprestamosolicituddia($offset,$no_of_records_per_page,$op_status,$fecha);
+            }
+        }
+
     }
 
 

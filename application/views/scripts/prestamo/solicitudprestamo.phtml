@@ -396,7 +396,7 @@
 
   $("#btn_prestamo").click(function(){
     var person = document.getElementById("user_prestamo").value;
-    var status = document.getElementById("status_op").value;
+    var status = document.getElementById("status").value;
     swal({
       title: "La busqueda sera por el personal, Desea continuar?",
       icon: "warning",
@@ -409,7 +409,7 @@
           icon: "success",
           buttons: false,
         }); 
-      window.location.href = "/nomina/searchsolicitudprestamo/status/"+status+"/usuario/"+person+"/op/1";
+      window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/usuario/"+person+"/op/1";
       } else {
         swal("La asignacion fue cancelada!");
       }
@@ -417,7 +417,29 @@
   });
 
   $("#btn_fecha").click(function(){
-    alert("Fecha");
+    var fecha = document.getElementById("fechaenvio_search").value;
+      var dia = fecha.slice(0,-8);
+      var mes = fecha.slice(3,-5);
+      var year = fecha.slice(6);
+
+    var status = document.getElementById("status").value;
+    swal({
+      title: "La busqueda sera por el personal, Desea continuar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        }); 
+      window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/2";
+      } else {
+        swal("La asignacion fue cancelada!");
+      }
+    });
   });
 
 </script>

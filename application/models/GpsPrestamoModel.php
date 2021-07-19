@@ -93,6 +93,41 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
     } //END GET PRESTAMO
 
 
+    public function getprestamosusuario($op_status,$user){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
+                        pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
+                        pp.fecha_liquidacion
+                        FROM personal_prestamos pp 
+                        where pp.status_prestamo = ? AND pp.id_personal = ?",array($op_status,$user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PRESTAMO
+
+
+    public function getprestamosyear($op_status,$year){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
+                        pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
+                        pp.fecha_liquidacion
+                        FROM personal_prestamos pp 
+                        where pp.status_prestamo = ? AND pp.fecha_prestamo = ?",array($op_status,$year));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PRESTAMO
+
+
+
     public function getprestamossolicitudnomina($user){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -125,6 +160,44 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET PAGINATOR PRESTAMO
+
+
+    public function getprestamosolicituduser($offset,$no_of_records_per_page,$op_status,$user){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
+                        pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
+                        pp.fecha_liquidacion
+                        FROM personal_prestamos pp 
+                        WHERE pp.status_prestamo = ? AND pp.id_personal = ?
+                        ORDER BY pp.id ASC
+                        LIMIT $offset,$no_of_records_per_page",array($op_status,$user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PRESTAMO
+
+    public function getprestamosolicituddia($offset,$no_of_records_per_page,$op_status,$fecha){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
+                        pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
+                        pp.fecha_liquidacion
+                        FROM personal_prestamos pp 
+                        WHERE pp.status_prestamo = ? AND pp.fecha_prestamo = ?
+                        ORDER BY pp.id ASC
+                        LIMIT $offset,$no_of_records_per_page",array($op_status,$fecha));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PRESTAMO
+
 
     public function getpersonalprestamo($id){
         try{
