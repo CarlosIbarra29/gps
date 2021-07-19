@@ -6,7 +6,7 @@ function eliminar_acentos($cadena){
 		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
 		$cadena
 		);
-
+ 
 		$cadena = str_replace(
 		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
 		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
@@ -187,25 +187,44 @@ function eliminar_acentos($cadena){
 <?php  $nomina_diciembre=0; foreach($this->nomina_diciembre as $usr){ $nomina_diciembre=$nomina_diciembre+$usr['monto_pago']; } 
 
 	$suma_nomina = $nomina_enero+ $nomina_febrero+ $nomina_marzo+ $nomina_abril+ $nomina_mayo + $nomina_junio + $nomina_julio + $nomina_agosto + $nomina_septiembre + $nomina_octubre + $nomina_noviembre + $nomina_diciembre;
-// E N D  N O M I N A
+?>
+<!-- // E N D  N O M I N A -->
 
+<!-- C A R G O S  T A G -->
 
-    $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero + $nomina_enero;
-    $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero + $nomina_febrero;
-    $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo + $nomina_marzo;
-    $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril + $nomina_abril;
-    $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo + $nomina_mayo;
-    $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio + $nomina_junio;
-    $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio + $nomina_julio;
-    $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto + $nomina_agosto;
-    $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre + $nomina_septiembre;
-    $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre + $nomina_octubre;
-    $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre + $nomina_noviembre;
-    $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre + $nomina_diciembre;
+<?php  $tag_enero=0; foreach($this->tag_enero as $usr){ $tag_enero=$tag_enero+$usr['importe']; } ?>
+<?php  $tag_febrero=0; foreach($this->tag_febrero as $usr){ $tag_febrero=$tag_febrero+$usr['importe']; } ?>
+<?php  $tag_marzo=0; foreach($this->tag_marzo as $usr){ $tag_marzo=$tag_marzo+$usr['importe']; } ?>
+<?php  $tag_abril=0; foreach($this->tag_abril as $usr){ $tag_abril=$tag_abril+$usr['importe']; } ?>
+<?php  $tag_mayo=0; foreach($this->tag_mayo as $usr){ $tag_mayo=$tag_mayo+$usr['importe']; } ?>
+<?php  $tag_junio=0; foreach($this->tag_junio as $usr){ $tag_junio=$tag_junio+$usr['importe']; } ?>
+<?php  $tag_julio=0; foreach($this->tag_julio as $usr){ $tag_julio=$tag_julio+$usr['importe']; } ?>
+<?php  $tag_agosto=0; foreach($this->tag_agosto as $usr){ $tag_agosto=$tag_agosto+$usr['importe']; } ?>
+<?php  $tag_septiembre=0; foreach($this->tag_septiembre as $usr){ $tag_septiembre=$tag_septiembre+$usr['importe']; } ?>
+<?php  $tag_octubre=0; foreach($this->tag_octubre as $usr){ $tag_octubre=$tag_octubre+$usr['importe']; } ?>
+<?php  $tag_noviembre=0; foreach($this->tag_noviembre as $usr){  $tag_noviembre=$tag_noviembre+$usr['importe']; }?>
+<?php  $tag_diciembre=0; foreach($this->tag_diciembre as $usr){ $tag_diciembre=$tag_diciembre+$usr['importe']; } ?>
 
-    $total = $suma_cajachica + $suma_totalgas + $suma_total + $suma_nomina;
+<?php $suma_cargastag = $tag_enero+ $tag_febrero+ $tag_marzo+ $tag_abril+ $tag_mayo+ $tag_junio+ $tag_julio+ $tag_agosto+ $tag_septiembre+ $tag_octubre + $tag_noviembre +$tag_diciembre ;
  ?>
 
+<?php	
+
+    $sum_enero = $suma_enero + $sugas_enero + $cajachica_enero + $nomina_enero + $tag_enero;
+    $sum_feb = $suma_febrero + $sugas_febrero + $cajachica_febrero + $nomina_febrero + $tag_febrero;
+    $sum_marz = $suma_marzo + $sugas_marzo + $cajachica_marzo + $nomina_marzo + $tag_marzo;
+    $sum_abril = $suma_abril + $sugas_abril + $cajachica_abril + $nomina_abril + $tag_abril;
+    $sum_mayo = $suma_mayo + $sugas_mayo + $cajachica_mayo + $nomina_mayo + $tag_mayo;
+    $sum_junio = $suma_junio + $sugas_junio + $cajachica_junio + $nomina_junio + $tag_junio;
+    $sum_julio = $suma_julio + $sugas_julio + $cajachica_julio + $nomina_julio + $tag_julio;
+    $sum_agosto = $suma_agosto + $sugas_agosto + $cajachica_agosto + $nomina_agosto + $tag_agosto;
+    $sum_septiembre = $suma_septiembre + $sugas_septiembre + $cajachica_septiembre + $nomina_septiembre + $tag_septiembre;
+    $sum_octubre = $suma_octubre + $sugas_octubre + $cajachica_octubre + $nomina_octubre + $tag_octubre;
+    $sum_noviembre = $suma_noviembre + $sugas_noviembre + $cajachica_noviembre + $nomina_noviembre + $tag_noviembre;
+    $sum_diciembre = $suma_diciembre + $sugas_diciembre + $cajachica_diciembre + $nomina_diciembre + $tag_diciembre;
+
+    $total = $suma_cajachica + $suma_totalgas + $suma_total + $suma_nomina + $suma_cargastag;
+ ?>
 
 <?php 
 
@@ -216,6 +235,9 @@ $count_cajachica = $this->count_cajachicaenero + $this->count_cajachicafebrero +
 $count_gas = $this->count_gasenero + $this->count_gasfebrero + $this->count_gasmarzo + $this->count_gasabril + $this->count_gasmayo + $this->count_gasjunio + $this->count_gasjulio + $this->count_gasagosto + $this->count_gasseptiembre + $this->count_gasoctubre + $this->count_gasnoviembre + $this->count_gasdiciembre; 
 
 $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->count_nominamarzo + $this->count_nominaabril + $this->count_nominamayo + $this->count_nominajunio + $this->count_nominajulio + $this->count_nominaagosto + $this->count_nominaseptiembre + $this->count_nominaoctubre + $this->count_nominanoviembre + $this->count_nominadiciembre; 
+
+$count_tag = $this->count_tagenero + $this->count_tagfebrero + $this->count_tagmarzo + $this->count_tagabril + $this->count_tagmayo + $this->count_tagjunio + $this->count_tagjulio + $this->count_tagagosto + $this->count_tagseptiembre + $this->count_tagoctubre + $this->count_tagnoviembre + $this->count_tagdiciembre; 
+
 ?>
 
 
@@ -492,6 +514,58 @@ $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->c
 	        	<div class="row">
 	        		<div class="col m12 s12">
 	        			<canvas id="nominas" style="width: 100px;"></canvas>
+	        		</div>
+	        	</div>
+	        </div>
+	    </div>
+    </div>
+
+
+    <div class="col s12 m6">
+	    <div class="card">
+	        <div class="card-content">
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Consumos TAG</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m6 s6 text-center">
+	        			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+	        				$<?php echo number_format($suma_cargastag, 2, '.', ','); ?>
+	        			</span>
+
+	        			<div style="margin-top: 10px;">
+	        				<a class="btn green" id="exportBtn5">Excel</a><br>
+	        				<span>TAG</span>
+	        			</div>
+
+	        		</div>
+
+	        		<div class="col m6 s6 text-center">
+				        <div class="progress green colorbar">
+				            <span class="progress-left">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <span class="progress-right">
+				                <span class="progress-bar"></span>
+				            </span>
+				            <div class="progress-value">
+				               	<h2 class="barra" style="margin-left: 45px">
+				               		<input type="text" value="<?php echo $count_tag; ?>" class="numero" readonly>
+				               	</h2>
+				            </div>
+				        </div>	
+				        Consumos TAG
+	        		</div>
+
+
+	        	</div>
+	        	<div class="row">
+	        		<div class="col m12 s12">
+	        			<canvas id="taggrafica" style="width: 100px;"></canvas>
 	        		</div>
 	        	</div>
 	        </div>
@@ -1781,9 +1855,525 @@ $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->c
 		</table>	
 	</div>
 </div>
-
 <!-- E  N D  N O M I N A -->
 
+<!-- T A G -->
+<div class="row oculto">
+	<div class="row excel-div" id="tab5">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>No TAG</th>
+					<th>Fecha</th>
+					<th>Concesionaria</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+					<th>Importe</th>
+					<th>Sitio</th>
+					<th>Id Cliente</th>
+					<th>Tipo Proyecto</th>
+
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->tag_enero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_febrero as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_marzo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_abril as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_mayo as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_junio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_julio as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->tag_agosto as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_septiembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+
+			<?php 
+			foreach ($this->tag_octubre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_noviembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+			<?php 
+			foreach ($this->tag_diciembre as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo eliminar_acentos($usr["id"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["tag"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["fecha"]); ?></td>
+
+					<td><?php echo eliminar_acentos($usr["concesionaria"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["entrada"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["salida"]); ?></td>
+					<td>$<?php echo number_format($usr["importe"], 2, '.', ','); ?> </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["id_cliente"]); ?>
+				        <?php } ?>
+				    </td>
+
+				    <td>
+				        <?php if($usr['id_sitio'] == 0){ ?>
+				            Oficina
+				        <?php } else { ?>
+				        	<?php echo eliminar_acentos($usr["nombre_proyecto"]); ?>
+				        <?php } ?>
+				    </td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+
+		</table>	
+	</div>
+</div>
+<!-- E  N D  T A G -->
 
     <input type="hidden" id="enero" value="<?php echo $sum_enero; ?> ">
     <input type="hidden" id="febrero" value="<?php echo $sum_feb; ?>">
@@ -1852,6 +2442,20 @@ $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->c
     <input type="hidden" id="octubre_nomina" value="<?php echo $nomina_octubre; ?>">
     <input type="hidden" id="noviembre_nomina" value="<?php echo $nomina_noviembre ?>">
     <input type="hidden" id="diciembre_nomina" value="<?php echo $nomina_diciembre; ?>">
+
+     <!-- T A G -->
+    <input type="hidden" id="enero_tag" value="<?php echo $tag_enero; ?> ">
+    <input type="hidden" id="febrero_tag" value="<?php echo $tag_febrero; ?>">
+    <input type="hidden" id="marzo_tag" value="<?php echo $tag_marzo; ?>">
+    <input type="hidden" id="abril_tag" value="<?php echo $tag_abril; ?>">
+    <input type="hidden" id="mayo_tag" value="<?php echo $tag_mayo; ?>">
+    <input type="hidden" id="junio_tag" value="<?php echo $tag_junio; ?>">
+    <input type="hidden" id="julio_tag" value="<?php echo $tag_julio; ?>">
+    <input type="hidden" id="agosto_tag" value="<?php echo $tag_agosto; ?>">
+    <input type="hidden" id="septiembre_tag" value="<?php echo $tag_septiembre; ?>">
+    <input type="hidden" id="octubre_tag" value="<?php echo $tag_octubre; ?>">
+    <input type="hidden" id="noviembre_tag" value="<?php echo $tag_noviembre ?>">
+    <input type="hidden" id="diciembre_tag" value="<?php echo $tag_diciembre; ?>">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     <script type="text/javascript">
@@ -2116,6 +2720,58 @@ $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->c
 	});
 
 
+	var enero = document.getElementById("enero_tag").value;
+    var febrero = document.getElementById("febrero_tag").value;
+    var marzo = document.getElementById("marzo_tag").value;
+    var abril = document.getElementById("abril_tag").value;
+    var mayo = document.getElementById("mayo_tag").value;
+    var junio = document.getElementById("junio_tag").value;
+    var julio = document.getElementById("julio_tag").value;
+    var agosto = document.getElementById("agosto_tag").value;
+    var septiembre = document.getElementById("septiembre_tag").value;
+    var octubre = document.getElementById("octubre_tag").value;
+    var noviembre = document.getElementById("noviembre_tag").value;
+    var diciembre = document.getElementById("diciembre_tag").value;
+
+	var ctx = document.getElementById('taggrafica').getContext('2d');
+	var myChartsemanados = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels:['Enero','Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        datasets: [{
+	            label: 'Gastos',
+	            data: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre,octubre,noviembre,diciembre],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
@@ -2156,6 +2812,15 @@ $count_nomina = $this->count_nominaenero + $this->count_nominafebrero + $this->c
             name: "Nomina.xlsx",
             sheet: {
             	name: "Nomina"
+            }
+        });
+    });
+
+    $("#exportBtn5").click(function(){
+        TableToExcel.convert(document.getElementById("tab5"), {
+            name: "ConsumosTAG.xlsx",
+            sheet: {
+            	name: "Consumos TAG"
             }
         });
     });
