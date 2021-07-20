@@ -2118,16 +2118,16 @@ where id not in (
 
                 r.nombre as nombreres, r.apellido_pa as ares, r.apellido_ma as amres,
 
-                v.marca, v.submarca, v.modelo, v.color, v.placas,v.imagen, 
+                v.marca, v.submarca, v.modelo, v.color, v.placas,v.imagen, v.no_serie,
 
                 sv.nombre_servicio, sv.evidencia_uno, sv.evidencia_dos, sv.evidencia_tres, sv.evidencia_cuatro,
                 sv.evidencia_cinco, sv.evidencia_seis, sv.evidencia_siete,
 
-                p.nombre_prov, p.telefono, p.rfc, p.datos_banco, p.cuenta, p.titular, p.email
+                p.nombre_prov, p.telefono, p.rfc, p.datos_banco, p.cuenta, p.titular, p.email, p.tarjeta
                 FROM vehiculos_solicitudes vs 
                 LEFT JOIN usuario u ON u.id = vs.id_usuario
                 LEFT JOIN usuario us ON us.id = vs.user_val
-                LEFT JOIN usuario uss ON us.id = vs.user_pago
+                LEFT JOIN usuario uss ON uss.id = vs.user_pago
                 LEFT JOIN personal_campo r ON r.id = vs.id_responsable
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
                 LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
