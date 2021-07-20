@@ -1640,6 +1640,9 @@ setInterval(function() {
             <?php } ?>
 
             <?php if($usuarios[0]['fkroles'] == 18){ ?>
+                <li class="bold moves <?php echo getUrl('/gasolina/controlgasolina',$actual_link); echo getgasolina($actual_link);?>">
+                    <a href="/gasolina/controlgasolina">Gasolina<i class="material-icons">local_gas_station</i></a>
+                </li>
                 <li class="bold moves <?php echo getauditorigasolina($actual_link);?>">
                     <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
                 </li>
