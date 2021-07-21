@@ -80,7 +80,7 @@
 					<th>Sitio</th>
 					<th>Responsable</th>
 					<th>Fecha de Ticket</th>
-					<th>Forma de Pago</th>
+					<!-- <th>Forma de Pago</th> -->
 					<th></th>
           <th></th>
 				</tr> 
@@ -102,7 +102,8 @@
 					<td>
 						<?php echo $usr['fecha_requerida']; ?>
 					</td>
-					<td>
+<!-- 					<td>
+  
 						<?php if($usr['forma_pago'] == 1){ ?>
 							Efecticard
 						<?php } ?>
@@ -114,7 +115,7 @@
 						<?php if($usr['forma_pago'] == 3){ ?>
 							Otra..
 						<?php } ?>
-					</td>
+					</td> -->
 					<td>
 						<a href="/gasolina/updatecontrolgasolina/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 					</td>

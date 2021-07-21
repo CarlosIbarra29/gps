@@ -14,6 +14,10 @@ class AsistenciaController extends Zend_Controller_Action{
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
+    public function demoAction(){
+        
+    }
+
     public function cuadrillasAction(){
     	$sitio = $this->_asistencia->getallsitioscuadrilla(); 
     	$this->_asistencia->trancatecuadrilla(); 

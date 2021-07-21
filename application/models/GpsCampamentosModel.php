@@ -6,20 +6,20 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
-                  IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,
-                 c.status_campamento, c.condiciones_dev, c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, 
-                 s.id_cliente, s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                ORDER BY c.status_campamento ASC LIMIT $offset,$no_of_records_per_page");
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
+                        IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos, c.status_campamento, c.condiciones_dev, 
+                        c.pago_servicios, c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente, s.nombre, tp.id, 
+                        tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        ORDER BY c.status_campamento ASC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -32,20 +32,20 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
-                  IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,
-                 c.status_campamento, c.condiciones_dev, c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, 
-                 s.id_cliente, s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                WHERE s.nombre like '%{$name}%'");
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
+                        IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,c.status_campamento, c.condiciones_dev, 
+                        c.pago_servicios, c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente, s.nombre, tp.id, 
+                        tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        WHERE s.nombre like '%{$name}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -58,21 +58,21 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
-                  IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,
-                 c.status_campamento, c.condiciones_dev, c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, 
-                 s.id_cliente, s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                WHERE s.nombre like '%{$name}%' 
-                LIMIT $offset,$no_of_records_per_page");
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
+                        IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,c.status_campamento, c.condiciones_dev, 
+                        c.pago_servicios, c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente, s.nombre, tp.id, 
+                        tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        WHERE s.nombre like '%{$name}%' 
+                        LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -86,20 +86,20 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
-                  IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,
-                 c.status_campamento, c.condiciones_dev, c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, 
-                 s.id_cliente, s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                WHERE c.status_campamento = ?",array($status));
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
+                        IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos, c.status_campamento, c.condiciones_dev, 
+                        c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, s.id_cliente, s.nombre, tp.id, 
+                        tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        WHERE c.status_campamento = ?",array($status));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -112,20 +112,20 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
-                  IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,
-                 c.status_campamento, c.condiciones_dev, c.pago_servicios, c.comentarios, c.contrato, c.id_responsable , s.Idgps, 
-                 s.id_cliente, s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                WHERE c.status_campamento = ? LIMIT $offset,$no_of_records_per_page",array($status));
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.deposito, c.status_anticipo,
+                        IF(c.deposito = 0, 'Sin Previo Deposito', c.deposito) AS depositos,c.status_campamento, c.condiciones_dev, 
+                        c.pago_servicios, c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente, s.nombre, tp.id, 
+                        tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        WHERE c.status_campamento = ? LIMIT $offset,$no_of_records_per_page",array($status));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -265,24 +265,24 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.status_anticipo, c.created_at, 
-                c.devolucion_img, c.comentarioscerrar, c.montodev, c.fecha_rem, c.fecha_cierre,
-                IF(c.pago_deposito != 0,  IF(c.pago_deposito = 1, 'Aplica', 'No Aplica'),'No Aplica') AS pdeposito,
-                c.deposito, c.status_campamento, c.condiciones_dev, c.pago_servicios,
-                IF(c.status_campamento != 3, IF(c.status_campamento != 2, IF(c.status_campamento = 1, 'Por Rentar', 'Sin Status'), 'En Renta'),'Cerrado') AS statusc,
-                IF(c.pago_servicios != 1,  IF(c.pago_servicios = 0, 'Incluidos en Renta', 'Fuera de Renta'),'Fuera de Renta') AS pservicios,
-                c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente,
-                s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                WHERE c.id_campamento = ?",array($id));
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.status_anticipo, c.created_at, 
+                        c.devolucion_img, c.comentarioscerrar, c.montodev, c.fecha_rem, c.fecha_cierre,
+                        IF(c.pago_deposito != 0,  IF(c.pago_deposito = 1, 'Aplica', 'No Aplica'),'No Aplica') AS pdeposito,
+                        c.deposito, c.status_campamento, c.condiciones_dev, c.pago_servicios,
+                        IF(c.status_campamento != 3, IF(c.status_campamento != 2, IF(c.status_campamento = 1, 'Por Rentar', 'Sin Status'), 'En Renta'),'Cerrado') AS statusc,
+                        IF(c.pago_servicios != 1,  IF(c.pago_servicios = 0, 'Incluidos en Renta', 'Fuera de Renta'),'Fuera de Renta') AS pservicios,
+                        c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente,s.nombre, tp.id, tp.nombre_proyecto, 
+                        st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        WHERE c.id_campamento = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -297,24 +297,24 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio, c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.status_anticipo, c.created_at, 
-                c.devolucion_img, c.comentarioscerrar, c.montodev, c.fecha_rem,
-                IF(c.pago_deposito != 0,  IF(c.pago_deposito = 1, 'Aplica', 'No Aplica'),'No Aplica') AS pdeposito,
-                c.deposito, c.status_campamento, c.condiciones_dev, c.pago_servicios,
-                IF(c.status_campamento != 3, IF(c.status_campamento != 2, IF(c.status_campamento = 1, 'Por Rentar', 'Sin Status'), 'En Renta'),'Cerrado') AS statusc,
-                IF(c.pago_servicios != 1,  IF(c.pago_servicios = 0, 'Incluidos en Renta', 'Fuera de Renta'),'Fuera de Renta') AS pservicios,
-                c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente,
-                s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
-                IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
-                sc.nombre AS nstatus
-                FROM campamentos c
-                LEFT JOIN sitios s ON s.id = c.id_sitio
-                LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
-                LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
-                LEFT JOIN personal_campo p ON p.id = c.id_responsable
-                LEFT JOIN puestos_personal pu ON pu.id = p.puesto
-                LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                ORDER BY c.id_campamento ASC");
+                        c.monto_renta, c.nombre_arrendador, c.tel_arrendador, c.pago_deposito, c.status_anticipo, c.created_at, 
+                        c.devolucion_img, c.comentarioscerrar, c.montodev, c.fecha_rem,
+                        IF(c.pago_deposito != 0,  IF(c.pago_deposito = 1, 'Aplica', 'No Aplica'),'No Aplica') AS pdeposito,
+                        c.deposito, c.status_campamento, c.condiciones_dev, c.pago_servicios,
+                        IF(c.status_campamento != 3, IF(c.status_campamento != 2, IF(c.status_campamento = 1, 'Por Rentar', 'Sin Status'), 'En Renta'),'Cerrado') AS statusc,
+                        IF(c.pago_servicios != 1,  IF(c.pago_servicios = 0, 'Incluidos en Renta', 'Fuera de Renta'),'Fuera de Renta') AS pservicios,
+                        c.comentarios, c.contrato, c.id_responsable, s.Idgps, s.id_cliente,
+                        s.nombre, tp.id, tp.nombre_proyecto, st.id_tipoproyecto, st.id_sitio AS idsi, st.residente, 
+                        IF(p.nombre IS NULL, 'Sin Asignar', p.nombre) AS nombrea, p.apellido_pa, p.apellido_ma, pu.nombre AS puesto,
+                        sc.nombre AS nstatus
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        LEFT JOIN tipo_proyecto tp ON tp.id = c.id_proyecto
+                        LEFT JOIN sitios_tipoproyecto st ON st.id_sitio = c.id_sitio AND st.id_tipoproyecto = c.id_proyecto
+                        LEFT JOIN personal_campo p ON p.id = c.id_responsable
+                        LEFT JOIN puestos_personal pu ON pu.id = p.puesto
+                        LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
+                        ORDER BY c.id_campamento ASC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -394,14 +394,13 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
     public function consultaproyecto($letra){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT st.id, st.id_tipoproyecto, t.nombre_proyecto,
-                st.id_sitio, s.Idgps, s.id_cliente, s.nombre, st.status_proyecto, st.status_cliente, st.operador, 
-                st.id_operador, st.residente, st.pm_cliente, st.coordinador_id, st.nombre_coordinador, st.ingproyecto_id,
-                st.nombre_ingproyecto, st.fecha_inicio, st.issue
-                FROM sitios_tipoproyecto st
-                LEFT JOIN sitios s ON s.id = st.id_sitio 
-                LEFT JOIN tipo_proyecto t ON t.id = st.id_tipoproyecto 
-                where st.id_sitio = $letra");
+            $qry = $db->query("SELECT st.id, st.id_tipoproyecto, t.nombre_proyecto,st.id_sitio, s.Idgps, s.id_cliente, s.nombre, 
+                        st.status_proyecto, st.status_cliente, st.operador, st.id_operador, st.residente, st.pm_cliente, 
+                        st.coordinador_id, st.nombre_coordinador, st.ingproyecto_id,st.nombre_ingproyecto, st.fecha_inicio, st.issue
+                        FROM sitios_tipoproyecto st
+                        LEFT JOIN sitios s ON s.id = st.id_sitio 
+                        LEFT JOIN tipo_proyecto t ON t.id = st.id_tipoproyecto 
+                        where st.id_sitio = $letra");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -415,11 +414,11 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio ,c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, s.id_cliente,
-                s.Idgps, s.nombre, s.cliente
-            FROM campamentos c
-            LEFT JOIN sitios s ON s.id = c.id_sitio
-            WHERE c.fin_renta between curdate() and date_add(curdate(), interval 10 day) AND c.status_campamento = 2");
+                        c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, 
+                        s.id_cliente,s.Idgps, s.nombre, s.cliente
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        WHERE c.fin_renta between curdate() and date_add(curdate(), interval 10 day) AND c.status_campamento = 2");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -433,11 +432,11 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT c.id_campamento, c.id_sitio ,c.id_proyecto, c.fecha_solicitud, c.inicio_renta, c.fin_renta,
-                c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, s.id_cliente,
-                s.Idgps, s.nombre, s.cliente
-            FROM campamentos c
-            LEFT JOIN sitios s ON s.id = c.id_sitio
-            WHERE c.fin_renta BETWEEN NOW() - INTERVAL 10 DAY AND NOW() - INTERVAL 1 DAY AND c.status_campamento = 2");
+                        c.monto_renta, c.condiciones_dev, c.pago_deposito, c.deposito, c.status_campamento, c.comentarios, s.id, 
+                        s.id_cliente,s.Idgps, s.nombre, s.cliente
+                        FROM campamentos c
+                        LEFT JOIN sitios s ON s.id = c.id_sitio
+                        WHERE c.fin_renta BETWEEN NOW() - INTERVAL 10 DAY AND NOW() - INTERVAL 1 DAY AND c.status_campamento = 2");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
