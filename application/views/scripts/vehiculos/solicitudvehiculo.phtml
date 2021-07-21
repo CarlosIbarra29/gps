@@ -55,9 +55,10 @@
         $nombre_user = $key ['nombre'];  $ap = $key ['ap'];  $am = $key ['am'];  
         $nombreap = $key ['nombreap']; $apap = $key ['apap']; $amap = $key ['amap'];
         $nombrep = $key ['nombrep']; $app = $key ['app']; $amp = $key ['amp'];
-
+        // var_dump($nombrep);
+        // exit();
         $marca = $key ['marca']; $submarca = $key ['submarca']; $modelo = $key ['modelo']; 
-        $color = $key ['color']; $placas = $key ['placas']; $imagen = $key ['imagen'];
+        $color = $key ['color']; $placas = $key ['placas']; $imagen = $key ['imagen']; $no_serie = $key ['no_serie']; 
 
         $nombre_servicio = $key ['nombre_servicio']; $evidencia_uno = $key ['evidencia_uno']; 
         $evidencia_dos = $key ['evidencia_dos']; $evidencia_tres = $key ['evidencia_tres']; 
@@ -66,7 +67,7 @@
 
         $nombre_prov = $key ['nombre_prov'];  $telefono = $key ['telefono'];  $rfc = $key ['rfc']; 
         $datos_banco = $key ['datos_banco'];  $cuenta = $key ['cuenta'];  $titular = $key ['titular'];  
-        $email = $key ['email']; 
+        $email = $key ['email']; $tarjeta = $key ['tarjeta'];
         
         }?>
 
@@ -77,157 +78,188 @@
 
 
         <div class="page-container hidden-on-narrow">
-                <div class="pdf-page size-a4">
-                        <div class="pdf-header">
-                                <span class="company-logo">
-                                        <img src="/img/head.png" style="width: 120px;" />
-                                </span>
+            <div class="pdf-page size-a4">
+                
+                <div class="pdf-header">
+                    
+                    <span class="company-logo">
+                        <img src="/img/head.png" style="width: 120px;" />
+                    </span>
 
-                                <span class="invoice-number">
-                                        <img src="/img/logo-2.png" style="width: 125px;" /><br/>
-                                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
-                                </span>
+                    <span class="invoice-number">
+                        <img src="/img/logo-2.png" style="width: 125px;" /><br/>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
+                    </span>
 
-                                <div class="row">
-                                        <div class="company-logo col m12 s12 text-center">
-                                                Pago de Servicios a Vehículos
-                                        </div>
-                                </div>
+                    <div class="row">
+                        <div class="company-logo col m12 s12 text-center">
+                            Pago de Servicios a Vehículos
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="pdf-footer">
+                    <p>Gps Constructivos<br />Fecha de descarga: <?php echo $hoy; ?><br /></p>
+                </div>
+
+                <div class="for" style="margin-top: 60px;">
+                    <h3>Fecha Requerida : <?php echo $fecha_sol; ?></h3>
+
+                    <?php if ($id_vehiculo == 0) { ?>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos</span>
+                        <p>
+                            <span class="title-pdf">Unidad de Pago: </span> <span style="font-size: 14px;">Oficina</span><br />
+                            <span class="title-pdf">Usuario: </span> <span style="font-size: 14px;"><?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br />
+                            <?php if ($id_responsable != 0) { ?>
+                                <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
+                            <?php } else {  ?>
+                            <?php } ?>
+                        </p>
+                    <?php } else { ?>
+
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos de vehículo</span>
+                        <p>
+                            <span class="title-pdf">Marca:</span> <span style="font-size: 14px;"><?php echo $marca; ?></span><br />
+                            <span class="title-pdf">Submarca:</span> <?php echo $submarca; ?><br />
+                            <span class="title-pdf">Modelo:</span><?php echo $modelo; ?><br />
+                            <span class="title-pdf">Placas:</span> <span style="font-size: 14px;"><?php echo $placas; ?></span><br />
+                            <span class="title-pdf">No Serie:</span> <span style="font-size: 14px;"><?php echo $no_serie; ?></span><br />
+                            <span class="title-pdf">Color:</span> <?php echo $color; ?><br />
+                            <?php if ($id_responsable != 0) { ?>
+                                <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
+                            <?php } else {  ?>
+                            <?php } ?>
+                        </p>
+                    <?php } ?>
+                </div>
+
+                <div class="from" style="margin-top: 60px;"> <br/><br/>
+                    
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Proveedor</span>
+                    
+                    <p style="padding-bottom: 20px;">
+                        <span class="title-pdf">Nombre:</span> <?php echo $nombre_prov; ?> <br />
+                        <span class="title-pdf">Telefono:</span> <?php echo $telefono; ?><br />
+                        <span class="title-pdf">RFC:</span> <?php echo $rfc; ?><br />
+                        <span class="title-pdf">Datos Banco:</span> <?php echo $datos_banco; ?><br />
+                        
+                        <span class="title-pdf">Cuenta: </span>
+                            <?php if($cuenta == "" ||  $cuenta == null){ ?>
+                                Sin Cuenta </br>
+                            <?php } else { ?>
+                                <?php echo $cuenta; ?></br>
+                            <?php } ?>
+                        
+                        <span class="title-pdf">Tarjeta: </span>
+                            <?php if($tarjeta == "" ||  $tarjeta == null){ ?>
+                                Sin Tarjeta </br>
+                            <?php } else { ?>
+                                <?php echo $tarjeta; ?></br>
+                            <?php } ?>
+                        
+                        <span class="title-pdf">Titular: </span>
+                            <?php if($titular == "" ||  $titular == null){ ?>
+                                Sin Titular </br>
+                            <?php } else { ?>
+                                <?php echo $titular; ?></br>
+                            <?php } ?>
+                        
+                        <span class="title-pdf">Email:</span> 
+                            <?php if($email == "" ||  $email == null){ ?>
+                                Sin E-mail </br>
+                            <?php } else { ?>
+                                <?php echo $email; ?></br>
+                            <?php } ?>
+
+                        <?php if($referencia == ""){ ?>
+                        <?php } else { ?>
+                            <span class="title-pdf">Referencia:</span> <?php echo $referencia; ?><br />
+                        <?php } ?>
+                    </p>
+                
+                </div>
+
+                <div class="pdf-body">
+                    <div class="row">
+
+                        <div class="col m12 s12" style="margin-top: 90px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><span class="title-pdf">Motivo de Solicitud</span></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center"><?php echo $motivos; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div class="pdf-footer">
-                                <p>Gps Constructivos<br />Fecha de descarga: <?php echo $hoy; ?><br /></p>
+                        <div class="col m12 s12">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"><span class="title-pdf">Servicio</span></th>
+                                        <th class="text-center"><span class="title-pdf">Monto</span></th>
+                                        <th class="text-center"><span class="title-pdf">IVA</span></th>
+                                        <th class="text-center"><span class="title-pdf">Total</span></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center"><?php echo $nombre_servicio; ?></td>
+                                        <td class="text-center">$ <?php echo $monto; ?></td>
+                                        <td class="text-center">
+                                            <?php if ($iva == null) { ?>
+                                                Servicio NO facturable.
+                                            <?php } else { ?>
+                                                $ <?php echo $iva; ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td class="text-center">$ <?php echo $total; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
-                        <div class="for" style="margin-top: 60px;">
-                                 <h3>Fecha Requerida : <?php echo $fecha_sol; ?></h3>
 
-                                <?php if ($id_vehiculo == 0) { ?>
-                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos</span>
-                                    <p>
-                                        <span class="title-pdf">Unidad de Pago: </span> <span style="font-size: 14px;">Oficina</span><br />
-                                        <span class="title-pdf">Usuario: </span> <span style="font-size: 14px;"><?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br />
+                    <div class="row">
+                        <div class="col m12 s12">
 
-                                        <?php if ($id_responsable != 0) { ?>
-                                            <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
-                            
-                                        <?php } else {  ?>
-                                        <?php } ?>
-                                    </p>
+                            <div class="col m6 s6">
+                                <span><b>Fecha Creación:</b> <?php echo $fecha_creacion; ?></span><br/>
+                                <span><b>Autorización:</b> <?php echo $fecha_validacion; ?></span><br/>
+                                <?php if ($fecha_pagada == null) { ?>
+                                    <span><b>Fecha Pago:</b> Aún es pagada</span><br/>
                                 <?php } else { ?>
-                                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos de vehículo</span>
-                                     <p>
-                                        <span class="title-pdf">Marca:</span> <span style="font-size: 14px;"><?php echo $marca; ?></span><br />
-                                        <span class="title-pdf">Submarca:</span> <?php echo $submarca; ?><br />
-                                        <span class="title-pdf">Modelo:</span><?php echo $modelo; ?><br />
-                                        <span class="title-pdf">Placas:</span> <span style="font-size: 14px;"><?php echo $placas; ?></span><br />
-                                        <span class="title-pdf">Color:</span> <?php echo $color; ?><br />
-                                        <?php if ($id_responsable != 0) { ?>
-                                            <span class="title-pdf">Con descuento a : </span> <span style="font-size: 14px; color: red;"><?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?></span><br />
-                            
-                                        <?php } else {  ?>
-                                        <?php } ?>
-                                    </p>
+                                    <span><b>Fecha Pago:</b> <?php echo $fecha_pagada; ?></span><br/>
                                 <?php } ?>
-                        </div>
+                            </div>
 
-                        <div class="from" style="margin-top: 60px;">
-                                <br/><br/>
-                                <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Proveedor</span>
-
-                                <p style="padding-bottom: 20px;">
-                                        <span class="title-pdf">Nombre:</span> <?php echo $nombre_prov; ?> <br />
-                                        <span class="title-pdf">Telefono:</span> <?php echo $telefono; ?><br />
-                                        <span class="title-pdf">RFC:</span> <?php echo $rfc; ?><br />
-                                        <span class="title-pdf">Datos Banco:</span> <?php echo $datos_banco; ?><br />
-                                        <span class="title-pdf">Cuenta: </span><?php echo $cuenta; ?> </br>
-                                         <span class="title-pdf">Tarjeta: </span<?php echo $titular; ?>></br>
-                                        <span class="title-pdf">Titular: </span<?php echo $titular; ?>></br>
-                                        <span class="title-pdf">Email:</span> <?php echo $email; ?></br>
-
-                                        <?php if($referencia == ""){ ?>
-
-                                        <?php } else { ?>
-                                                <span class="title-pdf">Referencia:</span> <?php echo $referencia; ?><br />
-                                        <?php } ?>
-                                </p>
-                        </div>
-
-                        <div class="pdf-body">
-
-                                <div class="row">
-                                
-
-                                        <div class="col m12 s12" style="margin-top: 50px;">
-                                                <table>
-                                                        <thead>
-                                                                <tr>
-                                                                        <th><span class="title-pdf">Motivo de Solicitud</span></th>
-                                                                </tr>
-                                                        </thead>
-
-                                                        <tbody>
-                                                                <tr>
-                                                                        <td class="text-center"><?php echo $motivos; ?></td>
-                                                                </tr>
-                                                        </tbody>
-                                                </table>
-                                        </div>
-
-                                        <div class="col m12 s12">
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center"><span class="title-pdf">Servicio</span></th>
-                                                        <th class="text-center"><span class="title-pdf">Monto</span></th>
-                                                        <th class="text-center"><span class="title-pdf">IVA</span></th>
-                                                        <th class="text-center"><span class="title-pdf">Total</span></th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-center"><?php echo $nombre_servicio; ?></td>
-                                                        <td class="text-center">$ <?php echo $monto; ?></td>
-                                                        <td class="text-center">
-                                                            <?php if ($iva == null) { ?>
-                                                                Servicio NO facturable.
-                                                            <?php } else { ?>
-                                                                $ <?php echo $iva; ?>
-                                                            <?php } ?>
-                                                        </td>
-                                                        <td class="text-center">$ <?php echo $total; ?></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                </div>
-
-
-                                <div class="row">
-                                        <span><b>Solicito:</b> <?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br/>
-                                        <span><b>Autorizó:</b> <?php echo $nombreap; ?> <?php echo $apap; ?> <?php echo $amap; ?></span><br/>
-                                        <span><b>Fecha Creación:</b> <?php echo $fecha_creacion; ?></span><br/>
-                                        <span><b>Fecha Autorización:</b> <?php echo $fecha_validacion; ?></span><br/>
-                                        <?php if ($fecha_pagada == null) { ?>
-                                            <span><b>Fecha Pago:</b> Aún es pagada</span>
-                                        <?php } else { ?>
-                                            <span><b>Fecha Pago:</b> <?php echo $fecha_pagada; ?></span>
-                                        <?php } ?>
-                            
-                                </div>
-
+                            <div class="col m6 s6">
+                                <span><b>Solicito:</b> <?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></span><br/>
+                                <span><b>Autorizó:</b> <?php echo $nombreap; ?> <?php echo $apap; ?> <?php echo $amap; ?></span><br/>
                                 <?php if ($status_comprobante == 1) { ?>
-                                        <div class="row">
-                                                <span><b>Pagada por:</b> <?php echo $nombrep; ?> <?php echo $app; ?> <?php echo $amp; ?></span>
-                                        </div>
+                                    <span><b>Pagada por:</b> <?php echo $nombrep; ?> <?php echo $app; ?> <?php echo $amp; ?></span>
                                 <?php } else {  ?>
                                 <?php } ?> 
+                            </div>
+
+                        </div>
+                    </div>
+
+                                
                                 <div class="row signature">
                                         <div class="col m12 s12 text-center">
                                                 <img src="/img/logo-2.png" style="width: 190px;"><br>
                                                 Aprobado: ING. Rubén García Guzmán<br /><br />
-                                                <?php echo $hoy; ?>
+                                                <!-- <?php echo $hoy; ?> -->
                                         </div>
                                 </div>
                         </div>
@@ -399,7 +431,7 @@
                         color: #787878;
                 }
                 .signature {
-                        padding-top: .5in;
+                        padding-top: .3in;
                 }
         </style>
 

@@ -99,7 +99,14 @@
 						<input id="efecticard" type="text" value="<?php echo $vh["efecticard"]; ?>" name="efecticard" class="validate" required>
 						<label for="efecticard">* Efecticard: </label>
 					</div>
-					<div class="input-field col m12 s12">
+
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">filter_frames</i>
+						<input id="serie" type="text" value="<?php echo $vh["no_serie"]; ?>" name="serie" class="validate" required>
+						<label for="serie">* No Serie: </label>
+					</div>
+
+					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input id="com" type="text" name="com" value="<?php echo $vh["comentarios"]; ?>" class="validate">
 						<label for="com">Comentarios: </label>
