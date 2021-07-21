@@ -267,7 +267,36 @@
           			</td>
 
           			<td>
-            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_nomina'], 2, '.', ','); ?></span>	
+                    <?php 
+                      $monto_real = round($usr['monto_nomina']); 
+                      $decimal_cuatro = substr($monto_real, 3);
+                      $decimal_tres = substr($monto_real, 2,1);
+                      $decimal_dos = substr($monto_real, 1,1);
+                      $decimal_uno = substr($monto_real, 0,1);
+                      $cero = 0;
+                      
+                      if($decimal_cuatro < 5){
+                        $new_decimal_tres = $decimal_tres;
+                        $new_decimal_cuatro = 0;
+                        $monto_suma =  $decimal_uno.$decimal_dos.$cero.$cero;
+                        $new_monto = $monto_suma ;
+                      }
+
+                      if($decimal_cuatro == 5){
+                        $new_decimal_tres = $decimal_tres;
+                        $new_decimal_cuatro = 0;
+                        $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                        $new_monto = $monto_suma +5;
+                      }
+
+                      if($decimal_cuatro > 5){
+                          $new_decimal_tres = $decimal_tres + 1;
+                          $new_decimal_cuatro = 0;
+                          $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                          $new_monto = $monto_suma +10;
+                      }
+                    ?>
+            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($new_monto, 2, '.', ','); ?></span>	
           			</td>
           			<td>
             			<?php if($usr['status_auditoria'] == 0){ ?>

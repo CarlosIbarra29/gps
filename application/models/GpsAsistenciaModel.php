@@ -232,8 +232,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         $status = 1; $hora_trabajo =0;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET status_asistencia= ?, hora_inicio=?, proyecto_fechainicio=?, day_number=?, day_asistencia = ? WHERE id = ?",
-                array($status,$hora_trabajo,$proyecto,$fecha,$hoy,$id));
+            $qry = $db->query("UPDATE $table SET status_asistencia= ?, hora_inicio=?, proyecto_fechainicio=?, day_number=?, day_asistencia = ?, motivo_inasistencia = ? WHERE id = ?",
+                array($status,$hora_trabajo,$proyecto,$fecha,$hoy,$post['motivo'],$id));
             $db->closeConnection();               
             return $qry;
         } 

@@ -82,7 +82,6 @@ class NominaController extends Zend_Controller_Action{
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $this->view->paginator=$this->_nomina->getnominasolicitud($offset,$no_of_records_per_page,$st,$pago);  
         }
-
     }
 
 
@@ -313,6 +312,12 @@ class NominaController extends Zend_Controller_Action{
         }
 
     }
+
+    public function solicitudnominacontaAction(){
+        
+    }
+
+
 
     public function detallenominaAction(){
         $user = $this->_getParam('user');

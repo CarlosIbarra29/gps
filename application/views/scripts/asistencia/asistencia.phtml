@@ -299,7 +299,10 @@
                             $diferencia = $interval->format("%H:%I");
                          ?>
                         <td>
-                            <?php echo $diferencia; ?> Hrs
+                            <?php if($usr['hora_final'] == NULL || $usr['hora_final'] == ""){ ?>
+                            <?php }else{ ?>
+                                <?php echo $diferencia; ?> Hrs
+                            <?php } ?>
                         </td>
                     <?php }else{ ?>
                         <td>

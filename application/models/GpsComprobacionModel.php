@@ -750,7 +750,8 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                         FROM comprobacion_solicitud cs 
                         WHERE cs.autorizacion_status = ? 
                         AND cs.pago_status = ?  
-                        AND $opcion  like '%{$nombre}%' ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago));
+                        AND $opcion  like '%{$nombre}%' 
+                        ORDER BY cs.id DESC LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

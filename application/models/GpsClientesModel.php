@@ -82,8 +82,8 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT cc.id, cc.nombre_carpeta, cc.id_cliente, cc.idc
-                FROM clientes_carpeta cc 
-                WHERE cc.idc = 0 AND cc.id_cliente = ?",array($id));
+                        FROM clientes_carpeta cc 
+                        WHERE cc.idc = 0 AND cc.id_cliente = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -97,9 +97,9 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
-                FROM clientes_archivos ca
-                WHERE ca.id_carpeta = 0 AND ca.id_cliente = $id
-                order by ca.id asc");
+                        FROM clientes_archivos ca
+                        WHERE ca.id_carpeta = 0 AND ca.id_cliente = $id
+                        order by ca.id asc");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -112,9 +112,9 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
-                FROM clientes_archivos ca
-                WHERE ca.id_carpeta = 0 AND ca.id_cliente = $id
-                order by ca.id asc LIMIT $offset,$no_of_records_per_page");
+                        FROM clientes_archivos ca
+                        WHERE ca.id_carpeta = 0 AND ca.id_cliente = $id
+                        order by ca.id asc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -196,8 +196,8 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT cc.id, cc.nombre_carpeta, cc.id_cliente, cc.idc
-                FROM clientes_carpeta cc 
-                WHERE cc.idc = ? AND cc.id_cliente = $clienteid",array($id));
+                        FROM clientes_carpeta cc 
+                        WHERE cc.idc = ? AND cc.id_cliente = $clienteid",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -210,8 +210,8 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT cc.id, cc.nombre_carpeta
-                FROM clientes_carpeta cc 
-                WHERE cc.id = ? ",array($id));
+                        FROM clientes_carpeta cc 
+                        WHERE cc.id = ? ",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -224,9 +224,9 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
-                FROM clientes_archivos ca
-                WHERE ca.id_carpeta = $id AND ca.id_cliente = $clienteid
-                order by ca.id asc");
+                        FROM clientes_archivos ca
+                        WHERE ca.id_carpeta = $id AND ca.id_cliente = $clienteid
+                        order by ca.id asc");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -239,9 +239,9 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ca.id, ca.nombre_archivo, ca.archivo, ca.id_cliente, ca.id_carpeta, ca.fecha
-                FROM clientes_archivos ca
-                WHERE ca.id_carpeta = $id AND ca.id_cliente = $clienteid
-                order by ca.id asc LIMIT $offset,$no_of_records_per_page");
+                        FROM clientes_archivos ca
+                        WHERE ca.id_carpeta = $id AND ca.id_cliente = $clienteid
+                        order by ca.id asc LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

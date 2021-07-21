@@ -83,14 +83,14 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetpaginationTagSpf($table,$id,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                WHERE t.tag like '%{$id}%' ORDER BY t.fecha ASC LIMIT $offset,$no_of_records_per_page");
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente, st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        WHERE t.tag like '%{$id}%' ORDER BY t.fecha ASC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -103,8 +103,8 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function proyectosActuales(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, 
-                        tp.nombre_proyecto, s.nombre, s.id_cliente
+            $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, tp.nombre_proyecto, s.nombre, 
+                        s.id_cliente
                         FROM sitios_tipoproyecto tis
                         LEFT JOIN tipo_proyecto tp on tis.id_tipoproyecto= tp.id 
                         LEFT JOIN sitios s on s.id = tis.id_sitio ORDER BY s.nombre ASC");
@@ -120,14 +120,14 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetTagSitio($id,$sitio){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                WHERE t.tag like '%{$id}%' And t.id_sitio = ? ORDER BY t.fecha",array($sitio));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente,st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        WHERE t.tag like '%{$id}%' And t.id_sitio = ? ORDER BY t.fecha",array($sitio));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -140,14 +140,15 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetTagSitioPaginator($table,$offset,$no_of_records_per_page,$id,$sitio){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                WHERE t.tag like '%{$id}%' And t.id_sitio = ? ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($sitio));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente,st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        WHERE t.tag like '%{$id}%' And t.id_sitio = ? 
+                        ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($sitio));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -160,14 +161,14 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
      public function GetTagProyecto($id,$proyecto){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                WHERE t.tag like '%{$id}%' And t.id_proyecto = ? ORDER BY t.fecha",array($proyecto));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente,st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        WHERE t.tag like '%{$id}%' And t.id_proyecto = ? ORDER BY t.fecha",array($proyecto));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -180,14 +181,15 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetTagProyectoPaginator($table,$offset,$no_of_records_per_page,$id,$proyecto){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                WHERE t.tag like '%{$id}%' And t.id_proyecto = ? ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($proyecto));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente,st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        WHERE t.tag like '%{$id}%' And t.id_proyecto = ? ORDER BY t.fecha 
+                        LIMIT $offset,$no_of_records_per_page",array($proyecto));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -200,29 +202,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetTagMes($id,$mes,$year){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto,
-                YEAR(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS AÑO,
-                MONTH(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS MES,
-                DAY(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS DIA
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha",array($mes));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente,st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto,
+                        YEAR(DATE(CONCAT(SUBSTRING(t.fecha,7,4),'-',SUBSTRING(t.fecha,4,2), '-',SUBSTRING(t.fecha,1,2)))) AS AÑO,
+                        MONTH(DATE(CONCAT(SUBSTRING(t.fecha,7,4),'-',SUBSTRING(t.fecha,4,2),'-',SUBSTRING(t.fecha,1,2)))) AS MES,
+                        DAY(DATE(CONCAT(SUBSTRING(t.fecha,7,4),'-',SUBSTRING(t.fecha,4,2),'-', SUBSTRING(t.fecha,1,2)))) AS DIA
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha",array($mes));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -235,29 +225,18 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     public function GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$year){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,
-                t.id_sitio, t.id_proyecto, s.id_cliente, s.nombre, s.cliente,
-                st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, tp.nombre_proyecto,
-                YEAR(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS AÑO,
-                MONTH(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS MES,
-                DAY(DATE(CONCAT(SUBSTRING(t.fecha, 7, 4),
-                    '-',
-                    SUBSTRING(t.fecha, 4, 2),
-                    '-',
-                    SUBSTRING(t.fecha, 1, 2)))) AS DIA
-                FROM tag t
-                LEFT JOIN sitios s ON s.id = t.id_sitio
-                LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
-                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
-                HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha LIMIT $offset,$no_of_records_per_page",array($mes));
+            $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
+                        s.id_cliente, s.nombre, s.cliente, st.id_tipoproyecto, st.status_proyecto, st.status_cliente, st.operador, 
+                        tp.nombre_proyecto,
+                        YEAR(DATE(CONCAT(SUBSTRING(t.fecha,7,4),'-', SUBSTRING(t.fecha,4,2), '-', SUBSTRING(t.fecha,1,2)))) AS AÑO,
+                        MONTH(DATE(CONCAT(SUBSTRING(t.fecha,7,4),'-', SUBSTRING(t.fecha,4,2),'-', SUBSTRING(t.fecha,1,2)))) AS MES,
+                        DAY(DATE(CONCAT(SUBSTRING(t.fecha,7,4), '-', SUBSTRING(t.fecha,4,2), '-', SUBSTRING(t.fecha,1,2)))) AS DIA
+                        FROM tag t
+                        LEFT JOIN sitios s ON s.id = t.id_sitio
+                        LEFT JOIN sitios_tipoproyecto st ON st.id = t.id_proyecto
+                        LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto
+                        HAVING t.tag like '%{$id}%' And MES = ? And AÑO = $year ORDER BY t.fecha 
+                        LIMIT $offset,$no_of_records_per_page",array($mes));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
