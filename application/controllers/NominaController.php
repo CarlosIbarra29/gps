@@ -314,6 +314,12 @@ class NominaController extends Zend_Controller_Action{
 
     }
 
+    public function solicitudnominacontaAction(){
+        
+    }
+
+
+
     public function detallenominaAction(){
         $user = $this->_getParam('user');
         $this->view->user_solicitud = $user;

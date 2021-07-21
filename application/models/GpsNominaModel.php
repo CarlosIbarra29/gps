@@ -134,8 +134,8 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
     public function updateasistendiadaynomina($table,$post,$monto,$day_num,$urldb,$urldb_s){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET hora_entrada =?, hora_salida = ?, dia =?, day_num = ?, id_proyecto =?, id_proyecto_salida = ?, ev_entrada = ?, ev_salida = ? WHERE id = ?",
-                array($post['hora_entrada'],$post['hora_salida'],$post['dia_registro'],$day_num,$post['sitio_entrada'],$post['sitio_salida'],$urldb,$urldb_s,$post['id_solicitud']));
+            $qry = $db->query("UPDATE $table SET hora_entrada =?, hora_salida = ?, id_proyecto =?, id_proyecto_salida = ?, ev_entrada = ?, ev_salida = ? WHERE id = ?",
+                array($post['hora_entrada'],$post['hora_salida'],$post['sitio_entrada'],$post['sitio_salida'],$urldb,$urldb_s,$post['id_solicitud']));
             $db->closeConnection();               
             return $qry;
         } 
@@ -143,6 +143,20 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+
+    public function fechapagonomina($id_solicitud,$table,$fecha,$daynum){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET dia =?, day_num = ? WHERE id = ?",array($fecha,$daynum,$id_solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
 
 
     public function getsolicitudnomina($status,$pago){
@@ -307,7 +321,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
     public function getdetailnominauser($id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, 
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.hora_pago, pc.dia_pago,
             		   pp.nombre as puesto, pc.curp, pc.nss,pc.rfc
 					   FROM personal_campo pc
 					   INNER JOIN puestos_personal pp on pp.id = pc.puesto 

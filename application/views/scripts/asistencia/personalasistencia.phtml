@@ -670,6 +670,8 @@
 			                  	<?php }else{ ?>
 			                  		<!-- D I A  E X T R A -->
 			                  		<?php 
+			                  		$dia_pago = $usr['dia_pago'];
+			                  		$hora_pago = $usr['hora_pago'];
 			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
 			                  				$rest = substr($diferencia, 0, -3);
 
@@ -747,9 +749,14 @@
 			                  	</td>
 
 			                  	<td>
-			                		<?php if($usr['status_tipos'] == 0){ ?>
+			                		<?php if($usr['status_tipos'] == 0 && $usr['status_asistencia'] == 0){ ?>
 			                			<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
 			                			<a class="delete_registro" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red; padding-left: 7px;"></i></span></a>
+			                		<?php }?>
+
+			                		<?php if($usr['status_asistencia'] == 1){ ?>
+			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+			                			<!-- DESCUENTO -->
 			                		<?php }?>
 
 			                		<?php if($usr['status_tipos'] == 1){ ?>
