@@ -8,6 +8,7 @@ class TagController extends Zend_Controller_Action{
     private $_tag;
 
     public function init(){
+        
         $this->_season = new Application_Model_SeasonPanelModel;
         $this->_session = new Zend_Session_Namespace("current_session");
         $this->_user = new Application_Model_GpsUserModel;
@@ -19,7 +20,9 @@ class TagController extends Zend_Controller_Action{
         $this->_tag = new Application_Model_GpsTagModel;
 
         if(empty($this->_session->id)){
+        
             $this->redirect('/home/login');
+        
         }
     }
 
@@ -41,9 +44,13 @@ class TagController extends Zend_Controller_Action{
         $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 20;
@@ -57,6 +64,7 @@ class TagController extends Zend_Controller_Action{
     }
 
     public function cargamasivafacturasAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -65,13 +73,11 @@ class TagController extends Zend_Controller_Action{
         $csv->auto($_FILES['archivo']['tmp_name']);
         $datos = $csv->data;
 
-        // var_dump($datos);
-        // die();
-
         $table="tag";
         $consumos = $this->_tag->GetArrayConsumosTag();
 
         $fecha = array();
+        
         foreach ($datos as $key) {
             $id = $key['fecha'];
             $wh="fecha";
@@ -85,34 +91,45 @@ class TagController extends Zend_Controller_Action{
 
             }
         }
+        
         $result = 1 ;
+        
         if ($result) {
+        
             return $this-> _redirect('/tag/addconsumo');
+        
         }else{
+        
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
+        
         }
     }
-
-
 
     public function requestdeltagAction(){
         
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $id =  $post['id'];
             $table="tag";
             $wh="tag";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }   
     }//END REQUEST DELETE TODO
@@ -123,17 +140,24 @@ class TagController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $id =  $post['id'];
             $table="tag";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }   
     }//END REQUEST DELETE REGISTRO
@@ -143,6 +167,7 @@ class TagController extends Zend_Controller_Action{
     public function detailconsumoAction(){
 
         if($this->_hasParam('id')){
+        
             $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
             
@@ -165,9 +190,13 @@ class TagController extends Zend_Controller_Action{
             $count=count($tagcount);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -250,9 +279,13 @@ class TagController extends Zend_Controller_Action{
             $count=count($tag_contador);
 
                 if (isset($_GET['pagina'])) {
+        
                     $pagina = $_GET['pagina'];
+        
                 } else {
+        
                     $pagina= $this->view->pagina = 1;
+        
                 } 
 
                 $no_of_records_per_page = 20;
@@ -267,9 +300,9 @@ class TagController extends Zend_Controller_Action{
 
 
             if($opcion == 2){
+        
                 $actualpagina=$this->_getParam('pagina');
-                $this->view->actpage=$actualpagina;
-                
+                $this->view->actpage=$actualpagina;        
                 $id = $this->_getParam('id');
 
                 $proyecto = $this->_getParam('proyecto');
@@ -278,7 +311,16 @@ class TagController extends Zend_Controller_Action{
                 $tag_contador=$this->view->tagcount=$this->_tag->GetTagProyecto($id,$proyecto);
                 $count=count($tag_contador);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -290,6 +332,7 @@ class TagController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
 
@@ -305,9 +348,17 @@ class TagController extends Zend_Controller_Action{
                 // var_dump($año);
 
                 $tag_contador=$this->view->tagcount=$this->_tag->GetTagMes($id,$mes,$year);
-
                 $count=count($tag_contador);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -328,11 +379,6 @@ class TagController extends Zend_Controller_Action{
         $this->view->sitios = $this->_tag->sitiosproyectoexcel();       
     
     }
-
-
-
-    
-
 
 
 

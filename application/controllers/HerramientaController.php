@@ -8,6 +8,7 @@ class HerramientaController extends Zend_Controller_Action{
     private $_her; 
 
     public function init(){
+        
         $this->_season = new Application_Model_SeasonPanelModel;
         $this->_session = new Zend_Session_Namespace("current_session");
         $this->_user = new Application_Model_GpsUserModel;
@@ -19,12 +20,15 @@ class HerramientaController extends Zend_Controller_Action{
         $this->_her = new Application_Model_GpsHerramientaModel;
 
         if(empty($this->_session->id)){
+        
             $this->redirect('/home/login');
+        
         }
     }
 
 
     public function inventarioAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -42,8 +46,11 @@ class HerramientaController extends Zend_Controller_Action{
 
         if (isset($_GET['pagina'])) {
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 15;
@@ -59,6 +66,7 @@ class HerramientaController extends Zend_Controller_Action{
     }// end inventario 
 
     public function buscarherramientaAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -80,11 +88,17 @@ class HerramientaController extends Zend_Controller_Action{
 
             $this->view->option=$option; 
             $count=count($nombre_herra);
+           
             if (isset($_GET['pagina'])) {
+           
                 $pagina = $_GET['pagina'];
+           
             } else {
+           
                 $pagina= $this->view->pagina = 1;
+           
             }   
+           
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -95,19 +109,27 @@ class HerramientaController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('codigo')){
+           
             $codigo = $this->_getParam('codigo');
             $codigo_herra= $this->_her->hercodigo($codigo);
+            
             $this->view->codigo_h=$codigo;
             $name="vacio";
             $this->view->name_herramienta=$name; 
             $option= 2;
             $this->view->option=$option;
             $count=count($codigo_herra);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             }else{
+            
                 $pagina= $this->view->pagina = 1;
+            
             }   
+            
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -119,8 +141,10 @@ class HerramientaController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('status')){
+            
             $status = $this->_getParam('status');
             $status_her= $this->_her->statusher($status);
+            
             $this->view->status_h=$status;
             $codigo="vacio";
             $this->view->codigo_h=$codigo;
@@ -130,10 +154,15 @@ class HerramientaController extends Zend_Controller_Action{
             $option= 3;
             $this->view->option=$option;
             $count=count($status_her);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -146,6 +175,7 @@ class HerramientaController extends Zend_Controller_Action{
         } 
 
         if($this->_hasParam('nombreh')){ 
+            
             $nherr = $this->_getParam('nombreh');
             $n_herra= $this->_her->hernherr($nherr);
             $this->view->name_h=$nherr;
@@ -158,15 +188,20 @@ class HerramientaController extends Zend_Controller_Action{
             $option= 4;
             $this->view->option=$option;
             $count=count($n_herra);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             }else{
+            
                 $pagina= $this->view->pagina = 1;
+            
             }   
+            
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
-
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
@@ -174,10 +209,9 @@ class HerramientaController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('hid')){ 
+            
             $htaid = $this->_getParam('hid');
-            
             $idhta= $this->_her->idherramienta($htaid);
-            
             $this->view->id_h=$htaid;
             
             $name="vacio";
@@ -191,22 +225,28 @@ class HerramientaController extends Zend_Controller_Action{
             $option= 5;
             $this->view->option=$option;
             $count=count($idhta);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             }else{
+            
                 $pagina= $this->view->pagina = 1;
+            
             }   
+            
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
-
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $sql= $this->view->paginator= $this->_her->idhercount($htaid,$offset,$no_of_records_per_page);
         }
 
-         if($this->_hasParam('cate')){
+        if($this->_hasParam('cate')){
+        
             $categoria = $this->_getParam('cate');
             $cat_her= $this->_her->catsher($categoria);
             $this->view->cate_h=$categoria;
@@ -221,10 +261,15 @@ class HerramientaController extends Zend_Controller_Action{
             $option= 6;
             $this->view->option=$option;
             $count=count($cat_her);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -239,101 +284,135 @@ class HerramientaController extends Zend_Controller_Action{
     } //End Buscar Herramienta
 
     public function requestaddherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="herramienta_inventario";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+                
                 if($res == 0){ 
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+                
                 }else{
+                
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                 }
             }
 
             $name = $_FILES['factura']['name'];
+            
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['factura']['size'];
                 $res = $this->formatSizeUnits($bytes);
+            
                 if($res == 0){ 
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+            
                 }else{
+            
                     $info1 = new SplFileInfo($_FILES['factura']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/factura/';
                     $urldb1 = $url1.$info1;
                     move_uploaded_file($_FILES['factura']['tmp_name'],$urldb1);
+            
                 }
             }
 
             $responsable=$post['responsable'];
+            
             if ($responsable == 0) {
+            
                 $status = 0;
+            
             }else{
+            
                 $status=1;
+            
             }
 
             $result = $this->_cat->insertherramienta($post,$table,$urldb,$urldb1,$status);
 
             if ($result) {
+            
                 return $this-> _redirect('/herramienta/herramientadetail/id/'.$result.'');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END add herramienta
 
     public function requestdeleteherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $id=$post['id'];
             $table="herramienta_inventario";
             $wh="id_herramienta";
             $result = $this->_season->deleteAll($id,$table,$wh);
+          
             if ($result) {
+          
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+          
             }else{
+          
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+          
             }
         }
     }//END REQUEST DELETE Herramienta
 
 
     public function herramientaeditAction(){
-           if($this->_hasParam('id')){
+
+        if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $table="herramienta_inventario";
             $wh="id_herramienta";
             $consulta=$this->view->herramientas_inv = $this->_season->GetSpecific($table,$wh,$id);
-
-            // var_dump($consulta);
-            // die();
 
             $table="categoria_herramienta";
             $this->view->categorias = $this->_season->GetAll($table);
@@ -366,45 +445,62 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->cate_h=$cate;
 
         }else {
+
             return $this-> _redirect('/');
+
         }   
 
     }//End herramientaedit
 
     public function requestupdateherramientaAction(){
-    $this->_helper->layout()->disableLayout();
-    $this->_helper->viewRenderer->setNoRender(true);
-    $post = $this->getRequest()->getPost();
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
         if($this->getRequest()->getPost()){
             $table="herramienta_inventario";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
                 
             $urldb1 = $post["imafactura"];
+        
             if(!empty($_FILES["factura"]["name"])) {
+        
                 $bytes = $_FILES['factura']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imafactura']);
                     $info1 = new SplFileInfo($_FILES['factura']['name']);
                     $ext1 = $info1->getExtension();
@@ -416,12 +512,17 @@ class HerramientaController extends Zend_Controller_Action{
 
             $table="herramienta_inventario";
             $result = $this->_cat->updateherramienta($post,$table,$urldb,$urldb1);
+        
             if ($result) {
+        
                 return $this-> _redirect('/herramienta/inventario');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }//END REQUEST update herramienta
@@ -471,59 +572,80 @@ class HerramientaController extends Zend_Controller_Action{
 
             $her = $this->_getParam('id');
             $this->view->idher=$her;
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }       
 
     } // End Herramienta Detail
 
 
     public function requestasignarherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d-m-Y H:i:s");
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHer($post,$table,$hoy);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }// End Request Asignar herramienta
 
     public function requestrherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         $personal = $post['idrs'];
         
         if($this->getRequest()->getPost()){
+        
             $table="reportes_reparacion";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/reparacion/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
@@ -532,59 +654,76 @@ class HerramientaController extends Zend_Controller_Action{
             
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHerRep($post,$table,$personal);
+        
             if ($result) {
+        
                 return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idhs'].''); 
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
             
     }// End Request Reparar herramienta
 
     public function requestregresarherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHer1($post,$table);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }// End Request Regresar herramienta
 
     public function requeststatushAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHer1($post,$table);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }// End Request Regresar herramienta
 
 
     public function requestactualizatodoAction(){
-        $this->_helper->layout()->disableLayout();
         
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-
         $post = $this->getRequest()->getPost();
 
         $id=$post['idp'];
@@ -627,7 +766,7 @@ class HerramientaController extends Zend_Controller_Action{
 
         foreach ($ids as $key => $value) {
     
-           $result = null;
+            $result = null;
            
             $result = $this->_her->UpdateStatusHer2($value,$table);
             
@@ -737,62 +876,82 @@ class HerramientaController extends Zend_Controller_Action{
             
             $table="herramienta_inventario";
             $result = $this->_her->UpdateStatusHerR($post,$table);
+            
             if ($result) {
+            
                 return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idhss'].''); 
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
             
     }// End Request Herramienta Reparada
 
     public function requestbajaherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         $cobro=$post['cobro'];
         
         if ($cobro == true) {
-                $idhr = $post['idh'];
-                $personal = $post['idr'];
-                $table="cobro_herramientas";
-                date_default_timezone_set('America/Mexico_City');
-                 $hoy = date("d-m-Y H:i:s");
-                $a= $this->_her->InsertCobrohd($post,$table,$hoy,$personal);
 
+            $idhr = $post['idh'];
+            $personal = $post['idr'];
+            $table="cobro_herramientas";
+                
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $a= $this->_her->InsertCobrohd($post,$table,$hoy,$personal);
 
-                if($this->getRequest()->getPost()){
+            if($this->getRequest()->getPost()){
+                
                 $table="herramienta_inventario";
                 $name = $_FILES['url']['name'];
                 $urldb = $post["imahidden"];
+                
                 if(!empty($_FILES["url"]["name"])) {
+                
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+                
                     if ($res == 0) {
+                
                         print '<script language="JavaScript">'; 
                         print 'alert("La imagen supera el maximo de tamaño");'; 
                         print '</script>';
+                
                     } else {
+                
                         unlink($post['imahidden']);
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/herramienta/baja/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                     }
                 }//end de if
 
 
                 $table="herramienta_inventario";
                 $result = $this->_her->UpdateStatusHerB($post,$table,$urldb,$personal);
+                
                 if ($result) {
+                
                     return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idh'].''); 
+                
                 }else{
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+                
                 }
             }
 
@@ -801,35 +960,48 @@ class HerramientaController extends Zend_Controller_Action{
             $personal = $post['idr'];
 
             if($this->getRequest()->getPost()){
+                
                 $table="herramienta_inventario";
                 $name = $_FILES['url']['name'];
                 $urldb = $post["imahidden"];
+                
                 if(!empty($_FILES["url"]["name"])) {
+                
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+                
                     if ($res == 0) {
+                
                         print '<script language="JavaScript">'; 
                         print 'alert("La imagen supera el maximo de tamaño");'; 
                         print '</script>';
+                
                     } else {
+                
                         unlink($post['imahidden']);
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/herramienta/baja/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                     }
                 }//end de if
 
 
                 $table="herramienta_inventario";
                 $result = $this->_her->UpdateStatusHerB($post,$table,$urldb,$personal);
+                
                 if ($result) {
+                
                     return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idh'].''); 
+                
                 }else{
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+                
                 }
             }
         }
@@ -837,6 +1009,7 @@ class HerramientaController extends Zend_Controller_Action{
 
 
     public function categoriaAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -847,9 +1020,13 @@ class HerramientaController extends Zend_Controller_Action{
         $count=count($categoria);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 15;
@@ -864,72 +1041,102 @@ class HerramientaController extends Zend_Controller_Action{
 
  
     public function requestaddcatAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $table="categoria_herramienta";
-
             $name = $_FILES['url']['name'];
+
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+            
                 if($res == 0){ 
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+            
                 }else{
+            
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/cat_herramientas/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+            
                 }
             }
 
             $result = $this->_cat->insertcat($post,$table,$urldb);
+            
             if ($result) {
+            
                 return $this-> _redirect('/herramienta/categoria');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END add cat
 
 
     public function cateditAction(){
+        
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $table="categoria_herramienta";
             $wh="id_cat";
             $this->view->cat_herramientas = $this->_season->GetSpecific($table,$wh,$id);
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }   
     }//End catedit
 
     public function requestupdatecatAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="categoria_herramienta";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
@@ -941,55 +1148,80 @@ class HerramientaController extends Zend_Controller_Action{
 
             $table="categoria_herramienta";
             $result = $this->_cat->updatecategoria($post,$table,$urldb);
+        
             if ($result) {
+        
                 return $this-> _redirect('/herramienta/categoria');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }//END REQUEST UPDATE CATEGORIA
 
 
     public function requestdeletecatAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="categoria_herramienta";
             $wh="id_cat";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }//END REQUEST DELETE Categoria
 
     public function buscarcatAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
+        
         if($this->_hasParam('nombre')){
             $cat = $this->_getParam('nombre');
             $nombre = strstr($cat, '?', true); 
+        
             if($nombre == false){
+        
                 $name = $this->_getParam('nombre');
+        
             }else{
+        
                  $name = strstr($cat, '?', true); 
+        
             }
 
             $this->view->name_search=$name;
             $usuarios=$this->_cat->catnombre($name);
             $count=count($usuarios); 
+        
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
 
@@ -1004,16 +1236,18 @@ class HerramientaController extends Zend_Controller_Action{
     } //Buscar Categoria
 
      public function excelherramientaAction(){
+        
         $status=$this->_getParam('status');
         $this->view->status=$status;
-        
         $this->view->excelher = $this->_her->herramientasexcel();
+    
     }// Excel Herramientas
 
      public function reportereparaAction(){
+    
         if($this->_hasParam('id')){
-            $id = $this->_getParam('id');
-          
+    
+            $id = $this->_getParam('id');      
             $this->view->reporte = $this->_her->reparacionexcel($id);
 
             $table="reportes_reparacion";
@@ -1021,7 +1255,9 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->nreparacion= $this->_her->Getnrep($id);
 
         }else {
+
             return $this-> _redirect('/');
+
         }       
         
     } // Excel Reportes
@@ -1047,53 +1283,73 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->reporte = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+
             return $this-> _redirect('/');
+        
         }   
     }//End Reporte Edit
 
     
     public function requestupdaterepAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="reportes_reparacion";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/reparacion/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
             $table="reportes_reparacion";
             $result = $this->_her->updatereporte($post,$table,$urldb);
+        
             if ($result) {
+        
                 return $this-> _redirect('/herramienta/herramientadetail/id/'.$post['idsr'].'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }//END REQUEST UPDATE Reporte Reparacion
 
+    
     public function bresponsableAction(){
 
         if($this->_hasParam('responsable')){
+            
             $id = $this->_getParam('responsable');
             $table="personal_campo";
             $wh="id";
@@ -1131,7 +1387,9 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->herramienta= $this->_her->Getherramientasres($id);
             
         }else {        
+            
             return $this-> _redirect('/');        
+        
         }  
 
     }
@@ -1147,31 +1405,43 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->responsiva= $this->_her->Responsivah($id);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }         
 
     }
 
 
     public function requestresponsivahAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="responsivah";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/responsivas/';
@@ -1181,17 +1451,21 @@ class HerramientaController extends Zend_Controller_Action{
             }
 
             date_default_timezone_set('America/Mexico_City');
-             $hoy = date("d-m-Y H:i:s");
+            $hoy = date("d-m-Y H:i:s");
             $table="responsivah";
 
             $result = $this->_her->insertresponsivah($post,$table,$urldb,$hoy);
 
             if ($result) {
+            
                 return $this-> _redirect('/herramienta/historialh/id/'.$post['idper'].'');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }   //END Responsiva
@@ -1209,7 +1483,9 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->cobros= $this->_her->Getcobro($id);
             
         }else {        
+            
             return $this-> _redirect('/');        
+        
         }  
     }
 
@@ -1230,9 +1506,13 @@ class HerramientaController extends Zend_Controller_Action{
             $count=count($herracobros);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -1256,9 +1536,9 @@ class HerramientaController extends Zend_Controller_Action{
         $status = $this->_getParam('status');
         $this->view->status_cobro=$status;
 
-
         if($status == 1){
-             $actualpagina=$this->_getParam('pagina');
+
+            $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
 
             $nombre = $this->_getParam('nombre');
@@ -1269,9 +1549,13 @@ class HerramientaController extends Zend_Controller_Action{
             $count=count($herracobros);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -1286,6 +1570,7 @@ class HerramientaController extends Zend_Controller_Action{
 
 
           if($status == 2){
+            
             $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
 
@@ -1297,9 +1582,13 @@ class HerramientaController extends Zend_Controller_Action{
             $count=count($herracobros);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -1313,11 +1602,15 @@ class HerramientaController extends Zend_Controller_Action{
         }
     }
 
+
     public function costodetailAction(){
+        
         if($this->_hasParam('id')){
+            
             $id = $this->_getParam('id');
             $wh="id_cobro";
             $table="cobro_herramientas";
+            
             $inf_user =$this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
             $id_herramienta = $inf_user[0]['id_herramienta'];
             $id_user = $inf_user[0]['id_personal'];
@@ -1336,12 +1629,15 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->puestos = $this->_season->GetSpecific($table,$wh,$puesto);
 
         }else {
+            
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de Herramienta a Cobrar
 
 
     public function pdfherramientacobroAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $wh="id_cobro";
@@ -1364,35 +1660,36 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->puestos = $this->_season->GetSpecific($table,$wh,$puesto);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }        
     }
 
     public function costodetailpAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->personal= $this->_her->GetPersonal($id);
-
-            // $table="epp_asignar";
-            // $wh="id_personal";
-            // $status=0;
-            // $cobro=2;
-            // $this->view->eppcobro = $this->_epp->GetEppCobro($table,$wh,$id,$status,$cobro);
 
             $table="cobro_herrac";
             $wh="id_personal";
             $this->view->hercobro = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de EPP Asignado
 
 
-     public function requestcostohAction(){
+    public function requestcostohAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+    
         if($this->getRequest()->getPost()){
 
             $table="cobro_herramientas";
@@ -1411,42 +1708,58 @@ class HerramientaController extends Zend_Controller_Action{
 
             $table="cobro_herrac";
             $name = $_FILES['url']['name'];
+    
             if(empty($name)){ 
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+    
             }else{
+    
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+    
                 if($res == 0){ 
+    
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+    
                 }else{
+    
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/cobros/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+    
                 }
+    
             }
 
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d-m-Y");
 
             $result = $this->_her->insertcobroH($post,$table,$urldb,$hoy);
+    
             if ($result) {
+    
                 return $this-> _redirect('/herramienta/herramientacosto/status/1');
+    
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+    
             }
         }
     }//END Add Comprobante Pago Herramienta
 
 
     public function prueba2Action(){
+    
          if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             
@@ -1457,20 +1770,20 @@ class HerramientaController extends Zend_Controller_Action{
             $this->view->herramienta= $this->_her->Getherramientasres($id);
             
         }else {        
+    
             return $this-> _redirect('/');        
+    
         }  
     }
 
+    
     public function datosAction(){
         
         try {
               
             $id = $_POST['variable'];
-
             $aResponse = $this->_her->Getherramientasresp($id);
-
             print json_encode( $aResponse, JSON_UNESCAPED_UNICODE);
-
 
             die();
 
@@ -1482,21 +1795,26 @@ class HerramientaController extends Zend_Controller_Action{
         }
     }
 
-     public function prueba3Action(){
+    
+    public function prueba3Action(){
+    
          if($this->_hasParam('id')){
-            $id = $this->_getParam('id');
-            
+
+            $id = $this->_getParam('id');        
             $table="herramienta_inventario";
             $this->view->contador= $this->_her->Getcontadorh($id);
 
             $table="herramienta_inventario";
             $this->view->herramienta= $this->_her->Getherramientasres($id);
             
-        }else {        
+        } else {        
+        
             return $this-> _redirect('/');        
+        
         }  
     }
 
+    
     public function escaneaqrAction(){
 
     }
@@ -1507,6 +1825,7 @@ class HerramientaController extends Zend_Controller_Action{
 
 
     public function requestaddpagoherramientaAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -1517,26 +1836,35 @@ class HerramientaController extends Zend_Controller_Action{
         $wh="id";
         $table="usuario";
         $usr = $this->_season->GetSpecific($table,$wh,$id);
+    
         $nombre_usuario = $usr[0]['nombre']. " " .$usr[0]['ap']. " ".$usr[0]['am'];
 
             $name = $_FILES['url']['name'];
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+            
                 if($res == 0){ 
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+            
                 }else{
+            
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/herramienta/cobros/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+            
                 }
             }
 
@@ -1544,17 +1872,21 @@ class HerramientaController extends Zend_Controller_Action{
         $result = $this->_her->Updateagregarmontoherramienta($post,$table,$urldb,$hoy);
         // var_dump($result);exit;
         if ($result) {
+            
             return $this-> _redirect('/herramienta/costodetail/id/'.$post['id_solicitud'].'');
+        
         }else{
+        
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
+        
         }
-
     } 
 
 
     public function requestaplicarcobroherramientaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
@@ -1571,9 +1903,13 @@ class HerramientaController extends Zend_Controller_Action{
             $new_num_pago = $num_pago + 1;
 
             if($new_num_pago == $usr[0]['parcialidad']){
+        
                 $this->_her->updatesolicitudherramientacobroouno($id,$table,$new_num_pago);
+        
             }else{
+        
                 $this->_her->updatesolicitudherramientacobroodos($id,$table,$new_num_pago); 
+        
             }
 
             date_default_timezone_set('America/Mexico_City');
@@ -1584,17 +1920,17 @@ class HerramientaController extends Zend_Controller_Action{
         }
 
         if ($result) {
+        
             return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        
         }else{
+        
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
+        
         }       
     }
-
-
-
-
 
     public function formatSizeUnits($bytes){
             if ($bytes >= 1073741824)

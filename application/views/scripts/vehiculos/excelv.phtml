@@ -67,9 +67,11 @@ function eliminar_acentos($cadena){
 				<th>Marca</th>
 				<th>Submarca</th>
 				<th>Modelo</th>
+				<th>Color</th>
         		<th>Placas</th>
         		<th>No Serie</th>
-        		<th>Color</th>
+        		<th>TAG</th>
+        		<th>Efecticard</th>
         		<th>Status</th>
         		<th>Grupo</th>
         		<th>Asignado a</th>
@@ -84,9 +86,26 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos( $vehiculo["marca"]); ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["submarca"]); ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["modelo"]); ?></td>
+				<td><?php echo $vehiculo["color"]; ?></td>
 				<td><?php echo $vehiculo["placas"]; ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["no_serie"]); ?></td>
-				<td><?php echo $vehiculo["color"]; ?></td>
+				<td>
+					<?php if ($vehiculo['tag'] == "" || $vehiculo['tag'] == null ) { ?>
+						Sin TAG
+					<?php } else { ?>
+						<?php echo $vehiculo["tag"]; ?>
+					<?php } ?>
+
+				</td>
+				<td>
+					<?php if ($vehiculo['efecticard'] == "" || $vehiculo['efecticard'] == null) { ?>
+						Sin Efecticard
+					<?php } else { ?>
+						<?php echo $vehiculo["efecticard"]; ?>
+					<?php } ?>
+
+				</td>
+				
 				<td><?php echo $vehiculo["nstatus"]; ?></td>
 				<td><?php echo eliminar_acentos( $vehiculo["grupo"]); ?></td>
 				<td>

@@ -44,11 +44,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     }//  INSERT EPP
 
     public function updateepp($post,$table){
-        // var_dump($post);
-        // exit;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? WHERE idepp = ? ",
+            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? 
+                WHERE idepp = ? ",
                 array(
                     $post['name'],
                     $post['talla'],
@@ -61,12 +61,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db->closeConnection();               
             return $qry;
         } 
+
         catch (Exception $e) {
             echo $e;
+        
         }
+
     }// END UPDATE EPP
 
     public function nepp($name){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_catalogo WHERE nombre like '%{$name}%'");
@@ -74,11 +78,14 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $row;
             $db->closeConnection();
         }catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
     public function eppnamecount($name,$offset,$no_of_records_per_page){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
@@ -90,24 +97,33 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
+        
         }catch (Exception $e){
+        
             echo $e;
+        
         }
+    
     }
 
     public function tallaepp($tallas){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_catalogo WHERE talla like '%{$tallas}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
     public function epptallacount($tallas,$offset,$no_of_records_per_page){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
@@ -120,12 +136,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $row;
             $db->closeConnection();
         }catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function eppexcel(){  
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
@@ -136,13 +155,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function eppasignacion(){  
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma,ae.id_epp, ae.cantidad, ae.descripcion, 
@@ -156,12 +179,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
     public function Getpaginationtipo($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT id_tipo, nombre
@@ -170,12 +198,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } 
 
     public function inserttipo($post,$table){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -183,38 +215,48 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  INSERT TIPO
 
     public function tiponombre($nombre){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_tipo WHERE nombre like '%{$nombre}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Buscar Tipo
 
     public function tipocount($nombre,$offset,$no_of_records_per_page){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_tipo WHERE nombre like '%{$nombre}%' LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+         
             echo $e;
+        
         }
     } //Contador Buscar
 
     public function updatetipo($post,$table){
-        // var_dump($post);
-        // exit;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET nombre = ? WHERE id_tipo = ? ",
@@ -224,12 +266,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db->closeConnection();               
             return $qry;
         } 
+        
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END UPDATE TIPO
 
     public function GetPersonalEpp($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
@@ -243,12 +289,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Personal
 
     public function Getcatalogo($table){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT nombre
@@ -256,13 +306,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Epp Nombre
 
 
     public function GetcatalogoSol($table){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT nombre
@@ -271,13 +325,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Epp Nombre
 
 
     public function GetEPPxVen($table){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_catalogo
@@ -285,12 +343,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // EPP con poco stock.
 
     public function GetEPPSinStock($table){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM epp_catalogo
@@ -299,12 +361,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $row;
             $db->closeConnection();
         }catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // EPP con poco stock.
 
     public function GetEppAsignado($table,$wh,$id,$status){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, 
@@ -317,8 +382,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Asignado
 
@@ -344,20 +412,25 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
 
 
     public function GetRegresar($table,$id_epp){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM $table where idepp = $id_epp");
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }
 
 
 
      public function updateStock2($post,$table,$nuevostock,$id_epp){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET  stock = ? WHERE idepp = ?",array(
@@ -368,24 +441,31 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  ACTUALIZAR STOCK 
 
     
     public function buscarrep($id,$table){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tiempo_vida FROM $table WHERE  idepp = ? ",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Asignado
 
     public function insertasignacion($post,$table,$fechanew,$statusc){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -403,14 +483,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END Insert asignar epp a personal
 
 
     public function insertasgcompra($post,$table,$fechanew,$statusc){
         $compra = 1;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -429,13 +513,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END Insert asignar epp a personal COMPRA EN CAMPO
 
 
     public function UpdateStock($post,$table){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET stock = stock - ? WHERE idepp = ?",array(
@@ -445,38 +533,49 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Stock de EPP
     
 // 
     public function consultaTallas($letra){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT idepp, talla FROM epp_catalogo WHERE nombre like '%{$letra}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// Obetener tallas
 
 
     public function consultaTallassin($letra){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT idepp, talla FROM epp_catalogo WHERE nombre like '%{$letra}%' and stock >=1");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// Obetener tallas
 
 
     public function Regresar($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto,
@@ -490,13 +589,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Personal Regresar de Vista
 
 
     public function DetallesEPP($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre as nombrep, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
@@ -513,26 +616,34 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Detalles EPP
 
 
     public function GetTalla($talla){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT idepp, talla FROM epp_catalogo WHERE nombre like '%{$talla}%'");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// Obetener tallas
 
 
     public function UpdateEppP($post,$table,$fechanew){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE epp_asignar SET talla = ?, id_epp = ?, tipo_epp = ?, fecha_entrega = ?, reposicion = ?, comentario = ? WHERE id = ? ",
@@ -548,20 +659,26 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
 
     }   //  Update EppP
 
     public function Responsiva($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM responsivas WHERE id_personal = ?",array($id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Responsiva
 
@@ -576,14 +693,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  Insert Responsiva
 
 
     public function GetEppCobro($table,$wh,$id,$status,$cobro){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro , 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, 
@@ -596,13 +717,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Asignado
 
     public function GetEppCobronomina($table,$wh,$id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, ea.comentario, ea.talla, 
                         ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, ea.status_epp, 
@@ -616,8 +741,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Asignado
 
@@ -625,6 +753,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
 
     public function GetPersonalCobro($table){
         $cobro = 1;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -639,13 +768,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Personal
 
     public function Getcobroeppnomina($cobro){
         $cobro = 1;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal, 
@@ -656,14 +789,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Personal
 
 
     public function GetPersonalCobroPag($table){
         $cobro = 2;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -678,13 +815,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Personal
 
     public function Getpaginationcobro($table,$offset,$no_of_records_per_page){
         $cobro = 1;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -700,12 +841,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// CONSULTA Cobro
 
     public function getnominacobroepppaginator($cobro,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal,
@@ -717,14 +862,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// CONSULTA Cobro
 
 
     public function GetpaginationcobroPag($table,$offset,$no_of_records_per_page){
         $cobro = 2;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -740,12 +889,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// CONSULTA Pagado
 
     public function insertcobro($post,$table,$urldb,$hoy){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -756,13 +909,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  INSERT COBRO
 
     public function UpdateCobro($post,$table){
         $cobro=2; 
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET cobro = ? WHERE id = ?",array(
@@ -772,12 +929,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Status Cobro
 
     public function UpdateCobronomina($post,$table,$nombre_usuario,$hoy){
         $cobro=4; 
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET cobro = ?, comentario_rechazo = ?, fecha_monto = ?, user_monto =? WHERE id = ?",array(
@@ -790,13 +950,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Status Cobro
 
 
     public function GetPersonalCobroB($table,$nombre){
         $cobro = 1;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -811,13 +974,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Buscador Personal
 
     public function GetPersonalCobroPagB($table,$nombre){
         $cobro = 2;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -832,13 +999,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta Buscador Personal
 
     public function GetpaginationcobroB($table,$nombre,$offset,$no_of_records_per_page){
         $cobro = 1;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -854,13 +1025,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// Consulta Buscador Personal
 
     public function GetpaginationcobroPagB($table,$nombre,$offset,$no_of_records_per_page){
         $cobro = 2;
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT DISTINCT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, pc.puesto, 
@@ -876,13 +1051,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// Consulta Buscador Personal
 
 
     public function GetAllPsn($table){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM personal_campo where delete_status = 0 and status_personal = 0
@@ -890,13 +1069,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // Consulta Personal EPP
 
 
      public function GetSolStepEPP(){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT *
@@ -904,13 +1087,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function GetSolStepEPPSpecific($id_user){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT *
@@ -918,13 +1105,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function GetStepEpppaginator($offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida,
@@ -937,13 +1128,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET INFO TO PAGINATOR
 
 
     public function GetStepEppSpecificpaginator($id_user,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida,
@@ -956,13 +1151,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET INFO TO PAGINATOR SPECIFIC
 
 
     public function insertsolepp1($post,$table,$id_user,$name_user){
+        
         try {
             $row = $this->createRow();
             $row->id_usuario = $id_user;
@@ -972,15 +1171,20 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row->fecha_requerida = $post['fecha_requerida'];
             $res = $row->save();              
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   // END INSERT PASO 1 SOLICITUD EPP
 
     public function UpdateSolPUno($post,$table,$id_user,$name_user){
-            try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET fecha_requerida = ?, id_usuario = ?, name_usuario = ?, id_personal = ?, comentarios = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET fecha_requerida = ?, id_usuario = ?, name_usuario = ?, id_personal = ?, comentarios = ? WHERE id = ?",
+                array(
                 $post['fecha_requerida'],
                 $id_user,
                 $name_user,
@@ -991,25 +1195,30 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   // END UPDATE PASO 1 SOLICITUD EPP
 
     public function GetPersonalSel($id_personal){
-         try{
+        try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM personal_campo WHERE id = $id_personal");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function GetEppAsgAct($id_personal){
-         try {
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, 
@@ -1022,12 +1231,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Asignado Actualmente
 
     public function insertasignacionsol($post,$table,$tipo){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -1042,14 +1255,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END Insert EPP por asignar
 
 
     public function GetEppXasg($id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.status_epp, ea.comprado_campo,ea.id_epp, ea.id_sol, 
@@ -1062,14 +1279,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Por Asignar
 
 
     public function GetEppXasgSinStatus($id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.epp_asignado, ea.fecha_entrega, ea.status_epp, 
@@ -1082,14 +1303,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Por Asignar Sin status
 
 
     public function GetEppXasgStatus($id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.epp_asignado, ea.fecha_entrega, ea.status_epp, 
@@ -1102,14 +1327,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     } // Consulta Epp Por Asignar Sin status
 
     public function UpdateSolPasDos($post,$table,$hoy){
         $pasodos = 1; 
-            try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET step_uno = ?, fecha_solicitud = ? WHERE id = ?",array(
                 $pasodos,
@@ -1119,7 +1348,9 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   // END UPDATE PASO 2 SOLICITUD EPP 
 
@@ -1128,6 +1359,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
 
 
     public function GetUserSolicitudAlmCount(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1140,13 +1372,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // Consulta Solicitudes en Proceso Almacen  
 
 
     public function GetPagSolProcesoAlm($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1160,8 +1396,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Paginacion Solicitudes en Proceso Almacen 
 
@@ -1169,6 +1408,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     ///////////////////////////////// Lista epp_solicitudes Admin ////////////////////////////////////////////////////////////
 
     public function GetSolCount(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1181,12 +1421,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT
 
     public function GetSolProcesopaginator($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1200,12 +1444,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes en Proceso
 
     public function GetSolEppAceptCount(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1218,14 +1466,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT Acerptadas
 
 
 
     public function GetSolAceptadaspaginator($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1239,13 +1491,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Aceptadas
 
 
     public function GetSolEppCancelCount(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1258,14 +1514,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT Canceladas/Rechazadas
 
 
 
     public function GetSolCanceladaspaginator($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1279,13 +1539,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Canceladas/Rechazadas
 
 
     public function GetSolEppSurtidoCount(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1298,14 +1562,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES COUNT Surtidas
 
 
 
     public function GetSolSurtidaspaginator($table,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1319,14 +1587,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Surtidas
 
     /////////////////////////////////////////////// Buscadores Admin  /////////////////////////////////////////////////////////
 
      public function GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1340,12 +1612,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Personal
 
     public function GetSolEPPBuscarPag($table,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1359,13 +1635,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Personal
 
 
      public function GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1379,12 +1659,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por ID
 
     public function GetSolIdEppBuscarPag($table,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1398,13 +1682,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por ID
 
 
     public function GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1418,13 +1706,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Usuario
 
 
      public function GetSolUserEPPBuscarPag($table,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1438,8 +1730,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Usuario
 
@@ -1447,6 +1742,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     //////////////////////////////////////// Lista solicitudes Specific ////////////////////////////////////////////////
 
     public function GetSolspfCount($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1460,14 +1756,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT
 
 
 
     public function GetSolProcesoSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1481,12 +1781,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes en Proceso
 
     public function GetSolEppAceptSpfCount($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1500,14 +1804,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT Acerptadas
 
 
 
     public function GetSolAceptadasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1521,13 +1829,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Aceptadas
 
 
     public function GetSolEppCancelSpfCount($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1541,14 +1853,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES  COUNT Canceladas/Rechazadas
 
 
 
     public function GetSolCanceladasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1562,13 +1878,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Canceladas/Rechazadas
 
 
     public function GetSolEppSurtidoSpfCount($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1582,14 +1902,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET SOLICITUDES COUNT Surtidas
 
 
 
     public function GetSolSurtidasSpfpaginator($table,$id,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1603,8 +1927,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //Paginacion Solicitudes Surtidas
     
@@ -1612,6 +1939,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     /////////////////////////////////////////////// Buscadores Specific  /////////////////////////////////////////////////////////
 
      public function GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1625,12 +1953,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Personal
 
     public function GetSolEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$personal,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1645,13 +1977,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Personal
 
 
      public function GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1665,12 +2001,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por ID
 
     public function GetSolIdEppSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$id,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1685,13 +2025,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por ID
 
 
     public function GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1705,13 +2049,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Usuario
 
 
      public function GetSolUserEPPSpfBuscarPag($table,$iduser,$offset,$no_of_records_per_page,$user,$statusstep,$statussol,$statussur){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_personal, e.id_usuario, e.name_usuario, e.fecha_solicitud, e.fecha_requerida, 
@@ -1726,8 +2074,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Usuario
 
@@ -1736,6 +2087,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
 
 
     public function GetDetallesEppSol($table,$id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.id_personal, e.fecha_solicitud, e.fecha_requerida,
@@ -1750,13 +2102,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // Detalles de solicitud
 
 
     public function UpdateAceptSolEpp($post,$table,$hoy,$name_user){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_solicitud = ?, user_aprobado = ?, fecha_aprobada = ?, name_useraprobado = ? WHERE id = ?",array(
@@ -1769,12 +2125,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  UPDATE Status Solicitud a Aceptada
 
 
     public function UpdateRechazarSolEpp($post,$table,$hoy,$name_user){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_solicitud = ?, user_rechazado = ?, fecha_rechazado = ?, comentarios_rechazo = ?, name_userrechazado = ?  WHERE id = ?",array(
@@ -1788,12 +2147,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  UPDATE Status Solicitud a Rechazada
 
 
     public function UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_surtido=?, url_responsiva = ?, fecha_surtido = ?, user_surtido = ?, name_usersurtido = ? WHERE id = ?",array(
@@ -1806,12 +2168,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db->closeConnection();               
             return $qry;
         } 
+        
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END UPDATE SOLICITUD Surtida EPP
 
     public function UpdateeppSol($post,$table,$idsol,$status,$hoy){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET status_epp = ?, fecha_entrega = ? WHERE id_sol = ?",array($status,$hoy,$idsol));
@@ -1819,13 +2185,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   // UPDATE STATUS 
 
 
     public function insertasgEppSol($table,$fechanew, $fecha_entrega, $cantidad, $descripcion, $talla, $id_personal, $id_epp,
                 $cobro, $tipo_epp){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -1842,12 +2211,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END Insert asignar epp a personal desde solicitudes
 
     public function UpdateStockEppSol($table,$cantidad,$talla){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET stock = stock - ? WHERE idepp = ?",array(
@@ -1857,11 +2230,14 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Stock de EPP desde Solicitudes
 
     public function insertrespEppSol($idper,$table,$urldb,$fhoy){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -1872,14 +2248,19 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  Insert Responsiva En historial desde solicitudes
 
 
      public function UpdateStatusCobro($post,$table){
+        
         $statuscobro=1;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET cobro = ? WHERE id = ?",array(
@@ -1889,12 +2270,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Status Cobro solicitud
 
 
      public function UpdateReestablecerCobro($solicitud,$table){
+        
         $statuscobro=0;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -1905,13 +2289,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Reestablecer Cobro
 
 
      public function UpdateStatusAsignado($post,$table){
         $status=1;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET epp_asignado = ? WHERE id = ?",array(
@@ -1921,13 +2308,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Status Cobro solicitud
 
 
     public function UpdateReestablecerAsignar($solicitud,$table){
         $status=0;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET epp_asignado = ? WHERE id_sol = ?",array(
@@ -1937,24 +2327,31 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Reestablecer Cobro
 
     public function GetSpecificInsertar($table,$wh,$id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM $table WHERE $wh = ? and epp_asignado = 1",array($id));
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }
 
 
     public function DetallesEPPXAsignar($id){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre as nombrep, pc.apellido_pa, pc.apellido_ma, ea.id AS idea, ea.fecha_entrega,
@@ -1968,13 +2365,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } // Consulta EPP en solicitudes
 
 
     public function UpdEppxAsg($post,$table){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE epp_asignarsol SET talla = ?, id_epp = ? WHERE id = ? ",
@@ -1986,7 +2387,9 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
 
     }   //  Update UpdEppxAsg
@@ -1994,6 +2397,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
 
      public function Updateagregarmontoeppnomina($post,$table,$urldb,$hoy,$nombre_usuario){
         $cobro=3; 
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET monto_pago =?, parcialidad =? ,cobro = ?, fecha_monto = ?, user_monto =? ,evidencia =? WHERE id = ?",array(
@@ -2008,13 +2412,16 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  Update Status Cobro
 
 
     public function updatesolicitudcobroounoepp($id,$table,$num_pago){
         $status= 2;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET cantidad_pago = ?, cobro = ? WHERE id = ?",array($num_pago,$status,$id));
@@ -2022,11 +2429,14 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  UPDATE ROL
 
     public function updatesolicitudcobroodosepp($id,$table,$num_pago){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("UPDATE $table SET cantidad_pago =? WHERE cobro = ?",array($num_pago,$id));
@@ -2034,12 +2444,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             return $qry;
         } 
         catch (Exception $e) {
+        
             echo $e;
+        
         }
     }//  UPDATE ROL
 
     public function insertneweppnomina($post,$table,$id,$descuento,$hoy){
         $tipo = 3;
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -2055,13 +2468,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END INSERT USER
 
 
     public function geteppasignarcobronomina($user){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.talla, ea.reposicion,ea.id_personal,
@@ -2071,8 +2488,11 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   // Detalles de solicitud
 

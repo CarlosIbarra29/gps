@@ -19,11 +19,14 @@ class EppController extends Zend_Controller_Action{
         $this->_her = new Application_Model_GpsHerramientaModel;
 
         if(empty($this->_session->id)){
+
             $this->redirect('/home/login');
+        
         }
     }
 
     public function catalogoAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -41,8 +44,10 @@ class EppController extends Zend_Controller_Action{
         $count=count($eppinv);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
         } else {
+        
             $pagina= $this->view->pagina = 1;
         } 
 
@@ -61,44 +66,59 @@ class EppController extends Zend_Controller_Action{
     public function requestaddeppAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+            
             $table="epp_catalogo";
- 
             $result = $this->_epp->insertepp($post,$table);
 
             if ($result) {
+
                 return $this-> _redirect('/epp/catalogo');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END ADD EPP
 
 
     public function requestdeleteeppAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $id=$post['id'];
             $table="epp_catalogo";
             $wh="idepp";
             $result = $this->_season->deleteAll($id,$table,$wh);
+            
             if ($result) {
+            
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            
             }else{
+            
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+            
             }
         }
     }//END REQUEST DELETE EPP
 
     public function eppeditAction(){
-           if($this->_hasParam('id')){
+        
+        if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $table="epp_catalogo";
             $wh="idepp";
@@ -115,43 +135,58 @@ class EppController extends Zend_Controller_Action{
 
             $table="sitios";
             $this->view->sitio= $this->_season->GetAll($table);
-        }else {
+        } else {
+          
             return $this-> _redirect('/');
+        
         }   
 
     }//END EPPEDIT
 
     public function requestupdateeppAction(){
-    $this->_helper->layout()->disableLayout();
-    $this->_helper->viewRenderer->setNoRender(true);
-    $post = $this->getRequest()->getPost();
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $post = $this->getRequest()->getPost();
+
         if($this->getRequest()->getPost()){
 
             $table="epp_catalogo";
             $result = $this->_epp->updateepp($post,$table);
+            
             if ($result) {
+                
                 return $this-> _redirect('/epp/catalogo');
-            }else{
+            
+            } else {
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END REQUEST update EPP
 
+    
     public function exceleppAction(){
+        
         $status=$this->_getParam('status');
         $this->view->status=$status;
         $this->view->excelepp = $this->_epp->eppexcel();
+    
     }// Excel EPP
 
-     public function excelasignacionAction(){
+     
+    public function excelasignacionAction(){
     
         $this->view->excelepp = $this->_epp->eppasignacion();
+    
     }// Excel EPP
 
 
     public function buscareppAction(){
+    
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -159,6 +194,7 @@ class EppController extends Zend_Controller_Action{
         $this->view->eppt = $this->_season->GetAll($table);
 
         if($this->_hasParam('nombre')){
+            
             $name = $this->_getParam('nombre');
             $nombre_epp= $this->_epp->nepp($name);
             $option= 1;
@@ -169,11 +205,17 @@ class EppController extends Zend_Controller_Action{
 
             $this->view->option=$option; 
             $count=count($nombre_epp);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             }   
+            
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -184,6 +226,7 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('tallas')){
+            
             $tallas = $this->_getParam('tallas');
             $talla_e= $this->_epp->tallaepp($tallas);
             $this->view->talla_epp=$tallas;
@@ -194,10 +237,15 @@ class EppController extends Zend_Controller_Action{
             $option= 2;
             $this->view->option=$option;
             $count=count($talla_e);
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             }else{
+            
                 $pagina= $this->view->pagina = 1;
+            
             }   
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -223,9 +271,13 @@ class EppController extends Zend_Controller_Action{
         $count=count($epp_t);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 15;
@@ -240,44 +292,62 @@ class EppController extends Zend_Controller_Action{
     }   // Tipo de EPP
 
     public function requestaddtipoAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $table="epp_tipo";
             $result = $this->_epp->inserttipo($post,$table);
+            
             if ($result) {
+            
                 return $this-> _redirect('/epp/tipo');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END add tipo de EPP
 
     public function buscartipoAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
+        
         if($this->_hasParam('nombre')){
             $tipo = $this->_getParam('nombre');
             $nombre = strstr($tipo, '?', true); 
+            
             if($nombre == false){
+            
                 $name = $this->_getParam('nombre');
+            
             }else{
+            
                  $name = strstr($tipo, '?', true); 
+            
             }
 
             $this->view->name_search=$name;
             $usuarios=$this->_epp->tiponombre($name);
             $count=count($usuarios); 
+            
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
-
 
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -290,30 +360,43 @@ class EppController extends Zend_Controller_Action{
     } //Buscar Tipo
 
     public function tipoeditAction(){
+        
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $table="epp_tipo";
             $wh="id_tipo";
             $this->view->tipo_epp = $this->_season->GetSpecific($table,$wh,$id);
-        }else {
+        
+        } else {
+        
             return $this-> _redirect('/');
+        
         }   
     }//End Tipo Edit
 
     public function requestupdatetipoAction(){
+       
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $table="epp_tipo";
             $result = $this->_epp->updatetipo($post,$table);
+            
             if ($result) {
+            
                 return $this-> _redirect('/epp/tipo');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END REQUEST UPDATE TIPO
@@ -321,6 +404,7 @@ class EppController extends Zend_Controller_Action{
     public function asignareppAction(){
 
         if($this->_hasParam('id')){
+            
             $id = $this->_getParam('id');
             $this->view->personal_epp= $this->_epp->GetPersonalEpp($id);
 
@@ -344,24 +428,34 @@ class EppController extends Zend_Controller_Action{
 
             $personal = $this->_getParam('id');
             $this->view->idpersonal=$personal;
-        }else {
+        } else {
+          
             return $this-> _redirect('/');
+        
         }       
 
     } // End Asignar Epp
 
     public function requesteppdelAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="epp_asignar";
             $wh="id";
             $result = $this->_epp->updatestatus($id,$table,$wh);
+            
             if ($result) {
+            
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            
             }else{
+            
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
@@ -373,7 +467,9 @@ class EppController extends Zend_Controller_Action{
         
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $id =  $post['id'];
@@ -398,24 +494,32 @@ class EppController extends Zend_Controller_Action{
             $table="epp_asignar";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }   
     }//END REQUEST DELETE TODO
 
 
     public function requestasignareppAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             
             $encampo = $post ['campo'];
+            
             if ($encampo == true) {
 
                 $id=$post['talla'];
@@ -427,21 +531,30 @@ class EppController extends Zend_Controller_Action{
                 $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
 
                 $cobro=$post['cobro']; 
+                
                 if ($cobro == true) {
+                
                     $statusc = 1;
+                
                 }else{
+                
                     $statusc=0;
+                
                 }
 
                 $table="epp_asignar";
                 $result = $this->_epp->insertasgcompra($post,$table,$fechanew,$statusc);
 
                 if ($result) {
+                
                     return $this-> _redirect('/epp/asignarepp/id/'.$post['idhs'].''); 
+                
                 }else{
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+                
                 }
 
             } else {
@@ -455,10 +568,15 @@ class EppController extends Zend_Controller_Action{
                 $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
 
                 $cobro=$post['cobro']; 
+                
                 if ($cobro == true) {
+                
                     $statusc = 1;
+                
                 }else{
+                
                     $statusc=0;
+                
                 }
 
                 $table="epp_asignar";
@@ -469,11 +587,15 @@ class EppController extends Zend_Controller_Action{
                 $result = $this->_epp->UpdateStock($post,$table);
 
                 if ($result) {
+                
                     return $this-> _redirect('/epp/asignarepp/id/'.$post['idhs'].''); 
+                
                 }else{
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+                
                 }
             }
         }        
@@ -498,30 +620,6 @@ class EppController extends Zend_Controller_Action{
             print json_encode($result);
 
             exit;
-            
-            // return $html;
-
-            // $html="";
-
-            // // foreach ($result as $key => $value) {
-        
-            //     $html.="<option value='".$value['idepp']."'>".$value['talla']."</option>";
-        
-            // }
-        
-        //     echo $html;
-
-        //     if ($result) {
-        
-        //         echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
-        
-        //     }else{
-        
-        //         print '<script language="JavaScript">';
-        //         print 'alert("Ocurrio un error: Comprueba los datos.");';
-        //         print '</script>';
-        
-        //     }
         
          }
     }//END REQUEST get TALLAS
@@ -545,35 +643,12 @@ class EppController extends Zend_Controller_Action{
 
             exit;
             
-            // return $html;
-
-            // $html="";
-
-            // // foreach ($result as $key => $value) {
-        
-            //     $html.="<option value='".$value['idepp']."'>".$value['talla']."</option>";
-        
-            // }
-        
-        //     echo $html;
-
-        //     if ($result) {
-        
-        //         echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
-        
-        //     }else{
-        
-        //         print '<script language="JavaScript">';
-        //         print 'alert("Ocurrio un error: Comprueba los datos.");';
-        //         print '</script>';
-        
-        //     }
-        
          }
     }//END REQUEST get TALLAS
 
 
     public function asignadetailAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->personal= $this->_epp->Regresar($id);
@@ -581,8 +656,10 @@ class EppController extends Zend_Controller_Action{
             $table="epp_asignar";
             $this->view->detalles= $this->_epp->DetallesEPP($id);
 
-        }else {
+        } else {
+        
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de EPP Asignado
 
@@ -638,11 +715,15 @@ class EppController extends Zend_Controller_Action{
             $result = $this->_epp->UpdateEppP($post,$table,$fechanew);
             
             if ($result) {
+
                 return $this-> _redirect('/epp/asignarepp/id/'.$post['ids'].'');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END REQUEST UPDATE ASINADO
@@ -658,37 +739,49 @@ class EppController extends Zend_Controller_Action{
             $table="responsivas";
             $this->view->responsiva= $this->_epp->Responsiva($id);
 
-        }else {
+        } else {
+         
             return $this-> _redirect('/');
+        
         }         
 
     }
 
-    
     public function requestresponsivaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="responsivas";
             $name = $_FILES['url']['name'];
+            
             if(empty($name)){ 
+                
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+                
                 if($res == 0){ 
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+                
                 }else{
+                
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/epp/responsivas/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                 }
             }
 
@@ -699,11 +792,15 @@ class EppController extends Zend_Controller_Action{
             $result = $this->_epp->insertresponsiva($post,$table,$urldb,$hoy);
 
             if ($result) {
+                
                 return $this-> _redirect('/epp/historial/id/'.$post['idper'].'');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END Responsiva
@@ -720,8 +817,11 @@ class EppController extends Zend_Controller_Action{
 
             $personal = $this->_getParam('id');
             $this->view->idpersonal=$personal;
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }       
 
     } // End Asignar Epp
@@ -745,8 +845,10 @@ class EppController extends Zend_Controller_Action{
             $this->view->eppcobro = $this->_epp->GetEppCobro($table,$wh,$id,$status,$cobro);
 
             
-        }else {
+        } else {
+          
             return $this-> _redirect('/');
+        
         }       
 
     }
@@ -754,6 +856,7 @@ class EppController extends Zend_Controller_Action{
     
 
     public function eppcostoAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -769,7 +872,15 @@ class EppController extends Zend_Controller_Action{
             $eppcobros=$this->_epp->Getcobroeppnomina($status);
             $count=count($eppcobros);
 
-            if (isset($_GET['pagina'])){ $pagina =$_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+            if (isset($_GET['pagina'])){ 
+
+                $pagina =$_GET['pagina'];
+
+            }else{
+
+                $pagina= $this->view->pagina = 1;
+
+            } 
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -778,9 +889,6 @@ class EppController extends Zend_Controller_Action{
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $table="personal_campo";
             $sql= $this->view->paginator= $this->_epp->getnominacobroepppaginator($status,$offset,$no_of_records_per_page);  
-    
-
-
 
     }// END Cobro EPP
 
@@ -797,6 +905,7 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 1){
+
              $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
 
@@ -808,9 +917,13 @@ class EppController extends Zend_Controller_Action{
             $count=count($eppcobros);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -825,6 +938,7 @@ class EppController extends Zend_Controller_Action{
 
 
           if($status == 2){
+            
             $actualpagina=$this->_getParam('pagina');
             $this->view->actpage=$actualpagina;
 
@@ -836,9 +950,12 @@ class EppController extends Zend_Controller_Action{
             $count=count($eppcobros);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 15;
@@ -854,6 +971,7 @@ class EppController extends Zend_Controller_Action{
 
 
     public function eppdetailcostoAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -863,12 +981,15 @@ class EppController extends Zend_Controller_Action{
             $wh="id";
             $this->view->eppcobro = $this->_epp->GetEppCobronomina($table,$wh,$id);
 
-        }else {
+        } else {
+        
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de EPP Asignado
 
     public function eppdetailcostopAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->personal_epp= $this->_epp->GetPersonalEpp($id);
@@ -883,8 +1004,10 @@ class EppController extends Zend_Controller_Action{
             $wh="id_personal";
             $this->view->eppcobro = $this->_season->GetSpecific($table,$wh,$id);
 
-        }else {
+        } else {
+        
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de EPP Asignado
 
@@ -894,6 +1017,7 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $table="epp_asignar";
             $wh="id_personal";
@@ -912,24 +1036,34 @@ class EppController extends Zend_Controller_Action{
 
             $table="epp_cobro";
             $name = $_FILES['url']['name'];
+            
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+                
                 if($res == 0){ 
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+                
                 }else{
+                
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/epp/cobros/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                 }
+            
             }
 
             date_default_timezone_set('America/Mexico_City');
@@ -937,16 +1071,22 @@ class EppController extends Zend_Controller_Action{
 
             $result = $this->_epp->insertcobro($post,$table,$urldb,$hoy);
             if ($result) {
+            
                 return $this-> _redirect('/epp/eppcosto/status/2');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END Add Comprobante Pago
 
+
     public function requestadddeleteeppcobroAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -961,18 +1101,23 @@ class EppController extends Zend_Controller_Action{
 
         $table="epp_asignar";
         $result = $this->_epp->UpdateCobronomina($post,$table,$nombre_usuario,$hoy);
+        
         if ($result) {
+        
             return $this-> _redirect('/epp/eppdetailcosto/id/'.$post['id_solicitud'].'');
+        
         }else{
+        
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
+        
         }
-
     }
 
 
     public function eppdetailAction(){
+      
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             
@@ -981,7 +1126,9 @@ class EppController extends Zend_Controller_Action{
             $this->view->inf= $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }  
     } // Detalles de EPP Asignado
 
@@ -1004,9 +1151,13 @@ class EppController extends Zend_Controller_Action{
         $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 20;
@@ -1047,11 +1198,15 @@ class EppController extends Zend_Controller_Action{
             $result = $this->_epp->insertsolepp1($post,$table,$id_user,$name_user);
 
             if ($result) {
+        
                 return $this-> _redirect('/epp/addsoleppdos/id/'.$result.'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }
@@ -1085,19 +1240,22 @@ class EppController extends Zend_Controller_Action{
             $usr = $this->_season->GetSpecific($table,$wh,$id);
             $id_user = $usr[0]['id'];
             $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
-            // var_dump($name_user);
-            // die();
-
+        
             $table="epp_solicitudes";
             $result = $this->_epp->UpdateSolPUno($post,$table,$id_user,$name_user);
             
             if ($result) {
+        
                 return $this-> _redirect('/epp/addsoleppdos/id/'.$post['ids'].'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
+        
         }
     }
 
@@ -1107,17 +1265,23 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $id =  $post['id'];
             $table="epp_solicitudes";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }   
     }//END REQUEST DELETE TODO
@@ -1149,9 +1313,11 @@ class EppController extends Zend_Controller_Action{
 
 
     public function requestasgeppsolAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
                 
             $id=$post['talla'];
@@ -1164,11 +1330,15 @@ class EppController extends Zend_Controller_Action{
             $result =  $this->_epp->insertasignacionsol($post,$table,$tipo);
 
             if ($result) {
+        
                 return $this-> _redirect('/epp/addsoleppdos/id/'.$post['solid'].''); 
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }        
     }// End Request Asignar -herramienta
@@ -1178,26 +1348,35 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $id =  $post['id'];
             $table="epp_asignarsol";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+            
             }
         }   
     }//END REQUEST DELETE TODO
 
 
     public function requestaddsolvehdosAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             date_default_timezone_set('America/Mexico_City');
@@ -1205,14 +1384,18 @@ class EppController extends Zend_Controller_Action{
 
             $table="epp_solicitudes";
             $result = $this->_epp->UpdateSolPasDos($post,$table,$hoy);
+            
             if ($result) {
+            
                 return $this-> _redirect('/epp/eppsol');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
-
         }
     }   // Solicitud Terminada Paso 2
 
@@ -1234,9 +1417,13 @@ class EppController extends Zend_Controller_Action{
         $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+         
                 $pagina = $_GET['pagina'];
+         
             } else {
+         
                 $pagina= $this->view->pagina = 1;
+         
             } 
 
             $no_of_records_per_page = 20;
@@ -1259,6 +1446,7 @@ class EppController extends Zend_Controller_Action{
 
 
      public function requestpasounoeppspfAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -1278,11 +1466,15 @@ class EppController extends Zend_Controller_Action{
             $result = $this->_epp->insertsolepp1($post,$table,$id_user,$name_user);
 
             if ($result) {
+        
                 return $this-> _redirect('/epp/addsoleppdosspf/id/'.$result.'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }
@@ -1315,6 +1507,7 @@ class EppController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             date_default_timezone_set('America/Mexico_City');
@@ -1322,14 +1515,18 @@ class EppController extends Zend_Controller_Action{
 
             $table="epp_solicitudes";
             $result = $this->_epp->UpdateSolPasDos($post,$table,$hoy);
+            
             if ($result) {
+            
                 return $this-> _redirect('/epp/eppsolspecific');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
-
         }
     }   // Solicitud Specific Terminada Paso 2
 
@@ -1349,9 +1546,11 @@ class EppController extends Zend_Controller_Action{
     }
 
     public function requestasgeppsolspfAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
                 
             $id=$post['talla'];
@@ -1364,16 +1563,21 @@ class EppController extends Zend_Controller_Action{
             $result =  $this->_epp->insertasignacionsol($post,$table,$tipo);
 
             if ($result) {
+            
                 return $this-> _redirect('/epp/addsoleppdosspf/id/'.$post['solid'].''); 
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }        
     }// End Request Asignar -herramienta
 
     public function requestupdsolspfAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -1386,18 +1590,20 @@ class EppController extends Zend_Controller_Action{
             $usr = $this->_season->GetSpecific($table,$wh,$id);
             $id_user = $usr[0]['id'];
             $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
-            // var_dump($name_user);
-            // die();
-
+        
             $table="epp_solicitudes";
             $result = $this->_epp->UpdateSolPUno($post,$table,$id_user,$name_user);
             
             if ($result) {
+           
                 return $this-> _redirect('/epp/addsoleppdosspf/id/'.$post['ids'].'');
+           
             }else{
+           
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+           
             }
         }
     }
@@ -1440,9 +1646,13 @@ class EppController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 20;
@@ -1457,13 +1667,16 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 1){
+        
             $solicitud=$this->_epp->GetSolEppAceptCount();
-
             $count=count($solicitud);
 
             if(isset($_GET['pagina'])) { 
+
                 $pagina = $_GET['pagina']; 
+            
             }else { 
+            
                 $pagina= $this->view->pagina = 1; 
             }
 
@@ -1478,12 +1691,16 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 2){
+            
             $solicitud=$this->_epp->GetSolEppCancelCount();
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
             } 
 
@@ -1498,13 +1715,16 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 3){
+            
             $solicitud=$this->_epp->GetSolEppSurtidoCount();
-            // var_dump($solicitud);exit;
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
             } 
 
@@ -1521,6 +1741,7 @@ class EppController extends Zend_Controller_Action{
 
 
     public function listasolbuscarAction(){
+        
         $id=$this->_session->id;
         $this->view->user_list=$id;
 
@@ -1547,7 +1768,9 @@ class EppController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+        
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
@@ -1560,9 +1783,13 @@ class EppController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -1577,6 +1804,7 @@ class EppController extends Zend_Controller_Action{
 
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -1589,7 +1817,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -1601,6 +1838,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -1610,9 +1848,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -1628,6 +1874,7 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+            
             if($opcion == 1){
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
@@ -1641,9 +1888,13 @@ class EppController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -1669,7 +1920,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -1681,18 +1941,28 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1;
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -1708,6 +1978,7 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 2) {
+            
             if($opcion == 1){
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
@@ -1716,14 +1987,18 @@ class EppController extends Zend_Controller_Action{
                 $statusstep = 1;
                 $statussol = 2;
                 $statussur = 0;
-                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -1737,6 +2012,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -1749,7 +2025,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -1761,6 +2046,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -1770,9 +2056,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) {
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -1788,7 +2082,9 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 3) {
+            
             if($opcion == 1){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
@@ -1801,9 +2097,13 @@ class EppController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+            
                     $pagina = $_GET['pagina'];
+            
                 } else {
+            
                     $pagina= $this->view->pagina = 1;
+            
                 } 
 
                 $no_of_records_per_page = 20;
@@ -1817,6 +2117,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -1829,7 +2130,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -1841,6 +2151,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -1850,9 +2161,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 1;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -1872,6 +2191,7 @@ class EppController extends Zend_Controller_Action{
     
 
     public function listasolspecificAction(){
+        
         $id=$this->_session->id;
         $this->view->user_list=$id;
         $wh="id_usuario";
@@ -1904,9 +2224,13 @@ class EppController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 20;
@@ -1921,14 +2245,18 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 1){
-            $solicitud=$this->_epp->GetSolEppAceptSpfCount($id);
 
+            $solicitud=$this->_epp->GetSolEppAceptSpfCount($id);
             $count=count($solicitud);
 
             if(isset($_GET['pagina'])) { 
+            
                 $pagina = $_GET['pagina']; 
+            
             }else { 
+            
                 $pagina= $this->view->pagina = 1; 
+            
             }
 
             $no_of_records_per_page = 20;
@@ -1942,13 +2270,18 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 2){
+            
             $solicitud=$this->_epp->GetSolEppCancelSpfCount($id);
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1962,14 +2295,19 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 3){
+            
             $solicitud=$this->_epp->GetSolEppSurtidoSpfCount($id);
             // var_dump($solicitud);exit;
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1987,6 +2325,7 @@ class EppController extends Zend_Controller_Action{
     
 
     public function listasolbuscarspfAction(){
+        
         $id=$this->_session->id;
         $this->view->user_list=$id;
 
@@ -2015,7 +2354,9 @@ class EppController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+        
             if($opcion == 1){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
@@ -2028,9 +2369,13 @@ class EppController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+            
                     $pagina = $_GET['pagina'];
+            
                 } else {
+            
                     $pagina= $this->view->pagina = 1;
+            
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2045,6 +2390,7 @@ class EppController extends Zend_Controller_Action{
 
 
             if($opcion == 2){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2057,7 +2403,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2069,6 +2424,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -2078,9 +2434,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2096,6 +2460,7 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+            
             if($opcion == 1){
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
@@ -2109,9 +2474,13 @@ class EppController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+             
                     $pagina = $_GET['pagina'];
+             
                 } else {
+             
                     $pagina= $this->view->pagina = 1;
+             
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2125,6 +2494,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+             
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2137,7 +2507,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2149,6 +2528,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -2158,9 +2538,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2177,6 +2565,7 @@ class EppController extends Zend_Controller_Action{
 
         if($status == 2) {
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
@@ -2184,14 +2573,18 @@ class EppController extends Zend_Controller_Action{
                 $statusstep = 1;
                 $statussol = 2;
                 $statussur = 0;
-                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($persona,$iduser,$statusstep,$statussol,$statussur);
 
+                $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($persona,$iduser,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2205,6 +2598,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2217,7 +2611,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2229,6 +2632,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
@@ -2238,9 +2642,17 @@ class EppController extends Zend_Controller_Action{
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+                 
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2256,22 +2668,29 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 3) {
+            
             if($opcion == 1){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
                 $this->view->personalsol=$personal;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 1;
+                
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPSpfBuscar($personal,$iduser,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2285,6 +2704,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2297,7 +2717,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppSpfBuscar($id,$iduser,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2309,18 +2738,28 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 1;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPSpfBuscar($user,$iduser,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2371,9 +2810,12 @@ class EppController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+                
                 $pagina = $_GET['pagina'];
             } else {
+                
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -2388,13 +2830,18 @@ class EppController extends Zend_Controller_Action{
         }
 
         if($status == 1){
+            
             $solicitud=$this->_epp->GetSolEppCancelCount();
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -2413,9 +2860,13 @@ class EppController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -2432,6 +2883,7 @@ class EppController extends Zend_Controller_Action{
 
 
     public function listasolbuscaralmAction(){
+        
         $id=$this->_session->id;
         $this->view->user_list=$id;
 
@@ -2458,22 +2910,29 @@ class EppController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+        
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
                 $this->view->personalsol=$personal;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 0;
+                
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2488,6 +2947,7 @@ class EppController extends Zend_Controller_Action{
 
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2500,7 +2960,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2512,18 +2981,28 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2539,22 +3018,29 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+            
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
                 $this->view->personalsol=$personal;
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statussur = 0;
+                
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2568,6 +3054,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2580,7 +3067,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2592,18 +3088,28 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statussur = 0;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2619,22 +3125,29 @@ class EppController extends Zend_Controller_Action{
 
 
         if($status == 2) {
+
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $personal = $this->_getParam('personal');
                 $this->view->personalsol=$personal;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 1;
+                
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolEPPBuscar($personal,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2648,6 +3161,7 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2660,7 +3174,16 @@ class EppController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolIdEppBuscar($id,$statusstep,$statussol,$statussur);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2672,18 +3195,28 @@ class EppController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statussur = 1;
 
                 $solicitud=$this->view->sol_epp=$this->_epp->GetSolUserEPPBuscar($user,$statusstep,$statussol,$statussur);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2701,6 +3234,7 @@ class EppController extends Zend_Controller_Action{
     
 
     public function solicituddetailAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -2732,16 +3266,19 @@ class EppController extends Zend_Controller_Action{
             $table="usuario";
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
 
-
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }
 
 
     public function requestchgaceptsoleppAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
         $post = $this->getRequest()->getPost();
         
             date_default_timezone_set('America/Mexico_City');
@@ -2762,17 +3299,22 @@ class EppController extends Zend_Controller_Action{
 
 
             if ($result) {
+        
                 return $this->_redirect('/epp/solicituddetail/id/'.$post['id_solicitud'].'/status/1');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // END REQUEST ACEPTAR SOLICITUD
 
 
     public function requestchgcanceleppsolAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -2795,17 +3337,22 @@ class EppController extends Zend_Controller_Action{
 
 
             if ($result) {
+        
                 return $this->_redirect('/epp/solicituddetail/id/'.$post['id_solicitud'].'/status/2');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // END REQUEST CANCELAR SOLICITUD
 
 
     public function solicitudeppAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -2839,8 +3386,11 @@ class EppController extends Zend_Controller_Action{
             $wh="id";
             $table="usuario";
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }   //Para PDF de la solicitud Usuario y MAnager
 
@@ -2879,13 +3429,15 @@ class EppController extends Zend_Controller_Action{
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
 
 
-        }else {
+        } else {
+        
             return $this-> _redirect('/');
+        
         }
-
     }
 
     public function solicitudeppalmAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -2916,13 +3468,16 @@ class EppController extends Zend_Controller_Action{
             $wh="id";
             $table="usuario";
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
-        }else {
+        } else {
+        
             return $this-> _redirect('/');
+        
         }
     }   //Para PDF de la solicitud Usuario y MAnager
 
 
     public function requestaddresponsivaeppAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -2977,24 +3532,30 @@ class EppController extends Zend_Controller_Action{
             $name = $_FILES['url']['name'];
             
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
 
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+
                 }else{
+
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/epp/responsivas';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
                 }
             }
 
@@ -3022,10 +3583,13 @@ class EppController extends Zend_Controller_Action{
             if ($result) {
                 // return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['id_solicitud'].'/status/2');
                 return $this-> _redirect('/epp/listasolalmacen/status/0');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }
@@ -3197,16 +3761,21 @@ class EppController extends Zend_Controller_Action{
             $result = $this->_epp->UpdEppxAsg($post,$table);
             
             if ($result) {
+            
                 return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/0');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }//END REQUEST UPDATE ASINADO
 
     public function requestaddpagoeppnominaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -3220,37 +3789,49 @@ class EppController extends Zend_Controller_Action{
         $nombre_usuario = $usr[0]['nombre']. " " .$usr[0]['ap']. " ".$usr[0]['am'];
 
             $name = $_FILES['url']['name'];
+            
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+            
                 if($res == 0){ 
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+            
                 }else{
+            
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/epp/cobros/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+            
                 }
             }
 
-        $table="epp_asignar";
-        $result = $this->_epp->Updateagregarmontoeppnomina($post,$table,$urldb,$hoy,$nombre_usuario);
-        // var_dump($result);exit;
+            $table="epp_asignar";
+            $result = $this->_epp->Updateagregarmontoeppnomina($post,$table,$urldb,$hoy,$nombre_usuario);
+            // var_dump($result);exit;
+
         if ($result) {
+            
             return $this-> _redirect('/epp/eppdetailcosto/id/'.$post['id_solicitud'].'');
+            
         }else{
+            
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         }
-
     } 
 
     public function requestaddeppnominauserAction(){
@@ -3260,6 +3841,7 @@ class EppController extends Zend_Controller_Action{
         // var_dump($post);exit;   
         
         foreach ($post['validar'] as $key) {
+        
             $id = $key;
             $wh="id";
             $table="epp_asignar";
@@ -3269,9 +3851,13 @@ class EppController extends Zend_Controller_Action{
             $new_num_pago = $num_pago + 1;
 
             if($new_num_pago == $usr[0]['parcialidad']){
+        
                 $this->_epp->updatesolicitudcobroounoepp($id,$table,$new_num_pago);
+        
             }else{
+        
                 $this->_epp->updatesolicitudcobroodosepp($id,$table,$new_num_pago); 
+        
             }
 
             date_default_timezone_set('America/Mexico_City');
@@ -3282,11 +3868,15 @@ class EppController extends Zend_Controller_Action{
         }
 
         if ($result) {
+        
             return $this->_redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].'');
+        
         }else{
+        
             print '<script language="JavaScript">'; 
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
+        
         }  
 
     }

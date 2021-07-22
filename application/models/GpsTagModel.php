@@ -5,7 +5,8 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
     protected $_primary = 'id';
 
 
-     public function GetTags(){ 
+    public function GetTags(){ 
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT distinct tag
@@ -13,13 +14,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }
 
 
     public function GetTagspaginator($offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT distinct tag 
@@ -27,12 +32,16 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET INFO TO PAGINATOR
 
     public function GetArrayConsumosTag(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT id, concesionaria, fecha, tag, entrada, salida, importe, 
@@ -41,12 +50,16 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } //END GET Consumos ya cargados
 
     public function insertTagConsumos($post,$table){
+        
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -62,25 +75,33 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }// END INSERT Consumos TAG
 
     public function GetSpecificTag($table,$wh,$id){
-         try {
+        
+        try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT * FROM $table WHERE $wh like '%{$id}%'");
             $row = $qry->fetchAll();
             $db->closeConnection();
             return $row;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
+        
             echo $e;
+        
         }
     }
 
 
     public function GetpaginationTagSpf($table,$id,$offset,$no_of_records_per_page){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -94,13 +115,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }// CONSULTA TAG
 
 
     public function proyectosActuales(){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT tis.id, tis.id_sitio, tis.id_tipoproyecto, tp.id as idp, tp.nombre_proyecto, s.nombre, 
@@ -111,13 +136,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }  
     }
 
 
     public function GetTagSitio($id,$sitio){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -131,13 +160,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Sitio
     
 
     public function GetTagSitioPaginator($table,$offset,$no_of_records_per_page,$id,$sitio){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -152,13 +185,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Sitio 
 
 
      public function GetTagProyecto($id,$proyecto){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -172,13 +209,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Proyecto
     
 
     public function GetTagProyectoPaginator($table,$offset,$no_of_records_per_page,$id,$proyecto){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -193,13 +234,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Proyecto 
 
 
     public function GetTagMes($id,$mes,$year){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -216,13 +261,17 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor por Mes
     
 
     public function GetTagMesPaginator($table,$offset,$no_of_records_per_page,$id,$mes,$year){
+        
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT t.id, t.concesionaria, t.fecha, t.tag, t.entrada, t.salida, t.importe,t.id_sitio,t.id_proyecto,
@@ -240,8 +289,11 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     }   //Buscardor en Paginacion por Mes 
 
@@ -260,10 +312,12 @@ class Application_Model_GpsTagModel extends Zend_Db_Table_Abstract{
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
-        }catch (Exception $e){
+        }
+        catch (Exception $e){
+        
             echo $e;
+        
         }
     } 
 
-      
 } 
