@@ -45,8 +45,8 @@
 </div>
 
     <?php 
-            date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d/m/Y");
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d/m/Y");
      ?>
 
 
@@ -73,16 +73,16 @@
                 </p>
             </div>
             <div class="for" style="margin-top: 70px;">
-                    <div class="col m12 s12">
-                        <span  style="font-size:14px;">Sitio: </span> 
-                        <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_sitio; ?></span> 
-                        <br> 
-                        <span  style="font-size:14px;">Usuario: </span>
-                        <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> <?php echo $user; ?></span>
-                        <br> 
-                        <span  style="font-size:14px;">Fecha: </span>
-                        <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $fecha; ?></span>
-                    </div>
+                <div class="col m12 s12">
+                    <span  style="font-size:14px;">Sitio: </span> 
+                    <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_sitio; ?></span> 
+                    <br> 
+                    <span  style="font-size:14px;">Usuario: </span>
+                    <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> <?php echo $user; ?></span>
+                    <br> 
+                    <span  style="font-size:14px;">Fecha: </span>
+                    <span  style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $fecha; ?></span>
+                </div>
             </div>
 
             <div class="from" style="margin-top: 60px;">
@@ -109,31 +109,21 @@
                         <span style="color:red; font-size: 10px;">DESCRIPCION BREVE DEL MATERIAL (SE TIENE QUE ADJUNTAR LA COTIZACION DEL PROVEEDOR).</span>
                     </div> -->
                 	<div class="col m12 s12" style="margin-top: 35px;">
-                         <table>
-                            <thead>
-                              <tr>
-                                  <th><span class="title-pdf">Personal en la Cuadrilla</span></th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                              <tr>
-                                <!-- <td class="text-center"><?php echo $condiciones_compra; ?></td> -->
-                              </tr>
-                            </tbody>
-                          </table>
+                        <div>
+                            <span class="title-pdf">Personal en la Cuadrilla</span>
+                        </div>
                 	</div>
 
 
                     <div class="col m12 s12">
                         <table class="table text-left table-hover">
-                          <thead>
-                            <tr>
-                              <th>Nombre</th>
-                              <th>Puesto</th>
-                              <th>Horas extras</th>
-                            </tr> 
-                          </thead>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Puesto</th>
+                                    <th>Horas extras</th>
+                                </tr> 
+                            </thead>
                           <?php
                           if ($this->personal) { 
                           foreach ($this->personal as $usr) { ?>
@@ -150,37 +140,6 @@
                                     <span  style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> <?php echo $usr['hora_extra']; ?> Horas</span>
                                 </td>
 
-                                <td>
-<!--                                    <div class="input-field col s12">
-                                      <input id="first_name" name="hora_extra[]" value="<?php echo $usr['hora_extra']; ?>" max="100" min="0" type="hidden" class="validate">
-
-                                      <input type="hidden" name="personal[]" value="<?php echo $usr['id_user']; ?>">
- -->            
-                                    <?php if($status_solicitud == 0){ ?>
-                                        <p>
-                                          <label>
-                                            <input type="checkbox" name="validar[]" value="<?php echo $usr['id_sol']; ?>" />
-                                            <span></span>
-                                          </label>
-                                        </p>
-                                    <?php }else{ ?>
-                                        <?php if($usr['status_user'] == 1){ ?>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" checked disabled />
-                                                <span></span>
-                                              </label>
-                                            </p>
-                                        <?php }else{ ?>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" disabled />
-                                                <span></span>
-                                              </label>
-                                            </p>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </td>
 
                             </tr>
                             <?php } }else{ ?>
@@ -206,7 +165,6 @@
                         <!-- <?php echo $newDate_jefe; ?> -->
                     </div>
                 </div>
-
 
 <!--                 <p class="signature">
                     Signature: ________________ <br /><br />
@@ -255,55 +213,55 @@
 
     $(document).ready(function() {
         var data = [
-          { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
-          { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
-          { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
-          { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
-          { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
-          { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
+            { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
+            { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
+            { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
+            { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
+            { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
+            { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
         ];
         var schema = {
-          model: {
-            productName: { type: "string" },
-            unitPrice: { type: "number", editable: false },
-            qty: { type: "number" }
-          },
-          parse: function (data) {
+            model: {
+                productName: { type: "string" },
+                unitPrice: { type: "number", editable: false },
+                qty: { type: "number" }
+            },
+            parse: function (data) {
                 $.each(data, function(){
-                    this.total = this.qty * this.unitPrice;
+                        this.total = this.qty * this.unitPrice;
                 });
                 return data;
-          }
+            }
         };
         var aggregate = [
-          { field: "qty", aggregate: "sum" },
-          { field: "total", aggregate: "sum" }
+            { field: "qty", aggregate: "sum" },
+            { field: "total", aggregate: "sum" }
         ];
         var columns = [
-          { field: "productName", title: "Product", footerTemplate: "Total"},
-          { field: "unitPrice", title: "Price", width: 120},
-          { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
-          { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
+            { field: "productName", title: "Product", footerTemplate: "Total"},
+            { field: "unitPrice", title: "Price", width: 120},
+            { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
+            { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
         ];
         var grid = $("#grid").kendoGrid({
-          editable: false,
-          sortable: true,
-          dataSource: {
-            data: data,
-            aggregate: aggregate,
-            schema: schema,
-          },
-          columns: columns
+            editable: false,
+            sortable: true,
+            dataSource: {
+                data: data,
+                aggregate: aggregate,
+                schema: schema,
+            },
+            columns: columns
         });
 
         $("#paper").kendoDropDownList({
-          change: function() {
-            $(".pdf-page")
-              .removeClass("size-a4")
-              .removeClass("size-letter")
-              .removeClass("size-executive")
-              .addClass(this.value());
-          }
+            change: function() {
+                $(".pdf-page")
+                .removeClass("size-a4")
+                .removeClass("size-letter")
+                .removeClass("size-executive")
+                .addClass(this.value());
+            }
         });
     });
     </script>

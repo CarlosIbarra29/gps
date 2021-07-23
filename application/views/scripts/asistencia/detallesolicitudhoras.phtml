@@ -194,6 +194,7 @@
 					          <th>Puesto</th>
 					          <th>Imagen</th>
 					          <th>Horas extras</th>
+					          <th></th>
 					        </tr> 
 					      </thead>
 					      <?php
@@ -382,33 +383,30 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });  
+		        swal("Espere un momento, la información esta siendo procesada", {
+		          icon: "success",
+		          buttons: false,
+		        });  
 
-	    		var dato = "1";
-	    		var comentario = null;
-	            var request = $.ajax({
-	                url:"/asistencia/requestupdatesolicitudhorasextra",
-	                method:"POST",
-	                data: {dato:dato, id:id, id_user:id_user,comentario:comentario},
-	                processData: true,
-	            });
+		    	var dato = "1";
+		    	var comentario = null;
+		        var request = $.ajax({
+		            url:"/asistencia/requestupdatesolicitudhorasextra",
+		            method:"POST",
+		            data: {dato:dato, id:id, id_user:id_user,comentario:comentario},
+		            processData: true,
+		        });
 	//-------------------end de ajax---------------------------
 	//-------------peticion de respuesta de ajax------------------
-	            request.done(function(response) {
-	                console.log(response);//imprime lo que responde el ajax
-	                // alert
-	                window.location.reload(true);
-	            });
+		        request.done(function(response) {
+		            console.log(response);//imprime lo que responde el ajax
+		            window.location.reload(true);
+		        });
 	//-------------------end de respuesta ajax---------------------
-	             return false;
-
-
-		  } else {
-		    swal("Accion cancelada!");
-		  }
+	        	return false;
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
 		});
 
     });
