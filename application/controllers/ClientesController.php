@@ -46,9 +46,13 @@ class ClientesController extends Zend_Controller_Action{
         $count=count($clientes);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 15;
@@ -155,12 +159,14 @@ class ClientesController extends Zend_Controller_Action{
 
 
     public function requestdeleteclienteAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="clientes";
             $wh="id";
@@ -171,9 +177,11 @@ class ClientesController extends Zend_Controller_Action{
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             } else {
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }   //REQUEST DELETE CLIENTE
@@ -186,8 +194,11 @@ class ClientesController extends Zend_Controller_Action{
             $table="clientes";
             $wh="id";
             $this->view->cliente_edit = $this->_season->GetSpecific($table,$wh,$id);
+        
         } else {
+        
             return $this-> _redirect('/');
+        
         }   
     
     }   //End Clientes Edit
@@ -206,13 +217,18 @@ class ClientesController extends Zend_Controller_Action{
             $urldb = $post["imahidden"];
             
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
@@ -230,15 +246,18 @@ class ClientesController extends Zend_Controller_Action{
                 return $this-> _redirect('/clientes/especificaciones');
             
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   //REQUEST UPDATE CLIENTE
 
 
     public function busquedacltAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
         
@@ -255,9 +274,13 @@ class ClientesController extends Zend_Controller_Action{
             $nombre = strstr($cliente, '?', true); 
             
             if($nombre == false){
+        
                 $name = $this->_getParam('nombre');
+        
             }else{
+        
                  $name = strstr($cliente, '?', true); 
+        
             }
 
             $this->view->name_search=$name;
@@ -265,9 +288,13 @@ class ClientesController extends Zend_Controller_Action{
             $count=count($cltname); 
             
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -300,9 +327,13 @@ class ClientesController extends Zend_Controller_Action{
         $count=count($clientes);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 15;
@@ -345,9 +376,13 @@ class ClientesController extends Zend_Controller_Action{
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -394,12 +429,14 @@ class ClientesController extends Zend_Controller_Action{
 
 
     public function requestdeletecarpetaAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="clientes_carpeta";
             $wh="id";
@@ -410,9 +447,11 @@ class ClientesController extends Zend_Controller_Action{
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             } else {
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }   //REQUEST DELETE CARPETA
@@ -427,51 +466,64 @@ class ClientesController extends Zend_Controller_Action{
         $cliente= $post['id_clientes'];
 
         if($this->getRequest()->getPost()){
+        
             $table="clientes_archivos";
             $name = $_FILES['urla']['name'];
             
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             } else {
 
                 $bytes = $_FILES['urla']['size'];
                 $res = $this->formatSizeUnits($bytes);
                 
                 if($res == 0){       
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 } else {
+        
                     $info1 = new SplFileInfo($_FILES['urla']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['urla']['tmp_name'],$urldb);
+        
                 }
             }
 
             $result = $this->_cliente->insertarchivo($post,$table,$urldb);
+        
             if ($result) {
                 
                 return $this-> _redirect('/clientes/carpetas/id/'.$cliente.'');
             
             } else {
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // Agregar Archivo
 
+    
     public function requestdeletearchivoAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+    
             $id=$post['id'];
             $table="clientes_archivos";
             $wh="id";
@@ -482,9 +534,11 @@ class ClientesController extends Zend_Controller_Action{
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             } else {
+    
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+    
             }
         }
     }   //REQUEST DELETE CARPETA
@@ -500,7 +554,9 @@ class ClientesController extends Zend_Controller_Action{
             $this->view->carpetaedit = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+    
             return $this-> _redirect('/');
+    
         }   
     }  // END EDIT CARPETA 
 
@@ -519,11 +575,15 @@ class ClientesController extends Zend_Controller_Action{
             $result = $this->_cliente->updatecarpeta($post,$table);
             
             if ($result) {
+    
                 return $this-> _redirect('/clientes/carpetas/id/'.$cliente.'');
+    
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+    
             }
         }
     }//END REQUEST UPDATE CARPETA
@@ -531,19 +591,22 @@ class ClientesController extends Zend_Controller_Action{
     public function archivoeditAction(){
         
         if($this->_hasParam('id')){
-            $id = $this->_getParam('id');
 
+            $id = $this->_getParam('id');
             $table="clientes_archivos";
             $wh="id";
             $this->view->archivoedit = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+            
             return $this-> _redirect('/');
+        
         }   
     }  // END EDIT ARCHIVO
 
 
     public function requestupdatearchivoAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true); 
         $post = $this->getRequest()->getPost();
@@ -551,34 +614,48 @@ class ClientesController extends Zend_Controller_Action{
         $cliente = $post['id_cliente'];
 
         if($this->getRequest()->getPost()){
+        
             $table="clientes_archivos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
+        
             }//end de if
 
             $table="clientes_archivos";
             $result = $this->_cliente->updatearchivo($post,$table,$urldb);
+        
             if ($result) {
+        
                 return $this-> _redirect('/clientes/carpetas/id/'.$cliente.'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   //END REQUEST UPDATE ARCHIVO
@@ -614,9 +691,13 @@ class ClientesController extends Zend_Controller_Action{
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -633,7 +714,8 @@ class ClientesController extends Zend_Controller_Action{
 
             $id_cliente = $this->_getParam('cliente');
             $this->view->id_cliente=$id_cliente;
-        }else {
+        
+        } else {
 
             return $this-> _redirect('/');
         
@@ -652,6 +734,7 @@ class ClientesController extends Zend_Controller_Action{
 
         $table="clientes_carpeta";
         $result = $this->_cliente->insertsubcarpeta($post,$table);
+        
         if ($result) {
                 
             return $this-> _redirect('/clientes/subcarpeta/id/'.$carpeta.'/cliente/'.$cliente.'');
@@ -674,40 +757,50 @@ class ClientesController extends Zend_Controller_Action{
         $carpeta= $post['idcarpetas'];
 
         if($this->getRequest()->getPost()){
+        
             $table="clientes_archivos";
             $name = $_FILES['urla']['name'];
             
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             } else {
 
                 $bytes = $_FILES['urla']['size'];
                 $res = $this->formatSizeUnits($bytes);
                 
                 if($res == 0){       
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 } else {
+        
                     $info1 = new SplFileInfo($_FILES['urla']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['urla']['tmp_name'],$urldb);
+        
                 }
             }
 
             $result = $this->_cliente->insertarchivosub($post,$table,$urldb);
+        
             if ($result) {
                 
                 return $this-> _redirect('/clientes/subcarpeta/id/'.$carpeta.'/cliente/'.$cliente.'');
             
             } else {
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // Agregar Documento Subcarpeta
@@ -723,7 +816,9 @@ class ClientesController extends Zend_Controller_Action{
             $this->view->carpetaedit2 = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }   
     }  // END EDIT SUBCARPETA 
 
@@ -744,11 +839,15 @@ class ClientesController extends Zend_Controller_Action{
             $result = $this->_cliente->updatecarpeta($post,$table);
             
             if ($result) {
+        
                 return $this-> _redirect('/clientes/subcarpeta/id/'.$carpeta.'/cliente/'.$cliente.'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }//END REQUEST UPDATE SUBCARPETA
@@ -757,6 +856,7 @@ class ClientesController extends Zend_Controller_Action{
     public function archivoedit2Action(){
         
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
 
             $table="clientes_archivos";
@@ -764,12 +864,15 @@ class ClientesController extends Zend_Controller_Action{
             $this->view->archivoedit2 = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }   
     }  // END EDIT ARCHIVO
 
 
     public function requestupdatearchivosAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true); 
         $post = $this->getRequest()->getPost();
@@ -778,34 +881,47 @@ class ClientesController extends Zend_Controller_Action{
         $carpeta= $post['idcta'];
 
         if($this->getRequest()->getPost()){
+        
             $table="clientes_archivos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
             $table="clientes_archivos";
             $result = $this->_cliente->updatearchivo($post,$table,$urldb);
+        
             if ($result) {
+        
                 return $this-> _redirect('/clientes/subcarpeta/id/'.$carpeta.'/cliente/'.$cliente.'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   //END REQUEST UPDATE ARCHIVO
@@ -841,9 +957,13 @@ class ClientesController extends Zend_Controller_Action{
             $count=count($clientes);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -863,6 +983,7 @@ class ClientesController extends Zend_Controller_Action{
 
             $subcarpeta = $this->_getParam('carpeta');
             $this->view->subcarpeta=$subcarpeta;
+
         }else {
 
             return $this-> _redirect('/');
@@ -883,39 +1004,50 @@ class ClientesController extends Zend_Controller_Action{
         $carpeta= $post['idcarpetas'];
 
         if($this->getRequest()->getPost()){
+
             $table="clientes_archivos";
             $name = $_FILES['urla']['name'];
             
             if(empty($name)){ 
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+
             } else {
 
                 $bytes = $_FILES['urla']['size'];
                 $res = $this->formatSizeUnits($bytes);
                 
                 if($res == 0){       
+
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+
                 } else {
+
                     $info1 = new SplFileInfo($_FILES['urla']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['urla']['tmp_name'],$urldb);
+
                 }
             }
 
             $result = $this->_cliente->insertarchivosub2($post,$table,$urldb);
+
             if ($result) {
+
                 return $this-> _redirect('/clientes/subcarpeta2/id/'.$subcarpeta.'/cliente/'.$cliente.'/carpeta/'.$carpeta.'');
             
             } else {
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     }   // Agregar Documento Subcarpeta2
@@ -932,12 +1064,17 @@ class ClientesController extends Zend_Controller_Action{
 
             $subcarpeta = $this->_getParam('carpeta');
             $this->view->subcarpeta=$subcarpeta;
+
         }   else {
+
             return $this-> _redirect('/');
+
         }   
     }  // END EDIT ARCHIVO2
     
+
     public function requestupdatearchivos2Action(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true); 
         $post = $this->getRequest()->getPost();
@@ -947,42 +1084,52 @@ class ClientesController extends Zend_Controller_Action{
         $carpeta= $post['carpeta'];
 
         if($this->getRequest()->getPost()){
+
             $table="clientes_archivos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+
             if(!empty($_FILES["url"]["name"])) {
+
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+
                 if ($res == 0) {
+
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+
                 } else {
+
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/clientes/archivos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
                 }
             }//end de if
 
             $table="clientes_archivos";
             $result = $this->_cliente->updatearchivo($post,$table,$urldb);
+
             if ($result) {
+
                 return $this-> _redirect('/clientes/subcarpeta2/id/'.$subcarpeta.'/cliente/'.$cliente.'/carpeta/'.$carpeta.'');
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     }   //END REQUEST UPDATE ARCHIVO2
     
         
-
-
-
 
     public function formatSizeUnits($bytes){
             if ($bytes >= 1073741824)

@@ -54,6 +54,7 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         }
     } // BUSCAR POR SITIO 
 
+    
     public function sitioccount($name,$offset,$no_of_records_per_page){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -168,7 +169,9 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
     public function updatecamp($post,$table,$urldb,$statusd,$statusa){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET id_sitio = ?, id_proyecto = ?, fecha_solicitud = ?, inicio_renta = ?, fin_renta = ?, monto_renta = ?, pago_deposito = ?, pago_servicios = ?, deposito = ?, status_campamento = ?, condiciones_dev = ?, nombre_arrendador = ?, tel_arrendador = ?, contrato = ?, comentarios = ?, id_responsable = ?, status_anticipo = ? WHERE id_campamento = ? ",
+            $qry = $db->query("UPDATE $table SET id_sitio = ?, id_proyecto = ?, fecha_solicitud = ?, inicio_renta = ?, fin_renta = ?, monto_renta = ?,
+                pago_deposito = ?, pago_servicios = ?, deposito = ?, status_campamento = ?, condiciones_dev = ?, nombre_arrendador = ?, tel_arrendador = ?, 
+                contrato = ?, comentarios = ?, id_responsable = ?, status_anticipo = ? WHERE id_campamento = ? ",
                 array(
                     $post['sitio'],
                     $post['proyecto'],
@@ -196,6 +199,7 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE CAMPAMENTOS
 
+   
     public function updatecampamento($post,$table,$urldb){
         $statuscmp = 2;
 
@@ -365,6 +369,7 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         }
     }   // END  REQUEST UPDATE STATUS
 
+    
     public function GetordernombresitiosC(){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -377,6 +382,7 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
         }
     } // CONSULTA SITIOS ORDEN
 
+    
     public function GetPersonalC(){  
         try{
             $db = Zend_Db_Table::getDefaultAdapter();

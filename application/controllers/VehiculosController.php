@@ -8,6 +8,7 @@ class VehiculosController extends Zend_Controller_Action{
     private $_veh;
 
     public function init(){
+
         $this->_season = new Application_Model_SeasonPanelModel;
         $this->_session = new Zend_Session_Namespace("current_session");
         $this->_user = new Application_Model_GpsUserModel;
@@ -19,14 +20,20 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_veh = new Application_Model_GpsVehiculosModel;
 
         if(empty($this->_session->id)){
+        
             $this->redirect('/home/login');
+        
         }
+        
         $id=$this->_session->id;
         $wh="id";
         $table="usuario";
         $usr = $this->_season->GetSpecific($table,$wh,$id);
+        
         foreach ($usr as $key) {
+        
            $fk=$key['fkroles'];
+        
         }
     }
 
@@ -60,9 +67,13 @@ class VehiculosController extends Zend_Controller_Action{
         $count=count($vehinv);
 
         if (isset($_GET['pagina'])) {
+        
             $pagina = $_GET['pagina'];
+        
         } else {
+        
             $pagina= $this->view->pagina = 1;
+        
         } 
 
         $no_of_records_per_page = 20;
@@ -76,7 +87,8 @@ class VehiculosController extends Zend_Controller_Action{
 
     }// END Vehiculos Inventario
 
- public function buscarvehiculoAction(){
+    public function buscarvehiculoAction(){
+    
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -94,6 +106,7 @@ class VehiculosController extends Zend_Controller_Action{
         $this->view->grupov = $this->_season->GetAll($table);
 
         if($this->_hasParam('marca')){
+    
             $name = $this->_getParam('marca');
             $marca_veh= $this->_veh->marca($name);
             
@@ -107,11 +120,17 @@ class VehiculosController extends Zend_Controller_Action{
 
             $this->view->option=$option; 
             $count=count($marca_veh);
+    
             if (isset($_GET['pagina'])) {
+    
                 $pagina = $_GET['pagina'];
+    
             } else {
+    
                 $pagina= $this->view->pagina = 1;
+    
             }   
+    
             $no_of_records_per_page = 20;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -119,9 +138,11 @@ class VehiculosController extends Zend_Controller_Action{
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $sql= $this->view->paginator= $this->_veh->marcavcount($name,$offset,$no_of_records_per_page);
+        
         }
 
         if($this->_hasParam('placas')){
+        
             $placas = $this->_getParam('placas');
             $placas_count= $this->_veh->placas($placas);
             $this->view->placas_v=$placas;
@@ -132,11 +153,17 @@ class VehiculosController extends Zend_Controller_Action{
             $option= 2;
             $this->view->option=$option;
             $count=count($placas_count);
+        
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             }else{
+        
                 $pagina= $this->view->pagina = 1;
+        
             }   
+        
             $no_of_records_per_page = 20;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -148,6 +175,7 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('status')){
+        
             $status = $this->_getParam('status');
             $status_her= $this->_veh->status($status);
             $this->view->status_v=$status;
@@ -159,10 +187,15 @@ class VehiculosController extends Zend_Controller_Action{
             $option= 3;
             $this->view->option=$option;
             $count=count($status_her);
+        
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 20;
@@ -178,74 +211,100 @@ class VehiculosController extends Zend_Controller_Action{
 
 
     public function requestdeletevehAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="vehiculos";
             $wh="id_vehiculos";
             $result = $this->_season->deleteAll($id,$table,$wh);
 
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }//END REQUEST DELETE VEHICULO
 
 
     public function requestaddvehAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
        
         $post = $this->getRequest()->getPost();
 
         if($this->getRequest()->getPost()){
+        
             $table="vehiculos";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/autos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }
 
             $name = $_FILES['url2']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url2']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url2']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/tarjetas_circulacion/';
                     $urldb2 = $url1.$info1;
                     move_uploaded_file($_FILES['url2']['tmp_name'],$urldb2);
+        
                 }
             }
            
@@ -253,23 +312,27 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->insertveh($post,$table,$urldb,$urldb2);
 
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/inventariov');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     } //END ADD VEHICULO
 
     public function vehiculoeditAction(){
-           if($this->_hasParam('id')){
-            $id = $this->_getParam('id');
+        
+        if($this->_hasParam('id')){
 
+            $id = $this->_getParam('id');
             $table="vehiculos";
             $wh="id_vehiculos";
             $this->view->vehiculos_act = $this->_season->GetSpecific($table,$wh,$id);
-
 
             $table="vehiculos_grupo";
             $this->view->grupov = $this->_season->GetAll($table);
@@ -287,12 +350,15 @@ class VehiculosController extends Zend_Controller_Action{
             $this->view->status=$status;
 
         }else {
+
             return $this-> _redirect('/');
+
         }   
 
     }// END EDIT VEHICULO
 
     public function requestupdatevhAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
        
@@ -303,39 +369,53 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/autos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
             $name = $_FILES['url2']['name'];
             $urldb2 = $post["imatarjeta"];
+        
             if(!empty($_FILES["url2"]["name"])) {
+        
                 $bytes = $_FILES['url2']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imatarjeta']);
                     $info1 = new SplFileInfo($_FILES['url2']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/tarjetas_circulacion/';
                     $urldb2 = $url1.$info1;
                     move_uploaded_file($_FILES['url2']['tmp_name'],$urldb2);
+        
                 }
             }//end de if
 
@@ -343,11 +423,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateveh($post,$table,$urldb,$urldb2);
 
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/inventariov');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     } //END UPDATE VEHICULO
@@ -356,6 +440,7 @@ class VehiculosController extends Zend_Controller_Action{
     public function vehdetailAction(){
 
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $table="vehiculos";
             $wh="id_vehiculos";
@@ -385,8 +470,11 @@ class VehiculosController extends Zend_Controller_Action{
 
             $veh = $this->_getParam('id');
             $this->view->idvh=$veh;
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }       
 
     } // END VEHICULO DETAIL
@@ -401,24 +489,32 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/tarjetas_circulacion/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
@@ -426,11 +522,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateTarjeta($post,$table,$urldb);
 
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idhs'].''); 
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // Añadir Tarjeta
@@ -446,20 +546,27 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos";
             $name = $_FILES['url2']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url2"]["name"])) {
+        
                 $bytes = $_FILES['url2']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url2']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/tarjetas_circulacion/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url2']['tmp_name'],$urldb);
+        
                 }
             }   //end de if
             
@@ -467,11 +574,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateTarjeta($post,$table,$urldb);
 
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idhs'].''); 
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // Modificar Tarjeta
@@ -493,31 +604,43 @@ class VehiculosController extends Zend_Controller_Action{
             $tarjetas = $this->view->tefecticard = $this->_season->GetSpecific($table,$wh,$id);
 
             if ($tarjetas == null) {
+        
                $efecticard = null;
+        
             } else{
+        
                 $efecticard = $tarjetas[0]['no_tarjeta'];
+        
             }
 
             $table="vehiculos_operadores";
                 $name = $_FILES['archivo']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['archivo']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['archivo']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/vehiculos/operadores/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['archivo']['tmp_name'],$urldb);
+        
                     }
                 }//end de if
 
@@ -533,9 +656,11 @@ class VehiculosController extends Zend_Controller_Action{
                 return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idveh'].'');   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }   // END ASIGNAR VEHICULO
@@ -546,6 +671,7 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
 
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             
             date_default_timezone_set('America/Mexico_City');
@@ -553,24 +679,31 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_operadores";
                 $name = $_FILES['archivo2']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
                     $bytes = $_FILES['archivo2']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['archivo2']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/vehiculos/operadores/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['archivo2']['tmp_name'],$urldb);
+        
                     }
                 }//end de if
             
@@ -586,39 +719,48 @@ class VehiculosController extends Zend_Controller_Action{
                 return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idveh'].'');   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }   // END REGRESAR VEHICULO
 
 
     public function requestbajavAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+        
             $table="vehiculos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
             
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
                 
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/baja/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
             }//end de if
 
@@ -629,11 +771,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->UpdateStatusVB($post,$table,$urldb,$hoy);
             
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idh'].''); 
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }   // END BAJA VEHICULO
@@ -647,30 +793,39 @@ class VehiculosController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+        
             $tiporep = $post['accion'];
 
             if ($tiporep == 1) {
 
                 $table="vehiculos_manto";
                 $name = $_FILES['imagenm']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['imagenm']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['imagenm']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/vehiculos/manto/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['imagenm']['tmp_name'],$urldb);
+        
                     }
                 }//end de if
 
@@ -679,12 +834,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos";
                 $result = $this->_veh->UpdateStatusVRM($post,$table);
+        
                 if ($result) {
+        
                     return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idhs'].''); 
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+        
                 }
             }
 
@@ -692,46 +852,62 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_incidentes";
                 $name = $_FILES['imagenv']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['imagenv']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['imagenv']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/vehiculos/incidentes/';
                         $urldb1 = $url1.$info1;
                         move_uploaded_file($_FILES['imagenv']['tmp_name'],$urldb1);
+        
                     }
                 }//end de if
 
                 $name = $_FILES['imageni']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['imageni']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['imageni']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'img/vehiculos/incidentes/';
                         $urldb2 = $url1.$info1;
                         move_uploaded_file($_FILES['imageni']['tmp_name'],$urldb2);
+        
                     }
                 }//end de if
 
@@ -740,9 +916,13 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos";
                 $result = $this->_veh->UpdateStatusVRI($post,$table);
+        
                 if ($result) {
+        
                     return $this-> _redirect('/vehiculos/vehdetail/id/'.$post['idhs'].''); 
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
@@ -777,13 +957,16 @@ class VehiculosController extends Zend_Controller_Action{
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
             
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }
     }   // END Vehiculo Reparado
 
+    
     public function catalogosAction(){
         
         $actualpagina=$this->_getParam('pagina');
@@ -796,9 +979,13 @@ class VehiculosController extends Zend_Controller_Action{
         $count=count($vhg);
 
         if (isset($_GET['pagina'])) {
+    
             $pagina = $_GET['pagina'];
+    
         } else {
+    
             $pagina= $this->view->pagina = 1;
+    
         } 
 
         $no_of_records_per_page = 15;
@@ -813,6 +1000,7 @@ class VehiculosController extends Zend_Controller_Action{
     }   // CATALOGO GRUPO
 
     public function requestaddgrupoAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -821,12 +1009,17 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_grupo";
             $result = $this->_veh->insertgrupo($post,$table);
+    
             if ($result) {
+    
                 return $this-> _redirect('/vehiculos/catalogos');
+    
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+    
             }
         }
     }//END ADD GRUPO
@@ -841,7 +1034,9 @@ class VehiculosController extends Zend_Controller_Action{
             $this->view->vehiculog = $this->_season->GetSpecific($table,$wh,$id);
 
         }else {
+    
             return $this-> _redirect('/');
+    
         }   
     }  // END EDIT GRUPO  
 
@@ -851,21 +1046,28 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
 
         $post = $this->getRequest()->getPost();
+    
         if($this->getRequest()->getPost()){
 
             $table="vehiculos_grupo";
             $result = $this->_veh->updategrupo($post,$table);
+    
             if ($result) {
+    
                 return $this-> _redirect('/vehiculos/catalogos');
+    
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+    
             }
         }
     }//END REQUEST UPDATE GRUPO
 
     public function excelvAction(){
+    
         $status=$this->_getParam('status');
         $this->view->status=$status;
 
@@ -883,14 +1085,19 @@ class VehiculosController extends Zend_Controller_Action{
         $count=count($serv);
 
         if (isset($_GET['pagina'])) {
+    
             $pagina = $_GET['pagina'];
+    
         } else {
+    
             $pagina= $this->view->pagina = 1;
+    
         } 
 
         $no_of_records_per_page = 15;
         $offset = ($pagina-1) * $no_of_records_per_page; 
         $total_pages= $count;
+    
         $this->view->totalpage = $total_pages;
         $this->view->total=ceil($total_pages/$no_of_records_per_page);
         $table="vehiculo_servicios";
@@ -900,6 +1107,7 @@ class VehiculosController extends Zend_Controller_Action{
 
 
     public function requesataddservicioAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -907,45 +1115,73 @@ class VehiculosController extends Zend_Controller_Action{
         if($this->getRequest()->getPost()){
 
             if ($post['statusuno'] == 0) {
+    
                 $statusu = 0;
+    
             } else{
+    
                 $statusu = 1;
+    
             }
 
             if ($post['statusdos'] == 0) {
+    
                 $statusd = 0;
+    
             } else{
+    
                 $statusd = 1;
+    
             }
 
             if ($post['statustres'] == 0) {
+    
                 $statust = 0;
+    
             } else{
+    
                 $statust = 1;
+    
             }
 
             if ($post['statuscuatro'] == 0) {
+    
                 $statuscu = 0;
+    
             } else{
+    
                 $statuscu = 1;
+    
             }
 
             if ($post['statuscinco'] == 0) {
+    
                 $statusci = 0;
+    
             } else{
+    
                 $statusci = 1;
+    
             }
 
             if ($post['statusseis'] == 0) {
+    
                 $statusse = 0;
+    
             } else{
+    
                 $statusse = 1;
+    
             }
 
             if ($post['statussiete'] == 0) {
+    
                 $statussi = 0;
+    
             } else{
+    
                 $statussi = 1;
+    
             }
 
             $table="vehiculo_servicios";
@@ -953,9 +1189,11 @@ class VehiculosController extends Zend_Controller_Action{
                 $statust,$statuscu,$statusci,$statusse,$statussi);
             
             if ($result) {
+    
                 return $this-> _redirect('/vehiculos/serviciosv');
             
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
@@ -974,7 +1212,9 @@ class VehiculosController extends Zend_Controller_Action{
             // var_dump($hola);
             // die();
         }else {
+    
             return $this-> _redirect('/');
+    
         }   
     }
 
@@ -987,45 +1227,76 @@ class VehiculosController extends Zend_Controller_Action{
         if($this->getRequest()->getPost()){
 
             if ($post['statusuno'] == 0) {
+    
                 $statusu = 0;
+    
             } else{
+    
                 $statusu = 1;
+    
             }
 
+
             if ($post['statusdos'] == 0) {
+
                 $statusd = 0;
+
             } else{
+
                 $statusd = 1;
+
             }
 
             if ($post['statustres'] == 0) {
+
                 $statust = 0;
+
             } else{
+
                 $statust = 1;
+
             }
 
             if ($post['statuscuatro'] == 0) {
+
                 $statuscu = 0;
+
             } else{
+
                 $statuscu = 1;
+
             }
 
             if ($post['statuscinco'] == 0) {
+
                 $statusci = 0;
+
             } else{
+
                 $statusci = 1;
+
             }
+
 
             if ($post['statusseis'] == 0) {
+
                 $statusse = 0;
+
             } else{
+
                 $statusse = 1;
+
             }
 
+
             if ($post['statussiete'] == 0) {
+
                 $statussi = 0;
+
             } else{
+
                 $statussi = 1;
+
             }
 
             $table="vehiculo_servicios";
@@ -1033,35 +1304,48 @@ class VehiculosController extends Zend_Controller_Action{
                 $statust,$statuscu,$statusci,$statusse,$statussi);
             
             if ($result) {
+
                 return $this-> _redirect('/vehiculos/serviciosv');
             
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
+
         }  
     }
+
 
     public function requestdeleteserviciovAction(){
 
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+
         if($this->getRequest()->getPost()){
+
             $id=$post['id'];
             $table="vehiculo_servicios";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+
             if ($result) {
+
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+
             }else{
+
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+
             }
         }
     }   //END REQUEST DELETE SERVICIO
+
 
     public function operadoresAction(){
 
@@ -1079,9 +1363,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($vehop);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 15;
@@ -1095,6 +1383,7 @@ class VehiculosController extends Zend_Controller_Action{
 
             $veh = $this->_getParam('id');
             $this->view->idvh=$veh;
+
         }else {
 
             return $this-> _redirect('/');
@@ -1102,6 +1391,7 @@ class VehiculosController extends Zend_Controller_Action{
         } 
 
     }
+
 
     public function updatearchivoAction(){
         
@@ -1113,36 +1403,49 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_operadores";
             $name = $_FILES['url']['name'];
+
             if(empty($name)){ 
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+
             }else{
+
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+
                 }else{
+
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/operadores/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
                 }
+
             }//end de if
 
             $table="vehiculos_operadores";
             $result = $this->_veh->updateArcOp($post,$table,$urldb);
 
             if ($result) {
+
                 return $this-> _redirect('/vehiculos/operadores/id/'.$post['idhs'].''); 
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     } // Añadir Archivo
@@ -1158,20 +1461,27 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos_operadores";
             $name = $_FILES['url2']['name'];
             $urldb = $post["imahidden"];
+
             if(!empty($_FILES["url2"]["name"])) {
+
                 $bytes = $_FILES['url2']['size'];
                 $res = $this->formatSizeUnits($bytes);
+
                 if ($res == 0) {
+
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+
                 } else {
+
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url2']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/operadores/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url2']['tmp_name'],$urldb);
+
                 }
             }   //end de if
             
@@ -1179,11 +1489,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateArcOp($post,$table,$urldb);
 
             if ($result) {
+
                 return $this-> _redirect('/vehiculos/operadores/id/'.$post['idhs'].''); 
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     }   // Modificar Archivo
@@ -1199,24 +1513,32 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_operadores";
             $name = $_FILES['url3']['name'];
+
             if(empty($name)){ 
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+
             }else{
+
                 $bytes = $_FILES['url3']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+
                 }else{
+
                     $info1 = new SplFileInfo($_FILES['url3']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/operadores/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url3']['tmp_name'],$urldb);
+
                 }
             }//end de if
 
@@ -1224,14 +1546,19 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateArc2Op($post,$table,$urldb);
 
             if ($result) {
+
                 return $this-> _redirect('/vehiculos/operadores/id/'.$post['idhs'].''); 
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     } // Añadir Archivo 2
+
 
     public function updatemodarchivo2Action(){
         
@@ -1244,20 +1571,27 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos_operadores";
             $name = $_FILES['url4']['name'];
             $urldb = $post["imahidden2"];
+   
             if(!empty($_FILES["url4"]["name"])) {
+   
                 $bytes = $_FILES['url4']['size'];
                 $res = $this->formatSizeUnits($bytes);
+   
                 if ($res == 0) {
+   
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+   
                 } else {
+   
                     unlink($post['imahidden2']);
                     $info1 = new SplFileInfo($_FILES['url4']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/operadores/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url4']['tmp_name'],$urldb);
+   
                 }
             }   //end de if
             
@@ -1265,15 +1599,20 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updateArc2Op($post,$table,$urldb);
 
             if ($result) {
+   
                 return $this-> _redirect('/vehiculos/operadores/id/'.$post['idhs'].''); 
+   
             }else{
+   
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+   
             }
         }
     }   // Modificar Archivo2
 
+   
     public function incidentesAction(){
 
         if($this->_hasParam('id')){
@@ -1296,9 +1635,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($vehinc);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -1312,6 +1655,7 @@ class VehiculosController extends Zend_Controller_Action{
 
             $veh = $this->_getParam('id');
             $this->view->idvh=$veh;
+        
         }else {
 
             return $this-> _redirect('/');
@@ -1319,6 +1663,7 @@ class VehiculosController extends Zend_Controller_Action{
         } 
 
     }
+
 
     public function updatesolincAction(){
         
@@ -1330,24 +1675,32 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_incidentes";
             $name = $_FILES['url']['name'];
+            
             if(empty($name)){ 
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+            
             }else{
+            
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+            
                 }else{
+            
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/incidentes/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+            
                 }
             }//end de if
 
@@ -1358,14 +1711,19 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updatesol($post,$table);
 
             if ($result) {
+            
                 return $this-> _redirect('/vehiculos/incidentes/id/'.$post['idhs'].''); 
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }
+
 
     public function excelincAction(){
 
@@ -1383,6 +1741,7 @@ class VehiculosController extends Zend_Controller_Action{
 
     }   // EXCEL VEHICULOS INCIDENCIAS
 
+
     public function mantenimientoAction(){
 
         if($this->_hasParam('id')){
@@ -1390,9 +1749,6 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos";
             $wh="id_vehiculos";
             $this->view->vehiculosc = $this->_veh->GetVehiculos($table,$id);
-
-            // $table="vehiculos_manto";
-            // $this->view->vehmantenimiento = $this->_veh->GetVehiculosManto($table,$id);
 
             $table="vehiculos_solicitudes";
             $this->view->solicitud = $this->_veh->GetSolicitudes($table,$id);
@@ -1405,9 +1761,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($vehmto);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 15;
@@ -1421,6 +1781,7 @@ class VehiculosController extends Zend_Controller_Action{
 
             $veh = $this->_getParam('id');
             $this->view->idvh=$veh;
+
         }else {
 
             return $this-> _redirect('/');
@@ -1428,6 +1789,7 @@ class VehiculosController extends Zend_Controller_Action{
         } 
 
     }
+
 
     public function updatesolmantoAction(){
         
@@ -1439,25 +1801,34 @@ class VehiculosController extends Zend_Controller_Action{
 
             $table="vehiculos_manto";
             $name = $_FILES['url']['name'];
+
             if(empty($name)){ 
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+
             }else{
+
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
 
                 if($res == 0){ 
+
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+
                 }else{
+
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/vehiculos/manto/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
                 }
+
             }//end de if
 
             $table="vehiculos_manto";
@@ -1467,18 +1838,24 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->updatesol($post,$table);
 
             if ($result) {
+
                 return $this-> _redirect('/vehiculos/mantenimiento/id/'.$post['idhs'].''); 
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
+
         }
+
     }
 
     public function excelmtoAction(){
 
-          if($this->_hasParam('id')){
+        if($this->_hasParam('id')){
             $id = $this->_getParam('id');
 
             $table="vehiculos_manto";
@@ -1526,9 +1903,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($vehdct);
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -1615,19 +1996,26 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_documentacion";
                 $name = $_FILES['url']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
 
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'pdf/vehiculosdoc/';
@@ -1649,11 +2037,15 @@ class VehiculosController extends Zend_Controller_Action{
                 $result = $this->_veh->updatesol($post,$table);
 
                 if ($result) {
+        
                     return $this-> _redirect('/vehiculos/documentacion/id/'.$post['idhs'].''); 
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+        
                 }
 
             } 
@@ -1670,8 +2062,11 @@ class VehiculosController extends Zend_Controller_Action{
                 $result = $this->_veh->insertdoc2($post,$table,$nombredoc,$hoy);
 
                 if ($result) {
+        
                     return $this-> _redirect('/vehiculos/documentacion/id/'.$post['idhs'].''); 
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
@@ -1686,6 +2081,7 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+
         if($this->getRequest()->getPost()){
 
             $id =  $post['id'];
@@ -1713,19 +2109,25 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos_documentacion";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+        
             if ($result) {
+        
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
             }else{
+        
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+        
             }
         }   
     }//END REQUEST DELETE TODO
 
     public function excelopAction(){
 
-          if($this->_hasParam('id')){
+        if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $table="vehiculos_operadores";
             $this->view->vehasignado = $this->_veh->GetVehiculosAsignado($table,$id);
@@ -1742,6 +2144,7 @@ class VehiculosController extends Zend_Controller_Action{
     public function historialvdAction(){
 
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $table="vehiculos";
             $wh="id_vehiculos";
@@ -1759,9 +2162,13 @@ class VehiculosController extends Zend_Controller_Action{
             
 
             if (isset($_GET['pagina'])) {
+        
                 $pagina = $_GET['pagina'];
+        
             } else {
+        
                 $pagina= $this->view->pagina = 1;
+        
             } 
 
             $no_of_records_per_page = 15;
@@ -1788,6 +2195,7 @@ class VehiculosController extends Zend_Controller_Action{
     public function exceldocAction(){
 
           if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
 
             $año = $this->_getParam('year');
@@ -1816,9 +2224,13 @@ class VehiculosController extends Zend_Controller_Action{
         $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1836,17 +2248,23 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
             $id =  $post['id'];
             $table="vehiculos_solicitudes";
             $wh="id";
             $result = $this->_season->deleteAll($id,$table,$wh);
+            
             if ($result) {
+            
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            
             }else{
+            
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+            
             }
         }   
     }//END REQUEST DELETE TODO
@@ -1911,9 +2329,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1928,14 +2350,18 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
         if($status == 1){
-            $solicitud=$this->_veh->GetSolAceptCount();
 
+            $solicitud=$this->_veh->GetSolAceptCount();
             $count=count($solicitud);
 
             if(isset($_GET['pagina'])) { 
+            
                 $pagina = $_GET['pagina']; 
+            
             }else { 
+            
                 $pagina= $this->view->pagina = 1; 
+            
             }
 
             $no_of_records_per_page = 20;
@@ -1949,13 +2375,18 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
         if($status == 2){
+            
             $solicitud=$this->_veh->GetSolCancelCount();
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1969,14 +2400,18 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
         if($status == 3){
+            
             $solicitud=$this->_veh->GetSolFinCount();
-            // var_dump($solicitud);exit;
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -1988,10 +2423,12 @@ class VehiculosController extends Zend_Controller_Action{
             $table="vehiculos_solicitudes";
             $sql= $this->view->paginator= $this->_veh->GetPagSolFin($table,$offset,$no_of_records_per_page);
         }
+    
     }   // Lista solicitudes en proceso
 
 
     public function listasolbuscarAction(){
+    
         $id=$this->_session->id;
         $this->view->user_list=$id;
 
@@ -2024,11 +2461,14 @@ class VehiculosController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+    
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 0;
                 $statuscom = 0;
@@ -2037,9 +2477,13 @@ class VehiculosController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2053,6 +2497,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -2064,7 +2509,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2076,6 +2531,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2088,7 +2544,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                }
+
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2100,18 +2565,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 0;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2124,18 +2599,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 0;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2147,18 +2633,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 0;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2173,22 +2669,29 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+            
             if($opcion == 1){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+               
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
+               
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2202,6 +2705,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -2213,7 +2717,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2225,6 +2739,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2237,7 +2752,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2249,18 +2773,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2273,18 +2807,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2296,18 +2841,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
              if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2322,22 +2877,29 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 2) {
+            
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
+                
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+               
                     $pagina = $_GET['pagina'];
+               
                 } else {
+               
                     $pagina= $this->view->pagina = 1;
+               
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2351,6 +2913,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -2362,7 +2925,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2374,6 +2947,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2386,7 +2960,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2398,18 +2981,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) {
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2422,18 +3015,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2445,18 +3049,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
              if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2471,22 +3085,29 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 3) {
+            
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
+                
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -2497,9 +3118,11 @@ class VehiculosController extends Zend_Controller_Action{
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="vehiculos_solicitudes";
                 $this->view->paginator= $this->_veh->GetSolVehiculoBuscarPag($table,$offset,$no_of_records_per_page,$vehiculo,$statusstep,$statussol,$statuscom);
+            
             }
 
             if($opcion == 2){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -2511,7 +3134,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+            
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+            
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2523,6 +3156,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -2535,7 +3169,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2547,18 +3190,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2571,18 +3224,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -2592,19 +3256,30 @@ class VehiculosController extends Zend_Controller_Action{
                 $table="vehiculos_solicitudes";
                 $this->view->paginator= $this->_veh->GetSolServicioBuscarPag($table,$offset,$no_of_records_per_page,$servicio,$statusstep,$statussol,$statuscom);    
             }
+
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2644,16 +3319,22 @@ class VehiculosController extends Zend_Controller_Action{
     
     }
 
+
     public function requestaddsolicitudservicioAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
         $resp = $post['responsable'];
+       
             if ($resp == "") {
+       
                 $responsable = 0;  
+       
             } else {
+       
                 $responsable = $post['responsable'];
+       
             }
 
         if($this->getRequest()->getPost()){
@@ -2668,11 +3349,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->insertsolveh($post,$table,$id_user,$responsable);
 
             if ($result) {
+       
                 return $this-> _redirect('/vehiculos/addsolicitudvdos/id/'.$result.'');
+       
             }else{
+       
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+       
             }
         }
     }
@@ -2683,10 +3368,15 @@ class VehiculosController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
 
         $resp = $post['responsable'];
+       
         if ($resp == "") {
+       
             $responsable = 0;  
+       
         } else {
+       
             $responsable = $post['responsable'];
+       
         }
 
         if($this->getRequest()->getPost()){
@@ -2701,11 +3391,15 @@ class VehiculosController extends Zend_Controller_Action{
             $result = $this->_veh->UpdateSolPasUno($post,$table,$id_user,$responsable);
             
             if ($result) {
+        
                 return $this-> _redirect('/vehiculos/addsolicitudvdos/id/'.$post['ids'].'');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }
@@ -2738,6 +3432,7 @@ class VehiculosController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $id=$post['idsol'];
@@ -2757,26 +3452,34 @@ class VehiculosController extends Zend_Controller_Action{
                 if ($usrs[0]['tipo_uno'] == 1) {
 
                     $name = $_FILES['datouno']['name'];
+        
                     if(empty($name)){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("Agrega una imagen");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $bytes = $_FILES['datouno']['size'];
                         $res = $this->formatSizeUnits($bytes);
+        
                         if($res == 0){ 
+        
                             print '<script language="JavaScript">'; 
                             print 'alert("La imagen supera el maximo de tamaño");'; 
                             print '</script>'; 
+        
                         }else{
+        
                             $info1 = new SplFileInfo($_FILES['datouno']['name']);
                             $ext1 = $info1->getExtension();
                             $url1 = 'img/vehiculos/sevidencias/';
                             $datouno = $url1.$info1;
                             move_uploaded_file($_FILES['datouno']['tmp_name'],$datouno);
+        
                         }
                     }
-
                 }
 
                 if ($usrs[0]['tipo_uno'] == 2) {
@@ -2788,18 +3491,26 @@ class VehiculosController extends Zend_Controller_Action{
                 if ($usrs[0]['tipo_uno'] == 3) {
                     
                     $name = $_FILES['datouno']['name'];
+                    
                     if(empty($name)){ 
+                    
                         print '<script language="JavaScript">'; 
                         print 'alert("Agrega un archivo");'; 
                         print '</script>'; 
+                    
                     }else{
+                    
                         $bytes = $_FILES['datouno']['size'];
                         $res = $this->formatSizeUnits($bytes);
+                    
                         if($res == 0){ 
+                    
                             print '<script language="JavaScript">'; 
                             print 'alert("El archivo supera el maximo de tamaño");'; 
                             print '</script>'; 
+                    
                         }else{
+                    
                             $info1 = new SplFileInfo($_FILES['datouno']['name']);
                             $ext1 = $info1->getExtension();
                             $url1 = 'img/vehiculos/sevidencias/';
@@ -2809,6 +3520,7 @@ class VehiculosController extends Zend_Controller_Action{
                     }
                     
                 }
+            
             } else {
               
               $datouno = $post['datouno'];   
@@ -3217,7 +3929,9 @@ class VehiculosController extends Zend_Controller_Action{
 
 
     public function solicituddetailAction(){
+        
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
             
@@ -3244,7 +3958,9 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }
 
@@ -3419,6 +4135,7 @@ class VehiculosController extends Zend_Controller_Action{
     // }//END REQUEST ADD ROL
 
     public function requestchangeaceptsolAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -3426,28 +4143,29 @@ class VehiculosController extends Zend_Controller_Action{
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
-
-            // var_dump($post);
-            // die();
 
         if($this->getRequest()->getPost()){
 
             $table="vehiculos_solicitudes";
             $result=$this->_veh->UpdateAceptSol($post,$table,$hoy);
 
-
             if ($result) {
+
                 return $this->_redirect('/vehiculos/solicituddetail/id/'.$post['id_solicitud'].'/status/1');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }   // END REQUEST ACEPTAR SOLICITUD
 
 
     public function requestchangerechazarsolAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -3456,27 +4174,28 @@ class VehiculosController extends Zend_Controller_Action{
             $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
-            // var_dump($post);
-            // die();
-
         if($this->getRequest()->getPost()){
 
             $table="vehiculos_solicitudes";
             $result=$this->_veh->UpdateRechazarSol($post,$table,$hoy);
 
-
             if ($result) {
+
                 return $this->_redirect('/vehiculos/solicituddetail/id/'.$post['id_solicitud'].'/status/2');
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     }   // END REQUEST RECHAZAR SOLICITUD
 
 
     public function requestchangecancelarsolAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -3485,27 +4204,28 @@ class VehiculosController extends Zend_Controller_Action{
             $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
-            // var_dump($post);
-            // die();
-
         if($this->getRequest()->getPost()){
 
             $table="vehiculos_solicitudes";
             $result=$this->_veh->UpdateRechazarSol($post,$table,$hoy);
 
-
             if ($result) {
+
                 return $this->_redirect('/vehiculos/solicituddetail/id/'.$post['id_solicitud'].'/status/2');
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     }   // END REQUEST CANCELAR SOLICITUD
 
 
     public function requestchangecancelarsolcontaAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -3514,9 +4234,6 @@ class VehiculosController extends Zend_Controller_Action{
             $hoy = date("d-m-Y H:i:s");
             $dato = date("Y-m-d H:i:s");
 
-            // var_dump($post);
-            // die();
-
         if($this->getRequest()->getPost()){
 
             $table="vehiculos_solicitudes";
@@ -3524,17 +4241,22 @@ class VehiculosController extends Zend_Controller_Action{
 
 
             if ($result) {
+
                 return $this->_redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     }   // END REQUEST CANCELAR SOLICITUD
 
 
     public function solicitudvehiculoAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -3559,13 +4281,17 @@ class VehiculosController extends Zend_Controller_Action{
             $wh="id";
             $table="usuario";
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }   //Para PDF de la solicitud Usuario y MAnager
 
 
     public function solicituddetailctbAction(){
+        
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
@@ -3593,13 +4319,17 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }
 
 
     public function solicitudvehctbAction(){
+        
         if($this->_hasParam('id')){
+        
             $id = $this->_getParam('id');
             $this->view->id_solicitud = $id;
             
@@ -3623,16 +4353,21 @@ class VehiculosController extends Zend_Controller_Action{
             $wh="id";
             $table="usuario";
             $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        
         }else {
+        
             return $this-> _redirect('/');
+        
         }
     }   //Para PDF de la solicitud Contabilidad
 
 
     public function requestaddcomprobantedepagovAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $status_conta = $post['pago_conta'];
@@ -3640,25 +4375,36 @@ class VehiculosController extends Zend_Controller_Action{
             if ($status_conta == 1) {
       
                 $name = $_FILES['url']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+        
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'pdf/sol_vehiculos/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                     }
+        
                 }
+        
                 date_default_timezone_set('America/Mexico_City');
                 $hoy = date("d-m-Y H:i:s");
                 $status_pago = 1;
@@ -3675,37 +4421,52 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+        
                 if ($result) {
                     // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
                     return $this-> _redirect('/vehiculos/listasolcontabilidad/status/0');
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+        
                 }
+        
             } else {
 
-
                 $name = $_FILES['url']['name'];
+
                 if(empty($name)){ 
+
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+
                 }else{
+
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+
                     if($res == 0){ 
+
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+
                     }else{
+
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'pdf/sol_vehiculos/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
                     }
+
                 }
+
                 date_default_timezone_set('America/Mexico_City');
                 $hoy = date("d-m-Y H:i:s");
                 $status_pago = 0;
@@ -3722,25 +4483,30 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+
                 if ($result) {
+
                     // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/0');
                     return $this-> _redirect('/vehiculos/listasolcontabilidad/status/0');
+
                 }else{
+
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+
                 }
-
-
             }
         }
     }
 
 
     public function requestaddcompnofactAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
+        
         if($this->getRequest()->getPost()){
 
             $status_conta = $post['pago_conta'];
@@ -3748,25 +4514,36 @@ class VehiculosController extends Zend_Controller_Action{
             if ($status_conta == 1) {
       
                 $name = $_FILES['url']['name'];
+        
                 if(empty($name)){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+        
                     if($res == 0){ 
+        
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+        
                     }else{
+        
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'pdf/sol_vehiculos/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                     }
+        
                 }
+        
                 date_default_timezone_set('America/Mexico_City');
                 $hoy = date("d-m-Y H:i:s");
                 $status_pago = 1;
@@ -3783,37 +4560,52 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+        
                 if ($result) {
                     // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/2');
                     return $this-> _redirect('/vehiculos/listasolcontafact/status/0');
+        
                 }else{
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+        
                 }
+        
             } else {
 
-
                 $name = $_FILES['url']['name'];
+                
                 if(empty($name)){ 
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Agrega una imagen");'; 
                     print '</script>'; 
+                
                 }else{
+                
                     $bytes = $_FILES['url']['size'];
                     $res = $this->formatSizeUnits($bytes);
+                
                     if($res == 0){ 
+                
                         print '<script language="JavaScript">'; 
                         print 'alert("El pdf supera el maximo de tamaño");'; 
                         print '</script>'; 
+                
                     }else{
+                
                         $info1 = new SplFileInfo($_FILES['url']['name']);
                         $ext1 = $info1->getExtension();
                         $url1 = 'pdf/sol_vehiculos/';
                         $urldb = $url1.$info1;
                         move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
                     }
+                
                 }
+                
                 date_default_timezone_set('America/Mexico_City');
                 $hoy = date("d-m-Y H:i:s");
                 $status_pago = 0;
@@ -3830,16 +4622,18 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $table="vehiculos_pagos";
                 $result=$this->_veh->InsertPagoSerVeh($post,$table,$urldb,$hoy,$nombre);
+                
                 if ($result) {
                     // return $this-> _redirect('/vehiculos/solicituddetailctb/id/'.$post['id_solicitud'].'/status/0');
                     return $this-> _redirect('/vehiculos/listasolcontafact/status/0');
+                
                 }else{
+                
                     print '<script language="JavaScript">'; 
                     print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                     print '</script>'; 
+                
                 }
-
-
             }
         }
     }
@@ -3888,9 +4682,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+            
                 $pagina = $_GET['pagina'];
+            
             } else {
+            
                 $pagina= $this->view->pagina = 1;
+            
             } 
 
             $no_of_records_per_page = 20;
@@ -3905,13 +4703,18 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
         if($status == 1){
+            
             $solicitud=$this->_veh->GetSolCancelCount();
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 20;
@@ -3930,9 +4733,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 20;
@@ -3989,9 +4796,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 20;
@@ -4010,9 +4821,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 20;
@@ -4031,9 +4846,13 @@ class VehiculosController extends Zend_Controller_Action{
             $count=count($solicitud);
 
             if (isset($_GET['pagina'])) {
+
                 $pagina = $_GET['pagina'];
+
             } else {
+
                 $pagina= $this->view->pagina = 1;
+
             } 
 
             $no_of_records_per_page = 20;
@@ -4047,9 +4866,6 @@ class VehiculosController extends Zend_Controller_Action{
         }
 
     }
-
-
-
 
 
     public function listasolbuscarcontAction(){
@@ -4085,22 +4901,29 @@ class VehiculosController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+
             if($opcion == 1){
+
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
-                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4114,6 +4937,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -4125,7 +4949,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4137,6 +4971,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -4149,7 +4984,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4161,18 +5005,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4185,18 +5039,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4208,18 +5073,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4234,22 +5109,29 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+
             if($opcion == 1){
+            
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+            
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
+            
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4263,6 +5145,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -4274,7 +5157,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4286,6 +5179,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -4298,7 +5192,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4310,18 +5213,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4334,18 +5247,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                }
+
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4357,18 +5281,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4383,22 +5317,28 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 2) {
+            
             if($opcion == 1){
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+            
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
+            
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscar($vehiculo,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                    
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4412,6 +5352,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -4423,7 +5364,16 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscar($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4435,6 +5385,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 3){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $id = $this->_getParam('id');
@@ -4447,7 +5398,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscar($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4459,18 +5419,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscar($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4483,18 +5453,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscar($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4506,18 +5487,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscar($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4565,22 +5556,28 @@ class VehiculosController extends Zend_Controller_Action{
         $this->view->opcion_search=$opcion;
 
         if($status == 0) {
+            
             if($opcion == 1){
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
-                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4594,6 +5591,7 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 2){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $prov = $this->_getParam('proveedor');
@@ -4605,7 +5603,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4629,7 +5637,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4641,18 +5658,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4665,18 +5692,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4688,18 +5726,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4714,11 +5762,14 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 1) {
+            
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
@@ -4727,9 +5778,13 @@ class VehiculosController extends Zend_Controller_Action{
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4754,7 +5809,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4778,7 +5843,16 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4790,18 +5864,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4814,18 +5898,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4841,14 +5936,23 @@ class VehiculosController extends Zend_Controller_Action{
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 2;
                 $statuscom = 0;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4863,22 +5967,29 @@ class VehiculosController extends Zend_Controller_Action{
 
 
         if($status == 2) {
+            
             if($opcion == 1){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $vehiculo = $this->_getParam('vehiculo');
                 $this->view->vehiculosol=$vehiculo;
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
-                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
 
+                $solicitud=$this->view->sol_auto=$this->_veh->GetSolVehiculoBuscarFact($vehiculo,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) {
+                
                     $pagina = $_GET['pagina'];
+                
                 } else {
+                
                     $pagina= $this->view->pagina = 1;
+                
                 } 
 
                 $no_of_records_per_page = 20;
@@ -4903,7 +6014,17 @@ class VehiculosController extends Zend_Controller_Action{
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolProvBuscarFact($prov,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4927,7 +6048,17 @@ class VehiculosController extends Zend_Controller_Action{
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolIdBuscarFact($id,$statusstep,$statussol,$statuscom);
                 $count=count($solicitud);
                 
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4939,18 +6070,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 4){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolUserBuscarFact($user,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -4963,18 +6104,29 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 5){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolServicioBuscarFact($servicio,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 
                 $total_pages= $count;
@@ -4986,18 +6138,28 @@ class VehiculosController extends Zend_Controller_Action{
             }
 
             if($opcion == 6){
+                
                 $actualpagina=$this->_getParam('pagina');
                 $this->view->actpage=$actualpagina;
                 $placas = $this->_getParam('placas'); 
                 $this->view->placas_search=$placas; 
+                
                 $statusstep = 1;
                 $statussol = 1;
                 $statuscom = 1;
 
                 $solicitud=$this->view->sol_auto=$this->_veh->GetSolPlacasBuscarfact($placas,$statusstep,$statussol,$statuscom);
-
                 $count=count($solicitud);
-                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
                 
                 $no_of_records_per_page = 20;
                 $offset = ($pagina-1) * $no_of_records_per_page; 

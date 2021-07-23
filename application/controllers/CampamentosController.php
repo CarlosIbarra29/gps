@@ -8,6 +8,7 @@ class CampamentosController extends Zend_Controller_Action{
     private $_cam;
 
     public function init(){
+        
         $this->_season = new Application_Model_SeasonPanelModel;
         $this->_session = new Zend_Session_Namespace("current_session");
         $this->_user = new Application_Model_GpsUserModel;
@@ -19,11 +20,14 @@ class CampamentosController extends Zend_Controller_Action{
         $this->_cam = new Application_Model_GpsCampamentosModel;
 
         if(empty($this->_session->id)){
+        
             $this->redirect('/home/login');
+        
         }
     }
 
     public function addcampamentoAction(){
+        
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -35,7 +39,6 @@ class CampamentosController extends Zend_Controller_Action{
 
         $table="tipo_proyecto";
         $this->view->proyectos = $this->_season->GetAll($table);
-
 
         $table = "campamentos"; 
         $this->view->alertas=$this->_cam->GetCampamentosxVen($table);
@@ -51,9 +54,13 @@ class CampamentosController extends Zend_Controller_Action{
         $count=count($campinv);
 
         if (isset($_GET['pagina'])) {
+
             $pagina = $_GET['pagina'];
+
         } else {
+
             $pagina= $this->view->pagina = 1;
+
         } 
 
         $no_of_records_per_page = 15;
@@ -68,7 +75,8 @@ class CampamentosController extends Zend_Controller_Action{
 
     }// END Campamentos Inventario
 
- public function buscarcampAction(){
+    public function buscarcampAction(){
+    
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
@@ -85,6 +93,7 @@ class CampamentosController extends Zend_Controller_Action{
         $this->view->campamentos_s = $this->_season->GetAll($table); 
 
         if($this->_hasParam('sitio')){
+    
             $name = $this->_getParam('sitio');
             $sitio_n= $this->_cam->sitio($name);
             
@@ -95,11 +104,16 @@ class CampamentosController extends Zend_Controller_Action{
 
             $this->view->option=$option; 
             $count=count($sitio_n);
+    
             if (isset($_GET['pagina'])) {
+    
                 $pagina = $_GET['pagina'];
+    
             } else {
+    
                 $pagina= $this->view->pagina = 1;
             }   
+    
             $no_of_records_per_page = 15;
             $offset = ($pagina-1) * $no_of_records_per_page; 
             $total_pages= $count;
@@ -110,6 +124,7 @@ class CampamentosController extends Zend_Controller_Action{
         }
 
         if($this->_hasParam('status')){
+    
             $status = $this->_getParam('status');
             $status_cam= $this->_cam->statusc($status);
             $this->view->status_c=$status;
@@ -120,10 +135,15 @@ class CampamentosController extends Zend_Controller_Action{
             $option= 2;
             $this->view->option=$option;
             $count=count($status_cam);
+    
             if (isset($_GET['pagina'])) {
+    
                 $pagina = $_GET['pagina'];
+    
             } else {
+    
                 $pagina= $this->view->pagina = 1;
+    
             } 
 
             $no_of_records_per_page = 15;
@@ -139,6 +159,7 @@ class CampamentosController extends Zend_Controller_Action{
 
 
     public function requestdeletecampAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -150,76 +171,106 @@ class CampamentosController extends Zend_Controller_Action{
             $result = $this->_season->deleteAll($id,$table,$wh);
 
             if ($result) {
+    
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+    
             }else{
+    
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+    
             }
         }
     }//END REQUEST DELETE Campamento
 
 
     public function requestaddcampAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $post = $this->getRequest()->getPost();
-        
+        $post = $this->getRequest()->getPost();    
         
         $resp = $post['statusa'];
+
         if ($resp == "") {
+        
             $statusa = 0;  
+        
         } else {
+        
             $statusa = $post['statusa'];
+        
         }
 
         $pagod=$post['pagod'];
-         if ($pagod == true) {
+
+        if ($pagod == true) {
+        
             $statusd = 1;
+        
         }else{
+        
             $statusd=0;
+        
         }
 
         if($this->getRequest()->getPost()){
+        
             $table="campamentos";
             $name = $_FILES['url']['name'];
+        
             if(empty($name)){ 
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Agrega una imagen");'; 
                 print '</script>'; 
+        
             }else{
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if($res == 0){ 
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("El pdf supera el maximo de tamaño");'; 
                     print '</script>'; 
+        
                 }else{
+        
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/campamentos/contratos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
                 }
+        
             }
 
             $table="campamentos";
             $result = $this->_cam->insertcamp($post,$table,$urldb,$statusd,$statusa);
 
             if ($result) {
+        
                 return $this-> _redirect('/campamentos/addcampamento');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     } //END ADD CAMPAMENTO
 
     public function campeditAction(){
-           if($this->_hasParam('id')){
-            $id = $this->_getParam('id');
+        
+        if($this->_hasParam('id')){
 
+            $id = $this->_getParam('id');
             $table="campamentos";
             $wh="id_campamento";
             $this->view->campamento_act = $this->_season->GetSpecific($table,$wh,$id);
@@ -236,30 +287,42 @@ class CampamentosController extends Zend_Controller_Action{
             $table="campamentos_status";
             $this->view->campamentos_s = $this->_season->GetAll($table);  
 
-
         }else {
+         
             return $this-> _redirect('/');
+        
         }   
 
     }// END EDIT CAMPAMENTOS
 
     public function requestupdatecamAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
         $resp = $post['statusa'];
+
         if ($resp == "") {
+
             $statusa = 0;  
+
         } else {
+
             $statusa = $post['statusa'];
+
         }
 
         $pagod=$post['pagod'];
-         if ($pagod == true) {
+
+        if ($pagod == true) {
+        
             $statusd = 1;
+        
         }else{
+        
             $statusd=0;
+        
         }
 
         if($this->getRequest()->getPost()){
@@ -267,14 +330,20 @@ class CampamentosController extends Zend_Controller_Action{
             $table="campamentos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+
             if(!empty($_FILES["url"]["name"])) {
+
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+
                 if ($res == 0) {
+
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+
                 } else {
+
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
@@ -288,11 +357,15 @@ class CampamentosController extends Zend_Controller_Action{
             $result = $this->_cam->updatecamp($post,$table,$urldb,$statusd,$statusa);
 
             if ($result) {
+
                 return $this-> _redirect('/campamentos/addcampamento');
+
             }else{
+
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+
             }
         }
     } //END UPDATE CAMPAMENTOS
@@ -305,72 +378,95 @@ class CampamentosController extends Zend_Controller_Action{
             $table="vehiculos";
             $this->view->campamentosc = $this->_cam->GetCampamentosAll($table,$id);
 
-
             $camp = $this->_getParam('id');
             $this->view->idca=$camp;
+
         }else {
+
             return $this-> _redirect('/');
+
         }       
 
     } // END CAMPAMENTOS DETAIL
 
 
     public function requestrentarAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
-
         if($this->getRequest()->getPost()){
+           
             $table="campamentos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+           
             if(!empty($_FILES["url"]["name"])) {
+           
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+           
                 if ($res == 0) {
+            
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+            
                 } else {
+            
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
                     $url1 = 'img/campamentos/contratos/';
                     $urldb = $url1.$info1;
                     move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+            
                 }
             }//end de if
 
             $table="campamentos";
             $result = $this->_cam->updatecampamento($post,$table,$urldb);
+            
             if ($result) {
+            
                 return $this-> _redirect('/campamentos/campdetail/id/'.$post['idc'].'');
+            
             }else{
+            
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+            
             }
         }
     } // Rentar Campamento
 
     public function requestcerrarcAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
             
         if($this->getRequest()->getPost()){
+        
             $table="campamentos";
             $name = $_FILES['url']['name'];
             $urldb = $post["imahidden"];
+        
             if(!empty($_FILES["url"]["name"])) {
+        
                 $bytes = $_FILES['url']['size'];
                 $res = $this->formatSizeUnits($bytes);
+        
                 if ($res == 0) {
+        
                     print '<script language="JavaScript">'; 
                     print 'alert("La imagen supera el maximo de tamaño");'; 
                     print '</script>';
+        
                 } else {
+        
                     unlink($post['imahidden']);
                     $info1 = new SplFileInfo($_FILES['url']['name']);
                     $ext1 = $info1->getExtension();
@@ -385,9 +481,11 @@ class CampamentosController extends Zend_Controller_Action{
 
             $table="campamentos";
             $result = $this->_cam->updatecampamentoCerrar($post,$table,$urldb,$hoy);
+        
             if ($result) {
                 
                 return $this-> _redirect('/campamentos/campdetail/id/'.$post['idc'].''); 
+        
             }else{
             
                 print '<script language="JavaScript">'; 
@@ -397,7 +495,9 @@ class CampamentosController extends Zend_Controller_Action{
         }
     }       //End Cerrar Campamento
 
+    
     public function requestcerrarcampAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -424,6 +524,7 @@ class CampamentosController extends Zend_Controller_Action{
     }       //End Cerrar Campamento
 
     public function excelcamAction(){
+    
         $status=$this->_getParam('status');
         $this->view->status=$status;
 
@@ -445,9 +546,13 @@ class CampamentosController extends Zend_Controller_Action{
         $count=count($stcamp);
 
         if (isset($_GET['pagina'])) {
+    
             $pagina = $_GET['pagina'];
+    
         } else {
+    
             $pagina= $this->view->pagina = 1;
+    
         } 
 
         $no_of_records_per_page = 15;
@@ -462,6 +567,7 @@ class CampamentosController extends Zend_Controller_Action{
     }   // Status Campamentos
 
     public function requestaddstatusAction(){
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
@@ -470,16 +576,22 @@ class CampamentosController extends Zend_Controller_Action{
 
             $table="campamentos_status";
             $result = $this->_cam->insertstatus($post,$table);
+    
             if ($result) {
+    
                 return $this-> _redirect('/campamentos/statusc');
+    
             }else{
+    
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+    
             }
         }
     }   //END ADD STATUS
 
+    
     public function statuseditAction(){
         
         if($this->_hasParam('id')){
@@ -489,54 +601,69 @@ class CampamentosController extends Zend_Controller_Action{
             $wh="id_status";
             $this->view->status_camp = $this->_season->GetSpecific($table,$wh,$id);
 
-        }else {
+        } else {
+    
             return $this-> _redirect('/');
+    
         }   
     }  // END EDIT STATUS
 
+    
     public function requestupdatestatusAction(){
         
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         $post = $this->getRequest()->getPost();
+    
         if($this->getRequest()->getPost()){
 
             $table="campamentos_status";
             $result = $this->_cam->updatestatusc($post,$table);
+        
             if ($result) {
+        
                 return $this-> _redirect('/campamentos/statusc');
+        
             }else{
+        
                 print '<script language="JavaScript">'; 
                 print 'alert("Ocurrio un error: Comprueba los datos.");'; 
                 print '</script>'; 
+        
             }
         }
     }//END REQUEST UPDATE STATUS  
     
     public function requestdeletestatusAction(){
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
         if($this->getRequest()->getPost()){
+        
             $id=$post['id'];
             $table="campamentos_status";
             $wh="id_status";
             $result = $this->_season->deleteAll($id,$table,$wh);
 
             if ($result) {
+            
                 echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+            
             }else{
+            
                 print '<script language="JavaScript">';
                 print 'alert("Ocurrio un error: Comprueba los datos.");';
                 print '</script>';
+            
             }
         }
     }//END REQUEST DELETE STATUS CAMPAMENTO
 
 
-        public function getproyectosAction(){
+    public function getproyectosAction(){
 
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

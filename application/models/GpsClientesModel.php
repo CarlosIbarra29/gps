@@ -8,14 +8,19 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
     public function Getpaginationclientes($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
+            
             $qry = $db->query("SELECT c.id, c.nombre_cliente, c.logo
                 FROM clientes c
                 order by id asc LIMIT $offset,$no_of_records_per_page");
+            
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
+        
         }catch (Exception $e){
+            
             echo $e;
+        
         }
     }
 
@@ -23,14 +28,19 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
     public function insertcliente($post,$table,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
+            
             $datasave = array(
                 'nombre_cliente'=>$post['name'],
                 'logo'=>$urldb); 
+            
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
             return $res;
+        
         } catch (Exception $e) {
+        
             echo $e;
+        
         }
     }   //  INSERT CLIENTES
 
@@ -206,6 +216,7 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
         }
     }   // CONSULTA SubCarpetaEspecifiva
 
+
     public function GetSuCarpetas($table,$id){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -219,6 +230,7 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   // CONSULTA SubCarpetaEspecifiva
+
 
     public function GetAllsubcarpeta($table,$id,$clienteid){
         try{
@@ -234,6 +246,7 @@ class Application_Model_GpsClientesModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }   // Arvhicos Especificos
+
 
     public function Getpaginationarchivocarpeta($table,$offset,$no_of_records_per_page,$id,$clienteid){
         try{
