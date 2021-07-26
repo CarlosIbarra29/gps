@@ -123,7 +123,7 @@
 			    <label for="mail">Correo Electronico:</label>
 			</div>
 
-			<?php if($this->rol_user == 1 || $this->rol_user == 4){ ?>
+			<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 9){ ?>
 				<div class="input-field col m6 s12">
 				    <i class="material-icons prefix">attach_money</i>
 				    <input id="day_pay" type="text" name="dia_pago" value="<?php echo $usr['dia_pago']; ?>" class="validate">
