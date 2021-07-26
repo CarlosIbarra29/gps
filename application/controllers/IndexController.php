@@ -37,7 +37,7 @@ class IndexController extends Zend_Controller_Action{
                     $this->_session->id = $result [0]["id"];
                     $this->_session->nombre = $result [0]["nombre"];
                     $year=date("Y");
-                    $url = "/panel/index/year/".$year."";
+                    $url = "/panel/index/year/".$year."/op/1";
                     $this->redirect($url); 
                 }
             }else{

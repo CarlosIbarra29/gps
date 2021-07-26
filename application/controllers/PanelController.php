@@ -40,6 +40,10 @@ class PanelController extends Zend_Controller_Action{
     // ----------------------   INDEX  --------------------------//
 
      public function indexAction(){
+        $op=$this->_getParam('op');
+        $this->view->op_modulo = $op;
+
+
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
         }
@@ -441,14 +445,90 @@ class PanelController extends Zend_Controller_Action{
 
         // C A M B I O  D E  T O R R E
         $tipo = 4; $status = 26; $cambio_uno=$this->view->cambio_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_unocount= count($cambio_uno);
         $tipo = 4; $status = 27; $cambio_dos=$this->view->cambio_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_doscount= count($cambio_dos);
         $tipo = 4; $status = 28; $cambio_tres=$this->view->cambio_tres= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_trescount= count($cambio_tres);
         $tipo = 4; $status = 29; $cambio_cuatro=$this->view->cambio_cuatro = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_cuatrocount= count($cambio_cuatro);
         $tipo = 4; $status = 30; $cambio_cinco=$this->view->cambio_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_cincocount= count($cambio_cinco);
         $tipo = 4; $status = 58; $cambio_seis=$this->view->cambio_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_seiscount= count($cambio_seis);
         $tipo = 4; $status = 78; $cambio_siete=$this->view->cambio_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_sietecount= count($cambio_siete);
         $tipo = 4; $status = 79; $cambio_ocho=$this->view->cambio_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->cambio_ochocount= count($cambio_ocho);
         // C A M B I O  D E  T O R R E
+
+
+        // T O R R E   N U E V A
+        $tipo = 5; $status = 76; $torre_uno=$this->view->torre_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_unocount= count($torre_uno);
+        $tipo = 5; $status = 50; $torre_dos=$this->view->torre_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_doscount= count($torre_dos);
+        $tipo = 5; $status = 56; $torre_tres=$this->view->torre_tres= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_trescount= count($torre_tres);
+        $tipo = 5; $status = 51; $torre_cuatro=$this->view->torre_cuatro = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_cuatrocount= count($torre_cuatro);
+        $tipo = 5; $status = 59; $torre_cinco=$this->view->torre_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_cincocount= count($torre_cinco);
+        $tipo = 5; $status = 52; $torre_seis=$this->view->torre_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_seiscount= count($torre_seis);
+        $tipo = 5; $status = 72; $torre_siete=$this->view->torre_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_sietecount= count($torre_siete);
+        $tipo = 5; $status = 53; $torre_ocho=$this->view->torre_ocho = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_ochocount= count($torre_ocho);
+        $tipo = 5; $status = 54; $torre_nueve=$this->view->torre_nueve = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_nuevecount= count($torre_nueve);
+        $tipo = 5; $status = 55; $torre_diez=$this->view->torre_diez = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_diezcount= count($torre_diez);
+        $tipo = 5; $status = 73; $torre_once=$this->view->torre_once = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_oncecount= count($torre_once);
+        $tipo = 5; $status = 74; $torre_doce=$this->view->torre_doce = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_docecount= count($torre_doce);
+        $tipo = 5; $status = 75; $torre_trece=$this->view->torre_trece = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_trececount= count($torre_trece);
+        $tipo = 5; $status = 49; $torre_catorce=$this->view->torre_catorce = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_catorcecount= count($torre_catorce);
+        $tipo = 5; $status = 89; $torre_quince=$this->view->torre_quince = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torre_quincecount= count($torre_quince);
+        // T O R R E   N U E V A
+
+        // M A P E O  D E  T O R R E
+        $tipo = 6; $status = 60; $mapeo_uno=$this->view->mapeo_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->mapeo_unocount= count($mapeo_uno);
+        $tipo = 6; $status = 61; $mapeo_dos=$this->view->mapeo_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->mapeo_doscount= count($mapeo_dos);
+        $tipo = 6; $status = 62; $mapeo_tres=$this->view->mapeo_tres= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->mapeo_trescount= count($mapeo_tres);
+        $tipo = 6; $status = 63; $mapeo_cuatro=$this->view->mapeo_cuatro = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->mapeo_cuatrocount= count($mapeo_cuatro);
+        // M A P E O  D E  T O R R E
+
+        // G A B I N E T E
+        $tipo = 7; $status = 67; $gabinete_uno=$this->view->gabinete_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->gabinete_unocount= count($gabinete_uno);
+        // G A B I N E T E
+
+
+        // T O R Q U E  Y  V E R T I C A L I D A D
+        $tipo = 8; $status = 81; $torque_uno=$this->view->torque_uno = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_unocount= count($torque_uno);
+        $tipo = 8; $status = 82; $torque_dos=$this->view->torque_dos = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_doscount= count($torque_dos);
+        $tipo = 8; $status = 83; $torque_tres=$this->view->torque_tres= $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_trescount= count($torque_tres);
+        $tipo = 8; $status = 84; $torque_cuatro=$this->view->torque_cuatro = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_cuatrocount= count($torque_cuatro);
+        $tipo = 8; $status = 85; $torque_cinco=$this->view->torque_cinco = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_cincocount= count($torque_cuatro);
+        $tipo = 8; $status = 86; $torque_seis=$this->view->torque_seis = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_seiscount= count($torque_seis);
+        $tipo = 8; $status = 87; $torque_siete=$this->view->torque_siete = $this->_archivo->getbtsstatus($tipo,$status);
+        $this->view->torque_sietecount= count($torque_siete);
+        // T O R Q U E  Y  V E R T I C A L I D A D
 
 
         // END STATUS PROYECTOS 

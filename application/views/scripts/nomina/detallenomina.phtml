@@ -447,9 +447,7 @@
                     <!-- <?php echo "Decimal uno: ".$monto_suma;   ?> -->
 	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>
 	          		</div>
-
 	          	</div>
-
 	        </div>
       	</div>
     </div>
@@ -551,7 +549,6 @@
 						    </tbody>
 						                
 						    <?php } ?>
-
 			      		</table>
 	        		</div>
 	        	</div>
@@ -723,7 +720,7 @@
 	                window.location.reload(true);
 	            });
 	//-------------------end de respuesta ajax---------------------
-	             return false;
+	            return false;
 
 
 		  	} else {
@@ -766,7 +763,6 @@
 	        setTimeout(submitpagonomina, 1500);
     	}
     });
-
     function submitpagonomina() { document.getElementById("submit_pago").submit() }
 
 
@@ -781,8 +777,8 @@
 		.then((willDelete) => {
 		  	if (willDelete) {
 		        swal("Espere un momento, la información esta siendo procesada", {
-		          icon: "success",
-		          buttons: false,
+		        	icon: "success",
+		        	buttons: false,
 		        });  
 
 	    		var dato = "1";
@@ -800,9 +796,7 @@
 	                window.location.reload(true);
 	            });
 	//-------------------end de respuesta ajax---------------------
-	             return false;
-
-
+	            return false;
 		  	} else {
 		    	swal("Accion cancelada!");
 		  	}

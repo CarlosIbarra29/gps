@@ -209,52 +209,86 @@ function eliminar_acentos($cadena){
     <?php if($rol == 1 || $rol == 8 || $rol == 4){ ?>
 
         <div class="row">
-            <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                <a class="btn" id="op1_gastos">Grafica Gastos</a>
-            </div>
+            <?php if($this->op_modulo == 1){ ?>
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn green">Grafica Gastos</a>
+                </div>
 
-            <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                <a class="btn" id="op1_fabricacion">Fabricación</a>
-            </div>
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_fabricacion">Fabricación</a>
+                </div>
 
-            <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                <a class="btn" id="op1_sitios">Sitios</a>
-            </div>
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_sitios">Sitios</a>
+                </div>
+            <?php } ?>
+
+            <?php if($this->op_modulo == 2){ ?>
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_gastos">Grafica Gastos</a>
+                </div>
+
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn green">Fabricación</a>
+                </div>
+
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_sitios">Sitios</a>
+                </div>
+            <?php } ?>
+
+            <?php if($this->op_modulo == 3){ ?>
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_gastos">Grafica Gastos</a>
+                </div>
+
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn" id="op1_fabricacion">Fabricación</a>
+                </div>
+
+                <div class="col m4 s6 text-center" style="margin-top: 15px;">
+                    <a class="btn green">Sitios</a>
+                </div>
+            <?php } ?>
         </div>
 
-        <div class="row oculto manger_div">
-            <div class="col m8 s12">
-                <div class="col m12 text-center">
-                    <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.2em;">Información del año <?php echo $this->year_op; ?></span> 
+
+        <?php if($this->op_modulo == 1){ ?>
+            <div class="row manger_div">
+                <div class="col m8 s12">
+                    <div class="col m12 text-center">
+                        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.2em;">Información del año <?php echo $this->year_op; ?></span> 
+                    </div>
+                </div>
+                <div class="col m4 s12">
+                    <div class="input-field col s12">
+                        <select id="filtrar_year">
+                            <option value="" disabled selected>Selecciona una opcion*</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                        <label>Filtrar por año:</label>
+                    </div>
+                </div>
+               
+            </div>
+
+
+            <div class="row manger_div">
+                <div class="col m12 s12">
+                    <canvas id="myChartpedidos" style="width: 100px;"></canvas> 
                 </div>
             </div>
-            <div class="col m4 s12">
-                <div class="input-field col s12">
-                    <select id="filtrar_year">
-                        <option value="" disabled selected>Selecciona una opcion*</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                    </select>
-                    <label>Filtrar por año:</label>
-                </div>
-            </div>
-           
-        </div>
+        <?php } ?>
 
-
-        <div class="row oculto manger_div">
-            <div class="col m12 s12">
-                <canvas id="myChartpedidos" style="width: 100px;"></canvas> 
-            </div>
-        </div>
     <?php }else{ ?>
 
     <?php } ?>
@@ -282,405 +316,408 @@ function eliminar_acentos($cadena){
     ?>
 
     <?php if($rol == 1 || $rol == 8 || $rol == 4){ ?>
+        <?php if($this->op_modulo == 1){ ?>
+           <div class="row manger_div">
+                <div class="col m12 s12">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Gasolina</th>
+                                <th>Solicitudes compra</th>
+                                <th>Comprobaciones</th>
+                                <th>Vehículos</th>
+                                <th>Nomina</th>
+                                <th>TAG</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-   <div class="row oculto manger_div">
-        <div class="col m12 s12">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mes</th>
-                        <th>Gasolina</th>
-                        <th>Solicitudes compra</th>
-                        <th>Comprobaciones</th>
-                        <th>Vehículos</th>
-                        <th>Nomina</th>
-                        <th>TAG</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/1/year/<?php echo $this->year_op; ?>">Enero</a>
+                                </td>
+                                <td>
+                                    $<?php echo number_format($sugas_enero, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($suma_enero, 2, '.', ','); ?>        
+                                </td>
+                                <td>
+                                    $<?php echo number_format($cajachica_enero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_enero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_enero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_enero, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_enero, 2, '.', ','); ?>
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/1/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <a href="/grafica/informacionmensual/mes/2/year/<?php echo $this->year_op; ?>">Febrero</a>
+                                </td>
+                                <td>
+                                    $<?php echo number_format($sugas_febrero, 2, '.', ','); ?>        
+                                </td>
+                                <td>
+                                    $<?php echo number_format($suma_febrero, 2, '.', ','); ?>
+                                </td>
+                                <td>
+                                    $<?php echo number_format($cajachica_enero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_febrero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_febrero, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_febrero, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_feb, 2, '.', ','); ?>
+                                </td>
 
-                <tbody>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/1/year/<?php echo $this->year_op; ?>">Enero</a>
-                        </td>
-                        <td>
-                            $<?php echo number_format($sugas_enero, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($suma_enero, 2, '.', ','); ?>        
-                        </td>
-                        <td>
-                            $<?php echo number_format($cajachica_enero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_enero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_enero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_enero, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_enero, 2, '.', ','); ?>
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/1/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 
-                            <a href="/grafica/informacionmensual/mes/2/year/<?php echo $this->year_op; ?>">Febrero</a>
-                        </td>
-                        <td>
-                            $<?php echo number_format($sugas_febrero, 2, '.', ','); ?>        
-                        </td>
-                        <td>
-                            $<?php echo number_format($suma_febrero, 2, '.', ','); ?>
-                        </td>
-                        <td>
-                            $<?php echo number_format($cajachica_enero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_febrero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_febrero, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_febrero, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_feb, 2, '.', ','); ?>
-                        </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/2/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
 
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/2/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/3/year/<?php echo $this->year_op; ?>">Marzo</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_marzo, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_marzo, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_marzo, 2, '.', ','); ?>  
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_marzo, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_marzo, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_marzo, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_marz, 2, '.', ','); ?> 
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/3/year/<?php echo $this->year_op; ?>">Marzo</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_marzo, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_marzo, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_marzo, 2, '.', ','); ?>  
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_marzo, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_marzo, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_marzo, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_marz, 2, '.', ','); ?> 
-                        </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/3/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
 
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/3/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/4/year/<?php echo $this->year_op; ?>">Abril</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_abril, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_abril, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_abril, 2, '.', ','); ?>  
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_abril, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_abril, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_abril, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_abril, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/4/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/5/year/<?php echo $this->year_op; ?>">Mayo</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_mayo, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_mayo, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_mayo, 2, '.', ','); ?>  
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_mayo, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_mayo, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_mayo, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_mayo, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/5/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>                           
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/6/year/<?php echo $this->year_op; ?>">Junio</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_junio, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_junio, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_junio, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_junio, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_junio, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_junio, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_junio, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/6/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/7/year/<?php echo $this->year_op; ?>">Julio</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_julio, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_julio, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_julio, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_julio, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_julio, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_julio, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_julio, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/7/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/8/year/<?php echo $this->year_op; ?>">Agosto</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_agosto, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_agosto, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_agosto, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_agosto, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_agosto, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_agosto, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_agosto, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/8/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/9/year/<?php echo $this->year_op; ?>">Septiembre</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_septiembre, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_septiembre, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_septiembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_septiembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_septiembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_septiembre, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_septiembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/9/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/1o/year/<?php echo $this->year_op; ?>">Octubre</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_octubre, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_octubre, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_octubre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_octubre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_octubre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_octubre, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_octubre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/10/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/11/year/<?php echo $this->year_op; ?>">Noviembre</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_noviembre, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_noviembre, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_noviembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_noviembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_noviembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_noviembre, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_noviembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/11/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>                           
+                            <tr>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/12/year/<?php echo $this->year_op; ?>">Diciembre</a>
+                                </td>
+                                <td>$<?php echo number_format($sugas_diciembre, 2, '.', ','); ?></td>
+                                <td>$<?php echo number_format($suma_diciembre, 2, '.', ','); ?></td>
+                                <td>
+                                    $<?php echo number_format($cajachica_diciembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    $<?php echo number_format($vehiculo_diciembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($nomina_diciembre, 2, '.', ','); ?>    
+                                </td>
+                                <td>
+                                    $<?php echo number_format($tag_diciembre, 2, '.', ','); ?>    
+                                </td>
+                                <td style="font-size: 16px; font-weight: bold;">
+                                    $<?php echo number_format($sum_diciembre, 2, '.', ','); ?> 
+                                </td>
+                                <td>
+                                    <a href="/grafica/informacionmensual/mes/12/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        <!-- 
+                <div class="col m12 s12">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Gasolina</th>
+                                <th>Solicitudes Orden compra</th>
+                                <th>Comprobaciones</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/4/year/<?php echo $this->year_op; ?>">Abril</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_abril, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_abril, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_abril, 2, '.', ','); ?>  
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_abril, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_abril, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_abril, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_abril, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/4/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/5/year/<?php echo $this->year_op; ?>">Mayo</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_mayo, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_mayo, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_mayo, 2, '.', ','); ?>  
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_mayo, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_mayo, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_mayo, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_mayo, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/5/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>                           
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/6/year/<?php echo $this->year_op; ?>">Junio</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_junio, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_junio, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_junio, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_junio, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_junio, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_junio, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_junio, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/6/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/7/year/<?php echo $this->year_op; ?>">Julio</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_julio, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_julio, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_julio, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_julio, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_julio, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_julio, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_julio, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/7/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/8/year/<?php echo $this->year_op; ?>">Agosto</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_agosto, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_agosto, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_agosto, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_agosto, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_agosto, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_agosto, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_agosto, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/8/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/9/year/<?php echo $this->year_op; ?>">Septiembre</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_septiembre, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_septiembre, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_septiembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_septiembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_septiembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_septiembre, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_septiembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/9/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/1o/year/<?php echo $this->year_op; ?>">Octubre</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_octubre, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_octubre, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_octubre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_octubre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_octubre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_octubre, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_octubre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/10/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/11/year/<?php echo $this->year_op; ?>">Noviembre</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_noviembre, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_noviembre, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_noviembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_noviembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_noviembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_noviembre, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_noviembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/11/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>                           
-                    <tr>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/12/year/<?php echo $this->year_op; ?>">Diciembre</a>
-                        </td>
-                        <td>$<?php echo number_format($sugas_diciembre, 2, '.', ','); ?></td>
-                        <td>$<?php echo number_format($suma_diciembre, 2, '.', ','); ?></td>
-                        <td>
-                            $<?php echo number_format($cajachica_diciembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            $<?php echo number_format($vehiculo_diciembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($nomina_diciembre, 2, '.', ','); ?>    
-                        </td>
-                        <td>
-                            $<?php echo number_format($tag_diciembre, 2, '.', ','); ?>    
-                        </td>
-                        <td style="font-size: 16px; font-weight: bold;">
-                            $<?php echo number_format($sum_diciembre, 2, '.', ','); ?> 
-                        </td>
-                        <td>
-                            <a href="/grafica/informacionmensual/mes/12/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-<!-- 
-        <div class="col m12 s12">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mes</th>
-                        <th>Gasolina</th>
-                        <th>Solicitudes Orden compra</th>
-                        <th>Comprobaciones</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-
-                </tbody>
-            </table>
-        </div>
- -->    </div>
+                        <tbody>
 
 
-        <div class="row oculto fabricacion_div">
-            <div class="col m12 s12 text-center">
-                <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fabricación</span>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+         -->    </div>
+        <?php } ?>
 
 
-            <div class="col m12 s12" style="margin-top: 30px;">
-                <div class="row">
-                    <?php foreach ($this->fabricacion as $key) { ?>
-                        <div class="col s4 m4">
-                          <div class="card" style="height: 270px;">
-                            <div class="card-content">
-                                <div class="row">
-                                    <div class="col m8 s8">
-                                        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['name_sitio'] ?></span>
+        <?php if($this->op_modulo == 2){ ?>
+            <div class="row fabricacion_div">
+                <div class="col m12 s12 text-center">
+                    <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fabricación</span>
+                </div>
+
+
+                <div class="col m12 s12" style="margin-top: 30px;">
+                    <div class="row">
+                        <?php foreach ($this->fabricacion as $key) { ?>
+                            <div class="col s4 m4">
+                              <div class="card" style="height: 270px;">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <div class="col m8 s8">
+                                            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['name_sitio'] ?></span>
+                                        </div>
+                                        <div class="col m4 s4 text-right">
+                                           <a href="/envios/enviodetail/id/<?php echo $key['id']; ?>/status/0"><i class="fa fa-2x fa fa-id-card-o" ></i></a>
+                                        </div>
                                     </div>
-                                    <div class="col m4 s4 text-right">
-                                       <a href="/envios/enviodetail/id/<?php echo $key['id']; ?>/status/0"><i class="fa fa-2x fa fa-id-card-o" ></i></a>
+                                    <div class="row" style="margin-top: 20px;">
+                                        <div class="col m12 s12">
+                                            <span>Fecha de Envio:</span> 
+                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['fecha_solicitud']; ?></span><br>
+                                            <span>Hora Entrega:</span> 
+                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['hora_entrega']; ?></span><br>
+                                            <span>Dirección:</span> 
+                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['direccion']; ?></span><br>
+                                            <span>Descripción:</span> 
+                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['descripcion']; ?></span><br>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-top: 20px;">
-                                    <div class="col m12 s12">
-                                        <span>Fecha de Envio:</span> 
-                                        <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['fecha_solicitud']; ?></span><br>
-                                        <span>Hora Entrega:</span> 
-                                        <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['hora_entrega']; ?></span><br>
-                                        <span>Dirección:</span> 
-                                        <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['direccion']; ?></span><br>
-                                        <span>Descripción:</span> 
-                                        <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['descripcion']; ?></span><br>
-                                    </div>
-                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                <?php } ?>
+                    <?php } ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
 
 
-        <div class="row oculto sitios_div">
-
+        <?php if($this->op_modulo == 3){ ?>
+        <div class="row sitios_div">
             <div class="row" style="margin-top: 30px:">
                 <div class="col m12 s12 text-center">
                     <span style="font-size:32px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sitios</span>
@@ -3503,7 +3540,6 @@ function eliminar_acentos($cadena){
                     </div>
                 </div>
 
-
                 <div class="row" id="cambiotorre_div">
                     <div class="col m12 s12 text-center">
                         <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cambio de torre</span>
@@ -3512,22 +3548,1854 @@ function eliminar_acentos($cadena){
                     <div class="col m12 s12">
                         <ul class="collapsible">
                             <li>
-                                <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-                                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                                <div class="collapsible-header">En Cotización
+                                    <?php if($this->cambio_unocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_unocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_uno as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
                             </li>
                             <li>
-                                <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-                                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                                <div class="collapsible-header">En espera de PO
+                                    <?php if($this->cambio_doscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_doscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_dos as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
                             </li>
                             <li>
-                                <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-                                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                                <div class="collapsible-header">En Ejecución
+                                    <?php if($this->cambio_trescount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_trescount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_tres as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Entrega de Carpeta
+                                    <?php if($this->cambio_cuatrocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_cuatrocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_cuatro as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Carta de Liberación 
+                                    <?php if($this->cambio_cincocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_cincocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_cinco as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Levantamiento 
+                                    <?php if($this->cambio_seiscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_seiscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_seis as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">En Migración
+                                    <?php if($this->cambio_sietecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_sietecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_siete as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="collapsible-header">Cancelado
+                                    <?php if($this->cambio_ochocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->cambio_ochocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->cambio_ocho as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/cambiotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
+                <!-- E N D   C A M B I O   D E   TO R R E -->
+
+                <div class="row" id="torrenueva_div">
+                    <div class="col m12 s12 text-center">
+                        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Torre Nueva</span>
+                    </div>
+
+                    <div class="col m12 s12">
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">En Diseño
+                                    <?php if($this->torre_unocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_unocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_uno as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">En Cotización
+                                    <?php if($this->torre_doscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_doscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_dos as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Ingeniería
+                                    <?php if($this->torre_trescount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_trescount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_tres as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">En Espera de PO
+                                    <?php if($this->torre_cuatrocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_cuatrocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_cuatro as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Requerimiento de Insumos
+                                    <?php if($this->torre_cincocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_cincocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_cinco as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Fabricación y Galvanizado 
+                                    <?php if($this->torre_seiscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_seiscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_seis as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Fabricada
+                                    <?php if($this->torre_sietecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_sietecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_siete as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Envio
+                                    <?php if($this->torre_ochocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_ochocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_ocho as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="collapsible-header">En Montaje
+                                    <?php if($this->torre_nuevecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_nuevecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_nueve as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Montada
+                                    <?php if($this->torre_diezcount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_diezcount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_diez as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">No Asignada
+                                    <?php if($this->torre_oncecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_oncecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_once as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Diseñada
+                                    <?php if($this->torre_docecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_docecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_doce as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Elaboración de Catálogo
+                                    <?php if($this->torre_trececount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_trececount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_trece as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">En Revisión
+                                    <?php if($this->torre_catorcecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_catorcecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_catorce as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Ingeniería Correcciones
+                                    <?php if($this->torre_quincecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torre_quincecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torre_quince as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/torrenuevaproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- // E N D   T O R R E  N U E V A -->
+
+                <div class="row" id="mapeotorre_div">
+                    <div class="col m12 s12 text-center">
+                        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Mapeo de torre</span>
+                    </div>
+
+                    <div class="col m12 s12">
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">Levantamiento
+                                    <?php if($this->mapeo_unocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->mapeo_unocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->mapeo_uno as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/mapeotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Generando Documentación
+                                    <?php if($this->mapeo_doscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->mapeo_doscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->mapeo_dos as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/mapeotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Documentación en Revisión
+                                    <?php if($this->mapeo_trescount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->mapeo_trescount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->mapeo_tres as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/mapeotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Entregado
+                                    <?php if($this->mapeo_cuatrocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->mapeo_cuatrocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->mapeo_cuatro as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/mapeotorreproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- E N D   M A P E O   D E   TO R R E -->
+
+                <div class="row" id="gabinete_div">
+                    <div class="col m12 s12 text-center">
+                        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gabinete</span>
+                    </div>
+
+                    <div class="col m12 s12">
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">Carta de Liberación
+                                    <?php if($this->gabinete_unocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->gabinete_unocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->gabinete_uno as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- E N D   G A B I N E T E -->
+
+                <div class="row" id="torque_div">
+                    <div class="col m12 s12 text-center">
+                        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Torque y verticalidad</span>
+                    </div>
+
+                    <div class="col m12 s12">
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">Solicitud Acceso
+                                    <?php if($this->torque_unocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_unocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_uno as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">En Ejecución
+                                    <?php if($this->torque_doscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_doscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_dos as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Generando Documentación
+                                    <?php if($this->torque_trescount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_trescount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_tres as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Documentación en Revisión
+                                    <?php if($this->torque_cuatrocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_cuatrocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_cuatro as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Corrección de Detalles
+                                    <?php if($this->torque_cincocount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_cincocount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_cinco as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header">Carta de Liberación
+                                    <?php if($this->torque_seiscount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_seiscount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_seis as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="collapsible-header">Cancelado
+                                    <?php if($this->torque_sietecount == 0) {?>
+                                    <?php }else{ ?> 
+                                        <div class="chip" style="margin-left: 30px;">
+                                            <?php echo $this->torque_sietecount; ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="collapsible-body">
+                                    <table class="table text-left table-hover">
+                                        <thead>
+                                            <tr>    
+                                                <th>Id cliente</th>
+                                                <th>Nombre sitio</th>
+                                                <th>Cliente</th>
+                                                <th>Ciudad</th>
+                                                <th>Estado</th>
+                                                <th>Status Cliente</th>
+                                                <th>Status Proyecto</th>
+                                                <th>Porcentaje Proyecto</th>
+                                                <th></th>
+                                            </tr> 
+                                        </thead>
+                                        <?php 
+                                        foreach ($this->torque_siete as $usr) { ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $usr["id_cliente"]; ?></td>
+                                                <td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_cliente"]); ?></td>
+                                                <td><?php echo eliminar_acentos($usr["status_proyecto"]); ?></td>
+                                                <?php if($usr["porcentaje_proyecto"] == NULL){ ?>
+                                                    <td>0%</td>
+                                                <?php }else{ ?>
+                                                    <td><?php echo $usr["porcentaje_proyecto"]; ?>%</td>
+                                                <?php } ?>
+                                                
+                                                <td><a href="/grafica/reforzamientoproject/id/<?php echo $usr["id"]; ?>/proyecto/3/sitio/<?php echo $usr["id_proyectos"]; ?>"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+
+<!--                                                 <td><?php echo $usr["id"]; ?></td>
+                                                <td><?php echo $usr["id_proyectos"]; ?></td> -->
+                                            </tr>
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>                                    
+                                </div>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- E N D   T O R Q U E  Y  V E R T I C A L I D A D -->
+
             </div>
         </div>
+        <?php } ?>
+
 
 
     <?php }else{ ?>
@@ -3657,6 +5525,9 @@ function eliminar_acentos($cadena){
     });
 </script>
 
+    <input type="hidden" id="year_idop" value="<?php echo $this->year_op; ?>">
+    <input type="hidden" id="op_modulo" value="<?php echo $this->op_modulo; ?>">
+
 <script type="text/javascript">
     $(document).ready(function(){
         $('.collapsible').collapsible();
@@ -3669,21 +5540,21 @@ function eliminar_acentos($cadena){
     });
 
     $("#op1_gastos").click(function(){
-        $(".manger_div").show();
-        $(".fabricacion_div").hide();
-        $(".sitios_div").hide();
+        var year = document.getElementById("year_idop").value;
+        var modulo = document.getElementById("op_modulo").value;
+        window.location.href = "/panel/index/year/"+year+"/op/1";
     });
 
     $("#op1_fabricacion").click(function(){
-        $(".fabricacion_div").show();
-        $(".manger_div").hide();
-        $(".sitios_div").hide();
+        var year = document.getElementById("year_idop").value;
+        var modulo = document.getElementById("op_modulo").value;
+        window.location.href = "/panel/index/year/"+year+"/op/2";
     });
 
     $("#op1_sitios").click(function(){
-        $(".sitios_div").show();
-        $(".fabricacion_div").hide();
-        $(".manger_div").hide();
+        var year = document.getElementById("year_idop").value;
+        var modulo = document.getElementById("op_modulo").value;
+        window.location.href = "/panel/index/year/"+year+"/op/3";
     });
 
      $("#bts").click(function(){
@@ -3717,7 +5588,7 @@ function eliminar_acentos($cadena){
     $("#torrenueva").click(function(){
         var myElement = document.getElementById(''); 
          $('html, body').animate({
-         scrollTop: $("#div_comentarios").offset().top
+         scrollTop: $("#torrenueva_div").offset().top
          }, 2000);
     });
 
@@ -3725,7 +5596,7 @@ function eliminar_acentos($cadena){
     $("#mapeotorre").click(function(){
         var myElement = document.getElementById(''); 
          $('html, body').animate({
-         scrollTop: $("#div_archivos").offset().top
+         scrollTop: $("#mapeotorre_div").offset().top
          }, 2000);
     });
 
@@ -3733,14 +5604,14 @@ function eliminar_acentos($cadena){
     $("#gabinete").click(function(){
         var myElement = document.getElementById(''); 
          $('html, body').animate({
-         scrollTop: $("#div_altan").offset().top
+         scrollTop: $("#gabinete_div").offset().top
          }, 2000);
     });
 
     $("#torque").click(function(){
         var myElement = document.getElementById(''); 
          $('html, body').animate({
-         scrollTop: $("#div_altan").offset().top
+         scrollTop: $("#torque_div").offset().top
          }, 2000);
     });
 </script>
