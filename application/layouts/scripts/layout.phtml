@@ -991,10 +991,6 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
                     <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
-<!--                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnominaconta',$actual_link); echo getnominacont($actual_link);?>">
-                    <a href="/nomina/solicitudnominaconta/status/0">Solicitud Nomina C<i class="material-icons">assignment</i></a>
-                </li> -->
-
                 <li class="bold moves <?php echo getUrl('/prestamo/solicitudprestamo',$actual_link); echo getprestamo($actual_link);?>">
                     <a href="/prestamo/solicitudprestamo/status/0">Descuentos<i class="material-icons">attach_money</i></a>
                 </li>
@@ -1434,6 +1430,14 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/panel/personal',$actual_link); echo getPersonal($actual_link);?>">
                     <a href="/panel/personal">Personal<i class="material-icons">person</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
+                    <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/prestamo/solicitudprestamo',$actual_link); echo getprestamo($actual_link);?>">
+                    <a href="/prestamo/solicitudprestamo/status/0">Descuentos<i class="material-icons">attach_money</i></a>
+                </li>
+                
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
                 </li>
@@ -1555,6 +1559,9 @@ setInterval(function() {
                     <a href="/personal/listapersonal">Asignación de Cuadrillas<i class="material-icons">accessibility</i></a>
                 </li>
 
+                <li class="bold moves <?php echo getUrl('/asistencia/cuadrillas',$actual_link);?>">
+                    <a href="/asistencia/cuadrillas">Asistencia<i class="material-icons">event_available</i></a>
+                </li>
             <?php } ?> 
 
             <?php if($usuarios[0]['fkroles'] == 8){ ?>
@@ -1644,6 +1651,10 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/materiales/auditoriamateriales/status/0',$actual_link);?>"> 
                     <a href="/materiales/auditoriamateriales/status/0">Lista de Materiales<i class="material-icons">business_center</i></a> 
                 </li>
+                <li class="bold moves <?php echo getUrl('/asistencia/solicitudhorasextra',$actual_link);echo gethorasextra($actual_link);?>">
+                    <a href="/asistencia/solicitudhorasextra">Solicitud Horas extra<i class="material-icons">access_time</i></a>
+                </li>
+
             <?php } ?>
 
             <?php if($usuarios[0]['fkroles'] == 17){ ?>

@@ -235,26 +235,27 @@
                       if($decimal_cuatro < 5){
                         $new_decimal_tres = $decimal_tres;
                         $new_decimal_cuatro = 0;
-                        $monto_suma =  $decimal_uno.$decimal_dos.$cero.$cero;
+                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                         $new_monto = $monto_suma ;
                       }
 
                       if($decimal_cuatro == 5){
                         $new_decimal_tres = $decimal_tres;
                         $new_decimal_cuatro = 0;
-                        $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                         $new_monto = $monto_suma +5;
                       }
 
                       if($decimal_cuatro > 5){
                           $new_decimal_tres = $decimal_tres + 1;
                           $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                           $new_monto = $monto_suma +10;
-                      }
+                      } 
                     ?>
 
-            		  <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($new_monto, 2, '.', ','); ?></span>	
+
+            		  <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>	
           			</td>
           			<td>
             			<?php if($usr['status_auditoria'] == 0){ ?>

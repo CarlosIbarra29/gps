@@ -425,25 +425,27 @@
 	                    if($decimal_cuatro < 5){
 	                      $new_decimal_tres = $decimal_tres;
 	                      $new_decimal_cuatro = 0;
-	                      $monto_suma =  $decimal_uno.$decimal_dos.$cero.$cero;
+	                      $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
 	                      $new_monto = $monto_suma ;
 	                    }
 
 	                    if($decimal_cuatro == 5){
 	                      $new_decimal_tres = $decimal_tres;
 	                      $new_decimal_cuatro = 0;
-	                      $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+	                      $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
 	                      $new_monto = $monto_suma +5;
 	                    }
 
 	                    if($decimal_cuatro > 5){
 	                        $new_decimal_tres = $decimal_tres + 1;
 	                        $new_decimal_cuatro = 0;
-	                        $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+	                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
 	                        $new_monto = $monto_suma +10;
-	                    }
+	                    } 
                     ?>
-	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($new_monto, 2, '.', ','); ?></span>
+
+                    <!-- <?php echo "Decimal uno: ".$monto_suma;   ?> -->
+	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>
 	          		</div>
 
 	          	</div>
@@ -478,7 +480,7 @@
 		        		<form action="/nomina/requestaddstatuspagonomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
 		        		<div class="col m12 s12">
 					        <div class="input-field col m6 s12">
-					          	<input id="pagonomina" name="monto" value="<?php echo $new_monto; ?>" type="number" class="validate">
+					          	<input id="pagonomina" name="monto" value="<?php echo $decimal_uno.$decimal_dos.$new_decimal_tres.$cero; ?>" type="number" class="validate">
 					          	<label for="pagonomina">Monto Autorizado</label>
 					        </div>
 							<input type="hidden" name="id_solicitud" value="<?php echo $this->solicitudid_nomina; ?>">
