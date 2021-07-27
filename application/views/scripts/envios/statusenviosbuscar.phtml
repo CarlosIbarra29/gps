@@ -72,7 +72,7 @@
 <?php 
 	$status =  $this->opcion_status;
 ?>
-
+<?php $opcion = $this->opcion_search; ?>
 <div class="row" style="margin-top: 20px;">
 	<div class="col m12 s12">
   		<ul >
@@ -124,7 +124,7 @@
   			<?php } ?>
 
   		</ul>
-	</div> 
+	</div>
 </div>
 
 <!-- Buscador -->
@@ -132,16 +132,28 @@
 	<div class="col m4 s12">
 	  	<div class="input-field col s12">
 	    	<select id="search_envios">
-	      		<option value="1" selected>Sitio</option>
-	      		<option value="2">Id Solicitud</option>
+	    		<?php if($opcion == 1){ ?>
+		      		<option value="1" selected>Sitio</option>
+		      		<option value="2">Id Solicitud</option>
+	    		<?php } ?>
+
+	    		<?php if($opcion == 2){ ?>
+		      		<option value="1">Sitio</option>
+		      		<option value="2" selected>Id Solicitud</option>
+	    		<?php } ?>
 	    	</select>
 	    	<label>Buscar por:</label>
 	  	</div>
 	</div>
+
 	<div class="col m8 s12"> 
-		<div class="col m12 s12" id="search_sitio">
-		    <div class="input-field col m10 s8">
-		        <input placeholder="Ingresa nombre" name="sitio" id="namesitio" type="text" class="validate">
+		<?php if($opcion == 1){ ?>
+			<div class="col m12 s12" id="search_sitio">
+		<?php }else{ ?>
+			<div class="col m12 s12 oculto" id="search_sitio">
+		<?php } ?>
+			<div class="input-field col m10 s8">
+		        <input placeholder="Ingresa nombre" name="sitio" id="namesitio" type="text" value="<?php echo $this->nombre_sto; ?>" class="validate">
 		        <label for="namesitio">Buscar por sitio</label>
 		    </div>
 		    <input type="hidden" id="status_search" value="<?php echo $status; ?>">
@@ -150,9 +162,13 @@
 		    </div>
 		</div>
 
-		<div class="col m12 s12 oculto" id="search_solicitud">
+		<?php if($opcion == 2){ ?>
+			<div class="col m12 s12" id="search_solicitud">
+		<?php }else{ ?>
+			<div class="col m12 s12 oculto" id="search_solicitud">
+		<?php } ?>
 		    <div class="input-field col m10 s8">
-		        <input placeholder="Ingresa el id de la solicitud" name="solicitud" id="id_sol" type="number" class="validate">
+		        <input placeholder="Ingresa el id de la solicitud" value="<?php echo $this->id_search; ?>" name="solicitud" id="id_sol" type="number" class="validate">
 		        <label for="id_sol">Buscar por id de la solicitud</label>
 		    </div>
 		    <div class="input-field col m2 s4">
@@ -162,6 +178,7 @@
 	</div>
 </div>
 <!-- End Buscador -->
+
 
 <div class="row"> 
 	<div class="col m12 s12" style="margin-top: 15px;">

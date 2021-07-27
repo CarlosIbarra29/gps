@@ -25,7 +25,7 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
             return $res;
         } catch (Exception $e) {
             echo $e;
-        }
+        } 
     }// END INSERT ENVIO
 
     public function updateenviopasodos($post,$table){
@@ -675,6 +675,88 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto stp on stp.id = e.id_tipoproyecto
                         having step_envio = 1 AND status_solicitud = 0 AND stp.id_tipoproyecto = 5
                         ORDER BY years,mes, dia ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getsolicitudandsitio($step,$status,$user,$sitio){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud,e.fecha_envio, 
+                        e.user_solicitud, e.id_user, e.prioridad, e.tipo_envio, e.vehiculo,e.direccion,e.step_envio, 
+                        e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado, e.dimensiones, e.comentarios, 
+                        e.status_solicitud, e.vehiculo_final, e.operador, e.acuse, e.id_tipoproyecto
+                        FROM envios_solicitud e 
+                        WHERE step_envio = ? and status_solicitud = ? and id_user = ? and name_sitio like '%{$sitio}%'",array($step,$status,$user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getenviospaginatorsitio($step,$status,$user,$sitio,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud,e.fecha_envio, 
+                        e.user_solicitud,e.id_user, e.prioridad, e.tipo_envio, e.vehiculo, e.direccion,e.step_envio, 
+                        e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado, e.dimensiones, e.comentarios,
+                        e.status_solicitud, e.vehiculo_final, e.operador, e.acuse, e.id_tipoproyecto, 
+                        year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
+                        month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        FROM envios_solicitud e 
+                        WHERE step_envio = ? AND status_solicitud = ? AND id_user = ? and e.name_sitio like '%{$sitio}%'
+                        ORDER BY years, mes, dia ASC 
+                        LIMIT $offset,$no_of_records_per_page",array($step,$status,$user));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getsolicitudandidsol($step,$status,$user,$id){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud,e.fecha_envio, 
+                        e.user_solicitud, e.id_user, e.prioridad, e.tipo_envio, e.vehiculo,e.direccion,e.step_envio, 
+                        e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado, e.dimensiones, e.comentarios, 
+                        e.status_solicitud, e.vehiculo_final, e.operador, e.acuse, e.id_tipoproyecto
+                        FROM envios_solicitud e 
+                        WHERE step_envio = ? and status_solicitud = ? and id_user = ? and id = ?",array($step,$status,$user,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getenviospaginatoridsol($step,$status,$user,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_sitio, e.name_sitio, e.id_cliente, e.fecha_solicitud,e.fecha_envio, 
+                        e.user_solicitud,e.id_user, e.prioridad, e.tipo_envio, e.vehiculo, e.direccion,e.step_envio, 
+                        e.hora_entrega, e.descripcion, e.contacto, e.peso_aproximado, e.dimensiones, e.comentarios,
+                        e.status_solicitud, e.vehiculo_final, e.operador, e.acuse, e.id_tipoproyecto, 
+                        year(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS years, 
+                        month(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS mes,
+                        day(date(CONCAT(SUBSTRING(fecha_solicitud, 7, 4),  '-', SUBSTRING(fecha_solicitud, 4, 2), '-', SUBSTRING(fecha_solicitud, 1, 2)))) AS dia
+                        FROM envios_solicitud e 
+                        WHERE step_envio = ? AND status_solicitud = ? AND id_user = ? and id = ? 
+                        ORDER BY years, mes, dia ASC 
+                        LIMIT $offset,$no_of_records_per_page",array($step,$status,$user,$id));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

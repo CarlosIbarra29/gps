@@ -1061,6 +1061,320 @@ class EnviosController extends Zend_Controller_Action{
         }   
     }//END REQUEST DELETE TODO
 
+
+    public function statusenviosbuscarAction(){
+
+        $step = 1;
+        $status = 0;
+        $user = $this->_session->id;
+        $en_proceso = $this->_envio->getsolicitudsteponeuser($step,$status,$user);
+        $count_enproceso = count($en_proceso);
+        $this->view->en_proceso = $count_enproceso;
+
+        $status=$this->_getParam('status');
+        $this->view->opcion_status=$status;
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($status == 0) {
+
+            if($opcion == 1){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sto=$sitio; 
+                
+                // var_dump($sitio);
+                // die();
+
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
+                $count=count($solicitud);
+
+
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $a=$this->view->paginator= $this->_envio->getenviospaginatorsitio($step,$status,$user,$sitio,$offset,$no_of_records_per_page);
+
+            }
+
+            if($opcion == 2){
+
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandidsol($step,$status,$user,$id);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                }
+
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatoridsol($step,$status,$user,$id,$offset,$no_of_records_per_page);
+            }
+
+        }
+
+
+        if($status == 1) {
+            
+            if($opcion == 1){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sto=$sitio; 
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatorsitio($step,$status,$user,$sitio,$offset,$no_of_records_per_page);
+            }
+
+            if($opcion == 2){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandidsol($step,$status,$user,$id);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatoridsol($step,$status,$user,$id,$offset,$no_of_records_per_page);
+            }
+
+        }
+
+
+        if($status == 2) {
+
+            if($opcion == 1){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sto=$sitio; 
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatorsitio($step,$status,$user,$sitio,$offset,$no_of_records_per_page);
+            }
+
+            if($opcion == 2){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandidsol($step,$status,$user,$id);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatoridsol($step,$status,$user,$id,$offset,$no_of_records_per_page);
+            }
+
+        }
+
+
+        if($status == 3) {
+            
+            if($opcion == 1){
+            
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $sitio = $this->_getParam('sitio');
+                $this->view->nombre_sto=$sitio; 
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
+                $count=count($solicitud);
+            
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+            
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatorsitio($step,$status,$user,$sitio,$offset,$no_of_records_per_page);
+            }
+
+            if($opcion == 2){
+                
+                $actualpagina=$this->_getParam('pagina');
+                $this->view->actpage=$actualpagina;
+                $id = $this->_getParam('id');
+                
+                $step = 1;
+                $status = 0;
+                $user = $this->_session->id;
+
+                $this->view->id_search=$id; 
+                $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandidsol($step,$status,$user,$id);
+                $count=count($solicitud);
+                
+                if (isset($_GET['pagina'])) { 
+
+                    $pagina = $_GET['pagina']; 
+
+                } else { 
+
+                    $pagina= $this->view->pagina = 1; 
+
+                } 
+                
+                $no_of_records_per_page = 20;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $table="envios_solicitud";
+                $this->view->paginator= $this->_envio->getenviospaginatoridsol($step,$status,$user,$id,$offset,$no_of_records_per_page);
+            }
+
+        }
+    }   // Buscadores Solicitud
+
     public function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)
         {
