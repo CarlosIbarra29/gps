@@ -1166,7 +1166,7 @@ class EnviosController extends Zend_Controller_Action{
                 $this->view->nombre_sto=$sitio; 
                 
                 $step = 1;
-                $status = 0;
+                $status = 1;
                 $user = $this->_session->id;
 
                 $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
@@ -1199,7 +1199,7 @@ class EnviosController extends Zend_Controller_Action{
                 $id = $this->_getParam('id');
                 
                 $step = 1;
-                $status = 0;
+                $status = 1;
                 $user = $this->_session->id;
 
                 $this->view->id_search=$id; 
@@ -1239,7 +1239,7 @@ class EnviosController extends Zend_Controller_Action{
                 $this->view->nombre_sto=$sitio; 
                 
                 $step = 1;
-                $status = 0;
+                $status = 2;
                 $user = $this->_session->id;
 
                 $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
@@ -1272,7 +1272,7 @@ class EnviosController extends Zend_Controller_Action{
                 $id = $this->_getParam('id');
                 
                 $step = 1;
-                $status = 0;
+                $status = 2;
                 $user = $this->_session->id;
 
                 $this->view->id_search=$id; 
@@ -1312,7 +1312,7 @@ class EnviosController extends Zend_Controller_Action{
                 $this->view->nombre_sto=$sitio; 
                 
                 $step = 1;
-                $status = 0;
+                $status = 3;
                 $user = $this->_session->id;
 
                 $solicitud=$this->view->sol_envios=$this->_envio->getsolicitudandsitio($step,$status,$user,$sitio);
@@ -1345,7 +1345,7 @@ class EnviosController extends Zend_Controller_Action{
                 $id = $this->_getParam('id');
                 
                 $step = 1;
-                $status = 0;
+                $status = 3;
                 $user = $this->_session->id;
 
                 $this->view->id_search=$id; 
