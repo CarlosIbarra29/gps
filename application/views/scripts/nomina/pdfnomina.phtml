@@ -309,28 +309,28 @@
                         if($decimal_cuatro < 5){
                           $new_decimal_tres = $decimal_tres;
                           $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$cero.$cero;
+                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                           $new_monto = $monto_suma ;
                         }
 
                         if($decimal_cuatro == 5){
                           $new_decimal_tres = $decimal_tres;
                           $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                           $new_monto = $monto_suma +5;
                         }
 
                         if($decimal_cuatro > 5){
                             $new_decimal_tres = $decimal_tres + 1;
                             $new_decimal_cuatro = 0;
-                            $monto_suma =  $decimal_uno.$decimal_dos.$decimal_tres.$cero;
+                            $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                             $new_monto = $monto_suma +10;
-                        }
+                        } 
                     ?>
                     <div class="row" >
                         <div class="col m6 s6 text-center" style="margin-top: 50px;">
                             <span style="font-size:17px;">Pago de Nomina: </span>
-                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($new_monto, 2, '.', ','); ?></span>
+                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>
                         </div>
                         <div class="col m6 s6 text-right" style="margin-top: 50px;">
                             <span>_______________________________________</span><br>
@@ -350,7 +350,6 @@
                         <!-- <?php echo $newDate_jefe; ?> -->
                     </div>
                 </div>
-
 
 <!--                 <p class="signature">
                     Signature: ________________ <br /><br />

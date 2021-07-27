@@ -63,13 +63,16 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->view->proyecto = $proyecto;
 
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
-        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientecheckin($proyecto);
+        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
+        // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
+            $this->view->as_status = $valor;
         }else{
             $valor = 1;
             $this->view->op_solicitud = $valor;
+            $this->view->as_status = $valor;
         }
     }
 
@@ -82,12 +85,15 @@ class AsistenciaController extends Zend_Controller_Action{
 
     	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
         $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
+        // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
+            $this->view->as_status = $valor;
         }else{
             $valor = 1;
             $this->view->op_solicitud = $valor;
+            $this->view->as_status = $valor;
         }
     }
 

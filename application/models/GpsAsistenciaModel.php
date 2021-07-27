@@ -408,9 +408,9 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre_sitio, pc.user_solicitud, pc.user_solicitud,pc.status, 
-                        pc.motivo, pc.asistencia_status, pc.id_proyecto
+                        pc.motivo, pc.asistencia_status, pc.id_proyecto, pc.asistencia_status
                         FROM personal_solicitudhoras pc 
-                        where id_proyecto = ? and pc.status= 0;",array($nombre));
+                        where id_proyecto = ? and pc.asistencia_status = 0",array($nombre));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

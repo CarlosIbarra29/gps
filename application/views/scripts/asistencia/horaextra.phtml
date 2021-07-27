@@ -11,7 +11,8 @@
     </div>
 </div>
 
-<?php if($this->op_solicitud == 1){ ?>
+<!-- <?php echo $this->as_status; ?> -->
+<?php if($this->as_status == 1){ ?>
 
 <?php 
 	foreach ($this->solicitud as $key) {
@@ -180,12 +181,13 @@
 </div>
 
 <?php if($this->op_solicitud == 1){ ?>
-
-	<div class="col m12 s12 text-center">
-		<div class="input-field col m12 s12">
-			<a onclick="M.toast({html: 'Ya existe una solicitud'})" class="btn"><i class="material-icons right">access_time</i>Autorizar</a>
+	<?php if($status_asistencia == 0){ ?>
+		<div class="col m12 s12 text-center">
+			<div class="input-field col m12 s12">
+				<a onclick="M.toast({html: 'Ya existe una solicitud'})" class="btn"><i class="material-icons right">access_time</i>Autorizar</a>
+			</div>
 		</div>
-	</div>
+	<?php }?>
 <?php }else{ ?>
 <div class="row">
 	<div class="col m12 s12 text-center">
