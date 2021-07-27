@@ -1298,6 +1298,10 @@ setInterval(function() {
                     </li>
                 <?php } ?>
 
+                <li class="bold moves <?php echo getUrl('/tag/addconsumo',$actual_link);?>">
+                    <a href="/tag/addconsumo">TAG<i class="material-icons">card_membership</i></a>
+                </li>
+
                 <?php if($total_nf == 0){ ?>
                     <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
                         <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF<i class="material-icons">assignment</i></a>
@@ -1459,6 +1463,10 @@ setInterval(function() {
                         <a href="/vehiculos/listasolcontabilidad/status/0">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solvehconta; ?></span><i class="material-icons">local_car_wash</i></a>
                     </li>
                 <?php } ?>
+
+                <li class="bold moves <?php echo getUrl('/tag/addconsumo',$actual_link);?>">
+                    <a href="/tag/addconsumo">TAG<i class="material-icons">card_membership</i></a>
+                </li>
 
 <!--                 <li class="bold <?php echo getauditorigasolina($actual_link);?>">
                     <a href="/gasolina/auditoriagasolina/status/0">Auditoria de Gasolina<i class="material-icons">local_gas_station</i></a>
