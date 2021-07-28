@@ -128,6 +128,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             	'status_expediente'=>$post['status'],
             	'rfc'=>$post['rfc'],
             	'telefono'=>$post['phone'],
+                'tel_emergencia'=>$post['emergencia'],
             	'email_personal'=>$post['mail'],
                 'nss'=>$post['nss'],
                 'dia_pago'=>$post['dia_pago'],
@@ -337,7 +338,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
 	public function refreshPersonal($post,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, status_campo = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, status_campo = ? WHERE id = ?",array(
                	$post['name'],
             	$post['apellido_pa'],
             	$post['ampellido_ma'],
@@ -347,6 +348,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             	$post['nss'],
             	$post['rfc'],
             	$post['phone'],
+                $post['emergencia'],
             	$post['mail'],
                 $post['dia_pago'],
                 $post['hora_pago'],
@@ -462,7 +464,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
-                        pc.puesto, pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago,
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago,
                         pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
                         pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
                         pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 

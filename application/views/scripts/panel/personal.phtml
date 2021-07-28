@@ -135,9 +135,9 @@
 </div>
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
+<div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-       <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Personal</span>
+       	<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Personal</span>
 		<div class="col m12 s12" style="margin-top: 19px;">
 			<form action="/panel/requestaddpersonalcampo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
 				<div class="row">
@@ -214,7 +214,12 @@
 			        <div class="input-field col m6 s12">
 			          <i class="material-icons prefix">phone</i>
 			          <input id="icon_telephone" type="text" name="phone" class="validate">
-			          <label for="icon_telephone">Telefono</label>
+			          <label for="icon_telephone">Teléfono</label>
+			        </div>
+			        <div class="input-field col m6 s12">
+			          <i class="material-icons prefix">phone</i>
+			          <input id="emergencia" type="text" name="emergencia" class="validate">
+			          <label for="emergencia">Teléfono en caso de accidente</label>
 			        </div>
 			        <div class="input-field col m6 s12">
 			          <i class="material-icons prefix">email</i>
