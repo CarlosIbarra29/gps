@@ -267,39 +267,20 @@
           			</td>
 
           			<td>
-                  <?php $monto_red = ceil($usr['monto_nomina']); ?>
-<!--                     <?php 
-                      $monto_real = round($usr['monto_nomina']); 
-                      $decimal_cuatro = substr($monto_real, 3);
-                      $decimal_tres = substr($monto_real, 2,1);
-                      $decimal_dos = substr($monto_real, 1,1);
-                      $decimal_uno = substr($monto_real, 0,1);
-                      $cero = 0;
-                      
-                      if($decimal_cuatro < 5){
-                        $new_decimal_tres = $decimal_tres;
-                        $new_decimal_cuatro = 0;
-                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                        $new_monto = $monto_suma ;
-                      }
 
-                      if($decimal_cuatro == 5){
-                        $new_decimal_tres = $decimal_tres;
-                        $new_decimal_cuatro = 0;
-                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                        $new_monto = $monto_suma +5;
-                      }
+                  <?php 
+                    $num = $usr['monto_nomina'];
+                    $multi = 5;
+       
+                    if (fmod($num, $multi) <> 0) {
+                        $valor_suma = $num-fmod($num, $multi)+$multi;
+                    } else {
+                        $valor_suma = $num;
+                    }
+                  ?>
 
-                      if($decimal_cuatro > 5){
-                          $new_decimal_tres = $decimal_tres + 1;
-                          $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                          $new_monto = $monto_suma +10;
-                      } 
-                    ?>
-
-            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span> -->	
-                  <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_red); ?></span>
+	
+                  <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($valor_suma); ?></span>
           			</td>
           			<td>
             			<?php if($usr['status_auditoria'] == 0){ ?>
