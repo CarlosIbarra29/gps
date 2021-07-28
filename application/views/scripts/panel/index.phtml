@@ -62,11 +62,6 @@ function eliminar_acentos($cadena){
         </div>
     <?php } ?>
 
-
-
-
-
-
 <?php  $suma_enero = 0; foreach ($this->enero as $usr) { $suma_enero = $suma_enero + $usr['total']; } ?>
 <?php  $suma_febrero = 0; foreach ($this->febrero as $usr) { $suma_febrero = $suma_febrero + $usr['total']; } ?>
 <?php  $suma_marzo = 0; foreach ($this->marzo as $usr) { $suma_marzo = $suma_marzo + $usr['total']; } ?>
@@ -211,7 +206,7 @@ function eliminar_acentos($cadena){
         <div class="row">
             <?php if($this->op_modulo == 1){ ?>
                 <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                    <a class="btn green">Grafica Gastos</a>
+                    <a class="btn orange">Grafica Gastos</a>
                 </div>
 
                 <div class="col m4 s6 text-center" style="margin-top: 15px;">
@@ -229,7 +224,7 @@ function eliminar_acentos($cadena){
                 </div>
 
                 <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                    <a class="btn green">Fabricación</a>
+                    <a class="btn orange">Fabricación</a>
                 </div>
 
                 <div class="col m4 s6 text-center" style="margin-top: 15px;">
@@ -247,7 +242,7 @@ function eliminar_acentos($cadena){
                 </div>
 
                 <div class="col m4 s6 text-center" style="margin-top: 15px;">
-                    <a class="btn green">Sitios</a>
+                    <a class="btn orange">Sitios</a>
                 </div>
             <?php } ?>
         </div>
@@ -393,7 +388,6 @@ function eliminar_acentos($cadena){
                                 <td>
                                     <a href="/grafica/informacionmensual/mes/2/year/<?php echo $this->year_op; ?>"><i class="fa fa-2x fa-pie-chart"></i></a>
                                 </td>
-
                             </tr>
                             <tr>
                                 <td>
@@ -684,32 +678,32 @@ function eliminar_acentos($cadena){
                     <div class="row">
                         <?php foreach ($this->fabricacion as $key) { ?>
                             <div class="col s4 m4">
-                              <div class="card" style="height: 270px;">
-                                <div class="card-content">
-                                    <div class="row">
-                                        <div class="col m8 s8">
-                                            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['name_sitio'] ?></span>
+                                <div class="card" style="height: 270px;">
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <div class="col m8 s8">
+                                                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['name_sitio'] ?></span>
+                                            </div>
+                                            <div class="col m4 s4 text-right">
+                                               <a href="/envios/enviodetail/id/<?php echo $key['id']; ?>/status/0"><i class="fa fa-2x fa fa-id-card-o" ></i></a>
+                                            </div>
                                         </div>
-                                        <div class="col m4 s4 text-right">
-                                           <a href="/envios/enviodetail/id/<?php echo $key['id']; ?>/status/0"><i class="fa fa-2x fa fa-id-card-o" ></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 20px;">
-                                        <div class="col m12 s12">
-                                            <span>Fecha de Envio:</span> 
-                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['fecha_solicitud']; ?></span><br>
-                                            <span>Hora Entrega:</span> 
-                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['hora_entrega']; ?></span><br>
-                                            <span>Dirección:</span> 
-                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['direccion']; ?></span><br>
-                                            <span>Descripción:</span> 
-                                            <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['descripcion']; ?></span><br>
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col m12 s12">
+                                                <span>Fecha de Envio:</span> 
+                                                <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['fecha_solicitud']; ?></span><br>
+                                                <span>Hora Entrega:</span> 
+                                                <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['hora_entrega']; ?></span><br>
+                                                <span>Dirección:</span> 
+                                                <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['direccion']; ?></span><br>
+                                                <span>Descripción:</span> 
+                                                <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $key['descripcion']; ?></span><br>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                              </div>
                             </div>
-                    <?php } ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -728,27 +722,26 @@ function eliminar_acentos($cadena){
                     <div class="col m6 s12 text-center">
                         <a class='dropdown-trigger btn' href='#' style="width: 150px; background-color: green" data-target='dropdown4'>Menú <i class="material-icons left">apps</i></a> 
 
-                      <ul id='dropdown4' class='dropdown-content'>
-                        <li><a id="bts">BTS</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="colocacion">Colocación</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="reforzamiento">Reforzamiento</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="cambiotorre">Cambio de Torre</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="torrenueva">Torre Nueva</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="mapeotorre">Mapeo de Torre</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="gabinete">Gabinete</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                        <li><a id="torque">Torque & Verticalidad</a></li>
-                        <li class="divider" tabindex="-1"></li>
-                      </ul>
+                        <ul id='dropdown4' class='dropdown-content'>
+                            <li><a id="bts">BTS</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="colocacion">Colocación</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="reforzamiento">Reforzamiento</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="cambiotorre">Cambio de Torre</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="torrenueva">Torre Nueva</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="mapeotorre">Mapeo de Torre</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="gabinete">Gabinete</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a id="torque">Torque & Verticalidad</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                        </ul>
                     </div>
                 </div>
-
             </div>
 
             <div class="col m12 s12">
@@ -5826,8 +5819,6 @@ function eliminar_acentos($cadena){
                                 </div>
                             </li>
 
-
-
                         </ul>
                     </div>
                 </div>
@@ -5837,17 +5828,9 @@ function eliminar_acentos($cadena){
         </div>
         <?php } ?>
 
-
-
     <?php }else{ ?>
 
     <?php } ?>
-
-
-
-
-
-
 
     <input type="hidden" id="enero" value="<?php echo $sum_enero; ?> ">
     <input type="hidden" id="febrero" value="<?php echo $sum_feb; ?>">
@@ -6000,59 +5983,59 @@ function eliminar_acentos($cadena){
 
      $("#bts").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#bts_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#bts_div").offset().top
+        }, 2000);
     });
 
      $("#colocacion").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#colocacion_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#colocacion_div").offset().top
+        }, 2000);
     });
 
     $("#reforzamiento").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#reforzamiento_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#reforzamiento_div").offset().top
+        }, 2000);
     });
 
     $("#cambiotorre").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#cambiotorre_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#cambiotorre_div").offset().top
+        }, 2000);
     });
 
     $("#torrenueva").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#torrenueva_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#torrenueva_div").offset().top
+        }, 2000);
     });
 
 
     $("#mapeotorre").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#mapeotorre_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#mapeotorre_div").offset().top
+        }, 2000);
     });
 
 
     $("#gabinete").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#gabinete_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#gabinete_div").offset().top
+        }, 2000);
     });
 
     $("#torque").click(function(){
         var myElement = document.getElementById(''); 
-         $('html, body').animate({
-         scrollTop: $("#torque_div").offset().top
-         }, 2000);
+        $('html, body').animate({
+        scrollTop: $("#torque_div").offset().top
+        }, 2000);
     });
 </script>

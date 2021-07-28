@@ -348,6 +348,31 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     } //END GET ASISTENCIA
 
+    public function getpersonalsitiocuadrillataller($nombre){
+        $nombre="Taller";
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp,
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago, 
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, 
+                        pc.name_sitio,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,  
+                        pc.status_operativo , pc.status_campo, tp.nombre_proyecto, pc.hora_extra,
+                        pc.fechainicio_asignacion, pc.fechafinal_asignacion, pc.day_number, pc.hora_inicio, 
+                        pc.hora_final, pc.status_asistencia, pc.horas_trabajadas
+                        FROM personal_campo pc 
+                        LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        LEFT JOIN tipo_proyecto tp on tp.id = pc.tipo_proyectopersonal 
+                        WHERE pc.name_sitio = ? ORDER BY pc.nombre ASC",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
+
     public function getprocesosolicitudhoras($op_status){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -418,6 +443,23 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET ASISTENCIA
+
+    public function getsolicitudpendientetaller($nombre){
+        $name="Taller";
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre_sitio, pc.user_solicitud, pc.user_solicitud,pc.status, 
+                        pc.motivo, pc.asistencia_status, pc.id_proyecto, pc.asistencia_status
+                        FROM personal_solicitudhoras pc 
+                        where nombre_sitio = ? and pc.asistencia_status = 0",array($name));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ASISTENCIA
+
 
     public function getsolicitudpendientecheckin($nombre){
         try{

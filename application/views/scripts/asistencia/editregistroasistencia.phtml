@@ -43,35 +43,78 @@
 			    <label for="new_horaentrada">Hora de entrada</label>
 			</div>	
 
+			<?php foreach ($this->asistencia as $key) {
+				$pro1 = $key['id_proyecto'];	
+				$pro2 = $key['id_proyecto_salida'];	
+			} ?>
 
-			<div class="input-field col m6 s12">
-				<select id="sitio_entrada" name="sitio_entrada" required>
-			    	<?php foreach ($this->proyectos as $mar) { 
-			     		if ($mar['id']==$key['id_proyecto']) { ?>
-			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
-			     	<?php } if ($mar['id']!=$key['id_proyecto']) { ?>
-			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
-			     	<?php } } ?>  
-				</select>
-				<label>Sitio Entrada</label>
-			</div>
+
+				<div class="input-field col m6 s12">
+					<?php if($pro1 == 0){ ?>
+					    <select id="sitio_entrada" name="sitio_entrada" required>
+					      	<option value="0" selected>Taller</option>
+					      	<?php foreach ($this->proyectos as $mar) { ?>
+					      	<option value="<?php echo $mar["id"]; ?>"><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					      	<?php } ?>
+					    </select>
+					<?php }else{ ?>
+						<select id="sitio_entrada" name="sitio_entrada" required>
+							<option value="0" >Taller</option>
+					    	<?php foreach ($this->proyectos as $mar) { 
+					     		if ($mar['id']==$key['id_proyecto']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					     	<?php } if ($mar['id']!=$key['id_proyecto']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					     	<?php } 
+					     	} ?>  
+						</select>
+					<?php } ?>
+					<label>Sitio Entrada</label>
+				</div>
+
 
 			<div class="input-field col m6 s12">
 			    <input id="new_horasalida" value="<?php echo $key['hora_salida']; ?>" name="hora_salida" type="time">
 			    <label for="new_horasalida">Hora de Salida</label>
 			</div>	
 
-			<div class="input-field col m6 s12">
-				<select id="sitio_entrada" name="sitio_salida" required>
-			    	<?php foreach ($this->proyectos as $mar) { 
-			     		if ($mar['id']==$key['id_proyecto_salida']) { ?>
-			                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
-			     	<?php } if ($mar['id']!=$key['id_proyecto_salida']) { ?>
-			                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
-			     	<?php } } ?>  
-				</select>
-				<label>Sitio Salida</label>
-			</div>
+
+	<!-- 			<div class="input-field col m6 s12">
+					<select id="sitio_entrada" name="sitio_salida" required>
+				    	<?php foreach ($this->proyectos as $mar) { 
+				     		if ($mar['id']==$key['id_proyecto_salida']) { ?>
+				                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+				     	<?php } if ($mar['id']!=$key['id_proyecto_salida']) { ?>
+				                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+				     	<?php } } ?>  
+					</select>
+					<label>Sitio Salida</label>
+				</div>
+ -->
+
+				<div class="input-field col m6 s12">
+					<?php if($pro2 == 0){ ?>
+					    <select id="sitio_salida" name="sitio_salida" required>
+					      	<option value="0" selected>Taller</option>
+					      	<?php foreach ($this->proyectos as $mar) { ?>
+					      	<option value="<?php echo $mar["id"]; ?>"><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					      	<?php } ?>
+					    </select>
+					<?php }else{ ?>
+						<select id="sitio_salida" name="sitio_salida" required>
+							<option value="0" >Taller</option>
+					    	<?php foreach ($this->proyectos as $mar) { 
+					     		if ($mar['id']==$key['id_proyecto_salida']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" selected><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					     	<?php } if ($mar['id']!=$key['id_proyecto_salida']) { ?>
+					                <option value="<?php echo $mar["id"]; ?>" ><?php echo $mar['nombre']; ?> / <?php echo $mar['nombre_proyecto']; ?> - Cliente: <?php echo $mar['id_cliente']; ?></option>
+					     	<?php } 
+					     	} ?>  
+						</select>
+					<?php } ?>
+					<label>Sitio Salida</label>
+				</div>
+
 
 
 		    <div class="file-field input-field col m6 s12">

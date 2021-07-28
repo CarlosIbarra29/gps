@@ -27,28 +27,38 @@ class AsistenciaController extends Zend_Controller_Action{
     		$uniq_sitio [] = $key['sitio_tipoproyectopersonal'];
     	}
     	$resultado = array_unique($uniq_sitio);
-        
+        // var_dump($resultado);exit;
     	foreach ($resultado as $key) {
-            $id=$key;
-            $wh="id";
-            $table="sitios_tipoproyecto";
-            $usr = $this->_season->GetSpecific($table,$wh,$id);
 
-            $id_sitio = $usr[0]['id_sitio'];
-            $proyecto = $usr[0]['id_tipoproyecto'];
+            if($key == 0){
+                $nombre ="Taller";
+                $cliente ="";
+                $tipo_proyecto="";
+                $table="sitios_cuadrillas";
+                $this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);   
+            }else{
+                $id=$key;
+                $wh="id";
+                $table="sitios_tipoproyecto";
+                $usr = $this->_season->GetSpecific($table,$wh,$id);
 
-            $table="sitios";
-            $sit = $this->_season->GetSpecific($table,$wh,$id_sitio);
+                $id_sitio = $usr[0]['id_sitio'];
+                $proyecto = $usr[0]['id_tipoproyecto'];
 
-            $nombre = $sit[0]['nombre'];
-            $cliente = $sit[0]['id_cliente'];
+                $table="sitios";
+                $sit = $this->_season->GetSpecific($table,$wh,$id_sitio);
 
-            $table="tipo_proyecto";
-            $pro = $this->_season->GetSpecific($table,$wh,$proyecto);
+                $nombre = $sit[0]['nombre'];
+                $cliente = $sit[0]['id_cliente'];
 
-            $tipo_proyecto =$pro[0]['nombre_proyecto'];
-            $table="sitios_cuadrillas";
-    		$this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);
+                $table="tipo_proyecto";
+                $pro = $this->_season->GetSpecific($table,$wh,$proyecto);
+
+                $tipo_proyecto =$pro[0]['nombre_proyecto'];
+                $table="sitios_cuadrillas";
+                $this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);     
+            }
+
     	}
     	
         $table="sitios_cuadrillas";
@@ -62,8 +72,15 @@ class AsistenciaController extends Zend_Controller_Action{
         $proyecto= $this->_getParam('proyecto');
         $this->view->proyecto = $proyecto;
 
-    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
-        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
+        if($proyecto == 0){
+            $this->view->personal = $this->_asistencia->getpersonalsitiocuadrillataller($proyecto);
+            $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientetaller($proyecto); 
+        }else{
+            $this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+            $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto); 
+        }
+
+
         // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
@@ -83,8 +100,18 @@ class AsistenciaController extends Zend_Controller_Action{
         $proyecto= $this->_getParam('proyecto');
         $this->view->proyecto = $proyecto;
 
-    	$this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
-        $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
+
+        if($proyecto == 0){
+            $this->view->personal = $this->_asistencia->getpersonalsitiocuadrillataller($proyecto);
+            $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendientetaller($proyecto); 
+        }else{
+            $this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+            $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto); 
+        }
+
+
+    	// $this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+     //    $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
         // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
@@ -118,7 +145,14 @@ class AsistenciaController extends Zend_Controller_Action{
             $this->view->if_sitio=$sit;
             $table="sitios";
             $wh="id";
-            $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']);  
+
+            if($sitio == "Taller"){
+                $this->view->sitio_info_taller = 1; 
+            }else{
+                $this->view->sitio_info_taller = 0; 
+                $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']); 
+            }
+             
 
             $table="puestos_personal";
             $wh="id";
@@ -514,10 +548,18 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
         // var_dump($post);exit;
-        $name_sitio = $post['proyecto'];
-        $wh="sitio_tipoproyectopersonal";
-        $table="personal_campo";
-        $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
+
+        if($post['sitio'] == "Taller"){
+            $name_sitio = "Taller";
+            $wh="name_sitio";
+            $table="personal_campo";
+            $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
+        }else{
+            $name_sitio = $post['proyecto'];
+            $wh="sitio_tipoproyectopersonal";
+            $table="personal_campo";
+            $personal = $this->_season->GetSpecific($table,$wh,$name_sitio);
+        }
 
         foreach ($personal as $key) {
             $id_personal =$key['id'];

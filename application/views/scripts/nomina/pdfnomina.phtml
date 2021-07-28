@@ -296,8 +296,8 @@
                             <?php } ?>
                         </table>
                     </div>
-
-
+                    <?php $monto_red = ceil($montos); ?>
+<!-- 
                     <?php 
                         $monto_real = round($montos); 
                         $decimal_cuatro = substr($monto_real, 3);
@@ -326,11 +326,11 @@
                             $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
                             $new_monto = $monto_suma +10;
                         } 
-                    ?>
+                    ?> -->
                     <div class="row" >
                         <div class="col m6 s6 text-center" style="margin-top: 50px;">
                             <span style="font-size:17px;">Pago de Nomina: </span>
-                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>
+                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_red); ?></span>
                         </div>
                         <div class="col m6 s6 text-right" style="margin-top: 50px;">
                             <span>_______________________________________</span><br>

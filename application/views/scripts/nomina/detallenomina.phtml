@@ -414,7 +414,7 @@
 	          		</div>
 
 	          		<div class="col m6 s6 text-right">
-                  	<?php 
+<!--                   	<?php 
 	                    $monto_real = round($montos); 
 	                    $decimal_cuatro = substr($monto_real, 3);
 	                    $decimal_tres = substr($monto_real, 2,1);
@@ -444,8 +444,11 @@
 	                    } 
                     ?>
 
-                    <!-- <?php echo "Decimal uno: ".$monto_suma;   ?> -->
-	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>
+	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span> -->
+
+	          			<?php $monto_red = ceil($montos); ?>
+						<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($monto_red); ?></span>          			
+
 	          		</div>
 	          	</div>
 	        </div>
@@ -478,7 +481,7 @@
 		        		<form action="/nomina/requestaddstatuspagonomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
 		        		<div class="col m12 s12">
 					        <div class="input-field col m6 s12">
-					          	<input id="pagonomina" name="monto" value="<?php echo $decimal_uno.$decimal_dos.$new_decimal_tres.$cero; ?>" type="number" class="validate">
+					          	<input id="pagonomina" name="monto" value="<?php echo $monto_red ?>" type="number" class="validate">
 					          	<label for="pagonomina">Monto Autorizado</label>
 					        </div>
 							<input type="hidden" name="id_solicitud" value="<?php echo $this->solicitudid_nomina; ?>">
@@ -602,7 +605,6 @@
         		<a class="example-image-link" id="href_salida" data-lightbox="example-1"><img class="example-image" id="img_salida" alt="image-1" style="width: 250px; height: 150px;"/></a>	  
         	</div>
         </div>
-
 
         <div class="row div_editinfo oculto">
         	<div class="col m12 s12" style="margin-top: 20px;">

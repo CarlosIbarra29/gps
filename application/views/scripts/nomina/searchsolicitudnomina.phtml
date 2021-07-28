@@ -267,7 +267,8 @@
           			</td>
 
           			<td>
-                    <?php 
+                  <?php $monto_red = ceil($usr['monto_nomina']); ?>
+<!--                     <?php 
                       $monto_real = round($usr['monto_nomina']); 
                       $decimal_cuatro = substr($monto_real, 3);
                       $decimal_tres = substr($monto_real, 2,1);
@@ -297,7 +298,8 @@
                       } 
                     ?>
 
-            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span>	
+            			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span> -->	
+                  <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_red); ?></span>
           			</td>
           			<td>
             			<?php if($usr['status_auditoria'] == 0){ ?>
