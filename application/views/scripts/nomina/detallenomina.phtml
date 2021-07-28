@@ -414,40 +414,18 @@
 	          		</div>
 
 	          		<div class="col m6 s6 text-right">
-<!--                   	<?php 
-	                    $monto_real = round($montos); 
-	                    $decimal_cuatro = substr($monto_real, 3);
-	                    $decimal_tres = substr($monto_real, 2,1);
-	                    $decimal_dos = substr($monto_real, 1,1);
-	                    $decimal_uno = substr($monto_real, 0,1);
-	                    $cero = 0;
-	                    
-	                    if($decimal_cuatro < 5){
-	                      $new_decimal_tres = $decimal_tres;
-	                      $new_decimal_cuatro = 0;
-	                      $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-	                      $new_monto = $monto_suma ;
-	                    }
+						<?php 
+							$num = $montos;
+							$multi = 5;
+ 
+							if (fmod($num, $multi) <> 0) {
+    							$valor_suma = $num-fmod($num, $multi)+$multi;
+							} else {
+    							$valor_suma = $num;
+							}
+						?>
 
-	                    if($decimal_cuatro == 5){
-	                      $new_decimal_tres = $decimal_tres;
-	                      $new_decimal_cuatro = 0;
-	                      $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-	                      $new_monto = $monto_suma +5;
-	                    }
-
-	                    if($decimal_cuatro > 5){
-	                        $new_decimal_tres = $decimal_tres + 1;
-	                        $new_decimal_cuatro = 0;
-	                        $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-	                        $new_monto = $monto_suma +10;
-	                    } 
-                    ?>
-
-	          			<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($decimal_uno.$decimal_dos.$new_decimal_tres.$cero, 2, '.', ','); ?></span> -->
-
-	          			<?php $monto_red = ceil($montos); ?>
-						<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($monto_red); ?></span>          			
+						<span style="font-size:20px; color: green; letter-spacing: 0.1em; font-weight: bold;">Monto a pagar: $<?php echo number_format($valor_suma); ?></span>          			
 
 	          		</div>
 	          	</div>
@@ -481,7 +459,7 @@
 		        		<form action="/nomina/requestaddstatuspagonomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
 		        		<div class="col m12 s12">
 					        <div class="input-field col m6 s12">
-					          	<input id="pagonomina" name="monto" value="<?php echo $monto_red ?>" type="number" class="validate">
+					          	<input id="pagonomina" name="monto" value="<?php echo $valor_suma ?>" type="number" class="validate">
 					          	<label for="pagonomina">Monto Autorizado</label>
 					        </div>
 							<input type="hidden" name="id_solicitud" value="<?php echo $this->solicitudid_nomina; ?>">

@@ -51,9 +51,9 @@
 </div>
 
     <?php 
-            date_default_timezone_set('America/Mexico_City');
-            $hoy = date("d/m/Y");
-     ?>
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d/m/Y");
+    ?>
 
 
     <div class="page-container hidden-on-narrow">
@@ -297,40 +297,20 @@
                         </table>
                     </div>
                     <?php $monto_red = ceil($montos); ?>
-<!-- 
                     <?php 
-                        $monto_real = round($montos); 
-                        $decimal_cuatro = substr($monto_real, 3);
-                        $decimal_tres = substr($monto_real, 2,1);
-                        $decimal_dos = substr($monto_real, 1,1);
-                        $decimal_uno = substr($monto_real, 0,1);
-                        $cero = 0;
-                        
-                        if($decimal_cuatro < 5){
-                          $new_decimal_tres = $decimal_tres;
-                          $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                          $new_monto = $monto_suma ;
+                        $num = $montos;
+                        $multi = 5;
+           
+                        if (fmod($num, $multi) <> 0) {
+                            $valor_suma = $num-fmod($num, $multi)+$multi;
+                        } else {
+                            $valor_suma = $num;
                         }
-
-                        if($decimal_cuatro == 5){
-                          $new_decimal_tres = $decimal_tres;
-                          $new_decimal_cuatro = 0;
-                          $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                          $new_monto = $monto_suma +5;
-                        }
-
-                        if($decimal_cuatro > 5){
-                            $new_decimal_tres = $decimal_tres + 1;
-                            $new_decimal_cuatro = 0;
-                            $monto_suma =  $decimal_uno.$decimal_dos.$new_decimal_tres.$cero;
-                            $new_monto = $monto_suma +10;
-                        } 
-                    ?> -->
+                    ?>
                     <div class="row" >
                         <div class="col m6 s6 text-center" style="margin-top: 50px;">
                             <span style="font-size:17px;">Pago de Nomina: </span>
-                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_red); ?></span>
+                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($valor_suma); ?></span>
                         </div>
                         <div class="col m6 s6 text-right" style="margin-top: 50px;">
                             <span>_______________________________________</span><br>
