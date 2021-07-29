@@ -145,6 +145,13 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12 text-right">
+		+ Agregar Pago
+	</div>
+</div>
+
 <!-- Modal Structure -->
 <div id="modalasistencia" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -631,6 +638,7 @@
 			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
 			                  				$rest = substr($diferencia, 0, -3);
 
+
 			                  				if($rest == 5){
 			                  					$monto = $dia_pago;
 			                  				}
@@ -684,6 +692,7 @@
 			                  		<?php 
 			                  		$dia_pago = $usr['dia_pago'];
 			                  		$hora_pago = $usr['hora_pago'];
+
 			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
 			                  				$rest = substr($diferencia, 0, -3);
 
@@ -693,12 +702,17 @@
 
 				                  			if($rest <= 9){
 				                  				$total = $rest - 5;
-				                  				$monto = $total * $hora_pago;
+				                  				if($total == 1){
+				                  					$monto = ($dia_pago / 100) * 20;
+				                  				}
+				                  				if($total == 2){
+				                  					$monto = ($dia_pago / 100) * 40;
+				                  				}
 				                  				// echo "menor";
 				                  			}
 
 			                  				if($rest == 10){
-			                  					$monto = 0;
+			                  					$monto = $dia_pago*2;
 			                  				}
 
 				                  			if($rest > 10){
@@ -709,9 +723,9 @@
 				                  				$monto = $suma;
 				                  				// echo "menor";
 				                  			}
+			                  			}
 
-
-			                  			}else{
+			                  			if($usr['day_num'] == 1 || $usr['day_num'] == 2 || $usr['day_num'] == 3 || $usr['day_num'] == 4){
 				                  			$rest = substr($diferencia, 0, -3);
 				                  			if($rest < 10){
 				                  				$total = $rest - 2;
@@ -732,6 +746,29 @@
 				                  			}
 
 			                  			}
+
+			                  			if($usr['day_num'] == 5){
+			                  				$rest = substr($diferencia, 0, -3);
+				                  			if($rest < 10){
+				                  				$total = $rest - 2;
+				                  				$monto = $total * $hora_pago;
+				                  				// echo "menor";
+				                  			}
+
+				                  			if($rest > 10){
+				                  				$total = $rest - 10;
+				                  				$multi = $total * $hora_pago;
+				                  				$monto = $multi;
+				                  				// echo "mayor";
+				                  			}
+
+				                  			if($rest == 10){
+				                  				$monto = 0;
+				                  				// echo "igual";
+				                  			}
+
+			                  			}
+
 			                  		?>
 
 			                  	<?php  } ?>

@@ -453,6 +453,7 @@ class PersonalController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost(); 
         $day_num =  date('N', strtotime($post['day']));
 
+
             $name = $_FILES['url_entrada']['name'];
             if(empty($name)){ 
                 print '<script language="JavaScript">'; 
