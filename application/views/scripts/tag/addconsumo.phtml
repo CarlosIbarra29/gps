@@ -60,11 +60,12 @@
 </style>
 
 <div class="row">
-  <div class="col m6 s6" style="margin-top: 10px;">
+  <div class="col m4 s4" style="margin-top: 10px;">
   </div>
   
 
-  <div class="col m6 s6 text-right" style="margin-top: 10px;">
+  <div class="col m8 s8 text-right" style="margin-top: 10px;">
+    <a class="green btn modal-trigger" href="#modal2">Reporte</a>
     <a class="green btn modal-trigger" href="#modal1">Cargar Consumo TAG</a>
   </div>
 </div>
@@ -215,6 +216,46 @@
 </div>
 
 
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte Consumo TAG</span>
+        <div class="row">
+            <div class="col m12 s12" style="margin-top: 20px;">
+              <div class="col m6 s6">
+                <span>* Agrega el periodo de fechas que requieras para el reporte.</span> <br>
+              </div>
+              <div class="col m6 s6">
+              </div>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m12 s12">
+                <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+  
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input id="finicio" type="date" name="finicio" class="validate">
+                        <label for="finicio">* Fecha inicio</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input id="ffin" type="date" name="ffin" class="validate">
+                        <label for="ffin">* Fecha Fin</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" id="add_reporte" class="btn">Generar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+
+</div>
+
 
 
 
@@ -244,6 +285,29 @@
     });
 
     function submittag() { document.getElementById("submit_cargatag").submit() }
+
+
+    $("#add_reporte").click(function(){
+
+    var finicio = document.getElementById("finicio").value;
+    var ffin = document.getElementById("ffin").value;
+
+    if(finicio == "" || ffin == ""){
+            swal({
+              title: "Para continuar debes agregar las fechas",
+            });
+      }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      
+        window.location.href = "/tag/excelcargas/inicio/"+finicio+"/final/"+ffin+""; 
+      }
+    
+
+   
+  });
 
 
 $(".delete").click(function(){

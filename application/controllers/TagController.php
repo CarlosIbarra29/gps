@@ -380,6 +380,18 @@ class TagController extends Zend_Controller_Action{
     
     }
 
+    public function excelcargasAction(){
+        $inicio = $this->_getParam('inicio'); $this->view->inicio=$inicio;
+        $final = $this->_getParam('final'); $this->view->final=$final;
+
+        $inicioa=date("d-m-Y", strtotime($inicio));
+        $finala=date("d-m-Y", strtotime($final));
+
+
+        $a=$this->view->tagcontrol = $this->_tag->getReporteTags($inicioa,$finala);             
+        // var_dump($a);
+        // die();
+    }
 
 
     public function formatSizeUnits($bytes){ 
