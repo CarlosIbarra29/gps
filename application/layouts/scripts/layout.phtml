@@ -1448,9 +1448,8 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/epp/eppcosto/status/1',$actual_link);?>">
                     <a href="/epp/eppcosto/status/1">EPP Cobros<i class="material-icons">accessibility</i></a>
                 </li>
-                <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
-                    <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
-                </li>
+
+
                 <li class="bold moves <?php echo getUrl('/campamentos/addcampamento',$actual_link);?>">
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
@@ -1470,6 +1469,14 @@ setInterval(function() {
 
                 <li class="bold moves <?php echo getUrl('/tag/addconsumo',$actual_link);?>">
                     <a href="/tag/addconsumo">TAG<i class="material-icons">card_membership</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/inventario',$actual_link); echo getherramienta($actual_link);?>">
+                    <a href="/herramienta/inventario">Herramientas<i class="material-icons">build</i></a>
+                </li>
+
+                <li class="bold moves <?php echo getUrl('/herramienta/herramientacosto/status/1',$actual_link);?>">
+                    <a href="/herramienta/herramientacosto/status/1">Herramientas Cobros<i class="material-icons">build</i></a>
                 </li>
 
 <!--                 <li class="bold <?php echo getauditorigasolina($actual_link);?>">
