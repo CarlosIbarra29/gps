@@ -78,7 +78,8 @@
                 <th>Apellido Paterno:</th>
                 <th>Apellido Materno:</th>
                 <th>Puesto:</th>
-                <th>Telefono:</th>
+                <th>Teléfono:</th>
+                <th>Tel Emergencia:</th>
             </tr>
           </thead>
       <?php foreach ($this->personal as $usr) { ?>
@@ -93,6 +94,13 @@
           <?php }else{ ?>
             <td>No disponible</td>
           <?php } ?>
+
+          <?php if($usr["tel_emergencia"] != ""){ ?>
+            <td><?php echo $usr["tel_emergencia"]; ?></td>
+          <?php }else{ ?>
+            <td>No disponible</td>
+          <?php } ?>
+
         </tr>
       </tbody>
       <?php } ?>
