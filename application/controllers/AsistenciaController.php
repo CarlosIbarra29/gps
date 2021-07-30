@@ -459,8 +459,36 @@ class AsistenciaController extends Zend_Controller_Action{
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         } 
-
     }
+
+    public function requestaddbonificacionAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost(); 
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y");
+        $fecha = date("N");
+
+        $id = $post['user'];
+        $wh ="id";
+        $table="personal_campo";
+        $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
+        // var_dump($pagi_count);exit;
+        $sitio = $pagi_count[0]['name_sitio'];
+
+        $table="personal_asistencia";
+        $result=$this->_asistencia->insertbonificacion($table,$post,$fecha,$hoy,$sitio);
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/personalasistencia/id/'.$post['user'].'/sitio/'.$sitio.'/proyecto/'.$post['proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+    }
+
 
     public function requestupdatesolicitudhorasextraAction(){
         $this->_helper->layout()->disableLayout();
@@ -729,6 +757,12 @@ class AsistenciaController extends Zend_Controller_Action{
                                     if($total == 2){
                                         $monto = ($dia_pago / 100) * 40;
                                     }
+                                    if($total == 3){
+                                        $monto = ($dia_pago / 100) * 60;
+                                    }
+                                    if($total == 4){
+                                        $monto = ($dia_pago / 100) * 80;
+                                    }
                                     // echo "menor";
                                 }
 
@@ -795,9 +829,16 @@ class AsistenciaController extends Zend_Controller_Action{
                     $monto = $key['monto_pago']; 
                 } 
 
-            }else{
-                $monto = 0;
             }
+
+            if($key['status_asistencia'] == 1){
+                $monto = 0; 
+            }
+
+            if($key['status_asistencia'] == 2){
+                 $monto = $key['monto_pago']; 
+            }
+
             $id = $key['id_pa'];
             $monto_pago = $monto;
             $table="personal_asistencia";

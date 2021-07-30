@@ -267,12 +267,25 @@
 
 
 
-                                  <?php }else{ ?>
+                                  <?php } ?>
+
+                                  <?php if($usr['status_asistencia'] == 1){ ?>
                                     <td>00:00</td>
                                     <td>00:00</td>
                                     <td>Inasistencia</td>
                                     <td>
                                         <?php $monto = 0; ?>
+                                        <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+                                    </td>
+                                  <?php } ?>
+
+
+                                  <?php if($usr['status_asistencia'] == 2){ ?>
+                                    <td>00:00</td>
+                                    <td>00:00</td>
+                                    <td>Otros..</td>
+                                    <td>
+                                        <?php $monto = $usr['monto_pago']; ?>
                                         <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
                                     </td>
                                   <?php } ?>

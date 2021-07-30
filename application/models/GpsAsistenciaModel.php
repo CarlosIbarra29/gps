@@ -36,6 +36,49 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }// END INSERT USER
 
+
+    public function insertbonificacion($table,$post,$fecha,$hoy,$sitio){
+         $status = 2; $hora_trabajo =0;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$post['user'],
+                'nombre'=>$sitio,
+                'hora_entrada'=>$hora_trabajo,
+                'hora_salida'=>$hora_trabajo,
+                'dia'=>$hoy,
+                'day_num'=>$fecha,
+                'hora_extra'=> $hora_trabajo,
+                'id_solicitudhora'=>$hora_trabajo,
+                'id_proyecto'=>$post['proyecto'],
+                'id_proyecto_salida'=>$post['proyecto'],
+                'status_asistencia'=>$status,
+                'motivo_inasistencia' =>$post['motivo'],
+                'monto_pago' => $post['monto_add']
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }        
+    }
+
+    public function updatebonificacion($table,$post,$fecha,$hoy){
+       
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET status_asistencia= ?, hora_inicio=?, proyecto_fechainicio=?, day_number=?, day_asistencia = ?, motivo_inasistencia = ? WHERE id = ?",
+                array($status,$hora_trabajo,$post['proyecto'],$fecha,$hoy,$post['motivo'],$id));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
     public function insertfinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -241,6 +284,9 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+
+
 
     public function updatefinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
         $status = 0;

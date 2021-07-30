@@ -350,7 +350,9 @@
 				                  			<span  style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: bold;">$<?php echo $usr['monto_pago']; ?></span>
 				                  		<?php } ?>
 				                  	</td>
-				                  <?php }else{ ?>
+				                  <?php }?>
+
+				                  <?php if($usr['status_asistencia'] == 1){ ?>
 				                  	<td>00:00</td>
 				                  	<td>00:00</td>
 				                  	<td>Inasistencia</td>
@@ -359,11 +361,36 @@
 				                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
 				                  	</td>
 				                  <?php } ?>
+
+				                  	<?php if($usr['status_asistencia'] == 2){ ?>
+
+					                  	<td>00:00</td>
+					                  	<td>00:00</td>
+					                  	<td>Otros..</td>
+					                  	<td>
+					                  		<?php $monto = $usr['monto_pago']; ?>
+					                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+					                  	</td>
+				                  	<?php } ?>
+
 				                  	<td>
 
 					                  	<?php if($usr['solicitud_prestamo'] == 0 ){ ?>
+					                  		<?php if($usr['status_asistencia'] == 0){ ?>
+					                  			<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+					                  		<?php } ?>
 
-					                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+					                  		<?php if($usr['status_asistencia'] == 1){ ?>
+					                  			<a class="inaistencia modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>"
+					                  			data-motivo="<?php echo $usr['motivo_inasistencia']; ?>" href="#modalinaistencia"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+					                  		<?php } ?>
+
+
+					                  		<?php if($usr['status_asistencia'] == 2){ ?>
+					                  			<a class="otros modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>"
+					                  			data-motivo="<?php echo $usr['motivo_inasistencia']; ?>" href="#modalotros"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+					                  		<?php } ?>
+
 					                  	<?php } ?>
 
 	                                    <?php if($usr['solicitud_prestamo'] != 0 ){ ?>
@@ -599,6 +626,85 @@
     </div>
 </div>
 
+
+
+
+<!-- Modal Structure -->
+<div id="modalinaistencia" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de la Inasistencia</span>
+        <div class="row div_info">
+        	<div class="col m8 s12" style="margin-top: 20px;">
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Pago:</span> $<span id="diapago_modal_in"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Hora Pago:</span> $<span id="horapago_modal_in"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Asistencia:</span> <span id="dia_modal_in"></span> <span id="today_modal_in"></span><br>
+        		<span style="font-size:16px; color:green; letter-spacing: 0.1em; font-weight: bold;" id="extra_modal_in" class="oculto">Horas Extra</span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Motivo Inasistencia:</span> <span id="motivo_modal_in"></span> 
+        	</div>
+
+        	<div class="col m4 s12 text-center">
+        		
+        	</div>
+        </div>
+
+        <div class="row div_editinfo oculto">
+        	<div class="col m12 s12" style="margin-top: 20px;">
+		        <div class="input-field col s6">
+		        	<input placeholder="" id="edit_day" type="hidden" class="validate">
+		        </div>
+        	</div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" id="add_inasistencia" class="btn">Guardar</button> -->
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modalotros" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Otro Concepto de pago</span>
+        <div class="row div_info">
+        	<div class="col m8 s12" style="margin-top: 20px;">
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Pago:</span> $<span id="diapago_modal_ot"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Hora Pago:</span> $<span id="horapago_modal_ot"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Asistencia:</span> <span id="dia_modal_ot"></span> <span id="today_modal_ot"></span><br>
+        		<span style="font-size:16px; color:green; letter-spacing: 0.1em; font-weight: bold;" id="extra_modal_ot" class="oculto">Horas Extra</span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Motivo:</span> <span id="motivo_modal_ot"></span> 
+        	</div>
+
+        	<div class="col m4 s12 text-center">
+        		
+        	</div>
+        </div>
+
+        <div class="row div_editinfo oculto">
+        	<div class="col m12 s12" style="margin-top: 20px;">
+		        <div class="input-field col s6">
+		        	<input placeholder="" id="edit_day" type="hidden" class="validate">
+		        </div>
+        	</div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" id="add_inasistencia" class="btn">Guardar</button> -->
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
 <form>
 
 	<input type="hidden" id="sol_nomina" value="<?php echo $this->solicitudid_nomina; ?>">
@@ -658,6 +764,91 @@
 
     	var hsalida = $(this).data('hsalida');
     	document.getElementById("hsalida_modal").innerHTML=hsalida;
+
+    	var extra = $(this).data('extra');
+    	if(extra == 1){
+ 			$("#extra_modal").show();
+    	}else{
+    		$("#extra_modal").hide();
+    	}
+    });
+
+    $(".inaistencia").click(function(){
+    	var id = $(this).data('id');
+
+    	var diapago = $(this).data('diapago');
+    	document.getElementById("diapago_modal_in").innerHTML=diapago;
+
+    	var motivo = $(this).data('motivo');
+    	document.getElementById("motivo_modal_in").innerHTML=motivo;
+
+    	var horapago = $(this).data('horapago');
+    	document.getElementById("horapago_modal_in").innerHTML=horapago;
+
+    	var dia = $(this).data('dia');
+    	if(dia == 1){ day = "Lunes";} if(dia == 2){ day = "Martes";} if(dia == 3){ day = "Miercoles";}
+    	if(dia == 4){ day = "Jueves";} if(dia == 5){ day = "Viernes";} if(dia == 6){ day = "Sabado";}
+    	if(dia == 7){ day = "Domingo";}
+    	document.getElementById("dia_modal_in").innerHTML=day;
+
+    	var today = $(this).data('today');
+    	document.getElementById("today_modal_in").innerHTML= "("+today+")";
+    	document.getElementById("edit_day_in").value = today;
+
+    	var element =document.getElementById("href_entrada_in");
+    	element.href =entrada;
+
+    	var hentrada = $(this).data('hentrada');
+    	document.getElementById("hentrada_modal_in").innerHTML=hentrada;
+
+    	var elements =document.getElementById("href_salida_in");
+    	elements.href =salida;
+
+    	var hsalida = $(this).data('hsalida');
+    	document.getElementById("hsalida_modal_in").innerHTML=hsalida;
+
+    	var extra = $(this).data('extra');
+    	if(extra == 1){
+ 			$("#extra_modal").show();
+    	}else{
+    		$("#extra_modal").hide();
+    	}
+    });
+
+
+    $(".otros").click(function(){
+    	var id = $(this).data('id');
+
+    	var diapago = $(this).data('diapago');
+    	document.getElementById("diapago_modal_ot").innerHTML=diapago;
+
+    	var motivo = $(this).data('motivo');
+    	document.getElementById("motivo_modal_ot").innerHTML=motivo;
+
+    	var horapago = $(this).data('horapago');
+    	document.getElementById("horapago_modal_ot").innerHTML=horapago;
+
+    	var dia = $(this).data('dia');
+    	if(dia == 1){ day = "Lunes";} if(dia == 2){ day = "Martes";} if(dia == 3){ day = "Miercoles";}
+    	if(dia == 4){ day = "Jueves";} if(dia == 5){ day = "Viernes";} if(dia == 6){ day = "Sabado";}
+    	if(dia == 7){ day = "Domingo";}
+    	document.getElementById("dia_modal_ot").innerHTML=day;
+
+    	var today = $(this).data('today');
+    	document.getElementById("today_modal_ot").innerHTML= "("+today+")";
+    	document.getElementById("edit_day_ot").value = today;
+
+    	var element =document.getElementById("href_entrada_ot");
+    	element.href =entrada;
+
+    	var hentrada = $(this).data('hentrada');
+    	document.getElementById("hentrada_modal_ot").innerHTML=hentrada;
+
+    	var elements =document.getElementById("href_salida_ot");
+    	elements.href =salida;
+
+    	var hsalida = $(this).data('hsalida');
+    	document.getElementById("hsalida_modal_ot").innerHTML=hsalida;
 
     	var extra = $(this).data('extra');
     	if(extra == 1){

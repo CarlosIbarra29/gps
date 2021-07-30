@@ -254,6 +254,7 @@
                     <th>Horas Trabajadas</th>
 					<th></th>
                     <th></th>
+                    <th></th>
                 </tr> 
             </thead>
 
@@ -326,6 +327,9 @@
                     <td>
                         <a class="delete modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-user-times" style="color: red"></i></span></a>
                     </td>
+<!--                     <td>
+                        <a class="add_monto modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaladdmonto"><span class="warning"><i class="fa fa-2x fa fa-user-plus" style="color: green"></i></span></a> 
+                    </td> -->
 
                 </tr>
             </tbody>
@@ -370,6 +374,38 @@
                         <input placeholder="Agregar el motivo de la inasistencia" name="motivo" id="motivo_form" type="text" class="validate">
                       <label for="motivo_form">Motivo</label>
                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_inasistencia" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modaladdmonto" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Bonificación</span>
+        <div class="row">
+            <form action="/asistencia/requestaddinasistenciapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_inasistencia">
+                <div class="col m12 s12" style="margin-top: 30px;">
+
+                    <div class="input-field col m6 s12">
+                        <input name="monto_add" id="monto" type="number" class="validate">
+                      <label for="monto">Motivo</label>
+                    </div>
+
+
+                    <div class="input-field col m6 s12">
+                        <input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
+                        <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+                        <input type="hidden" name="ids" id="id_userinasistencia">
+                        <input placeholder="Agregar el motivo de la inasistencia" name="motivo" id="motivo_form" type="text" class="validate">
+                      <label for="motivo_form">Motivo</label>
+                    </div>                    
                 </div>
             </form>
         </div>

@@ -121,6 +121,46 @@
 </div>
 
 <div class="row">
+   	<div class="col m6 s12"></div>
+   	<div class="col m6 s12 text-right">
+    	<a class="add_monto modal-trigger" href="#modaladdmonto"><span class="warning"><i class="fa fa-2x fa fa-user-plus" style="color: green"></i></span></a> 
+   	</div>
+</div>
+        
+<!-- Modal Structure -->
+<div id="modaladdmonto" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Otro concepto de pago</span>
+        <div class="row">
+            <form action="/asistencia/requestaddbonificacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_inasistencia">
+                <div class="col m12 s12" style="margin-top: 30px;">
+
+                    <div class="input-field col m6 s12">
+                        <input name="monto_add" id="monto_form" type="number" class="validate">
+                      <label for="monto">Monto</label>
+                    </div>
+
+
+                    <div class="input-field col m6 s12">
+                        <input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>"></input>
+                        <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+                        <input type="hidden" name="user" value="<?php echo $this->personal_id ?>">
+                        <input placeholder="Agregar el motivo de la inasistencia" name="motivo" id="motivo_form" type="text" class="validate">
+                      <label for="motivo_form">Motivo</label>
+                    </div>                    
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_inasistencia" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+
+<div class="row">
 	<div class="col m6 s12">
 		<div class="col m6 s6 text-center">
 			<?php if($this->epp_op == 1){ ?>
@@ -145,12 +185,12 @@
 	</div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col m6 s12"></div>
 	<div class="col m6 s12 text-right">
 		+ Agregar Pago
 	</div>
-</div>
+</div> -->
 
 <!-- Modal Structure -->
 <div id="modalasistencia" class="modal modal-fixed-footer">
@@ -708,6 +748,12 @@
 				                  				if($total == 2){
 				                  					$monto = ($dia_pago / 100) * 40;
 				                  				}
+				                  				if($total == 3){
+				                  					$monto = ($dia_pago / 100) * 60;
+				                  				}
+				                  				if($total == 4){
+				                  					$monto = ($dia_pago / 100) * 80;
+				                  				}
 				                  				// echo "menor";
 				                  			}
 
@@ -784,7 +830,9 @@
 			                  	<?php } ?>
 			                  		
 			                  	</td>
-			                  <?php }else{ ?>
+			                  <?php } ?>
+
+			                  <?php if($usr['status_asistencia'] == 1){ ?>
 			                  	<td>00:00</td>
 			                  	<td>00:00</td>
 			                  	<td>Inasistencia</td>
@@ -793,6 +841,19 @@
 			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
 			                  	</td>
 			                  <?php } ?>
+
+
+			                  <?php if($usr['status_asistencia'] == 2){ ?>
+
+			                  	<td>00:00</td>
+			                  	<td>00:00</td>
+			                  	<td>Otros..</td>
+			                  	<td>
+			                  		<?php $monto = $usr['monto_pago']; ?>
+			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+			                  	</td>
+			                  <?php } ?>
+
 			                  	<td>
 			                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
 			                  	</td>
@@ -804,6 +865,12 @@
 			                		<?php }?>
 
 			                		<?php if($usr['status_asistencia'] == 1){ ?>
+			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+			                			<!-- DESCUENTO -->
+			                		<?php }?>
+
+
+			                		<?php if($usr['status_asistencia'] == 2){ ?>
 			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
 			                			<!-- DESCUENTO -->
 			                		<?php }?>
@@ -1239,5 +1306,21 @@
 		});
     });
 
+    $("#add_inasistencia").click(function(){
+        var motvo = document.getElementById("motivo_form").value;
+        var monto = document.getElementById("monto_form").value;
+        if(motvo == "" || monto == ""){
+            swal({
+                title: "Para continuar es necesario agregar el motivo y el monto de la bonificación",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitinasistencia, 1500);     
+        }
+    });
+    function submitinasistencia() { document.getElementById("submit_inasistencia").submit() }
 
 </script>
