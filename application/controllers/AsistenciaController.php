@@ -27,7 +27,6 @@ class AsistenciaController extends Zend_Controller_Action{
     		$uniq_sitio [] = $key['sitio_tipoproyectopersonal'];
     	}
     	$resultado = array_unique($uniq_sitio);
-        // var_dump($resultado);exit;
     	foreach ($resultado as $key) {
 
             if($key == 0){
@@ -80,8 +79,6 @@ class AsistenciaController extends Zend_Controller_Action{
             $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto); 
         }
 
-
-        // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
@@ -112,7 +109,6 @@ class AsistenciaController extends Zend_Controller_Action{
 
     	// $this->view->personal = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
      //    $solicitud = $this->view->solicitud = $this->_asistencia->getsolicitudpendiente($proyecto);
-        // var_dump($solicitud);exit;
         if(empty($solicitud)){
             $valor = 0;
             $this->view->op_solicitud = $valor;
@@ -440,7 +436,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost(); 
-        // var_dump($post);exit;
         date_default_timezone_set('America/Mexico_City');
         $hoy = date("d-m-Y");
 
@@ -474,7 +469,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $wh ="id";
         $table="personal_campo";
         $pagi_count = $this->_season->GetSpecific($table,$wh,$id);
-        // var_dump($pagi_count);exit;
         $sitio = $pagi_count[0]['name_sitio'];
 
         $table="personal_asistencia";
@@ -502,7 +496,7 @@ class AsistenciaController extends Zend_Controller_Action{
         $table="usuario";
         $usr = $this->_season->GetSpecific($table,$wh,$id);
         $nombre_usuario = $usr[0]['nombre']." ".$usr[0]['ap']." ".$usr[0]['am'];
-         $table="personal_solicitudhoras";
+        $table="personal_solicitudhoras";
         $table="personal_solicitudhoras";
         $this->_asistencia->updatesolicitudhoraextra($post,$table,$today,$nombre_usuario);
 
@@ -575,7 +569,6 @@ class AsistenciaController extends Zend_Controller_Action{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
-        // var_dump($post);exit;
 
         if($post['sitio'] == "Taller"){
             $name_sitio = "Taller";
