@@ -32,6 +32,13 @@ class HerramientaController extends Zend_Controller_Action{
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
+        $id_user=$this->_session->id;
+        $this->view->usuario = $id_user;
+
+        $wh="id";
+        $table="usuario";
+        $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
         $table="categoria_herramienta";
         $this->view->cat = $this->_season->GetAll($table);
         $table="sitios";
