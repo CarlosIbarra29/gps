@@ -1137,7 +1137,6 @@ class SolicitudController extends Zend_Controller_Action{
                 $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptservicio($table,$offset,$no_of_records_per_page,$servicio);
             }
 
-
         }
 
         if($status == 2){

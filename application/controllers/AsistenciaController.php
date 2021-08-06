@@ -27,6 +27,7 @@ class AsistenciaController extends Zend_Controller_Action{
     		$uniq_sitio [] = $key['sitio_tipoproyectopersonal'];
     	}
     	$resultado = array_unique($uniq_sitio);
+        // var_dump($resultado);exit;
     	foreach ($resultado as $key) {
 
             if($key == 0){
@@ -65,6 +66,12 @@ class AsistenciaController extends Zend_Controller_Action{
     }
 
     public function asistenciaAction(){
+
+        $id=1; $status=0; $wh="status_campo";
+        $table="personal_campo";
+        $this->view->personal_dis = $this->_personal->getpersonalasignarcount($id,$status);
+
+
     	$nombre = $this->_getParam('sitio');
     	$this->view->sitio = $nombre;
 
@@ -735,7 +742,8 @@ class AsistenciaController extends Zend_Controller_Action{
                     // <!-- D I A  E X T R A -->
                         $dia_pago = $key['dia_pago'];
                         $hora_pago = $key['hora_pago'];
-                            if($key['day_num'] == 6 || $key['day_num'] == 7){
+
+                            if($key['day_num'] == 6){
                                 $rest = substr($diferencia, 0, -3);
 
                                 if($rest == 5){
@@ -744,16 +752,54 @@ class AsistenciaController extends Zend_Controller_Action{
 
                                 if($rest <= 9){
                                     $total = $rest - 5;
-                                    if($total == 1){
+                                    if($rest == 1){
                                         $monto = ($dia_pago / 100) * 20;
                                     }
-                                    if($total == 2){
+                                    if($rest == 2){
                                         $monto = ($dia_pago / 100) * 40;
                                     }
-                                    if($total == 3){
+                                    if($rest == 3){
                                         $monto = ($dia_pago / 100) * 60;
                                     }
-                                    if($total == 4){
+                                    if($rest == 4){
+                                        $monto = ($dia_pago / 100) * 80;
+                                    }
+                                    // echo "menor";
+                                }
+
+                                    if($rest == 10){
+                                        $monto = $dia_pago;
+                                    }
+
+                                    if($rest > 10){
+                                        $total = $rest - 10;
+                                        $suma = $total * $hora_pago;
+                                        $dia = $dia_pago*2;
+
+                                        $monto = $suma;
+                                        // echo "menor";
+                                    }                                
+                            }
+
+                            if($key['day_num'] == 7){
+                                $rest = substr($diferencia, 0, -3);
+
+                                if($rest == 5){
+                                    $monto = 0;
+                                }
+
+                                if($rest <= 9){
+                                    $total = $rest - 5;
+                                    if($rest == 1){
+                                        $monto = ($dia_pago / 100) * 20;
+                                    }
+                                    if($rest == 2){
+                                        $monto = ($dia_pago / 100) * 40;
+                                    }
+                                    if($rest == 3){
+                                        $monto = ($dia_pago / 100) * 60;
+                                    }
+                                    if($rest == 4){
                                         $monto = ($dia_pago / 100) * 80;
                                     }
                                     // echo "menor";
@@ -1134,6 +1180,41 @@ class AsistenciaController extends Zend_Controller_Action{
             }
         }
     }//END REQUEST DELETE PERSONAL
+
+    public function requestaddmorepersoncuadrillaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        // var_dump($post);exit;
+        $id=$post['person_more'];
+        $wh="id";
+        $table="personal_campo";
+        $personal = $this->_season->GetSpecific($table,$wh,$id);
+        if($personal[0]['puesto'] == 30 || $personal[0]['puesto'] == 31){
+            $name = $personal[0]['nombre']." ".$personal[0]['apellido_pa']." ".$personal[0]['apellido_ma'];
+            $table ="sitios_tipoproyecto";
+            $this->_sitio->updatesitioresidente($post,$table,$name);
+        }
+        
+        $proyecto = $post['proyecto'];
+        $ver_sitio = $this->_asistencia->getpersonalsitiocuadrilla($proyecto);
+        $fecha_inicio = $ver_sitio[0]['fechainicio_asignacion'];
+        $fecha_final = $ver_sitio[0]['fechafinal_asignacion'];
+        $id_sitio = $ver_sitio[0]['id_sitiopersonal'];
+
+        $table="personal_campo";
+        $result=$this->_sitio->asignacionpersonalcuadrillaadd($post,$table,$id_sitio,$fecha_inicio,$fecha_final);
+
+        if ($result) {
+            return $this-> _redirect('/asistencia/asistencia/sitio/'.$post['sitio'].'/proyecto/'.$post['proyecto'].'');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        } 
+
+
+    }
 
 
     public function formatSizeUnits($bytes){

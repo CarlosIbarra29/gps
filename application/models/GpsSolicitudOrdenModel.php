@@ -2475,7 +2475,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
                         WHERE soc.status_documento = 1 AND soc.status_pago !=1 
-                        ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') ASC 
+                        ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
@@ -2504,7 +2504,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
                         WHERE soc.status_documento = 1 AND soc.status_pago !=1 
                         AND soc.facturable = ?
-                        ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') ASC 
+                        ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page",array($datos));
             $row = $qry->fetchAll();
             return $row;
@@ -2531,8 +2531,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND nombre_sitio like '%{$nombre}%' order by soc.fecha_validaciondos 
-                        ASC LIMIT $offset,$no_of_records_per_page");
+                        AND nombre_sitio like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC  
+                        LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -2585,7 +2585,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND name_proveedor like '%{$nombre}%' order by soc.fecha_validaciondos ASC 
+                        AND name_proveedor like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
@@ -2642,7 +2642,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND name_user like '%{$nombre}%' order by soc.fecha_validaciondos ASC 
+                        AND name_user like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
@@ -2697,7 +2697,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND soc.id =? order by soc.fecha_validaciondos ASC 
+                        AND soc.id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -2753,7 +2753,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND soc.servicio_id =? order by soc.fecha_validaciondos ASC 
+                        AND soc.servicio_id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -3081,7 +3081,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
-                        order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+                        order by STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -3656,7 +3656,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN servicios s on s.id = soc.servicio_id
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
-                        WHERE  soc.status_documento= 2 OR soc.status_documento = 3 order by soc.id DESC 
+                        WHERE  soc.status_documento= 2 OR soc.status_documento = 3 order by STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;

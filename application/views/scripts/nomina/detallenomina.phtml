@@ -311,8 +311,12 @@
                                                     // echo "menor";
                                                 }
 
+                                                    if($rest == 10){
+                                                        $op_day = "5 Hrs";
+                                                    }
+
                                                 }else{
-                                                    if($rest < 10){
+                                                    if($rest <= 9){
                                                         $total = $rest - 2;
                                                         // echo "menor";
                                                         $op_day = $total."Hrs";
@@ -325,9 +329,7 @@
                                                     }
 
                                                     if($rest == 10){
-                                                        $monto = $dia_pago;
-                                                        // echo "igual";
-                                                        $op_day = "1 día";
+                                                        $op_day = "5 Hrs";
                                                     }
                                                 }
                                          ?>

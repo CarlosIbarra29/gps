@@ -144,6 +144,43 @@
 </div>
 <?php } ?>
 
+
+<div class="row">
+    <div class="col m6 s12"></div>
+    <div class="col m6 s12 text-right">
+        <a class="orange btn modal-trigger" href="#modalmore"><i class="material-icons right">add</i>Agregar Personal</a>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalmore" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar personal a la cuadrilla</span>
+
+        <form action="/asistencia/requestaddmorepersoncuadrilla" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addmore">
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="person_more" name="person_more" required>
+                        <option value="0" disabled selected>* Selecciona una opcion:</option>
+                        <?php foreach ($this->personal_dis as $rl) { ?>
+                        <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?> / Puesto: <?php echo $rl["name_puesto"]; ?></option>
+                        <?php } ?>
+                    </select>
+                    <label>Personal</label>
+                </div>
+
+                <input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>">
+                <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_personalmore" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
 <div class="row" style="margin-top: 40px;">
 	<!-- <div class="col m1 s12"></div> -->
 	<div class="col m12 s12">
@@ -244,6 +281,7 @@
         <table class="table text-left table-hover">
             <thead>
                 <tr style="background-color: #EDEDED">
+                    <th>Liberar</th>
 					<th>id</th>
 					<th>Nombre</th>
 					<th>Puesto</th>
@@ -262,6 +300,9 @@
                 foreach ($this->personal as $usr) { ?>
             <tbody>
                 <tr>
+                    <td>
+                        <a class="liberar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span></a>
+                    </td>
                 	<td>
                 		<?php echo $usr['id']; ?>
                 	</td>
@@ -508,4 +549,64 @@
         }
     });
     function submitfinalizar() { document.getElementById("submit_finalizar").submit() }
+
+
+    $(".liberar_personal").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        ap=$(this).data('ap');
+        am =$(this).data('am');
+
+        swal({
+            title: "Estas seguro de liberar a "+ap+" "+nombre+" del sitio?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, "+ap+" "+nombre+"  se liberara del sitio", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/panel/requestliberarpersonal",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+    //-------------------end de ajax---------------------------
+
+    //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+    //-------------------end de respuesta ajax---------------------
+                 return false;
+            } else {
+                swal("La accion fue cancelada!");
+            } 
+        });
+
+    });
+
+
+    $("#add_personalmore").click(function(){
+        var person_more = document.getElementById("person_more").value;
+        if(person_more == 0){
+            swal({
+                title: "Para continuar es necesario seleccionar al personal",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitmoreperson, 1500);     
+        }
+    });
+    function submitmoreperson() { document.getElementById("submit_addmore").submit() }
 </script>
