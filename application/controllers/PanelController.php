@@ -556,13 +556,9 @@ class PanelController extends Zend_Controller_Action{
         $this->view->actpage=$actualpagina;
 
         $table="personal_campo";
-        $pagi_count=$this->view->usuarios = $this->_user->Getcountpersonalcero();
+        $pagi_count=$this->view->usuarios = $this->_user->Getcountpersonalceropaguno();
         $count=count($pagi_count);
-        if (isset($_GET['pagina'])) {
-            $pagina = $_GET['pagina'];
-        } else {
-            $pagina= $this->view->pagina = 1;
-        } 
+        if (isset($_GET['pagina'])){$pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
 
         $no_of_records_per_page = 20;
         $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -2058,7 +2054,6 @@ class PanelController extends Zend_Controller_Action{
             $sitio = $this->_getParam('sitio');
             $this->view->sitio_id=$sitio;   
             $ver = $this->view->torre = $this->_torrenueva->getexist($id,$proyecto,$sitio);
-            // var_dump($ver);exit;
             $torre = $this->view->torre_doc = $this->_torrenueva->getexistinfodos($id,$proyecto,$sitio);
 
             $table="status_proyecto";
@@ -2117,7 +2112,6 @@ class PanelController extends Zend_Controller_Action{
             $wh="id_sitiotipo";
             $table="torrenueva_avances";
             $this->view->avances_torre = $this->_season->GetSpecific($table,$wh,$id);
-            // var_dump($ver);exit;
             $id= $this->_getParam('sitio');
             $wh="id_sitiotipo";
             $table="torrenueva_comentarioavance";

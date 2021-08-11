@@ -134,7 +134,10 @@ class GraficaController extends Zend_Controller_Action{
                 $semana_uno = 1; // Con datos
                 $this->view->semana_uno = $semana_uno;
                 $wk11= $this->view->semana_btsuno = $this->_season->GetSpecific($table,$wh,$sitio);
-            }   
+            }
+
+            $tipo = $this->_getParam('sitio');
+            $this->view->ev_wkuno = $this->_season->GetSpecific($table,$wh,$tipo);
         // END SEMANA UNO 
 
         // SEMANA DOS BTS
@@ -149,6 +152,9 @@ class GraficaController extends Zend_Controller_Action{
                 $this->view->semana_dos = $semana_dos;
                 $wk11= $this->view->semana_btsdos = $this->_season->GetSpecific($table,$wh,$sitio);
             }   
+            $table="semanados_bts";
+            $this->view->ev_wkdos = $this->_season->GetSpecific($table,$wh,$tipo);
+
         // END SEMANA DOS 
 
         // SEMANA TRES BTS
@@ -163,6 +169,9 @@ class GraficaController extends Zend_Controller_Action{
                 $this->view->semana_tres = $semana_tres;
                 $wk11= $this->view->semana_btstres = $this->_season->GetSpecific($table,$wh,$sitio);
             }   
+
+            $table="semanatres_bts";
+            $this->view->ev_wktres = $this->_season->GetSpecific($table,$wh,$tipo);
         // END SEMANA TRES 
 
         // SEMANA CUATRO BTS
@@ -177,6 +186,9 @@ class GraficaController extends Zend_Controller_Action{
                 $this->view->semana_cuatro = $semana_cuatro;
                 $wk11= $this->view->semana_btscuatro = $this->_season->GetSpecific($table,$wh,$sitio);
             }   
+
+            $table="semanacuatro_bts";
+            $this->view->ev_wkcuatro = $this->_season->GetSpecific($table,$wh,$tipo);
         // END SEMANA CUATRO 
 
             $sitio=$this->_getParam('sitio');
