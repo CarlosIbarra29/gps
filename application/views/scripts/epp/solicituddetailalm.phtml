@@ -136,7 +136,7 @@
 	          		</div>
 	          		<div class="col m6 s12">
 	          			<div class="row">	
-	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13){ ?> 
+	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13 || $rol_user == 9){ ?> 
 	          					<?php if($status_sol == 1){ ?>
 	          						<div class="col m6 s6 text-center">
 										<div class="chip">
@@ -277,7 +277,7 @@
 	          	</div>
 
 	          	<div class="col m4 s12 text-center">
-		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13){ ?> 
+		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 13 || $rol_user == 9){ ?> 
 		          		<?php if($status_sol == 1 && $status_surtido == 0){ ?>
 		          			<!-- Validacion de rechazada -->
 		          			<div>
@@ -694,7 +694,7 @@
 } ?>
 
 <!-- Pago -->
-<?php if($rol_user == 13 || $rol_user == 1 || $rol_user == 8){ ?>
+<?php if($rol_user == 13 || $rol_user == 1 || $rol_user == 8 || $rol_user == 9){ ?>
 	<div class="row">
 		<div class="col m12 s12">
 			<div class="card  darken-1">

@@ -722,7 +722,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     public function getusermissolicitudes($id,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, 
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor, 
                         soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
                         soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
                         soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
@@ -732,6 +732,135 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN servicios s on s.id = soc.servicio_id
                         WHERE soc.id_usuario= ? order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getmissolandsitio($iduser,$sitio){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.nombre_sitio like '%{$sitio}%'  order by soc.id DESC",array($iduser));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getmissolpaginatorsitio($iduser,$sitio,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.nombre_sitio like '%{$sitio}%'  order by soc.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($iduser));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getmissolandidsol($iduser,$id){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.id = ? order by soc.id DESC",array($iduser,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getmispaginatoridsol($iduser,$id,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.id = ? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($iduser,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+     public function getmissolandproveedor($iduser,$proveedor){ 
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.name_proveedor like '%{$proveedor}%'  order by soc.id DESC",array($iduser));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getmissolpaginatorproveedor($iduser,$proveedor,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.id_usuario, soc.proveedor_id, soc.name_proveedor,
+                        soc.fecha_requerida, soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.status_documento, soc.status_pago, soc.status_documentouno ,soc.id_usuario,
+                        soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        WHERE soc.id_usuario= ? and soc.name_proveedor like '%{$proveedor}%'  order by soc.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($iduser));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

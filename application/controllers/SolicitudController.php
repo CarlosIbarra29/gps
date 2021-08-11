@@ -42,6 +42,9 @@ class SolicitudController extends Zend_Controller_Action{
         $actualpagina=$this->_getParam('pagina');
         $this->view->actpage=$actualpagina;
 
+        $iduser=$this->_getParam('id');
+        $this->view->usuario=$iduser;
+
         $id = $this->_getParam('id');
         $wh="id_usuario";
         $table="solicitud_ordencompra";
@@ -63,6 +66,125 @@ class SolicitudController extends Zend_Controller_Action{
             $table="solicitud_ordencompra";
             $ver=$this->view->paginator= $this->_ordencompra->getusermissolicitudes($id,$offset,$no_of_records_per_page);
     }
+
+
+      public function missolbuscarAction(){
+
+        
+        $iduser=$this->_getParam('user');
+        $this->view->usuario=$iduser;
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        if($opcion == 1){
+                
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+                
+            $sitio = $this->_getParam('sitio');
+            $this->view->nombre_sto=$sitio; 
+                
+            // var_dump($sitio);
+            // die();
+
+            $solicitud=$this->view->sol_envios=$this->_ordencompra->getmissolandsitio($iduser,$sitio);
+            $count=count($solicitud);
+
+
+                
+            if (isset($_GET['pagina'])) { 
+
+                $pagina = $_GET['pagina']; 
+
+            } else { 
+
+                $pagina= $this->view->pagina = 1; 
+
+            } 
+                
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $a=$this->view->paginator= $this->_ordencompra->getmissolpaginatorsitio($iduser,$sitio,$offset,$no_of_records_per_page);
+
+        }
+
+        if($opcion == 2){
+
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+            
+            $id = $this->_getParam('id');
+                
+            $this->view->id_search=$id; 
+            $solicitud=$this->view->sol_envios=$this->_ordencompra->getmissolandidsol($iduser,$id);
+            $count=count($solicitud);
+                
+            if (isset($_GET['pagina'])) { 
+
+                $pagina = $_GET['pagina']; 
+
+            } else { 
+
+                $pagina= $this->view->pagina = 1; 
+
+            }
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $this->view->paginator= $this->_ordencompra->getmispaginatoridsol($iduser,$id,$offset,$no_of_records_per_page);
+        }
+
+
+        if($opcion == 3){
+                
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+                
+            $proveedor = $this->_getParam('proveedor');
+            $this->view->proverdor_name=$proveedor; 
+                
+            // var_dump($sitio);
+            // die();
+
+            $solicitud=$this->view->sol_envios=$this->_ordencompra->getmissolandproveedor($iduser,$proveedor);
+            $count=count($solicitud);
+
+
+                
+            if (isset($_GET['pagina'])) { 
+
+                $pagina = $_GET['pagina']; 
+
+            } else { 
+
+                $pagina= $this->view->pagina = 1; 
+
+            } 
+                
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="solicitud_ordencompra";
+            $a=$this->view->paginator= $this->_ordencompra->getmissolpaginatorproveedor($iduser,$proveedor,$offset,$no_of_records_per_page);
+
+        }
+
+    }   // Buscadores Solicitud
+
 
     public function solicitudespagadasAction(){
         $actualpagina=$this->_getParam('pagina');
