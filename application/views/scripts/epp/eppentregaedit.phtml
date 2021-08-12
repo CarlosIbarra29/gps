@@ -1,7 +1,16 @@
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
         <?php foreach ($this->solicitud as $regresar) { ?>
-        <a href="/epp/solicituddetailalm/id/<?php echo $regresar['id_sol'] ?>/status/0" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        	<?php if($rol_user == 1  || $rol_user == 8 || $rol_user == 9 || $rol_user == 4){ ?> 
+        		<a href="/epp/solicituddetail/id/<?php echo $regresar['id_sol'] ?>/status/0" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        	<?php } else { ?>
+        		<a href="/epp/solicituddetailalm/id/<?php echo $regresar['id_sol'] ?>/status/0" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        	<?php } ?>
         <?php } ?>    
     </div>
 </div>
@@ -14,52 +23,63 @@
 
 
 <div class="col m12 s12">
-	<form action="/epp/requestudpsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitepp">
-		<?php foreach ($this->asignado as $epp) { ?>
-		<input type="hidden" name="idsol" value="<?php echo $epp["id_sol"]; ?>">
-		<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
-			<div class="input-field col m12 s12">
-				<i class="material-icons prefix">event_available</i>
-				<select id="tipo" name="tipo" disabled required>
-					<?php foreach ($this->tipo as $t) { 
-					if ($t['id_tipo']==$epp['tipo_epp']) { ?>
-					    <option value="<?php echo $t["id_tipo"]; ?>" selected ><?php echo $t["nombre"]; ?></option>
-					<?php } if ($t['id_tipo']!=$epp['tipo_epp']) { ?>
-			            <option value="<?php echo $t['id_tipo']; ?>"><?php echo $t["nombre"]; ?></option>
-					<?php } } ?>  
-				</select>
-				<label>Tipo de EPP</label>
-			</div>
-			<div class="input-field col m6 s12">
-			     <i class="material-icons prefix">accessibility</i>
-			     <input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" disabled required>
-			     <label for="name">* Nombre:</label>
-			 </div> 
+	<?php if($rol_user == 1  || $rol_user == 8 || $rol_user == 9 || $rol_user == 4){ ?> 
+		<form action="/epp/requestudpsoleppcont" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submiteppcont">
+	<?php } else { ?>
+		<form action="/epp/requestudpsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitepp">
+	<?php } ?>
+			<?php foreach ($this->asignado as $epp) { ?>
+			<input type="hidden" name="idsol" value="<?php echo $epp["id_sol"]; ?>">
+			<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">event_available</i>
+					<select id="tipo" name="tipo" disabled required>
+						<?php foreach ($this->tipo as $t) { 
+						if ($t['id_tipo']==$epp['tipo_epp']) { ?>
+						    <option value="<?php echo $t["id_tipo"]; ?>" selected ><?php echo $t["nombre"]; ?></option>
+						<?php } if ($t['id_tipo']!=$epp['tipo_epp']) { ?>
+				            <option value="<?php echo $t['id_tipo']; ?>"><?php echo $t["nombre"]; ?></option>
+						<?php } } ?>  
+					</select>
+					<label>Tipo de EPP</label>
+				</div>
+				<div class="input-field col m6 s12">
+				     <i class="material-icons prefix">accessibility</i>
+				     <input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" disabled required>
+				     <label for="name">* Nombre:</label>
+				 </div> 
 
-			<div class="input-field col m6 s12">
-				<i class="material-icons prefix">photo_size_select_small</i>
-				<select id="tallaget" name="tallaget" required>
-					<?php foreach ($this->tallaget as $talla) { 
-					if ($talla['idepp']==$epp['id_epp']) { ?>
-					    <option value="<?php echo $talla["idepp"]; ?>" selected><?php echo $talla["talla"]; ?></option>
-					<?php } if ($talla['idepp']!=$epp['id_epp']) { ?>
-			            <option value="<?php echo $talla['idepp']; ?>" ><?php echo $talla["talla"]; ?></option>
-					<?php } } ?>  
-				</select>
-				<label>* Talla:</label>
-			</div>
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">photo_size_select_small</i>
+					<select id="tallaget" name="tallaget" required>
+						<?php foreach ($this->tallaget as $talla) { 
+						if ($talla['idepp']==$epp['id_epp']) { ?>
+						    <option value="<?php echo $talla["idepp"]; ?>" selected><?php echo $talla["talla"]; ?></option>
+						<?php } if ($talla['idepp']!=$epp['id_epp']) { ?>
+				            <option value="<?php echo $talla['idepp']; ?>" ><?php echo $talla["talla"]; ?></option>
+						<?php } } ?>  
+					</select>
+					<label>* Talla:</label>
+				</div>
 
-					  
-		<?php } ?>
-	</form>
+						  
+			<?php } ?>
+		</form>
 </div>
 
 <div class="input-field col m12 s12 text-right">
 	<div class="row">
-		<?php foreach ($this->solicitud as $regresar) { ?>
-		<a href="/epp/solicituddetailalm/id/<?php echo $regresar['id_sol'] ?>/status/0" class="waves-effect red waves-light btn">Cancelar</a>
+		<?php if($rol_user == 1  || $rol_user == 8 || $rol_user == 9 || $rol_user == 4){ ?> 
+			<?php foreach ($this->solicitud as $regresar) { ?>
+				<a href="/epp/solicituddetail/id/<?php echo $regresar['id_sol'] ?>/status/0" class="waves-effect red waves-light btn">Cancelar</a>
+			<?php } ?>
+			<button  id="updeppcont" class="waves-effect waves-light btn">Actualizar</button>
+		<?php } else { ?>
+			<?php foreach ($this->solicitud as $regresar) { ?>
+				<a href="/epp/solicituddetailalm/id/<?php echo $regresar['id_sol'] ?>/status/0" class="waves-effect red waves-light btn">Cancelar</a>
+			<?php } ?>
+			<button  id="updepp" class="waves-effect waves-light btn">Actualizar</button>
 		<?php } ?>
-		<button  id="updepp" class="waves-effect waves-light btn">Actualizar</button>
 	</div>	
 </div>
 
@@ -87,5 +107,29 @@
 
     function submitForm() {
         document.getElementById("submitepp").submit()
+    }
+
+
+
+    $("#updeppcont").click(function(){
+        var name = document.getElementById("name").value;
+
+        if(name == ""){
+            swal({
+                title: "Para editar el epp agrega un nombre",
+            });
+        }else{
+             swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+            setTimeout(submitForm1, 500);     
+        }
+
+    });
+
+
+    function submitForm1() {
+        document.getElementById("submiteppcont").submit()
     }
 </script>

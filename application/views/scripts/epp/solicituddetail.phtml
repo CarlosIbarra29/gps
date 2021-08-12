@@ -125,7 +125,7 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
-    	<?php if($rol_user == 1  || $rol_user == 8 || $rol_user == 9){ ?> 
+    	<?php if($rol_user == 1  || $rol_user == 8 || $rol_user == 9 || $rol_user == 4){ ?> 
         	<a href="/epp/listasolicitudes/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
         <?php } else { ?>
         	<a href="/epp/listasolspecific/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
@@ -516,8 +516,8 @@
 				          			<input type="hidden" name="sol" value="<?php echo $idsolicitud ?>">
 				          			<input type="submit" class="btn" id="limpiezaepp" value="Reestablecer"  dir="/epp/limpiarcobro" />
 				          		</form>
+				        	<?php } else { } ?>
 				        <?php } else { } ?>
-				          	<?php } else { } ?>
 		          	</div>
 		        </div>				
 				<div class="row">
@@ -647,6 +647,134 @@
     </div>
 </div>
 <!-- End Detalles Solicitud -->
+
+<!-- Entregar EPP -->
+<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4 || $rol_user == 9){ ?> 
+	<div class="row">
+		<div class="col m12 s12">
+			<div class="card  darken-1">
+				<div class="card-content">
+					<div class="row">
+			          	<div class="col m6 s12">
+			          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de EPP a Entregar</span>
+			          	</div>
+			          	<div class="col m6 text-right s12">
+			          		<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+			          			<form action="/epp/requestreplayentregaconta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="returnentrega">
+					          		<input type="hidden" name="sol" value="<?php echo $idsolicitud ?>">
+					          		<input type="submit" class="btn" id="reestablecer" value="Reestablecer"  dir="/epp/requestreplayentregaconta" />
+					          	</form>
+					        <?php } else { } ?>
+			          	</div>
+			        </div>				
+					<div class="row">
+						<div class="col m12 s12">
+							<div class="row">
+								<form action="/epp/requesteppasignadoconta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="udpasignado">
+					      			<table>
+					        			<thead>
+					          				<tr>
+					              				<th class="text-center"><b>Cantidad</b></th>
+		                                    	<th class="text-center"><b>Descripción</b></th>
+		                                    	<th class="text-center"><b>Talla</b></th>
+		                                    	<th class="text-center"><b>Tipo EPP</b></th>
+		                                    	<th class="text-center"><b>Cobro Extra</b></th>
+		                                    	<th class="text-center"><b>EPP a Entregar</b></th>
+		                                    	<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+		                                    		<th class="text-center"><b>Operaciones</b></th>
+		                                    	<?php } else { } ?>
+					          				</tr>
+					        			</thead>
+					        			<?php if ($this->epp_requerido) { 
+					        				foreach ($this->epp_requerido as $eppreq) { ?>
+					        					<input type="hidden" name="sol_id" value="<?php echo $eppreq['id_sol']; ?>">
+												<tbody>
+													<tr>
+														<td class="text-center">
+		                                            		<?php echo $eppreq['cantidad']; ?>
+		                                        		</td>
+		                                        		<td class="text-center">
+		                                            		<?php echo $eppreq['descripcion']; ?>
+				                                        </td>
+				                                         <td class="text-center">
+				                                            <?php echo $eppreq['t_e']; ?>
+				                                        </td>
+				                                        <td class="text-center">
+				                                            <?php echo $eppreq['nombretipo']; ?>
+				                                        </td>
+				                                        <td class="text-center">
+				                                        	<?php if ($eppreq['cobro'] == 1) { ?>
+				                                            	Sí
+				                                        	<?php } else { ?> 
+				                                        		No
+				                                        	<?php } ?>
+				                                        </td>
+				                                        <td class="text-center">
+				                                        	<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+							                                    <?php if($eppreq['epp_asignado'] == 1){ ?>
+							                                   		<label>
+																		<input type="checkbox" name="ideppasg[]" value="<?php echo $eppreq['id']; ?>" checked disabled>
+																		<span></span>
+																	</label>
+							                                    <?php } else { ?>
+							                                    	<label>
+							                                    		<input type="checkbox" name="ideppasg[]" value="<?php echo $eppreq['id']; ?>">
+							                                    		<span></span>
+																	</label>
+							                                    <?php } ?>
+							                                <?php } else { ?>
+							                                	<?php if($eppreq['epp_asignado'] == 1){ ?>
+							                                   		<label>
+																		<input type="checkbox" checked disabled>
+																		<span></span>
+																	</label>
+							                                    <?php } else { ?>
+							                                    	<label>
+							                                    		<input type="checkbox" disabled>
+							                                    		<span></span>
+																	</label>
+							                                    <?php } ?>
+							                                <?php } ?>
+														</td>
+														<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+															<td class="text-center">
+																<a href="/epp/eppentregaedit/id/<?php echo $eppreq["id"] ?>"><i class="material-icons" style="color: blue;">storage</i></a>
+															</td>
+														<?php } else { }?>
+													</tr>
+												</tbody>
+										<?php } }else{ ?>
+											<tbody>
+												<tr>
+													<td>No se ha surtido la solicitud</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
+										<?php } ?>
+					      			</table><br/>
+					      			<?php if($status_sol == 1 && $status_surtido == 0){ ?>
+						      			<?php if ($this->epp_requerido) { ?> 
+			                                <div class="col s12 m6 text-left"></div>
+											<div class="col s12 m6 text-right">
+												<input type="submit" class="btn" id="addasignado" value="Actualizar"   dir="/epp/requesteppasignadoconta" />
+											</div>
+										<?php } else { } ?>						
+									<?php  }else{ }?>
+					      		</form>
+				        	</div>
+						</div>
+					</div>
+				</div>
+	        </div>
+	    </div>
+	</div>
+<?php  }else{ }?>
+
+<!-- End Entregar EPP -->
+
 
 <?php 
 	date_default_timezone_set('America/Mexico_City');
@@ -834,30 +962,13 @@
         					<div class="row">
 	        					<div class="col m12 s12 text-center">
 				        			<div class="row">
-				        				<div class="col m4 s12 text-center"></div>
-
-				        				<div class="col m4 s12 text-center">
-				        					<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em;">
-				        						Surtido en Proceso...
-				        					</span>
-				        				</div>
-
-				        				<div class="col m4 s12 text-center"></div>
-				        				<!-- <div class="col m8 s12">
-				        					<form action="/vehiculos/requestaddcomprobantedepagov" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comprobante">
-				        						<input type="hidden" name="monto" id="monto_form">
-				        						<input type="hidden" name="status_pago" id="status_form">
-
-				        						<div class="input-field col m12 s12">
-									          		<i class="material-icons prefix">event_available</i>
-									          		<input id="monto" type="text" name="monto" class="validate">
-									          		<label for="monto">Monto</label>
-									        	</div>
+				        				<div class="col m8 s12">
+				        					<form action="/epp/requestaddresponsivaeppc" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="sumbit_responsiva">
 
 									    		<div class="file-field col m12 s12 input-field text-center">
 									      			<div class="btn">
-									        			<span>Comprobante Pago</span>
-									        			<input id="file_comprobante" type="file" name="url">
+									        			<span>Responsiva Firmada</span>
+									        			<input id="file_responsiva" type="file" name="url">
 									      			</div>
 									      			<div class="file-path-wrapper">
 									        			<input class="file-path validate"  type="text">
@@ -869,16 +980,31 @@
 
 				        				<div class="col m4 s12">
 				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
-				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
-				        					<div class="col m12 s12 text-center"><div class="row"></div></div>
 				        					<div class="col m12 s12 text-center">
-				        						<a class="btn" id="btcomprobante">Subir Pago</a>
+				        						<a class="btn" id="btnresponsiva">Subir Responsiva</a>
 											</div>
-		        						</div> -->
-
+		        						</div>
 				        			</div>
 			        			</div>
 			        		</div>
+
+
+        					<!-- <div class="row">
+	        					<div class="col m12 s12 text-center">
+				        			<div class="row">
+				        				<div class="col m4 s12 text-center"></div>
+
+				        				<div class="col m4 s12 text-center">
+				        					<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em;">
+				        						Surtido en Proceso...
+				        					</span>
+				        				</div>
+
+				        				<div class="col m4 s12 text-center"></div>
+				    
+				        			</div>
+			        			</div>
+			        		</div> -->
 						<?php } ?>
 
 						<?php if ($status_surtido == 1) { ?>
@@ -1271,6 +1397,47 @@
 	}// End Liberar seleccion Ajax
 
 
+	 $("#addasignado").click(function(){
+        var eppaasignar = document.getElementById("eppaasignar").value;
+        if(eppaasignar == "" ){
+            swal({
+            	title: "¿Estas seguro que entregarás el epp seleccionado?",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitAsignar, 500);     
+        }
+    });	
+
+
+	function submitAsignar() {
+		document.getElementById("udpasignado").submit()
+	}// End Liberar seleccion Ajax
+
+
+	$("#reestablecer").click(function(){
+        var sol = document.getElementById("sol").value;
+        if(sol == 0 ){
+            swal({
+            	title: "El epp regresara a status sin asignar",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitReturn, 500);     
+        }
+    });	
+
+
+
+	function submitReturn() {
+		document.getElementById("returnentrega").submit()
+	}// End Liberar seleccion Ajax
 
     $("#btcomprobante").click(function(){
     	var file = document.getElementById("file_comprobante").value;
@@ -1291,6 +1458,22 @@
     	
     function submitfileprede() { document.getElementById("submit_comprobante").submit() }
 
+    $("#btnresponsiva").click(function(){
+    	var file = document.getElementById("file_responsiva").value;
 
+    	if(file == ""){
+            swal({
+              title: "Para continuar debes subir la responsiva firmada",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitresponsiva, 1500);
+    	}
+    });
+    	
+    function submitresponsiva() { document.getElementById("sumbit_responsiva").submit() }
 
 </script>

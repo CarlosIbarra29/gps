@@ -3595,6 +3595,125 @@ class EppController extends Zend_Controller_Action{
     }
 
 
+    public function requestaddresponsivaeppcAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        $idsol = $post['id_solicitud'];
+        $wh="id_sol";
+        $table="epp_asignarsol";
+        $usr = $this->_season->GetSpecific($table,$wh,$idsol);
+           
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("Y-m-d");
+
+        $status = 1;
+        $this->_epp->UpdateeppSol($post,$table,$idsol,$status,$hoy);  
+
+            $solicitud = $post['id_solicitud'];
+            $wh="id_sol";
+            $table="epp_asignarsol";
+            $eppasg = $this->_epp->GetSpecificInsertar($table,$wh,$solicitud);
+          
+        foreach ($eppasg as $key) {
+          
+            $fecha_entrega = $key['fecha_entrega'];
+            $cantidad = $key['cantidad'];
+            $descripcion = $key['descripcion'];
+            $talla = $key['talla'];
+            $id_personal = $key['id_personal'];
+            $id_epp = $key['id_epp'];
+            $cobro = $key['cobro'];
+            $tipo_epp = $key['tipo_epp'];
+
+            $id=$talla;
+            $table="epp_catalogo";
+            $vida=$this->_epp->buscarrep($id,$table);
+           
+
+            $vidap=implode($vida[0]);
+            $date=$fecha_entrega;
+            $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
+           
+            $table="epp_asignar";
+            $this->_epp->insertasgEppSol($table,$fechanew, $fecha_entrega, $cantidad, $descripcion, $talla, $id_personal, $id_epp,
+                $cobro, $tipo_epp);
+
+            $table="epp_catalogo";
+            $this->_epp->UpdateStockEppSol($table,$cantidad,$talla);
+
+        }
+
+        if($this->getRequest()->getPost()){
+
+            $name = $_FILES['url']['name'];
+            
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+        
+            }else{
+
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+
+                if($res == 0){ 
+
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+
+                }else{
+
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/responsivas';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
+                }
+            }
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+
+            $idper = $eppasg[0]['id_personal'];
+            $fhoy = date("d-m-Y");
+            $table="responsivas";
+
+            $this->_epp->insertrespEppSol($idper,$table,$urldb,$fhoy);
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            $id_usuario = $usr[0]['id'];            
+            
+            $status_surtido = 1;
+            
+            $table = "epp_solicitudes";
+            $result = $this->_epp->UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb);
+
+            if ($result) {
+                // return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['id_solicitud'].'/status/2');
+                return $this-> _redirect('/epp/listasolicitudes/status/0');
+            
+            }else{
+            
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            
+            }
+        }
+    }
+
+
     public function requestactualizacobroAction(){
 
         $this->_helper->layout()->disableLayout();
@@ -3686,10 +3805,40 @@ class EppController extends Zend_Controller_Action{
             print '</script>'; 
         
         }
-    }       //End Seleccion a Cobrar
+    }       //End Seleccion a Entregar
 
 
-    
+    public function requesteppasignadocontaAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $ids = $post['ideppasg'];
+        $table="epp_asignarsol";
+
+        foreach ($ids as $key => $value) {      
+            
+            $result = null;
+           
+            $result = $this->_epp->UpdateStatusAsignado($value,$table);
+            
+        }
+
+        if ($result) {
+
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol_id'].'/status/1'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Seleccion a Entregar Conta
 
     public function requestreplayentregaAction(){
 
@@ -3718,6 +3867,33 @@ class EppController extends Zend_Controller_Action{
     }       //End Regresar EPP sin Asignar
 
 
+    public function requestreplayentregacontaAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $solicitud = $post['sol'];
+        $table="epp_asignarsol";
+        
+        $result = $this->_epp->UpdateReestablecerAsignar($solicitud,$table);
+
+        if ($result) {
+ 
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol'].'/status/1'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Regresar EPP sin Asignar Conta
+
+
     public function eppentregaeditAction(){
 
         if($this->_hasParam('id')){
@@ -3741,6 +3917,13 @@ class EppController extends Zend_Controller_Action{
 
             $table="epp_tipo";
             $this->view->tipo = $this->_season->GetAll($table);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
         
         } else {
         
@@ -3762,7 +3945,7 @@ class EppController extends Zend_Controller_Action{
             
             if ($result) {
             
-                return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/0');
+                return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/1');
             
             }else{
             
@@ -3773,6 +3956,30 @@ class EppController extends Zend_Controller_Action{
             }
         }
     }//END REQUEST UPDATE ASINADO
+
+    public function requestudpsoleppcontAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+
+            $table="epp_asignarsol";
+            $result = $this->_epp->UpdEppxAsg($post,$table);
+            
+            if ($result) {
+            
+                return $this-> _redirect('/epp/solicituddetail/id/'.$post['idsol'].'/status/1');
+            
+            }else{
+            
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            
+            }
+        }
+    }//END REQUEST UPDATE ASINADO CONT
 
     public function requestaddpagoeppnominaAction(){
         
