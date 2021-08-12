@@ -3364,8 +3364,11 @@ class EppController extends Zend_Controller_Action{
             $table = "epp_solicitudes";
             $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
 
+            // $table = "epp_asignarsol";
+            // $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
             $table = "epp_asignarsol";
-            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+            $this->view->epp_requerido = $this->_epp->GetEppXasgStatus($id);
 
             $table = "epp_asignarsol";
             $this->view->epp_surtido = $this->_epp->GetEppXasgStatus($id);
