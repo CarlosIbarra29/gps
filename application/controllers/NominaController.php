@@ -468,7 +468,6 @@ class NominaController extends Zend_Controller_Action{
             print 'alert("Ocurrio un error: Comprueba los datos.");'; 
             print '</script>'; 
         } 
-
     }
 
 

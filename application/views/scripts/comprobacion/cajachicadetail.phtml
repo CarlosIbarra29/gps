@@ -11,6 +11,7 @@
 <?php foreach ($this->solicitud as $key){ 
   $id = $key['id'];
   $sitio = $key['nombre_sitio'];
+  $comentario  =$key['comentario'];
   $residente = $key['nombre_residente'];
   $user = $key['user_solicitud'];
   $monto = $key['monto'];
@@ -238,6 +239,17 @@
     </div>
   </div>
 </div> -->
+
+<div class="row">
+  <div class="col m12 s12">
+    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentario: </span>
+  </div>
+
+  <div class="col m12 s12">
+    <span style="font-size:15px;  color: red; letter-spacing: 0.1em; font-weight: bold;"><?php echo $comentario; ?></span>
+  </div>
+</div>
+
 
 
 <div class="row">

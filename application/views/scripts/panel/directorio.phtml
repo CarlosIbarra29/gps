@@ -205,8 +205,6 @@
 </div>
 
 
-
-        
 <div class="row">
     <div class="col m12 s12 text-center">
         <div class="white-box">
@@ -214,11 +212,11 @@
                 <ul class="pagination justify-content-center">
                     <?php if($pagina - 1 == 0){ ?>
                         <li class="page-item disabled">
-                            <span class="page-link">Anterior</span>
+                            <span class="page-link"><i class="fa fa-chevron-left" style="color:gray;"></i></span>
                         </li>
                     <?php }else{ ?>
                         <li class="page-item">
-                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                         </li>
                     <?php } ?>
                         <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
@@ -226,11 +224,11 @@
                         </li>
                     <?php if($pagina >= $this->total): ?>
                         <li class="page-item disabled">
-                            <span class="page-link">Siguente</span>
+                            <span class="page-link"><i class="fa fa-chevron-right" style="color:gray;"></i></a></span>
                         </li>
                     <?php else: ?>
                         <li class="page-item">
-                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a></a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -238,5 +236,3 @@
         </div>
     </div> 
 </div>
-
-

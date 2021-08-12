@@ -480,6 +480,11 @@ function eliminar_acentos($cadena){
 	        </div>
 	        <div class="card-action">
 	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn modal-trigger orange" href="#modalevuno"><i class="material-icons right">photo_camera</i>Evidencia</a>
+	        		</div>
+	        	</div>
+	        	<div class="row">
 	        		<div class="col m6 s12">
 		        		<div style="margin-top: 20px;">
 		        			<span class="title-pdf">Actividades:</span> 7 actividades <br/>
@@ -515,6 +520,195 @@ function eliminar_acentos($cadena){
 	        </div>
 	    </div>
     </div>
+
+  <!-- Modal Structure -->
+  <div id="modalevuno" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Evicencias Semana 1</span>
+   	
+    	<div class="row" style="margin-top: 20px;">
+    		<div class="col m4 s3">
+    			<hr width=100%  align="right"  size=10   noshade="noshade">
+    		</div>
+    		<div class="col m4 s6 text-center">
+    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Actividades</span>
+    		</div>
+    		<div class="col m4 s3">
+    			<hr width=100%  align="right"  size=10   noshade="noshade">
+    		</div>
+    	</div>
+
+    	<?php foreach ($this->ev_wkuno as $key) { 
+    		$status_preliminares = $key['status_preliminares'];  $preliminares = $key['preliminares'];
+    		$status_trazo = $key['status_trazo']; $trazo_limpieza = $key['trazo_limpieza'];
+    		$status_excavacion = $key['status_excavacion']; $excavacion = $key['excavacion'];
+    		$status_plantilla = $key['status_plantilla']; $plantilla = $key['plantilla'];
+    		$status_translado = $key['status_translado']; $translado = $key['translado'];
+    		$status_armado = $key['status_armado']; $armado = $key['armado'];
+    		$status_muro = $key['status_muro']; $excavacion_muro = $key['excavacion_muro'];
+    		$status_arena = $key['status_arena']; $arena = $key['arena'];
+    		$status_cemento = $key['status_cemento']; $cemento = $key['cemento'];
+    		$status_block = $key['status_block']; $block = $key['block'];
+    		$status_varilla = $key['status_varilla']; $varilla = $key['varilla'];
+    		$status_madera = $key['status_madera']; $madera = $key['madera'];
+    	}?>
+    	<div class="row" style="margin-top: 25px;">
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_preliminares == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $preliminares; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $preliminares; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Preliminares</span>
+    			</div>
+    		</div>
+
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_trazo == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $trazo_limpieza; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $trazo_limpieza; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Trazo y Limpieza</span>
+    			</div>
+    		</div>
+
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_excavacion == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $excavacion; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $excavacion; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Excavación</span>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div class="row" style="margin-top: 10px;">
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_plantilla == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $plantilla; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $plantilla; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Plantilla</span>
+    			</div>
+    		</div>
+
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_translado == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $translado; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $translado; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Translado de materiales y agregados</span>
+    			</div>
+    		</div>
+
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_armado == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $armado; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $armado; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Habilitado y armado de acero</span>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div class="row" style="margin-top: 10px;">
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_muro == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $excavacion_muro; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $excavacion_muro; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Excavación muro / Dala perimetral</span>
+    			</div>
+    		</div>    		
+    	</div>
+
+    	<div class="row" style="margin-top: 20px;">
+    		<div class="col m4 s3">
+    			<hr width=100%  align="right"  size=10   noshade="noshade">
+    		</div>
+    		<div class="col m4 s6 text-center">
+    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cotización de materiales</span>
+    		</div>
+    		<div class="col m4 s3">
+    			<hr width=100%  align="right"  size=10   noshade="noshade">
+    		</div>
+    	</div>
+
+    	<div class="row" style="margin-top: 25px;">
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_arena == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $arena; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $arena; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Arena</span>
+    			</div>
+    		</div>    	
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_cemento == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $cemento; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $cemento; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cemento</span>
+    			</div>
+    		</div>    
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_block == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $block; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $block; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Block</span>
+    			</div>
+    		</div>    		
+    	</div>
+
+    	<div class="row" style="margin-top: 10px;">
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_varilla == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $varilla; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $varilla; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Varilla</span>
+    			</div>
+    		</div> 
+
+    		<div class="col m4 s12 text-center">
+    			<?php if($status_madera == 1){ ?>
+    				<a class="example-image-link" href="/<?php echo $madera; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $madera; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+    			<?php }else{ ?>
+    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+    			<?php } ?>
+    			<div>
+    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Madera</span>
+    			</div>
+    		</div> 
+    	</div>
+
+    </div>
+    <div class="modal-footer">
+    	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
 
   <!-- S E M A N A   D O S -->
 <?php if($this->semana_dos == 0){ ?>
@@ -560,6 +754,13 @@ function eliminar_acentos($cadena){
 	        	Reporte de Evicencias Semana 2</span>
 	        </div>
 	        <div class="card-action">
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn modal-trigger orange" href="#modalevdos"><i class="material-icons right">photo_camera</i>Evidencia</a>
+	        		</div>
+	        	</div>
+
 	        	<div class="row">
 	        		<div class="col m6 s12">
 		        		<div style="margin-top: 20px;">
@@ -597,8 +798,134 @@ function eliminar_acentos($cadena){
 	        </div>
 	    </div>
     </div>
-
 </div>
+
+  <!-- Modal Structure -->
+  	<div id="modalevdos" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+    	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Evicencias Semana 2</span>
+   	
+    	<?php foreach ($this->ev_wkdos as $key) {
+    		$status_colocacion = $key['status_colocacion'];  $colocacion = $key['colocacion'];
+    		$status_vaciado = $key['status_vaciado']; $vaciado = $key['vaciado'];
+    		$status_relleno = $key['status_relleno']; $relleno = $key['relleno'];
+    		$status_nicho = $key['status_nicho'];  $nicho = $key['nicho'];
+    		$status_muro = $key['status_muro']; $muro_dos = $key['muro'];
+    		$status_tuberiapvc = $key['status_tuberiapvc']; $tuberiapvc = $key['tuberiapvc'];
+    		$status_laboratorio = $key['status_laboratorio']; $laboratorio = $key['laboratorio'];
+    	} ?>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    		<div class="col m4 s6 text-center">
+	    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Actividades</span>
+	    		</div>
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 25px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_colocacion == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $colocacion; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $colocacion; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Colocación de anclas</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_vaciado == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $vaciado; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $vaciado; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vaciado de Concreto</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_relleno == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $relleno; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $relleno; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Descimbrado y relleno con tepetate</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 10px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_nicho == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $nicho; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $nicho; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nicho / Acometida eléctrica</span>
+	    			</div>
+	    		</div>	
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_muro == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $muro_dos; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $muro_dos; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Muro perimetral / Malla</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    		<div class="col m4 s6 text-center">
+	    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cotización de materiales</span>
+	    		</div>
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    	</div>
+
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_tuberiapvc == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $tuberiapvc; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $tuberiapvc; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tuberia PVC</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_laboratorio == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $laboratorio; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $laboratorio; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pruebas de laboratorio</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    </div>
+	    <div class="modal-footer">
+	    	<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
+
 
 
 
@@ -668,6 +995,14 @@ function eliminar_acentos($cadena){
 		        	Reporte de Evicencias Semana 3</span>
 	        </div>
 	        <div class="card-action">
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn modal-trigger orange" href="#modalevtres"><i class="material-icons right">photo_camera</i>Evidencia</a>
+	        		</div>
+	        	</div>
+
+
 	        	<div class="row">
 	        		<div class="col m6 s12">
 		        		<div style="margin-top: 20px;">
@@ -707,6 +1042,349 @@ function eliminar_acentos($cadena){
     </div>
 
 
+  <!-- Modal Structure -->
+  	<div id="modalevtres" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+    		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Evicencias Semana 3</span>
+   	
+	    	<?php foreach ($this->ev_wktres as $key) {
+	    		$status_excavaciontrayectoria = $key['status_excavaciontrayectoria']; $excavacion_trayectoria =$key['excavacion_trayectoria'];
+	    		$status_basemedicion = $key['status_basemedicion']; $base_medicion = $key['base_medicion'];
+	    		$status_baseinterruptor= $key['status_baseinterruptor']; $base_interruptor = $key['base_interruptor'];
+	    		$status_registrosfo = $key['status_registrosfo']; $registros_fo = $key['registros_fo'];
+	    		$status_registroelectrico = $key['status_registroelectrico']; $registro_electrico= $key['registro_electrico'];
+	    		$status_tuberiafo = $key['status_tuberiafo']; $tuberia_fo = $key['tuberia_fo'];
+	    		$status_tuberiaelectrica = $key['status_tuberiaelectrica']; $tuberia_electrica=$key['tuberia_electrica'];
+	    		$status_trayectoriaaerea = $key['status_trayectoriaaerea']; $trayectoria_aerea = $key['trayectoria_aerea'];
+	    		$status_planchaequipo =$key['status_planchaequipo']; $plancha_equipo = $key['plancha_equipo'];
+	    		$status_soportetelescopio = $key['status_soportetelescopio']; $soporte_telescopio = $key['soporte_telescopio'];
+	    		$status_sistematierras =$key['status_sistematierras']; $sistema_tierras = $key['sistema_tierras'];
+	    		$status_interruptorgabinetes =$key['status_interruptorgabinetes']; $interruptor_gabinetes = $key['interruptor_gabinetes'];
+	    		$status_nichocentro =$key['status_nichocentro']; $nicho_centro = $key['nicho_centro'];
+	    		$status_gabinetefuerzas =$key['status_gabinetefuerzas']; $gabinete_fuerzas =$key['gabinete_fuerzas'];
+	    		$status_instalacioncable =$key['status_instalacioncable']; $instalacion_cable=$key['instalacion_cable'];
+	    		$status_basesequipos = $key['status_basesequipos']; $bases_equipos = $key['bases_equipos'];
+	    		$status_orientacionsoportes =$key['status_orientacionsoportes']; $orientacion_soportes =$key['orientacion_soportes'];
+	    		$status_instalacioncgo = $key['status_instalacioncgo']; $instalacion_cgo = $key['instalacion_cgo'];
+	    		$status_instalacionbarrastierras = $key['status_instalacionbarrastierras']; $instalacion_barrastierras = $key['instalacion_barrastierras'];
+	    		$status_aterrizajebarras = $key['status_aterrizajebarras']; $aterrizaje_barras = $key['aterrizaje_barras'];
+	    		$status_portacables = $key['status_portacables']; $porta_cables = $key['porta_cables'];
+	    		$status_sistemaelectrico = $key['status_sistemaelectrico']; $sistema_electrico=$key['sistema_electrico'];
+	    		$status_fibraoptica = $key['status_fibraoptica']; $fibra_optica = $key['fibra_optica'];
+	    		$status_sistemadetierra =$key['status_sistemadetierra']; $sistemadetierra = $key['sistemadetierra'];
+	    		$status_materialelectrico =$key['status_materialelectrico']; $materialelectrico = $key['materialelectrico'];
+	    	} ?>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    		<div class="col m4 s6 text-center">
+	    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Actividades</span>
+	    		</div>
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_excavaciontrayectoria == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $excavacion_trayectoria; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $excavacion_trayectoria; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Excavación de Trayectorias</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_basemedicion == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $base_medicion; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $base_medicion; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de base de medición</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_baseinterruptor == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $base_interruptor; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $base_interruptor; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalacion de base de interruptor de cuchillas</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_registrosfo == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $registros_fo; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $registros_fo; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Construccion de registros de FO</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_registroelectrico == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $registro_electrico; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $registro_electrico; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Construccion de registros de electricos</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_tuberiafo == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $tuberia_fo; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $tuberia_fo; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de tuberia FO</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_tuberiaelectrica == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $tuberia_electrica; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $tuberia_electrica; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de tuberia eléctrica</span>
+	    			</div>
+	    		</div>	
+
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_trayectoriaaerea == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $trayectoria_aerea; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $trayectoria_aerea; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de trayectoria aerea</span>
+	    			</div>
+	    		</div>	
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_planchaequipo == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $plancha_equipo; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $plancha_equipo; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Construcción de plancha para equipos</span>
+	    			</div>
+	    		</div>	
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_soportetelescopio == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $soporte_telescopio; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $soporte_telescopio; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de soporte telescopio para portacablera</span>
+	    			</div>
+	    		</div>	
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_sistematierras == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $sistema_tierras; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $sistema_tierras; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de sistemas de tierras</span>
+	    			</div>
+	    		</div>	
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_interruptorgabinetes == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $interruptor_gabinetes; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $interruptor_gabinetes; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de interruptores en gabinetes de fuerzas</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_nichocentro == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $nicho_centro; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $nicho_centro; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Construcción de nicho para centro de cargas</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_gabinetefuerzas == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $gabinete_fuerzas; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $gabinete_fuerzas; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Colocación de gabinete de fuerzas con soporte</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_instalacioncable == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $instalacion_cable; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $instalacion_cable; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de cable</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_basesequipos == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $bases_equipos; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $bases_equipos; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Colocación de bases de equipos e interconexiones</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_orientacionsoportes == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $orientacion_soportes; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $orientacion_soportes; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación  y orientacion de soportes RF</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_instalacioncgo == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $instalacion_cgo; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $instalacion_cgo; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de CGO</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_instalacionbarrastierras == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $instalacion_barrastierras; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $instalacion_barrastierras; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de barras de tierras</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_aterrizajebarras == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $aterrizaje_barras; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $aterrizaje_barras; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Aterrizaje de barras de tierras</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_portacables == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $porta_cables; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $porta_cables; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Instalación de porta cablera horizontal</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 15px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_sistemaelectrico == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $sistema_electrico; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $sistema_electrico; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sistema eléctrico</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_fibraoptica == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $fibra_optica; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $fibra_optica; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fibra optica</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_sistemadetierra == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $sistemadetierra; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $sistemadetierra; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sistemas de tierras</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    		<div class="col m4 s6 text-center">
+	    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cotización de materiales</span>
+	    		</div>
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 25px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_materialelectrico == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $materialelectrico; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $materialelectrico; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Material eléctrico</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+
+	    </div>
+	    <div class="modal-footer">
+	    	<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
+
 
 <?php if($this->semana_cuatro == 0){ ?>
 	<input type="hidden" id="actividadescuatro" value="0">
@@ -740,6 +1418,13 @@ function eliminar_acentos($cadena){
 		        	Reporte de Evicencias Semana 4</span>
 	        </div>
 	        <div class="card-action">
+
+	        	<div class="row">
+	        		<div class="col m12 s12 text-right">
+	        			<a class="btn modal-trigger orange" href="#modalevcuatro"><i class="material-icons right">photo_camera</i>Evidencia</a>
+	        		</div>
+	        	</div>
+
 	        	<div class="row">
 	        		<div class="col m6 s12">
 		        		<div style="margin-top: 20px;">
@@ -777,6 +1462,71 @@ function eliminar_acentos($cadena){
       	</div>
     </div>
 </div>
+
+
+  <!-- Modal Structure -->
+  	<div id="modalevcuatro" class="modal modal-fixed-footer">
+	    <div class="modal-content">
+    		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Reporte de Evicencias Semana 4</span>
+   	
+	    	<?php foreach ($this->ev_wkcuatro as $key) {
+	    		$status_montajetorre = $key['status_montajetorre'];  $montaje_torre = $key['montaje_torre'];
+	    		$status_camagrava = $key['status_camagrava']; $cama_grava = $key['cama_grava'];
+	    		$status_limpiezadetalles = $key['status_limpiezadetalles']; $limpieza_detalles = $key['limpieza_detalles'];
+	    	} ?>
+
+	    	<div class="row" style="margin-top: 20px;">
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    		<div class="col m4 s6 text-center">
+	    			<span style="font-size:17px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Actividades</span>
+	    		</div>
+	    		<div class="col m4 s3">
+	    			<hr width=100%  align="right"  size=10   noshade="noshade">
+	    		</div>
+	    	</div>
+
+	    	<div class="row" style="margin-top: 25px;">
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_montajetorre == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $montaje_torre; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $montaje_torre; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Montaje de torre</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_camagrava == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $cama_grava; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $cama_grava; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Antivegetal y cama de grava</span>
+	    			</div>
+	    		</div>
+	    		<div class="col m4 s12 text-center">
+	    			<?php if($status_limpiezadetalles == 1){ ?>
+	    				<a class="example-image-link" href="/<?php echo $limpieza_detalles; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $limpieza_detalles; ?>"  alt="image-1" style="width: 150px; height: 100px;"/></a>
+	    			<?php }else{ ?>
+	    				<img src="/img/no_disponible1.png" style="width: 120px; height: 100px;">
+	    			<?php } ?>
+	    			<div>
+	    				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Limpieza y detalle</span>
+	    			</div>
+	    		</div>
+	    	</div>
+
+	    </div>
+	    <div class="modal-footer">
+	    	<button  class="modal-close red btn">Cerrar</button>
+	    </div>
+  	</div>
+
+
 
 
 <?php if($this->condiciondos_bts == 1){ ?>
@@ -3378,9 +4128,11 @@ $count_tag = $this->count_tagenero + $this->count_tagfebrero + $this->count_tagm
     <input type="hidden" id="noviembre_tag" value="<?php echo $tag_noviembre ?>">
     <input type="hidden" id="diciembre_tag" value="<?php echo $tag_diciembre; ?>">
 
+<script src="/js/lightbox.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script type="text/javascript">
 	$( document ).ready(function() {
+		$('.modal').modal();
 	    var total = document.getElementById("total_proyecto").value;
 	    document.getElementById("porcentaje_final").value = total+ "%";
 	    document.getElementById("porcentaje_add").value = total;

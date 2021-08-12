@@ -487,7 +487,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
                         pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
                         pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
                         FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
-                        WHERE pc.delete_status =0 order by id desc");
+                        WHERE pc.delete_status =0  order by id desc");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -495,6 +495,25 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function Getcountpersonalceropaguno(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto,pc.status_expediente, pc.telefono, pc.email_personal, pc.nss, pc.rfc, pc.dia_pago,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal, pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
+                        FROM personal_campo pc LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        WHERE pc.delete_status =0 AND pc.status_personal = 0  order by id desc");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function Getcountpersonalgasolina(){
         try{
