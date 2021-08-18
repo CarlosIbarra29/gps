@@ -184,6 +184,7 @@
                                         <th class="text-center"><b>Cantidad</b></th>
                                         <th class="text-center"><b>Descripción</b></th>
                                         <th class="text-center"><b>Talla</b></th>
+                                        <th class="text-center"><b>Presentación</b></th>
                                         <th class="text-center"><b>Cobro Extra</b></th>
                                         <th class="text-center"><b>Fecha Entrega</b></th>
                                         <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
@@ -198,6 +199,13 @@
                                                 <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
                                                 <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
                                                 <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
+                                                <td class="text-center">
+                                                    <?php if ($eppreq['presentacion'] == null || $eppreq['presentacion'] == "" ) { ?>
+                                                        Sin dato
+                                                    <?php } else { ?>
+                                                        <?php echo $eppreq['presentacion']; ?>
+                                                    <?php } ?>
+                                                </td>
                                                 <td class="text-center">
                                                     <?php if ($eppreq['cobro'] == 1) { ?>
                                                         Aplica descuento

@@ -49,7 +49,7 @@ class EppController extends Zend_Controller_Action{
         } else {
         
             $pagina= $this->view->pagina = 1;
-        } 
+        }  
 
         $no_of_records_per_page = 15;
         $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -70,9 +70,38 @@ class EppController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+             $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
             
+            }else{
+            
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                
+                if($res == 0){ 
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                
+                }else{
+                
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppimg/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
+                }
+            }
+
             $table="epp_catalogo";
-            $result = $this->_epp->insertepp($post,$table);
+            $result = $this->_epp->insertepp($post,$table,$urldb);
 
             if ($result) {
 
@@ -151,8 +180,34 @@ class EppController extends Zend_Controller_Action{
 
         if($this->getRequest()->getPost()){
 
+            $name = $_FILES['url']['name'];
+            $urldb = $post["imahidden"];
+        
+            if(!empty($_FILES["url"]["name"])) {
+        
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+        
+                if ($res == 0) {
+        
+                    print '<script language="JavaScript">'; 
+                    print 'alert("La imagen supera el maximo de tamaño");'; 
+                    print '</script>';
+        
+                } else {
+        
+                    unlink($post['imahidden']);
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppimg/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+                }
+            }//end de if
+
             $table="epp_catalogo";
-            $result = $this->_epp->updateepp($post,$table);
+            $result = $this->_epp->updateepp($post,$table,$urldb);
             
             if ($result) {
                 

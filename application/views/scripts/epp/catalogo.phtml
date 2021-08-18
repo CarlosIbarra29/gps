@@ -202,6 +202,16 @@ if($this->total== 1){
 		<div class="col m12 s12">
 			<form action="/epp/requestaddepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_epp">
 				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Imagen</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+
 					<div class="input-field col m12 s12">
 						<select id="tipo" name="tipo" required>
 							<option value="0" disabled selected>* Selecciona una opcion:</option>
@@ -211,10 +221,15 @@ if($this->total== 1){
 						</select>
 						<label>Tipo de EPP</label>
 					</div>
-					<div class="input-field col m12 s12">
+					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">account_circle</i>
 						<input id="name" type="text" name="name" class="validate" required>
 						<label for="name">*Nombre: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">photo_filter</i>
+						<input id="presentacion" type="text" name="presentacion" class="validate" required>
+						<label for="presentacion">Presentación: </label>
 					</div>
 					<div class="input-field col m12 s12">
 						<i class="material-icons prefix">event_available</i>
@@ -235,7 +250,7 @@ if($this->total== 1){
 						<i class="material-icons prefix">account_circle</i>
 						<input id="vida" placeholder="Días Aproximados" type="number" min="1" name="vida" class="validanumeros" required>
 						<label for="vida">*Tiempo de vida: (En días) </label>
-					</div>
+					</div> 
 					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">event_available</i>
 						<input type="text" id="costo" name="costo" class="validanumeros">
@@ -269,8 +284,10 @@ if($this->total== 1){
 		<table class="table text-left table-hover">
 			<thead>
 				<tr>
+					<th>Imagen</th>
 					<th>Nombre</th>
 					<th>Talla</th>
+					<th>Presentación</th>
 					<th>Costo Aprobado</th>
 					<th>Stock</th>
 					<th></th>
@@ -283,8 +300,22 @@ if($this->total== 1){
 				foreach ($this->paginator as $eppinv) { ?>
 					<tbody>
 						<tr>
+							<td>
+								<?php if($eppinv['imagen'] == null){ ?>
+									<img src="/img/no_disponible.png" style="width: 100px;">
+								<?php } else { ?>
+									<img src="/<?php echo $eppinv["imagen"]; ?>" style="width: 100px;">
+								<?php } ?>
+							</td>
 							<td><?php echo $eppinv["nombre"]; ?></td>
 							<td><?php echo $eppinv["talla"]; ?></td>
+							<td>
+								<?php if ($eppinv["presentacion"] == "" || $eppinv["presentacion"] == null) { ?>
+									Sin dato
+								<?php } else { ?>
+									<?php echo $eppinv["presentacion"]; ?>
+								<?php } ?>
+							</td>
 							<td>$<?php echo $eppinv["costoa"]; ?></td>
 							<td><?php echo $eppinv["stock"]; ?></td>
 							<td>

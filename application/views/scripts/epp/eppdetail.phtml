@@ -58,7 +58,7 @@
 								</h4>
 								<h4>
 									<strong><span class="font_tittle">Tiempo Vida: </span> </strong>
-									<?php echo $data['tiempo_vida']; ?>
+									<?php echo $data['tiempo_vida']; ?> días
 								</h4>
 							<?php } ?>
 						</div>
@@ -72,7 +72,19 @@
 								</h3>
 								<h3>
 									<strong><span class="font_tittle">Descripción: </span> </strong>
-									<?php echo $data['descripcion']; ?>
+									<?php if ($data['descripcion'] == "" || $data['descripcion'] == null) { ?>
+										Sin datos
+									<?php } else { ?> 
+										<?php echo $data['descripcion']; ?>
+									<?php } ?>
+								</h3>
+								<h3>
+									<strong><span class="font_tittle">Presentación: </span> </strong>
+									<?php if ($data['presentacion'] == "" || $data['presentacion'] == null) { ?>
+										Sin datos
+									<?php } else { ?>
+										<?php echo $data['presentacion']; ?>
+									<?php } ?>	
 								</h3>
 							<?php } ?>
 						</div>

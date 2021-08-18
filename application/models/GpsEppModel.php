@@ -7,7 +7,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     public function Getpaginationepp($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
+            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock, e.imagen, e.presentacion,
                         IF(e.costo_aprobado IS NULL, 'Costo no Asignado', e.costo_aprobado) AS costoa, 
                         e.tiempo_vida, e.tipo_epp, et.id_tipo, et.nombre as tiponombre
                         FROM epp_catalogo e
@@ -22,13 +22,15 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     }// CONSULTA EPP
 
 
-    public function insertepp($post,$table){
+    public function insertepp($post,$table,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
                 'tipo_epp'=>$post['tipo'],
                 'nombre'=>$post['name'],
                 'descripcion'=>$post['desc'],
+                'presentacion'=>$post['presentacion'],
+                'imagen'=>$urldb,
                 'talla'=>$post['talla'],
                 'stock'=>$post['stock'],
                 'tiempo_vida'=>$post['vida'],
@@ -43,16 +45,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }//  INSERT EPP
 
-    public function updateepp($post,$table){
+    public function updateepp($post,$table,$urldb){
         
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? 
+            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, imagen = ?, presentacion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? 
                 WHERE idepp = ? ",
                 array(
                     $post['name'],
                     $post['talla'],
                     $post['desc'],
+                    $urldb,
+                    $post['presentacion'],
                     $post['stock'],
                     $post['vida'],
                     $post['costo'],
@@ -147,7 +151,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
+            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock, e.presentacion,
                         IF(e.costo_aprobado IS NULL, 'Costo no Asignado', e.costo_aprobado) AS costoa, 
                         e.tiempo_vida, e.tipo_epp, et.id_tipo, et.nombre as tiponombre
                         FROM epp_catalogo e
@@ -373,7 +377,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, 
-                        ea.status_epp, ea.comprado_campo,ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock,
+                        ea.status_epp, ea.comprado_campo,ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.presentacion,
                         ec.costo_aprobado, ec.tiempo_vida 
                         FROM epp_asignar ea 
                         LEFT JOIN
@@ -1318,7 +1322,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.epp_asignado, ea.fecha_entrega, ea.status_epp, 
-                        ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,ec.talla as t_e, ec.descripcion as desc_e, ec.stock, 
+                        ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.presentacion,
                         ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
                         FROM epp_asignarsol ea 
                         LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp

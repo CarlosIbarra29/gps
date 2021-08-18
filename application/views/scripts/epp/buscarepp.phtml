@@ -201,6 +201,16 @@ function isActhref($nameBtn,$urlname){
 		<div class="col m12 s12">
 			<form action="/epp/requestaddepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_epp">
 				<div class="row">
+					<div class="file-field input-field col m12 s12">
+						<div class="btn">
+							<span>Añade Imagen</span>
+							<input type="file" name="url">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+
 					<div class="input-field col m12 s12">
 						<select id="tipo" name="tipo" required>
 							<option value="0" disabled selected>* Selecciona una opcion:</option>
@@ -210,10 +220,15 @@ function isActhref($nameBtn,$urlname){
 						</select>
 						<label>Tipo de EPP</label>
 					</div>
-					<div class="input-field col m12 s12">
+					<div class="input-field col m6 s12">
 						<i class="material-icons prefix">account_circle</i>
 						<input id="name" type="text" name="name" class="validate" required>
 						<label for="name">*Nombre: </label>
+					</div>
+					<div class="input-field col m6 s12">
+						<i class="material-icons prefix">photo_filter</i>
+						<input id="presentacion" type="text" name="presentacion" class="validate" required>
+						<label for="presentacion">Presentación: </label>
 					</div>
 					<div class="input-field col m12 s12">
 						<i class="material-icons prefix">event_available</i>
