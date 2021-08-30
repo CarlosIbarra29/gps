@@ -184,7 +184,8 @@
                                             <th class="text-center"><b>Cantidad</b></th>
                                             <th class="text-center"><b>Descripción</b></th>
                                             <th class="text-center"><b>Talla</b></th>
-                                            <th class="text-center"><b>Tipo EPP</b></th>
+                                            <th class="text-center"><b>Presentación</b></th>
+                                            <th class="text-center"><b>Cobro Extra</b></th>
                                             <th class="text-center"><b>Fecha Entrega</b></th>
                                             <th class="text-center"><b>Status</b></th>
                                         </tr>
@@ -196,7 +197,20 @@
                                                     <td class="text-center"><?php echo $epps['cantidad']; ?></td>
                                                     <td class="text-center"><?php echo $epps['descripcion']; ?></td>
                                                     <td class="text-center"><?php echo $epps['t_e']; ?></td>
-                                                    <td class="text-center"><?php echo $epps['nombretipo']; ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($epps['presentacion'] == null || $epps['presentacion'] == "" ) { ?>
+                                                            Sin dato
+                                                        <?php } else { ?>
+                                                            <?php echo $epps['presentacion']; ?>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php if ($eppreq['cobro'] == 1) { ?>
+                                                           Aplica descuento
+                                                        <?php } else { ?>
+                                                            Sin descuento
+                                                        <?php } ?>
+                                                    </td>
                                                     <td class="text-center">
                                                         <?php if ($epps['fecha_entrega'] == null) { ?>
                                                             <?php echo $hoy ?>
@@ -231,7 +245,8 @@
                                             <th class="text-center"><b>Cantidad</b></th>
                                             <th class="text-center"><b>Descripción</b></th>
                                             <th class="text-center"><b>Talla</b></th>
-                                            <th class="text-center"><b>Tipo EPP</b></th>
+                                            <th class="text-center"><b>Presentación</b></th>
+                                            <th class="text-center"><b>Cobro Extra</b></th>
                                             <th class="text-center"><b>Fecha Entrega</b></th>
                                         </tr>
                                     </thead>
@@ -242,7 +257,20 @@
                                                     <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
                                                     <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
                                                     <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
-                                                    <td class="text-center"><?php echo $eppreq['nombretipo']; ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($eppreq['presentacion'] == null || $eppreq['presentacion'] == "" ) { ?>
+                                                            Sin dato
+                                                        <?php } else { ?>
+                                                            <?php echo $eppreq['presentacion']; ?>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php if ($eppreq['cobro'] == 1) { ?>
+                                                           Aplica descuento
+                                                        <?php } else { ?>
+                                                            Sin descuento
+                                                        <?php } ?>
+                                                    </td>
                                                     <td class="text-center">
                                                         <?php if ($eppreq['fecha_entrega'] == null) { ?>
                                                             <?php echo $hoy ?>

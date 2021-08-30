@@ -7,7 +7,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     public function Getpaginationepp($table,$offset,$no_of_records_per_page){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
+            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock, e.imagen, e.presentacion,
                         IF(e.costo_aprobado IS NULL, 'Costo no Asignado', e.costo_aprobado) AS costoa, 
                         e.tiempo_vida, e.tipo_epp, et.id_tipo, et.nombre as tiponombre
                         FROM epp_catalogo e
@@ -20,15 +20,17 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }// CONSULTA EPP
+ 
 
-
-    public function insertepp($post,$table){
+    public function insertepp($post,$table,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
                 'tipo_epp'=>$post['tipo'],
                 'nombre'=>$post['name'],
                 'descripcion'=>$post['desc'],
+                'presentacion'=>$post['presentacion'],
+                'imagen'=>$urldb,
                 'talla'=>$post['talla'],
                 'stock'=>$post['stock'],
                 'tiempo_vida'=>$post['vida'],
@@ -43,16 +45,18 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }//  INSERT EPP
 
-    public function updateepp($post,$table){
+    public function updateepp($post,$table,$urldb){
         
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? 
+            $qry = $db->query("UPDATE $table SET nombre = ?, talla = ?, descripcion = ?, imagen = ?, presentacion = ?, stock = ?, tiempo_vida = ?, costo_aprobado = ?, tipo_epp = ? 
                 WHERE idepp = ? ",
                 array(
                     $post['name'],
                     $post['talla'],
                     $post['desc'],
+                    $urldb,
+                    $post['presentacion'],
                     $post['stock'],
                     $post['vida'],
                     $post['costo'],
@@ -147,7 +151,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock,
+            $qry = $db->query("SELECT e.idepp, e.nombre, e.talla, e.descripcion, e.stock, e.presentacion,
                         IF(e.costo_aprobado IS NULL, 'Costo no Asignado', e.costo_aprobado) AS costoa, 
                         e.tiempo_vida, e.tipo_epp, et.id_tipo, et.nombre as tiponombre
                         FROM epp_catalogo e
@@ -373,7 +377,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.comentario, ea.talla, ea.fecha_entrega, ea.reposicion, ea.id_personal, ea.tipo_epp, 
-                        ea.status_epp, ea.comprado_campo,ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock,
+                        ea.status_epp, ea.comprado_campo,ea.id_epp, ec.nombre, ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.presentacion,
                         ec.costo_aprobado, ec.tiempo_vida 
                         FROM epp_asignar ea 
                         LEFT JOIN
@@ -1078,12 +1082,48 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
     }   // Consulta Personal EPP
 
 
+    public function GetAllProveedor($table){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM proveedor
+                ORDER BY nombre_prov ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Consulta Personal EPP
+
+
      public function GetSolStepEPP(){ 
         
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT *
                 FROM epp_solicitudes where step_uno = 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }
+
+
+    public function GetStockStep(){ 
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT *
+                FROM epp_stock where step_uno = 0");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -1135,6 +1175,27 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         
         }
     } //END GET INFO TO PAGINATOR
+
+
+    public function GetStepStockpaginator($offset,$no_of_records_per_page){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id,e.id_usuario, e.name_usuario, e.status_stock, e.fecha_recibido,
+                        e.step_uno, e.comprobante_doc, e.comentarios, e.id_proveedor, e.name_proveedor
+                        FROM epp_stock e 
+                        where e.step_uno = 0 LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    } //END GET INFO TO PAGINATOR
+
 
 
     public function GetStepEppSpecificpaginator($id_user,$offset,$no_of_records_per_page){
@@ -1318,7 +1379,7 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT ea.id, ea.cantidad, ea.descripcion, ea.cobro, 
                         IF(ea.cobro != 2 , IF(ea.cobro = 0, 'Sin Costo Extra', 'Se Aplicara Costo') , 'Descuento Efectuado') AS cobroe, ea.talla, ea.id_personal, ea.tipo_epp, ea.epp_asignado, ea.fecha_entrega, ea.status_epp, 
-                        ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,ec.talla as t_e, ec.descripcion as desc_e, ec.stock, 
+                        ea.comprado_campo, ea.id_epp, ea.id_sol, ec.nombre,ec.talla as t_e, ec.descripcion as desc_e, ec.stock, ec.presentacion,
                         ec.costo_aprobado, ec.tiempo_vida, et.nombre as nombretipo
                         FROM epp_asignarsol ea 
                         LEFT JOIN epp_catalogo ec ON ea.id_epp = ec.idepp
@@ -2496,5 +2557,353 @@ class Application_Model_GpsEppModel extends Zend_Db_Table_Abstract{
         }
     }   // Detalles de solicitud
 
-      
+    /////////////////////////////////////// Pedidos EPP ////////////////////////////////////////////////////////////
+
+
+    public function UpdatePedidoUno($post,$table,$id_user,$name_user,$name_proveedor,$urldb){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET fecha_recibido = ?, id_usuario = ?, name_usuario = ?, id_proveedor = ?, name_proveedor = ?, comentarios = ?, comprobante_doc = ? WHERE id = ?",
+                array(
+                $post['fecharecibido'],
+                $id_user,
+                $name_user,
+                $post['proveedor'],
+                $name_proveedor,
+                $post['comentarios'],
+                $urldb,
+                $post['ids']));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }   // END UPDATE PASO 1 PEDIDIDO EPP
+
+
+
+    public function insertaddstock1($post,$table,$tipo){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'cantidad'=>$post['cantidad'],
+                'descripcion'=>$post['epp'],
+                'talla'=>$post['talla'],
+                'tipo_epp'=>$tipo,
+                'id_epp'=>$post['talla'],
+                'id_stock'=>$post['pedid']
+            );
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        }
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }// END Insert EPP que llego
+
+
+
+    public function GetEppxPedido($id){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT es.id, es.cantidad, es.descripcion, es.talla, es.id_epp, es.tipo_epp, es.id_stock, es.epp_add, 
+                        ec.nombre, ec.talla as t_e, et.nombre as nombretipo
+                        FROM epp_stockadd es 
+                        LEFT JOIN epp_catalogo ec ON es.id_epp = ec.idepp
+                        LEFT JOIN epp_tipo et ON et.id_tipo = es.tipo_epp
+                        WHERE es.id_stock = ? and es.epp_add = 0 ORDER BY es.id ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        }
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    } // Consulta Epp del pedido
+
+
+    public function GetEppxPedidoEntrega($id){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT es.id, es.cantidad, es.descripcion, es.talla, es.id_epp, es.tipo_epp, es.id_stock, es.epp_add, 
+                        ec.nombre, ec.talla as t_e, et.nombre as nombretipo
+                        FROM epp_stockadd es 
+                        LEFT JOIN epp_catalogo ec ON es.id_epp = ec.idepp
+                        LEFT JOIN epp_tipo et ON et.id_tipo = es.tipo_epp
+                        WHERE es.id_stock = ? and es.epp_add = 1 ORDER BY es.id ASC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        }
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    } // Consulta Epp del pedido
+
+
+    public function UpdateEppPedidoEntregado($post,$table,$idpedido,$status){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET epp_add = ? WHERE id_stock = ?",array($status,$idpedido));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }   // UPDATE STATUS 
+
+
+    public function GetSpecificStockAdd($table,$wh,$pedido){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM $table WHERE $wh = ? and epp_add = 1",array($pedido));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        }
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }
+
+
+    public function UpdateSumarStock($table,$cantidad,$talla){
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET stock = stock + ? WHERE idepp = ?",array(
+                $cantidad,
+                $talla));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }   //  Update Stock de EPP PEdidos
+
+
+    public function UpdatePedidoPasoDos($post,$table,$hoy,$pedidocomplete){
+        $pasodos = 1; 
+        
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET step_uno = ?, fecha_creacion = ?, status_stock = ? WHERE id = ?",array(
+                $pasodos,
+                $hoy,
+                $pedidocomplete,
+                $post['idpedido']));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+        
+            echo $e;
+        
+        }
+    }   // END UPDATE PASO 2 PEDIDO EPP 
+
+
+    public function GetPedidosCount(){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = 1 order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    } //END GET PEDIDOS  COUNT
+
+
+    public function GetPedidospaginator($table,$offset,$no_of_records_per_page){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = 1 
+                        order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    } //Paginacion Solicitudes en Proceso
+
+
+    public function GetPedidosEPPBuscar($statusped,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.status_stock = ? Order By e.id ASC",array($statusped));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor por Status
+
+    public function GetPedEPPBuscarPag($table,$offset,$no_of_records_per_page,$statusped,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.status_stock = ? Order By e.id ASC LIMIT $offset,$no_of_records_per_page",array($statusped));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor en Paginacion por Status
+
+
+    public function GetPedidosEPPBuscarId($id,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.id = ? Order By e.id ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor por ID
+
+    public function GetPedEPPBuscarPagId($table,$offset,$no_of_records_per_page,$id,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.id = ? Order By e.id ASC LIMIT $offset,$no_of_records_per_page",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor en Paginacion por ID
+
+    public function GetPedidosEPPBuscarPrv($proveedor,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.name_proveedor like '%{$proveedor}%' order by e.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor por Proveedor
+
+
+     public function GetPedEPPBuscarPagPrv($table,$offset,$no_of_records_per_page,$proveedor,$statusstep){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion
+                        FROM epp_stock e 
+                        where e.step_uno = $statusstep AND e.name_proveedor like '%{$proveedor}%' order by e.id ASC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   //Buscardor en Paginacion por Proveedor
+
+
+    public function GetDetallesEppPedido($table,$id){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT e.id, e.id_usuario, e.name_usuario, e.comprobante_doc, e.fecha_recibido, 
+                        e.status_stock, e.id_proveedor, e.step_uno, e.comentarios, e.name_proveedor, e.fecha_creacion,
+                        p.nombre_prov, p.telefono, p.rfc, p.datos_banco, p.cuenta, p.tarjeta, p.titular, p.email
+                        FROM epp_stock e 
+                        LEFT JOIN proveedor p ON p.id = e.id_proveedor
+                        WHERE e.id = ? order by e.id ASC",array($id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Detalles de Pedido
+
 } 

@@ -20,34 +20,30 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
-        <a href="/epp/solicituddetailalm/id/<?php echo $ids; ?>/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+        <a href="/epp/pedidodetail/id/<?php echo $ids; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
     <div class="col m6 s6 text-right">
         <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
     </div>
 </div>
+    <?php 
+    foreach ($this->solicitud as $key){
+        $idsol = $key ['id'];
+        $status_sol = $key['status_stock'];
+    }?>
 
-        <?php foreach ($this->solicitud as $key){
-                $idsol = $key ['id'];
-                $status_sol = $key['status_solicitud'];
-        }?>
 
-        <?php 
-        foreach ($this->detalle as $key){
-            
-            $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
-            $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
-            $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
-            $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva']; 
-            $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
-            $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
-            $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
-            $comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
-            $user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
-            
-            $imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
-     
-        }?>
+    <?php 
+    foreach ($this->detalle as $key){
+        
+        $idsolicitud = $key ['id']; $id_usuario = $key ['id_usuario']; $comprobante_doc = $key['comprobante_doc'];
+        $fecha_recibido = $key ['fecha_recibido']; $status_stock = $key ['status_stock']; $id_proveedor = $key ['id_proveedor'];
+        $step_uno = $key ['step_uno']; $comentarios = $key ['comentarios']; $name_usuario = $key ['name_usuario']; 
+        $name_proveedor = $key ['name_proveedor'];  $fecha_creacion = $key ['fecha_creacion'];  $nombre_prov = $key ['nombre_prov'];
+        $telefono = $key ['telefono'];  $rfc = $key ['rfc']; $datos_banco = $key ['datos_banco']; 
+        $cuenta = $key ['cuenta']; $tarjeta = $key ['tarjeta'];  $titular = $key ['titular']; $email = $key ['email']; 
+
+    }?>
 
         <?php 
                 date_default_timezone_set('America/Mexico_City');
@@ -66,12 +62,12 @@
 
                     <span class="invoice-number">
                             <img src="/img/logo-2.png" style="width: 125px;" /><br/>
-                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pedido No.<?php echo $idsol; ?></span>
                     </span>
 
                     <div class="row">
                         <div class="company-logo col m12 s12 text-center">
-                            Entrega EPP
+                            Pedido/Stock EPP
                         </div>
                     </div>
                 
@@ -82,48 +78,44 @@
                 </div>
 
                 <div class="for" style="margin-top: 60px;">
-                    <h3>Fecha Requerida : <?php echo $fecha_requerida; ?></h3>
+                    <br/><br/>
+                    <!-- <h4><b>Fecha de Entrega: <?php echo $fecha_recibido; ?></b></h4>  -->
                     
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos de Personal</span>
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos del Proveedor</span>
                     <p>
-                        <span class="title-pdf">Nombre:</span> <span style="font-size: 14px;"><?php echo $nresponsable; ?></span><br />
-                        <span class="title-pdf">Apellido Paterno:</span> <?php echo $apres; ?><br />
-                        <span class="title-pdf">Apellido Materno:</span><?php echo $amres; ?><br />
-                        <span class="title-pdf">Puesto:</span> <?php echo $pname; ?><br />
+                        <span class="title-pdf">Nombre:</span> <span style="font-size: 14px;"> <?php echo $name_proveedor; ?></span><br />
+                        <span class="title-pdf">RFC:</span> <?php echo $rfc; ?><br />
+                        <span class="title-pdf">Télefono:</span> <?php echo $telefono; ?><br />
+                        <span class="title-pdf">Email:</span > <span style="font-size: 14px;"><?php echo $email; ?></span><br />
                     </p>
                 </div>
 
                 <div class="from" style="margin-top: 60px;">
-                    <br/><br/>
+                    <div class="col m12 s12 text-right">
+                        <span style="font-size:14px; font-weight: bold;"><b>Entrega: <?php echo $fecha_recibido; ?></b></span>
+                    </div><br/><br/>
+                    <!-- <h4><b>Fecha de Entrega: <?php echo $fecha_recibido; ?></b></h4>  -->
+                    <!-- <br/><br/> -->
                     <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Generales</span>
                     
                     <p style="padding-bottom: 10px;">
                         
                         <span class="title-pdf"><b>Solicito:</b></span> <?php echo $name_usuario; ?> <br />
-                        <span class="title-pdf"><b>Fecha Creación:</b></span> <?php echo $fecha_solicitud; ?><br />
-                        <?php if ($status_sol==1) { ?>
-                            <span class="title-pdf"><b>Autorizó:</b></span> <?php echo $name_useraprobado; ?><br />
-                            <span class="title-pdf"><b>Fecha Autorización:</b></span> <?php echo $fecha_aprobada; ?><br />
-                        <?php } ?>
-
-                        <?php if ($status_sol==2) { ?>
-                            <span class="title-pdf"><b>Rechazó:</b></span> <?php echo $name_userrechazado; ?><br />
-                            <span class="title-pdf"><b>Fecha Rechazó:</b></span> <?php echo $fecha_rechazado; ?><br />
-                        <?php } ?>
-
-                        <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
-                            <span class="title-pdf"><b>Surtido por:</b></span> <?php echo $name_usersurtido; ?><br />
-                            <span class="title-pdf"><b>Fecha Surtido:</b></span> <?php echo $fecha_surtido; ?><br />
-                        <?php } ?>
-                                    
+                        <span class="title-pdf"><b>Fecha Creación:</b></span> <?php echo $fecha_creacion; ?><br />
+                        <span class="title-pdf"><b>Comentarios:</b></span>
+                            <?php if ($comentarios==null) { ?>
+                                Sin Comentarios<br />
+                            <?php } else { ?>
+                                <?php echo $comentarios; ?><br />
+                            <?php } ?>                
                     </p>
                 </div>
 
                 <div class="pdf-body">
 
                     <div class="row">
-                        <div class="col m12 s12 text-center" style="margin-top: 22px;">
-                            <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP entregado anteriormente
+                        <div class="col m12 s12 text-center" style="margin-top: 60px;">
+                            <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP Recibido
                             </span><br>
                         </div>  
 
@@ -131,39 +123,39 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="text-center"><b>No.</b></th>
+                                        <th class="text-center"><b>Id/Código</b></th>
                                         <th class="text-center"><b>Cantidad</b></th>
                                         <th class="text-center"><b>Descripción</b></th>
                                         <th class="text-center"><b>Talla</b></th>
-                                        <th class="text-center"><b>Fecha Asignación</b></th>
+                                        <th class="text-center"><b>Tipo Epp</b></th>
                                     </tr>
                                 </thead>
 
-                                <?php if ($this->eppasignado) { 
-                                    foreach ($this->eppasignado as $eppasg) { ?>
+                                <?php if ($this->eppxpedido) { 
+                                    foreach ($this->eppxpedido as $epppedido) { ?>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center"><?php echo @$contar+=1; ?></td>
+                                                <td class="text-center"><?php echo $epppedido['id_epp']; ?></td>
                                                 <td class="text-center">
-                                                    <?php echo $eppasg['cantidad']; ?>
+                                                    <?php echo $epppedido['cantidad']; ?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo $eppasg['descripcion']; ?>
+                                                    <?php echo $epppedido['descripcion']; ?>
                                                 </td>
                                                  <td class="text-center">
-                                                    <?php echo $eppasg['t_e']; ?>
+                                                    <?php echo $epppedido['t_e']; ?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo  date("d-m-Y", strtotime($eppasg['fecha_entrega'])); ?>
+                                                    <?php echo $epppedido['nombretipo']; ?>
                                                 </td>
                                             </tr>
                                         </tbody>
                                 <?php } }else{ ?>
                                     <tbody>
                                         <tr>
-                                            <td>No se ha asignado EPP a este personal</td>
                                             <td></td>
                                             <td></td>
+                                            <td>No se ha entrego nada en este pedido.</td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -171,73 +163,7 @@
                                 <?php } ?>
                             </table>
                         </div>
-
-
-                        
-                        <div class="col m12 s12" style="margin-top: 20px;">
-                            <div class="col m12 s12 text-center">
-                                <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP a entregar</span><br>
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="text-center"><b>Cantidad</b></th>
-                                        <th class="text-center"><b>Descripción</b></th>
-                                        <th class="text-center"><b>Talla</b></th>
-                                        <th class="text-center"><b>Presentación</b></th>
-                                        <th class="text-center"><b>Cobro Extra</b></th>
-                                        <th class="text-center"><b>Fecha Entrega</b></th>
-                                        <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
-                                            <th class="text-center"><b>Status</b></th>
-                                        <?php } else { } ?>
-                                    </tr>
-                                </thead>
-                                <?php if ($this->epp_requerido) { 
-                                    foreach ($this->epp_requerido as $eppreq) { ?>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center"><?php echo $eppreq['cantidad']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['descripcion']; ?></td>
-                                                <td class="text-center"><?php echo $eppreq['t_e']; ?></td>
-                                                <td class="text-center">
-                                                    <?php if ($eppreq['presentacion'] == null || $eppreq['presentacion'] == "" ) { ?>
-                                                        Sin dato
-                                                    <?php } else { ?>
-                                                        <?php echo $eppreq['presentacion']; ?>
-                                                    <?php } ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php if ($eppreq['cobro'] == 1) { ?>
-                                                        Aplica descuento
-                                                    <?php } else { ?>
-                                                        Sin descuento
-                                                    <?php } ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php if ($eppreq['fecha_entrega'] == null) { ?>
-                                                        <?php echo $hoy ?>
-                                                    <?php } else { ?>
-                                                        <?php echo  date("d-m-Y", strtotime($eppreq['fecha_entrega'])); ?>
-                                                    <?php } ?>
-                                                </td>
-                                                <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
-                                                    <td class="text-center">Entregado</td>
-                                                <?php } else { } ?>
-                                            </tr>
-                                        </tbody>
-                                <?php } }else{ ?>
-                                    <tbody>
-                                        <tr>
-                                            <td>No se ha seleccionado el EPP a surtir</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                <?php } ?>
-                            </table>
-                        </div>
+   
                     </div>
 
                     <div class="row signature">
@@ -248,7 +174,7 @@
                         </div>
                         <div class="col m6 s6 text-center">
                             <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Recibido por:</span><br><br>
-                            <?php echo $nresponsable; ?> <?php echo $apres; ?> <?php echo $amres; ?>
+                            <?php echo $name_usuario; ?>
                             <hr>
                             <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
                         </div>
@@ -281,7 +207,7 @@
 
             function getPDF(selector) {
                 kendo.drawing.drawDOM($(selector)).then(function(group){
-                    kendo.drawing.pdf.saveAs(group, "Solicitud EPP NO <?php echo $idsol; ?>.pdf");
+                    kendo.drawing.pdf.saveAs(group, "Pedido EPP NO <?php echo $idsol; ?>.pdf");
                 });
             }
 
@@ -429,7 +355,7 @@
             }
             
             .signature {
-                padding-top: .25in;
+                padding-top: 1.0in;
             }
 
             td, th{

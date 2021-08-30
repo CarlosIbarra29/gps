@@ -1,0 +1,709 @@
+<style type="text/css">
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*font-family: "Open Sans";*/
+}
+/* Form Progress */
+
+.progress {
+
+  margin: 20px auto;
+  text-align: center;
+  padding-bottom: 80px;
+  background-color: white;
+}
+.progress .circle,
+.progress .bar {
+  display: inline-block;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #d5d5da;
+  vertical-align:top;
+}
+.progress .bar {
+  position: relative;
+  width: 80px;
+  height: 6px;
+  margin: 0 -5px 17px -5px;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  top:16px;
+  vertical-align:top
+}
+.progress .circle .label {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 27px;
+  border-radius: 32px;
+  margin-top: 1px;
+  color: #b5b5ba;
+  font-size: 15px;
+}
+.progress .circle .title {
+  color: #b5b5ba;
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: -30px;
+  display: block;
+  width: 100px;
+  margin-top: 5px;
+}
+/* Done / Active */
+
+.progress .bar.done,
+.progress .circle.done {
+  background: #eee;
+}
+.progress .bar.active {
+  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+}
+.progress .circle.done .label {
+  color: #FFF;
+  background: #8bc435;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.done .title {
+  color: #444;
+}
+.progress .circle.active .label {
+  color: #FFF;
+  background: #0c95be;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+}
+.progress .circle.active .title {
+  color: #0c95be;
+}
+</style>
+
+<style type="text/css">
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<div class="row">
+	<div class="col m12 s12">
+		
+	</div>
+</div>
+	<?php 
+	foreach ($this->solicitud as $key){
+	    $idsol = $key ['id'];
+		$status_sol = $key['status_stock'];
+	}?>
+
+
+    <?php 
+	foreach ($this->detalle as $key){
+	    
+	    $idsolicitud = $key ['id']; $id_usuario = $key ['id_usuario']; $comprobante_doc = $key['comprobante_doc'];
+	    $fecha_recibido = $key ['fecha_recibido']; $status_stock = $key ['status_stock']; $id_proveedor = $key ['id_proveedor'];
+	    $step_uno = $key ['step_uno']; $comentarios = $key ['comentarios']; $name_usuario = $key ['name_usuario']; 
+	    $name_proveedor = $key ['name_proveedor'];  $fecha_creacion = $key ['fecha_creacion'];  $nombre_prov = $key ['nombre_prov'];
+	    $telefono = $key ['telefono'];  $rfc = $key ['rfc']; $datos_banco = $key ['datos_banco']; 
+	    $cuenta = $key ['cuenta']; $tarjeta = $key ['tarjeta'];  $titular = $key ['titular']; $email = $key ['email']; 
+
+	}?>
+
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/epp/listapedidos" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+    <div class="col m6 s6 text-right">
+     	<a class="btn" href="/epp/pedidoepp/id/<?php echo $idsol; ?>"><i class="material-icons right">insert_drive_file</i>Pedido</a>
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:28px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle del Pedido</span>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col m6 s12"></div>
+	<div class="col m6 s12 text-center">
+		<div class="row">	
+			<?php if($status_sol == 1){ ?>
+				<div class="col m6 s6">
+					<div class="chip">
+			    		<img src="/img/correct.png">
+			    		Completo
+			  		</div>
+				</div>
+				<div class="col m6 s6">
+					<div class="chip">
+			    		<img src="/img/gris.jpg">
+			    		Incompleto
+			  		</div>
+				</div>
+			<?php } ?>
+
+			<?php if($status_sol == 2){ ?>
+				<div class="col m6 s6">
+					<div class="chip">
+				    	<img src="/img/gris.jpg" >
+				    	Completo
+				  	</div>
+				</div>
+
+				<div class="col m6 s6">
+					<div class="chip">
+			    		<img src="/img/naranja.png">
+			    		Incompleto
+			  		</div>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<!-- General Solicitud -->
+<div class="row">
+    <div class="col s12 m6">
+      	<div class="card" style="height: 350px;">
+	        <div class="card-content">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Proveedor</span>
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top: 20px;">
+	          			<span style="font-size:16px;">Nombre: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_prov; ?> </span> <br>
+	          			<span style="font-size:16px;">RFC: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $rfc; ?></span><br>
+	          			<span style="font-size:16px;">Télefono: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $telefono; ?> </span> <br>
+	          			<span style="font-size:16px;">Banco: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $datos_banco; ?> </span> <br>
+	          			<span style="font-size:16px;">Email: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $email; ?> </span> <br>
+	          		</div>	
+	          	</div>
+	        </div>
+      	</div>
+    </div>
+
+
+    <div class="col s12 m6">
+      	<div class="card" style="height: 350px;">
+	        <div class="card-content">
+	          	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Pedido</span>
+
+	          	<div class="row">
+	          		<div class="col m12 s12" style="margin-top: 20px;">
+	          			<span style="font-size:16px;">Usuario que creo pedido: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $name_usuario; ?> </span> <br>
+	          			<span style="font-size:16px;">Fecha Creación: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $fecha_creacion; ?> </span> <br>
+	          			<span style="font-size:16px;">Fecha Entrega Pedido: </span>
+	          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $fecha_recibido; ?></span> <br>
+	          			<span style="font-size:16px;">Comentarios: </span>
+	          			<?php if ($comentarios == null) { ?>
+		          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sin comentarios</span>
+		          		<?php } else { ?>
+		          			<span style="font-size:16px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $comentarios; ?></span>
+		          		<?php } ?>
+	          		</div>	
+	          	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+<!-- End General Solicitud -->
+
+
+<!-- Detalles Solicitud Requerido -->
+<div class="row">
+	<div class="col m12 s12">
+		<div class="card  darken-1">
+			<div class="card-content">
+				<div class="row">
+		          	<div class="col m12 s12">
+		          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">EPP Entregado en pedido</span>
+		          	</div>
+		        </div>				
+				<div class="row">
+					<div class="col m12 s12">
+						<div class="row table_wrapper" style="margin-bottom: 3px;">
+							
+			      			<table>
+			        			<thead>
+			          				<tr>
+			          					<th class="text-center"><b>Id/Código EPP</b></th>
+			              				<th class="text-center"><b>Cantidad</b></th>
+                                    	<th class="text-center"><b>Descripción</b></th>
+                                    	<th class="text-center"><b>Talla</b></th>
+                                    	<th class="text-center"><b>Tipo EPP</b></th>
+			          				</tr>
+			        			</thead>
+			        			<?php if ($this->eppxpedido) { 
+			        				foreach ($this->eppxpedido as $eppreq) { ?>
+										<tbody>
+											<tr>
+												<td class="text-center">
+                                            		<?php echo $eppreq['id_epp']; ?>
+                                        		</td>									
+												<td class="text-center">
+                                            		<?php echo $eppreq['cantidad']; ?>
+                                        		</td>
+                                        		<td class="text-center">
+                                            		<?php echo $eppreq['descripcion']; ?>
+		                                        </td>
+		                                         <td class="text-center">
+		                                            <?php echo $eppreq['t_e']; ?>
+		                                        </td>
+		                                         <td class="text-center">
+		                                            <?php echo $eppreq['nombretipo']; ?>
+		                                        </td>
+		                                    
+											</tr>
+										</tbody>
+								<?php } }else{ ?>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td>No se tiene datos este pedido.</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								<?php } ?>
+			      			</table>
+			        	</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- End Detalles Solicitud -->
+
+
+
+
+<?php 
+	date_default_timezone_set('America/Mexico_City');
+	$hoy = date("Y-m-d");
+?>
+
+
+
+<?php foreach ($this->user as $value) {
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
+
+<!-- Surtir -->
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="card  darken-1">
+			<div class="card-content">
+				<div class="row">
+					<div class="col m6 s6">
+    					<h3>Detalles Pedido</h3>
+    				</div>
+    			</div>
+
+				<div class="row">
+      				<table>
+        				<thead>
+          					<tr>
+              					<th class="text-center">Id Pedido</th>
+              					<th class="text-center">Creado por:</th>
+              					<th class="text-center">Evidencia de Pedido</th>
+          					</tr>
+        				</thead>
+        				<?php 
+        				if ($this->pedidoevidencia) { 
+        				foreach ($this->pedidoevidencia as $usr) { ?>
+									<tbody>
+										<tr>
+											<td class="text-center">
+												<?php echo $usr['id']; ?>
+											</td>
+											<td class="text-center">
+												<?php echo $usr['name_usuario']; ?>
+											</td>	
+											<td class="text-center">
+												<a title="Descargar Archivo" href="/<?php echo $usr["comprobante_doc"]; ?>" download="<?php echo substr(strrchr($usr["comprobante_doc"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+											</td>
+										</tr>
+									</tbody>
+						<?php } }else{ ?>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>No cuenta con evidencia el pedido</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+						<?php } ?>
+      				</table>
+        		</div>
+			</div>
+    	</div>
+    </div>
+</div>
+
+
+  
+<input type="hidden" id="cobroepp" value="yes">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ <script src="/js/lightbox.js"></script>
+
+        
+<script type="text/javascript">
+
+
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    });   
+
+	$(document).ready(function(){
+    	$('.modal').modal();
+    	$('.tooltipped').tooltip();
+ 	});
+
+
+ 	 $("#autorizar_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		    swal("Bien! El status se cambio!", {
+		      icon: "success",
+		    });
+
+	    		var dato = "1";
+	            var request = $.ajax({
+	                url:"/epp/requestchgaceptsolepp",
+	                method:"POST",
+	                data: {dato:dato, id:id, id_user:id_user},
+	                processData: true,
+	            });
+	//-------------------end de ajax---------------------------
+	//-------------peticion de respuesta de ajax------------------
+	            request.done(function(response) {
+	                console.log(response);//imprime lo que responde el ajax
+	                // alert
+	                window.location.reload(true);
+	            });
+	//-------------------end de respuesta ajax---------------------
+	             return false;
+
+
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+    
+    $("#cancel_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "3";
+	    		var	comentario = document.getElementById("cancels").value;
+	            var request = $.ajax({
+	                url:"/epp/requestchgcanceleppsol",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+
+    $("#rechazar_sol").click(function(){
+    	var id = document.getElementById("id_solicitud").value;
+    	var id_user = document.getElementById("id_user").value;
+		swal({
+			title: "Estas seguro de cambiar el status de la solicitud?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+        swal("Espere un momento, la información esta siendo procesada", {
+          icon: "success",
+          buttons: false,
+        });
+	    		var dato = "2";
+	    		var	comentario = document.getElementById("cancels").value;
+	            var request = $.ajax({
+	                url:"/epp/requestchgcanceleppsol",
+	                method:"POST",
+	                data: { id:id, dato:dato, comentario:comentario,  id_user:id_user},
+	                processData: true,
+	            });
+	            request.done(function(response) {
+	                console.log(response);
+	                window.location.reload(true);
+	            });
+	             return false;
+		  } else {
+		    swal("Accion cancelada!");
+		  }
+		  });
+    });
+
+
+            //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de eliminar el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppdel",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
+
+    $(".regresar").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+        swal({
+            title: "Estas seguro de regresar al stock el EPP "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/epp/requesteppregresar",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+        //-------------------end de ajax---------------------------
+
+        //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+        //-------------------end de respuesta ajax---------------------
+            return false;
+
+            } else {
+                swal("La accion fue cancelada!");
+            }
+        });
+    });
+    // End Delete Ajax
+
+
+	$("#addcobro").click(function(){
+        var cobroepp = document.getElementById("cobroepp").value;
+        if(cobroepp == "" ){
+            swal({
+            	title: "¿Estas seguro de deseas enviar a cobro el epp seleccionado?",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitActcobro, 500);     
+        }
+    });	
+
+
+	function submitActcobro() {
+		document.getElementById("actualizasel").submit()
+	}// End Liberar seleccion Ajax
+
+
+	$("#limpiezaepp").click(function(){
+        var sol = document.getElementById("sol").value;
+        if(sol == 0 ){
+            swal({
+            	title: "El epp regresara a ser sin cobro",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(cobroclean, 500);     
+        }
+    });	
+
+
+	function cobroclean() {
+		document.getElementById("limpiarcepp").submit()
+	}// End Liberar seleccion Ajax
+
+
+	 $("#addasignado").click(function(){
+        var eppaasignar = document.getElementById("eppaasignar").value;
+        if(eppaasignar == "" ){
+            swal({
+            	title: "¿Estas seguro que entregarás el epp seleccionado?",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitAsignar, 500);     
+        }
+    });	
+
+
+	function submitAsignar() {
+		document.getElementById("udpasignado").submit()
+	}// End Liberar seleccion Ajax
+
+
+	$("#reestablecer").click(function(){
+        var sol = document.getElementById("sol").value;
+        if(sol == 0 ){
+            swal({
+            	title: "El epp regresara a status sin asignar",
+            });
+        }else{
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 
+            setTimeout(submitReturn, 500);     
+        }
+    });	
+
+
+
+	function submitReturn() {
+		document.getElementById("returnentrega").submit()
+	}// End Liberar seleccion Ajax
+
+    $("#btcomprobante").click(function(){
+    	var file = document.getElementById("file_comprobante").value;
+    	var monto = document.getElementById("monto").value;
+
+    	if(monto == "" || file == ""){
+            swal({
+              title: "Para continuar debes llenar todos los datos (Monto y Comprobante de pago)",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitfileprede, 1500);
+    	}
+    });
+    	
+    function submitfileprede() { document.getElementById("submit_comprobante").submit() }
+
+    $("#btnresponsiva").click(function(){
+    	var file = document.getElementById("file_responsiva").value;
+
+    	if(file == ""){
+            swal({
+              title: "Para continuar debes subir la responsiva firmada",
+            });
+    	}else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	          icon: "success",
+	          buttons: false,
+	        });  
+	        setTimeout(submitresponsiva, 1500);
+    	}
+    });
+    	
+    function submitresponsiva() { document.getElementById("sumbit_responsiva").submit() }
+
+</script>

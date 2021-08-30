@@ -11,13 +11,34 @@
 	</div>
 </div>
 <?php } ?>
-
-
+ 
+ 
 <div class="col m12 s12" style="margin-top: 12px;">
 	<div class="white-box">
 		<form action="/epp/requestupdateepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_epp">
-			<?php foreach ($this->epp_inv as $epp) { $nombre = $epp['nombre'];?> 
+			<?php foreach ($this->epp_inv as $epp) { $imagen = $epp['imagen'];  $nombre = $epp['nombre'];?> 
 			<input type="hidden" name="ids" value="<?php echo $epp["idepp"]; ?>">
+
+				<div class="file-field input-field col m8 s12">
+					<div class="btn">
+					    <span>Imagen EPP</span>
+					    <input type="file" name="url">
+					    <input type="hidden" name="imahidden" value="<?php echo $epp["imagen"]; ?>">   
+					</div>
+					
+					<div class="file-path-wrapper">
+					    <input class="file-path validate" type="text">
+					</div>
+				</div>
+				<div class="col m4 s12 text-center">
+					<?php if($imagen== null){ ?>
+						<img src="/img/no_disponible.png" class="responsive-img" style="width: 200px; margin-top: 5px;">
+						<h3>No Disponible</h3>
+					<?php }else{ ?>
+						<a class="example-image-link" href="/<?php echo $epp['imagen']; ?>" data-lightbox="example-1"><img class="example-image" src="/<?php echo $epp['imagen']; ?>" id="camara_div" alt="<?php echo $nombre; ?>" style="width: 240px;  margin-top: 5px;"/></a>
+					<?php } ?>
+				</div> 
+
 				<div class="input-field col m12 s12">
 					<select id="tipo" name="tipo" required>
 						<?php foreach ($this->eppt as $eppt) { 
@@ -29,11 +50,18 @@
 					</select>
 					<label>Tipo EPP</label>
 				</div>
-				<div class="input-field col m12 s12">
+				<div class="input-field col m6 s12">
 			        <i class="material-icons prefix">account_circle</i>
 			        <input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" required>
 			        <label for="name">Nombre: </label>
 			    </div>
+
+			     <div class="input-field col m6 s12">
+					<i class="material-icons prefix">photo_filter</i>
+					<input id="presentacion" type="text" value="<?php echo $epp["presentacion"]; ?>" name="presentacion" class="validate" required>
+					<label for="presentacion">Presentación: </label>
+				</div>
+
 			    <div class="input-field col m12 s12">
 			    	<i class="material-icons prefix">account_circle</i>
 			    	<input id="desc" type="text" name="desc" value="<?php echo $epp["descripcion"]; ?>" class="validate" required>

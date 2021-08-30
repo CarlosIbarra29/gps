@@ -6,6 +6,7 @@ class EppController extends Zend_Controller_Action{
     private $_user;
     private $_epp;
     private $_her;
+    private $_pedido;
 
     public function init(){
         $this->_season = new Application_Model_SeasonPanelModel;
@@ -17,6 +18,7 @@ class EppController extends Zend_Controller_Action{
         $this->_colo = new Application_Model_GpsColocacionModel;
         $this->_epp = new Application_Model_GpsEppModel;
         $this->_her = new Application_Model_GpsHerramientaModel;
+        $this->_pedido = new Application_Model_GpsPedidosEppModel;
 
         if(empty($this->_session->id)){
 
@@ -49,7 +51,7 @@ class EppController extends Zend_Controller_Action{
         } else {
         
             $pagina= $this->view->pagina = 1;
-        } 
+        }  
 
         $no_of_records_per_page = 15;
         $offset = ($pagina-1) * $no_of_records_per_page; 
@@ -70,9 +72,38 @@ class EppController extends Zend_Controller_Action{
         $post = $this->getRequest()->getPost();
         
         if($this->getRequest()->getPost()){
+             $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
             
+            }else{
+            
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                
+                if($res == 0){ 
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                
+                }else{
+                
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppimg/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
+                }
+            }
+
             $table="epp_catalogo";
-            $result = $this->_epp->insertepp($post,$table);
+            $result = $this->_epp->insertepp($post,$table,$urldb);
 
             if ($result) {
 
@@ -151,8 +182,34 @@ class EppController extends Zend_Controller_Action{
 
         if($this->getRequest()->getPost()){
 
+            $name = $_FILES['url']['name'];
+            $urldb = $post["imahidden"];
+        
+            if(!empty($_FILES["url"]["name"])) {
+        
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+        
+                if ($res == 0) {
+        
+                    print '<script language="JavaScript">'; 
+                    print 'alert("La imagen supera el maximo de tamaño");'; 
+                    print '</script>';
+        
+                } else {
+        
+                    unlink($post['imahidden']);
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppimg/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+                }
+            }//end de if
+
             $table="epp_catalogo";
-            $result = $this->_epp->updateepp($post,$table);
+            $result = $this->_epp->updateepp($post,$table,$urldb);
             
             if ($result) {
                 
@@ -3364,8 +3421,11 @@ class EppController extends Zend_Controller_Action{
             $table = "epp_solicitudes";
             $this->view->detalle = $this->_epp->GetDetallesEppSol($table,$id); 
 
+            // $table = "epp_asignarsol";
+            // $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+
             $table = "epp_asignarsol";
-            $this->view->epp_requerido = $this->_epp->GetEppXasgSinStatus($id);
+            $this->view->epp_requerido = $this->_epp->GetEppXasgStatus($id);
 
             $table = "epp_asignarsol";
             $this->view->epp_surtido = $this->_epp->GetEppXasgStatus($id);
@@ -3595,6 +3655,125 @@ class EppController extends Zend_Controller_Action{
     }
 
 
+    public function requestaddresponsivaeppcAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        $idsol = $post['id_solicitud'];
+        $wh="id_sol";
+        $table="epp_asignarsol";
+        $usr = $this->_season->GetSpecific($table,$wh,$idsol);
+           
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("Y-m-d");
+
+        $status = 1;
+        $this->_epp->UpdateeppSol($post,$table,$idsol,$status,$hoy);  
+
+            $solicitud = $post['id_solicitud'];
+            $wh="id_sol";
+            $table="epp_asignarsol";
+            $eppasg = $this->_epp->GetSpecificInsertar($table,$wh,$solicitud);
+          
+        foreach ($eppasg as $key) {
+          
+            $fecha_entrega = $key['fecha_entrega'];
+            $cantidad = $key['cantidad'];
+            $descripcion = $key['descripcion'];
+            $talla = $key['talla'];
+            $id_personal = $key['id_personal'];
+            $id_epp = $key['id_epp'];
+            $cobro = $key['cobro'];
+            $tipo_epp = $key['tipo_epp'];
+
+            $id=$talla;
+            $table="epp_catalogo";
+            $vida=$this->_epp->buscarrep($id,$table);
+           
+
+            $vidap=implode($vida[0]);
+            $date=$fecha_entrega;
+            $fechanew=date('Y-m-d', strtotime($date. ' +'.$vidap.' days'));
+           
+            $table="epp_asignar";
+            $this->_epp->insertasgEppSol($table,$fechanew, $fecha_entrega, $cantidad, $descripcion, $talla, $id_personal, $id_epp,
+                $cobro, $tipo_epp);
+
+            $table="epp_catalogo";
+            $this->_epp->UpdateStockEppSol($table,$cantidad,$talla);
+
+        }
+
+        if($this->getRequest()->getPost()){
+
+            $name = $_FILES['url']['name'];
+            
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+        
+            }else{
+
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+
+                if($res == 0){ 
+
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+
+                }else{
+
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/responsivas';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+
+                }
+            }
+
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+
+            $idper = $eppasg[0]['id_personal'];
+            $fhoy = date("d-m-Y");
+            $table="responsivas";
+
+            $this->_epp->insertrespEppSol($idper,$table,$urldb,$fhoy);
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            $id_usuario = $usr[0]['id'];            
+            
+            $status_surtido = 1;
+            
+            $table = "epp_solicitudes";
+            $result = $this->_epp->UpdateSurtidaEpp($post,$table,$hoy,$name_user,$status_surtido,$id_usuario,$urldb);
+
+            if ($result) {
+                // return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['id_solicitud'].'/status/2');
+                return $this-> _redirect('/epp/listasolicitudes/status/0');
+            
+            }else{
+            
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            
+            }
+        }
+    }
+
+
     public function requestactualizacobroAction(){
 
         $this->_helper->layout()->disableLayout();
@@ -3686,10 +3865,40 @@ class EppController extends Zend_Controller_Action{
             print '</script>'; 
         
         }
-    }       //End Seleccion a Cobrar
+    }       //End Seleccion a Entregar
 
 
-    
+    public function requesteppasignadocontaAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $ids = $post['ideppasg'];
+        $table="epp_asignarsol";
+
+        foreach ($ids as $key => $value) {      
+            
+            $result = null;
+           
+            $result = $this->_epp->UpdateStatusAsignado($value,$table);
+            
+        }
+
+        if ($result) {
+
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol_id'].'/status/1'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Seleccion a Entregar Conta
 
     public function requestreplayentregaAction(){
 
@@ -3718,6 +3927,33 @@ class EppController extends Zend_Controller_Action{
     }       //End Regresar EPP sin Asignar
 
 
+    public function requestreplayentregacontaAction(){
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $post = $this->getRequest()->getPost();
+        $solicitud = $post['sol'];
+        $table="epp_asignarsol";
+        
+        $result = $this->_epp->UpdateReestablecerAsignar($solicitud,$table);
+
+        if ($result) {
+ 
+            return $this-> _redirect('/epp/solicituddetail/id/'.$post['sol'].'/status/1'); 
+            
+        }else{
+        
+            print '<script language="JavaScript">'; 
+                
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+               
+            print '</script>'; 
+        
+        }
+    }       //End Regresar EPP sin Asignar Conta
+
+
     public function eppentregaeditAction(){
 
         if($this->_hasParam('id')){
@@ -3741,6 +3977,13 @@ class EppController extends Zend_Controller_Action{
 
             $table="epp_tipo";
             $this->view->tipo = $this->_season->GetAll($table);
+
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
         
         } else {
         
@@ -3762,7 +4005,7 @@ class EppController extends Zend_Controller_Action{
             
             if ($result) {
             
-                return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/0');
+                return $this-> _redirect('/epp/solicituddetailalm/id/'.$post['idsol'].'/status/1');
             
             }else{
             
@@ -3773,6 +4016,30 @@ class EppController extends Zend_Controller_Action{
             }
         }
     }//END REQUEST UPDATE ASINADO
+
+    public function requestudpsoleppcontAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+
+            $table="epp_asignarsol";
+            $result = $this->_epp->UpdEppxAsg($post,$table);
+            
+            if ($result) {
+            
+                return $this-> _redirect('/epp/solicituddetail/id/'.$post['idsol'].'/status/1');
+            
+            }else{
+            
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            
+            }
+        }
+    }//END REQUEST UPDATE ASINADO CONT
 
     public function requestaddpagoeppnominaAction(){
         
@@ -3882,6 +4149,642 @@ class EppController extends Zend_Controller_Action{
     }
 
 
+    public function eppstockAction(){
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+        
+        $pedido = $this->_epp->GetStockStep();
+        $count=count($pedido);
+
+            if (isset($_GET['pagina'])) {
+        
+                $pagina = $_GET['pagina'];
+        
+            } else {
+        
+                $pagina= $this->view->pagina = 1;
+        
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_epp->GetStepStockpaginator($offset,$no_of_records_per_page);
+
+    }
+
+
+    public function requestdelpedidoAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+            $id =  $post['id'];
+            $table="epp_stock";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+        
+            if ($result) {
+        
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
+            }else{
+        
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+        
+            }
+        }   
+    }//END REQUEST DELETE PEDIDO
+
+    public function addstockAction(){
+
+        $table="proveedor";
+        $this->view->proveedor = $this->_epp->GetAllProveedor($table);
+
+    }
+
+
+    public function requestpasounostockAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+           
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+            
+
+            $id = $post['proveedor'];
+            $wh="id";
+            $table="proveedor";
+
+            $prov = $this->_season->GetSpecific($table,$wh,$id);
+            $name_proveedor = $prov[0]['nombre_prov'];
+
+
+            $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            
+            }else{
+            
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                
+                if($res == 0){ 
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                
+                }else{
+                
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppstock/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
+                }
+            }
+
+            $table="epp_stock";
+            $result = $this->_pedido->insertpedidoepp1($post,$table,$id_user,$name_user,$name_proveedor,$urldb);
+
+            if ($result) {
+        
+                return $this-> _redirect('/epp/addpedidoeppdos/id/'.$result.'');
+        
+            }else{
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+        
+            }
+        }
+    }
+
+    public function updatestockpedAction(){
+
+        $id=$this->_getParam('id');
+        $this->view->ids = $id;
+        
+        $wh="id";
+        $table="epp_stock";
+        $this->view->pedidos = $this->_season->GetSpecific($table,$wh,$id);
+
+        $table="proveedor";
+        $this->view->proveedor = $this->_epp->GetAllProveedor($table);
+
+    }
+
+
+    public function requestupdpedidoeppAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        if($this->getRequest()->getPost()){
+
+            $id=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $usr = $this->_season->GetSpecific($table,$wh,$id);
+            $id_user = $usr[0]['id'];
+            $name_user = $usr[0]['nombre'].' '. $usr[0]['ap'].' '.$usr[0]['am'];
+
+
+            $id = $post['proveedor'];
+            $wh="id";
+            $table="proveedor";
+
+            $prov = $this->_season->GetSpecific($table,$wh,$id);
+            $name_proveedor = $prov[0]['nombre_prov'];
+
+            $name = $_FILES['url']['name'];
+            $urldb = $post["imahidden"];
+        
+            if(!empty($_FILES["url"]["name"])) {
+        
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+        
+                if ($res == 0) {
+        
+                    print '<script language="JavaScript">'; 
+                    print 'alert("La imagen supera el maximo de tamaño");'; 
+                    print '</script>';
+        
+                } else {
+        
+                    unlink($post['imahidden']);
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/epp/eppstock/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+                }
+            }   //end de if
+        
+            $table="epp_stock";
+            $result = $this->_epp->UpdatePedidoUno($post,$table,$id_user,$name_user,$name_proveedor,$urldb);
+            
+            if ($result) {
+        
+                return $this-> _redirect('/epp/addpedidoeppdos/id/'.$post['ids'].'');
+        
+            }else{
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+        
+            }
+        
+        }
+    }
+
+
+      public function addpedidoeppdosAction(){
+       
+        $id =$this->_getParam('id');
+        $this->view->id = $id;
+        $wh="id";
+        $table="epp_stock";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $nameproveedor = $usr[0]['name_proveedor'];
+        $this->view->nameproveedor = $nameproveedor;
+
+        $table="epp_catalogo";
+        $hola=$this->view->eppn= $this->_epp->Getcatalogo($table);
+
+        $this->view->eppxpedido = $this->_epp->GetEppxPedido($id);
+        
+
+    }// Pedido Paso 2
+
+
+
+    public function requestaddpedeppAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+                
+            $id=$post['talla'];
+            $wh="idepp";
+            $table="epp_catalogo";
+            $eppcat = $this->_season->GetSpecific($table,$wh,$id);
+            $tipo = $eppcat[0]['tipo_epp'];
+
+            $table="epp_stockadd";
+            $result =  $this->_epp->insertaddstock1($post,$table,$tipo);
+
+            if ($result) {
+        
+                return $this-> _redirect('/epp/addpedidoeppdos/id/'.$post['pedid'].''); 
+                 // echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+
+            }else{
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+        
+            }
+        }        
+    }// End Request EPP que llego
+
+
+    public function requestdelepppedAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+            $id =  $post['id'];
+            $table="epp_stockadd";
+            $wh="id";
+            $result = $this->_season->deleteAll($id,$table,$wh);
+        
+            if ($result) {
+        
+                echo json_encode(array('status' => "1","message"=>"Se ha agregado correctamente", "data"=>$post));   
+        
+            }else{
+
+                print '<script language="JavaScript">';
+                print 'alert("Ocurrio un error: Comprueba los datos.");';
+                print '</script>';
+            
+            }
+        }   
+    }//END REQUEST DELETE TODO
+
+
+    public function requestaddpedidodosAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $post = $this->getRequest()->getPost();
+        
+        if($this->getRequest()->getPost()){
+
+
+            $idpedido = $post['idpedido'];
+            $wh="id_stock";
+            $table="epp_stockadd";
+            $usr = $this->_season->GetSpecific($table,$wh,$idpedido);
+
+            $status = 1;
+            $this->_epp->UpdateEppPedidoEntregado($post,$table,$idpedido,$status); 
+
+            $check = $post['completo'];
+
+            if ($check == true) {
+
+                $pedido = $post['idpedido'];
+                $wh="id_stock";
+                $table="epp_stockadd";
+                $pedidoepp = $this->_epp->GetSpecificStockAdd($table,$wh,$pedido);
+
+
+                foreach ($pedidoepp as $key) {
+          
+                    $cantidad = $key['cantidad'];
+                    $descripcion = $key['descripcion'];
+                    $talla = $key['talla'];
+                    $id_epp = $key['id_epp'];
+
+                    $table="epp_catalogo";
+                    $this->_epp->UpdateSumarStock($table,$cantidad,$talla);
+
+                }
+
+                $pedidocomplete = 1;
+
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y H:i:s");
+
+                $table="epp_stock";
+                $result = $this->_epp->UpdatePedidoPasoDos($post,$table,$hoy,$pedidocomplete);
+                
+                if ($result) {
+                
+                    return $this-> _redirect('/epp/eppstock');
+                
+                }else{
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                
+                }
+            
+            }else{
+
+                $pedido = $post['idpedido'];
+                $wh="id_stock";
+                $table="epp_stockadd";
+                $pedidoepp = $this->_epp->GetSpecificStockAdd($table,$wh,$pedido);
+
+
+                foreach ($pedidoepp as $key) {
+          
+                    $cantidad = $key['cantidad'];
+                    $descripcion = $key['descripcion'];
+                    $talla = $key['talla'];
+                    $id_epp = $key['id_epp'];
+
+                    $table="epp_catalogo";
+                    $this->_epp->UpdateSumarStock($table,$cantidad,$talla);
+
+                }
+
+                $pedidocomplete = 2;
+
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d-m-Y H:i:s");
+
+                $table="epp_stock";
+                $result = $this->_epp->UpdatePedidoPasoDos($post,$table,$hoy,$pedidocomplete);
+                
+                if ($result) {
+                
+                    return $this-> _redirect('/epp/eppstock');
+                
+                }else{
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                    print '</script>'; 
+                
+                }
+            
+                
+            }
+            
+        }
+    }   // Pedido Terminado Terminada Paso 2
+
+
+    public function listapedidosAction(){
+        
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+        $wh="id_usuario";
+        $table="epp_stock";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $wh="id";
+        $table="usuario";
+        $user = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$user[0]['fkroles'];
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $pedido=$this->_epp->GetPedidosCount();
+        $count=count($pedido);
+
+        if (isset($_GET['pagina'])) {
+        
+            $pagina = $_GET['pagina'];
+        
+        } else {
+        
+            $pagina= $this->view->pagina = 1;
+        
+        } 
+
+        $no_of_records_per_page = 20;
+        $offset = ($pagina-1) * $no_of_records_per_page; 
+        $total_pages= $count;
+
+        $this->view->totalpage = $total_pages;
+        $this->view->total=ceil($total_pages/$no_of_records_per_page);
+        $table="epp_stock";
+        $sql=$this->view->paginator= $this->_epp->GetPedidospaginator($table,$offset,$no_of_records_per_page);
+        
+    }   // Lista Pedidos
+
+
+    public function listapedidobuscarAction(){
+        
+        $id=$this->_session->id;
+        $this->view->user_list=$id;
+
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->user_rol=$usr[0]['fkroles'];
+
+        $wh="id_usuario";
+        $table="epp_stock";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+
+        $opcion = $this->_getParam('op');
+        $this->view->opcion_search=$opcion;
+
+        
+        if($opcion == 1){
+            
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+           
+
+            $statusped = $this->_getParam('statusped');
+            $this->view->status_pedido=$statusped;
+
+            $statusstep = 1;
+
+            $pedido=$this->view->pedido_epp=$this->_epp->GetPedidosEPPBuscar($statusped,$statusstep);
+
+            $count=count($pedido);
+
+            if (isset($_GET['pagina'])) {
+            
+                $pagina = $_GET['pagina'];
+            
+            } else {
+            
+                $pagina= $this->view->pagina = 1;
+            
+            } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_stock";
+            $this->view->paginator= $this->_epp->GetPedEPPBuscarPag($table,$offset,$no_of_records_per_page,$statusped,$statusstep);
+        }
+
+
+        if($opcion == 2){
+            
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+            $id = $this->_getParam('id');
+            
+            $statusstep = 1;
+
+            $this->view->id_search=$id; 
+            $pedido=$this->view->pedido_epp=$this->_epp->GetPedidosEPPBuscarId($id,$statusstep);
+            $count=count($pedido);
+            
+            if (isset($_GET['pagina'])) { 
+
+                $pagina = $_GET['pagina']; 
+
+            } else { 
+
+                $pagina= $this->view->pagina = 1; 
+
+            } 
+            
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_stock";
+            $this->view->paginator= $this->_epp->GetPedEPPBuscarPagId($table,$offset,$no_of_records_per_page,$id,$statusstep);
+        }
+
+        if($opcion == 3){
+            
+            $actualpagina=$this->_getParam('pagina');
+            $this->view->actpage=$actualpagina;
+            $proveedor = $this->_getParam('proveedor'); 
+            $this->view->user_proveedor=$proveedor; 
+
+            $statusstep = 1;
+
+            $pedido=$this->view->pedido_epp=$this->_epp->GetPedidosEPPBuscarPrv($proveedor,$statusstep);
+            $count=count($pedido);
+            
+            if (isset($_GET['pagina'])) { 
+
+                $pagina = $_GET['pagina']; 
+
+            } else { 
+
+                $pagina= $this->view->pagina = 1; 
+
+            } 
+            
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $table="epp_stock";
+            $this->view->paginator= $this->_epp->GetPedEPPBuscarPagPrv($table,$offset,$no_of_records_per_page,$proveedor,$statusstep);
+        }
+
+    }   // Buscadores Pedidos
+
+    public function pedidodetailAction(){
+        
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_stock";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_stock";
+            $this->view->detalle = $this->_epp->GetDetallesEppPedido($table,$id); 
+
+            $table = "epp_stockadd";
+            $this->view->eppxpedido = $this->_epp->GetEppxPedidoEntrega($id);
+
+            $table = "epp_stock";
+            $wh = "id";
+            $this->view->pedidoevidencia = $this->_season->GetSpecific($table,$wh,$id);
+        
+            
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+
+        }else {
+        
+            return $this-> _redirect('/');
+        
+        }
+    }
+
+
+    public function pedidoeppAction(){
+        
+        if($this->_hasParam('id')){
+            $id = $this->_getParam('id');
+            $this->view->id_solicitud = $id;
+            
+            $table = "epp_stock";
+            $wh = "id";
+            $usr = $this->view->solicitud = $this->_season->GetSpecific($table,$wh,$id);
+
+            $table = "epp_stock";
+            $this->view->detalle = $this->_epp->GetDetallesEppPedido($table,$id); 
+
+            $table = "epp_stockadd";
+            $this->view->eppxpedido = $this->_epp->GetEppxPedidoEntrega($id);
+
+            $table = "epp_stock";
+            $wh = "id";
+            $this->view->pedidoevidencia = $this->_season->GetSpecific($table,$wh,$id);
+        
+            
+            $id_user=$this->_session->id;
+            $this->view->usuario = $id_user;
+
+            $wh="id";
+            $table="usuario";
+            $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        
+        }else {
+        
+            return $this-> _redirect('/');
+        
+        }
+    }   //Para PDF de la solicitud Usuario y MAn
+
     public function formatSizeUnits($bytes){ 
         if ($bytes >= 1073741824)
         {
@@ -3908,8 +4811,8 @@ class EppController extends Zend_Controller_Action{
             $bytes = '0 bytes';
         }
         return $bytes;
-        }//END FUNCION DE TAMAÑO DE IMAGEN
-    }
+    }//END FUNCION DE TAMAÑO DE IMAGEN
+}
 
 
     // date_default_timezone_set('America/Mexico_City');

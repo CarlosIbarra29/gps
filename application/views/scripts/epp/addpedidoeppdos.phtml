@@ -1,0 +1,343 @@
+<?php 
+date_default_timezone_set('America/Mexico_City');
+$hoy = date("Y-m-d");
+
+?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/updatestockped/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar Paso 1</a>    
+    </div>
+</div> 
+ 
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+	<div class="col m12 s12 text-center">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pedido de EPP/Stock <br/>Paso 2</span>
+	</div>
+</div>
+
+
+
+<div class="col m12 s12">
+	<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.05em;">EPP entregado por el proveedor: <?php echo $this->nameproveedor; ?> </span>
+</div>
+
+
+<div class="row" style="margin-top: 15px;"></div> 
+
+<!-- Epp por Asignar al pedido -->
+<div class="col m12 s12">
+	<div class="row">
+		<div class="col m12 s12 text-left" style="margin-top: 5px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar EPP
+        </div>
+
+        <form action="/epp/requestaddpedepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addpedido">
+
+        	<!-- <?php foreach ($this->personalsel as $personal) { ?>
+                <input type="hidden" name="idhs" value="<?php echo $personal["id"]; ?>">
+            <?php } ?> -->
+
+            	<input type="hidden" name="pedid" value="<?php echo $this->id; ?>">
+
+            <div class="row">
+
+                <div class="input-field col m2 s12">
+                    <i class="material-icons prefix">format_list_numbered</i>
+                    <input type="number" id="cantidad" name="cantidad" min="1" class="validanumeros">
+                    <label for="cantidad">Cantidad:</label>
+                </div>
+
+                <div class="input-field col m4 s12">
+                    <i class="material-icons prefix">accessibility</i>
+                    <select id="epp" name="epp" required>
+                        <option value="0" disabled selected>* Selecciona una opcion:</option>
+                        <?php foreach ($this->eppn as $epp) { ?>
+                        	<option value="<?php echo $epp["nombre"]; ?>"><?php echo $epp["nombre"]; ?></option>
+                        <?php } ?>
+                    </select>
+                    <label>EPP</label>
+                </div>
+
+                <div class="input-field col m4 s12">
+                    <div class="col m2 s12">
+                        <input type="hidden" id="input-tallas" list="tallas_lista">  
+                        <span style="color: #9e9e9e; font-weight: bold;">*Talla</span>
+                        <!-- <i class="material-icons prefix">photo_size_select_small</i> -->
+                    </div>
+                    <div class="col m10 s12">
+                        <select style="background: white; border-bottom-color: #686868;" class="browser-default" id="tallas_lista" name="talla" ></select>
+                    </div>
+                </div>
+
+
+                <div class="input-field col m2 s12 text-center">
+					<button type="button" id="addpedido" class="btn">Guardar</button>	
+				</div>
+      
+            </div>
+            
+        </form>
+
+
+		
+	</div>
+</div>
+<!-- End Epp por Asignar al pedido -->
+
+<!-- EPP X Asignar al pedido-->
+<div class="col m12 s12 text-center">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card darken-1">
+                <div class="card-content">
+
+                    <div class="row">
+                        <div class="col m12 s12 text-left">
+                            <h3 class="card-title">EPP del Pedido</h3>
+                        </div>
+                    </div>
+
+                    <div class="row table_wrapper">
+                        <table class="table text-center table-hover ">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Talla</th>
+                                    <th class="text-center">Tipo EPP</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <?php if ($this->eppxpedido) { 
+                            foreach ($this->eppxpedido as $eppxp) { ?>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?php echo $eppxp['cantidad']; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo $eppxp['descripcion']; ?>
+                                        </td>
+                                         <td class="text-center">
+                                            <?php echo $eppxp['t_e']; ?>
+                                        </td>
+                                         <td class="text-center">
+                                            <?php echo $eppxp['nombretipo']; ?>
+                                        </td>
+                                        <td>
+                                            <a class="delete" data-id="<?php echo $eppxp["id"]; ?>" data-nombre="<?php echo $eppxp["descripcion"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                        </td>                                            
+                                    </tr>
+                                </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>No se ha agregado EPP a esté pedido.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End EPP X Asignar al pedido -->
+
+<!-- Terminar Pedido -->
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/epp/requestaddpedidodos" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="subpaso2epp">
+			<input type="hidden" id="idpedido" name="idpedido" value="<?php echo $this->id; ?>">
+
+
+            <div class="input-field col m12 s12 text-right">
+                <div class="row">
+                    <label>
+                        <input type="checkbox" id="completo" name="completo">
+                        <span>Selecciona si el pedido llego completo</span>
+                    </label>                
+                </div>  
+            </div>
+    	</form>
+
+        
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/epp/eppstock" class="red btn">Salir</a>
+				<?php if ($this->eppxpedido) { ?>
+					<button  id="sendpasodos" class="btn">Terminar Pedido</button>
+				<?php } else { ?>
+					<button  id="sendpasodos" disabled class="btn">Terminar Pedido</button>
+				<?php } ?>
+			</div>	
+		</div>
+	</div>
+</div>
+<!-- End Terminar Pedido -->
+
+<script src="/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+    	$('.datepicker').datepicker();
+
+    	$('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+        })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+    });
+
+    $("#sendpasodos").click(function(){
+        var idpedido = document.getElementById("idpedido").value;
+
+        if(idpedido == 0){
+            swal({
+              title: "Para continuar debes agregar minímo un EPP",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { 
+    	document.getElementById("subpaso2epp").submit() 
+    }
+
+    //Obtener Tallas
+    $('#epp').change(function(){
+
+    	limpiar();       
+    	epp = document.getElementById("epp").value;
+
+    	$.ajax({
+
+            url: "/epp/gettallas/",       
+            data: { epp: epp },
+            type: "POST",
+
+            success: function(data) {
+
+              $("#id-talla").find('option').remove();
+
+              var aData = JSON.parse(data);
+
+              console.log(aData);
+
+              var sOptions = '';
+
+              $.each(aData, function(i, v) {
+
+                sOptions += '<option value="' + v.idepp + '">' + v.talla + '</option>';
+
+                // console.log(sOptions);
+              });
+
+              console.log(sOptions);
+
+              $('#tallas_lista').html( sOptions );
+            },
+
+            error: function(a, b, c) {
+
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }
+        });
+    });
+
+    function limpiar(){
+        document.getElementById('input-tallas').value='';
+    }
+    //End Obtener Tallas
+
+
+    //EPP Que LLEGO
+    $("#addpedido").click(function(){
+        var cantidad = document.getElementById("cantidad").value;
+        var epp =  document.getElementById("epp").value;
+        var tallas_lista =  document.getElementById("tallas_lista").value;
+
+        if(cantidad == "" || epp == 0 || tallas_lista  == ""){
+            swal({
+                title: "Llena los campos, para asignar el EPP(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(añadirpedido, 500);     
+        }    
+    }); 
+
+    function añadirpedido() {
+
+        document.getElementById("submit_addpedido").submit()
+
+    }
+    //End EPP Que llego
+
+
+    $(".delete").click(function(){
+    	swal({
+
+    		title: "¿Estás seguro de eliminar el registro?",
+	  		icon: "warning",
+	  		buttons: true,
+	  		dangerMode: true,
+	  	})
+
+	  	.then((willDelete) => {
+	  		if (willDelete) {
+	  			swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});  
+
+				var	id = $(this).data('id')
+            	var request = $.ajax({
+                	url:"/epp/requestdeleppped",
+                	method:"POST",
+                	data: { id: id },
+                	processData: true,
+                	// contentType: false,
+            	});
+					//-------------------end de ajax---------------------------
+
+					//-------------peticion de respuesta de ajax------------------
+            	request.done(function(response) {
+                	console.log(response);//imprime lo que responde el ajax
+                	// alert
+                	window.location.reload(true);
+            	});
+					//-------------------end de respuesta ajax---------------------
+            	
+            	return false;
+
+            } else {
+            	swal("El cambio de status fue cancelado!");
+            }
+        });
+	 });
+
+</script>
+
+

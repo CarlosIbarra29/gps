@@ -143,6 +143,7 @@
                             <tr>
                                 <th class="text-center"><span class="title-pdf">Articulo No.</span></th>
                                 <th class="text-center"><span class="title-pdf">Descripción</span></th>
+                                <th class="text-center"><span class="title-pdf">Presentación</span></th>
                                 <th class="text-center"><span class="title-pdf">Talla</span></th>
                                 <th class="text-center"><span class="title-pdf">Cantidad</span></th>
                                 <th class="text-center"><span class="title-pdf">Fecha Entrega</span></th>
@@ -155,6 +156,13 @@
                                 <tr>
                                     <td class="text-center"><?php echo @$contar+=1; ?></td>
                                     <td class="text-center"><?php echo $epp['nombre']; ?></td>
+                                    <td class="text-center">
+                                        <?php if ($epp['presentacion'] == null || $epp['presentacion'] == "") { ?>
+                                            Sin dato
+                                        <?php } else { ?>
+                                            <?php echo $epp['presentacion']; ?>
+                                        <?php } ?>
+                                    </td>
                                     <td class="text-center"><?php echo $epp['t_e']; ?></td>
                                     <td class="text-center"><?php echo $epp['cantidad']; ?></td>
                                     <td class="text-center"><?php echo $epp['fecha_entrega']; ?></td>

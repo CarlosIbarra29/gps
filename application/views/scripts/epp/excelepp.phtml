@@ -68,6 +68,7 @@ function eliminar_acentos($cadena){
 				<th>Nombre</th>
 				<th>Talla</th>
 				<th>Descripcion</th>
+				<th>Presentacion</th>
         		<th>Stock</th>
         		<th>Costo Aprobado</th>
         		<th>Tiempo vida en dias</th>
@@ -82,6 +83,7 @@ function eliminar_acentos($cadena){
 				<td><?php echo eliminar_acentos( $epp["nombre"]); ?></td>
 				<td><?php echo $epp["talla"]; ?></td>
 				<td><?php echo eliminar_acentos( $epp["descripcion"]); ?></td>
+				<td><?php echo eliminar_acentos( $epp["presentacion"]); ?></td>
 				<td><?php echo $epp["stock"]; ?></td>
 				<td>$<?php echo $epp["costoa"]; ?></td>
 				<td><?php echo $epp["tiempo_vida"]; ?></td>
