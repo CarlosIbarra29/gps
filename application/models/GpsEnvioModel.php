@@ -82,6 +82,22 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE ENVIO
 
+    public function updatemodificacionfecha($post,$table,$fecha_mod){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET fecha_solicitud = ?, motivo_mod = ? WHERE id = ?",array(
+                $fecha_mod,
+                $post['motivo'],
+                $post['ids']));
+            $db->closeConnection();              
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }// END UPDATE ENVIO
+
+
     public function updatematerial($post,$table){
         $change = 1;
             try {

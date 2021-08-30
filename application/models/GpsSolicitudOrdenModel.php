@@ -2283,8 +2283,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
-                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND nombre_sitio 
-                        like '%{$nombre}%' order by soc.id DESC");
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND nombre_sitio  like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -2292,6 +2293,30 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+
+    public function getusernamesolicitudcountjefesearchclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, 
+                        soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND nombre_sitio  like '%{$nombre}%' order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudcountjefesearchnofact($nombre){
         $datos ="No facturable";
@@ -2329,7 +2354,32 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
-                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND name_proveedor 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_proveedor 
+                        like '%{$nombre}%' order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcountjefesearchprovclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
+                        u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND name_proveedor 
                         like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -2374,8 +2424,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
-                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND name_user 
-                        like '%{$nombre}%' order by soc.id DESC");
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_user  like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -2383,6 +2434,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudcountjefesearchuserclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
+                        u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND name_user  like '%{$nombre}%' order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudcountjefesearchusernofacturable($nombre){
         $datos ="No facturable";
@@ -2422,6 +2496,30 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.servicio_id = ? 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        order by soc.id DESC",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcountjefesearchservicioclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor, 
+                        soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
+                        soc.status_pago, soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.servicio_id = ? 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -2469,6 +2567,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.id = ?
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
                         order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -2477,6 +2576,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudcountjefesearchidclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
+                        u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.id = ?
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        order by soc.id DESC",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudcountjefesearchidnofact($nombre){
         $datos ="No facturable";
@@ -2514,7 +2636,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
-                        WHERE soc.status_documento = 1 AND soc.status_pago !=1 order by soc.id DESC");
+                        WHERE soc.status_documento = 1 AND soc.status_pago !=1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -2522,6 +2646,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudcountaceptclavos(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia,soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
+                        u.id, u.nombre, u.ap, s.nombre_servicio
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id= soc.servicio_id 
+                        WHERE soc.status_documento = 1 AND soc.status_pago !=1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudcountaceptfacturable(){
         $datos ="No facturable";
@@ -2604,6 +2751,35 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
                         WHERE soc.status_documento = 1 AND soc.status_pago !=1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getusernamesolicitudaceptclavos($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, 
+                        soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, 
+                        soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, 
+                        soc.status_pago, soc.status_documentouno,soc.id_usuario,soc.rol_encargado,
+                        soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.status_documento = 1 AND soc.status_pago !=1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -2660,6 +2836,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND nombre_sitio like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC  
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptsitioclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
                         AND nombre_sitio like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC  
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -2714,6 +2918,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_proveedor like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptprovclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
                         AND name_proveedor like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -2771,6 +3003,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_user like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptuserclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         AND name_user like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -2826,6 +3086,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
                         AND soc.id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -2835,6 +3096,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudaceptidclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND soc.id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
+                        LIMIT $offset,$no_of_records_per_page",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudaceptidnofacturable($table,$offset,$no_of_records_per_page,$nombre){
         $datos ="No facturable";
@@ -2882,6 +3171,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
                         AND soc.servicio_id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -2892,7 +3182,32 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         }
     }
 
-
+    public function getusernamesolicitudaceptservicioclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND soc.servicio_id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
+                        LIMIT $offset,$no_of_records_per_page",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
 
     public function getusernamesolicitudaceptservicionofact($table,$offset,$no_of_records_per_page,$nombre){
         $datos ="No facturable";
@@ -2991,7 +3306,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
-                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75 
+                        AND nombre_sitio like '%{$nombre}%'  order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcountaceptpagositioclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
+                        u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
                         AND nombre_sitio like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3035,6 +3372,28 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_proveedor like '%{$nombre}%'  order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcountaceptpagoprovclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, 
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
+                        u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         AND name_proveedor like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3077,7 +3436,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75 
+                        AND soc.id=? order by soc.id DESC", array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudcountaceptpagoidclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
+                        u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         AND soc.id=? order by soc.id DESC", array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -3120,6 +3501,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_user like '%{$nombre}%'  order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+
+    public function getusernamesolicitudcountaceptpagouserclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
+                        u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
                         AND name_user like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3162,7 +3566,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         soc.status_pago ,u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
-                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75 
                         AND soc.servicio_id = ?  order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -3172,6 +3577,26 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function getusernamesolicitudcountaceptpagoservicioclavos($nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor,soc.servicio_id, 
+                        soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
+                        soc.status_pago ,u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND soc.servicio_id = ?  order by soc.id DESC",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
 
     public function getusernamesolicitudcountaceptpagoservicionofact($nombre){
         $datos ="No facturable";
@@ -3263,6 +3688,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
                         AND nombre_sitio like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -3272,6 +3698,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudaceptpagositioclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, 
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND nombre_sitio like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudaceptpagositionofact($table,$offset,$no_of_records_per_page,$nombre){
         $datos = "No facturable";
@@ -3318,6 +3772,33 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_proveedor like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptpagoprovclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
                         AND name_proveedor like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -3374,6 +3855,34 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND name_user like '%{$nombre}%' order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptpagouserclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         AND name_user like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -3430,6 +3939,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
                         AND soc.servicio_id = ? order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -3439,6 +3949,33 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudaceptpagoserviciopclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)   
+                        AND soc.servicio_id = ? order by soc.id DESC 
+                        LIMIT $offset,$no_of_records_per_page",array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudaceptpagoserviciopnofact($table,$offset,$no_of_records_per_page,$nombre){
         $datos ="No facturable";
@@ -3485,6 +4022,33 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        AND soc.id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page", array($nombre));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptpagoidclavos($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, 
+                        soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
                         AND soc.id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page", array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -4825,7 +5389,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 
-                        AND soc.status_pago = 1  order by soc.id DESC");
+                        AND soc.status_pago = 1  
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -4833,6 +5399,28 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }
+
+    public function getusernamesolicitudcountaceptandpayclavos(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,soc.id_usuario,
+                        soc.status_documentouno ,soc.delete_status, soc.status_pago ,u.id, u.nombre, u.ap
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1 
+                        AND soc.status_pago = 1  
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        order by soc.id DESC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
 
     public function getusernamesolicitudcountaceptandpaysitio($nombre){
         try{
@@ -4868,7 +5456,35 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  
-                        AND soc.status_pago = 1 order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+                        AND soc.status_pago = 1 
+                        AND soc.proveedor_id != 74 AND soc.proveedor_id != 75
+                        order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
+    public function getusernamesolicitudaceptandpayclavos($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto 
+                        WHERE soc.delete_status =0 AND soc.status_documento= 1  
+                        AND soc.status_pago = 1 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

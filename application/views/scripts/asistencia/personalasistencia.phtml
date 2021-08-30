@@ -734,27 +734,27 @@
 			                  		$hora_pago = $usr['hora_pago'];
 			                  			if($usr['day_num'] == 6){
 			                  				$rest = substr($diferencia, 0, -3);
-
+			                  				// echo $rest;
 			                  				if($rest == 5){
 			                  					$monto = 0;
 			                  				}
 
 				                  			if($rest <= 9){
-				                  				// $total = $rest - 5;
-				                  				// echo $rest;
-				                  				if($rest == 1){
+				                  				$total = $rest - 5;
+				                  				// echo $total;
+				                  				if($total == 1){
 				                  					$monto_u= $dia_pago / 100;
 				                  					$monto = $monto_u * 20;
 				                  				}
-				                  				if($rest == 2){
+				                  				if($total == 2){
 				                  					$monto_u = ($dia_pago / 100);
 				                  					$monto = $monto_u * 40;
 				                  				}
-				                  				if($rest == 3){
+				                  				if($total == 3){
 				                  					$monto_u = $dia_pago / 100;
 				                  					$monto = $monto_u * 60;
 				                  				}
-				                  				if($rest == 4){
+				                  				if($total == 4){
 				                  					$monto_u = ($dia_pago / 100);
 				                  					$monto = $monto_u * 80;
 				                  				}
@@ -767,10 +767,26 @@
 
 				                  			if($rest > 10){
 				                  				$total = $rest - 10;
-				                  				$suma = $total * $hora_pago;
-				                  				$dia = $dia_pago*2;
+				                  				if($total == 1){
+				                  					$monto_u= $dia_pago / 100;
+				                  					$suma = $monto_u * 20;
+				                  				}
+				                  				if($total == 2){
+				                  					$monto_u = ($dia_pago / 100);
+				                  					$suma = $monto_u * 40;
+				                  				}
+				                  				if($total == 3){
+				                  					$monto_u = $dia_pago / 100;
+				                  					$suma = $monto_u * 60;
+				                  				}
+				                  				if($total == 4){
+				                  					$monto_u = ($dia_pago / 100);
+				                  					$suma = $monto_u * 80;
+				                  				}
 
-				                  				$monto = $suma;
+				                  				// $suma = $total * $hora_pago;
+				                  				$dia = $dia_pago;
+				                  				$monto = $suma + $dia;
 				                  				// echo "menor";
 				                  			}
 			                  			}

@@ -136,6 +136,53 @@
 
 
 <div class="row">
+  <div class="col m6 s12">
+    
+  </div>
+
+  <div class="col m6 s12 text-right">
+    <a class="btn modal-trigger" href="#modal5">Modificar Fecha</a>
+  </div>
+</div>
+
+  <!-- Modal Structure -->
+  <div id="modal5" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col m12 s12">
+          <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Modificar fecha de envio</span>
+        </div>
+      </div>
+      <div class="row">
+        <form action="/envios/requestupdatefechaenvio" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_modificar">
+        <input type="hidden" name="ids" value="<?php echo $this->id_envio; ?>">
+        <input type="hidden" name="status" value="<?php echo $this->status; ?>">
+          
+        <div class="col m12 s12">
+          <div class="input-field col s12">
+            <input placeholder="Especifique el motivo del cambio de fecha de envio" name="motivo" id="motivo_up" type="text" class="validate">
+            <label for="motivo_up">Motivo</label>
+          </div>
+
+          <div class="input-field col s12">
+            <input id="fecha_up" type="date" name="fecha" class="validate">
+            <label for="fecha_up">Motivo</label>
+          </div>
+
+        </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="modificar_solicitud" class="btn">Guardar</button>
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
+  </div>
+
+
+
+
+<div class="row">
   <div class="col s12 m6">
     <div class="card">
       <div class="card-content" style="height: 300px;">  
@@ -613,4 +660,24 @@
 
   });
   function submitno() { document.getElementById("submit_auditoria").submit() }
+
+
+  $("#modificar_solicitud").click(function(){
+    var motivo_up = document.getElementById("motivo_up").value;
+    var fecha_up = document.getElementById("fecha_up").value;
+
+    if(motivo_up == "" || fecha_up == ""){
+      swal({
+        title: "Para continuar debes agregar el motivo por el cual se modifica la fecha de envio",
+      });
+    }else{
+      swal("Espere un momento, la información esta siendo procesada", {
+        icon: "success",
+        buttons: false,
+      }); 
+      setTimeout(submitmodificar, 1500);     
+    }
+  });
+  function submitmodificar() { document.getElementById("submit_modificar").submit() }
+
 </script>

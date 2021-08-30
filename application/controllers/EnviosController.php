@@ -979,6 +979,30 @@ class EnviosController extends Zend_Controller_Action{
         }
     }
 
+
+
+    public function requestupdatefechaenvioAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+            $year_uno = substr($post['fecha'], 0,4); 
+            $mes_uno = substr($post['fecha'], 5,2); 
+            $day_uno = substr($post['fecha'], 8,2);
+            $fecha_mod = $day_uno."/".$mes_uno."/".$year_uno;
+
+        $table="envios_solicitud";
+        $result = $this->_envio->updatemodificacionfecha($post,$table,$fecha_mod);
+
+        if ($result) {
+            return $this-> _redirect('/envios/enviodetail/id/'.$post['ids'].'/status/'.$post['status'].' ');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }
+    }
+
     public function requestaddoperadorenvioAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

@@ -752,16 +752,16 @@ class AsistenciaController extends Zend_Controller_Action{
 
                                 if($rest <= 9){
                                     $total = $rest - 5;
-                                    if($rest == 1){
+                                    if($total == 1){
                                         $monto = ($dia_pago / 100) * 20;
                                     }
-                                    if($rest == 2){
+                                    if($total == 2){
                                         $monto = ($dia_pago / 100) * 40;
                                     }
-                                    if($rest == 3){
+                                    if($total == 3){
                                         $monto = ($dia_pago / 100) * 60;
                                     }
-                                    if($rest == 4){
+                                    if($total == 4){
                                         $monto = ($dia_pago / 100) * 80;
                                     }
                                     // echo "menor";
@@ -773,10 +773,26 @@ class AsistenciaController extends Zend_Controller_Action{
 
                                     if($rest > 10){
                                         $total = $rest - 10;
-                                        $suma = $total * $hora_pago;
-                                        $dia = $dia_pago*2;
 
-                                        $monto = $suma;
+                                        if($total == 1){
+                                            $suma = ($dia_pago / 100) * 20;
+                                        }
+                                        if($total == 2){
+                                            $suma = ($dia_pago / 100) * 40;
+                                        }
+                                        if($total == 3){
+                                            $suma = ($dia_pago / 100) * 60;
+                                        }
+                                        if($total == 4){
+                                            $suma = ($dia_pago / 100) * 80;
+                                        }
+
+
+
+                                        // $suma = $total * $hora_pago;
+                                        $dia = $dia_pago + $suma;
+
+                                        $monto = $dia;
                                         // echo "menor";
                                     }                                
                             }

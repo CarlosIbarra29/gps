@@ -114,7 +114,7 @@
 <!--                     <div class="text-center">
                         <span style="color:red; font-size: 10px;">DESCRIPCION BREVE DEL MATERIAL (SE TIENE QUE ADJUNTAR LA COTIZACION DEL PROVEEDOR).</span>
                     </div> -->
-                	<div class="col m12 s12" style="margin-top: 75px;">
+                	<div class="col m12 s12" style="margin-top: 95px;">
                         <table>
                             <thead>
                                 <tr style="background-color: white;">
@@ -180,15 +180,15 @@
                                         <?php if($usr['solicitud_prestamo'] == 0){ ?>
                                             <?php echo $usr['hora_salida']; ?>
                                         <?php }?>
-
+                              
                                         <?php if($usr['status_tipos'] == 1){ ?>
                                             Descuento
                                         <?php }?>
-
+                                
                                         <?php if($usr['status_tipos'] == 2){ ?>
                                             Herramientas
                                         <?php }?>
-
+                            
                                         <?php if($usr['status_tipos'] == 3){ ?>
                                             EPP
                                         <?php }?>
@@ -200,7 +200,7 @@
                                             $diferencia = $interval->format("%H:%I");
                                             $rest = substr($diferencia, 0, -3);
                                             $day_num = $usr['day_num']; 
-
+                             
                                                 if($day_num == 6 || $day_num == 7){
                                                     if($rest == 5){
                                                         $op_day = "1 Día";
@@ -210,7 +210,7 @@
                                                     $op_day = "1 dia ".$total."Hrs";
                                                     // echo "menor";
                                                 }
-
+                                            
                                                 }else{
                                                     if($rest < 10){
                                                         $total = $rest - 2;

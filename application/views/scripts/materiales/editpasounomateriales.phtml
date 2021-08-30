@@ -105,11 +105,11 @@
     var num = document.getElementById("check_select").value;
 
     if(num == 0){
-      document.getElementById("check_select").value= 1;
+    	document.getElementById("check_select").value= 1;
     }
 
     if(num == 1){
-      document.getElementById("check_select").value= 0;
+    	document.getElementById("check_select").value= 0;
     }
 
   });
@@ -120,12 +120,12 @@
 
       if(sitio == 0 ||  fecha_entrega == ""){
         swal({
-          title: "Para continuar debes agregar la información marcada con un '*' ",
+        	title: "Para continuar debes agregar la información marcada con un '*' ",
         });
       }else{
         swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
+        	icon: "success",
+        	buttons: false,
         }); 
         setTimeout(submitForm, 1500);     
       }
