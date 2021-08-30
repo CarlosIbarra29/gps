@@ -1,0 +1,109 @@
+<style type="text/css">
+	.oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/epp/eppstock" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+  <div class="col m12 s12 text-center">
+    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Pedido de EPP/Stock</span>
+  </div>
+</div>
+
+  
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/epp/requestpasounostock" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pedidoepp">
+
+			<!-- <div class="input-field col m6 s12"></div> -->
+			
+			<div class="input-field col m6 s12">
+	        	<input id="fecharecibido" name="fecharecibido" type="text" class="datepicker">
+	        	<label for="fecharecibido">* Fecha Recibido</label>
+	        </div>
+
+	        <div class="input-field col m6 s12">
+	    		<select id="proveedor" name="proveedor"> 
+	      			<option value="0" disabled selected>Selecciona un proveedor</option>
+	      			<?php foreach ($this->proveedor as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['nombre_prov']; ?></option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>* Proveedor:</label>
+	  		</div>
+
+	  		<div class="file-field input-field col m12 s12">
+				<div class="btn">
+					<span>Añade Evidencia del Pedido</span>
+					<input type="file" name="url">
+				</div>
+				
+				<div class="file-path-wrapper">
+					<input class="file-path validate" id="url"  type="text">
+				</div>
+			</div>
+
+			<div class="input-field col m12 s12">
+			    <i class="material-icons prefix">mode_edit</i>
+			    <textarea id="comentarios" name="comentarios" class="materialize-textarea"></textarea>
+			    <label for="comentarios">* Comentarios: </label>
+			</div>
+
+		</form>
+
+		<div class="row">
+			<div class="col m12 s12 text-right" style="margin-top: 20px;">
+				<a class="btn" id="enviar_pedido"><i class="material-icons right">arrow_forward</i>Paso 2</a>
+			</div>
+	  	</div>
+	</div>
+</div>
+
+
+	<script type="text/javascript">
+  		$(document).ready(function(){
+    		$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    		$('select').formSelect();
+    		$('.modal').modal();
+    		$('.validanumeros').keypress(function(e) {
+			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+				return false;
+		})
+		.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+  		});
+
+
+		$("#enviar_pedido").click(function(){
+
+			var fecha = document.getElementById("fecharecibido").value;
+			var proveedor = document.getElementById("proveedor").value;
+			var comentarios = document.getElementById("comentarios").value;
+			var url = document.getElementById("url").value;
+
+			if(fecha == "" || proveedor == 0 || comentarios == "" || url == ""){
+	            swal({
+	             	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+	            });
+
+	    	}else{
+	    		swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+	    		setTimeout(submit_ser, 1000);   
+	    	}
+		});
+
+		function submit_ser() { 
+			document.getElementById("submit_pedidoepp").submit() 
+		}
+
+
+	</script>

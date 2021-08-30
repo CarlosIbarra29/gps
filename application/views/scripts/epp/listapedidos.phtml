@@ -7,7 +7,7 @@
 	}
 
     if (isset($_GET['pagina'])) {
-        $pagina = $_GET['pagina']; 
+        $pagina = $_GET['pagina'];
     } else {
         $pagina = 1;
     }  
@@ -67,88 +67,43 @@
 	}
 </style>
 
-<?php 
-	$status =  $this->status_documento;
-?>
 
-<div class="row" style="margin-top: 20px;">
-	<div class="col m12 s12">
-  		<ul >
-  			<?php if($status == 0){ ?>
-	    		<li class="tab col s3 active_menu">
-	    			<a class="" href="/epp/listasolicitudes/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->enproceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php }else{ ?>
-	    		<li class="tab col s3">
-	    			<a class="" href="/epp/listasolicitudes/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->enproceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php } ?>
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12 text-right">
+            
+    </div>
+</div>
 
-  			<?php if($status == 2){ ?>
-  				<li class="tab col s3 active_menu"><a href="/epp/listasolicitudes/status/2"><h4>Rechazadas</h4></a></li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/epp/listasolicitudes/status/2"><h4>Rechazadas</h4></a></li>
-  			<?php } ?>
-
-
-  			<?php if($status == 1){ ?>
-  				<li class="tab col s3 active_menu">
-  					<a href="/epp/listasolicitudes/status/1"><h4>Dirección</h4></a>
-  					<div></div>
-  				</li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/epp/listasolicitudes/status/1"><h4>Dirección</h4></a></li>
-  			<?php } ?>
-
-  			<?php if($status == 3){ ?>
-  				<li class="tab col s3 active_menu">
-  					<a href="/epp/listasolicitudes/status/3"><h4>Surtidas</h4></a>
-  					<div></div>
-  				</li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/epp/listasolicitudes/status/3"><h4>Surtidas</h4></a></li>
-  			<?php } ?>
-
-  		</ul>
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Lista Pedidos EPP </span>
 	</div>
 </div>
+
 
 <!-- Buscador -->
 <div class="row" style="margin-top:10px;">
 	<div class="col m4 s12">
 	  	<div class="input-field col s12">
-	    	<select id="search_tipo">
-	      		<option value="1" selected>Personal</option>
+	    	<select id="search_pedido">
+	      		<option value="1" selected>Status</option>
 	      		<option value="2">Id de la solicitud</option>
-	      		<option value="3">Usuario</option>
+	      		<option value="3">Proveedor</option>
 	    	</select>
 	    	<label>Buscar por:</label>
 	  	</div>
 	</div>
 	<div class="col m8 s12"> 
-		<div class="col m12 s12" id="search_nombre">
+		<div class="col m12 s12" id="search_status">
 		    <div class="input-field col m10 s8">
-				<select id="personal" name="personal" required>
+				<select id="statusped" name="statusped" required>
 					<option value="" disabled selected>* Selecciona una opcion:</option>
-					<?php foreach ($this->personal_campo as $personal) { ?>
-					<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
-					<?php } ?>
+					<option value="1">Completo</option>
+					<option value="2">Incompleto</option>
 				</select>
-				<label>Personal</label>
+				<label>Status</label>
 		    </div>
-		    <input type="hidden" id="status_search" value="<?php echo $status; ?>">
+<!-- 		    <input type="hidden" id="status_search" value="<?php echo $status; ?>"> -->
 		    <div class="input-field col m2 s4">
 		     	<button tyle="submit" id="buscador" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
 		    </div>
@@ -156,21 +111,21 @@
 
 		<div class="col m12 s12 oculto" id="search_solicitud">
 		    <div class="input-field col m10 s8">
-		        <input placeholder="Ingresa el id de la solicitud" name="solicitud" id="id_sol" type="number" class="validate">
-		        <label for="id_sol">Buscar por id de la solicitud</label>
+		        <input placeholder="Ingresa el id del pedido" name="solicitud" id="id_pedido" type="number" class="validate">
+		        <label for="id_pedido">Buscar por id del pedido</label>
 		    </div>
 		    <div class="input-field col m2 s4">
 		     	<button tyle="submit" id="buscador_solicitud" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
 		    </div>
 		</div>
 
-		<div class="col m12 s12 oculto" id="search_usuario">
+		<div class="col m12 s12 oculto" id="search_proveedor">
 		    <div class="input-field col m10 s8">
-		        <input placeholder="Ingresa el usuario" name="usuario" id="name_usuario" type="text" class="validate">
-		        <label for="name_usuario">Buscar por usuario</label>
+		        <input placeholder="Ingresa el nombre del proveedor" name="proveedor" id="name_proveedor" type="text" class="validate">
+		        <label for="name_proveedor">Buscar por Proveedor</label>
 		    </div>
 		    <div class="input-field col m2 s4">
-		     	<button tyle="submit" id="buscador_usuario" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		     	<button tyle="submit" id="buscador_proveedor" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
 		    </div>
 		</div>
 	</div>
@@ -181,29 +136,20 @@
 		<div class="row">
 			<div class="col m8 s8">
 				<!-- <h3>Lista de solicitudes de orden de compra </h3> -->
-				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de solicitudes de EPP</span>
+				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de pedisos de EPP</span>
 			</div>
-			<!-- <div class="col m4 s4 text-right">
-				<?php if($this->user_rol == 8){ ?>
-					
-				<?php }else{ ?>
-					<h4><a href="/vehiculos/missolicitudes/id/<?php echo $this->user_list; ?>">Mis Solicitudes Creadas</a></h4>
-				<?php } ?>
-			</div> -->
 		</div>
 		
 		<div class="col m12 s12 table_wrapper">
 			<table class="table text-left table-hover">
 				<thead>
 					<tr>
-						<th>NO.</th>
-						<th>Creada</th>
-						<th>Personal</th>
-						<th>Puesto</th>
-						<th>Fecha Solicitud</th>
-						<th>Fecha Requerida</th>			
-						<th>Status Autorización</th>
-						<th>Detalle Solicitud</th>
+						<th>Id Pedido</th>
+						<th>Creada por</th>
+						<th>Proveedor</th>
+						<th>Fecha Pedido</th>			
+						<th>Status Pedido</th>
+						<th>Detalle Pedido</th>
 					</tr> 
 				</thead>
 				<?php
@@ -218,53 +164,30 @@
 							<h5><?php echo $usr['name_usuario']; ?> </h5>
 						</td>
 						<td>
-							<h5><?php echo $usr["nombre"]; ?> <?php echo $usr["apellido_pa"]; ?> <?php echo $usr["apellido_ma"]; ?></h5>
+							<h5><?php echo $usr['name_proveedor']; ?></h5>
 						</td>
 						<td>
-							<h5><?php echo $usr['pname']; ?></h5>
+							<h5><?php echo $usr['fecha_recibido']; ?></h5>
 						</td>
 						<td>
-							<h5><?php echo $usr['fecha_solicitud']; ?></h5>
-						</td>
-						<td>
-							<h5>
-								<b><?php echo $usr['fecha_requerida']; ?></b>
-							</h5>
-						</td>
-						<td>
-							<?php if($usr['status_solicitud'] == 0){ ?>
+							<?php if($usr['status_stock'] == 1){ ?>
 								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/gris.jpg" >
-							    	<span style="font-size: 12px;">En proceso</span>
+							    	<img src="/img/correct.png" >
+							    	<span style="font-size: 11px;">Completo</span>
 							  	</div>
 							<?php } ?>
 
-							<?php if($usr['status_solicitud'] == 1){ ?>
+							<?php if($usr['status_stock'] == 2){ ?>
 								<div class="chip" id="activo_personal">
-							    	<img src="/img/correct.png" >
-							    	<span style="font-size: 12px;">Autorizada</span>
+							    	<img src="/img/naranja.png" >
+							    	<span style="font-size: 10px;">Incompleto</span>
 							  	</div>
 							  	
-							<?php } ?>
-
-							<?php if($usr['status_solicitud'] == 2){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/rojo.png" >
-							    	<span style="font-size: 12px;">Rechazada</span>
-							  	</div>
-							<?php } ?>
-
-
-							<?php if($usr['status_solicitud'] == 3){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/naranja.png" >
-							    	<span style="font-size: 12px;">Cancelada</span>
-							  	</div>
 							<?php } ?>
 						</td>
 				
 						<td class="text-center">
-							<a href="/epp/solicituddetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+							<a href="/epp/pedidodetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 						</td>
 
 					</tr>
@@ -272,7 +195,7 @@
 			    </tbody> 
 			    <tbody>
 			        <tr>
-			            <td class="text-center" colspan="6"><h4>No hay solicitudes de EPP.</h4></td>
+			            <td class="text-center" colspan="6"><h4>No hay pedidos de EPP.</h4></td>
 			        </tr>
 			    </tbody>
 			                
@@ -316,59 +239,28 @@
 </div>
 
 <script type="text/javascript">
-   	$(".delete_cotizacion").click(function(){
-    	id=$(this).data('id');
-		swal({
-			title: "Estas seguro de eliminar la solicitud ?",
-		  	icon: "warning",
-		  	buttons: true,
-		  	dangerMode: true,
-		})
-		.then((willDelete) => {
-	  		if (willDelete) {
-	    		swal("Bien! La solicitud se elimino!", {
-	      			icon: "success",
-	    		});
-
-            	var request = $.ajax({
-	                url:"/solicitud/requestupdatestatusdeletesolicitudordencompra",
-	                method:"POST",
-	                data: { id : id },
-	                processData: true,
-            	});
-
-		        request.done(function(response) {
-		            console.log(response);
-		            window.location.reload(true);
-		        });
-             	return false;
-	  		} else {
-	    		swal("La accion fue cancelada!");
-	  		}
-		});
-   	});
 
 
-	$('#search_tipo').on('change', function() {
+	$('#search_pedido').on('change', function() {
 		var value = this.value;
 
 		if(value == 1){
-			$("#search_nombre").show();
+			$("#search_status").show();
 			$("#search_solicitud").hide();
-			$("#search_usuario").hide();
+			$("#search_proveedor").hide();
 		}
 
 		if(value == 2){
 			$("#search_solicitud").show();	
-			$("#search_nombre").hide();
-			$("#search_usuario").hide();
+			$("#search_status").hide();
+			$("#search_proveedor").hide();
 
 		}
 
 		if(value == 3){
-			$("#search_usuario").show();
+			$("#search_proveedor").show();
 			$("#search_solicitud").hide();
-			$("#search_nombre").hide();
+			$("#search_status").hide();
 
 		}
 	});
@@ -376,10 +268,9 @@
 
 
    	$("#buscador").click(function(){
-   		var personal = document.getElementById("personal").value;
-   		var status = document.getElementById("status_search").value;
-		swal({
-			title: "La busqueda será para el personal "+personal+", Desea continuar?",
+   		var statusped = document.getElementById("statusped").value;
+ 		swal({
+			title: "La busqueda será por el status con id "+statusped+", Desea continuar?",
 			icon: "warning",
 			buttons: true,
 			dangerMode: true,
@@ -390,7 +281,7 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscar/status/"+status+"/personal/"+personal+"/op/1";
+			window.location.href = "/epp/listapedidobuscar/statusped/"+statusped+"/op/1";
 		  } else {
 		    swal("La asignacion fue cancelada!");
 		  }
@@ -399,8 +290,8 @@
 
 
    	$("#buscador_solicitud").click(function(){
-   		var id = document.getElementById("id_sol").value;
-   		var status = document.getElementById("status_search").value;
+   		var id = document.getElementById("id_pedido").value;
+
 		swal({
 			title: "La busqueda sera por id "+id+", Desea continuar?",
 			icon: "warning",
@@ -413,19 +304,18 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscar/status/"+status+"/id/"+id+"/op/2";
+			window.location.href = "/epp/listapedidobuscar/id/"+id+"/op/2";
 		  } else {
 		    swal("La asignacion fue cancelada!");
 		  }
 		});
    	});
 
-   	$("#buscador_usuario").click(function(){
-   		var id = document.getElementById("name_usuario").value;
-   		var status = document.getElementById("status_search").value;
+   	$("#buscador_proveedor").click(function(){
+   		var id = document.getElementById("name_proveedor").value;
 
 		swal({
-			title: "La busqueda sera por nombre del usuario "+id+", Desea continuar?",
+			title: "La busqueda sera por nombre del proveedor "+id+", Desea continuar?",
 			icon: "warning",
 			buttons: true,
 			dangerMode: true,
@@ -436,7 +326,7 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscar/status/"+status+"/usuario/"+id+"/op/3";
+			window.location.href = "/epp/listapedidobuscar/proveedor/"+id+"/op/3";
 		  } else {
 		    swal("La asignacion fue cancelada!");
 		  }
