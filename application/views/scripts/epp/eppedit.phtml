@@ -67,21 +67,25 @@
 			    	<input id="desc" type="text" name="desc" value="<?php echo $epp["descripcion"]; ?>" class="validate" required>
 			        <label for="desc">Descripción: </label>
 			    </div>
+
 			    <div class="input-field col m6 s12">
 			        <i class="material-icons prefix">account_circle</i>
 			        <input id="talla" type="text" name="talla" value="<?php echo $epp["talla"]; ?>" class="validate" required>
 			        <label for="talla">Talla: </label>
 			    </div>
+
 			    <div class="input-field col m6 s12">
 			    	<i class="material-icons prefix">account_circle</i>
-			    	<input id="stock" type="number" name="stock" value="<?php echo $epp["stock"]; ?>" class="validanumeros" min="1" required>
+			    	<input id="stock" type="number" name="stock" value="<?php echo $epp["stock"]; ?>" class="validanumeros" min="1" disabled required>
 			    	<label for="stock">*Stock: </label>
 				</div>
+
 				<div class="input-field col m6 s12">
 					<i class="material-icons prefix">account_circle</i>
 					<input id="vida" placeholder="Días Aproximados" type="number" value="<?php echo $epp["tiempo_vida"]; ?>" min="1" name="vida" class="validanumeros" required>
 					<label for="vida">*Tiempo de vida: (En días) </label>
 				</div>
+				
 				<div class="input-field col m6 s12">
 					<i class="material-icons prefix">event_available</i>
 					<input type="text" id="costo" value="<?php echo $epp["costo_aprobado"]; ?>" name="costo" class="validanumeros">

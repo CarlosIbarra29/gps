@@ -698,8 +698,13 @@ class AsistenciaController extends Zend_Controller_Action{
 
                             if($rest <= 9){
                                 $total = $rest - 5;
-                                $suma = $total * $hora_pago;
+                                $pagomas = $dia_pago / 5;
+                                $suma = $total * $pagomas;
                                 $monto = $dia_pago + $suma;
+
+                                // $total = $rest - 5;
+                                // $suma = $total * $hora_pago;
+                                // $monto = $dia_pago + $suma;
                                 // echo "menor";
                             }
 
