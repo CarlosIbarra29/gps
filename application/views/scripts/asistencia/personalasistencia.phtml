@@ -696,6 +696,8 @@
 				                  				// $suma = $total * $hora_pago;
 				                  				// $monto = $dia_pago + $suma;
 				                  				// echo "menor";
+
+				                  				// Cambios Berri
 				                  			}
 
 			                  				if($rest == 10){
@@ -703,11 +705,19 @@
 			                  				}
 
 				                  			if($rest > 10){
+				                  				
 				                  				$total = $rest - 10;
-				                  				$suma = $total * $hora_pago;
+				                  				$pagomas = $dia_pago / 5;
+				                  				$suma = $total * $pagomas;
 				                  				$dia = $dia_pago*2;
-
 				                  				$monto = $dia + $suma;
+
+				                  				// Berri
+
+				                  				// $total = $rest - 10;
+				                  				// $suma = $total * $hora_pago;
+				                  				// $dia = $dia_pago*2;
+				                  				// $monto = $dia + $suma;
 				                  				// echo "menor";
 				                  			}
 

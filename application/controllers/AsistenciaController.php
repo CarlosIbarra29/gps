@@ -706,6 +706,8 @@ class AsistenciaController extends Zend_Controller_Action{
                                 // $suma = $total * $hora_pago;
                                 // $monto = $dia_pago + $suma;
                                 // echo "menor";
+
+                                // Cambios Berri
                             }
 
                             if($rest == 10){
@@ -713,11 +715,18 @@ class AsistenciaController extends Zend_Controller_Action{
                             }
 
                             if($rest > 10){
-                                $total = $rest - 10;
-                                $suma = $total * $hora_pago;
-                                $dia = $dia_pago*2;
 
+                                $total = $rest - 10;
+                                $pagomas = $dia_pago / 5;
+                                $suma = $total * $pagomas;
+                                $dia = $dia_pago*2;
                                 $monto = $dia + $suma;
+                                 // BErri
+
+                                // $total = $rest - 10;
+                                // $suma = $total * $hora_pago;
+                                // $dia = $dia_pago*2;
+                                // $monto = $dia + $suma;
                                 // echo "menor";
                             }
 
