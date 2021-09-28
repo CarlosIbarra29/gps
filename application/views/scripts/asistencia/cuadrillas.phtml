@@ -1,5 +1,91 @@
+<?php 
+
+function eliminar_acentos($cadena){
+        $cadena = str_replace(
+        array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+        array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+        $cadena
+        );
+
+        $cadena = str_replace(
+        array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+        array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+        $cadena );
+
+        $cadena = str_replace(
+        array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+        array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+        $cadena );
+
+        $cadena = str_replace(
+        array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+        array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+        $cadena );
+
+        $cadena = str_replace(
+        array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+        array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+        $cadena );
+
+        $cadena = str_replace(
+        array('Ñ', 'ñ', 'Ç', 'ç'),
+        array('N', 'n', 'C', 'c'),
+        $cadena
+        );
+        
+        return $cadena;
+    }
+?>
+
+<style type="text/css">
+    .oculto{
+        display: none;
+    }
+</style>
+
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col m12 s12 text-right"> 
+        <a class="btn" id="exportBtn4"><i class="material-icons right">arrow_downward</i>Nóminas Pagagas</a>
+    </div>
+</div>
+
+<div class="row oculto">
+    <div class="row excel-div" id="tab3">
+        <table class="table text-left table-hover" >
+            <thead>
+                <tr>
+                    <th>Id Nomina</th>
+                    <th>Personal</th>
+                    <th>Puesto</th>
+                    <th>Sitio</th>
+                    <th>Fecha Pago</th>
+                    <th>Monto</th>
+                </tr> 
+            </thead>
+            <?php 
+            foreach ($this->nominas_pagadas as $usr) { ?>
+            <tbody>
+                <tr>
+                    <td><?php echo eliminar_acentos($usr["idnomina"]); ?></td>
+                    <td><?php echo eliminar_acentos($usr["personal"]); ?></td>
+                    <td><?php echo eliminar_acentos($usr["puesto"]); ?></td>
+                    <td><?php echo eliminar_acentos($usr["sitio"]); ?></td> 
+                    <td><?php echo $usr['fecha_pago']; ?></td>
+                    <td>$<?php echo number_format($usr['pago_nomina'], 2, '.', ','); ?> </td>
+                </tr>
+            </tbody>
+            <?php } ?>
+        </table>    
+    </div>
+</div>
+
+
+<!-- personal_excel -->
+
+
 <div class="row"> 
-    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+    <div class="col m12 s12 text-center" style="margin-top: 15px;">
         <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cuadrillas</span>
     </div>
 </div>
@@ -59,3 +145,17 @@
 	</div>
 	<div class="col m2 s12"></div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<script type="text/javascript">
+
+$("#exportBtn4").click(function(){
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "Personal de campo.xlsx",
+            sheet: {
+                name: "Personal de campo"
+            }
+        });
+    });
+
+</script>

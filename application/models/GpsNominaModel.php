@@ -357,5 +357,22 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     } //END GET ASISTENCIA REGISTRO
 
+    public function getnominapagadaexcel(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.id, pn.pago_nomina, pn.fecha_pago, pn.usuario_nomina, pn.solicitud_nomina,
+                sn.id as idnomina, sn.id_personal, sn.personal, sn.sitio, pc.id, pp.nombre as puesto
+                FROM personal_pagonomina pn
+                LEFT JOIN personal_nomina sn ON sn.id = pn.solicitud_nomina
+                LEFT JOIN personal_campo pc ON pc.id = pn.usuario_nomina
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                ORDER BY pn.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
 
 }

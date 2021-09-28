@@ -19,6 +19,7 @@ class AsistenciaController extends Zend_Controller_Action{
     }
 
     public function cuadrillasAction(){
+        $this->view->nominas_pagadas = $this->_nomina->getnominapagadaexcel(); 
     	$sitio = $this->_asistencia->getallsitioscuadrilla(); 
     	$this->_asistencia->trancatecuadrilla(); 
 
