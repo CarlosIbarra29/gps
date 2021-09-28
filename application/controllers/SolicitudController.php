@@ -3938,6 +3938,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->sol_id = $dos['id']; $this->view->nombre_sitio = $dos['nombre_sitio']; 
                 $this->view->nombre_proyecto = $dos['nombre_tipoproyecto']; $this->view->sol_monto = $dos['monto'];
                 $this->view->autorizacion = $dos['autorizacion_status']; 
+                $this->view->comentario = $dos['comentario'];
                 $this->view->pago = $dos['pago_status']; 
                 $this->view->monto_anterior = $dos['monto_anterior'];
                 $this->view->end_solicitud = $dos;

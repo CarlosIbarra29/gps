@@ -231,9 +231,9 @@ class PrestamoController extends Zend_Controller_Action{
 
         $id=$post['usuario'];
         $wh="id";
-        $table="personal_Campo";
-        $usr = $this->_season->GetSpecific($table,$wh,$id);
-        $nombre_personal = $usr[0]['nombre']." ".$usr[0]['apellido_pa']." ".$usr[0]['apellido_ma'];
+        $table="personal_campo";
+        $usrname = $this->_season->GetSpecific($table,$wh,$id);
+        $nombre_personal = $usrname[0]['nombre']." ".$usrname[0]['apellido_pa']." ".$usrname[0]['apellido_ma'];
     
         $id_us=$this->_session->id;
         $wh="id";

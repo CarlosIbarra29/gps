@@ -30,7 +30,14 @@ class AsistenciaController extends Zend_Controller_Action{
         // var_dump($resultado);exit;
     	foreach ($resultado as $key) {
 
-            if($key == 0){
+            if($key == 2222222){
+                $nombre ="Compensacion";
+                $cliente ="";
+                $tipo_proyecto="";
+                $table="sitios_cuadrillas";
+                $this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);   
+            }
+            elseif($key == 0){
                 $nombre ="Taller";
                 $cliente ="";
                 $tipo_proyecto="";
@@ -151,6 +158,8 @@ class AsistenciaController extends Zend_Controller_Action{
 
             if($sitio == "Taller"){
                 $this->view->sitio_info_taller = 1; 
+            }elseif($sitio == "Compensacion"){
+                $this->view->sitio_info_taller = 2; 
             }else{
                 $this->view->sitio_info_taller = 0; 
                 $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']); 

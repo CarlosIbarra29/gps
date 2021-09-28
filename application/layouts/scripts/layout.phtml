@@ -1623,6 +1623,10 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/asistencia/cuadrillas',$actual_link);?>">
                     <a href="/asistencia/cuadrillas">Asistencia<i class="material-icons">event_available</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
+                    <a href="/nomina/solicitudnomina/status/3">Solicitudes Nomina<i class="material-icons">assignment</i></a>
+                </li>
             <?php } ?> 
 
             <?php if($usuarios[0]['fkroles'] == 8){ ?>

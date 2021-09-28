@@ -319,7 +319,7 @@ class PersonalController extends Zend_Controller_Action{
             foreach ($post['ids'] as $key) {                
                 $table="personal_campo";
                 $id = $key;
-                $result = $this->_sitio->asignacionpersonalop($post,$table,$name_sitio,$id,$proyecto);  
+                $result = $this->_sitio->asignacionpersonalopcomp($post,$table,$name_sitio,$id,$proyecto);  
             }
         }
 
@@ -400,7 +400,7 @@ class PersonalController extends Zend_Controller_Action{
             $name_sitio = "Compensacion";
             $sitio= 2222222;
             $table="personal_campo";
-            $result = $this->_sitio->asignacionpersonalasitioindop($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
+            $result = $this->_sitio->asignacionpersonalasitioindopcomp($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
         }
 
         if($post['op'] == 3){

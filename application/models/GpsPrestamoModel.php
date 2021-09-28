@@ -148,8 +148,9 @@ class Application_Model_GpsPrestamoModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pp.id, pp.id_personal, pp.nombre_personal, pp.fecha_prestamo, pp.monto, 
             			pp.cantidad_pagos, pp.motivo, pp.evidencia,pp.status_prestamo, pp.cantidad_saldada, 
-            			pp.fecha_liquidacion
+            			pp.fecha_liquidacion, pc.nombre, pc.apellido_pa, pc.apellido_ma
 						FROM personal_prestamos pp 
+                        LEFT JOIN personal_campo pc ON pc.id = pp.id_personal 
 						WHERE pp.status_prestamo = ?
                         ORDER BY pp.id ASC
                         LIMIT $offset,$no_of_records_per_page",array($op_status));

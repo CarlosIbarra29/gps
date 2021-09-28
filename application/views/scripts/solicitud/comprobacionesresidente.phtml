@@ -342,7 +342,12 @@
               </span>
             </div>
           <!-- </div> -->
-
+          <?php if($this->autorizacion == 1){ ?>
+            <div class="col m12 s12 text-right"> 
+              <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Montivo de Cancelación: <span style="font-size:17px; color: red;"><?php echo $this->comentario; ?></span>
+              </span>
+            </div>
+          <?php } ?>
         </div>
       </div>
     <?php } ?>

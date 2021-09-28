@@ -13,6 +13,13 @@ class NominaController extends Zend_Controller_Action{
     }
 
     public function solicitudnominaAction(){
+        
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->rol_user = $usr[0]['fkroles'];
+
         $status = $this->_getParam('status');
         $this->view->status_documento = $status;
 

@@ -184,7 +184,7 @@
           <tbody>
             <tr>
               <td><?php echo $usr['id']; ?></td>
-              <td><?php echo $usr['nombre_personal']; ?></td>
+              <td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?></td>
               <td><?php echo $usr['fecha_prestamo']; ?></td>
               <td>
                 <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>

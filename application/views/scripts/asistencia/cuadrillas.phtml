@@ -20,7 +20,11 @@
                 foreach ($this->sitios as $usr) { ?>
             <tbody>
                 <tr>
-                    <?php if($usr["nombre_sitio"] == "Taller"){ ?>
+                    <?php if($usr["nombre_sitio"] == "Compensacion"){ ?>
+                        <td>
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Compensación</span>
+                        </td>
+                    <?php } elseif($usr["nombre_sitio"] == "Taller"){ ?>
                         <td>
                             <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Taller</span>
                         </td>
