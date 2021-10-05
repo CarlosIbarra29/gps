@@ -222,6 +222,22 @@ class PersonalController extends Zend_Controller_Action{
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
             $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
         } // END VACACIONES
+
+        if($op == 5){
+            $id=1; $status=0; $wh="status_campo";
+            $table="personal_campo";
+            $pagi_count = $this->_personal->getpersonalasignarcount($id,$status);
+            $count=count($pagi_count);
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 40;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_personal->getpersonalasignarpaginator($offset,$no_of_records_per_page,$id,$status); 
+        } // END Taller Foraneos
     }
 
     public function procesoliberarAction(){
@@ -343,6 +359,16 @@ class PersonalController extends Zend_Controller_Action{
             }       
         }
 
+        if($post['op'] == 5){
+            $name_sitio = "Taller Foraneos";
+            $proyecto=5555555;
+            foreach ($post['ids'] as $key) {                
+                $table="personal_campo";
+                $id = $key;
+                $result = $this->_sitio->asignacionpersonaloptalfor($post,$table,$name_sitio,$id,$proyecto);  
+            }
+        }
+
         if ($result) {
             return $this-> _redirect('/personal/listapersonal');
         }else{
@@ -415,6 +441,13 @@ class PersonalController extends Zend_Controller_Action{
             $sitio= 4444444;
             $table="personal_campo";
             $result = $this->_sitio->asignacionpersonalasitioindopvac($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
+        }
+
+        if($post['op'] == 5){
+            $name_sitio = "Taller Foraneos";
+            $sitio= 5555555;
+            $table="personal_campo";
+            $result = $this->_sitio->asignacionpersonalasitioindoptalfor($post,$table,$name_sitio,$fecha_inicial,$fecha_fianl,$sitio);
         }
 
         if ($result) {

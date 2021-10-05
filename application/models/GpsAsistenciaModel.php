@@ -230,6 +230,18 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+    public function updaterolregistrohorasolicituduno($solicitud,$table,$hoy,$nombre){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET validacion_user = ?, fecha_validacion = ?  WHERE id = ?",array($nombre,$hoy,$solicitud));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
     public function updaterolregistrohorasolicitud($solicitud,$table){
         $value= 1;
         try {

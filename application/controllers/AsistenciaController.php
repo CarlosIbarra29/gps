@@ -46,6 +46,14 @@ class AsistenciaController extends Zend_Controller_Action{
                 $this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);
 
             }
+            elseif($key == 5555555){
+                $nombre ="Taller Foraneos";
+                $cliente ="";
+                $tipo_proyecto="";
+                $table="sitios_cuadrillas";
+                $this->_asistencia->insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table);
+
+            }
             elseif($key == 0){
                 $nombre ="Taller";
                 $cliente ="";
@@ -168,9 +176,11 @@ class AsistenciaController extends Zend_Controller_Action{
             if($sitio == "Taller"){
                 $this->view->sitio_info_taller = 1; 
             }elseif($sitio == "Compensacion"){
-                $this->view->sitio_info_taller = 2; 
+                $this->view->sitio_info_taller = 2;
             }elseif($sitio == "Vacaciones"){
                 $this->view->sitio_info_taller = 3; 
+            }elseif($sitio == "Taller Foraneos"){
+                $this->view->sitio_info_taller = 4; 
             }else{
                 $this->view->sitio_info_taller = 0; 
                 $this->view->sitio_info = $this->_season->GetSpecific($table,$wh,$info[0]['id_sitiopersonal']); 
@@ -564,6 +574,21 @@ class AsistenciaController extends Zend_Controller_Action{
             $this->_asistencia->updaterolregistrohorapersonaldos($solicitud,$table);
             // $this->_asistencia->updaterolregistrohorapersonal($id_user,$table,$horaextra);
         }
+
+        $solicitud = $post['solicitud'];
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $nombre= $usr[0]['nombre']." ".$usr[0]['ap'];
+        $id_usuario = $usr[0]['id'];
+
+        $table="personal_solicitudhoras";
+        $this->_asistencia->updaterolregistrohorasolicituduno($solicitud,$table,$hoy,$nombre);
 
         foreach ($post['validar'] as $key) {
             $solicitud = $key;

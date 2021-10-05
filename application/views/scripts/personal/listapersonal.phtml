@@ -96,6 +96,9 @@ function eliminar_acentos($cadena){
 	.oculto{
 		display: none;
 	}
+    .table_wrapper{
+        overflow-x: auto;
+    }
 </style>
 
 
@@ -106,7 +109,7 @@ function eliminar_acentos($cadena){
 </div>
 
 <div class="row oculto">
-    <div class="row excel-div" id="tab3">
+    <div class="row excel-div " id="tab3">
         <table class="table text-left table-hover" >
             <thead>
                 <tr>
@@ -223,7 +226,7 @@ function eliminar_acentos($cadena){
 
 
 <div class="row">
-    <div class="col m12 s12">
+    <div class="col m12 s12 table_wrapper">
         <div class="row">
             <div class="col m8 s6">
                 <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista del Personal</span>
@@ -239,7 +242,7 @@ function eliminar_acentos($cadena){
                 </div>
             </div>
         </div>
-        <table class="table text-left table-hover">
+        <table class="table text-left table-hover ">
             <thead>
                 <tr style="background-color: #EDEDED;">
                     <th>Nombre</th> 
@@ -355,29 +358,39 @@ function eliminar_acentos($cadena){
         </div>
 
         <div class="row">
-            <div class="col m2 s6 text-center">
+            <div class="col m4 s4 text-center">
                 <div class="chip modal-trigger" id="sitio_op">
                     <img src="/img/correct.png" class="sitio_uno">
                     <img src="/img/gris.jpg" class="sitio_dos oculto">
                     Sitio
                 </div>
             </div>
-            <div class="col m4 s6 text-center">
+            <div class="col m4 s4 text-center">
                 <div class="chip modal-trigger" id="compensacion_op">
                     <img src="/img/gris.jpg" class="comp_uno">
                     <img src="/img/correct.png" class="comp_dos oculto">
                     Compensación
                 </div>
             </div>
-            <div class="col m3 s6 text-center">
+            <div class="col m4 s4 text-center">
                 <div class="chip modal-trigger" id="taller_op">
                     <img src="/img/gris.jpg" class="taller_uno">
                     <img src="/img/correct.png" class="taller_dos oculto">
                     Taller
                 </div>
             </div>
+        </div>
 
-            <div class="col m3 s6 text-center">
+        <div class="row">
+            <div class="col m6 s6 text-center">
+                <div class="chip modal-trigger" id="taller_opfor">
+                    <img src="/img/gris.jpg" class="taller_unofor">
+                    <img src="/img/correct.png" class="taller_dosfor oculto">
+                    Taller Foráneos
+                </div>
+            </div>
+
+            <div class="col m6 s6 text-center">
                 <div class="chip modal-trigger" id="vacaciones_op">
                     <img src="/img/gris.jpg" class="vacaciones_uno">
                     <img src="/img/correct.png" class="vacaciones_dos oculto">
@@ -458,6 +471,23 @@ function eliminar_acentos($cadena){
         </div>
 
 
+        <div class="row oculto" style="margin-top: 20px;" id="div_tallerfor">
+            <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_tallerfor">
+                <input type="hidden" name="op" value="5">
+                <input type="hidden" name="id_user" id="id_usercinco" value="">
+                <div class="input-field col m6 s12">
+                    <input id="fecha_inicialtallerfor" name="fecha_inicial" type="date" class="datepicker">
+                    <label for="fecha_inicialtallerfor">* Fecha Inicial</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <input id="fecha_finaltallerfor" name="fecha_final" type="date" class="datepicker">
+                    <label for="fecha_finaltallerfor">* Fecha Final</label>
+                </div>
+            </form>
+        </div>
+
+
         <div class="row oculto" style="margin-top: 20px;" id="div_vacaciones">
             <form action="/personal/requestaddpersonalasignar" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_vacaciones">
                 <input type="hidden" name="op" value="4">
@@ -479,6 +509,7 @@ function eliminar_acentos($cadena){
         <button class=" btn" id="adduser">Guardar</button>
         <button class=" btn oculto" id="btn_compensacion">Guardar</button>
         <button class=" btn oculto" id="btn_taller">Guardar</button>
+        <button class=" btn oculto" id="btn_tallerfor">Guardar</button>
         <button class=" btn oculto" id="btn_vacaciones">Guardar</button>
 
         <button  class="modal-close red btn">Cerrar</button>
@@ -505,6 +536,7 @@ function eliminar_acentos($cadena){
         document.getElementById("id_userdos").value=id;
         document.getElementById("id_usertres").value=id;
         document.getElementById("id_usercuatro").value=id;
+         document.getElementById("id_usercinco").value=id;
     });
 
 
@@ -658,16 +690,19 @@ function eliminar_acentos($cadena){
         $(".sitio_uno").show(); $(".sitio_dos").hide();
         $(".comp_uno").show(); $(".comp_dos").hide();
         $(".taller_uno").show(); $(".taller_dos").hide();
+        $(".taller_unofor").show(); $(".taller_dosfor").hide();
         $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
 
         $("#div_sitio").show();
         $("#div_compensacion").hide();
         $("#div_taller").hide();
+        $("#div_tallerfor").hide();
         $("#div_vacaciones").hide();
 
         $("#adduser").show();
         $("#btn_compensacion").hide();
         $("#btn_taller").hide();
+        $("#btn_tallerfor").hide();
         $("#btn_vacaciones").hide();
     });
 
@@ -675,21 +710,25 @@ function eliminar_acentos($cadena){
         $(".sitio_uno").hide(); $(".sitio_dos").show();
         $(".comp_uno").hide(); $(".comp_dos").show();
         $(".taller_uno").show(); $(".taller_dos").hide();
+         $(".taller_unofor").show(); $(".taller_dosfor").hide();
         $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
 
         $("#div_sitio").hide();
         $("#div_compensacion").show();
         $("#div_taller").hide();
+        $("#div_tallerfor").hide();
         $("#div_vacaciones").hide();
 
         $("#adduser").hide();
         $("#btn_compensacion").show();
         $("#btn_taller").hide();
+        $("#btn_tallerfor").hide();
         $("#btn_vacaciones").hide();
     });
 
     $("#taller_op").click(function(){
         $(".taller_uno").hide(); $(".taller_dos").show();
+        $(".taller_unofor").show(); $(".taller_dosfor").hide();
         $(".sitio_uno").hide(); $(".sitio_dos").show();
         $(".comp_uno").show(); $(".comp_dos").hide();
         $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
@@ -697,11 +736,33 @@ function eliminar_acentos($cadena){
         $("#div_sitio").hide();
         $("#div_compensacion").hide();
         $("#div_taller").show();
+        $("#div_tallerfor").hide();
         $("#div_vacaciones").hide();
 
         $("#adduser").hide();
         $("#btn_compensacion").hide();
         $("#btn_taller").show();
+        $("#btn_tallerfor").hide();
+        $("#btn_vacaciones").hide();
+    });
+
+    $("#taller_opfor").click(function(){
+        $(".taller_unofor").hide(); $(".taller_dosfor").show();
+        $(".taller_uno").show(); $(".taller_dos").hide();
+        $(".sitio_uno").hide(); $(".sitio_dos").show();
+        $(".comp_uno").show(); $(".comp_dos").hide();
+        $(".vacaciones_uno").show(); $(".vacaciones_dos").hide();
+
+        $("#div_sitio").hide();
+        $("#div_compensacion").hide();
+        $("#div_taller").hide();
+        $("#div_tallerfor").show();
+        $("#div_vacaciones").hide();
+
+        $("#adduser").hide();
+        $("#btn_compensacion").hide();
+        $("#btn_taller").hide();
+        $("#btn_tallerfor").show();
         $("#btn_vacaciones").hide();
     });
 
@@ -709,16 +770,19 @@ function eliminar_acentos($cadena){
         $(".sitio_uno").hide(); $(".sitio_dos").show();
         $(".comp_uno").show(); $(".comp_dos").hide();
         $(".taller_uno").show(); $(".taller_dos").hide();
+         $(".taller_unofor").show(); $(".taller_dosfor").hide();
         $(".vacaciones_uno").hide(); $(".vacaciones_dos").show();
 
         $("#div_sitio").hide();
         $("#div_compensacion").hide();
         $("#div_taller").hide();
+        $("#div_tallerfor").hide();
         $("#div_vacaciones").show();
 
         $("#adduser").hide();
         $("#btn_compensacion").hide();
         $("#btn_taller").hide();
+        $("#btn_tallerfor").hide();
         $("#btn_vacaciones").show();
     });
 
@@ -781,7 +845,24 @@ function eliminar_acentos($cadena){
     });
     function submitvacaciones() { document.getElementById("submit_vacaciones").submit() }
     
+    $("#btn_tallerfor").click(function(){
+        var id_user = document.getElementById("id_user").value;
+        var fecha_inicial = document.getElementById("fecha_inicialtallerfor").value;
+        var fecha_final = document.getElementById("fecha_finaltallerfor").value;
 
+        if(id_user == "" ||  fecha_inicial=="" || fecha_final== ""){
+            swal({
+                title: "Para asignar al personal es necesario llenar los datos",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submittallerfor, 1500);     
+        }
+    });
+    function submittallerfor() { document.getElementById("submit_tallerfor").submit() }
 
     $("#exportBtn4").click(function(){
         TableToExcel.convert(document.getElementById("tab3"), {
