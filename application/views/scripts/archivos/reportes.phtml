@@ -398,8 +398,16 @@
         </div>
 
         <div class="row">
-          <div class="col m12 s12 text-center">
-            <button type="button" id="reporte_filtrado" class="btn">Crear Reporte</button>
+          <div class="col m12 s12 text-center" id="busbtn_sitio">
+            <button type="button" id="reporte_filtradosto" class="btn">Crear Reporte</button>
+          </div>
+
+          <div class="col m12 s12 text-center oculto" id="busbtn_proveedor">
+            <button type="button" id="reporte_filtradoprv" class="btn">Crear Reporte</button>
+          </div>
+
+          <div class="col m12 s12 text-center oculto" id="busbtn_usuario">
+            <button type="button" id="reporte_filtradousr" class="btn">Crear Reporte</button>
           </div>
         </div>
 
@@ -873,25 +881,51 @@
       $("#bus_sitio").show();
       $("#bus_proveedor").hide();
       $("#bus_usuario").hide();
+
+      $("#busbtn_sitio").show();
+      $("#busbtn_proveedor").hide();
+      $("#busbtn_usuario").hide();
     }
 
     if(value == 2){
       $("#bus_sitio").hide();
       $("#bus_proveedor").show();
       $("#bus_usuario").hide();
+
+      $("#busbtn_sitio").hide();
+      $("#busbtn_proveedor").show();
+      $("#busbtn_usuario").hide();
     }
 
     if(value == 3){
       $("#bus_sitio").hide();
       $("#bus_proveedor").hide();
       $("#bus_usuario").show();
+
+      $("#busbtn_sitio").hide();
+      $("#busbtn_proveedor").hide();
+      $("#busbtn_usuario").show();
     }
   });
 
-  $("#reporte_filtrado").click(function(){
-    alert("Esta accion por el momento esta en desarrollo");
+  // $("#reporte_filtrado").click(function(){
+  //   alert("Esta accion por el momento esta en desarrollo");
+  // });
+
+  $("#reporte_filtradosto").click(function(){
+    var sitio = document.getElementById("sitio_sol").value;
+    window.location.href = "/archivos/excelordencompraesp/sitio/"+sitio+"/op/1";
   });
 
+  $("#reporte_filtradoprv").click(function(){
+    var proveedor = document.getElementById("proveedor_sol").value;
+    window.location.href = "/archivos/excelordencompraesp/proveedor/"+proveedor+"/op/2";
+  });
+
+  $("#reporte_filtradousr").click(function(){
+    var usuario = document.getElementById("user_sol").value;
+    window.location.href = "/archivos/excelordencompraesp/usuario/"+usuario+"/op/3";
+  });
 
   $("#reporte_completo_bus").click(function(){
 

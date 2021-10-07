@@ -5847,6 +5847,78 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
     }
 
 
+    public function getsolicitudesSitioAll($sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sit.id_cliente, sc.id as idsolicitud, sc.nombre_sitio,sc.name_proveedor, 
+                        s.nombre_servicio, sc.name_user, sc.fecha_creacion,sc.fecha_validacion as fecha_auditoria,
+                        sc.fecha_validaciondos as fecha_direccion, sc.fecha_pago, sc.importe, sc.iva, 
+                        sc.retencion_iva, sc.retencion_isr, sc.total, sc.condiciones_compra, sc.status_documento as
+                        direccion,sc.status_documentouno as auditoria,sc.status_pago, sc.descripcion,sc.referencia,
+                        tp.nombre_proyecto
+                        FROM solicitud_ordencompra sc
+                        LEFT JOIN servicios s on sc.servicio_id = s.id
+                        LEFT JOIN sitios sit on sit.id = sc.sitio_id
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = sc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto
+                        WHERE nombre_sitio  like '%{$sitio}%' ");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }    
+    }
+
+
+    public function getsolicitudesPrvAll($proveedor){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sit.id_cliente, sc.id as idsolicitud, sc.nombre_sitio,sc.name_proveedor, 
+                        s.nombre_servicio, sc.name_user, sc.fecha_creacion,sc.fecha_validacion as fecha_auditoria,
+                        sc.fecha_validaciondos as fecha_direccion, sc.fecha_pago, sc.importe, sc.iva, 
+                        sc.retencion_iva, sc.retencion_isr, sc.total, sc.condiciones_compra, sc.status_documento as
+                        direccion,sc.status_documentouno as auditoria,sc.status_pago, sc.descripcion,sc.referencia,
+                        tp.nombre_proyecto
+                        FROM solicitud_ordencompra sc
+                        LEFT JOIN servicios s on sc.servicio_id = s.id
+                        LEFT JOIN sitios sit on sit.id = sc.sitio_id
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = sc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto
+                        WHERE name_proveedor  like '%{$proveedor}%' ");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }    
+    }
+
+
+    public function getsolicitudesUsrAll($usuario){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sit.id_cliente, sc.id as idsolicitud, sc.nombre_sitio,sc.name_proveedor, 
+                        s.nombre_servicio, sc.name_user, sc.fecha_creacion,sc.fecha_validacion as fecha_auditoria,
+                        sc.fecha_validaciondos as fecha_direccion, sc.fecha_pago, sc.importe, sc.iva, 
+                        sc.retencion_iva, sc.retencion_isr, sc.total, sc.condiciones_compra, sc.status_documento as
+                        direccion,sc.status_documentouno as auditoria,sc.status_pago, sc.descripcion,sc.referencia,
+                        tp.nombre_proyecto
+                        FROM solicitud_ordencompra sc
+                        LEFT JOIN servicios s on sc.servicio_id = s.id
+                        LEFT JOIN sitios sit on sit.id = sc.sitio_id
+                        LEFT JOIN sitios_tipoproyecto stp on stp.id = sc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto tp on tp.id = stp.id_tipoproyecto
+                        WHERE name_user  like '%{$usuario}%' ");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }    
+    }
+
+
  // F E C H A S    G R A F I C A S
 
     public function getdireccionsitiograficas($nombre,$year,$month){

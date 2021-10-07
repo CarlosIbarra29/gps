@@ -258,4 +258,39 @@ class ArchivosController extends Zend_Controller_Action{
         $this->view->oficina = $this->_comprobacion->getfacturasasignadaoficina();
         $this->view->oficina_dos = $this->_comprobacion->getfacturasasignadaoficinados();
     }
+
+    public function excelordencompraespAction(){
+
+        $op=$this->_getParam('op');
+        $this->view->op_select=$op;
+
+        if($op == 1){
+            
+            $sitio = $this->_getParam('sitio');
+            $this->view->sitio = $sitio;
+            
+            $this->view->sitioexc = $this->_ordencompra->getsolicitudesSitioAll($sitio);
+
+        }
+
+        if($op == 2){
+            
+            $proveedor = $this->_getParam('proveedor');
+            $this->view->proveedor = $proveedor;$sitio;
+            
+            $this->view->proveedorexc = $this->_ordencompra->getsolicitudesPrvAll($proveedor);
+
+        }
+
+        if($op == 3){
+            
+            $usuario = $this->_getParam('usuario');
+            $this->view->usuario = $usuario;
+            
+            $this->view->usuarioexc = $this->_ordencompra->getsolicitudesUsrAll($usuario);
+
+        }
+
+    }
+
 }

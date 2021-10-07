@@ -1,0 +1,472 @@
+<?php 
+function eliminar_acentos($cadena){
+        
+        //Reemplazamos la A y a
+        $cadena = str_replace(
+        array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+        array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+        $cadena
+        );
+
+        //Reemplazamos la E y e
+        $cadena = str_replace(
+        array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+        array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+        $cadena );
+
+        //Reemplazamos la I y i
+        $cadena = str_replace(
+        array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+        array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+        $cadena );
+
+        //Reemplazamos la O y o
+        $cadena = str_replace(
+        array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+        array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+        $cadena );
+
+        //Reemplazamos la U y u
+        $cadena = str_replace(
+        array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+        array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+        $cadena );
+
+        //Reemplazamos la N, n, C y c
+        $cadena = str_replace(
+        array('Ñ', 'ñ', 'Ç', 'ç'),
+        array('N', 'n', 'C', 'c'),
+        $cadena
+        );
+        
+        return $cadena;
+    }
+?>
+<style type="text/css">
+.excel-div {
+    width: 98%;
+    height: 70em;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.oculto{
+    display: none;
+}
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+            <a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+    <?php if($this->op_select == 1){ ?>
+        <div class="col m6 s6 text-right">
+            <a class=" btn" id="exportBtn1"><i class="material-icons right">file_download</i>Descargar</a>
+        </div>
+    <?php } ?>
+
+    <?php if($this->op_select == 2){ ?>
+        <div class="col m6 s6 text-right">
+            <a class=" btn" id="exportBtn2"><i class="material-icons right">file_download</i>Descargar</a>
+        </div>
+    <?php } ?>
+
+
+    <?php if($this->op_select == 3){ ?>
+        <div class="col m6 s6 text-right">
+            <a class=" btn" id="exportBtn3"><i class="material-icons right">file_download</i>Descargar</a>
+        </div>
+    <?php } ?>
+</div>
+
+
+<?php if($this->op_select == 1){ ?>
+    <div class="row">
+    	<div class="col m12 s12 text-center">
+    		<span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Solicitudes Compra</span>
+    	</div>
+    	<div class="col m12 s12 text-center">
+    		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Por Sitio</span>
+    	</div>
+    </div>
+<?php } ?>
+
+<?php if($this->op_select == 2){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Solicitudes Compra</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Por Proveedor</span>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if($this->op_select == 3){ ?>
+    <div class="row">
+        <div class="col m12 s12 text-center">
+            <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Solicitudes Compra</span>
+        </div>
+        <div class="col m12 s12 text-center">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Por Usuario</span>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if($this->op_select == 1){ ?>
+
+<div class="row excel-div" id="tab1">
+    <table class="table text-left table-hover" >
+        <thead>
+            <tr>
+                <th>Id Solicitud</th>
+                <th>Id cliente</th>
+                <th>Nombre sitio</th>
+                <th>Proyecto</th>
+                <th>Proveedor</th>
+                <th>Servicio</th>
+                <th>Nombre solicitante</th>
+                <th>Importe</th>
+                <th>IVA</th>
+                <th>Retencion IVA</th>
+                <th>Retencion ISR</th>
+                <th>Total</th>
+                <th>Descripcion</th>
+                <th>Condicion de compra</th>
+                <th>Referencia</th>
+                <th>Fecha Creacion</th>
+                <th>Fecha Auditoria</th>
+                <th>Fecha Direccion</th>
+                <th>Fecha Pago</th>
+                <th>Status Auditoria</th>
+                <th>Status Direccion</th>
+                <th>Status Pago</th>
+                
+            </tr> 
+        </thead>
+        <?php 
+        foreach ($this->sitioexc as $usr) { ?>
+        <tbody>
+            <tr>
+                <td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+                <td><?php echo $usr['importe']; ?></td>
+                <td><?php echo $usr['iva']; ?></td>
+                <td><?php echo $usr['retencion_iva']; ?></td>
+                <td><?php echo $usr['retencion_isr']; ?></td>
+                <td><?php echo $usr['total']; ?></td>
+                <td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["referencia"]); ?></td>                
+                <td><?php echo $usr['fecha_creacion']; ?></td>
+                <td><?php echo $usr['fecha_auditoria']; ?></td>
+                <td><?php echo $usr['fecha_direccion']; ?></td>
+                <td><?php echo $usr['fecha_pago'] ?></td>
+                <td>
+                    <?php if($usr['auditoria'] == 0){ ?>
+                        En Proceso
+                    <?php } ?>
+
+                    <?php if($usr['auditoria'] == 1){ ?>
+                        Autorizada
+                    <?php } ?>  
+
+                    <?php if($usr['auditoria'] == 2){ ?>
+                        Rechazada
+                    <?php } ?>          
+                </td>
+                
+                <td>
+                    <?php if($usr['direccion'] == 0){ ?>
+                        En Proceso
+                    <?php }?>
+
+                    <?php if($usr['direccion'] == 1){ ?>
+                        Autorizada
+                    <?php }?>
+
+
+                    <?php if($usr['direccion'] == 2){ ?>
+                        Rechazada
+                    <?php }?>
+                </td>
+
+                <td>
+                    <?php if($usr['status_pago'] == 0){ ?>
+                        No Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 1){ ?>
+                        Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 2){ ?>
+                        En pagos / No liquidada
+                    <?php } ?>
+                </td>
+                
+            </tr>
+        </tbody>
+        <?php } ?>
+    </table>    
+</div>
+
+<?php } ?>
+
+
+<?php if($this->op_select == 2){ ?>
+
+<div class="row excel-div" id="tab2">
+    <table class="table text-left table-hover" >
+        <thead>
+            <tr>
+                <th>Id Solicitud</th>
+                <th>Id cliente</th>
+                <th>Nombre sitio</th>
+                <th>Proyecto</th>
+                <th>Proveedor</th>
+                <th>Servicio</th>
+                <th>Nombre solicitante</th>
+                <th>Importe</th>
+                <th>IVA</th>
+                <th>Retencion IVA</th>
+                <th>Retencion ISR</th>
+                <th>Total</th>
+                <th>Descripcion</th>
+                <th>Condicion de compra</th>
+                <th>Referencia</th>
+                <th>Fecha Creacion</th>
+                <th>Fecha Auditoria</th>
+                <th>Fecha Direccion</th>
+                <th>Fecha Pago</th>
+                <th>Status Auditoria</th>
+                <th>Status Direccion</th>
+                <th>Status Pago</th>
+                
+            </tr> 
+        </thead>
+        <?php 
+        foreach ($this->proveedorexc as $usr) { ?>
+        <tbody>
+            <tr>
+                <td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+                <td><?php echo $usr['importe']; ?></td>
+                <td><?php echo $usr['iva']; ?></td>
+                <td><?php echo $usr['retencion_iva']; ?></td>
+                <td><?php echo $usr['retencion_isr']; ?></td>
+                <td><?php echo $usr['total']; ?></td>
+                <td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["referencia"]); ?></td>                
+                <td><?php echo $usr['fecha_creacion']; ?></td>
+                <td><?php echo $usr['fecha_auditoria']; ?></td>
+                <td><?php echo $usr['fecha_direccion']; ?></td>
+                <td><?php echo $usr['fecha_pago'] ?></td>
+                <td>
+                    <?php if($usr['auditoria'] == 0){ ?>
+                        En Proceso
+                    <?php } ?>
+
+                    <?php if($usr['auditoria'] == 1){ ?>
+                        Autorizada
+                    <?php } ?>  
+
+                    <?php if($usr['auditoria'] == 2){ ?>
+                        Rechazada
+                    <?php } ?>          
+                </td>
+                
+                <td>
+                    <?php if($usr['direccion'] == 0){ ?>
+                        En Proceso
+                    <?php }?>
+
+                    <?php if($usr['direccion'] == 1){ ?>
+                        Autorizada
+                    <?php }?>
+
+
+                    <?php if($usr['direccion'] == 2){ ?>
+                        Rechazada
+                    <?php }?>
+                </td>
+
+                <td>
+                    <?php if($usr['status_pago'] == 0){ ?>
+                        No Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 1){ ?>
+                        Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 2){ ?>
+                        En pagos / No liquidada
+                    <?php } ?>
+                </td>
+                
+            </tr>
+        </tbody>
+        <?php } ?>
+    </table>    
+</div>
+
+<?php } ?>
+
+
+<?php if($this->op_select == 3){ ?>
+
+<div class="row excel-div" id="tab3">
+    <table class="table text-left table-hover" >
+        <thead>
+            <tr>
+                <th>Id Solicitud</th>
+                <th>Id cliente</th>
+                <th>Nombre sitio</th>
+                <th>Proyecto</th>
+                <th>Proveedor</th>
+                <th>Servicio</th>
+                <th>Nombre solicitante</th>
+                <th>Importe</th>
+                <th>IVA</th>
+                <th>Retencion IVA</th>
+                <th>Retencion ISR</th>
+                <th>Total</th>
+                <th>Descripcion</th>
+                <th>Condicion de compra</th>
+                <th>Referencia</th>
+                <th>Fecha Creacion</th>
+                <th>Fecha Auditoria</th>
+                <th>Fecha Direccion</th>
+                <th>Fecha Pago</th>
+                <th>Status Auditoria</th>
+                <th>Status Direccion</th>
+                <th>Status Pago</th>
+                
+            </tr> 
+        </thead>
+        <?php 
+        foreach ($this->usuarioexc as $usr) { ?>
+        <tbody>
+            <tr>
+                <td><?php echo eliminar_acentos($usr["idsolicitud"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["id_cliente"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_sitio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_proveedor"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["name_user"]); ?></td>
+                <td><?php echo $usr['importe']; ?></td>
+                <td><?php echo $usr['iva']; ?></td>
+                <td><?php echo $usr['retencion_iva']; ?></td>
+                <td><?php echo $usr['retencion_isr']; ?></td>
+                <td><?php echo $usr['total']; ?></td>
+                <td><?php echo eliminar_acentos($usr["descripcion"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["condiciones_compra"]); ?></td>
+                <td><?php echo eliminar_acentos($usr["referencia"]); ?></td>                
+                <td><?php echo $usr['fecha_creacion']; ?></td>
+                <td><?php echo $usr['fecha_auditoria']; ?></td>
+                <td><?php echo $usr['fecha_direccion']; ?></td>
+                <td><?php echo $usr['fecha_pago'] ?></td>
+                <td>
+                    <?php if($usr['auditoria'] == 0){ ?>
+                        En Proceso
+                    <?php } ?>
+
+                    <?php if($usr['auditoria'] == 1){ ?>
+                        Autorizada
+                    <?php } ?>  
+
+                    <?php if($usr['auditoria'] == 2){ ?>
+                        Rechazada
+                    <?php } ?>          
+                </td>
+                
+                <td>
+                    <?php if($usr['direccion'] == 0){ ?>
+                        En Proceso
+                    <?php }?>
+
+                    <?php if($usr['direccion'] == 1){ ?>
+                        Autorizada
+                    <?php }?>
+
+
+                    <?php if($usr['direccion'] == 2){ ?>
+                        Rechazada
+                    <?php }?>
+                </td>
+
+                <td>
+                    <?php if($usr['status_pago'] == 0){ ?>
+                        No Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 1){ ?>
+                        Pagada
+                    <?php } ?>
+
+                    <?php if($usr['status_pago'] == 2){ ?>
+                        En pagos / No liquidada
+                    <?php } ?>
+                </td>
+                
+            </tr>
+        </tbody>
+        <?php } ?>
+    </table>    
+</div>
+
+<?php } ?>
+
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("d-m-Y");
+?>
+
+<input type="hidden" id="hoy" value="<?php echo $hoy; ?>">
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+<script type="text/javascript">
+    $("#exportBtn1").click(function(){
+        var hoy = document.getElementById("hoy").value;
+        TableToExcel.convert(document.getElementById("tab1"), {
+            name: "Solicitudes Compra Sitio "+hoy+" .xlsx",
+            sheet: {
+                name: "Solicitudes Compra Sitio "+hoy+""
+            }
+        });
+    });
+
+    $("#exportBtn2").click(function(){
+        var hoy = document.getElementById("hoy").value;
+        TableToExcel.convert(document.getElementById("tab2"), {
+            name: "Solicitudes Compra Proveedor "+hoy+" .xlsx",
+            sheet: {
+                name: "Solicitudes Compra Proveedor "+hoy+""
+            }
+        });
+    });
+
+    $("#exportBtn3").click(function(){
+        var hoy = document.getElementById("hoy").value;
+        TableToExcel.convert(document.getElementById("tab3"), {
+            name: "Solicitudes Compra Usuario "+hoy+" .xlsx",
+            sheet: {
+                name: "Solicitudes Compra Usuario "+hoy+""
+            }
+        });
+    });
+</script>
