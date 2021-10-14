@@ -188,6 +188,7 @@
 				<tr>
 					<th>NO.</th>
 					<th>Usuario</th>
+					<th>Fecha Creación</th>
 					<th>Sitio</th>		
 					<th>Residente</th>
 					<th>Monto</th>
@@ -206,6 +207,9 @@
 					</td>
 					<td>
 						<?php echo $usr['user_solicitud']; ?>
+					</td>
+					<td>
+						<?php echo  date("d-m-Y", strtotime($usr['fecha_solicitud'])); ?>
 					</td>
 					<td>
 						<span style="font-weight: bold;"><?php echo $usr['nombre_sitio']; ?> </span>

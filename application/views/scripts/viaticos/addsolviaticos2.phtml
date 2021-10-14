@@ -1,0 +1,94 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/viaticos/updatesolviaticos/id/<?php echo $this->id; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar Paso 1</a>    
+    </div>
+</div> 
+
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+	<div class="col m12 s12 text-center">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Viáticos <br/>Paso 2</span>
+	</div>
+</div>
+
+
+<?php foreach ($this->solicitud as $viaticosol) { ?> 
+	<div class="col m12 s12">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em;">Viáticos para: <?php echo $viaticosol['name_personal'] ?></span>
+	</div>
+<?php } ?>
+
+<div class="row" style="margin-top: 15px;"></div> 
+
+<div class="row">
+	<div class="col m12 s12">
+		<form action="/viaticos/requestadddosviaticos" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitpasodosviaticos">
+			<input type="hidden" name="idsol" value="<?php echo $this->id; ?>">
+
+
+			<div class="input-field col m6 s12">
+	    		<select id="proyecto" name="proyecto"> 
+	      			<option value="0" disabled selected>Selecciona un Sitio</option>
+	      			<?php foreach ($this->proyecto as $key){ ?>
+	      				<option value="<?php echo $key['id']; ?>"><?php echo $key['id']; ?> - Sitio : <?php echo $key['nombre']; ?> - <?php echo $key['nombre_proyecto']; ?> </option>
+	      			<?php } ?>
+	    		</select>
+	    		<label>* Proyecto:</label>
+	  		</div>
+
+	  		<div class="input-field col m6 s12 ">
+				<i class="material-icons prefix">today</i>
+				<input id="dia" type="number" name="dia" class="validanumeros">
+				<label for="dia">* Días de Viáticos:</label>
+			</div>
+
+    	</form>
+
+
+		<div class="input-field col m12 s12 text-right">
+			<div class="row">
+				<a href="/viaticos/solviaticos" class="red btn">Salir</a>
+				<button  id="sendpasodos" class="btn">Terminar Solicitud</button>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+    	$('.datepicker').datepicker();
+    	$('select').formSelect();
+    	$('.validanumeros').keypress(function(e) {
+    		if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+    			return false;
+    	})
+    	.on("cut copy paste",function(e){
+			e.preventDefault();
+		});
+    });
+
+    $("#sendpasodos").click(function(){
+
+        var proyecto = document.getElementById("proyecto").value;
+        var dia = document.getElementById("dia").value;
+
+        if( proyecto == 0 || dia == ""){
+            swal({
+              title: "Para continuar debes agregar toda la informacion requerida ",
+            });
+        }else{
+          swal("Espere un momento, la información esta siendo procesada", {
+            icon: "success",
+            buttons: false,
+          }); 
+          setTimeout(submitForm, 1500);     
+        }
+    });
+
+
+    function submitForm() { document.getElementById("submitpasodosviaticos").submit() }
+
+  </script>
+
+

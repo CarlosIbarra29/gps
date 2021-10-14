@@ -1,0 +1,242 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<style type="text/css">
+	.oculto{display: none;}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s6"> </div>
+	<div class="col m6 s6 text-right">
+		<a class="waves-effect btn modal-trigger" href="/viaticos/addsolviaticos">+ Crear Solicitud</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Víaticos
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col m8 s8">
+				<!-- <h3>Lista de solicitudes de orden de compra </h3> -->
+				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes Pendientes</span>
+			</div>
+			<div class="col m4 s4 text-right">
+				<a href="/viaticos/listasolicitudvtc/status/0"> <h4 style="color: blue;">Solicitudes en Proceso <i class="material-icons">receipt</i></h4></a>
+			</div>
+		</div>
+
+
+
+
+		<div class="col m12 s12 table_wrapper">
+			<table class="table text-left table-hover ">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Personal</th>
+						<th>Puesto</th>
+						<th>Sitio</th>
+						<th>Fecha Inicial</th>
+						<th>Fecha Final</th>
+						<th>Status Solicitud</th>
+						<th></th>
+						<th></th>
+					</tr> 
+				</thead>
+				<?php
+				if ($this->paginator) { 
+				foreach ($this->paginator as $viaticosol) { ?>
+				<tbody>
+					<tr>
+						<td>
+							<?php echo $viaticosol['id']; ?>
+						</td>
+						<td>
+							<?php echo $viaticosol['name_personal']; ?>
+						</td>
+						<td>
+							<?php echo $viaticosol['namepuesto']; ?>
+						</td>
+						<td>
+							<?php echo $viaticosol['name_sitio']; ?>
+						</td>
+						<td>
+							<?php echo $viaticosol['fecha_inicio']; ?>
+						</td>
+						<td>
+							<?php echo $viaticosol['fecha_fin']; ?>
+						</td>
+						<td>
+							<?php if($viaticosol['status_solicitud'] == 0){ ?>
+								Sin Terminar 
+							<?php } ?>
+
+							<?php if($viaticosol['status_solicitud'] == 1){ ?>
+								En Proceso
+							<?php } ?>
+						</td>
+						<td>
+							<a href="/viaticos/updatesolviaticos/id/<?php echo $viaticosol["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+						</td>
+
+						<td>
+							<a class="delete" data-id="<?php echo $viaticosol["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+						</td>
+
+					</tr>
+			    <?php } }else{ ?>
+			    </tbody> 
+			    <tbody>
+			        <tr>
+			            <td class="text-center" colspan="6"><h4>No hay solicitudes pendientes. !Revisa en solicitudes en proceso!</h4></td>
+			        </tr>
+			    </tbody>
+			                
+			    <?php } ?>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+ <script type="text/javascript">
+
+  $(".delete").click(function(){
+	swal({
+	  title: "¿Estás seguro de eliminar el registro?",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+			swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			});  
+  			var	id = $(this).data('id')
+            var request = $.ajax({
+                url:"/viaticos/requestdeletesolv",
+                method:"POST",
+                data: { id: id },
+                processData: true,
+                // contentType: false,
+            });
+//-------------------end de ajax---------------------------
+
+//-------------peticion de respuesta de ajax------------------
+            request.done(function(response) {
+                console.log(response);//imprime lo que responde el ajax
+                // alert
+                window.location.reload(true);
+            });
+//-------------------end de respuesta ajax---------------------
+             return false;
+
+
+	  } else {
+	    swal("El cambio de status fue cancelado!");
+	  }
+	});
+
+  });
+ </script>
+
+

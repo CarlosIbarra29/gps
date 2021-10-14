@@ -1,0 +1,122 @@
+<style type="text/css">
+  .oculto{display: none;}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+        <a href="/viaticos/solviaticos" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px; margin-top:15px;">
+    <div class="col m12 s12 text-center">
+      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud de Viáticos Paso 1</span>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 19px;">
+    <div class="col m12 s12"> 
+        <form action="/viaticos/requestupdatesolvia" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitudp">
+            <input type="hidden" name="ids" value="<?php echo $this->ids; ?>">
+            <?php foreach ($this->solicitudes as $solv){ ?>
+                
+                <div class="input-field col m6 s12">
+                    <input id="fecha_inicial" name="fecha_inicial"  value="<?php echo $solv['fecha_inicio']; ?>" type="text" class="datepicker">
+                    <label for="fecha_inicial">* Fecha Inicial</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <input id="fecha_final" name="fecha_final"  value="<?php echo $solv['fecha_fin']; ?>" type="text" class="datepicker">
+                    <label for="fecha_final">* Fecha Final</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <select id="sitio" name="sitio"> 
+                        <option value="0" disabled selected>Selecciona un Sitio</option>
+                        <?php foreach ($this->sitios as $key){ 
+                            if ($key['id']==$solv['id_sitio']) { ?>
+                                <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+                            <?php } if ($key['id']!=$solv['id_sitio']) { ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> - <?php echo $key['id_cliente']; ?></option>
+                        <?php } } ?>
+                    </select>
+                    <label>* Sitio:</label>
+                </div>
+
+                <div class="input-field col m6 s12">
+                    <select id="personal" name="personal"> 
+                        <option value="0" disabled selected>Selecciona un Personal</option>
+                        <?php foreach ($this->personal as $key){ 
+                            if ($key['id']==$solv['id_personal']) { ?>
+                                <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                            <?php } if ($key['id']!=$solv['id_personal']) { ?>
+                                <option value="<?php echo $key['id']; ?>"><?php echo $key['nombre']; ?> <?php echo $key['apellido_pa']; ?> <?php echo $key['apellido_ma']; ?></option>
+                        <?php } } ?>
+                    </select>
+                    <label>* Personal:</label>
+                </div>
+
+                <div class="input-field col m12 s12">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea id="motivo" name="motivo" value="<?php echo $solv['motivo_viaticos']; ?>" class="materialize-textarea"><?php echo $solv['motivo_viaticos']; ?></textarea>
+                    <label for="motivo">* Motivo de servicio: </label>
+                </div>
+            <?php } ?>
+        </form>
+
+        <div class="input-field col m12 s12 text-right">
+            <div class="row">
+                <a href="/viaticos/addsolviaticos2/id/<?php echo $this->ids; ?>" class="red btn">Paso 2</a>
+                <button  id="updatesolicitud" class="btn">Actualizar</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+        $('select').formSelect();
+        $('.modal').modal();
+        $('.validanumeros').keypress(function(e) {
+            if(isNaN(this.value + String.fromCharCode(e.charCode))) 
+                return false;
+            })
+        .on("cut copy paste",function(e){
+            e.preventDefault();
+        });
+    });
+
+
+
+    $("#updatesolicitud").click(function(){
+        var fecha_inicial = document.getElementById("fecha_inicial").value;
+        var fecha_final = document.getElementById("fecha_final").value;
+        var sitio = document.getElementById("sitio").value;
+        var personal = document.getElementById("personal").value;
+        var motivo = document.getElementById("motivo").value;
+
+
+        if(fecha_inicial == "" || fecha_final == "" || sitio == 0 || motivo == "" || personal == 0){
+            swal({
+                title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+            });
+
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submit_ser, 1000);   
+        }
+    });
+
+    function submit_ser() { 
+        document.getElementById("submitudp").submit() 
+    }
+
+
+</script>

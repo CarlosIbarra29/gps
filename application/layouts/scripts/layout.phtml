@@ -1047,6 +1047,11 @@ setInterval(function() {
                     <!-- <p>Orden</p> -->
                     <!-- <li class="bold">Solicitudes orden compra</li> -->
                 <li class="divider" tabindex="-1"></li>
+
+                 <li class="bold moves <?php echo getUrl('/viaticos/solviaticos',$actual_link);?>">
+                    <a href="/viaticos/solviaticos">Solicitudes Viáticos<i class="material-icons">style</i></a>
+                </li>
+
                 <!-- solicitudes orden compra -->
                 <?php if($total_cajasol == 0){ ?>
                     <li class="bold moves <?php echo getUrl('/comprobacion/solicitudescajachica',$actual_link); echo getcajachica($actual_link)?>">
@@ -1314,7 +1319,7 @@ setInterval(function() {
                     </li>
                 <?php } else { ?>
                     <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontafact',$actual_link);?>">
-                        <a href="/vehiculos/listasolcontafact">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solvehnf; ?></span><i class="material-icons">local_car_wash</i></a>
+                        <a href="/vehiculos/listasolcontafact">Solicitudes Vehículos <span style="color: red; font-weight: bold; font-size: 10px;"><?php echo $total_solvehnf; ?></span><i class="material-icons">local_car_wash</i></a>
                     </li>
                 <?php } ?>
 
@@ -1324,11 +1329,11 @@ setInterval(function() {
 
                 <?php if($total_nf == 0){ ?>
                     <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
-                        <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF<i class="material-icons">assignment</i></a>
+                        <a href="/solicitud/ordencompranofacturable">Solicitud Compra NF<i class="material-icons">assignment</i></a>
                     </li>
                 <?php } else { ?>
                     <li class="bold moves <?php echo getUrl('/solicitud/ordencompranofacturable',$actual_link);?>">
-                        <a href="/solicitud/ordencompranofacturable">Solicitud de Compra NF <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_nf; ?></span><i class="material-icons">assignment</i></a>
+                        <a href="/solicitud/ordencompranofacturable">Solicitud Compra NF <span style="color: red; font-weight: bold; font-size: 10px;"><?php echo $total_nf; ?></span><i class="material-icons">assignment</i></a>
                     </li>
                 <?php } ?>
 
