@@ -2186,6 +2186,29 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function getusernamesolicitudsearchusr($table,$offset,$no_of_records_per_page,$nombre){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
+                        soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.name_user,soc.importe, soc.iva, 
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
+                        st.id_tipoproyecto, t.nombre_proyecto
+                        FROM solicitud_ordencompra soc
+                        LEFT JOIN usuario u on soc.id_usuario = u.id 
+                        LEFT JOIN servicios s on s.id = soc.servicio_id
+                        LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
+                        LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
+                        WHERE soc.status_documento= 0 and status_documentouno = 1 and name_user like '%{$nombre}%'  order by soc.id DESC LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    }
+
     public function getusernamesolicitudcountsearchusernofact($nombre){
         $datos ="No facturable";
         try{

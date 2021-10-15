@@ -955,6 +955,15 @@ setInterval(function() {
     $cajasolconta = $instance_cajachica->getcomprobacionproceso($aceptada,$pago);
     $total_cajasolconta = count($cajasolconta);
 
+    $instancevia = new Application_Model_GpsViaticosModel();
+    
+    $via_solicitudes = $instancevia->GetSolicitudesViaCount();
+    $total_viaticos = count($via_solicitudes);
+
+    $via_sol_cont = $instancevia->GetSolicitudViaContCount();
+    $total_solviacont = count($via_sol_cont);
+
+
 
     //Contabilidad 
     $normal = $instance->getusernamesolicitudcountacept();
@@ -1048,9 +1057,32 @@ setInterval(function() {
                     <!-- <li class="bold">Solicitudes orden compra</li> -->
                 <li class="divider" tabindex="-1"></li>
 
-                 <li class="bold moves <?php echo getUrl('/viaticos/solviaticos',$actual_link);?>">
+                <li class="bold moves <?php echo getUrl('/viaticos/solviaticos',$actual_link);?>">
                     <a href="/viaticos/solviaticos">Solicitudes Viáticos<i class="material-icons">style</i></a>
                 </li>
+
+                <?php if($total_viaticos == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listasolicitudvtc/status/0',$actual_link);?>">
+                        <a href="/viaticos/listasolicitudvtc/status/0">Lista Viáticos<i class="material-icons">style</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listasolicitudvtc/status/0',$actual_link);?>">
+                        <a href="/viaticos/listasolicitudvtc/status/0">Lista Viáticos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_viaticos; ?></span><i class="material-icons">style</i></a>
+                    </li>
+                <?php } ?>
+
+                <?php if($total_solviacont == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos Conta<i class="material-icons">style</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos Conta <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solviacont; ?></span><i class="material-icons">style</i></a>
+                    </li>
+                <?php } ?>
+
+                                
+
 
                 <!-- solicitudes orden compra -->
                 <?php if($total_cajasol == 0){ ?>
@@ -1351,6 +1383,20 @@ setInterval(function() {
                     <a href="/campamentos/addcampamento">Campamentos<i class="material-icons">home</i></a>
                 </li>
 
+                <li class="bold moves <?php echo getUrl('/viaticos/solviaticos',$actual_link);?>">
+                    <a href="/viaticos/solviaticos">Solicitar Viáticos<i class="material-icons">style</i></a>
+                </li>
+
+                <?php if($total_solviacont == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos<i class="material-icons">style</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solviacont; ?></span><i class="material-icons">style</i></a>
+                    </li>
+                <?php } ?>
+
                 <?php if($total_cajasolconta == 0){ ?>
                     <li class="bold moves <?php echo getUrl('/comprobacion/cajachicacontabilidad',$actual_link); echo getcajachicaconta($actual_link)?>">
                         <a href="/comprobacion/cajachicacontabilidad/status/0">Caja chica<i class="material-icons">credit_card</i></a>
@@ -1492,6 +1538,20 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/prestamo/solicitudprestamo',$actual_link); echo getprestamo($actual_link);?>">
                     <a href="/prestamo/solicitudprestamo/status/0">Descuentos<i class="material-icons">attach_money</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/viaticos/solviaticos',$actual_link);?>">
+                    <a href="/viaticos/solviaticos">Solicitar Viáticos<i class="material-icons">style</i></a>
+                </li>
+
+                <?php if($total_solviacont == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos<i class="material-icons">style</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listaviaticosconta/status/0',$actual_link);?>">
+                        <a href="/viaticos/listaviaticosconta/status/0">Lista Viáticos <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solviacont; ?></span><i class="material-icons">style</i></a>
+                    </li>
+                <?php } ?>
 
                 <li class="bold moves <?php echo getUrl('/panel/sitios',$actual_link); echo getSitios($actual_link);?>">
                     <a href="/panel/sitiosingeniero">Sitios<i class="material-icons">build</i></a>
@@ -1678,6 +1738,16 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
                     <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
+
+                <?php if($total_viaticos == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listasolicitudvtc/status/0',$actual_link);?>">
+                        <a href="/viaticos/listasolicitudvtc/status/0">Auditoría Viáticos<i class="material-icons">style</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/viaticos/listasolicitudvtc/status/0',$actual_link);?>">
+                        <a href="/viaticos/listasolicitudvtc/status/0">Auditoría Viáticos <span style="color: red; font-weight: bold; font-size: 11px;"><?php echo $total_viaticos; ?></span><i class="material-icons">style</i></a>
+                    </li>
+                <?php } ?>
                 
                 <li class="bold moves <?php echo getUrl('/vehiculos/inventariov',$actual_link);?>">
                     <a href="/vehiculos/inventariov">Vehículos<i class="material-icons">directions_car</i></a>

@@ -1,0 +1,342 @@
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.common.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div id="example">
+
+<?php foreach ($this->solicitud as $key){
+        $ids= $key ['id'];
+}?> 
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="/viaticos/soldetailviaticoscbt/id/<?php echo $ids; ?>/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+    <div class="col m6 s6 text-right">
+        <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
+    </div>
+</div>
+
+        <?php foreach ($this->solicitud as $key){
+                $idsol = $key ['id'];
+                $status_sol = $key['status_solicitud'];
+        }?>
+
+        <?php foreach ($this->detalle as $key){
+            
+        $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; 
+        $id_personal = $key ['id_personal']; $name_personal = $key ['name_personal']; 
+        $fecha_inicio = $key ['fecha_inicio']; $fecha_fin = $key ['fecha_fin']; $id_sitio = $key ['id_sitio'];
+        $name_sitio = $key ['name_sitio']; $id_proyecto = $key ['id_proyecto']; $id_tipoproyecto = $key ['id_tipoproyecto']; 
+        
+
+        $nombre_proyecto = $key ['nombre_proyecto']; $status_step = $key ['status_step']; $dias = $key ['dias']; 
+
+        $status_pago = $key ['status_pago']; $comprobante_viatico = $key ['comprobante_viatico']; 
+
+        $monto_total = $key ['monto_total'];
+        
+        $fecha_creacion = $key ['fecha_creacion']; $user_creacion = $key ['user_creacion']; $name_user = $key ['name_user']; 
+        $fecha_autorizacion = $key ['fecha_autorizacion']; $user_autorizacion = $key ['user_autorizacion']; 
+        $name_userautorizacion = $key ['name_userautorizacion']; 
+        
+        $comentario_cancel = $key ['comentario_cancel']; $motivo_viaticos = $key ['motivo_viaticos']; 
+
+        $fecha_pago = $key ['fecha_pago']; $user_pago = $key ['user_pago']; $name_userpago = $key ['name_userpago']; 
+        $puesto = $key ['puesto']; $viaticos = $key ['viaticos']; $imagen = $key ['imagen']; 
+        $namepuesto = $key ['namepuesto']; 
+        }?>
+
+        <?php 
+                date_default_timezone_set('America/Mexico_City');
+                $hoy = date("d/m/Y");
+        ?>
+
+
+        <div class="page-container hidden-on-narrow">
+            <div class="pdf-page size-a4">
+                
+                <div class="pdf-header">
+                    
+                    <span class="company-logo">
+                        <img src="/img/head.png" style="width: 120px;" />
+                    </span>
+
+                    <span class="invoice-number">
+                        <img src="/img/logo-2.png" style="width: 125px;" /><br/>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
+                    </span>
+
+                    <div class="row">
+                        <div class="company-logo col m12 s12 text-center">
+                            Comprobante de Viáticos
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="pdf-footer">
+                    <p>Gps Constructivos<br />Fecha de descarga: <?php echo $hoy; ?><br /></p>
+                </div>
+
+                <div class="for" style="margin-top: 60px;"> <br/>
+                    <!-- <h3>Fecha Requerida : <?php echo $fecha_sol; ?></h3> -->
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos del personal</span>
+                        <p>
+                            <span class="title-pdf">Nombre:</span> <span style="font-size: 14px;"><?php echo $name_personal; ?></span><br />
+                            <span class="title-pdf">Puesto:</span> <?php echo $namepuesto; ?><br />
+                            <span class="title-pdf">Sitio:</span> <?php echo $name_sitio; ?><br />
+                            <span class="title-pdf">Proyecto:</span> <?php echo $nombre_proyecto; ?><br />
+                        </p>
+                </div>
+
+                <div class="from" style="margin-top: 60px;"> <br/>
+                    
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Solicitud</span>    
+                    <p style="padding-bottom: 20px;">
+                        <span class="title-pdf">Fecha Inicio:</span> <?php echo $fecha_inicio; ?> <br />
+                        <span class="title-pdf">Fecha Final:</span> <?php echo $fecha_fin; ?><br />
+                        <span class="title-pdf">Víaticos por día:</span> $<?php echo number_format($viaticos, 2, '.', ','); ?><br />
+                        <span class="title-pdf">Días Solicitados:</span> <?php echo $dias; ?><br />
+                    </p>
+                
+                </div>
+
+                <div class="pdf-body">
+                    <div class="row">
+                        <div class="col m12 s12">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"><span class="title-pdf">Motivo</span></th>
+                                        <th class="text-center"><span class="title-pdf">Días</span></th>
+                                        <th class="text-center"><span class="title-pdf">Monto Por día</span></th>
+                                        <th class="text-center"><span class="title-pdf">Total</span></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center"><?php echo $motivo_viaticos; ?></td>
+                                        <td class="text-center"><b><?php echo $dias; ?></b></td>
+                                        <td class="text-center">$ <?php echo number_format($viaticos, 2, '.', ','); ?></td>
+                                        <td class="text-center"><b>$ <?php echo number_format($monto_total, 2, '.', ','); ?></b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col m12 s12">
+
+                            <div class="col m6 s6">
+                                <span><b>Fecha Creación:</b> <?php echo $fecha_creacion; ?></span><br/>
+                                <span><b>Autorización:</b> <?php echo $fecha_autorizacion; ?></span><br/>
+                                <?php if ($fecha_pago == null) { ?>
+                                    <span><b>Fecha Pago:</b> Aún no es pagada</span><br/>
+                                <?php } else { ?>
+                                    <span><b>Fecha Pago:</b> <?php echo $fecha_pago; ?></span><br/>
+                                <?php } ?>
+                            </div>
+
+                            <div class="col m6 s6">
+                                <span><b>Creada por:</b> <?php echo $name_user; ?></span><br/>
+                                <span><b>Autorizó:</b> <?php echo $name_userautorizacion; ?></span><br/>
+                                <?php if ($status_pago == 1) { ?>
+                                    <span><b>Pagada por:</b> <?php echo $name_userpago; ?></span>
+                                <?php } else {  ?>
+                                <?php } ?> 
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row signature">
+                        <div class="col m12 s12 text-center">
+                            <img src="/img/logo-2.png" style="width: 190px;"><br>
+                            Aprobado: ING. Javier Morales Aguilera<br /><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="responsive-message"></div>
+
+
+        <style>
+
+                .pdf-page {
+                        font-family: "DejaVu Sans", "Arial", sans-serif;
+                }
+        </style>
+
+        <script>
+                kendo.pdf.defineFont({
+                        "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+                        "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+                        "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+                        "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+                });
+        </script>
+
+        <script src="../content/shared/js/pako.min.js"></script>
+
+        <script>
+                function getPDF(selector) {
+                        kendo.drawing.drawDOM($(selector)).then(function(group){
+                                kendo.drawing.pdf.saveAs(group, "Viaticos No <?php echo $idsol; ?>.pdf");
+                        });
+                }
+
+
+                $(document).ready(function() {
+                        var data = [
+                        { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
+                        { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
+                        { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
+                        { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
+                        { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
+                        { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
+                        ];
+
+                                var schema = {
+                                        model: {
+                                        productName: { type: "string" },
+                                        unitPrice: { type: "number", editable: false },
+                                        qty: { type: "number" }
+                                },
+
+                                parse: function (data) {
+                                        $.each(data, function(){
+                                                this.total = this.qty * this.unitPrice;
+                                        });
+
+                                        return data;
+                                }
+                        };
+
+
+                        var aggregate = [
+                        { field: "qty", aggregate: "sum" },
+                        { field: "total", aggregate: "sum" }
+                        ];
+
+                        var columns = [
+                        { field: "productName", title: "Product", footerTemplate: "Total"},
+                        { field: "unitPrice", title: "Price", width: 120},
+                        { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
+                        { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
+                        ];
+
+
+                        var grid = $("#grid").kendoGrid({
+                                editable: false,
+                                sortable: true,
+
+                                dataSource: {
+                                        data: data,
+                                        aggregate: aggregate,
+                                        schema: schema,
+                                },
+                                columns: columns
+                        });
+
+
+                        $("#paper").kendoDropDownList({
+                                change: function() {
+                                        $(".pdf-page")
+                                        .removeClass("size-a4")
+                                        .removeClass("size-letter")
+                                        .removeClass("size-executive")
+                                        .addClass(this.value());
+                                }
+                        });
+                });
+        </script>
+
+        <style>
+
+                .title-pdf{
+                        font-weight: bold;
+                        font-size: 13px;
+                }
+                .pdf-page {
+                        margin: 0 auto;
+                        box-sizing: border-box;
+                        box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+                        background-color: #fff;
+                        color: #333;
+                        position: relative;
+                }
+                .pdf-header {
+                        position: absolute;
+                        top: .5in;
+                        height: .6in;
+                        left: .5in;
+                        right: .5in;
+                        /*border-bottom: 1px solid #e5e5e5;*/
+                }
+                .invoice-number {
+                        padding-top: .17in;
+                        float: right;
+                }
+                .pdf-footer {
+                        position: absolute;
+                        bottom: .5in;
+                        height: .6in;
+                        left: .5in;
+                        right: .5in;
+                        padding-top: 10px;
+                        border-top: 1px solid #e5e5e5;
+                        text-align: left;
+                        color: #787878;
+                        font-size: 12px;
+                }
+                .pdf-body {
+                        position: absolute;
+                        top: 4.3in;
+                        bottom: 1.2in;
+                        left: .5in;
+                        right: .5in;
+                }
+
+                .size-a4 { width: 8.3in; height: 11.7in; }
+                .size-letter { width: 8.5in; height: 11in; }
+                .size-executive { width: 7.25in; height: 10.5in; }
+
+                .company-logo {
+                        font-size: 34px;
+                        font-weight: bold;
+                        color: red;
+                }
+                .for {
+                        position: absolute;
+                        top: 1.5in;
+                        left: .5in;
+                        width: 3.5in;
+                }
+                .from {
+                        position: absolute;
+                        top: 1.5in;
+                        right: .5in;
+                        width: 3.5in;
+                }
+                .from p, .for p {
+                        color: #787878;
+                }
+                .signature {
+                        padding-top: 1.5in;
+                }
+        </style>
+
+</div>
+
+
+</body>

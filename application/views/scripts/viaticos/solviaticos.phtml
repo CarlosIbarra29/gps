@@ -14,7 +14,7 @@
 ?>
 
 <?php 
-
+ 
     $links = "";
     $url="";
 
@@ -52,6 +52,10 @@
 
 
  ?>
+<?php foreach ($this->user as $value) { 
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?>
 
 
 <style type="text/css">
@@ -65,7 +69,10 @@
 <div class="row" style="margin-top: 10px;">
 	<div class="col m6 s6"> </div>
 	<div class="col m6 s6 text-right">
-		<a class="waves-effect btn modal-trigger" href="/viaticos/addsolviaticos">+ Crear Solicitud</a>
+		<?php if($rol_user == 1 || $rol_user == 9 || $rol_user == 4){ ?>
+			<a class="waves-effect btn blue modal-trigger" href="/viaticos/excelpagados"><i class="material-icons right">arrow_downward</i>Viáticos Pagados</a>
+		<?php } ?>	
+			<a class="waves-effect btn modal-trigger" href="/viaticos/addsolviaticos">+ Crear Solicitud</a>
 	</div>
 </div>
 

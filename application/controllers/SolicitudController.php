@@ -1129,7 +1129,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchprov($table,$offset,$no_of_records_per_page,$user);
+                $this->view->paginator= $this->_ordencompra->getusernamesolicitudsearchusr($table,$offset,$no_of_records_per_page,$user);
             }
 
             if($opcion == 5){

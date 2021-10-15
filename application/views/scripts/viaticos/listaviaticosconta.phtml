@@ -1,0 +1,422 @@
+<?php 
+	function isActhref($nameBtn,$urlname){
+	    if($nameBtn==1 && $urlname==null){
+	    	return "active"; 
+	    }
+	    return ($nameBtn == $urlname)?"active":"";
+	}
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+
+<style type="text/css">
+	.oculto{display: none;}
+	.active_menu{
+		-webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+</style>
+
+<?php 
+	$status =  $this->status_documento;
+?>
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col m12 s12">
+  		<ul >
+  			<?php if($status == 0){ ?>
+	    		<li class="tab col s3 active_menu">
+	    			<a class="" href="/viaticos/listaviaticosconta/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php }else{ ?>
+	    		<li class="tab col s3">
+	    			<a class="" href="/viaticos/listaviaticosconta/status/0">
+	    			<h4>En Proceso
+	  					<div class="chip">
+	    					<?php echo $this->enproceso; ?>
+	  					</div>
+	    			</h4>
+	    			</a>
+	    		</li>
+  			<?php } ?>
+
+  			<?php if($status == 1){ ?>
+  				<li class="tab col s3 active_menu"><a href="/viaticos/listaviaticosconta/status/1"><h4>Rechazadas</h4></a></li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/viaticos/listaviaticosconta/status/1"><h4>Rechazadas</h4></a></li>
+  			<?php } ?>
+
+
+  			<?php if($status == 2){ ?>
+  				<li class="tab col s3 active_menu">
+  					<a href="/viaticos/listaviaticosconta/status/2"><h4>Pagadas</h4></a>
+  					<div></div>
+  				</li>
+  			<?php }else{ ?>
+  				<li class="tab col s3"><a href="/viaticos/listaviaticosconta/status/2"><h4>Pagadas</h4></a></li>
+  			<?php } ?>
+
+  		</ul>
+	</div>
+</div>
+
+<!-- Buscador -->
+<div class="row" style="margin-top:10px;">
+	<div class="col m4 s12">
+	  	<div class="input-field col s12">
+	    	<select id="search_tipo">
+	      		<option value="1" selected>Personal</option>
+	      		<option value="2">Id de la solicitud</option>
+	      		<option value="3">Sitio</option>
+	    	</select>
+	    	<label>Buscar por:</label>
+	  	</div>
+	</div>
+	<div class="col m8 s12"> 
+		<div class="col m12 s12" id="search_nombre">
+		    <div class="input-field col m10 s8">
+				<select id="personal" name="personal" required>
+					<option value="0" disabled selected>* Selecciona una opcion:</option>
+					<?php foreach ($this->personal as $rl) { ?>
+					<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+					<?php } ?>
+				</select>
+				<label>Personal</label>
+		    </div>
+		    <input type="hidden" id="status_search" value="<?php echo $status; ?>">
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+
+		<div class="col m12 s12 oculto" id="search_solicitud">
+		    <div class="input-field col m10 s8">
+		        <input placeholder="Ingresa el id de la solicitud" name="solicitud" id="id_sol" type="number" class="validate">
+		        <label for="id_sol">Buscar por id de la solicitud</label>
+		    </div>
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador_solicitud" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+
+		<div class="col m12 s12 oculto" id="search_sitio">
+		    <div class="input-field col m10 s8">
+				<select id="sitio" name="sitio" required>
+					<option value="0" disabled selected>* Selecciona una opcion:</option>
+					<?php foreach ($this->sitios as $rl) { ?>
+					<option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> - <?php echo $rl["id_cliente"]; ?></option>
+					<?php } ?>
+				</select>
+				<label>Sitio</label>
+		    </div>
+		    <div class="input-field col m2 s4">
+		     	<button tyle="submit" id="buscador_sitio" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+		    </div>
+		</div>
+
+	</div>
+</div>
+<!-- End Buscador -->
+
+<div class="row">
+	<div class="col m12 s12">
+		<div class="row">
+			<div class="col m8 s8">
+				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de solicitudes de Viáticos</span>
+			</div>
+			<!-- <div class="col m4 s4 text-right">
+				<?php if($this->user_rol == 8){ ?>
+					
+				<?php }else{ ?>
+					<h4><a href="/vehiculos/missolicitudes/id/<?php echo $this->user_list; ?>">Mis Solicitudes Creadas</a></h4>
+				<?php } ?>
+			</div> -->
+		</div>
+		
+		<div class="col m12 s12 table_wrapper">
+			<table class="table text-left table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Fecha Creación</th>
+						<th>Personal</th>
+						<th>Puesto</th>
+						<th>Sitio</th>		
+						<th>Días Viáticos</th>	
+						<th>Monto</th>
+						<th>Autorización</th>
+						<th>Detalle Solicitud</th>
+					</tr> 
+				</thead>
+				<?php
+				if ($this->paginator) { 
+				foreach ($this->paginator as $usr) { ?>
+				<tbody>
+					<tr>
+						<td>
+							<h5><?php echo $usr['id']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo  date("d-m-Y", strtotime($usr['fecha_creacion'])); ?></h5>
+						</td>
+
+						<td>
+							<h5><?php echo $usr['name_personal']; ?></h5>
+						</td>
+
+						<td>
+							<h5><?php echo $usr['namepuesto']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo $usr['name_sitio']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo $usr['dias']; ?></h5>
+						</td>
+						
+						<td>
+							<h5 style="font-weight: bold;">
+								$<?php echo number_format($usr['monto_total'], 2, '.', ','); ?>
+							</h5>
+						</td>
+						<td>
+							<?php if($usr['status_solicitud'] == 0){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/gris.jpg" >
+							    	En proceso
+							  	</div>
+							<?php } ?>
+
+							<?php if($usr['status_solicitud'] == 1){ ?>
+								<div class="chip" id="activo_personal">
+							    	<img src="/img/correct.png" >
+							    	Autorizada
+							  	</div>
+							  	
+							<?php } ?>
+
+							<?php if($usr['status_solicitud'] == 2){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/rojo.png" >
+							    	Rechazada
+							  	</div>
+							<?php } ?>
+
+
+							<?php if($usr['status_solicitud'] == 3){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/naranja.png" >
+							    	Cancelada
+							  	</div>
+							<?php } ?>
+						</td>
+				
+						<td class="text-center">
+							<a href="/viaticos/soldetailviaticoscbt/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+						</td>
+						<!--<td class="text-center">
+							<a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+						</td> -->
+					</tr>
+			    <?php } }else{ ?>
+			    </tbody> 
+			    <tbody>
+			        <tr>
+			            <td class="text-center" colspan="6"><h4>No hay solicitudes de Viáticos.</h4></td>
+			        </tr>
+			    </tbody>
+			                
+			    <?php } ?>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguiente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<script type="text/javascript">
+
+	$('#search_tipo').on('change', function() {
+		var value = this.value;
+
+		if(value == 1){
+			$("#search_nombre").show();
+			$("#search_solicitud").hide();
+			$("#search_sitio").hide();
+		}
+
+		if(value == 2){
+			$("#search_solicitud").show();	
+			$("#search_nombre").hide();
+			$("#search_sitio").hide();
+
+		}
+
+
+		if(value == 3){
+			$("#search_sitio").show();
+			$("#search_solicitud").hide();
+			$("#search_nombre").hide();
+
+		}
+
+	});
+
+
+   	$("#buscador").click(function(){
+   		var personal = document.getElementById("personal").value;
+   		var status = document.getElementById("status_search").value;
+		swal({
+			title: "La busqueda será para el personal "+personal+", Desea continuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+			window.location.href = "/viaticos/listasolvbuscarctb/status/"+status+"/personal/"+personal+"/op/1";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});	
+
+
+   	$("#buscador_solicitud").click(function(){
+   		var id = document.getElementById("id_sol").value;
+   		var status = document.getElementById("status_search").value;
+		swal({
+			title: "La busqueda sera por id "+id+", Desea continuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+			window.location.href = "/viaticos/listasolvbuscarctb/status/"+status+"/id/"+id+"/op/2";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});
+
+
+   	$("#buscador_sitio").click(function(){
+   		var status = document.getElementById("status_search").value;
+   		var sitio = document.getElementById("sitio").value;
+
+		swal({
+			title: "La busqueda sera por la opción de sitio, Deseacontinuar?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				}); 
+			window.location.href = "/viaticos/listasolvbuscarctb/status/"+status+"/sitio/"+sitio+"/op/3";
+		  } else {
+		    swal("La asignacion fue cancelada!");
+		  }
+		});
+   	});
+
+</script>
