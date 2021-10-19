@@ -174,7 +174,7 @@ function eliminar_acentos($cadena){
 
 <div class="row" style="margin-top: 10px;">
   <div class="col m12 s12">
-      <a href="/panel/index/year/<?php echo $this->year_op; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
+      <a href="/panel/index/year/<?php echo $this->year_op; ?>/op/1" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
   </div>
 </div>
 
@@ -240,8 +240,15 @@ function eliminar_acentos($cadena){
         }
     ?>
 
+    <?php 
+        $viaticos = 0;
+        foreach ($this->viaticos as $key){ 
+        	$viaticos = $viaticos + $key['monto_pagado'];
+        }
+    ?>
 
-    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo + $nomina + $tag; ?>
+
+    <?php $total_mes = $solicitud + $gasolina + $cajachica + $vehiculo + $nomina + $tag + $viaticos; ?>
 
 <div class="row">
     <div class="col m12 s12 text-right" style="margin-top: 20px;">
@@ -358,10 +365,8 @@ function eliminar_acentos($cadena){
       	</div>
     </div>
 </div>
-
-<div class="row">
-
-	<!-- C O M P R O B A C I O N E S -->
+<!-- C O M P R O B A C I O N E S -->
+<div class="row">	
     <div class="col s12 m6">
     	<div class="card">
     		<div class="card-content">
@@ -484,7 +489,7 @@ function eliminar_acentos($cadena){
 				          		<div class="row" style="margin-top: 20px;">
 				          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
 				          				<a class="btn green" id="exportBtn6">Excel</a><br>
-				          				<span>Reporte de Nomina</span>
+				          				<span>Reporte de Nómina</span>
 				          			</div>
 									<!-- <div class="col m6 s12 text-center" style="margin-top: 10px;">
 				          				<a class="btn red">PDF</a>
@@ -506,7 +511,7 @@ function eliminar_acentos($cadena){
 						               	</h2>
 						            </div>
 						        </div>
-						        <h4>Total de Nomina</h4>
+						        <h4>Total de Nómina</h4>
 		          			</div>
 		          		</div>
 		          	</div>
@@ -555,6 +560,54 @@ function eliminar_acentos($cadena){
 						            </div>
 						        </div>
 						        <h4>Total de Consumos</h4>
+		          			</div>
+		          		</div>
+		          	</div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+
+    <!-- T A G -->
+    <div class="col s12 m6">
+    	<div class="card">
+    		<div class="card-content">
+    			<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">VIÁTICOS</span>
+
+    			<div class="row">
+          			<div class="col m12 s12">
+          				
+          				<div class="row" style="margin-top: 20px;">
+		          			<div class="col m6 s12 text-center">
+				          		<div style=" margin-top: 20px;">
+					          		<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					          			 $<?php echo number_format($viaticos, 2, '.', ','); ?> 
+					          		</span>
+				          		</div>
+
+				          		<div class="row" style="margin-top: 20px;">
+				          			<div class="col m12 s12 text-center" style="margin-top: 10px;">
+				          				<a class="btn green" id="exportBtn8">Excel</a><br>
+				          				<span>Gastos Viáticos</span>
+				          			</div>
+				          		</div>
+		          			</div>
+
+		          			<div class="col m6 s12 text-center">
+						        <div class="progress green colorbar">
+						            <span class="progress-left">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <span class="progress-right">
+						                <span class="progress-bar"></span>
+						            </span>
+						            <div class="progress-value">
+						               	<h2 class="barra" style="margin-left: 40px">
+						               		<input type="text" id="porcentaje_final" class="numero" value="<?php echo count($this->viaticos); ?>" readonly>
+						               	</h2>
+						            </div>
+						        </div>
+						        <h4>Total de Gastos</h4>
 		          			</div>
 		          		</div>
 		          	</div>
@@ -963,7 +1016,47 @@ function eliminar_acentos($cadena){
 </div>
 <!--E N D   E X C E L    C O N S U M O S   T A G-->
 
+<!--  E X C E L    G A S T O S  V I A T I C O S-->
+<div class="row oculto">
+	<div class="row excel-div" id="tab8">
+		<table class="table text-left table-hover" >
+			<thead>
+				<tr>
+					<th>Id</th>		
+					<th>Personal</th>
+					<th>Puesto</th>
+					<th>Sitio</th>
+					<th>Fecha Inicio</th>
+	        		<th>Fecha Final</th>
+	        		<th>Viaticos por dia</th>
+	        		<th>Dias Solicitados</th>
+	        		<th>Monto Pagado</th>
+	        		<th>Motivo Viaticos</th>
 
+				</tr> 
+			</thead>
+			<?php 
+			foreach ($this->viaticos as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $usr["id"]; ?></td>
+					<td><?php echo eliminar_acentos( $usr["name_personal"]); ?></td>
+					<td><?php echo eliminar_acentos( $usr["namepuesto"]); ?></td>
+					<td><?php echo eliminar_acentos( $usr["name_sitio"]); ?></td>
+					<td><?php echo $usr["fecha_inicio"]; ?></td>
+					<td><?php echo $usr["fecha_fin"]; ?></td>
+					<td><?php echo $usr["viaticos"]; ?></td>
+					<td><?php echo $usr["dias"]; ?></td>
+					<td><?php echo $usr["monto_pagado"]; ?></td>
+					<td><?php echo eliminar_acentos( $usr["motivo_viaticos"]); ?></td>
+						
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table>	
+	</div>
+</div>
+<!--E N D   E X C E L    G A S T O S  V I A T I C O S-->
 
 <input type="hidden" id="op_year" value="<?php echo $this->year_op; ?>">
 
@@ -1067,6 +1160,18 @@ function eliminar_acentos($cadena){
             name: "Consumos TAG "+mes+" "+year+".xlsx",
             sheet: {
             	name: "Consumos TAG "+mes+" "+year+" "
+            }
+        });
+    });
+
+    $("#exportBtn8").click(function(){
+      	year = document.getElementById("op_year").value;
+      	mes = document.getElementById("op_month").value;
+
+        TableToExcel.convert(document.getElementById("tab8"), {
+            name: "Gastos Viaticos "+mes+" "+year+".xlsx",
+            sheet: {
+            	name: "Gastos Viaticos "+mes+" "+year+" "
             }
         });
     });

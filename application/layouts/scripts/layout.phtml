@@ -1824,6 +1824,13 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/tag/addconsumo',$actual_link);?>">
                     <a href="/tag/addconsumo">TAG<i class="material-icons">card_membership</i></a>
                 </li>
+
+                <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                    <a href="/panel/ordencompraspendiente">Solicitud de Compra<i class="material-icons">assignment</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
             <?php } ?>            
         </ul>                  
 

@@ -275,6 +275,7 @@ class PanelController extends Zend_Controller_Action{
 
 
         // T A G  C O N S U M O S
+
         $month= 1;
         $tag_enero = $this->view->tag_enero = $this->_archivo->gettagconsumosm($year,$month);
         $this->view->count_tagenero = count($tag_enero);
@@ -324,6 +325,59 @@ class PanelController extends Zend_Controller_Action{
         $this->view->count_tagdiciembre = count($tag_diciembre);
 
         // E N D  T A G  C O N S U M O S
+
+
+        // V I A T I C O S   G A S T O S 
+        
+        $month= 1;
+        $viaticos_enero = $this->view->viaticos_enero = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosenero = count($viaticos_enero);
+
+        $month= 2;
+        $viaticos_febrero = $this->view->viaticos_febrero = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosfebrero = count($viaticos_febrero);
+
+        $month= 3;
+        $viaticos_marzo = $this->view->viaticos_marzo = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosmarzo = count($viaticos_marzo);
+
+        $month= 4;
+        $viaticos_abril = $this->view->viaticos_abril = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosabril = count($viaticos_abril);
+
+        $month= 5;
+        $viaticos_mayo = $this->view->viaticos_mayo = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosmayo = count($viaticos_mayo);
+
+        $month= 6;
+        $viaticos_junio = $this->view->viaticos_junio = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosjunio = count($viaticos_junio);
+
+        $month= 7;
+        $viaticos_julio = $this->view->viaticos_julio = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosjulio = count($viaticos_julio);
+
+        $month= 8;
+        $viaticos_agosto = $this->view->viaticos_agosto = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosagosto = count($viaticos_agosto);
+
+        $month= 9;
+        $viaticos_septiembre = $this->view->viaticos_septiembre = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosseptiembre = count($viaticos_septiembre);
+
+        $month= 10;
+        $viaticos_octubre = $this->view->viaticos_octubre = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosoctubre = count($viaticos_octubre);
+
+        $month= 11;
+        $viaticos_noviembre = $this->view->viaticos_noviembre = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosnoviembre = count($viaticos_noviembre);
+
+        $month= 12;
+        $viaticos_diciembre = $this->view->viaticos_diciembre = $this->_archivo->getviaticosm($year,$month);
+        $this->view->count_viaticosdiciembre = count($viaticos_diciembre);
+        
+        // E N D  V I A T I C O S   G A S T O S 
 
 
         $envios = $this->view->fabricacion = $this->_envio->getfabricacionindex();

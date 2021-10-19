@@ -221,7 +221,7 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
         }catch (Exception $e){
             echo $e;
         }
-    } 
+    } // Consumos tag mes
 
 
     public function gettagconsumosproyecto($year,$month,$sitio){
@@ -256,6 +256,61 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
         }catch (Exception $e){
             echo $e;
         }
-    } 
+    } // Consumos tag Sitio
+
+
+    public function getviaticosm($year,$month){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.fecha_inicio, vs.fecha_fin, vs.id_personal, vs.name_personal, vs.id_sitio, 
+                vs.name_sitio, vs.status_step, vs.status_solicitud, vs.id_proyecto, vs.dias, vs.status_pago, 
+                vs.comentario_cancel, vs.motivo_viaticos, vs.monto_pagado,
+                vs.comprobante_viatico, vs.monto_total, vs.fecha_creacion, vs.user_creacion, vs.name_user, vs.fecha_autorizacion,
+                vs.user_autorizacion, vs.name_userautorizacion , vs.fecha_pago, vs.user_pago, vs.name_userpago,   
+                pc.puesto, pc.viaticos, pc.imagen, pp.nombre as namepuesto, 
+                st.id_tipoproyecto, tp.nombre_proyecto,
+                 year(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS Year,
+                        month(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS Month ,
+                        day(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS dia_count
+                FROM viaticos_sol vs 
+                LEFT JOIN personal_campo pc ON pc.id = vs.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                LEFT JOIN sitios_tipoproyecto st ON st.id = vs.id_proyecto
+                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto 
+                HAVING vs.status_pago = 1 And Month = ? And Year = ? ORDER BY vs.fecha_pago",array($month,$year));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Viaticos Mensual
+
+    public function getviaticosproyecto($year,$month,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT vs.id, vs.fecha_inicio, vs.fecha_fin, vs.id_personal, vs.name_personal, vs.id_sitio, 
+                vs.name_sitio, vs.status_step, vs.status_solicitud, vs.id_proyecto, vs.dias, vs.status_pago, 
+                vs.comentario_cancel, vs.motivo_viaticos, vs.monto_pagado,
+                vs.comprobante_viatico, vs.monto_total, vs.fecha_creacion, vs.user_creacion, vs.name_user, vs.fecha_autorizacion,
+                vs.user_autorizacion, vs.name_userautorizacion , vs.fecha_pago, vs.user_pago, vs.name_userpago,   
+                pc.puesto, pc.viaticos, pc.imagen, pp.nombre as namepuesto, 
+                st.id_tipoproyecto, tp.nombre_proyecto,
+                 year(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS Year,
+                        month(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS Month ,
+                        day(date(CONCAT(SUBSTRING(vs.fecha_pago, 7, 4),  '-', SUBSTRING(vs.fecha_pago, 4, 2), '-', SUBSTRING(vs.fecha_pago, 1, 2)))) AS dia_count
+                FROM viaticos_sol vs 
+                LEFT JOIN personal_campo pc ON pc.id = vs.id_personal
+                LEFT JOIN puestos_personal pp ON pp.id = pc.puesto
+                LEFT JOIN sitios_tipoproyecto st ON st.id = vs.id_proyecto
+                LEFT JOIN tipo_proyecto tp ON tp.id = st.id_tipoproyecto 
+                HAVING vs.status_pago = 1 And Month = ? And Year = ? AND vs.id_proyecto = ? ORDER BY vs.fecha_pago",array($month,$year,$sitio));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } // Viaticos por sitio
 
 }
