@@ -61,6 +61,10 @@
 		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
 </style>
 
 <?php 
@@ -136,131 +140,133 @@
 				<a href="/archivos/excelsolicitudescompracoord"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
 			</div>
 		</div>
-		<table class="table text-left table-hover">
-			<thead>
-				<tr>
-					<th>NO.</th>
-					<th>Usuario</th>
-					<th>Sitio</th>		
-					<th>Servicio</th>
-					<th>Proveedor</th>
-					<th>Monto</th>
-					<th>Autorización</th>
-					<!-- <th>Documento</th> -->
-					<th>Detalle Solicitud</th>
-					<!-- <th>Eliminar</th> -->
-				</tr> 
-			</thead>
-			<?php
-			if ($this->paginator) { 
-			foreach ($this->paginator as $usr) { ?>
-			<tbody>
-				<tr>
-					<td>
-						<h5><?php echo $usr['id_solicitud']; ?></h5>
-					</td>
-					<td>
-						<h5><?php echo $usr['nombre']; ?> <?php echo $usr['ap']; ?></h5>
-					</td>
-					<td>
-						<?php if($usr["nombre_sitio"] == "oficina"){ ?>
-							<h5>Oficina</h5>
-						<?php } ?>
-						<?php if($usr["nombre_sitio"] == "Stock Almacen"){ ?>
-							<h5>Stock almacen</h5>
-						<?php } ?>
+		<div class="col m12 s12 table_wrapper">
+			<table class="table text-left table-hover">
+				<thead>
+					<tr>
+						<th>NO.</th>
+						<th>Usuario</th>
+						<th>Sitio</th>		
+						<th>Servicio</th>
+						<th>Proveedor</th>
+						<th>Monto</th>
+						<th>Autorización</th>
+						<!-- <th>Documento</th> -->
+						<th>Detalle Solicitud</th>
+						<!-- <th>Eliminar</th> -->
+					</tr> 
+				</thead>
+				<?php
+				if ($this->paginator) { 
+				foreach ($this->paginator as $usr) { ?>
+				<tbody>
+					<tr>
+						<td>
+							<h5><?php echo $usr['id_solicitud']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo $usr['nombre']; ?> <?php echo $usr['ap']; ?></h5>
+						</td>
+						<td>
+							<?php if($usr["nombre_sitio"] == "oficina"){ ?>
+								<h5>Oficina</h5>
+							<?php } ?>
+							<?php if($usr["nombre_sitio"] == "Stock Almacen"){ ?>
+								<h5>Stock almacen</h5>
+							<?php } ?>
 
-						<?php if($usr["nombre_sitio"] != "Stock Almacen" && $usr["nombre_sitio"] != "oficina"){ ?>
-							<h5><?php echo $usr["nombre_sitio"]; ?> / <?php echo $usr['nombre_proyecto']; ?></h5>
-						<?php } ?>	
-					</td>
-					<td>
-						<h5><?php echo $usr['nombre_servicio']; ?></h5>
-					</td>
-					<td>
-						<h5><?php echo $usr['name_proveedor']; ?></h5>
-					</td>
-					<td>
-						<h5 style="font-weight: bold;">
-							$<?php echo number_format($usr['total'], 2, '.', ','); ?>
-						</h5>
-					</td>
-					<td>
-					<?php if($usr['status_documentouno'] == 0){ ?>
-						<?php if($usr['status_documento'] == 0){ ?>
-							<div class="chip" id="inactivo_personal">
-						    	<img src="/img/gris.jpg" >
-						    	En proceso
-						  	</div>
-						<?php } ?>
+							<?php if($usr["nombre_sitio"] != "Stock Almacen" && $usr["nombre_sitio"] != "oficina"){ ?>
+								<h5><?php echo $usr["nombre_sitio"]; ?> / <?php echo $usr['nombre_proyecto']; ?></h5>
+							<?php } ?>	
+						</td>
+						<td>
+							<h5><?php echo $usr['nombre_servicio']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo $usr['name_proveedor']; ?></h5>
+						</td>
+						<td>
+							<h5 style="font-weight: bold;">
+								$<?php echo number_format($usr['total'], 2, '.', ','); ?>
+							</h5>
+						</td>
+						<td>
+						<?php if($usr['status_documentouno'] == 0){ ?>
+							<?php if($usr['status_documento'] == 0){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/gris.jpg" >
+							    	En proceso
+							  	</div>
+							<?php } ?>
 
-						<?php if($usr['status_documento'] == 1){ ?>
-							<div class="chip" id="activo_personal">
-						    	<img src="/img/correct.png" >
-						    	Autorizada
-						  	</div>
-						  	
-						<?php } ?>
+							<?php if($usr['status_documento'] == 1){ ?>
+								<div class="chip" id="activo_personal">
+							    	<img src="/img/correct.png" >
+							    	Autorizada
+							  	</div>
+							  	
+							<?php } ?>
 
-						<?php if($usr['status_documento'] == 2){ ?>
-							<div class="chip" id="inactivo_personal">
-						    	<img src="/img/rojo.png" >
-						    	Rechazada
-						  	</div>
-						<?php } ?>
-					<?php } ?>
-
-					<?php if($usr['status_documentouno'] == 1){ ?>
-						<?php if($usr['status_documento'] == 0){ ?>
-							<div class="chip" id="inactivo_personal">
-						    	<img src="/img/gris.jpg" >
-						    	En proceso
-						  	</div>
+							<?php if($usr['status_documento'] == 2){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/rojo.png" >
+							    	Rechazada
+							  	</div>
+							<?php } ?>
 						<?php } ?>
 
-						<?php if($usr['status_documento'] == 1){ ?>
-							<div class="chip" id="activo_personal">
-						    	<img src="/img/correct.png" >
-						    	Autorizada
-						  	</div>
-						  	
+						<?php if($usr['status_documentouno'] == 1){ ?>
+							<?php if($usr['status_documento'] == 0){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/gris.jpg" >
+							    	En proceso
+							  	</div>
+							<?php } ?>
+
+							<?php if($usr['status_documento'] == 1){ ?>
+								<div class="chip" id="activo_personal">
+							    	<img src="/img/correct.png" >
+							    	Autorizada
+							  	</div>
+							  	
+							<?php } ?>
+
+							<?php if($usr['status_documento'] == 2){ ?>
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/rojo.png" >
+							    	Rechazada
+							  	</div>
+							<?php } ?>
 						<?php } ?>
 
-						<?php if($usr['status_documento'] == 2){ ?>
-							<div class="chip" id="inactivo_personal">
-						    	<img src="/img/rojo.png" >
-						    	Rechazada
-						  	</div>
+						<?php if($usr['status_documentouno'] == 2){ ?>
+
+								<div class="chip" id="inactivo_personal">
+							    	<img src="/img/rojo.png" >
+							    	Rechazada
+							  	</div>
 						<?php } ?>
-					<?php } ?>
 
-					<?php if($usr['status_documentouno'] == 2){ ?>
+						</td>
 
-							<div class="chip" id="inactivo_personal">
-						    	<img src="/img/rojo.png" >
-						    	Rechazada
-						  	</div>
-					<?php } ?>
-
-					</td>
-
-					<td class="text-center">
-						<a href="/solicitud/solicituddetailcoordinador/id/<?php echo $usr["id_solicitud"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-					</td>
-<!-- 					<td class="text-center">
-						<a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-					</td> -->
-				</tr>
-		    <?php } }else{ ?>
-		    </tbody> 
-		    <tbody>
-		        <tr>
-		            <td class="text-center" colspan="6"><h4>No hay solicitudes de compra.</h4></td>
-		        </tr>
-		    </tbody>
-		                
-		    <?php } ?>
-		</table>
+						<td class="text-center">
+							<a href="/solicitud/solicituddetailcoordinador/id/<?php echo $usr["id_solicitud"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+						</td>
+	<!-- 					<td class="text-center">
+							<a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+						</td> -->
+					</tr>
+			    <?php } }else{ ?>
+			    </tbody> 
+			    <tbody>
+			        <tr>
+			            <td class="text-center" colspan="6"><h4>No hay solicitudes de compra.</h4></td>
+			        </tr>
+			    </tbody>
+			                
+			    <?php } ?>
+			</table>
+		</div>
 	</div>
 </div>
 

@@ -1,101 +1,129 @@
 <style type="text/css">
-*,
-*:after,
-*:before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /*font-family: "Open Sans";*/
-}
-/* Form Progress */
+	*,
+	*:after,
+	*:before {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+  		/*font-family: "Open Sans";*/
+  	}
+  	/* Form Progress */
 
-.progress {
+	.progress {
+		margin: 20px auto;
+		text-align: center;
+		padding-bottom: 80px;
+		background-color: white;
+	}
 
-  margin: 20px auto;
-  text-align: center;
-  padding-bottom: 80px;
-  background-color: white;
-}
-.progress .circle,
-.progress .bar {
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #d5d5da;
-  vertical-align:top;
-}
-.progress .bar {
-  position: relative;
-  width: 80px;
-  height: 6px;
-  margin: 0 -5px 17px -5px;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
-  top:16px;
-  vertical-align:top
-}
-.progress .circle .label {
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  line-height: 27px;
-  border-radius: 32px;
-  margin-top: 1px;
-  color: #b5b5ba;
-  font-size: 15px;
-}
-.progress .circle .title {
-  color: #b5b5ba;
-  font-size: 13px;
-  line-height: 18px;
-  margin-left: -30px;
-  display: block;
-  width: 100px;
-  margin-top: 5px;
-}
-/* Done / Active */
+	.progress .circle,
+	.progress .bar {
+		display: inline-block;
+		background: #fff;
+		width: 40px;
+		height: 40px;
+		border-radius: 40px;
+		border: 1px solid #d5d5da;
+		vertical-align:top;
+	}
 
-.progress .bar.done,
-.progress .circle.done {
-  background: #eee;
-}
-.progress .bar.active {
-  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
-}
-.progress .circle.done .label {
-  color: #FFF;
-  background: #8bc435;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.done .title {
-  color: #444;
-}
-.progress .circle.active .label {
-  color: #FFF;
-  background: #0c95be;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.active .title {
-  color: #0c95be;
-}
-</style>
-
-<div class="row">
-	<div class="col m12 s12">
+	.progress .bar {
+		position: relative;
+		width: 80px;
+		height: 6px;
+		margin: 0 -5px 17px -5px;
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
+		top:16px;
+		vertical-align:top
+	}
+	
+	.progress .circle .label {
+		display: inline-block;
+		width: 36px;
+		height: 36px;
+		line-height: 27px;
+		border-radius: 32px;
+		margin-top: 1px;
+		color: #b5b5ba;
+		font-size: 15px;
+	}
 		
-	</div>
-</div>
-	<?php 
-	foreach ($this->solicitud as $key){
-	    $idsol = $key ['id'];
-		$status_sol = $key['status_solicitud'];
-	}?>
+	.progress .circle .title {
+		color: #b5b5ba;
+		font-size: 13px;
+		line-height: 18px;
+		margin-left: -30px;
+		display: block;
+		width: 100px;
+		margin-top: 5px;
+	}
+	/* Done / Active */
+	.progress .bar.done,
+	.progress .circle.done {
+		background: #eee;
+	}
 
-	<?php 
-	foreach ($this->detalle as $key){
+	.progress .bar.active {
+
+		background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+
+	}
+	.progress .circle.done .label {
+		color: #FFF;
+		background: #8bc435;
+		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.done .title {
+		color: #444;
+	}
+
+	.progress .circle.active .label {
+		color: #FFF;
+		background: #0c95be;
+		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.active .title {
+	
+		color: #0c95be;
+	
+	}
+
+	.card .card-content1 {
+	  padding: 24px;
+	  border-radius: 0 0 2px 2px;
+	  height: 330px;
+	}
+
+	.card .card-content1 p {
+	  margin: 0;
+	}
+
+	.card .card-content1 .card-title {
+	  display: block;
+	  line-height: 32px;
+	  margin-bottom: 8px;
+	}
+
+	.card .card-content1 .card-title i {
+	  line-height: 32px;
+	}
+
+
+</style>
+<div class="row">
+	<div class="col m12 s12"></div>
+</div>
+
+	<?php foreach ($this->solicitud as $key){
+		$idsol = $key ['id'];
+		$status_sol = $key['status_solicitud'];
+	} ?>
+
+	<?php foreach ($this->detalle as $key){
 	    
 	    $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; 
 	    $id_personal = $key ['id_personal']; $name_personal = $key ['name_personal']; 
@@ -120,6 +148,7 @@
         $namepuesto = $key ['namepuesto']; 
 	}?>
 
+
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
         <a href="/viaticos/listasolicitudvtc/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
@@ -135,184 +164,175 @@
 <input type="hidden" id="id_user" name="id_user" value="<?php echo $this->usuario; ?>">
 
 <!-- General Solicitud -->
+
 <div class="row">
-    <div class="col s12 m12">
-      	<div class="card darken-1">
-	        <div class="card-content">
-	          	<div class="row">
-	          		<div class="col m6 s12">
-	          			<h3 class="card-title">Información de la Solicitud</h3>
-	          		</div>
-	          		<div class="col m6 s12">
-	          			<div class="row">	
-	          				<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
-	          					<?php if($status_sol == 0){ ?>
-	          						<div class="col m6 s6">
-	          							<form action="/viaticos/requestchangeviaticossol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
-	          								<input type="hidden" name="id" value="<?php echo $this->id_solicitud; ?>">
-											<input type="hidden" name="id_user" value="<?php echo $this->usuario; ?>">
-	          							</form>
-	          							<div class="chip">
-									    	<img src="/img/gris.jpg" id="autorizar_sol">
-									    	Autorizado
-									  	</div>
-									</div>
-									<div class="col m6 s6">
-										<div class="chip modal-trigger" href="#modal1">
-								    		<img src="/img/gris.jpg">
-								    		Rechazado
-								  		</div>
-									</div>
-	          					<?php } ?>
+	<div class="col m12 s12 text-center">
+		<span style="font-size:29px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información Solicitud</span>
+	</div>
 
-	          					<?php if($status_sol == 1){ ?>
-	          						<div class="col m6 s6 text-center">
-										<div class="chip">
-									    	<img src="/img/correct.png" >
-									    	Autorizado
-									  	</div>
-									</div>
+	<div class="col m6 s12 right" style="margin-top:20px; ">
+		<div class="row">
 
-									<div class="col m6 s6 text-center">
-										<div class="row">
-											<div class="col m12 s12 center">
-												<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
-											</div>
-										</div>
-									</div>
-								<?php } ?>
+			<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+				<?php if($status_sol == 0){ ?>
+					
+					<div class="col m6 s6">
+						<form action="/viaticos/requestchangeviaticossol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+							<input type="hidden" name="id" value="<?php echo $this->id_solicitud; ?>">
+							<input type="hidden" name="id_user" value="<?php echo $this->usuario; ?>">
+	          			</form>
 
+	          			<div class="chip">
+	          				<img src="/img/gris.jpg" id="autorizar_sol">
+								Autorizado
+						</div>
+					</div>
 
-	          					<?php if($status_sol== 3){ ?>
-	          						<div class="col m4 s6">
-										<div class="chip">
-									    	<img src="/img/naranja.png" >
-									    	Cancelada
-									  	</div>
-									</div>
-
-									<div class="col m8 s6">
-										<div class="row">
-											<div class="col m12 s12 center">
-												<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
-											</div>
-										</div>
-									</div>
-								<?php } ?>
-
-								
-								<?php if($status_sol == 2){ ?>
-									<div class="col m6 s6">
-										<div class="chip modal-trigger">
-									    	<img src="/img/rojo.png" >
-									    	Rechazado
-									  	</div>
-									</div>
-								<?php }?>
-
-	          				<?php } else { ?>
-
-
-	          					<?php if($status_sol == 0){ ?>
-	          						<div class="col m6 s6">
-	          							<div class="chip">
-									    	<img src="/img/gris.jpg">
-									    	Autorizado
-									  	</div>
-									</div>
-									<div class="col m6 s6">
-										<div class="chip">
-								    		<img src="/img/gris.jpg">
-								    		Rechazado
-								  		</div>
-									</div>
-	          					<?php } ?>
-
-	          					<?php if($status_sol == 1){ ?>
-	          						<div class="col m4 s6">
-										<div class="chip">
-									    	<img src="/img/correct.png" >
-									    	Autorizado
-									  	</div>
-									</div>
-
-									<div class="col m4 s6">
-										<div class="chip">
-								    		<img src="/img/gris.jpg">
-								    		Rechazado
-								  		</div>
-									</div>
-									<div class="col m4 s6">
-										<div class="row">
-											<div class="col m12 s12 center">
-												<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
-											</div>
-										</div>
-									</div>
-								<?php } ?>
-
-
-	          					<?php if($status_sol== 3){ ?>
-	          						<div class="col m4 s6">
-										<div class="chip">
-									    	<img src="/img/naranja.png" >
-									    	Cancelada
-									  	</div>
-									</div>
-
-									<div class="col m8 s6">
-										<div class="row">
-											<div class="col m12 s12 center">
-												<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
-											</div>
-										</div>
-									</div>
-								<?php } ?>
-
-								
-								<?php if($status_sol == 2){ ?>
-									<div class="col m6 s6">
-										<div class="chip modal-trigger">
-									    	<img src="/img/rojo.png" >
-									    	Rechazado
-									  	</div>
-									</div>
-								<?php }?>
-								
-	          				<?php } ?>
-	          			</div>
-	          		</div>
-	          	</div>
-	        </div>
+					<div class="col m6 s6">
+						<div class="chip modal-trigger" href="#modal1">
+							<img src="/img/gris.jpg">
+							Rechazado
+						</div>
+					</div>
 	          	
-	        <div class="row" style="margin-left: 10px;">
-	          	<div class="col m4 s12">
-		          	<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos del personal</span>
-		          	<h4>Nombre: <?php echo $name_personal; ?> </h4>
-		          	<h4>Puesto: <?php echo $namepuesto; ?> </h4>
-		          	<h4>Sitio: <?php echo $name_sitio; ?></h4>
-		          	<h4>Proyecto: <?php echo $nombre_proyecto; ?> 
-		          	<h4>Viáticos por día:<b> $ <?php echo $viaticos; ?></b></h4>
-		          	<!-- <h4>Usuario: <?php echo $nombre_user; ?> <?php echo $ap; ?> <?php echo $am; ?></h4> -->
-	          	</div>
-	          	<div class="col m4 s12">
-	          		<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Solicitud</span>
+	          	<?php } ?>
 
-	          		<h4>Fecha Inicio: <?php echo $fecha_inicio ?></h4>
-	          		<h4>Fecha Final: <?php echo $fecha_fin; ?></h4>
-	          		<h4>Días Viáticos: <?php echo $dias; ?></h4>
-	          		<h3>Monto a pagar: <b>$ <?php echo $monto_total; ?></b></h3>
-	          		<h3>Motivo Viáticos: <b><?php echo $motivo_viaticos; ?></b></h3>
-	          	</div>
+	          	<?php if($status_sol == 1){ ?>
+	          		
+	          		<div class="col m6 s6 text-center">
+	          			<div class="chip">
+	          				<img src="/img/correct.png" >
+							Autorizado
+						</div>
+					</div>
 
-	          	<div class="col m4 s12 text-center">
-		          	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
-		          		<?php if($status_sol == 1 && $status_pago == 0){ ?>
-		          			<!-- Validacion de rechazada -->
-		          			<div>
+					<div class="col m6 s6 text-center">
+						<div class="row">
+							<div class="col m12 s12 center">
+								<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+							</div>
+						</div>
+					</div>
+
+				<?php } ?>
+
+				<?php if($status_sol== 3){ ?>
+					
+					<div class="col m4 s6">
+						<div class="chip">
+							<img src="/img/naranja.png" >
+							Cancelada
+						</div>
+					</div>
+
+					<div class="col m8 s6">
+						<div class="row">
+							<div class="col m12 s12 center">
+								<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+							</div>
+						</div>
+					</div>
+
+				<?php } ?>
+
+				<?php if($status_sol == 2){ ?>
+
+					<div class="col m6 s6">
+						<div class="chip modal-trigger">
+							<img src="/img/rojo.png" >
+							Rechazado
+						</div>
+					</div>
+				
+				<?php }?>
+			<?php } else { ?>
+
+				<?php if($status_sol == 0){ ?>
+					<div class="col m6 s6">
+						<div class="chip">
+							<img src="/img/gris.jpg">
+							Autorizado
+						</div>
+					</div>
+
+					<div class="col m6 s6">
+						<div class="chip">
+							<img src="/img/gris.jpg">
+							Rechazado
+						</div>
+					</div>
+				<?php } ?>
+
+				<?php if($status_sol == 1){ ?>
+				
+					<div class="col m4 s6">
+						<div class="chip">
+							<img src="/img/correct.png" >
+							Autorizado
+						</div>
+					</div>
+
+					<div class="col m4 s6">
+						<div class="chip">
+							<img src="/img/gris.jpg">
+							Rechazado
+						</div>
+					</div>
+
+					<div class="col m4 s6">
+						<div class="row">
+							<div class="col m12 s12 center">
+								<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+							</div>
+						</div>
+					</div>
+				
+				<?php } ?>
+
+				<?php if($status_sol== 3){ ?>
+					
+					<div class="col m4 s6">
+						<div class="chip">
+							<img src="/img/naranja.png">
+							Cancelada
+						</div>
+					</div>
+
+					<div class="col m8 s6">
+						<div class="row">
+							<div class="col m12 s12 center">
+								<a  href="/viaticos/solicitudviaticos/id/<?php echo $idsol; ?>/status/<?php echo $this->status_back; ?>" class="waves-effect waves-light btn"> Solicitud  </a>
+							</div>
+						</div>
+					</div>
+				
+				<?php } ?>
+
+				<?php if($status_sol == 2){ ?>
+				
+					<div class="col m6 s6">
+						<div class="chip modal-trigger">
+							<img src="/img/rojo.png" >
+							Rechazado
+						</div>
+					</div>
+				
+				<?php }?>
+			<?php } ?>
+		</div>
+	</div>
+
+	<?php if($rol_user == 1 || $rol_user == 8 || $rol_user == 4){ ?> 
+		<?php if($status_sol == 1 && $status_pago == 0){ ?>
+			<div class="col m12 s12">
+				<div class="row">
+					<div class="col m6 s12"></div>
+					<div class="col m6 s12 text-center">
+						<div class="row">
+							<div>
 		          				<span>* Esta opción solo esta disponible si el pago no se ha realizado</span>
 		          			</div>
-		          			
+
 		          			<div style="margin-top: 5px;">
 		          				<a class="btn modal-trigger orange darken-3" href="#modal6">Cancelar Solicitud</a>	
 		          			</div>
@@ -336,161 +356,225 @@
 	    						</div>
 	  							
 	  						</div>
-		          		<?php }else{ ?>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  	<?php }else{ ?>
+	  	<?php } ?>
+	<?php }else{} ?>
+</div>
 
-		          		<?php } ?>
-		          	<?php }else{} ?>
-	          		<div>
-	          			<?php if($imagen == null){ ?>
-	          				<img src="/img/no_disponible1.png" class="responsive-img text-center" style="width: 200px; margin-top: 5px;">
-    					<?php }else{ ?>
-            				<a class="example-image-link text-center" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>" id="camara_div" alt="<?php echo $marca; ?>" style="width: 240px;  margin-top: 5px;"/></a>
-        				<?php } ?>
+<div class="row">
+    <div class="col s12 m4">
+      	<div class="card darken-1">
+	        <div class="card-content1">
+	          	<div class="row">
+	          		<div class="col m12 s12">
+	          			<span class="card-title" style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos del personal</span>
+	          		</div>
+	          		<div class="col m12 s12">
+	          			<div class="row">
+	          				<h4>Nombre: <?php echo $name_personal; ?> </h4>
+		          			<h4>Puesto: <?php echo $namepuesto; ?> </h4>
+		          			<h4>Sitio: <?php echo $name_sitio; ?></h4>
+		          			<h4>Proyecto: <?php echo $nombre_proyecto; ?></h4>
+		          			<h4>Viáticos por día:<b> $ <?php echo $viaticos; ?></b></h4>
+	          			</div>
 	          		</div>
 	          	</div>
 	        </div>
+	    </div>
+	</div>
 
-
-	        <!-- <div class="row">
-	          	<div class="col m4 s12">
-	          		<?php foreach ($this->validacion as $key){ ?>
-		          		<h4>Datos de Autorización</h4>
-		          		<h4>Auditor: <?php echo $key['nombre']; ?> <?php echo $key['ap']; ?></h4>
-		          		<h4>Fecha y Hora: <?php echo $key["fecha_validacion"]; ?></h4>	          				
-	          		<?php } ?>
+	<div class="col s12 m4">
+      	<div class="card darken-1">
+	        <div class="card-content1">
+	          	<div class="row">
+	          		<div class="col m12 s12">
+	          			<span class="card-title" style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Datos Solicitud</span>
+	          		</div>
+	          		<div class="col m12 s12">
+	          			<div class="row">
+	          				<h4>Fecha Inicio: <?php echo $fecha_inicio ?></h4>
+	          				<h4>Fecha Final: <?php echo $fecha_fin; ?></h4>
+	          				<h4>Días Viáticos: <?php echo $dias; ?></h4>
+	          				<h4>Monto a pagar: <b>$ <?php echo $monto_total; ?></b></h4>
+	          				<h4>Motivo Viáticos: <b><?php echo $motivo_viaticos; ?></b></h4>
+	          			</div>
+	          		</div>
 	          	</div>
-	        </div> -->
-	          	
-	        <!-- <h3 class="card-title" style="margin-left: 10px;">Información de la Solicitud</h3> -->
-	        <div class="row" style="margin-left: 10px;">
-
-	          	<div class="col m12 s12">
-					<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-					<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-					<?php if($status_sol == 0 && $status_pago == 0){ ?>
-						<div class="progress">
-							<div class="circle done"> 
-								<span class="label">1</span>
-								<span class="title">Solicitud Creada</span>
-						  	</div> 
-						  	<span class="bar active"></span>
-						  	<div class="circle" > 
-						  		<span class="label">2</span>
-						    	<span class="title">Aprobada</span>
-						  	</div> 
-						  	
-						  	<span class="bar"></span>
-						  	<div class="circle"> 
-						  		<span class="label">3</span>
-						    	<span class="title">Pagada</span>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if($status_sol == 1 && $status_pago == 0){ ?>
-						<div class="progress">
-							<div class="circle done"> 
-							  	<span class="label">1</span>
-							    <span class="title">Solicitud Creada</span>
-							</div> 
-							<span class="bar active"></span>
-
-							<div class="circle done" > 
-								<span class="label">2</span>
-								<span class="title">Aprobada</span>
-							</div> 
-							<span class="bar"></span>
-
-							<div class="circle"> 
-								<span class="label">3</span>
-								<span class="title">Pagada</span>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if($status_sol == 1 && $status_pago == 1){ ?>
-						<div class="progress">
-							<div class="circle done"> 
-							  	<span class="label">1</span>
-							    <span class="title">Solicitud Creada</span>
-							</div> 
-							<span class="bar active"></span>
-
-							<div class="circle done" > 
-								<span class="label">2</span>
-							    <span class="title">Aprobada</span>
-							</div> 
-							<span class="bar"></span>
-
-							<div class="circle done"> 
-								<span class="label">3</span>
-							    <span class="title">Pagada</span>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if($status_sol == 2 && $status_pago == 0){ ?>
-						<div class="progress">
-						  	<div class="circle done"> 
-						  		<span class="label">1</span>
-						    	<span class="title">Solicitud Creada</span>
-						  	</div> 
-						  	<span class="bar active"></span>
-
-							<div class="circle done" > 
-							  	<span class="label">2</span>
-							    <span class="title">Rechazada</span>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if($status_sol == 3 && $status_pago == 0){ ?>
-						<div class="progress">
-						  	<div class="circle done"> 
-						  		<span class="label">1</span>
-						    	<span class="title">Solicitud Creada</span>
-							</div> 
-							<span class="bar active"></span>
-
-						  	<div class="circle done" > 
-						  		<span class="label">2</span>
-						    	<span class="title">Cancelada</span>
-						  	</div>
-						</div>
-					<?php } ?>
-	          	</div>
-	        </div>
-
-	        <div class="row" style="margin-left: 10px;">
-	         	<div class="col m6 s12">
-	        		<h4>* Solicitud Creada: <?php echo $fecha_creacion; ?></h4>
-	        		<h4>* Creada por: <?php echo $name_user; ?></h4>
-	        		<?php if ($status_sol==1) { ?>
-	        			<h4>* Aprobada por: <?php echo $name_userautorizacion; ?> </h4>
-	        		<?php } ?>
-	        		<?php if ($status_sol==2) { ?>
-	        			<h4>* Rechazado por: <?php echo $name_userautorizacion; ?></h4>
-	        		<?php } ?>
-	        		<?php if ($status_sol == 1 && $status_pago == 1) { ?>
-	        			<h4>* Pagada por: <?php echo $name_userpago; ?></h4>
-	        		<?php } ?>
-	        	</div>
-
-	        	<div class="col m6 s12">
-	        		<?php if ($status_sol==1) { ?>
-	        			<h4>* Aprobada el: <?php echo $fecha_autorizacion; ?></h4>
-	        		<?php } ?>
-	        		<?php if ($status_sol==2) { ?>
-	        			<h4>* Rechazada el: <?php echo $fecha_autorizacion; ?></h4>
-	        		<?php } ?>
-	        		<?php if ($status_sol == 1 && $status_pago == 1) { ?>
-	        			<h4>* Pagada el: <?php echo $fecha_pago; ?></h4>
-	        		<?php } ?>	
-	        	</div>
 	        </div>
 	    </div>
-    </div>
+	</div>
+	          	
+	<div class="col s12 m4">
+      	<div class="card darken-1">
+	        <div class="card-content1">
+	          	<div class="row">
+	          		<div class="col m12 s12">
+	          			<span class="card-title" style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">General</span>
+	          		</div>
+	          		<div class="col m12 s12 text-center">
+	          			<div class="row">
+	          				<div>
+	          					<?php if($imagen == null){ ?>
+	          						<img src="/img/no_disponible1.png" class="responsive-img text-center" style="width: 180px; height: 185px; margin-top: 5px;">
+    							<?php }else{ ?>
+            						<a class="example-image-link text-center" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>" id="camara_div" alt="<?php echo $marca; ?>" style="width: 180px;  margin-top: 5px;"/></a>
+        						<?php } ?>
+	          				</div>
+	          			</div>
+	          		</div>
+	          	</div>
+	        </div>
+	    </div>
+	</div>
 </div>
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card darken-1">
+	        <div class="card-content">
+	          	<div class="row">
+	          		<div class="col m12 s12">
+	          			<span class="card-title" style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status Solicitud</span>
+	          		</div>
+
+	          		<div class="row" style="margin-left: 10px;">
+	          			<div class="col m12 s12">
+	          				<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+							<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+							<?php if($status_sol == 0 && $status_pago == 0){ ?>
+								<div class="progress">
+									<div class="circle done"> 
+										<span class="label">1</span>
+										<span class="title">Solicitud Creada</span>
+						  			</div> 
+						  			
+						  			<span class="bar active"></span>
+						  			
+						  			<div class="circle" > 
+						  				<span class="label">2</span>
+						    			<span class="title">Aprobada</span>
+						  			</div>
+						  			<span class="bar"></span>
+						  			
+						  			<div class="circle"> 
+						  				<span class="label">3</span>
+						    			<span class="title">Pagada</span>
+									</div>
+								</div>
+							<?php } ?>
+
+							<?php if($status_sol == 1 && $status_pago == 0){ ?>
+								<div class="progress">
+									<div class="circle done"> 
+										<span class="label">1</span>
+							    		<span class="title">Solicitud Creada</span>
+									</div> 
+									<span class="bar active"></span>
+
+									<div class="circle done" > 
+										<span class="label">2</span>
+										<span class="title">Aprobada</span>
+									</div> 
+									<span class="bar"></span>
+
+									<div class="circle"> 
+										<span class="label">3</span>
+										<span class="title">Pagada</span>
+									</div>
+								</div>
+							<?php } ?>
+
+							<?php if($status_sol == 1 && $status_pago == 1){ ?>
+								<div class="progress">
+									<div class="circle done"> 
+									  	<span class="label">1</span>
+									    <span class="title">Solicitud Creada</span>
+									</div> 
+									<span class="bar active"></span>
+
+									<div class="circle done" > 
+										<span class="label">2</span>
+									    <span class="title">Aprobada</span>
+									</div> 
+									<span class="bar"></span>
+
+									<div class="circle done"> 
+										<span class="label">3</span>
+									    <span class="title">Pagada</span>
+									</div>
+								</div>
+							<?php } ?>
+
+							<?php if($status_sol == 2 && $status_pago == 0){ ?>
+								<div class="progress">
+								  	<div class="circle done"> 
+								  		<span class="label">1</span>
+								    	<span class="title">Solicitud Creada</span>
+								  	</div> 
+								  	<span class="bar active"></span>
+
+									<div class="circle done" > 
+									  	<span class="label">2</span>
+									    <span class="title">Rechazada</span>
+									</div>
+								</div>
+							<?php } ?>
+
+							<?php if($status_sol == 3 && $status_pago == 0){ ?>
+								<div class="progress">
+								  	<div class="circle done"> 
+								  		<span class="label">1</span>
+								    	<span class="title">Solicitud Creada</span>
+									</div> 
+									<span class="bar active"></span>
+
+								  	<div class="circle done" > 
+								  		<span class="label">2</span>
+								    	<span class="title">Cancelada</span>
+								  	</div>
+								</div>
+							<?php } ?>
+						</div>
+	        		</div>
+
+			        <div class="row" style="margin-left: 10px;">
+			         	<div class="col m6 s12">
+			        		<h4>* Solicitud Creada: <?php echo $fecha_creacion; ?></h4>
+			        		<h4>* Creada por: <?php echo $name_user; ?></h4>
+			        		<?php if ($status_sol==1) { ?>
+			        			<h4>* Aprobada por: <?php echo $name_userautorizacion; ?> </h4>
+			        		<?php } ?>
+			        		<?php if ($status_sol==2) { ?>
+			        			<h4>* Rechazado por: <?php echo $name_userautorizacion; ?></h4>
+			        		<?php } ?>
+			        		<?php if ($status_sol == 1 && $status_pago == 1) { ?>
+			        			<h4>* Pagada por: <?php echo $name_userpago; ?></h4>
+			        		<?php } ?>
+			        	</div>
+
+			        	<div class="col m6 s12">
+			        		<?php if ($status_sol==1) { ?>
+			        			<h4>* Aprobada el: <?php echo $fecha_autorizacion; ?></h4>
+			        		<?php } ?>
+			        		<?php if ($status_sol==2) { ?>
+			        			<h4>* Rechazada el: <?php echo $fecha_autorizacion; ?></h4>
+			        		<?php } ?>
+			        		<?php if ($status_sol == 1 && $status_pago == 1) { ?>
+			        			<h4>* Pagada el: <?php echo $fecha_pago; ?></h4>
+			        		<?php } ?>	
+			        	</div>
+			        </div>
+	          	</div>
+	        </div>
+	    </div>
+	</div>
+</div>
+	
+	       
 <!-- End General Solicitud -->
 
 <!-- Comentarios  -->

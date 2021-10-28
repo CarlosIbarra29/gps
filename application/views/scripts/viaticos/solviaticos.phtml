@@ -1,6 +1,6 @@
 <?php 
 	function isActhref($nameBtn,$urlname){
-	    if($nameBtn==1 && $urlname==null){
+		if($nameBtn==1 && $urlname==null){
 	    	return "active"; 
 	    }
 	    return ($nameBtn == $urlname)?"active":"";
@@ -49,9 +49,8 @@
                 
             }           
         }
+?>
 
-
- ?>
 <?php foreach ($this->user as $value) { 
 	$rol_user = $value['fkroles'];
 	// echo $rol_user;
@@ -87,16 +86,12 @@
 	<div class="col m12 s12">
 		<div class="row" style="margin-top: 20px;">
 			<div class="col m8 s8">
-				<!-- <h3>Lista de solicitudes de orden de compra </h3> -->
 				<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes Pendientes</span>
 			</div>
 			<div class="col m4 s4 text-right">
 				<a href="/viaticos/listasolicitudvtc/status/0"> <h4 style="color: blue;">Solicitudes en Proceso <i class="material-icons">receipt</i></h4></a>
 			</div>
 		</div>
-
-
-
 
 		<div class="col m12 s12 table_wrapper">
 			<table class="table text-left table-hover ">
@@ -115,53 +110,52 @@
 				</thead>
 				<?php
 				if ($this->paginator) { 
-				foreach ($this->paginator as $viaticosol) { ?>
-				<tbody>
-					<tr>
-						<td>
-							<?php echo $viaticosol['id']; ?>
-						</td>
-						<td>
-							<?php echo $viaticosol['name_personal']; ?>
-						</td>
-						<td>
-							<?php echo $viaticosol['namepuesto']; ?>
-						</td>
-						<td>
-							<?php echo $viaticosol['name_sitio']; ?>
-						</td>
-						<td>
-							<?php echo $viaticosol['fecha_inicio']; ?>
-						</td>
-						<td>
-							<?php echo $viaticosol['fecha_fin']; ?>
-						</td>
-						<td>
-							<?php if($viaticosol['status_solicitud'] == 0){ ?>
-								Sin Terminar 
-							<?php } ?>
+					foreach ($this->paginator as $viaticosol) { ?>
+						<tbody>
+							<tr>
+								<td>
+									<?php echo $viaticosol['id']; ?>
+								</td>
+								<td>
+									<?php echo $viaticosol['name_personal']; ?>
+								</td>
+								<td>
+									<?php echo $viaticosol['namepuesto']; ?>
+								</td>
+								<td>
+									<?php echo $viaticosol['name_sitio']; ?>
+								</td>
+								<td>
+									<?php echo $viaticosol['fecha_inicio']; ?>
+								</td>
+								<td>
+									<?php echo $viaticosol['fecha_fin']; ?>
+								</td>
+								<td>
+									<?php if($viaticosol['status_solicitud'] == 0){ ?>
+										Sin Terminar 
+									<?php } ?>
 
-							<?php if($viaticosol['status_solicitud'] == 1){ ?>
-								En Proceso
-							<?php } ?>
-						</td>
-						<td>
-							<a href="/viaticos/updatesolviaticos/id/<?php echo $viaticosol["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-						</td>
+									<?php if($viaticosol['status_solicitud'] == 1){ ?>
+										En Proceso
+									<?php } ?>
+								</td>
+								<td>
+									<a href="/viaticos/updatesolviaticos/id/<?php echo $viaticosol["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								</td>
 
-						<td>
-							<a class="delete" data-id="<?php echo $viaticosol["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-						</td>
+								<td>
+									<a class="delete" data-id="<?php echo $viaticosol["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td>
+							</tr>
+				<?php } }else{ ?>
+						</tbody> 
 
-					</tr>
-			    <?php } }else{ ?>
-			    </tbody> 
-			    <tbody>
-			        <tr>
-			            <td class="text-center" colspan="6"><h4>No hay solicitudes pendientes. !Revisa en solicitudes en proceso!</h4></td>
-			        </tr>
-			    </tbody>
-			                
+						<tbody>
+							<tr>
+			            		<td class="text-center" colspan="6"><h4>No hay solicitudes pendientes. !Revisa en solicitudes en proceso!</h4></td>
+			        		</tr>
+			    		</tbody>
 			    <?php } ?>
 			</table>
 		</div>
@@ -203,47 +197,47 @@
 
 
 
- <script type="text/javascript">
+<script type="text/javascript">
 
-  $(".delete").click(function(){
-	swal({
-	  title: "¿Estás seguro de eliminar el registro?",
-	  icon: "warning",
-	  buttons: true,
-	  dangerMode: true,
-	})
-	.then((willDelete) => {
-	  if (willDelete) {
-			swal("Espere un momento, la información esta siendo procesada", {
-				icon: "success",
-				buttons: false,
-			});  
-  			var	id = $(this).data('id')
-            var request = $.ajax({
-                url:"/viaticos/requestdeletesolv",
-                method:"POST",
-                data: { id: id },
-                processData: true,
-                // contentType: false,
-            });
-//-------------------end de ajax---------------------------
+	$(".delete").click(function(){
+		swal({
+			title: "¿Estás seguro de eliminar el registro?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Espere un momento, la información esta siendo procesada", {
+					icon: "success",
+					buttons: false,
+				});  
 
-//-------------peticion de respuesta de ajax------------------
-            request.done(function(response) {
-                console.log(response);//imprime lo que responde el ajax
-                // alert
-                window.location.reload(true);
-            });
-//-------------------end de respuesta ajax---------------------
-             return false;
+				var	id = $(this).data('id')
+				var request = $.ajax({
+					url:"/viaticos/requestdeletesolv",
+                	method:"POST",
+                	data: { id: id },
+                	processData: true,
+                	// contentType: false,
+                });
+                //-------------------end de ajax---------------------------
 
-
-	  } else {
-	    swal("El cambio de status fue cancelado!");
-	  }
+                //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                	console.log(response);//imprime lo que responde el ajax
+                	// alert
+                	window.location.reload(true);
+                });
+                //-------------------end de respuesta ajax---------------------
+             	return false;
+             } else {
+             	swal("El cambio de status fue cancelado!");
+             }
+        });
 	});
-
-  });
+ 
  </script>
 
 

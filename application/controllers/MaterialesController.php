@@ -198,6 +198,137 @@ class MaterialesController extends Zend_Controller_Action{
 
     }
 
+
+    public function materialesenviadosAction(){
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $status = $this->_getParam('status');
+        $this->view->opcion_status = $status;
+        
+        $step = 1; $dato = 0;
+        $en_proceso = $this->_material->getsolicitudesmateriales($step,$dato);
+        $count_enproceso = count($en_proceso);
+        $this->view->en_proceso = $count_enproceso;
+        
+        $step = 1;
+        $solicitud = $this->_material->getsolicitudesmateriales($step,$status);
+        $count=count($solicitud);
+        if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_material->getsolicitudesmaterialpag($step,$status,$offset,$no_of_records_per_page);
+    }
+
+    public function buscadorenviadosAction(){
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+        $step = 1;
+        $status = 0;
+        $en_proceso = $this->_material->getsolicitudsteponematerial($step,$status);
+        $count_enproceso = count($en_proceso);
+        $this->view->en_proceso = $count_enproceso;
+
+        $status=$this->_getParam('status');
+        $this->view->opcion_status=$status;
+
+        $op = $this->_getParam('op'); 
+        $this->view->opcion=$op;
+
+        if($op == 1){
+            $step = 1;
+            $sitio=$this->_getParam('sitio');
+            $this->view->sitio_selected=$sitio;
+            $envio = $this->_material->getsitiobuscador($step,$status,$sitio);
+            $count=count($envio);
+            if(isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1; } 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_material->getsitiobuscadorpaginator($step,$status,$sitio,$offset,$no_of_records_per_page);
+        }
+
+        if($op == 2){
+            $step = 1;
+            $dia=$this->_getParam('dia'); $mes=$this->_getParam('mes'); $year=$this->_getParam('year');
+            $fecha = $dia."/".$mes."/".$year;
+            $this->view->fecha_selected=$fecha;
+            $envio = $this->_material->getfechabuscador($step,$status,$fecha);
+            $count=count($envio);
+            if(isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator= $this->_material->getfechabuscadorpaginator($step,$status,$fecha,$offset,$no_of_records_per_page);
+        }
+
+        if($op == 3){
+            $step = 1;
+            $user=$this->_getParam('user');
+            $this->view->user_selected=$user;
+            $envio = $this->_material->getnamebuscador($step,$status,$user);
+            $count=count($envio);
+            if(isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{ $pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $ver = $this->view->paginator= $this->_material->getuserbuscadorpaginator($step,$status,$user,$offset,$no_of_records_per_page);
+        }
+
+        if($op == 4){
+            $step = 1;
+            $solicitud=$this->_getParam('solicitud');
+            $this->view->id_selected=$solicitud;
+            $dato = $this->_material->getidbuscador($step,$status,$solicitud);
+            
+            $count=count($dato);
+            if(isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $ver = $this->view->paginator= $this->_material->getidbuscadorpaginator($step,$status,$solicitud,$offset,$no_of_records_per_page);
+        }
+
+        if($op == 5){
+            $step = 1;
+            $solicitud=$this->_getParam('check');
+            $this->view->id_selected=$solicitud;
+            $dato = $this->_material->getcheckbuscador($step,$status,$solicitud);
+            
+            $count=count($dato);
+            if(isset($_GET['pagina'])){$pagina = $_GET['pagina'];}else{$pagina= $this->view->pagina = 1;} 
+
+            $no_of_records_per_page = 20;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $ver = $this->view->paginator= $this->_material->getcheckbuscadorpaginator($step,$status,$solicitud,$offset,$no_of_records_per_page);
+        }
+
+    }
+
     public function materialdetailAction(){
         $status = $this->_getParam('status');
         $this->view->opcion_status = $status;

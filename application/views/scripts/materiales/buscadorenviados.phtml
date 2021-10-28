@@ -12,7 +12,7 @@
         $pagina = 1;
     }  
 ?>
- 
+
 <?php 
 
     $links = "";
@@ -60,102 +60,13 @@
 	-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	}
-
-	.icon_style{
-	    font-size: 17px;
-	    font-family: "Nunito", sans-serif;
-	    cursor:pointer; 
-	}
-
-	.colorfont strong{
-		color: rgb(169,68,66);
-		font-weight: bold;
-	}
-
-	.colorfont span{
-		color: rgb(169,68,66);
-		font-weight: 350;
-	}
 </style>
 
 <?php $status =  $this->opcion_status; ?>
 
-<?php if($status == 0 || $status == 1){ ?>
-<div class="col m12 s12">
-    <div class="row">
-        <div class="col m12 s12" id="alert_box">
-            <?php if ($this->alertas) { ?>
-                <?php foreach ($this->alertas as $vencidas) { ?>
-                    <div style="background: rgb(242,222,222);"  class="card darken-1">
-                        <div style="padding: 10px;" class="card-content white-text colorfont">
-                            <strong>¡Cuidado!</strong> 
-                            <span>
-                            	Los materiales para el sitio <b><?php echo $vencidas['name_sitio']; ?></b> programados para el: 
-                            	<b><?php echo $vencidas['fecha_solicitar']; ?></b> no han sido enviados. Atiendelo
-                            </span> &nbsp; 
-                            <a href="/materiales/materialdetail/id/<?php echo $vencidas["id"] ?>">
-                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
-                            </a>
-                        </div>    
-                    </div>              
-                <?php } ?>
-                <div class="col m12 s12 text-right">
-                    <a><i class="icon_style"  id="alert_close" aria-hidden="true"> Cerrar todo </i></a>
-                </div> 
-            <?php } else { } ?>
-        </div>
-    </div>
-</div>
-<?php }else{ } ?>
-
-
-<div class="row" style="margin-top: 20px;">
-	<div class="col m12 s12">
-  		<ul >
-  			<?php if($status == 0){ ?>
-	    		<li class="tab col s3 active_menu">
-	    			<a class="" href="/materiales/auditoriamateriales/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->en_proceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php }else{ ?>
-	    		<li class="tab col s3">
-	    			<a class="" href="/materiales/auditoriamateriales/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->en_proceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php } ?>
-
-  			<?php if($status == 1){ ?>
-  				<li class="tab col s3 active_menu"><a href="/materiales/auditoriamateriales/status/1"><h4>Surtiendo</h4></a></li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/materiales/auditoriamateriales/status/1"><h4>Surtiendo</h4></a></li>
-  			<?php } ?>
-
-  			<?php if($status == 2){ ?>
-  				<li class="tab col s3 active_menu">
-  					<a href="/materiales/auditoriamateriales/status/2"><h4>Listo para enviar</h4></a>
-  					<div></div>
-  				</li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/materiales/auditoriamateriales/status/2"><h4>Listo para enviar</h4></a></li>
-  			<?php } ?>
-
-  			<?php if($status == 3){ ?>
-  				<li class="tab col s3 active_menu"><a href="/materiales/auditoriamateriales/status/3"><h4>Rechazadas</h4></a></li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/materiales/auditoriamateriales/status/3"><h4>Rechazadas</h4></a></li>
-  			<?php } ?>
-
-  		</ul>
+<div class="row" style="margin-top: 30px; margin-bottom: 40px;">
+	<div class="col m12 s12 text-center">
+  		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Materiales Enviados</span>
 	</div>
 </div>
 
@@ -163,68 +74,146 @@
 	<div class="col m1 s12"></div>
 	<div class="col m10 s12">
 		<div class="row">
-			<div class="col m4 s4">
+			<div class="col m5 s6">
 			  	<div class="input-field col s12">
-			    	<select id="search_op">
-			      		<option value="1" selected>Sitio</option>
-			      		<option value="2">Fecha Solicitada</option>
-			      		<option value="3">Usuario</option>
-			      		<option value="4">Id solicitud</option>
-			      		<option value="5">Proyección</option>
-			    	</select>
-			    	<label>Buscar por:</label>
+				    <select id="buscador_id">
+				    	<?php if($this->opcion == 1){ ?>
+					    	<option value="1" selected>Sitio</option>
+					    	<option value="2">Fecha solicitada</option>
+					      	<option value="3">Usuario</option>
+					      	<option value="4">Id solicitud</option>
+					      	<option value="5">Proyección</option>
+				    	<?php } ?>
+
+				    	<?php if($this->opcion == 2){ ?>
+					    	<option value="1">Sitio</option>
+					    	<option value="2" selected>Fecha Solicitada</option>
+					      	<option value="3">Usuario</option>
+					      	<option value="4">Id solicitud</option>
+					      	<option value="5">Proyección</option>
+				    	<?php } ?>
+
+				    	<?php if($this->opcion == 3){ ?>
+					    	<option value="1">Sitio</option>
+					    	<option value="2">Fecha solicitada</option>
+					      	<option value="3" selected>Usuario</option>
+					      	<option value="4">Id solicitud</option>
+					      	<option value="5">Proyección</option>
+				    	<?php } ?>
+
+				    	<?php if($this->opcion == 4){ ?>
+					    	<option value="1">Sitio</option>
+					    	<option value="2">Fecha solicitada</option>
+					      	<option value="3">Usuario</option>
+					      	<option value="4" selected>Id solicitud</option>
+					      	<option value="5">Proyección</option>
+				    	<?php } ?>
+
+				    	<?php if($this->opcion == 5){ ?>
+					    	<option value="1">Sitio</option>
+					    	<option value="2">Fecha solicitada</option>
+					      	<option value="3">Usuario</option>
+					      	<option value="4">Id solicitud</option>
+					      	<option value="5" selected>Proyección</option>
+				    	<?php } ?>
+
+				    </select>
+				    <label>Buscar por:</label>
 			  	</div>
 			</div>
-			<div class="col m4 s4">
-		        <div class="input-field col s12 op_sitio">
-		        	<input placeholder="Escribe el nombre del sitio" id="sitio_search" type="text" class="validate">
-		          	<label for="sitio_search">Sitio</label>
-		        </div>
+			<div class="col m5 s6">
+				<?php if($this->opcion == 1){ ?>
+			        <div class="input-field col s12 op_sitio">
+			        	<input value="<?php echo $this->sitio_selected; ?>" id="sitio_search" type="text" class="validate">
+			        	<label for="sitio_search">Sitio</label>
+			        </div>
+		    	<?php }else{ ?>
+			        <div class="input-field col s12 oculto op_sitio">
+			        	<input placeholder="Agrega el nombre del sitio" id="sitio_search" type="text" class="validate">
+			        	<label for="sitio_search">Sitio</label>
+			        </div>
+		    	<?php } ?>
 
-		        <div class="input-field col s12 oculto op_fecha">
-		        	<input id="fechaenvio_search" type="text" class="datepicker">
-		        	<label for="fechaenvio_search">Fecha envio</label>
-		        </div>
+		    	<?php if($this->opcion == 2){ ?>
+		        	<div class="input-field col s12 op_fecha">
+			        	<input id="fechaenvio_search" value="<?php echo $this->fecha_selected; ?>" type="text" class="datepicker">
+			        	<label for="fechaenvio_search">Fecha solicitada</label>
+			        </div>	
+		    	<?php }else{ ?>
+			        <div class="input-field col s12 oculto op_fecha">
+			        	<input id="fechaenvio_search" type="text" class="datepicker">
+			        	<label for="fechaenvio_search">Fecha solicitada</label>
+			        </div>
+		    	<?php } ?>
 
+
+		    	<?php if($this->opcion == 3){ ?>
+			        <div class="input-field col s12 op_user">
+			        	<input value="<?php echo $this->user_selected; ?>" id="user_search" type="text" class="validate">
+			        	<label for="user_search">Usuario</label>
+			        </div>
+		    	<?php }else{ ?>
 		        <div class="input-field col s12 oculto op_user">
-		        	<input placeholder="Agrega el nombre del usuario" id="user_search" type="text" class="validate">
-		        	<label for="user_search">Usuario</label>
-		        </div>
+			        	<input placeholder="Agrega el nombre del usuario" id="user_search" type="text" class="validate">
+			        	<label for="user_search">Usuario</label>
+			        </div>
+		    	<?php } ?>
 
-		        <div class="input-field col s12 oculto op_id">
-		        	<input placeholder="Agrega el id del envio" id="id_envio" type="number" class="validate">
-		        	<label for="id_envio">Id de solicitud</label>
-		        </div>
+		    	<?php if($this->opcion == 4){ ?>
+			        <div class="input-field col s12 op_id">
+			        	<input value="<?php echo $this->id_selected; ?>" id="id_envio" type="number" class="validate">
+			        	<label for="id_envio">Id de envio</label>
+			        </div>
+		    	<?php }else{ ?>
+			        <div class="input-field col s12 oculto op_id">
+			        	<input placeholder="Agrega el id del envio" id="id_envio" type="number" class="validate">
+			        	<label for="id_envio">Id de envio</label>
+			        </div>
+		    	<?php } ?>
 
-		        <div class="input-field col s12 oculto op_proyeccion">
-					<select id="select_proyeccion">
-					    <option value="1" selected>Si</option>
-					    <option value="0">No</option>
-					</select>
-					<label>Proyeccion</label>
-		        </div>
+
+		    	<?php if($this->opcion == 5){ ?>
+			        <div class="input-field col s12  op_proyeccion">
+						<select id="select_proyeccion">
+							<?php if($this->id_selected == 1){ ?>
+							    <option value="1" selected>Si</option>
+							    <option value="0">No</option>
+							<?php }else{ ?>
+						    	<option value="1">Si</option>
+							    <option value="0" selected>No</option>
+							<?php } ?>
+						</select>
+						<label>Proyeccion</label>
+			        </div>
+		    	<?php }else{ ?>
+			        <div class="input-field col s12 oculto op_proyeccion">
+						<select id="select_proyeccion">
+						    <option value="1">Si</option>
+						    <option value="2">No</option>
+						</select>
+						<label>Proyeccion</label>
+			        </div>
+		    	<?php } ?>
 
 			</div>
-			<div class="col m4 s4">
-		        <div class="input-field col s12">
-		        	<a class="btn" id="search_opdos">Buscar</a>
-		        </div>
+			<div class="col m2 s12">
+				<a class="btn" id="search_opdos"><i class="material-icons right">search</i></a>
 			</div>
-
-		</div>
+		</div>	
 	</div>
 	<div class="col m1 s12"></div>
 </div>
 
 
 
+
 <div class="row"> 
-	<div class="col m12 s12" style="margin-top: 20px;">
+	<div class="col m12 s12" style="margin-top: 15px;">
 		<div class="col m6 s6">
 			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitudes de Materiales</span>
 		</div>
 		<div class="col m6 s6 text-right">
-			<a href="/materiales/materialesenviados/status/4"> <h4 style="color: blue;">Materiales Enviados <i class="material-icons">receipt</i></h4></a>
+			<a href="/materiales/materialesenviados/status/4"> <h4 style="color: blue;"> Mostrar Todos <i class="material-icons">receipt</i></h4></a>
 		</div>
 	</div>
 
@@ -236,7 +225,6 @@
 					<th>Usuario</th>
 					<th>Sitio</th>	
 					<th>Fecha solicitada</th>
-					<th>Envios</th>
 					<th>Detalle Solicitud</th>
 				</tr> 
 			</thead>
@@ -292,14 +280,23 @@
 						    	Rechazada
 						  	</div>
 						<?php } ?>
+
+						<?php if($usr['status_solicitud'] == 4){ ?>
+							<div class="chip" id="inactivo_personal">
+							    <img src="/img/correct.png" >
+							    Enviado
+							 </div>
+						<?php } ?>
+
 					</td>
+
 					<td>
 						<?php if($usr['solicitud_materiales']  == 0 || $usr['solicitud_materiales']  == NULL ){ ?>
 						<?php }else{ ?>
 							<a href="/envios/enviodetail/id/<?php echo $usr['envio_id']; ?>/status/<?php echo $usr['envios_status']; ?>"><i class="material-icons">local_shipping</i></a>
 						<?php } ?>
 					</td>
-
+					
 					<td class="text-center">
 						<a href="/materiales/materialdetail/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
 					</td>
@@ -310,7 +307,9 @@
 							<i class="material-icons" style="color: green">bookmark</i>	
 						</td>
 					<?php } ?>
+
 				</tr>
+
 		    <?php } }else{ ?>
 		    </tbody> 
 		    <tbody>
@@ -361,7 +360,7 @@
     </div> 
 </div>
 
-<input type="hidden" id="buscador" value="1">
+<input type="hidden" id="buscador" value="<?php echo $this->opcion; ?>">
 <input type="hidden" id="status_seach" value="<?php echo $this->opcion_status; ?>">
 
 <script src="/js/materialize.min.js"></script>
@@ -372,19 +371,18 @@
     	$('select').formSelect();
     	$('.modal').modal();
     	$('.timepicker').timepicker();
+
     	var currentDate = document.getElementById("today_picker").value; 
     	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate",currentDate);
+
   	});
 
-  	$('#alert_close').click(function(){
-	    $( "#alert_box" ).fadeOut( );
-	});
+	$("#buscador_id").on('change', function() {
+		var val = this.value;
+		document.getElementById("buscador").value= val;
 
-	$("#search_op").on('change', function() {
-		var value = this.value;
-		document.getElementById("buscador").value= value;
 
-		if(value == 1){
+		if(val == 1){
 			$(".op_sitio").show();
 			$(".op_user").hide();
 			$(".op_fecha").hide();
@@ -392,7 +390,7 @@
 			$(".op_proyeccion").hide();
 		}
 
-		if(value == 2){
+		if(val == 2){
 			$(".op_fecha").show();
 			$(".op_user").hide();
 			$(".op_sitio").hide();	
@@ -400,7 +398,7 @@
 			$(".op_proyeccion").hide();
 		}
 
-		if(value == 3){
+		if(val == 3){
 			$(".op_user").show();
 			$(".op_sitio").hide();
 			$(".op_fecha").hide();
@@ -408,7 +406,7 @@
 			$(".op_proyeccion").hide();
 		}
 
-		if(value == 4){
+		if(val == 4){
 			$(".op_id").show();
 			$(".op_fecha").hide();
 			$(".op_user").hide();
@@ -416,21 +414,23 @@
 			$(".op_proyeccion").hide();
 		}
 
-		if(value == 5){
+		if(val == 5){
 			$(".op_proyeccion").show();
 			$(".op_id").hide();
 			$(".op_fecha").hide();
 			$(".op_user").hide();
 			$(".op_sitio").hide();
 		}
+
 	});
 
 	$("#search_opdos").click(function(){
 		var op = document.getElementById("buscador").value;
 		var status = document.getElementById("status_seach").value;
+
 		if(op == 1){
 			sitio =	document.getElementById("sitio_search").value;
-			window.location.href = "/materiales/buscadormateriales/status/"+status+"/sitio/"+sitio+"/op/1";
+			window.location.href = "/materiales/buscadorenviados/status/"+status+"/sitio/"+sitio+"/op/1";
 		}
 
 		if(op == 2){			
@@ -439,22 +439,21 @@
 			var mes = fecha.slice(3,-5);
 			var year = fecha.slice(6);
 
-			window.location.href = "/materiales/buscadormateriales/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/2";	
+			window.location.href = "/materiales/buscadorenviados/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/2";	
 		}
 		if(op == 3){
 			user =	document.getElementById("user_search").value;
-			window.location.href = "/materiales/buscadormateriales/status/"+status+"/user/"+user+"/op/3";
+			window.location.href = "/materiales/buscadorenviados/status/"+status+"/user/"+user+"/op/3";
 		}
 
 		if(op == 4){
 			id = document.getElementById("id_envio").value;
-			window.location.href = "/materiales/buscadormateriales/status/"+status+"/solicitud/"+id+"/op/4";
+			window.location.href = "/materiales/buscadorenviados/status/"+status+"/solicitud/"+id+"/op/4";
 		}
 
 		if(op == 5){
 			check = document.getElementById("select_proyeccion").value;
-			window.location.href = "/materiales/buscadormateriales/status/"+status+"/check/"+check+"/op/5";
+			window.location.href = "/materiales/buscadorenviados/status/"+status+"/check/"+check+"/op/5";
 		}
- 
 	});
 </script>

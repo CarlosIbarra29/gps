@@ -248,82 +248,81 @@
 				</thead>
 				<?php
 				if ($this->paginator) { 
-				foreach ($this->paginator as $usr) { ?>
-				<tbody>
-					<tr>
-						<td>
-							<h5><?php echo $usr['id']; ?></h5>
-						</td>
-						<td>
-							<h5><?php echo  date("d-m-Y", strtotime($usr['fecha_creacion'])); ?></h5>
-						</td>
+					foreach ($this->paginator as $usr) { ?>
+						<tbody>
+							<tr>
+								<td>
+									<h5><?php echo $usr['id']; ?></h5>
+								</td>
+								<td>
+									<h5><?php echo  date("d-m-Y", strtotime($usr['fecha_creacion'])); ?></h5>
+								</td>
 
-						<td>
-							<h5><?php echo $usr['name_personal']; ?></h5>
-						</td>
+								<td>
+									<h5><?php echo $usr['name_personal']; ?></h5>
+								</td>
 
-						<td>
-							<h5><?php echo $usr['namepuesto']; ?></h5>
-						</td>
-						<td>
-							<h5><?php echo $usr['name_sitio']; ?></h5>
-						</td>
-						<td>
-							<h5><?php echo $usr['dias']; ?></h5>
-						</td>
+								<td>
+									<h5><?php echo $usr['namepuesto']; ?></h5>
+								</td>
+								<td>
+									<h5><?php echo $usr['name_sitio']; ?></h5>
+								</td>
+								<td>
+									<h5><?php echo $usr['dias']; ?></h5>
+								</td>
+								
+								<td>
+									<h5 style="font-weight: bold;">
+										$<?php echo number_format($usr['monto_total'], 2, '.', ','); ?>
+									</h5>
+								</td>
+								<td>
+									<?php if($usr['status_solicitud'] == 0){ ?>
+										<div class="chip" id="inactivo_personal">
+									    	<img src="/img/gris.jpg" >
+									    	En proceso
+									  	</div>
+									<?php } ?>
+
+									<?php if($usr['status_solicitud'] == 1){ ?>
+										<div class="chip" id="activo_personal">
+									    	<img src="/img/correct.png" >
+									    	Autorizada
+									  	</div>
+									  	
+									<?php } ?>
+
+									<?php if($usr['status_solicitud'] == 2){ ?>
+										<div class="chip" id="inactivo_personal">
+									    	<img src="/img/rojo.png" >
+									    	Rechazada
+									  	</div>
+									<?php } ?>
+
+
+									<?php if($usr['status_solicitud'] == 3){ ?>
+										<div class="chip" id="inactivo_personal">
+									    	<img src="/img/naranja.png" >
+									    	Cancelada
+									  	</div>
+									<?php } ?>
+								</td>
 						
-						<td>
-							<h5 style="font-weight: bold;">
-								$<?php echo number_format($usr['monto_total'], 2, '.', ','); ?>
-							</h5>
-						</td>
-						<td>
-							<?php if($usr['status_solicitud'] == 0){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/gris.jpg" >
-							    	En proceso
-							  	</div>
-							<?php } ?>
-
-							<?php if($usr['status_solicitud'] == 1){ ?>
-								<div class="chip" id="activo_personal">
-							    	<img src="/img/correct.png" >
-							    	Autorizada
-							  	</div>
-							  	
-							<?php } ?>
-
-							<?php if($usr['status_solicitud'] == 2){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/rojo.png" >
-							    	Rechazada
-							  	</div>
-							<?php } ?>
-
-
-							<?php if($usr['status_solicitud'] == 3){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/naranja.png" >
-							    	Cancelada
-							  	</div>
-							<?php } ?>
-						</td>
-				
-						<td class="text-center">
-							<a href="/viaticos/soldetailviaticos/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-						</td>
-	<!-- 					<td class="text-center">
-							<a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-						</td> -->
-					</tr>
-			    <?php } }else{ ?>
-			    </tbody> 
-			    <tbody>
-			        <tr>
-			            <td class="text-center" colspan="6"><h4>No hay solicitudes de Viáticos.</h4></td>
-			        </tr>
-			    </tbody>
-			                
+								<td class="text-center">
+									<a href="/viaticos/soldetailviaticos/id/<?php echo $usr["id"] ?>/status/<?php echo $status; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+								</td>
+								<!-- <td class="text-center">
+									<a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+								</td> -->
+							</tr>
+				<?php } }else{ ?>
+						</tbody> 
+					    <tbody>
+					        <tr>
+					            <td class="text-center" colspan="6"><h4>No hay solicitudes de Viáticos.</h4></td>
+					        </tr>
+					    </tbody>        
 			    <?php } ?>
 			</table>
 		</div>
@@ -439,10 +438,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/personal/"+personal+"/op/1";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/personal/"+personal+"/op/1";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});	
 
@@ -462,10 +461,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/id/"+id+"/op/2";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/id/"+id+"/op/2";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
 
@@ -486,10 +485,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/sitio/"+sitio+"/op/3";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/viaticos/listasolvbuscar/status/"+status+"/sitio/"+sitio+"/op/3";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
 
