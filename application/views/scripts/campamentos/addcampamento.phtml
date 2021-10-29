@@ -96,17 +96,11 @@ if($this->total== 1){
 </div>
 <!-- End botones -->
 
-
 <!-- Notificaciones -->
-
 <div class="col m12 s12">
     <div class="row">
         <div class="col m12 s12" id="alert_box">
             <?php if ($this->alertas || $this->alertasvencidas) { ?>
-                <!-- <div class="col m12 s12 text-right">
-                    <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i>
-                </div> -->
-
                 <?php foreach ($this->alertasvencidas as $vencidas) { ?>
                     <div style="background: rgb(242,222,222);"  class="card darken-1">
                         <div style="padding: 10px;" class="card-content white-text colorfont">
@@ -144,15 +138,13 @@ if($this->total== 1){
         </div>
     </div>
 </div>
-
-<!-- end notificaciones  -->
+<!-- End notificaciones  -->
 
 <div class="row">
 	<div class="col m12 s12 text-center" style="margin-top: 10px;">
 		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Campamentos
 	</div>
 </div>
-
 
 <!-- Buscador -->
 <div class="row">
@@ -193,17 +185,18 @@ if($this->total== 1){
 			</div>	
 		</form> 
 	</div>
-	<div class="input-field col m2 s12"></div> <!-- espacio -->
+	<div class="input-field col m2 s12"></div> 
 </div>
 <!-- End Buscador -->
-
 
 <!-- Inicio Modal Insertar Campamentos -->
 <div id="modal1" class="modal modal-fixed-footer">
 	<div class="modal-content">
+
 		<div class="col m12 s12 text-left" style="margin-top: 10px;">
 			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Campamento
 		</div>
+
 		<div class="col m12 s12">
 			<form action="/campamentos/requestaddcamp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cam">
 				<div class="row">
@@ -309,16 +302,7 @@ if($this->total== 1){
 					</div>
 
 					<div class="input-field col m6 s12 text-center "></div>
-					<!-- <div class="input-field col m6 s12">
-						<i class="material-icons prefix">payment</i>
-						<select id="pagod" name="pagod" required>
-							<option value="" disabled selected>Selecciona una opcion</option>
-							<option value="0">Aplica</option>
-							<option value="1">No Aplica</option>
-						</select>
-						<label>Pago Deposito</label>
-					</div> -->
-
+					
 					<div id="dep" class="input-field col m6 s12 oculto">
 						<i class="material-icons prefix">monetization_on</i>
 						<input id="deposito" type="text" name="deposito" class="validanumeros" required>
@@ -360,8 +344,8 @@ if($this->total== 1){
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="modal-footer">
+	</div>
+	<div class="modal-footer">
 		</form>
 		<button class=" btn" id="addcam">Guardar</button>
 		<button  class="modal-close red btn">Cerrar</button>
@@ -369,9 +353,9 @@ if($this->total== 1){
 </div>
 <!-- End Campamentos -->
 
-
 <!-- Table Campamentos-->
 <div class="col m12 s12">
+	
 	<div class="row">
 		<div class="col m6 s12 text-left" style="margin-top: 10px;">
 			<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Campamentos
@@ -380,6 +364,7 @@ if($this->total== 1){
 			<a href="/campamentos/excelcam/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
 		</div>
 	</div>
+	
 	<div class="col m12 s12 text-right table_wrapper">
 		<table class="table text-left table-hover">
 			<thead>
@@ -448,25 +433,23 @@ if($this->total== 1){
 							</td>
 						</tr>
 					</tbody>
-				<?php } }else{?>
-					<tbody>
-						<td></td>
-						<td></td>
-						<td>
-							<h4>No se encontrarón campamentos</h4>
-						</td>
-						<td></td>
-						<td></td>
-					</tbody>
-				<?php } ?>
+			<?php } }else{?>
+				<tbody>
+					<td></td>
+					<td></td>
+					<td>
+						<h4>No se encontrarón campamentos</h4>
+					</td>
+					<td></td>
+					<td></td>
+				</tbody>
+			<?php } ?>
 		</table>
 	</div>
 </div>
 <!-- End Table Campamentos -->
 
-
-
-	<!-- Paginador -->
+<!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
 		<div class="white-box">
@@ -498,7 +481,7 @@ if($this->total== 1){
 		</div>
 	</div> 
 </div>
-	<!-- End Paginator -->
+<!-- End Paginator -->
 
 
 <script type="text/javascript">
@@ -528,10 +511,7 @@ if($this->total== 1){
 				document.getElementById('condiciones').value="";
 			}  
 		})
-
- 	});
-
- 	// Inicio Add epp
+ 	});	// Inicio Add epp
 
 	$("#addcam").click(function(){
 		var monto = document.getElementById("monto").value;
@@ -553,8 +533,7 @@ if($this->total== 1){
 
 	function submitForm() {
 		document.getElementById("submit_cam").submit()
-	}
-	// End Add epp
+	}// End Add epp
 
 	//Inicio Delete Ajax
 	$(".delete").click(function(){
@@ -595,8 +574,7 @@ if($this->total== 1){
 				swal("La accion fue cancelada!");
 			}
 		});
-	});
-	// End Delete Ajax
+	});	// End Delete Ajax
 
 
 	//Inicio Selected
@@ -611,12 +589,10 @@ if($this->total== 1){
 			$("#buscar_sitio").hide();
 			$("#buscar_status").show();
 		}
-	});
-	// End Selected
+	});	// End Selected
 
 	$('#alert_close').click(function(){
 	    $( "#alert_box" ).fadeOut( );
 	});
-
 </script>
 

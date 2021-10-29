@@ -13,138 +13,143 @@
         <a href="/campamentos/addcampamento"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
     </div>
 </div>
+
 <?php foreach ($this->campamento_act as $camp) { ?>
-<div class="row text-center">
-	<div class="col m12 s12 " style="margin-top: 10px;">
-		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Campamento
-  	</div>
-  	<div class="col m12 s12">
-		<h2> Inicio Renta: <?php echo $camp["inicio_renta"]; ?></h2>
+	<div class="row text-center">
+		<div class="col m12 s12 " style="margin-top: 10px;">
+			<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Campamento
+  		</div>
+
+  		<div class="col m12 s12">
+			<h2> Inicio Renta: <?php echo $camp["inicio_renta"]; ?></h2>
+		</div>
 	</div>
-</div>
 <?php } ?>
 
-		<div class="col m12 s12" style="margin-top: 12px;">
-			<div class="white-box">
-				<form action="/campamentos/requestupdatecam" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cam">
-					<?php foreach ($this->campamento_act as $camp) { $pago_deposito = $camp['pago_deposito']; $pago_servicio  = $camp['pago_servicios']; $statuscampamento = $camp['status_campamento'];  ?> 
-					<input type="hidden" name="ids" value="<?php echo $camp["id_campamento"]; ?>">
+<div class="col m12 s12" style="margin-top: 12px;">
+	<div class="white-box">
+		<form action="/campamentos/requestupdatecam" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cam">
+			<?php foreach ($this->campamento_act as $camp) { $pago_deposito = $camp['pago_deposito']; $pago_servicio  = $camp['pago_servicios']; $statuscampamento = $camp['status_campamento'];  ?> 
+				<input type="hidden" name="ids" value="<?php echo $camp["id_campamento"]; ?>">
 
-					<div class="file-field input-field col m12 s12">
-						<div class="btn">
-							<span>Añade Contrato</span>
-							<input type="file" name="url">
-							<input type="hidden" name="imahidden" value="<?php echo $camp["contrato"]; ?>">  
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
-						</div>
+				<div class="file-field input-field col m12 s12">
+					<div class="btn">
+						<span>Añade Contrato</span>
+						<input type="file" name="url">
+						<input type="hidden" name="imahidden" value="<?php echo $camp["contrato"]; ?>">  
 					</div>
-
-					<div class="input-field col m6 s12">
-					    <select id="responsable" name="responsable" required>
-					      	<?php foreach ($this->per as $personal) {
-					      		if ($personal['id']==$camp['id_responsable']) { ?>
-					      			<option value="<?php echo $personal["id"]; ?>" selected><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
-					      		<?php } if ($personal['id']!=$camp['id_responsable']) { ?>
-					      			<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
-					      	<?php } } ?> 
-					    </select>
-					    <label>Responsable: </label>
+					
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
 					</div>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<select id="sitio" name="sitio" required>
-					    	<?php foreach ($this->sitios as $si) { 
-					     		if ($si['id']==$camp['id_sitio']) { ?>
-					                <option value="<?php echo $si["id"]; ?>" selected><?php echo $si["nombre"]; ?></option>
-					     	<?php } if ($si['id']!=$camp['id_sitio']) { ?>
-					                <option value="<?php echo $si['id']; ?>" ><?php echo $si["nombre"]; ?></option>
-					     	<?php } } ?>  
-						</select>
-						<label>Sitio</label>
-					</div>
+				<div class="input-field col m6 s12">
+					<select id="responsable" name="responsable" required>
+					    <?php foreach ($this->per as $personal) {
+					      	if ($personal['id']==$camp['id_responsable']) { ?>
+					      		<option value="<?php echo $personal["id"]; ?>" selected><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					      	<?php } if ($personal['id']!=$camp['id_responsable']) { ?>
+					      		<option value="<?php echo $personal["id"]; ?>"><?php echo $personal["nombre"]; ?> <?php echo $personal["apellido_pa"]; ?> <?php echo $personal["apellido_ma"]; ?></option>
+					    <?php } } ?> 
+					</select>
+					<label>Responsable: </label>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<select id="proyecto" name="proyecto" required>
-					    	<?php foreach ($this->proyectos as $pro) { 
-					     		if ($pro['id']==$camp['id_proyecto']) { ?>
-					                <option value="<?php echo $pro["id"]; ?>" selected><?php echo $pro["nombre_proyecto"]; ?></option>
-					     	<?php } if ($pro['id']!=$camp['id_proyecto']) { ?>
-					                <option value="<?php echo $pro['id']; ?>" ><?php echo $pro["nombre_proyecto"]; ?></option>
-					     	<?php } } ?>  
-						</select>
-						<label>Proyecto</label>
-					</div>
+				<div class="input-field col m6 s12">
+					<select id="sitio" name="sitio" required>
+					    <?php foreach ($this->sitios as $si) { 
+					     	if ($si['id']==$camp['id_sitio']) { ?>
+					            <option value="<?php echo $si["id"]; ?>" selected><?php echo $si["nombre"]; ?></option>
+					    <?php } if ($si['id']!=$camp['id_sitio']) { ?>
+					            <option value="<?php echo $si['id']; ?>" ><?php echo $si["nombre"]; ?></option>
+					    <?php } } ?>  
+					</select>
+					<label>Sitio</label>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">attach_money</i>
-						<select id="statusc" name="statusc" required>
-							<option value="" disabled>Selecciona una opcion</option>
-							<?php if ($statuscampamento == 1) { ?> 
+				<div class="input-field col m6 s12">
+					<select id="proyecto" name="proyecto" required>
+					    <?php foreach ($this->proyectos as $pro) { 
+					     	if ($pro['id']==$camp['id_proyecto']) { ?>
+					            <option value="<?php echo $pro["id"]; ?>" selected><?php echo $pro["nombre_proyecto"]; ?></option>
+					    <?php } if ($pro['id']!=$camp['id_proyecto']) { ?>
+					            <option value="<?php echo $pro['id']; ?>" ><?php echo $pro["nombre_proyecto"]; ?></option>
+					    <?php } } ?>  
+					</select>
+					<label>Proyecto</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">attach_money</i>
+					<select id="statusc" name="statusc" required>
+						<option value="" disabled>Selecciona una opcion</option>
+						<?php if ($statuscampamento == 1) { ?> 
 							<option value="1" selected>Por Rentar</option>
 							<option value="2">En Renta</option>
 							<option value="3">Cerrado</option>
-							<?php } ?>
-							<?php if ($statuscampamento == 2) { ?> 
+						<?php } ?>
+						
+						<?php if ($statuscampamento == 2) { ?> 
 							<option value="1">Por Rentar</option>
 							<option value="2" selected>En Renta</option>
 							<option value="3">Cerrado</option>
-							<?php } ?>
-							<?php if ($statuscampamento == 3) { ?> 
+						<?php } ?>
+						<?php if ($statuscampamento == 3) { ?> 
 							<option value="1">Por Rentar</option>
 							<option value="2">En Renta</option>
 							<option value="3" selected>Cerrado</option>
-							<?php } ?>
-						</select>
-						<label>Status Campamento</label>
-					</div>
+						<?php } ?>
+					</select>
+					<label>Status Campamento</label>
+				</div>
 
-					<div class="input-field col m12 s12">
-						<i class="material-icons prefix">event_available</i>
-						<input id="fechasol" type="date" value="<?php echo $camp["fecha_solicitud"]; ?>" name="fechasol" class="validate">
-						<label for="fechasol">* Fecha Solicitud: dd/mm/yyyy</label>
-					</div>
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">event_available</i>
+					<input id="fechasol" type="date" value="<?php echo $camp["fecha_solicitud"]; ?>" name="fechasol" class="validate">
+					<label for="fechasol">* Fecha Solicitud: dd/mm/yyyy</label>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">event_available</i>
-						<input id="fechair" type="date" name="fechair" value="<?php echo $camp["inicio_renta"]; ?>" class="validate">
-						<label for="fechair">* Inicio Renta: dd/mm/yyyy</label>
-					</div>
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">event_available</i>
+					<input id="fechair" type="date" name="fechair" value="<?php echo $camp["inicio_renta"]; ?>" class="validate">
+					<label for="fechair">* Inicio Renta: dd/mm/yyyy</label>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">event_available</i>
-						<input id="fechafr" type="date" value="<?php echo $camp["fin_renta"]; ?>" name="fechafr" class="validate">
-						<label for="fechafr">* Fin Renta: dd/mm/yyyy</label>
-					</div>
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">event_available</i>
+					<input id="fechafr" type="date" value="<?php echo $camp["fin_renta"]; ?>" name="fechafr" class="validate">
+					<label for="fechafr">* Fin Renta: dd/mm/yyyy</label>
+				</div>
 
-					<div class="input-field col m12 s12">
-						<i class="material-icons prefix">monetization_on</i>
-						<input id="monto" type="text" value="<?php echo $camp["monto_renta"]; ?>" name="monto" class="validanumeros" required>
-						<label for="monto">* Monto Renta:</label>
-					</div>
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">monetization_on</i>
+					<input id="monto" type="text" value="<?php echo $camp["monto_renta"]; ?>" name="monto" class="validanumeros" required>
+					<label for="monto">* Monto Renta:</label>
+				</div>
 
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">attach_money</i>
-						<select id="pagos" name="pagos" required>
-							<option value="" disabled>Selecciona una opcion</option>
-							<?php if ($pago_servicio == 0) { ?> 
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">attach_money</i>
+					<select id="pagos" name="pagos" required>
+						<option value="" disabled>Selecciona una opcion</option>
+						<?php if ($pago_servicio == 0) { ?> 
 							<option value="0" selected>Incluidos en Renta</option>
 							<option value="1">Fuera de Renta</option>
-							<?php } ?>
-							<?php if ($pago_servicio == 1) { ?> 
+						<?php } ?>
+						<?php if ($pago_servicio == 1) { ?> 
 							<option value="0">Incluidos en Renta</option>
 							<option value="1" selected>Fuera de Renta</option>
-							<?php } ?>
-						</select>
-						<label>Pago de Servicios</label>
+						<?php } ?>
+					</select>
+					<label>Pago de Servicios</label>
+				</div>
+
+				<div class="input-field col m6 s12 text-center ">
+					<div>
+						<label>Pago de Depósito</label>
 					</div>
 
-					<div class="input-field col m6 s12 text-center ">
-						<div>
-							<label>Pago de Depósito</label>
-						</div>
-						<?php if ($pago_deposito == 0) { ?>
+					<?php if ($pago_deposito == 0) { ?>
 						<div>
 							<div class="switch">
 								<label>
@@ -155,8 +160,9 @@
 								</label>
 							</div>
 						</div>
-						<?php } ?>
-						<?php if ($pago_deposito == 1) { ?>
+					<?php } ?>
+					
+					<?php if ($pago_deposito == 1) { ?>
 						<div>
 							<div class="switch">
 								<label>
@@ -167,108 +173,96 @@
 								</label>
 							</div>
 						</div>
-						<?php } ?>
+					<?php } ?>
+				</div>
+
+				<div class="input-field col m6 s12 text-center "></div>
+
+				<?php if ($pago_deposito == 0) { ?>
+					<div id="dep" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">monetization_on</i>
+						<input id="deposito" type="text" name="deposito" value="<?php echo $camp["deposito"]; ?>" class="validanumeros" required>
+						<label for="deposito">* Deposito:</label>
 					</div>
 
-					<div class="input-field col m6 s12 text-center "></div>
-					
-					<!-- <div class="input-field col m6 s12">
-						<i class="material-icons prefix">payment</i>
-						<select id="pagod" name="pagod" required>
-							<?php if ($pago_deposito == 0) { ?> 
-								<option value="0" selected>Aplica</option>
-								<option value="1">No Aplica</option>
-							<?php } ?>
-							<?php if ($pago_deposito == 1) { ?> 
-								<option value="0">Aplica</option>
-								<option value="1" selected>No Aplica</option>
-							<?php } ?>
+					<div id="sta" class="input-field col m6 s12 oculto">
+						<i class="material-icons prefix">store</i>
+						<select id="statusa" name="statusa" required>
+						    <?php foreach ($this->campamentos_s as $camps) { 
+						     	if ($camps['id_status']==$camp['status_anticipo']) { ?>
+						            <option value="<?php echo $camps["id_status"]; ?>" selected><?php echo $camps["nombre"]; ?></option>
+						    <?php } if ($camps['id_status']!=$camp['status_anticipo']) { ?>
+						            <option value="<?php echo $camps['id_status']; ?>" ><?php echo $camps["nombre"]; ?></option>
+						    <?php } } ?>  
 						</select>
-						<label>Pago Deposito: </label>
-					</div> -->
-					<?php if ($pago_deposito == 0) { ?>
-						<div id="dep" class="input-field col m6 s12 oculto">
-							<i class="material-icons prefix">monetization_on</i>
-							<input id="deposito" type="text" name="deposito" value="<?php echo $camp["deposito"]; ?>" class="validanumeros" required>
-							<label for="deposito">* Deposito:</label>
-						</div>
-
-						<div id="sta" class="input-field col m6 s12 oculto">
-							<i class="material-icons prefix">store</i>
-							<select id="statusa" name="statusa" required>
-						    	<?php foreach ($this->campamentos_s as $camps) { 
-						     		if ($camps['id_status']==$camp['status_anticipo']) { ?>
-						                <option value="<?php echo $camps["id_status"]; ?>" selected><?php echo $camps["nombre"]; ?></option>
-						     	<?php } if ($camps['id_status']!=$camp['status_anticipo']) { ?>
-						                <option value="<?php echo $camps['id_status']; ?>" ><?php echo $camps["nombre"]; ?></option>
-						     	<?php } } ?>  
-							</select>
-							<label>Status Depósito: </label>
-						</div>
-
-						<div id="cond" class="input-field col m12 s12 oculto">
-							<i class="material-icons prefix">description</i>
-							<input id="condiciones" type="text" value="<?php echo $camp["condiciones_dev"]; ?>" name="condiciones" class="validate" required>
-							<label for="condiciones">Condiciones Devolución Depósito: </label>
-						</div>
-
-					<?php } ?>
-
-					<?php if ($pago_deposito == 1) { ?>
-						
-						<div id="dep" class="input-field col m6 s12">
-							<i class="material-icons prefix">monetization_on</i>
-							<input id="deposito" type="text" name="deposito" value="<?php echo $camp["deposito"]; ?>" class="validanumeros" required>
-							<label for="deposito">* Deposito:</label>
-						</div>
-
-						<div id="sta" class="input-field col m6 s12">
-							<i class="material-icons prefix">store</i>
-							<select id="statusa" name="statusa" required>
-						    	<?php foreach ($this->campamentos_s as $camps) { 
-						     		if ($camps['id_status']==$camp['status_anticipo']) { ?>
-						                <option value="<?php echo $camps["id_status"]; ?>" selected><?php echo $camps["nombre"]; ?></option>
-						     	<?php } if ($camps['id_status']!=$camp['status_anticipo']) { ?>
-						                <option value="<?php echo $camps['id_status']; ?>" ><?php echo $camps["nombre"]; ?></option>
-						     	<?php } } ?>  
-							</select>
-							<label>Status Depósito: </label>
-						</div>
-
-						<div id="cond" class="input-field col m12 s12">
-							<i class="material-icons prefix">description</i>
-							<input id="condiciones" type="text" value="<?php echo $camp["condiciones_dev"]; ?>" name="condiciones" class="validate" required>
-							<label for="condiciones">Condiciones Devolución Depósito: </label>
-						</div>
-					<?php } ?>
-					
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">perm_identity</i>
-						<input id="nombrear" type="text" value="<?php echo $camp["nombre_arrendador"]; ?>" name="nombrear" class="validate" required>
-						<label for="nombrear">* Nombre Arrendador: </label>
+						<label>Status Depósito: </label>
 					</div>
 
-					<div class="input-field col m6 s12">
-						<i class="material-icons prefix">phone_iphone</i>
-						<input id="tel" type="text" name="tel" value="<?php echo $camp["tel_arrendador"]; ?>" class="validanumeros" required>
-						<label for="tel">* Telefono Arrendador: </label>
-					</div>
-					<div class="input-field col m12 s12">
+					<div id="cond" class="input-field col m12 s12 oculto">
 						<i class="material-icons prefix">description</i>
-						<input id="comen" type="text" name="comen" value="<?php echo $camp["comentarios"]; ?>" class="validate" required>
-						<label for="comen">Comentarios Generales: </label>
+						<input id="condiciones" type="text" value="<?php echo $camp["condiciones_dev"]; ?>" name="condiciones" class="validate" required>
+						<label for="condiciones">Condiciones Devolución Depósito: </label>
 					</div>
-			</div>
-		     <?php } ?>
-		    </form>
-		</div>
 
-		<div class="input-field col m12 s12 text-right">
-			<div class="row">
-				<a href="/campamentos/addcampamento" class="waves-effect red waves-light btn">Cancelar</a>
-				<button  id="updcam" class="waves-effect waves-light btn">Actualizar</button>
-			</div>	
-		</div>
+				<?php } ?>
+
+				<?php if ($pago_deposito == 1) { ?>
+						
+					<div id="dep" class="input-field col m6 s12">
+						<i class="material-icons prefix">monetization_on</i>
+						<input id="deposito" type="text" name="deposito" value="<?php echo $camp["deposito"]; ?>" class="validanumeros" required>
+						<label for="deposito">* Deposito:</label>
+					</div>
+
+					<div id="sta" class="input-field col m6 s12">
+						<i class="material-icons prefix">store</i>
+						<select id="statusa" name="statusa" required>
+					    	<?php foreach ($this->campamentos_s as $camps) { 
+						     	if ($camps['id_status']==$camp['status_anticipo']) { ?>
+						            <option value="<?php echo $camps["id_status"]; ?>" selected><?php echo $camps["nombre"]; ?></option>
+						    <?php } if ($camps['id_status']!=$camp['status_anticipo']) { ?>
+						            <option value="<?php echo $camps['id_status']; ?>" ><?php echo $camps["nombre"]; ?></option>
+						    <?php } } ?>  
+						</select>
+						<label>Status Depósito: </label>
+					</div>
+
+					<div id="cond" class="input-field col m12 s12">
+						<i class="material-icons prefix">description</i>
+						<input id="condiciones" type="text" value="<?php echo $camp["condiciones_dev"]; ?>" name="condiciones" class="validate" required>
+						<label for="condiciones">Condiciones Devolución Depósito: </label>
+					</div>
+				<?php } ?>
+					
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">perm_identity</i>
+					<input id="nombrear" type="text" value="<?php echo $camp["nombre_arrendador"]; ?>" name="nombrear" class="validate" required>
+					<label for="nombrear">* Nombre Arrendador: </label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<i class="material-icons prefix">phone_iphone</i>
+					<input id="tel" type="text" name="tel" value="<?php echo $camp["tel_arrendador"]; ?>" class="validanumeros" required>
+					<label for="tel">* Telefono Arrendador: </label>
+				</div>
+
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">description</i>
+					<input id="comen" type="text" name="comen" value="<?php echo $camp["comentarios"]; ?>" class="validate" required>
+					<label for="comen">Comentarios Generales: </label>
+				</div>
+			</div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/campamentos/addcampamento" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="updcam" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
+
 <script src="/js/materialize.min.js"></script>
 <script src="/js/lightbox.js"></script>
 <script type="text/javascript">
@@ -292,16 +286,17 @@
 				$("#dep").hide();
 				$("#sta").hide();
 				$("#cond").hide();
+
 				document.getElementById('deposito').value="";
 				document.getElementById('statusa').value=0;
 				document.getElementById('condiciones').value="";
 			}  
 		})
-
  	});
 
     $("#updcam").click(function(){
-        var sitio = document.getElementById("sitio").value;
+
+    	var sitio = document.getElementById("sitio").value;
 
 		if(sitio == ""){
 			swal({
@@ -314,15 +309,14 @@
 			});
 			setTimeout(submitForm, 500);     
 		}
-
     });
 
-	lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+    lightbox.option({
+    	'resizeDuration': 200,
+    	'wrapAround': true
     });
 
     function submitForm() {
-        document.getElementById("submit_cam").submit()
+    	document.getElementById("submit_cam").submit()
     }
 </script>

@@ -16,9 +16,9 @@
 <div class="col m12 s12">
 	<form action="/clientes/requestupdatesubcarpeta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_udp">
 		<?php foreach ($this->carpetaedit2 as $carpeta) { ?>
-		<input type="hidden" name="idcarpeta" value="<?php echo $carpeta["id"]; ?>">
-		<input type="hidden" name="id_cliente" value="<?php echo $carpeta["id_cliente"]; ?>">
-		<input type="hidden" name="idcta" value="<?php echo $carpeta["idc"]; ?>">
+			<input type="hidden" name="idcarpeta" value="<?php echo $carpeta["id"]; ?>">
+			<input type="hidden" name="id_cliente" value="<?php echo $carpeta["id_cliente"]; ?>">
+			<input type="hidden" name="idcta" value="<?php echo $carpeta["idc"]; ?>">
 			<div class="row">
 				<div class="input-field col m12 s12">
 					<i class="material-icons prefix">font_download</i>
@@ -33,7 +33,7 @@
 <div class="input-field col m12 s12 text-right">
 	<div class="row">
 		<a href="/clientes/subcarpeta/id/<?php echo $id_carpeta; ?>/cliente/<?php echo $id_cliente; ?>" class="waves-effect red waves-light btn">Cancelar</a>
-		<button  id="udpcarpeta" class="waves-effect waves-light btn">Actualizar</button>
+		<button id="udpcarpeta" class="waves-effect waves-light btn">Actualizar</button>
 	</div>	
 </div>
 

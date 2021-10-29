@@ -1,5 +1,5 @@
 <?php 
-function eliminar_acentos($cadena){
+	function eliminar_acentos($cadena){
 		$cadena = str_replace(
 		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
 		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
@@ -30,36 +30,39 @@ function eliminar_acentos($cadena){
 		array('Ñ', 'ñ', 'Ç', 'ç'),
 		array('N', 'n', 'C', 'c'),
 		$cadena
-		);
-		
+		);		
 		return $cadena;
 	}
 ?>
 <style> 
- .table_wrapper{
-    overflow-x: auto;
-}
+	.table_wrapper{
+		overflow-x: auto;
+	}
 </style>
 
-	<div class="row" style="margin-top: 10px;">
-		<div class="col m6 s12 text-left">
-			<?php if($this->status == 0){ ?>
-				<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-			<?php }?>
-			<?php if($this->status == 1){ ?>
-				<a href="/campamentos/addcampamento" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-			<?php }?>			
-		</div>
-		<div class="col m6 s12 text-right">
-			<a class=" btn" onclick="exportTableToCSV(null,'campamentos.csv')"><i class="material-icons right">file_download</i>Descargar</a>
-		</div>
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s12 text-left">
+		
+		<?php if($this->status == 0){ ?>
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php }?>
+
+		<?php if($this->status == 1){ ?>
+			<a href="/campamentos/addcampamento" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php }?>			
 	</div>
 
-	<div class="row">
-		<div class="col m12 s12 text-center" style="margin-top: 20px;">
-        	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Campamentos   </span>
-    	</div>
+	<div class="col m6 s12 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'campamentos.csv')"><i class="material-icons right">file_download</i>Descargar</a>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Campamentos   </span>
+    </div>
+</div>
+
 <div class="col m12 s12 text-right table_wrapper">
 	<table class="table text-left table-hover ">
 		<thead>
@@ -84,40 +87,40 @@ function eliminar_acentos($cadena){
 		</thead>
 		<?php 
 		foreach ($this->excelc as $campa) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $campa["id_campamento"]; ?></td>
-				<td><?php echo eliminar_acentos( $campa["nombre"]); ?></td>
-				<td><?php echo $campa["id_cliente"]; ?></td>
-				<td><?php echo eliminar_acentos( $campa["nombre_proyecto"]); ?></td>
-				<td>
-					<?php echo eliminar_acentos( $campa["nombrea"]); ?> <?php echo eliminar_acentos( $campa["apellido_pa"]); ?> <?php echo eliminar_acentos( $campa["apellido_ma"]); ?>	
-				</td>
-				<td><?php echo $campa["statusc"]; ?></td>
-				<td>
-					<?php if($campa['nstatus'] == 0){ ?>
-						No Aplica
-					<?php } else{ ?>
-						<?php echo $campa["nstatus"]; ?>
-					<?php }  ?>		
-				</td>
-				<td><?php echo $campa["pdeposito"]; ?></td>
-				<td>
-					<?php if($campa['deposito'] == 0){ ?>
-						Sin Deposito Previo
-					<?php } else{ ?>
-					$<?php echo $campa["deposito"]; ?>
-					<?php }  ?>
-				</td>
-				<td><?php echo $campa["inicio_renta"]; ?></td>
-				<td><?php echo $campa["fin_renta"]; ?></td>
-				<td><?php echo $campa["pservicios"]; ?></td>
-				<td>$<?php echo $campa["monto_renta"]; ?></td>
-				<td><?php echo eliminar_acentos( $campa["nombre_arrendador"]); ?></td>
-				<td><?php echo eliminar_acentos( $campa["tel_arrendador"]); ?></td>
-				<td><?php echo $campa["comentarios"]; ?></td>
-			</tr>
-		</tbody>
+			<tbody>
+				<tr>
+					<td><?php echo $campa["id_campamento"]; ?></td>
+					<td><?php echo eliminar_acentos( $campa["nombre"]); ?></td>
+					<td><?php echo $campa["id_cliente"]; ?></td>
+					<td><?php echo eliminar_acentos( $campa["nombre_proyecto"]); ?></td>
+					<td>
+						<?php echo eliminar_acentos( $campa["nombrea"]); ?> <?php echo eliminar_acentos( $campa["apellido_pa"]); ?> <?php echo eliminar_acentos( $campa["apellido_ma"]); ?>	
+					</td>
+					<td><?php echo $campa["statusc"]; ?></td>
+					<td>
+						<?php if($campa['nstatus'] == 0){ ?>
+							No Aplica
+						<?php } else{ ?>
+							<?php echo $campa["nstatus"]; ?>
+						<?php } ?>		
+					</td>
+					<td><?php echo $campa["pdeposito"]; ?></td>
+					<td>
+						<?php if($campa['deposito'] == 0){ ?>
+							Sin Deposito Previo
+						<?php } else{ ?>
+							$<?php echo $campa["deposito"]; ?>
+						<?php }  ?>
+					</td>
+					<td><?php echo $campa["inicio_renta"]; ?></td>
+					<td><?php echo $campa["fin_renta"]; ?></td>
+					<td><?php echo $campa["pservicios"]; ?></td>
+					<td>$<?php echo $campa["monto_renta"]; ?></td>
+					<td><?php echo eliminar_acentos( $campa["nombre_arrendador"]); ?></td>
+					<td><?php echo eliminar_acentos( $campa["tel_arrendador"]); ?></td>
+					<td><?php echo $campa["comentarios"]; ?></td>
+				</tr>
+			</tbody>
 		<?php } ?>
 	</table>
 </div>
@@ -127,9 +130,9 @@ function eliminar_acentos($cadena){
 	    var csv = [];
 	    var rows = document.querySelectorAll("table tr");
 	    for(var i = 0; i < rows.length; i++){
-	        var row = [], cols = rows[i].querySelectorAll("td, th");
-	        for(var j = 0; j < cols.length; j++){
-	            row.push(cols[j].innerText);
+	    	var row = [], cols = rows[i].querySelectorAll("td, th");
+	    	for(var j = 0; j < cols.length; j++){
+	    		row.push(cols[j].innerText);
 	        }
 	        csv.push(row.join(","));
 	    }

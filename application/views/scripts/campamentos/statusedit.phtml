@@ -1,6 +1,6 @@
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
-        <a href="/campamentos/statusc" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<a href="/campamentos/statusc" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
 <div class="col m12 s12">
 	<form action="/campamentos/requestupdatestatus" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitupd">
 		<?php foreach ($this->status_camp as $sc) { ?>
-		<input type="hidden" name="ids" value="<?php echo $sc["id_status"]; ?>">
+			<input type="hidden" name="ids" value="<?php echo $sc["id_status"]; ?>">
 			<div class="row">
 				<div class="input-field col m12 s12">
 					<i class="material-icons prefix">account_circle</i>
@@ -49,9 +49,7 @@
 			});
             setTimeout(submitForm, 500);     
         }
-
     });
-
 
     function submitForm() {
         document.getElementById("submitupd").submit()

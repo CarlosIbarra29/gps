@@ -14,32 +14,35 @@
 <div class="col m12 s12">
 	<form action="/clientes/requestupdatearchivo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_archivo">
 		<?php foreach ($this->archivoedit as $archivo) { ?>
+			
 			<input type="hidden" name="idarchivo" value="<?php echo $archivo["id"]; ?>">
 			<input type="hidden" name="id_cliente" value="<?php echo $archivo["id_cliente"]; ?>">
-				<div class="row">
-			        <div class="input-field col m6 s12">
-			          	<i class="material-icons prefix">account_circle</i>
-			          	<input id="name" type="text" name="name" value="<?php echo $archivo["nombre_archivo"]; ?>" class="validate" required>
-			          	<label for="name">* Nombre Documento:</label>
-			        </div> 
-			        <div class="input-field col m6 s12">
-				       	<i class="material-icons prefix">account_circle</i>
-				       	<input id="fecha" type="date" name="fecha" value="<?php echo $archivo["fecha"]; ?>" required>
-				       	<label for="fecha">Fecha Documento: dd/mm/yyyy</label>
-				    </div>
-		      	</div>
 
-		      	
-		      	<div class="file-field input-field col m12 s12">
-		      	 	<div class="btn">
-		      	 		<span>Actualiza documento</span>
-					    <input type="file" name="url">
-					    <input type="hidden" name="imahidden" value="<?php echo $archivo["archivo"]; ?>">   
-					</div>
-					<div class="file-path-wrapper">
-					    <input class="file-path validate" type="text">
-					</div>
+			<div class="row">
+				<div class="input-field col m6 s12">
+			        <i class="material-icons prefix">account_circle</i>
+			        <input id="name" type="text" name="name" value="<?php echo $archivo["nombre_archivo"]; ?>" class="validate" required>
+			        <label for="name">* Nombre Documento:</label>
+			    </div> 
+			        
+			    <div class="input-field col m6 s12">
+			       	<i class="material-icons prefix">account_circle</i>
+			       	<input id="fecha" type="date" name="fecha" value="<?php echo $archivo["fecha"]; ?>" required>
+			       	<label for="fecha">Fecha Documento: dd/mm/yyyy</label>
+			    </div>
+		    </div>
+
+		    <div class="file-field input-field col m12 s12">
+		    	<div class="btn">
+		      	 	<span>Actualiza documento</span>
+				    <input type="file" name="url">
+				    <input type="hidden" name="imahidden" value="<?php echo $archivo["archivo"]; ?>">   
 				</div>
+	
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
 		<?php } ?>
 	</form>
 </div>
@@ -53,8 +56,6 @@
 
 
 <script type="text/javascript">
-
-
     $("#udparchivo").click(function(){
         var name = document.getElementById("name").value;
 
@@ -69,11 +70,9 @@
 			});
             setTimeout(submitForm, 500);     
         }
-
     });
 
-
     function submitForm() {
-        document.getElementById("submit_archivo").submit()
+    	document.getElementById("submit_archivo").submit()
     }
 </script>

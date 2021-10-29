@@ -5,49 +5,49 @@ function isActhref($nameBtn,$urlname){
 	}
 	return ($nameBtn == $urlname)?"active":"";
 }
+
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else { 
 		$pagina = 1;
 	}  
 ?> 
+
 <?php 
+	$links = "";
+	$url="";
 
-$links = "";
-$url="";
+	if($this->total== 1){
+		$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+	} else {
+		if ($this->total >= 1 && $pagina <= $this->total) {
 
-if($this->total== 1){
-	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-}else{
-	if ($this->total >= 1 && $pagina <= $this->total) {
-
-		if (isset($_GET['pagina']) && $this->actpage != 1) {
-			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-		}else{
-			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-		}
-
-		$i = max(2, $pagina - 3);
-		if ($i > 2)
-			$links .= " <li><a>...</a></li> ";
-		for (; $i < min($pagina + 3, $this->total); $i++) {
-			if($i ==$this->actpage){
-				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-			}else{
-				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+			if (isset($_GET['pagina']) && $this->actpage != 1) {
+				$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+			} else {
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
 			}
-		}
-		if ($i != $this->total)
-			$links .= " <li><a>...</a></li> ";
-		if($i ==$this->actpage){
-			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
-		}else{
-			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
-		}
 
-	}           
-}
+			$i = max(2, $pagina - 3);
+			if ($i > 2)
+				$links .= " <li><a>...</a></li> ";
+			for (; $i < min($pagina + 3, $this->total); $i++) {
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+				} else {
+					$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+				}
+			}
+			if ($i != $this->total)
+				$links .= " <li><a>...</a></li> ";
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+			} else {
+				$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+			}
 
+		}           
+	}
 ?>
 
 <style type="text/css">
@@ -229,11 +229,10 @@ if($this->total== 1){
 					<th>Proyecto</th>
 					<?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>	
 						<th>Eliminar</th>
-					<?php }else{ } ?>
+					<?php } else { } ?>
 				</tr> 
 			</thead>
 			<?php if ($this->paginator ) {
-
 				foreach ($this->paginator as $tag) { ?>
 					<tbody>
 						<tr>
@@ -324,7 +323,6 @@ if($this->total== 1){
 
 
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		$('.modal').modal();
 		$('select').formSelect();
@@ -482,6 +480,5 @@ if($this->total== 1){
 		  }
 		});
    	});
-
 </script>
 

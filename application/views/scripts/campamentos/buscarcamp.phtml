@@ -320,16 +320,7 @@ function isActhref($nameBtn,$urlname){
 					</div>
 
 					<div class="input-field col m6 s12 text-center "></div>
-					<!-- <div class="input-field col m6 s12">
-						<i class="material-icons prefix">payment</i>
-						<select id="pagod" name="pagod" required>
-							<option value="" disabled selected>Selecciona una opcion</option>
-							<option value="0">Aplica</option>
-							<option value="1">No Aplica</option>
-						</select>
-						<label>Pago Deposito</label>
-					</div> -->
-
+					
 					<div id="dep" class="input-field col m6 s12 oculto">
 						<i class="material-icons prefix">monetization_on</i>
 						<input id="deposito" type="text" name="deposito" class="validanumeros" required>
@@ -364,6 +355,7 @@ function isActhref($nameBtn,$urlname){
 						<input id="tel" type="text" name="tel" class="validanumeros" required>
 						<label for="tel">* Telefono Arrendador: </label>
 					</div>
+
 					<div class="input-field col m12 s12">
 						<i class="material-icons prefix">description</i>
 						<input id="comen" type="text" name="comen" class="validate" required>
@@ -372,15 +364,13 @@ function isActhref($nameBtn,$urlname){
 				</div>
 			</div>
 		</div>
-		<div class="modal-footer">
+	<div class="modal-footer">
 		</form>
 		<button class=" btn" id="addcam">Guardar</button>
 		<button  class="modal-close red btn">Cerrar</button>
 	</div>
 </div>
 <!-- End Campamentos -->
-
-
 
 <!-- Table Campamentos-->
 <div class="col m12 s12">
@@ -392,6 +382,7 @@ function isActhref($nameBtn,$urlname){
 			<a href="/campamentos/excelcam/status/1"> <h4 style="color: green;">Generar Excel  <i class="material-icons">insert_drive_file</i></h4></a>
 		</div>
 	</div>
+
 	<div class="col m12 s12 text-right table_wrapper">
 		<table class="table text-left table-hover">
 			<thead>
@@ -460,25 +451,23 @@ function isActhref($nameBtn,$urlname){
 							</td>
 						</tr>
 					</tbody>
-				<?php } }else{?>
-					<tbody>
-						<td></td>
-						<td></td>
-						<td>
-							<h4>No se encontrarón campamentos</h4>
-						</td>
-						<td></td>
-						<td></td>
-					</tbody>
-				<?php } ?>
+			<?php } }else{?>
+				<tbody>
+					<td></td>
+					<td></td>
+					<td>
+						<h4>No se encontrarón campamentos</h4>
+					</td>
+					<td></td>
+					<td></td>
+				</tbody>
+			<?php } ?>
 		</table>
 	</div>
 </div>
 <!-- End Table Campamentos -->
 
-
-
-	<!-- Paginador -->
+<!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
 		<div class="white-box">
@@ -522,8 +511,7 @@ function isActhref($nameBtn,$urlname){
 		</div>
 	</div> 
 </div>
-	<!-- End Paginator -->
-
+<!-- End Paginator -->
 
 <script type="text/javascript">
 
@@ -618,8 +606,7 @@ function isActhref($nameBtn,$urlname){
 				swal("La accion fue cancelada!");
 			}
 		});
-	});
-	// End Delete Ajax
+	});	// End Delete Ajax
 
 
 	//Inicio Selected
@@ -634,8 +621,6 @@ function isActhref($nameBtn,$urlname){
 			$("#buscar_sitio").hide();
 			$("#buscar_status").show();
 		}
-	});
-	// End Selected
-
+	});	// End Selected
 </script>
 

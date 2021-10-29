@@ -20,40 +20,41 @@
     $name=$this->name_search;
 
     if($this->total== 1){
-      $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
+        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
     }else{
-      if ($this->total >= 1 && $pagina <= $this->total) {
 
-        if (isset($_GET['pagina']) && $this->actpage != 1) {
-          $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
-        }else{
-          $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
-        }
+        if ($this->total >= 1 && $pagina <= $this->total) {
+            if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
+            }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1&&nombre={$name}\">1</a></li>";
+            }
 
-        $i = max(2, $pagina - 3); 
-        if ($i > 2)
-          $links .= " <li><a>...</a></li> ";
-        for (; $i < min($pagina + 3, $this->total); $i++) {
-          if($i ==$this->actpage){
-            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&nombre={$name}\">{$i}</a></li>";
-          }else{
-            $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&nombre={$name}\">{$i}</a></li>";
-          }
-        }
-        if ($i != $this->total)
-          $links .= " <li><a>...</a></li> ";
-        if($i ==$this->actpage){
-          $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&nombre={$name}\">{$this->total}</a></li>";
-        }else{
-          $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&nombre={$name}\">{$this->total}</a></li>";
-        }
+            $i = max(2, $pagina - 3); 
+            if ($i > 2)
+                $links .= " <li><a>...</a></li> ";
+            for (; $i < min($pagina + 3, $this->total); $i++) {
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}&&nombre={$name}\">{$i}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}&&nombre={$name}\">{$i}</a></li>";
+                }
+            }
 
-      }           
+            if ($i != $this->total)
+                $links .= " <li><a>...</a></li> ";
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}&&nombre={$name}\">{$this->total}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&nombre={$name}\">{$this->total}</a></li>";
+            }
+        }           
     }
  ?>
 
-<?php foreach ($this->user as $value) {
-    $rol_user = $value['fkroles'];
+<?php 
+    foreach ($this->user as $value) {
+        $rol_user = $value['fkroles'];
     } 
 ?>
 
@@ -79,7 +80,7 @@
     <div class="col m2 s12">
         <a href="/clientes/especificaciones">Mostrar todos</a>
     </div>
-   
+
     <div class="col m8 s12">
         <form action="/clientes/busquedaclt" enctype="multipart/form-data" class="form-horizontal form-material">
             <div class="input-field col m8 s8">
@@ -92,9 +93,7 @@
             </div>
         </form>
     </div>
-    
     <div class="col m2 s12"></div>
-
 </div>
 <!-- End Buscador -->
             
@@ -154,36 +153,35 @@
             </tr> 
         </thead>
         <?php if ($this->paginator) {
-        foreach ($this->paginator as $cliente) { ?>
-            <tbody>
-                <tr>
-                    <td><?php echo $cliente["id"]; ?></td>
-                    <td><?php echo $cliente["nombre_cliente"]; ?></td>
-                    <td>
-                        <?php if($cliente["logo"]== null){ ?>
-                            <img src="/img/no_disponible1.png" class="responsive-img" style="width: 100px; margin-top: 5px;">
-                        <?php }else{ ?>
-                            <a class="example-image-link" href="/<?php echo $cliente['logo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $cliente['logo']; ?>" id="camara_div" alt="<?php echo $cliente["nombre_cliente"]; ?>" style="width: 100px; height: 100px;  margin-top: 5px;"/></a>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <a href="/clientes/carpetas/id/<?php echo $cliente["id"] ?>"><i class="fa fa-2x fa-folder"></i></a>
-                    </td>
+            foreach ($this->paginator as $cliente) { ?>
+                <tbody>
+                    <tr>
+                        <td><?php echo $cliente["id"]; ?></td>
+                        <td><?php echo $cliente["nombre_cliente"]; ?></td>
+                        <td>
+                            <?php if($cliente["logo"]== null){ ?>
+                                <img src="/img/no_disponible1.png" class="responsive-img" style="width: 100px; margin-top: 5px;">
+                            <?php }else{ ?>
+                                <a class="example-image-link" href="/<?php echo $cliente['logo']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $cliente['logo']; ?>" id="camara_div" alt="<?php echo $cliente["nombre_cliente"]; ?>" style="width: 100px; height: 100px;  margin-top: 5px;"/></a>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <a href="/clientes/carpetas/id/<?php echo $cliente["id"] ?>"><i class="fa fa-2x fa-folder"></i></a>
+                        </td>
                     
-                    <td>
-                        <?php if ($rol_user == 1 || $rol_user == 8) { ?>
-                            <a href="/clientes/clienteedit/id/<?php echo $cliente["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-                        <?php } else { } ?>
-                    </td>
-                    <td>
-                        <?php if ($rol_user == 1 || $rol_user == 8) { ?>
-                            <a class="delete" data-id="<?php echo $cliente["id"]; ?>" data-nombre="<?php echo $cliente["nombre_cliente"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-                        <?php } else { } ?>
-                    </td>
-                </tr>
-            </tbody>
+                        <td>
+                            <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                                <a href="/clientes/clienteedit/id/<?php echo $cliente["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                            <?php } else { } ?>
+                        </td>
+                        <td>
+                            <?php if ($rol_user == 1 || $rol_user == 8) { ?>
+                                <a class="delete" data-id="<?php echo $cliente["id"]; ?>" data-nombre="<?php echo $cliente["nombre_cliente"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                            <?php } else { } ?>
+                        </td>
+                    </tr>
+                </tbody>
         <?php } } else{ ?>
-
             <tbody>
                 <td></td>
                 <td></td>
@@ -238,79 +236,74 @@
 <script type="text/javascript">
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+        'resizeDuration': 200,
+        'wrapAround': true
     });
 
     $(document).ready(function(){
-    
-      $('.modal').modal();
-    
+        $('.modal').modal();
     }); //Modal script//
 
-    
     $("#add_cliente").click(function(){
-      
-      var name = document.getElementById("name").value;
+        var name = document.getElementById("name").value;
 
-            if(name == ""){
-                swal({
-                  title: "Para agregar un cliente llena los datos requeridos (*)",
+        if(name == ""){
+            swal({
+                title: "Para agregar un cliente llena los datos requeridos (*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitForm, 500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_clt").submit()
+    }   //Agregar Cliente Script
+
+
+    //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+
+        swal({
+            title: "¿Estas seguro de eliminar al cliente "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
                 });
-            }else{
-                 swal("Espera un momento, la información esta siendo procesada", {
-        icon: "success",
-        buttons: false,
-      });
-                setTimeout(submitForm, 500);     
+
+                var request = $.ajax({
+                    url:"/clientes/requestdeletecliente",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+            //-------------------end de ajax---------------------------
+
+            //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+            //-------------------end de respuesta ajax---------------------
+                return false;
+
+            } else {
+                swal("La accion fue cancelada!");
             }
         });
-
-        function submitForm() {
-            document.getElementById("submit_clt").submit()
-        }
-        //Agregar Cliente Script
-
-//Inicio Delete Ajax
-
-        $(".delete").click(function(){
-      id=$(this).data('id');
-      nombre=$(this).data('nombre');
-    swal({
-      title: "¿Estas seguro de eliminar al cliente "+nombre+"?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-
-    .then((willDelete) => {
-      if (willDelete) {
-         swal("Espera un momento, la información esta siendo procesada", {
-        icon: "success",
-        buttons: false,
-      });
-
-            var request = $.ajax({
-              url:"/clientes/requestdeletecliente",
-                method:"POST",
-                data: { id : id },
-                processData: true,
-            });
-//-------------------end de ajax---------------------------
-
-//-------------peticion de respuesta de ajax------------------
-            request.done(function(response) {
-                console.log(response);//imprime lo que responde el ajax
-                // alert
-                window.location.reload(true);
-            });
-//-------------------end de respuesta ajax---------------------
-             return false;
-
-              } else {
-                swal("La accion fue cancelada!");
-              }
-          });
-  });
- // End Ajax
+    }); // End Ajax
 </script>

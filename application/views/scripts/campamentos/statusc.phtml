@@ -1,148 +1,145 @@
-  <?php 
-  function isActhref($nameBtn,$urlname){
-    if($nameBtn==1 && $urlname==null){
-      return "active"; 
+<?php 
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+            return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
     }
-    return ($nameBtn == $urlname)?"active":"";
-  }
 
     if (isset($_GET['pagina'])) {
-      $pagina = $_GET['pagina'];
+        $pagina = $_GET['pagina'];
     } else {
-      $pagina = 1;
+        $pagina = 1;
     }  
-  ?>
+?>
 
 <?php 
 
-    $links = "";
-    $url="";
+$links = "";
+$url="";
 
-        if($this->total== 1){
-            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-        }else{
-            if ($this->total >= 1 && $pagina <= $this->total) {
-
-              if (isset($_GET['pagina']) && $this->actpage != 1) {
+    if($this->total== 1){
+        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+    }else{
+        if ($this->total >= 1 && $pagina <= $this->total) {
+            if (isset($_GET['pagina']) && $this->actpage != 1) {
                 $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }else{
+            }else{
                 $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }
-                
-                $i = max(2, $pagina - 3);
-                if ($i > 2)
-                    $links .= " <li><a>...</a></li> ";
-                for (; $i < min($pagina + 3, $this->total); $i++) {
-                  if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }else{
-                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }
-                }
-                if ($i != $this->total)
-                    $links .= " <li><a>...</a></li> ";
+            }
+
+            $i = max(2, $pagina - 3);
+            if ($i > 2)
+                $links .= " <li><a>...</a></li> ";
+            for (; $i < min($pagina + 3, $this->total); $i++) {
                 if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }else{
-                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }
-                
-            }           
-        }
+            if ($i != $this->total)
+                $links .= " <li><a>...</a></li> ";
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }
+        }           
+    }
 ?>
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
-  <div class="col m6 s6">
-    <a href="/campamentos/addcampamento" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
-  </div>
-  <div class="col m6 s6 text-right">
-    <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Status</a>
-  </div>
+    <div class="col m6 s6">
+        <a href="/campamentos/addcampamento" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+    <div class="col m6 s6 text-right">
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Status</a>
+    </div>
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status de Anticipo de Campamentos
-  </div>
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Status de Anticipo de Campamentos
+    </div>
 </div>
 <!-- End Inicio Botones -->
 
 <!-- Modal Structure 1 -->
 <div id="modal1" class="modal modal-fixed-footer">
-  <div class="modal-content">
-    <div class="col m12 s12" style="margin-top: 10px;">
-      <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Status</span>
+    <div class="modal-content">
+        
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Status</span>
+        </div>
+
+        <div class="col m12 s12">
+            <form action="/campamentos/requestaddstatus" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="sumbit_s">
+                <div class="row">
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="name" placeholder="Ingresa Nombre Status" type="text" name="name" class="validate" required>
+                        <label for="name">* Nombre:</label>
+                    </div>
+                </div>
+        </div>
     </div>
 
-    <div class="col m12 s12">
-      <form action="/campamentos/requestaddstatus" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="sumbit_s">
-        <div class="row">
-          <div class="input-field col m12 s12">
-            <i class="material-icons prefix">assignment</i>
-            <input id="name" placeholder="Ingresa Nombre Status" type="text" name="name" class="validate" required>
-            <label for="name">* Nombre:</label>
-          </div>
-				</div>
+    <div class="modal-footer">
+        </form>
+        <button class=" btn" id="addstatus">Guardar</button>	
+        <button  class="modal-close red btn">Cerrar</button>
     </div>
-	</div>
-
-  <div class="modal-footer">
-    		</form>
-    <button class=" btn" id="addstatus">Guardar</button>	
-    <button  class="modal-close red btn">Cerrar</button>
-  </div>
 </div>
 <!-- End Modal -->
 
-  
-  <!-- Table Grupo -->
+<!-- Table Grupo -->
 <div class="col m6 s12">
-  <div class="row">
-    <div class="col m12 s12" style="margin-top: 10px;">
-      <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Status</span>
+    
+    <div class="row">
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Status</span>
+        </div>
     </div>
-  </div>
 
-  <table class="table text-center table-hover">
-    <thead>
-      <tr>
-        <th>Id</th>
-				<th>Nombre</th>	
-				<th></th>
-        <th></th>
-			</tr> 
-		</thead>
+    <table class="table text-center table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+				        <th>Nombre</th>	
+				        <th></th>
+                <th></th>
+			      </tr> 
+        </thead>
 
-    <?php if ($this->paginator) {
-		foreach ($this->paginator as $statcamp) { ?>
-      <tbody>
-        <tr class="text-center">
-				  <td><?php echo $statcamp["id_status"]; ?></td>
-				  <td><?php echo $statcamp["nombre"]; ?></td>
-				  <td>
-					 <a href="/campamentos/statusedit/id/<?php echo $statcamp["id_status"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-				  </td>
-          <td>
-            <a class="delete" data-id="<?php echo $statcamp["id_status"]; ?>" data-nombre="<?php echo $statcamp["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-          </td>
-			 </tr>
-		  </tbody>
-    <?php } } else{ ?>
-      <tbody>
-        <td></td>
-				<td>
-					<h4>No se encontraron Status de Campamentos</h4>
-				</td>
-				<td></td>
-			</tbody>
-    <?php }?>
-  </table>
+        <?php if ($this->paginator) {
+            foreach ($this->paginator as $statcamp) { ?>
+                <tbody>
+                    <tr class="text-center">
+                        <td><?php echo $statcamp["id_status"]; ?></td>
+                        <td><?php echo $statcamp["nombre"]; ?></td>
+                        <td>
+                            <a href="/campamentos/statusedit/id/<?php echo $statcamp["id_status"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <a class="delete" data-id="<?php echo $statcamp["id_status"]; ?>" data-nombre="<?php echo $statcamp["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+        <?php } } else{ ?>
+            <tbody>
+                <td></td>
+                <td>
+					         <h4>No se encontraron Status de Campamentos</h4>
+                </td>
+				        <td></td>
+			      </tbody>
+        <?php }?>
+    </table>
 </div>
-  <!-- End Table Grupo -->
+<!-- End Table Grupo -->
 
 <!-- Paginación  -->
-
 <div class="row">
     <div class="col m12 s12 text-center">
         <div class="white-box">
@@ -174,78 +171,72 @@
         </div>
     </div> 
 </div>
-
-
 <!-- End Paginacion  -->
 
 <!-- Scripts -->
 <script type="text/javascript">
     $(document).ready(function(){
-      $('.modal').modal();
-	  });
-	  //Modal script//
+        $('.modal').modal();
+	  });  //Modal script//
 
 	  $("#addstatus").click(function(){
-	  	var name = document.getElementById("name").value;
+	  	  var name = document.getElementById("name").value;
+        if(name == ""){
+            swal({
+                title: "Para agregar un status ingresa el nombre(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+			 	        buttons: false,
+            });
+            setTimeout(submitForm, 500);     
+        }
+    });
 
-            if(name == ""){
-                swal({
-                  title: "Para agregar un status ingresa el nombre(*)",
+    function submitForm() {
+        document.getElementById("sumbit_s").submit()
+    } //Agregar Scripts
+
+    //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+
+        swal({
+            title: "¿Estas seguro de eliminar el status "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
                 });
-            }else{
-                 swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-                setTimeout(submitForm, 500);     
+
+                var request = $.ajax({
+                    url:"/campamentos/requestdeletestatus",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+                //-------------------end de ajax--------------------------- 
+
+                //-------------peticion de respuesta de ajax------------------
+
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+                //-------------------end de respuesta ajax---------------------
+                return false;
+            } else {
+                swal("La accion fue cancelada!");
             }
         });
-
-        function submitForm() {
-            document.getElementById("sumbit_s").submit()
-        }
-        //Agregar Scripts
-
-      //Inicio Delete Ajax
-  $(".delete").click(function(){
-    id=$(this).data('id');
-    nombre=$(this).data('nombre');
-    swal({
-      title: "¿Estas seguro de eliminar el status "+nombre+"?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-
-    .then((willDelete) => {
-      if (willDelete) {
-        swal("Espera un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });
-
-        var request = $.ajax({
-          url:"/campamentos/requestdeletestatus",
-          method:"POST",
-          data: { id : id },
-          processData: true,
-        });
-    //-------------------end de ajax---------------------------
-
-    //-------------peticion de respuesta de ajax------------------
-        request.done(function(response) {
-                  console.log(response);//imprime lo que responde el ajax
-                  // alert
-                  window.location.reload(true);
-              });
-    //-------------------end de respuesta ajax---------------------
-      return false;
-
-      } else {
-        swal("La accion fue cancelada!");
-      }
-    });
-  });
-  // End Delete Ajax
-
+    }); // End Delete Ajax
 </script>

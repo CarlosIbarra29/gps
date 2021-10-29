@@ -143,11 +143,6 @@ if($this->total== 1){
 				</select>
 				<label>Año</label>
 		    </div>
-
-<!-- 		    <div class="input-field col m10 s8">
-		        <input placeholder="Ingresa el usuario" name="usuario" id="name_usuario" type="text" class="validate">
-		        <label for="name_usuario">Buscar por usuario</label>
-		    </div> -->
 		    <div class="input-field col m2 s4">
 		     	<button tyle="submit" id="buscador_mes" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
 		    </div>
@@ -289,7 +284,6 @@ if($this->total== 1){
 
 
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		$('.modal').modal();
 		$('select').formSelect();
@@ -397,7 +391,6 @@ if($this->total== 1){
 
    	$("#buscador").click(function(){
    		var sitio = document.getElementById("sitio").value;
-   		// var status = document.getElementById("status_search").value;
    		var tagn = document.getElementById("tagn").value
 		swal({
 			title: "La busqueda será para el sitio con id "+sitio+", Desea continuar?",
@@ -412,10 +405,10 @@ if($this->total== 1){
 					buttons: false,
 				}); 
 
-			window.location.href = "/tag/consumobuscar/id/"+tagn+"/sitio/"+sitio+"/op/1";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/tag/consumobuscar/id/"+tagn+"/sitio/"+sitio+"/op/1";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});	
 
@@ -423,7 +416,6 @@ if($this->total== 1){
    	$("#buscador_proyecto").click(function(){
    		var proyecto = document.getElementById("proyecto").value;
    		var tagn = document.getElementById("tagn").value
-   		// var status = document.getElementById("status_search").value;
 		swal({
 			title: "La busqueda sera por proyecto "+proyecto+", Desea continuar?",
 			icon: "warning",
@@ -436,12 +428,10 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				}); 
-
-			window.location.href = "/tag/consumobuscar/id/"+tagn+"/proyecto/"+proyecto+"/op/2";
-			// window.location.href = "/epp/listasolbuscar/status/"+status+"/id/"+id+"/op/2";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/tag/consumobuscar/id/"+tagn+"/proyecto/"+proyecto+"/op/2";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
 
@@ -449,7 +439,6 @@ if($this->total== 1){
    		var mes = document.getElementById("mes").value;
    		var year = document.getElementById("year").value;
    		var tagn = document.getElementById("tagn").value
-   		// var status = document.getElementById("status_search").value;
 
 		swal({
 			title: "La busqueda sera por el mes "+mes+" y el año "+year+", Desea continuar?",
@@ -463,14 +452,11 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				});
-			window.location.href = "/tag/consumobuscar/id/"+tagn+"/mes/"+mes+"/year/"+year+"/op/3";
-
-			// window.location.href = "/epp/listasolbuscar/status/"+status+"/usuario/"+id+"/op/3";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/tag/consumobuscar/id/"+tagn+"/mes/"+mes+"/year/"+year+"/op/3";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
-
 </script>
 

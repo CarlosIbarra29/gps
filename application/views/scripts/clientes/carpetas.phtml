@@ -1,10 +1,10 @@
 <?php 
-	function isActhref($nameBtn,$urlname){
-	    if($nameBtn==1 && $urlname==null){
-	    	return "active"; 
-	    }
-	    return ($nameBtn == $urlname)?"active":"";
-	}
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+	    	    return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
+    }
 
     if (isset($_GET['pagina'])) {
         $pagina = $_GET['pagina'];
@@ -57,30 +57,26 @@
 
 <!-- Inicio Botones -->
 <div class="col m12 s12" style="margin-top: 10px;">
-
     <div class="col m5 s5"> 
         <a href="/clientes/especificaciones"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
     </div>
+
     <?php if ($rol_user == 1 || $rol_user == 8) { ?>
-      <div class="col m7 s7 text-right">
-          <a class="waves-effect green btn modal-trigger" href="#modal1">+ Añadir Carpeta</a>
-    	    <a class="waves-effect green btn modal-trigger" href="#modal2">+ Agregar Documento</a>
-      </div>
+        <div class="col m7 s7 text-right">
+            <a class="waves-effect green btn modal-trigger" href="#modal1">+ Añadir Carpeta</a>
+    	      <a class="waves-effect green btn modal-trigger" href="#modal2">+ Agregar Documento</a>
+        </div>
     <?php } else { } ?>
 </div>
  
 <div class="row">
-    
     <div class="col m12 s12 text-center" style="margin-top: 40px;">
         <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de clientes
     </div>
-
 </div>
 <!-- End Inicio Botones -->
 
-
 <!-- Buscador -->
-
 <!-- <div class="row">
 	  <div class="col m2 s12"></div>
 	 
@@ -100,7 +96,6 @@
     <div class="col m2 s12"></div>
 
 </div> -->
-
 <!-- End Buscador -->
 
 <!-- Modal Agregar Carpeta -->

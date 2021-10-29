@@ -1,5 +1,5 @@
 <?php 
-function eliminar_acentos($cadena){
+	function eliminar_acentos($cadena){
 		$cadena = str_replace(
 		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
 		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
@@ -38,17 +38,18 @@ function eliminar_acentos($cadena){
 
 
 <style type="text/css">
-.excel-div {
-    width: 98%;
-    height: 70em;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-.oculto{
-	display: none;
-}
+	.excel-div {
+    	width: 98%;
+    	height: 70em;
+    	overflow-x: auto;
+    	white-space: nowrap;
+	}
 
-.table_wrapper{
+	.oculto{
+		display: none;
+	}
+
+	.table_wrapper{
 		overflow-x: auto;
 	}
 </style>
@@ -87,23 +88,23 @@ function eliminar_acentos($cadena){
         		<th>Nombre Proyecto</th>
 			</tr> 
 		</thead>
-		<?php 
+		<?php
 		foreach ($this->sitios as $usr) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $usr["id"]; ?></td>
-				<td><?php echo $usr["id_cliente"]; ?></td>
-				<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
-				<!-- <td><?php echo eliminar_acentos(preg_replace('/[.,]/', '', $usr['direccion'])); ?></td> -->
-				<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
-				<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
-				<td><?php echo $usr["region"]; ?></td>
-        		<td><?php echo $usr["id_proyecto"]; ?></td>
-        		<td><?php echo $usr["id_tipoproyecto"]; ?></td>
-        		<td><?php echo $usr["nombre_proyecto"]; ?></td>
-			</tr>
-		</tbody>
+			<tbody>
+				<tr>
+					<td><?php echo $usr["id"]; ?></td>
+					<td><?php echo $usr["id_cliente"]; ?></td>
+					<td><?php echo eliminar_acentos($usr["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["cliente"]); ?></td>
+					<!-- <td><?php echo eliminar_acentos(preg_replace('/[.,]/', '', $usr['direccion'])); ?></td> -->
+					<td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
+					<td><?php echo eliminar_acentos($usr["estado"]); ?></td>
+					<td><?php echo $usr["region"]; ?></td>
+	        		<td><?php echo $usr["id_proyecto"]; ?></td>
+	        		<td><?php echo $usr["id_tipoproyecto"]; ?></td>
+	        		<td><?php echo $usr["nombre_proyecto"]; ?></td>
+				</tr>
+			</tbody>
 		<?php } ?>
 	</table>
 </div>

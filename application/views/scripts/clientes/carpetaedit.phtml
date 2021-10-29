@@ -16,8 +16,8 @@
 <div class="col m12 s12">
 	<form action="/clientes/requestupdatecarpeta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_udp">
 		<?php foreach ($this->carpetaedit as $carpeta) { ?>
-		<input type="hidden" name="idcarpeta" value="<?php echo $carpeta["id"]; ?>">
-		<input type="hidden" name="id_cliente" value="<?php echo $carpeta["id_cliente"]; ?>">
+			<input type="hidden" name="idcarpeta" value="<?php echo $carpeta["id"]; ?>">
+			<input type="hidden" name="id_cliente" value="<?php echo $carpeta["id_cliente"]; ?>">
 			<div class="row">
 				<div class="input-field col m12 s12">
 					<i class="material-icons prefix">font_download</i>
