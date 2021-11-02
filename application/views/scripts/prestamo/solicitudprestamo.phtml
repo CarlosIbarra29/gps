@@ -56,167 +56,169 @@
 
 
 <style type="text/css">
-  .oculto{display: none;}
-  .active_menu{
-    -webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
-    -moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
-    box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
-  }
+    .oculto{display: none;}
+    .active_menu{
+        -webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+        -moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+        box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    }
+
+    .table_wrapper{
+        overflow-x: auto;
+    }
 </style>
 
 <?php 
-	$status =  $this->status_documento;
+	 $status =  $this->status_documento;
 ?>
 <div class="row" style="margin-top: 20px;">
-	<div class="col m12 s12">
-  		<ul >
-  			<?php if($status == 0){ ?>
-	    		<li class="tab col s3 active_menu">
-	    			<a class="" href="/prestamo/solicitudprestamo/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->enproceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php }else{ ?>
-	    		<li class="tab col s3">
-	    			<a class="" href="/prestamo/solicitudprestamo/status/0">
-	    			<h4>En Proceso
-	  					<div class="chip">
-	    					<?php echo $this->enproceso; ?>
-	  					</div>
-	    			</h4>
-	    			</a>
-	    		</li>
-  			<?php } ?>
+  	<div class="col m12 s12">
+    		<ul >
+      			<?php if($status == 0){ ?>
+      	    		<li class="tab col s3 active_menu">
+        	    			<a class="" href="/prestamo/solicitudprestamo/status/0">
+            	    			<h4>En Proceso
+              	  					<div class="chip">
+              	    					  <?php echo $this->enproceso; ?>
+              	  					</div>
+            	    			</h4>
+        	    			</a>
+      	    		</li>
+      			<?php }else{ ?>
+      	    		<li class="tab col s3">
+      	    			  <a class="" href="/prestamo/solicitudprestamo/status/0">
+      	    			      <h4>En Proceso
+      	  					        <div class="chip">
+      	    					          <?php echo $this->enproceso; ?>
+      	  					          </div>
+      	    			      </h4>
+      	    			  </a>
+      	    		</li>
+    			  <?php } ?>
 
-  			<?php if($status == 1){ ?>
-  				<li class="tab col s3 active_menu">
-  					<a href="/prestamo/solicitudprestamo/1"><h4>Liquidadas</h4></a>
-  					<div></div>
-  				</li>
-  			<?php }else{ ?>
-  				<li class="tab col s3"><a href="/prestamo/solicitudprestamo/status/1"><h4>Liquidadas</h4></a></li>
-  			<?php } ?>
-
-  		</ul>
-	</div>
+      			<?php if($status == 1){ ?>
+        				<li class="tab col s3 active_menu">
+        					<a href="/prestamo/solicitudprestamo/1"><h4>Liquidadas</h4></a>
+        					<div></div>
+        				</li>
+      			<?php }else{ ?>
+      				  <li class="tab col s3"><a href="/prestamo/solicitudprestamo/status/1"><h4>Liquidadas</h4></a></li>
+      			<?php } ?>
+    		</ul>
+  	</div>
 </div>
 
 
 <div class="row">
-  <div class="col m1 s12"></div>
-  <div class="col m10 s12">
-    <div class="row">
-      <div class="col m5 s6">
-        <div class="input-field col s12">
-          <select id="search_op">
-            <option value="1" selected>Personal</option>
-            <option value="2">Fecha Prestamo</option>
-          </select>
-          <label>Buscar por:</label>
+    <div class="col m1 s12"></div>
+    <div class="col m10 s12">
+        <div class="row">
+            <div class="col m4 s6">
+                <div class="input-field col s12">
+                    <select id="search_op">
+                        <option value="1" selected>Personal</option>
+                        <option value="2">Fecha Prestamo</option>
+                    </select>
+                    <label>Buscar por:</label>
+                </div>
+            </div>
+            <div class="col m4 s6">
+                <div class="input-field col m12 s12 prestamo_div">
+                    <select id="user_prestamo" name="usuario">
+                        <option value="0" disabled selected>* Selecciona una opcion:</option>
+                        <?php foreach ($this->prestamo_user as $rl) { ?>
+                            <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+                        <?php } ?>
+                    </select>
+                    <label>Personal</label>
+                </div>
+            </div>
+
+            <div class="col m4 s6 oculto fecha_div">
+                <div class="input-field col m12 s12">
+                    <input id="fechaenvio_search" type="text" class="datepicker">
+                    <label for="fechaenvio_search">Fecha Prestamo</label>
+                </div>
+            </div>   
+
+            <div class="col m4 s12 text-center prestamo_div">
+                <a class="btn" id="btn_prestamo"><i class="material-icons right">search</i>Buscar</a>
+            </div>
+
+            <div class="col m4 s12 text-center fecha_div oculto">
+                <a class="btn" id="btn_fecha"><i class="material-icons right">search</i>Buscar</a>
+            </div>
         </div>
-      </div>
-      <div class="col m5 s6">
-        <div class="input-field col m12 s12 prestamo_div">
-          <select id="user_prestamo" name="usuario">
-            <option value="0" disabled selected>* Selecciona una opcion:</option>
-            <?php foreach ($this->prestamo_user as $rl) { ?>
-            <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
-            <?php } ?>
-          </select>
-          <label>Personal</label>
-        </div>
-      </div>
-
-      <div class="col m5 s6 oculto fecha_div">
-        <div class="input-field col m12 s12">
-            <input id="fechaenvio_search" type="text" class="datepicker">
-            <label for="fechaenvio_search">Fecha Prestamo</label>
-        </div>
-      </div>   
-
-
-      <div class="col m2 s12 text-center prestamo_div">
-        <a class="btn" id="btn_prestamo"><i class="material-icons right">search</i>Buscar</a>
-      </div>
-
-      <div class="col m2 s12 text-center fecha_div oculto">
-        <a class="btn" id="btn_fecha"><i class="material-icons right">search</i>Buscar</a>
-      </div>
-
-
     </div>
-  </div>
-  <div class="col m1 s12"></div>
+    <div class="col m1 s12"></div>
 </div>
 
 
 
 <div class="row">
     <div class="col m12 s12">
-      <div class="row">
-          <div class="col m8 s8">
-            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista Descuento</span>
-          </div>
-          <div class="col m4 s4 text-right">
-            <a class="btn modal-trigger green" href="#modal1">+ Agregar Descuento</a>
-          </div>
-      </div>
-      <table class="table text-left table-hover">
-          <thead>
-            <tr style="background-color: #EDEDED;">
-                <th>NO.</th>
-                <th>Personal</th>
-                <th>Fecha prestamo</th>
-                <th>Monto</th> 
-                <th>Cantidad</th>
-                <th>Pagos</th>
-                <th></th>
-                <th></th>
-            </tr> 
-          </thead>
-          <?php
-          if ($this->paginator) { 
-          foreach ($this->paginator as $usr) { ?>
-          <tbody>
-            <tr>
-              <td><?php echo $usr['id']; ?></td>
-              <td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?></td>
-              <td><?php echo $usr['fecha_prestamo']; ?></td>
-              <td>
-                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>
-              </td>
-              <td>
-                <?php echo $usr['cantidad_pagos']; ?>
-              </td>
-              <td>
-                <?php echo $usr['cantidad_saldada']; ?>
-              </td>
-              <td class="text-center">
-                <a href="/prestamo/detalleprestamo/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-              </td>
+        <div class="row">
+            <div class="col m8 s8">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista Descuento</span>
+            </div>
+            <div class="col m4 s4 text-right">
+                <a class="btn modal-trigger green" href="#modal1">+ Agregar Descuento</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m12 s12 table_wrapper">
+                <table class="table text-left table-hover">
+                    <thead>
+                        <tr style="background-color: #EDEDED;">
+                            <th>NO.</th>
+                            <th>Personal</th>
+                            <th>Fecha prestamo</th>
+                            <th>Monto</th> 
+                            <th>Cantidad</th>
+                            <th>Pagos</th>
+                            <th></th>
+                            <th></th>
+                        </tr> 
+                    </thead>
 
-              <?php if($usr['cantidad_saldada'] == 0){ ?>
-                <td>
-                  <a class="delete_file" data-id="<?php echo $usr["id"]; ?>" data-op="3"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-                </td>
-              <?php } ?>
+                    <?php if ($this->paginator) { 
+                        foreach ($this->paginator as $usr) { ?>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $usr['id']; ?></td>
+                                    <td><?php echo $usr['nombre']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?></td>
+                                    <td><?php echo $usr['fecha_prestamo']; ?></td>
+                                    <td>
+                                        <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>
+                                    </td>
+                                    <td>
+                                        <?php echo $usr['cantidad_pagos']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $usr['cantidad_saldada']; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/prestamo/detalleprestamo/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                                    </td>
 
-            </tr>
-          <?php } }else{ ?>
-          </tbody> 
-        <tbody>
-            <tr>
-                <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
-            </tr>
-        </tbody>
-                    
-        <?php } ?>
-    </table>
-  </div>
+                                    <?php if($usr['cantidad_saldada'] == 0){ ?>
+                                        <td>
+                                            <a class="delete_file" data-id="<?php echo $usr["id"]; ?>" data-op="3"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
+                    <?php } }else{ ?>
+                            </tbody> 
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
+                                </tr>
+                            </tbody>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -253,60 +255,62 @@
 </div>
 
 
-  <!-- Modal Structure -->
+<!-- Modal Structure -->
 <div id="modal1" class="modal modal-fixed-footer">
-  <div class="modal-content">
-    <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Descuento</span>
-    <div class="row" style="margin-top: 25px;">
-      <form action="/prestamo/requestaddprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
-      <div class="col m12 s12">
-        <div class="input-field col m6 s12">
-          <select id="user_pre" name="usuario" required>
-            <option value="0" disabled selected>* Selecciona una opcion:</option>
-            <?php foreach ($this->prestamo_user as $rl) { ?>
-            <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
-            <?php } ?>
-          </select>
-          <label>Personal</label>
-        </div>
+    <div class="modal-content">
+        <span style="font-size:23px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Descuento</span>
+        <div class="row" style="margin-top: 25px;">
+            <form action="/prestamo/requestaddprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
+                
+                <div class="col m12 s12">
+                    <div class="input-field col m6 s12">
+                        <select id="user_pre" name="usuario" required>
+                            <option value="0" disabled selected>* Selecciona una opcion:</option>
+                            <?php foreach ($this->prestamo_user as $rl) { ?>
+                                <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>Personal</label>
+                    </div>
 
-        <div class="input-field col m6 s12">
-          <input id="fecha_prestamo" name="fecha" type="date" class="validate">
-          <label for="fecha_prestamo">Fecha Prestamo</label>
-        </div>
+                    <div class="input-field col m6 s12">
+                        <input id="fecha_prestamo" name="fecha" type="date" class="validate">
+                        <label for="fecha_prestamo">Fecha Prestamo</label>
+                    </div>
 
-        <div class="input-field col m6 s12">
-          <input id="monto_prestamo" name="monto" type="number" class="validate">
-          <label for="monto_prestamo">Monto</label>
-        </div>
+                    <div class="input-field col m6 s12">
+                        <input id="monto_prestamo" name="monto" type="number" class="validate">
+                        <label for="monto_prestamo">Monto</label>
+                    </div>
 
-        <div class="input-field col m6 s12">
-          <input id="cantidad_prestamo" name="cantidad" type="number" class="validate">
-          <label for="cantidad_prestamo">Cantidad Pagos</label>
-        </div>
+                    <div class="input-field col m6 s12">
+                        <input id="cantidad_prestamo" name="cantidad" type="number" class="validate">
+                        <label for="cantidad_prestamo">Cantidad Pagos</label>
+                    </div>
 
-        <div class="file-field input-field col m s12">
-          <div class="btn">
-            <span>Evidencia</span>
-            <input type="file" name="url">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" id="validate_url" type="text">
-          </div>
-        </div>
+                    <div class="file-field input-field col m s12">
+                        <div class="btn">
+                            <span>Evidencia</span>
+                            <input type="file" name="url">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="validate_url" type="text">
+                        </div>
+                    </div>  
 
-        <div class="input-field col m12 s12">
-          <input id="motivo_prestamo" name="motivo" type="text" class="validate">
-          <label for="motivo_prestamo">Motivo</label>
+                    <div class="input-field col m12 s12">
+                        <input id="motivo_prestamo" name="motivo" type="text" class="validate">
+                        <label for="motivo_prestamo">Motivo</label>
+                    </div>
+                </div>
+            </form> 
         </div>
-      </div>
-     </form> 
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" id="add_generarprestamo" class="btn">Generar</button>
-    <button  class="modal-close red btn">Cerrar</button>
-  </div>
+
+    <div class="modal-footer">
+        <button type="button" id="add_generarprestamo" class="btn">Generar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
 </div>
 
 
@@ -316,17 +320,17 @@
 
 <script src="/js/materialize.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function(){
-    $('.modal').modal();
-    $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
-  });
+    $(document).ready(function(){
+        $('.modal').modal();
+        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    });
 
     $("#add_generarprestamo").click(function(){
-      var user_prestamo = document.getElementById("user_pre").value;
-      var monto_prestamo = document.getElementById("monto_prestamo").value;
-      var cantidad_prestamo = document.getElementById("cantidad_prestamo").value;
-      var motivo_prestamo = document.getElementById("motivo_prestamo").value;
-      var fecha_prestamo = document.getElementById("fecha_prestamo").value;
+        var user_prestamo = document.getElementById("user_pre").value;
+        var monto_prestamo = document.getElementById("monto_prestamo").value;
+        var cantidad_prestamo = document.getElementById("cantidad_prestamo").value;
+        var motivo_prestamo = document.getElementById("motivo_prestamo").value;
+        var fecha_prestamo = document.getElementById("fecha_prestamo").value;
 
         if(user_prestamo == 0 ||  monto_prestamo== 0 || cantidad_prestamo == 0 ||  motivo_prestamo == "" || fecha_prestamo == ""){
             swal({
@@ -340,106 +344,111 @@
             setTimeout(submitprestamo, 1500);     
         }
     });
+    
     function submitprestamo() { document.getElementById("submit_addprestamo").submit() }
 
 
     $(".delete_file").click(function(){
-      var id = $(this).data('id');
-      var op = $(this).data('op');
+        var id = $(this).data('id');
+        var op = $(this).data('op');
 
-    swal({
-      title: "Estas seguro de eliminar el registro?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });
-              var request = $.ajax({
-                  url:"/prestamo/requestdeleteprestamonuevo",
-                  method:"POST",
-                  data: { id : id, op : op},
-                  processData: true,
-              });
+        swal({
+            title: "Estas seguro de eliminar el registro?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });
+
+                var request = $.ajax({
+                    url:"/prestamo/requestdeleteprestamonuevo",
+                    method:"POST",
+                    data: { id : id, op : op},
+                    processData: true,
+                });
         //-------------------end de ajax---------------------------
         //--------- ----peticion de respuesta de ajax------------------
-              request.done(function(response) {
-                  console.log(response);//imprime lo que responde el ajax
-                  window.location.reload(true);
-              });
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    window.location.reload(true);
+                });
         //-------------------end de respuesta ajax---------------------
-               return false;
-        } else {
-          swal("La asignacion fue cancelada!");
+                return false;
+            } else {
+                swal("La asignacion fue cancelada!");
+            }
+        });
+    });
+
+    $("#search_op").on('change', function() {
+        var value = this.value;
+        document.getElementById("buscador").value= value;
+
+        if(value == 1){
+            $(".prestamo_div").show();
+            $(".fecha_div").hide();
+        }
+
+        if(value == 2){
+            $(".fecha_div").show();
+            $(".prestamo_div").hide();
         }
     });
+
+    $("#btn_prestamo").click(function(){
+        var person = document.getElementById("user_prestamo").value;
+        var status = document.getElementById("status").value;
+
+        swal({
+            title: "La busqueda sera por el personal, Desea continuar?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                }); 
+                window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/usuario/"+person+"/op/1";
+            } else {
+                swal("La asignacion fue cancelada!");
+            }
+        });
     });
-
-
-  $("#search_op").on('change', function() {
-    var value = this.value;
-    document.getElementById("buscador").value= value;
-
-    if(value == 1){
-      $(".prestamo_div").show();
-      $(".fecha_div").hide();
-    }
-    if(value == 2){
-      $(".fecha_div").show();
-      $(".prestamo_div").hide();
-    }
-  });
-
-  $("#btn_prestamo").click(function(){
-    var person = document.getElementById("user_prestamo").value;
-    var status = document.getElementById("status").value;
-    swal({
-      title: "La busqueda sera por el personal, Desea continuar?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        }); 
-      window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/usuario/"+person+"/op/1";
-      } else {
-        swal("La asignacion fue cancelada!");
-      }
-    });
-  });
 
   $("#btn_fecha").click(function(){
-    var fecha = document.getElementById("fechaenvio_search").value;
+      var fecha = document.getElementById("fechaenvio_search").value;
       var dia = fecha.slice(0,-8);
       var mes = fecha.slice(3,-5);
       var year = fecha.slice(6);
+      var status = document.getElementById("status").value;
 
-    var status = document.getElementById("status").value;
-    swal({
-      title: "La busqueda sera por el personal, Desea continuar?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        }); 
-      window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/2";
-      } else {
-        swal("La asignacion fue cancelada!");
-      }
-    });
+      swal({
+          title: "La busqueda sera por el personal, Desea continuar?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+      })
+      .then((willDelete) => {
+          if (willDelete) {
+              swal("Espere un momento, la información esta siendo procesada", {
+                  icon: "success",
+                  buttons: false,
+              }); 
+              window.location.href = "/prestamo/searchsolicitudprestamo/status/"+status+"/dia/"+dia+"/mes/"+mes+"/year/"+year+"/op/2";
+          } else {
+              swal("La asignacion fue cancelada!");
+          }
+      });
   });
 
 </script>

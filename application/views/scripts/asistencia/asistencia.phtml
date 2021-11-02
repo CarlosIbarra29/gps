@@ -2,6 +2,10 @@
     .oculto{
         display: none;
     }
+    
+    .table_wrapper{
+        overflow-x: auto;
+    }
 </style>
 
 <div class="row" style="margin-top: 10px;">
@@ -68,82 +72,82 @@
 
 <?php if($this->op_solicitud == 1){ ?>
 
-<?php 
-    foreach ($this->solicitud as $key) {
-        $id_solicitud = $key['id'];
-        $nombre_sitio = $key['nombre_sitio'];
-        $user_solicitud = $key['user_solicitud'];
-        $status_auditoria = $key['status'];
-        $status_asistencia = $key['asistencia_status'];
-    }
-?>
-<div class="row">
+    <?php 
+        foreach ($this->solicitud as $key) {
+            $id_solicitud = $key['id'];
+            $nombre_sitio = $key['nombre_sitio'];
+            $user_solicitud = $key['user_solicitud'];
+            $status_auditoria = $key['status'];
+            $status_asistencia = $key['asistencia_status'];
+        }
+    ?>
+
+    <div class="row">
     <!-- <div class="col m12 s12"></div> -->
-    <div class="col s12 m12">
-        <div class="card">
-            <div class="card-content">
-                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud horas extra</span>
-                <div class="row"> 
-                    <div class="col m12 s12">
-                        <table>
-                            <thead>
-                                <tr style="background-color: #EDEDED">
-                                  <th>No.</th>
-                                  <th>Sitio</th>
-                                  <th>Usuario</th>
-                                  <th>Status Auditoria</th>
-                                  <th>Status Asistencia</th>
-                                </tr>
-                            </thead>
+        <div class="col s12 m12">
+            <div class="card">
+                <div class="card-content">
+                    <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud horas extra</span>
+                    <div class="row"> 
+                        <div class="col m12 s12 table_wrapper">
+                            <table>
+                                <thead>
+                                    <tr style="background-color: #EDEDED">
+                                        <th>No.</th>
+                                        <th>Sitio</th>
+                                        <th>Usuario</th>
+                                        <th>Status Auditoria</th>
+                                        <th>Status Asistencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo $id_solicitud; ?></td>
+                                        <td><?php echo $nombre_sitio; ?></td>
+                                        <td><?php echo $user_solicitud; ?></td>
+                                        <td>
+                                            <?php if($status_auditoria == 0){ ?>
+                                                <div class="chip modal-trigger" id="sitio_op">
+                                                    <img src="/img/gris.jpg" class="sitio_dos">
+                                                    Pendiente
+                                                </div>
+                                            <?php }else{ ?>
+                                                <div class="chip modal-trigger" id="sitio_op">
+                                                    <img src="/img/correct.png" class="sitio_dos">
+                                                    Auditada
+                                                </div>
+                                            <?php } ?>
+                                        </td>
+                                        <td>
+                                            <?php if($status_asistencia == 0){ ?>
+                                                <div class="chip modal-trigger" id="sitio_op">
+                                                    <img src="/img/gris.jpg" class="sitio_dos">
+                                                    Pendiente
+                                                </div>
+                                            <?php }else{ ?>
+                                                <div class="chip modal-trigger" id="sitio_op">
+                                                    <img src="/img/correct.png" class="sitio_dos">
+                                                    Auditada
+                                                </div>
+                                            <?php } ?>
+                                        </td>
 
-                            <tbody>
-                                <tr>
-                                    <td><?php echo $id_solicitud; ?></td>
-                                    <td><?php echo $nombre_sitio; ?></td>
-                                    <td><?php echo $user_solicitud; ?></td>
-                                    <td>
-                                        <?php if($status_auditoria == 0){ ?>
-                                            <div class="chip modal-trigger" id="sitio_op">
-                                                <img src="/img/gris.jpg" class="sitio_dos">
-                                                Pendiente
-                                            </div>
-                                        <?php }else{ ?>
-                                            <div class="chip modal-trigger" id="sitio_op">
-                                                <img src="/img/correct.png" class="sitio_dos">
-                                                Auditada
-                                            </div>
-                                        <?php } ?>
-                                    </td>
-                                    <td>
-                                        <?php if($status_asistencia == 0){ ?>
-                                            <div class="chip modal-trigger" id="sitio_op">
-                                                <img src="/img/gris.jpg" class="sitio_dos">
-                                                Pendiente
-                                            </div>
-                                        <?php }else{ ?>
-                                            <div class="chip modal-trigger" id="sitio_op">
-                                                <img src="/img/correct.png" class="sitio_dos">
-                                                Auditada
-                                            </div>
-                                        <?php } ?>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col m12 s12 text-right">
-                        <span>Las Horas extra mostradas por personal corresponden a esta solicitud.</span>
+
+                    <div class="row">
+                        <div class="col m12 s12 text-right">
+                            <span>Las Horas extra mostradas por personal corresponden a esta solicitud.</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <?php } ?>
-
 
 <div class="row">
     <div class="col m6 s12"></div>
@@ -210,182 +214,191 @@
 			</div>
 		</div> -->
         <form action="/asistencia/requestaddasistenciapersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_asignar">
-        <input type="hidden" name="op_asistencia" id="op_asistencia">
-        <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
-        <div class="row">
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col m6 s12">
-                                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Opciones</span>
-                            </div>
-                            <div class="col m6 s12 text-right">
-                                <div class="row">
-                                    <div class="col m6 s6">
-                                        <a class="btn green" id="op_entrada">Hora Entrada</a>
-                                    </div>
-                                    <div class="col m6 s6">
-                                        <a class="btn green" id="op_salida">Hora Salida</a>
+            <input type="hidden" name="op_asistencia" id="op_asistencia">
+            <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col m6 s12">
+                                    <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Opciones</span>
+                                </div>
+
+                                <div class="col m6 s12 text-right">
+                                    <div class="row">
+                                        <div class="col m6 s6">
+                                            <a class="btn green" id="op_entrada">Hora Entrada</a>
+                                        </div>
+                                        
+                                        <div class="col m6 s6">
+                                            <a class="btn green" id="op_salida">Hora Salida</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row oculto" id="div_entrada">
+                                <div class="col m s6 text-right">
+                                    <div class="input-field col m12 s12">
+                                      <input type="time" id="h_entrada" name="h_entrada" value="">
+                                      <label for="h_entrada">Hora de entrada</label>
+                                    </div>
+                                </div>
+                                <div class="col m s6">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>Evidencia Entrada</span>
+                                            <input type="file" name="url_entrada">
+                                        </div>
+                                    
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="row oculto" id="div_salida">
+                                <div class="col m s6 text-right">
+                                    <div class="input-field col m12 s12">
+                                        <input type="time" id="h_salida" name="h_salida" value="">
+                                        <label for="h_salida">Hora de salida</label>
+                                    </div>
+                                </div>
+                                <div class="col m s6">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>Evidencia Salida</span>
+                                            <input type="file" name="url_salida">
+                                        </div>
+
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
-
-                        <div class="row oculto" id="div_entrada">
-                            <div class="col m s6 text-right">
-                                <div class="input-field col m12 s12">
-                                  <input type="time" id="h_entrada" name="h_entrada" value="">
-                                  <label for="h_entrada">Hora de entrada</label>
-                                </div>
-                            </div>
-                            <div class="col m s6">
-                                <div class="file-field input-field">
-                                  <div class="btn">
-                                    <span>Evidencia Entrada</span>
-                                    <input type="file" name="url_entrada">
-                                  </div>
-                                  <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
-                                  </div>
-                                </div>
-                            </div>
-                        </div> 
-
-                        <div class="row oculto" id="div_salida">
-                            <div class="col m s6 text-right">
-                                <div class="input-field col m12 s12">
-                                  <input type="time" id="h_salida" name="h_salida" value="">
-                                  <label for="h_salida">Hora de salida</label>
-                                </div>
-                            </div>
-                            <div class="col m s6">
-                                <div class="file-field input-field">
-                                  <div class="btn">
-                                    <span>Evidencia Salida</span>
-                                    <input type="file" name="url_salida">
-                                  </div>
-                                  <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
-                                  </div>
-                                </div>
-                            </div>
-                        </div> 
                     </div>
                 </div>
             </div>
-        </div>
 
-		<input  name="act_todos" id="act_todos" value="" type="hidden">
-		<input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
-        <table class="table text-left table-hover">
-            <thead>
-                <tr style="background-color: #EDEDED">
-                    <th>Liberar</th>
-					<th>id</th>
-					<th>Nombre</th>
-					<th>Puesto</th>
-					<th>Foto</th>
-					<th>Horas extra</th>
-					<th>Hora Entrada</th>
-					<th>Hora Salida</th>
-                    <th>Horas Trabajadas</th>
-					<th></th>
-                    <th></th>
-                    <th></th>
-                </tr> 
-            </thead>
+            <input  name="act_todos" id="act_todos" value="" type="hidden">
+            <input type="hidden" name="sitio" value="<?php echo $this->sitio; ?>"></input>
 
-            <?php if ($this->personal) { 
-                foreach ($this->personal as $usr) { ?>
-            <tbody>
-                <tr>
-                    <td>
-                        <a class="liberar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span></a>
-                    </td>
-                	<td>
-                		<?php echo $usr['id']; ?>
-                	</td>
-                    <td>
-                    	<a href="/asistencia/personalasistencia/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->sitio; ?>/proyecto/<?php echo $this->proyecto; ?>">
-                    		<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
-                    	</a>
-                    </td>
+            <div class="row">
+                <div class="col m12 s12 table_wrapper">
+                    <table class="table text-left table-hover">
+                        <thead>
+                            <tr style="background-color: #EDEDED">
+                                <th>Liberar</th>
+            					<th>id</th>
+            					<th>Nombre</th>
+            					<th>Puesto</th>
+            					<th>Foto</th>
+            					<th>Horas extra</th>
+            					<th>Hora Entrada</th>
+            					<th>Hora Salida</th>
+                                <th>Horas Trabajadas</th>
+            					<th></th>
+                                <th></th>
+                                <th></th>
+                            </tr> 
+                        </thead>
+                        <?php if ($this->personal) { 
+                            foreach ($this->personal as $usr) { ?>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a class="liberar_personal" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-ap="<?php echo $usr["apellido_pa"]; ?>" data-am="<?php echo $usr["apellido_ma"]; ?>"><span class="warning"><i class="fa fa-2x fa-external-link" style="color: red"></i></span></a>
+                                        </td>
+                                    	<td>
+                                    		<?php echo $usr['id']; ?>
+                                    	</td>
+                                        <td>
+                                        	<a href="/asistencia/personalasistencia/id/<?php echo $usr['id']; ?>/sitio/<?php echo $this->sitio; ?>/proyecto/<?php echo $this->proyecto; ?>">
+                                        		<?php echo $usr['nombre'] ?> <?php echo $usr['apellido_pa'] ?> <?php echo $usr['apellido_ma'] ?> 
+                                        	</a>
+                                        </td>
 
-                    <td>
-                    	<?php echo $usr['name_puesto']; ?>
-                    </td>
-                    <td>
-                    	<?php if($usr['imagen'] == NULL){ ?>
-                    		<img src="/img/no_disponible1.png"style="width: 70px; height: 70px;">
-                    	<?php }else{ ?>
-	                    	<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>"  alt="image-1" style="width: 70px; height: 70px;"/>
-	                    	</a>
-                    	<?php } ?>
-                    </td>
-                    <td>
-                    	<span  style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['hora_extra']; ?> Horas</span>
-                    </td>
-                    <?php if($usr['status_asistencia'] == 0){ ?>
-                        <td>
-                        	<?php echo $usr['hora_inicio']; ?>
-                        </td>
-                        <td>
-                        	<?php echo $usr['hora_final']; ?>
-                        </td>
-                        <?php 
-                            $datetime1 = new DateTime($usr['hora_inicio']);
-                            $datetime2 = new DateTime($usr['hora_final']);
-                            $interval = $datetime1->diff($datetime2);
-                            $diferencia = $interval->format("%H:%I");
-                         ?>
-                        <td>
-                            <?php if($usr['hora_final'] == NULL || $usr['hora_final'] == ""){ ?>
-                            <?php }else{ ?>
-                                <?php echo $diferencia; ?> Hrs
-                            <?php } ?>
-                        </td>
-                    <?php }else{ ?>
-                        <td>
-                            Inasistencia
-                        </td>
-                        <td>
-                            Inasistencia
-                        </td>
-                        <td>
-                            --
-                        </td>
-                    <?php } ?>
+                                        <td>
+                                        	<?php echo $usr['name_puesto']; ?>
+                                        </td>
+                                        <td>
+                                        	<?php if($usr['imagen'] == NULL){ ?>
+                                        		<img src="/img/no_disponible1.png"style="width: 70px; height: 70px;">
+                                        	<?php }else{ ?>
+                    	                    	<a class="example-image-link" href="/<?php echo $usr['imagen']; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $usr['imagen']; ?>"  alt="image-1" style="width: 70px; height: 70px;"/>
+                    	                    	</a>
+                                        	<?php } ?>
+                                        </td>
+                                        <td>
+                                            <span  style="font-size:13px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['hora_extra']; ?> Horas</span>
+                                        </td>
 
-                    <td>
-						<p>
-						    <label>
-						        <input type="checkbox" class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
-						        <span></span>
-						    </label>
-						</p>
-                    </td>
-                    <td>
-                        <a class="delete modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-user-times" style="color: red"></i></span></a>
-                    </td>
-<!--                     <td>
-                        <a class="add_monto modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaladdmonto"><span class="warning"><i class="fa fa-2x fa fa-user-plus" style="color: green"></i></span></a> 
-                    </td> -->
+                                        <?php if($usr['status_asistencia'] == 0){ ?>
+                                            <td>
+                            	               <?php echo $usr['hora_inicio']; ?>
+                                            </td>
+                                            <td>
+                            	               <?php echo $usr['hora_final']; ?>
+                                            </td>
+                                            <?php
+                                                $datetime1 = new DateTime($usr['hora_inicio']);
+                                                $datetime2 = new DateTime($usr['hora_final']);
+                                                $interval = $datetime1->diff($datetime2);
+                                                $diferencia = $interval->format("%H:%I");
+                                            ?>
 
-                </tr>
-            </tbody>
-            <?php } }else{ ?>
-            <tbody>
-                <tr>
-                    <td>No se ha agregado personal </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-            <?php } ?>
-        </table>
+                                            <td>
+                                                <?php if($usr['hora_final'] == NULL || $usr['hora_final'] == ""){ ?>
+                                                <?php }else{ ?>
+                                                    <?php echo $diferencia; ?> Hrs
+                                                <?php } ?>
+                                            </td>
+                                        <?php }else{ ?>
+                                            <td>
+                                                Inasistencia
+                                            </td>
+                                            <td>
+                                                Inasistencia
+                                            </td>
+                                            <td>
+                                                --
+                                            </td>
+                                        <?php } ?>
+                                        <td>
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
+                                                    <span></span>
+    						                    </label>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <a class="delete modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-user-times" style="color: red"></i></span></a>
+                                        </td>
+                                        <!-- <td>
+                                            <a class="add_monto modal-trigger" data-id="<?php echo $usr["id"]; ?>" href="#modaladdmonto"><span class="warning"><i class="fa fa-2x fa fa-user-plus" style="color: green"></i></span></a> 
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                        <?php } }else{ ?>
+                            <tbody>
+                                <tr>
+                                    <td>No se ha agregado personal </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        <?php } ?>
+                    </table>
+                </div>
+            </div>
        </form> 
 	</div>
 	<!-- <div class="col m1 s12"></div> -->

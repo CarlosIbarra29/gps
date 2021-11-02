@@ -4,7 +4,6 @@
 	}
 </style>
 
-
 <?php foreach ($this->user as $key) {	
 	$nombre = $key['nombre'];
 	$ap = $key['apellido_pa'];
@@ -35,7 +34,6 @@
 
 
 <!-- INICIO DETAIL-->
-
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
         <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> 
@@ -51,7 +49,6 @@
 		<span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $id_solicitud; ?></span>
 	</div>
 </div>
-
 <!-- END INICIO DETAIL-->
 
 
@@ -75,70 +72,72 @@
 	</div>	
 </div>
 
-  	<div id="pago" class="modal modal-fixed-footer">
-	    <div class="modal-content">
-	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Pago </span>
+<div id="pago" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Pago </span>
 
-	    	<div class="row" style="margin-top: 20px;">
-	    		<form action="/herramienta/requestaddpagoherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
-		    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
-		    		<div class="col m12 s12">
-				        <div class="input-field col m6 s12">
-				        	<input id="monto_pago" name="monto" type="number" class="validate">
-				        	<label for="monto_pago">* Monto</label>
-				        </div>
+		<div class="row" style="margin-top: 20px;">
+	    	<form action="/herramienta/requestaddpagoherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_pago">
+	    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
 
-				        <div class="input-field col m6 s12">
-				        	<input id="parcialidad" name="cantidad" type="number" class="validate">
-				        	<label for="parcialidad">* Parcialidad</label>
-				        </div>
+	    		<div class="col m12 s12">
+	    			<div class="input-field col m6 s12">
+				        <input id="monto_pago" name="monto" type="number" class="validate">
+				        <label for="monto_pago">* Monto</label>
+				    </div>
 
-					    <div class="file-field input-field col m12 s12">
-					      <div class="btn">
+				    <div class="input-field col m6 s12">
+				        <input id="parcialidad" name="cantidad" type="number" class="validate">
+				        <label for="parcialidad">* Parcialidad</label>
+				    </div>
+
+				   	<div class="file-field input-field col m12 s12">
+				   		<div class="btn">
 					        <span>* Evidencia</span>
 					        <input type="file" name="url">
-					      </div>
-					      <div class="file-path-wrapper">
-					        <input class="file-path validate" id="validate_url" type="text">
-					      </div>
 					    </div>
 
-				        <div class="input-field col s12">
-				        	<input id="comentario_pago" type="text" class="validate">
-				        	<label for="comentario_pago">Comentario</label>
-				        </div>
-		    		</div>
-	    		</form>
+					    <div class="file-path-wrapper">
+					        <input class="file-path validate" id="validate_url" type="text">
+					    </div>
+					</div>
+
+					<div class="input-field col s12">
+				        <input id="comentario_pago" type="text" class="validate">
+				        <label for="comentario_pago">Comentario</label>
+				    </div>
+		    	</div>
+	    	</form>
+	    </div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="add_aplicarpago" class="btn">Guardar</button>
+		<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+
+<div id="rechazar" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud </span>
+
+		<div class="row" style="margin-top: 20px;">
+			<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
+
+			<div class="col m12 s12">
+			    <div class="input-field col s12">
+			    	<input id="motivo" type="text" class="validate">
+			       	<label for="motivo">Motivo</label>
+			    </div>
 	    	</div>
-
-
 	    </div>
-	    <div class="modal-footer">
-		    <button type="button" id="add_aplicarpago" class="btn">Guardar</button>
-		    <button  class="modal-close red btn">Cerrar</button>
-	    </div>
-  	</div>
+	</div>
 
-  	<div id="rechazar" class="modal modal-fixed-footer">
-	    <div class="modal-content">
-	    	<span style="font-size:26px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar solicitud </span>
-
-	    	<div class="row" style="margin-top: 20px;">
-	    		<input type="hidden" name="id_solicitud" value="<?php echo $id_solicitud; ?>">
-	    		<div class="col m12 s12">
-			        <div class="input-field col s12">
-			        	<input id="motivo" type="text" class="validate">
-			        	<label for="motivo">Motivo</label>
-			        </div>
-	    		</div>
-	    	</div>
-
-	    </div>
-	    <div class="modal-footer">
-    		<button type="button" id="add_generarprestamo" class="btn">Guardar</button>
-    		<button  class="modal-close red btn">Cerrar</button>
-	    </div>
-  	</div>
+	<div class="modal-footer">
+    	<button type="button" id="add_generarprestamo" class="btn">Guardar</button>
+    	<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
 
 <div class="row">
     <div class="col s12 m6">
@@ -206,10 +205,9 @@
     </div>
 </div>
 
-      		<!-- <form action="/herramienta/requestcostoh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cobro"> -->
-
+<!-- <form action="/herramienta/requestcostoh" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cobro"> -->
 <?php if($status_cobro == 3 || $status_cobro == 2){ ?>
-  	<div class="row">
+	<div class="row">
 	    <div class="col s12 m12">
 	      	<div class="card">
 		        <div class="card-content">
@@ -238,19 +236,18 @@
 	      	</div>
 	    </div>
   	</div>
-
 <?php } ?>
 
 <script src="/js/lightbox.js"></script>
 <script type="text/javascript">
 
-    lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+	lightbox.option({
+		'resizeDuration': 200,
+		'wrapAround': true
     });
 
-	$(document).ready(function(){
-		$('.modal').modal();
+    $(document).ready(function(){
+    	$('.modal').modal();
 		$('.validanumeros').keypress(function(e) {
 			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
 				return false;
@@ -278,5 +275,8 @@
             setTimeout(submitaddpago, 1500);     
         }
     });
-    function submitaddpago() { document.getElementById("submit_pago").submit() }
+
+    function submitaddpago() { 
+    	document.getElementById("submit_pago").submit() 
+    }
 </script>

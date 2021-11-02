@@ -1,6 +1,12 @@
+<?php foreach ($this->herramienta as $h) { 
+	$imagen = $h['imagen'];   
+	$nombre =$h['nombre']; 
+	$evidencia =$h['evidencia_b'];  
+} ?>
 
-<?php foreach ($this->herramienta as $h) { $imagen = $h['imagen'];   $nombre =$h['nombre']; $evidencia =$h['evidencia_b'];  } ?>
-<?php foreach ($this->reparacion as $rep) { $id_h = $rep['id_herramienta'];  } ?>
+<?php foreach ($this->reparacion as $rep) { 
+	$id_h = $rep['id_herramienta'];  
+} ?>
 
 <input type="hidden" name="id_herr" id="id_herr" value="<?php echo $this->idher; ?>">
 
@@ -9,8 +15,6 @@
 		overflow-x: auto;
 	}
 </style>
-
-
 
 <!-- INICIO DETAIL-->
 <div class="col m12 s12">
@@ -124,6 +128,7 @@
 <?php foreach ($this->herramienta as $idher) { 
 	$herramientaid = $idher["id_herramienta"];
 } ?>
+
 <input type="hidden" name="" id="herramienta_id" value="<?php echo $herramientaid; ?>">
 
 <!--Inicio Botones rep/baja-->
@@ -716,25 +721,25 @@
 											<?php } ?>
 										</tr>
 									</tbody>
-								<?php } }else{ ?>
-									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td>La Herremienta nunca ha sido reparada</td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								<?php } ?>
-							</table>
-						</div>
+							<?php } }else{ ?>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>La Herremienta nunca ha sido reparada</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							<?php } ?>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
 <!-- End Reparaciones -->
 
@@ -743,8 +748,8 @@
 <script type="text/javascript">
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+    	'resizeDuration': 200,
+    	'wrapAround': true
     });
 
 	$(document).ready(function(){
@@ -789,9 +794,9 @@
 				//-------------peticion de respuesta de ajax------------------
 
 				request.done(function(response) {
-                console.log(response);//imprime lo que responde el ajax
-                // alert
-                window.location.reload(true);
+                	console.log(response);//imprime lo que responde el ajax
+                	// alert
+                	window.location.reload(true);
             	});
 				//-------------------end de respuesta ajax---------------------
              	return false;
@@ -942,7 +947,8 @@
 				buttons: false,
 			});
 			setTimeout(submitForm, 500);     
-		}    });
+		}    
+	});
 
     function submitForm() {
     	document.getElementById("submit_baja").submit()
@@ -978,10 +984,11 @@
 			})
     	.then((willDelete) => {
 		  	if (willDelete) {
-		    swal("Bien! El status se cambio!", {
-		      icon: "success",
-		    });
-	    		var user = document.getElementById("usuario_id").value;
+		  		swal("Bien! El status se cambio!", {
+		  			icon: "success",
+		  		});
+
+		  		var user = document.getElementById("usuario_id").value;
 	    		var dato = "0";
 	            var request = $.ajax({
 	                url:"/panel/requestchangeaddstatuspersonal",
@@ -998,12 +1005,10 @@
 	            });
 		//-------------------end de respuesta ajax---------------------
 	             return false;
-
-
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+	        } else {
+	        	swal("Accion cancelada!");
+	        }
+		});
     });
 
     $("#inactivo_personal").click(function(){
@@ -1015,9 +1020,10 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-		    swal("Bien! El status se cambio!", {
-		      icon: "success",
-		    });
+		  		swal("Bien! El status se cambio!", {
+		  			icon: "success",
+		  		});
+	    		
 	    		var user = document.getElementById("usuario_id").value;
 	    		var dato = "1";
 	            var request = $.ajax({
@@ -1030,13 +1036,11 @@
 	                console.log(response);
 	                window.location.reload(true);
 	            });
-	             return false;
-
-
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+	            return false;
+	        } else {
+	        	swal("Accion cancelada!");
+	        }
+		});
     });
 
     $("#baja_personal").click(function(){
@@ -1048,9 +1052,10 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-		    swal("Bien! El status se cambio!", {
-		      icon: "success",
-		    });
+		    	swal("Bien! El status se cambio!", {
+		      		icon: "success",
+		    	});
+	    		
 	    		var user = document.getElementById("usuario_id").value;
 	    		var dato = "2";
 	            var request = $.ajax({
@@ -1063,13 +1068,10 @@
 	                console.log(response);
 	                window.location.reload(true);
 	            });
-	             return false;
-
-
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+	            return false;
+	        } else {
+	        	swal("Accion cancelada!");
+		  	}
+		});
     });
-
 </script>

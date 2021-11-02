@@ -1,16 +1,18 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-	if($nameBtn==1 && $urlname==null){
-		return "active"; 
+	function isActhref($nameBtn,$urlname){
+		if($nameBtn==1 && $urlname==null){
+			return "active"; 
+		}
+		return ($nameBtn == $urlname)?"active":"";
 	}
-	return ($nameBtn == $urlname)?"active":"";
-}
+	
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else {
 		$pagina = 1;
 	}  
 ?>
+
 <?php 
 
 $links = "";
@@ -44,7 +46,6 @@ if($this->total== 1){
 		}else{
 			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
 		}
-
 	}           
 }
 
@@ -56,6 +57,7 @@ if($this->total== 1){
 		-moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 		box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
 	}
+
 	.oculto{
 		display: none;
 	}
@@ -65,10 +67,9 @@ if($this->total== 1){
 	}
 </style>
 
- <?php 
+<?php 
 	$status =  $this->status_cobro;
 ?>
-
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
@@ -210,9 +211,7 @@ if($this->total== 1){
 </div>
 <!-- End Table Personal HErramienta -->
 
-
-
-	<!-- Paginador -->
+<!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
 		<div class="white-box">
@@ -244,8 +243,7 @@ if($this->total== 1){
 		</div>
 	</div> 
 </div>
-	<!-- End Paginator -->
-
+<!-- End Paginator -->
 
 <script type="text/javascript">
 
@@ -263,7 +261,7 @@ if($this->total== 1){
 
  	// Inicio Add epp
 
-	$("#buscador").click(function(){
+ 	$("#buscador").click(function(){
    		var name = document.getElementById("name").value;
    		var status = document.getElementById("status_search").value;
 		swal({
@@ -278,13 +276,11 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/herramienta/costobuscar/status/"+status+"/nombre/"+name+"";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/herramienta/costobuscar/status/"+status+"/nombre/"+name+"";
+			} else {
+				swal("La asignacion fue cancelada!");
+			}
 		});
    	});	
-
-
 </script>
 

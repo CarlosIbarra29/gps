@@ -10,41 +10,40 @@
 	</div>
 </div>
 
-
-		<div class="col m12 s12">
-			<form action="/herramienta/requestupdatecat" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cat">
-			<?php foreach ($this->cat_herramientas as $cat) { ?>
+<div class="col m12 s12">
+	<form action="/herramienta/requestupdatecat" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cat">
+		<?php foreach ($this->cat_herramientas as $cat) { ?>
 			<input type="hidden" name="ids" value="<?php echo $cat["id_cat"]; ?>">
-				<div class="row">
-			        <div class="input-field col m12 s12">
-			          	<i class="material-icons prefix">account_circle</i>
-			          	<input id="name" type="text" name="name" value="<?php echo $cat["nombre"]; ?>" class="validate" required>
-			          	<label for="name">* Nombre:</label>
-			        </div> 
-		      	</div>
 
-		      	 <div class="file-field input-field col m12 s12">
-					    <div class="btn">
-					        <span>Imagen</span>
-					        <input type="file" name="url">
-					        <input type="hidden" name="imahidden" value="<?php echo $cat["imagen"]; ?>">   
-					    </div>
-					    <div class="file-path-wrapper">
-					        <input class="file-path validate" type="text">
-					    </div>
-				
-				  </div>
-		     <?php } ?>
-		    </form>
-		</div>
-
-		<div class="input-field col m12 s12 text-right">
 			<div class="row">
-				<a href="/herramienta/categoria" class="waves-effect red waves-light btn">Cancelar</a>
-				<button  id="addcat" class="waves-effect waves-light btn">Actualizar</button>
-			</div>	
-		</div>
+				<div class="input-field col m12 s12">
+					<i class="material-icons prefix">account_circle</i>
+			        <input id="name" type="text" name="name" value="<?php echo $cat["nombre"]; ?>" class="validate" required>
+			        <label for="name">* Nombre:</label>
+			    </div> 
+		    </div>
 
+		    <div class="file-field input-field col m12 s12">
+				<div class="btn">
+					<span>Imagen</span>
+					<input type="file" name="url">
+					<input type="hidden" name="imahidden" value="<?php echo $cat["imagen"]; ?>">   
+				</div>
+
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/herramienta/categoria" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="addcat" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
 
 <script type="text/javascript">
     $("#addcat").click(function(){
@@ -61,9 +60,7 @@
 			});
             setTimeout(submitForm, 500);     
         }
-
     });
-
 
     function submitForm() {
         document.getElementById("submit_cat").submit()

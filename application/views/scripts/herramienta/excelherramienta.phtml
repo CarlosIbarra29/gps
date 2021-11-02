@@ -1,5 +1,5 @@
 <?php 
-function eliminar_acentos($cadena){
+	function eliminar_acentos($cadena){
 		$cadena = str_replace(
 		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
 		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
@@ -35,31 +35,35 @@ function eliminar_acentos($cadena){
 		return $cadena;
 	}
 ?>
+
 <style> 
- .table_wrapper{
-    overflow-x: auto;
-}
+	.table_wrapper{
+		overflow-x: auto;
+	}
 </style>
 
-	<div class="row" style="margin-top: 10px;">
-		<div class="col m6 s12 text-left">
-			<?php if($this->status == 0){ ?>
-				<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-			<?php }?>
-			<?php if($this->status == 1){ ?>
-				<a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-			<?php }?>			
-		</div>
-		<div class="col m6 s12 text-right">
-			<a class=" btn" onclick="exportTableToCSV(null,'Inventario.csv')"><i class="material-icons right">file_download</i>Descargar</a>
-		</div>
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s12 text-left">
+		<?php if($this->status == 0){ ?>
+			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php }?>
+		
+		<?php if($this->status == 1){ ?>
+			<a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+		<?php }?>			
 	</div>
 
-	<div class="row">
-		<div class="col m12 s12 text-center" style="margin-top: 20px;">
-        	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Herramientas   </span>
-    	</div>
+	<div class="col m6 s12 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'Inventario.csv')"><i class="material-icons right">file_download</i>Descargar</a>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 20px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Herramientas</span>
+    </div>
+</div>
+
 <div class="col m12 s12 text-right table_wrapper">
 	<table class="table text-left table-hover ">
 		<thead>
@@ -82,24 +86,24 @@ function eliminar_acentos($cadena){
 		</thead>
 		<?php 
 		foreach ($this->excelher as $dher) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $dher["id_herramienta"]; ?></td>
-				<td><?php echo $dher["codigo"]; ?></td>
-				<td><?php echo eliminar_acentos( $dher["nombre"]); ?></td>
-				<td><?php echo eliminar_acentos( $dher["unidad"]); ?></td>
-				<td><?php echo eliminar_acentos( $dher["descripcion"]); ?></td>
-				<td><?php echo eliminar_acentos ($dher["marca"]); ?></td>
-				<td><?php echo eliminar_acentos ($dher["modelo"]); ?></td>
-				<td><?php echo eliminar_acentos ($dher["no_serie"]); ?></td>
-				<td><?php echo eliminar_acentos ($dher["factura_numero"]); ?></td>
-				<td><?php echo $dher["nstatus"]; ?></td>
-				<td><?php echo eliminar_acentos($dher["nombrea"]); ?> <?php echo eliminar_acentos($dher["apellido_pa"]); ?> <?php echo eliminar_acentos($dher["apellido_ma"]); ?></td>
-				<td><?php echo eliminar_acentos ($dher["sitio"]); ?></td>
-        		<td><?php echo $dher["fecha_salida"]; ?></td>
-        		<td><?php echo $dher["fecha_entrega"]; ?></td>
-			</tr>
-		</tbody>
+			<tbody>
+				<tr>
+					<td><?php echo $dher["id_herramienta"]; ?></td>
+					<td><?php echo $dher["codigo"]; ?></td>
+					<td><?php echo eliminar_acentos( $dher["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos( $dher["unidad"]); ?></td>
+					<td><?php echo eliminar_acentos( $dher["descripcion"]); ?></td>
+					<td><?php echo eliminar_acentos ($dher["marca"]); ?></td>
+					<td><?php echo eliminar_acentos ($dher["modelo"]); ?></td>
+					<td><?php echo eliminar_acentos ($dher["no_serie"]); ?></td>
+					<td><?php echo eliminar_acentos ($dher["factura_numero"]); ?></td>
+					<td><?php echo $dher["nstatus"]; ?></td>
+					<td><?php echo eliminar_acentos($dher["nombrea"]); ?> <?php echo eliminar_acentos($dher["apellido_pa"]); ?> <?php echo eliminar_acentos($dher["apellido_ma"]); ?></td>
+					<td><?php echo eliminar_acentos ($dher["sitio"]); ?></td>
+	        		<td><?php echo $dher["fecha_salida"]; ?></td>
+	        		<td><?php echo $dher["fecha_entrega"]; ?></td>
+				</tr>
+			</tbody>
 		<?php } ?>
 	</table>
 </div>

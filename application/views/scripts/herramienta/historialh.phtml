@@ -19,9 +19,9 @@
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de Responsivas de Herramientas
-  </div>
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de Responsivas de Herramientas
+  	</div>
 </div>
 
 
@@ -29,13 +29,12 @@
 	<div class="col m12 s12 text-left" style="margin-top: 10px;">
 		<?php foreach ($this->personales as $per) { ?>
 			<span>Responsivas de <br><b><?php echo $per['nombre'];?> <?php echo $per['apellido_pa'];?> <?php echo $per['apellido_ma'];?></b></span>
-			  	<?php } ?>
+		<?php } ?>
 	</div>
 </div>
 <!-- END INICIO DETAIL-->
 
 <!-- Añadir Responsiva -->
-
 <div class="col m12 s12">
 	<form action="/herramienta/requestresponsivah" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_res">
 		<?php foreach ($this->personales as $id_per) { ?>
@@ -59,7 +58,6 @@
 		</div>
 	</form>
 </div>
-
 <!-- End Añadir Responsiva -->
 
 <!-- Inicio Tabla responsivas -->
@@ -110,25 +108,25 @@
 											<?php } ?>
 										</tr>
 									</tbody>
-								<?php } }else{ ?>
-									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td>No se encontraron datos de responsivas</td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								<?php } ?>
-							</table>
-						</div>
+							<?php } }else{ ?>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>No se encontraron datos de responsivas</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							<?php } ?>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
 <!-- End Tabla responsivas-->
 
@@ -160,8 +158,8 @@
 <script type="text/javascript">
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+    	'resizeDuration': 200,
+    	'wrapAround': true
     });
 
     $(document).ready(function(){
@@ -192,16 +190,15 @@
     }
 
     $(".info_res").click(function(){
-      var id = $(this).data('id');
-      var imagen = $(this).data('imagen');
-      var imagen2 = $(this).data('imagen');
-      var img = "/"+imagen;
-      var img2 = "/"+imagen2;
-     
-      document.getElementById("imagen").src = img;
-      document.getElementById("imagen2").href = img2;
-    }); 
+    	var id = $(this).data('id');
+    	var imagen = $(this).data('imagen');
+    	var imagen2 = $(this).data('imagen');
+    	var img = "/"+imagen;
+    	var img2 = "/"+imagen2;
 
+    	document.getElementById("imagen").src = img;
+    	document.getElementById("imagen2").href = img2;
+    }); 
 </script>
 
 

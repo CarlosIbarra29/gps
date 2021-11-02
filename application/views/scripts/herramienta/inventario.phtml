@@ -1,16 +1,18 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-	if($nameBtn==1 && $urlname==null){
-		return "active"; 
+	function isActhref($nameBtn,$urlname){
+		if($nameBtn==1 && $urlname==null){
+			return "active"; 
+		}
+		return ($nameBtn == $urlname)?"active":"";
 	}
-	return ($nameBtn == $urlname)?"active":"";
-}
+	
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else {
 		$pagina = 1;
 	}  
 ?>
+
 <?php 
 
 $links = "";
@@ -44,7 +46,6 @@ if($this->total== 1){
 		}else{
 			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
 		}
-
 	}           
 }
 
@@ -78,7 +79,6 @@ if($this->total== 1){
 		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramientas
 	</div>
 </div>
-
 <!-- End botones -->
 
 <!-- Buscador -->
@@ -183,7 +183,6 @@ if($this->total== 1){
 	<div class="input-field col m2 s12"></div> <!-- espacio -->
 </div>
 <!-- End Buscador -->
-
 
 <!-- Inicio Modal -->
 <div id="modal1" class="modal modal-fixed-footer">
@@ -307,7 +306,7 @@ if($this->total== 1){
 				</div>
 			</div>
 		</div>
-		<div class="modal-footer">
+	<div class="modal-footer">
 		</form>
 		<button class=" btn" id="addherramienta">Guardar</button>
 		<button  class="modal-close red btn">Cerrar</button>
@@ -406,29 +405,27 @@ if($this->total== 1){
 							</td>
 						</tr>
 					</tbody>
-				<?php } }else{?>
-					<tbody>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>
-							<h4>No se encontraron Herramientas</h4>
-						</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tbody>
-				<?php } ?>
+			<?php } }else{?>
+				<tbody>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<h4>No se encontraron Herramientas</h4>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tbody>
+			<?php } ?>
 		</table>
 	</div>
 </div>
 <!-- End Table Herramientas -->
 
-
-
-	<!-- Paginador -->
+<!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
 		<div class="white-box">
@@ -460,17 +457,16 @@ if($this->total== 1){
 		</div>
 	</div> 
 </div>
-	<!-- End Paginator -->
-
+<!-- End Paginator -->
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.modal').modal();
 		$('select').formSelect();
-     // $('.datepicker').datepicker();
+		// $('.datepicker').datepicker();
  	});
 
-// Inicio Add Herramienta
+ 	// Inicio Add Herramienta
 	$("#addherramienta").click(function(){
 		var name = document.getElementById("name").value;
 
@@ -490,9 +486,9 @@ if($this->total== 1){
 	function submitForm() {
 		document.getElementById("submit_herramienta").submit()
 	}
-// End Add Herramienta
-
-//Inicio Delete Ajax
+	// End Add Herramienta
+	
+	//Inicio Delete Ajax
 	$(".delete").click(function(){
 		id=$(this).data('id');
 		nombre=$(this).data('nombre');
@@ -525,18 +521,16 @@ if($this->total== 1){
 	                window.location.reload(true);
 	            });
 		//-------------------end de respuesta ajax---------------------
-			return false;
-
+				return false;
 			} else {
 				swal("La accion fue cancelada!");
 			}
 		});
 	});
-// End Delete Ajax
+	// End Delete Ajax
 
-
-//Inicio Selected
-$('#mySelect').on('change', function() {
+	//Inicio Selected
+	$('#mySelect').on('change', function() {
   		var value = $(this).val();
   		if(value==1){
 			$("#buscar_nombre").show();
@@ -589,6 +583,5 @@ $('#mySelect').on('change', function() {
   			$("#buscar_cat").show();
   		}
 	});	// End Selected
-
 </script>
 

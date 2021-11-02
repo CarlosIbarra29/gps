@@ -1,18 +1,18 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-	if($nameBtn==1 && $urlname==null){
-		return "active"; 
+	function isActhref($nameBtn,$urlname){
+		if($nameBtn==1 && $urlname==null){
+			return "active"; 
+		}
+		return ($nameBtn == $urlname)?"active":"";
 	}
-	return ($nameBtn == $urlname)?"active":"";
-}
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else {
 		$pagina = 1;
 	}  
 ?>
-<?php 
 
+<?php 
 $links = "";
 $url="";
 
@@ -47,7 +47,6 @@ if($this->total== 1){
 
 	}           
 }
-
 ?>
 
 <style type="text/css">
@@ -65,10 +64,9 @@ if($this->total== 1){
 	}
 </style>
 
- <?php 
+<?php 
 	$status =  $this->status_cobro;
 ?>
-
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
@@ -235,7 +233,6 @@ if($this->total== 1){
 
 
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		$('.modal').modal();
 		$('select').formSelect();
@@ -265,13 +262,11 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/herramienta/costobuscar/status/"+status+"/nombre/"+name+"";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/herramienta/costobuscar/status/"+status+"/nombre/"+name+"";
+			} else {
+				swal("La asignacion fue cancelada!");
+			}
 		});
    	});	
-
-
 </script>
 

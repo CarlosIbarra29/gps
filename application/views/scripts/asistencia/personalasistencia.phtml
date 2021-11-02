@@ -2,6 +2,10 @@
 	.oculto{
 		display: none;
 	}
+
+	 .table_wrapper{
+        overflow-x: auto;
+    }
 </style>
 <?php foreach ($this->info_personal as $key) {
 	$id = $key['id'];
@@ -34,12 +38,12 @@
 	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Personal</span>
 
 	        	<div class="row" style="margin-top: 30px;">
-	        		<div class="col m6 s6 text-center">
+	        		<div class="col m6 s12 text-center">
 	        			<!-- <img src="/<?php echo $imagen;?>" style="width: 100px;">  -->
 	        			<a class="example-image-link" href="/<?php echo $imagen; ?>" data-lightbox="example-1"><img class="example-image oculto" src="/<?php echo $imagen; ?>"  alt="image-1" style="width: 100px;"/></a>
 	        		</div>
 
-	        		<div class="col m6 s6">
+	        		<div class="col m6 s12">
 	        			<div class="row">
 	        				<div class="col m12 s12 text-center">
 			        			<span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
@@ -66,7 +70,7 @@
 	        		</div>
 	        	</div>
 	        </div>
-      </div>
+      	</div>
     </div>
 
 
@@ -77,66 +81,65 @@
 
 	        	<div class="row">
 	        		<div class="col m12 s12" style="margin-top: 19px;">
-	        		<?php if($this->sitio_info_taller == 0){ ?>
+		        		<?php if($this->sitio_info_taller == 0){ ?>
 
-	        			<?php if($this->if_sitio == 0){ ?>
-	        			<?php }else{ ?>
-	        				<?php foreach ($this->sitio_info as $key) {
-	        					$nombre_sitio = $key['nombre'];
-	        					$direccion = $key['direccion'];
-	        					$estado = $key['estado'];
-	        					$ciudad = $key['ciudad'];
-	        				} ?>
-	        				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
+		        			<?php if($this->if_sitio == 0){ ?>
+		        			<?php }else{ ?>
+		        				<?php foreach ($this->sitio_info as $key) {
+		        					$nombre_sitio = $key['nombre'];
+		        					$direccion = $key['direccion'];
+		        					$estado = $key['estado'];
+		        					$ciudad = $key['ciudad'];
+		        				} ?>
+		        				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
 
-			        		<div class="row" style="margin-top: 20px;">
-			        			<div class="col m12 s12">
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Ciudad: 
-				        			</span> <?php echo $ciudad; ?> <br>
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Estado: 
-				        			</span> <?php echo $estado; ?> <br>
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Dirección: 
-				        			</span> <?php echo $direccion; ?>
-			        			</div>
-			        		</div>
-	        			<?php } ?>
-	        		<?php }elseif($this->sitio_info_taller == 2) { ?>
-			        		<div class="row" style="margin-top: 20px;">
-			        			<div class="col m12 s12">
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Compensación: 
-				        			</span> El Personal se encuentra en período de compensación.<br>
-			        			</div>
-			        		</div>
-			        <?php }elseif($this->sitio_info_taller == 3) { ?>
-			        		<div class="row" style="margin-top: 20px;">
-			        			<div class="col m12 s12">
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Vacaciones: 
-				        			</span> El Personal se encuentra en período de vacaciones actualmente.<br>
-			        			</div>
-			        		</div>
-			        <?php }elseif($this->sitio_info_taller == 4) { ?>
-			        		<div class="row" style="margin-top: 20px;">
-			        			<div class="col m12 s12">
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Taller Foráneos: 
-				        			</span>  Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br>
-			        			</div>
-			        		</div>
-	        		<?php }else{ ?>
-			        		<div class="row" style="margin-top: 20px;">
-			        			<div class="col m12 s12">
-				        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
-				        				Taller: 
-				        			</span> Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX <br>
-			        			</div>
-			        		</div>
-
-	        		<?php } ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Ciudad: 
+					        			</span> <?php echo $ciudad; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Estado: 
+					        			</span> <?php echo $estado; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Dirección: 
+					        			</span> <?php echo $direccion; ?>
+				        			</div>
+				        		</div>
+		        			<?php } ?>
+		        		<?php }elseif($this->sitio_info_taller == 2) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Compensación: 
+					        			</span> El Personal se encuentra en período de compensación.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 3) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Vacaciones: 
+					        			</span> El Personal se encuentra en período de vacaciones actualmente.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 4) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller Foráneos: 
+					        			</span>  Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br>
+				        			</div>
+				        		</div>
+		        		<?php }else{ ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller: 
+					        			</span> Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX <br>
+				        			</div>
+				        		</div>
+		        		<?php } ?>
 	        		</div>
 	        	</div>
 	        </div>
@@ -311,100 +314,101 @@
     </div>
 </div>
           
-
-  <div id="modalprestamo" class="modal modal-fixed-footer">
+<div id="modalprestamo" class="modal modal-fixed-footer">
     <div class="modal-content">
     	<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Descuento</span>
     	<div class="row">
+
     		<div class="col m12 s12">
-		    <form action="/prestamo/requestaplicarprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
-		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
+    			<form action="/prestamo/requestaplicarprestamo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addprestamo">
+    				<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
 		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
-		      <table class="table text-left table-hover">
-		          <thead>
-		            <tr style="background-color: #EDEDED">
-		                <th>NO.</th>
-		                <th>Fecha Descuento</th>
-		                <th>Monto Total</th> 
-		                <th>Cantidad</th>
-		                <th>Pagos</th>
-		                <th>Descuento</th>
-		                <th></th>
-		            </tr> 
-		          </thead>
-		          <?php
-		          if ($this->solicitud_prestamo) { 
-		          foreach ($this->solicitud_prestamo as $usr) { ?>
-		          <tbody>
-		            <tr>
-		              <td><?php echo $usr['id']; ?></td>
-		              <td><?php echo $usr['fecha_prestamo']; ?></td>
-		              <td>
-		                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>
-		              </td>
-		              <td>
-		                <?php echo $usr['cantidad_pagos']; ?>
-		              </td>
-		              <td>
-		                <?php echo $usr['cantidad_saldada']; ?>
-		              </td>
-		              	<?php 
-		              		$monto_pago = $usr['monto'] / $usr['cantidad_pagos'];
-		              	?>
 
-		              <td>
-		              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
-		              </td>
-		              <td>
-		              	<?php if($usr['cantidad_pagos'] == $usr['cantidad_saldada']){ ?>
-		              	<?php }else{ ?>
-		 					<p>
-								<label>
-									<input type="checkbox" class="check_prestamo" name="validar[]" value="<?php echo $usr['id']; ?>" />
-									<span></span>
-								</label>
-							</p>
-						<?php } ?>
-		              </td>
-		            </tr>
-		          <?php } }else{ ?>
-		          </tbody> 
-		        <tbody>
-		            <tr>
-		                <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
-		            </tr>
-		        </tbody>
-		                    
-		        <?php } ?>
-		    </table>
-		  	</form>
-    	</div>
-    	</div>
+		        	<table class="table text-left table-hover">
+		        		<thead>
+				            <tr style="background-color: #EDEDED">
+				                <th>NO.</th>
+				                <th>Fecha Descuento</th>
+				                <th>Monto Total</th> 
+				                <th>Cantidad</th>
+				                <th>Pagos</th>
+				                <th>Descuento</th>
+				                <th></th>
+				            </tr> 
+		          		</thead>
+		          		<?php if ($this->solicitud_prestamo) { 
+		          			foreach ($this->solicitud_prestamo as $usr) { ?>
+		          				<tbody>
+						            <tr>
+						            	<td><?php echo $usr['id']; ?></td>
+							            <td><?php echo $usr['fecha_prestamo']; ?></td>
+							            <td>
+							            	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto'], 2, '.', ','); ?></span>
+							            </td>
+							            <td>
+							            	<?php echo $usr['cantidad_pagos']; ?>
+							            </td>
+							            <td>
+							                <?php echo $usr['cantidad_saldada']; ?>
+							            </td>
+
+							            <?php
+							            	$monto_pago = $usr['monto'] / $usr['cantidad_pagos'];
+							            ?>
+
+							            <td>
+							            	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
+							            </td>
+							            <td>
+							            	<?php if($usr['cantidad_pagos'] == $usr['cantidad_saldada']){ ?>
+							            	<?php }else{ ?>
+							 					<p>
+													<label>
+														<input type="checkbox" class="check_prestamo" name="validar[]" value="<?php echo $usr['id']; ?>" />
+														<span></span>
+													</label>
+												</p>
+											<?php } ?>
+							            </td>
+						            </tr>
+						<?php } }else{ ?>
+								</tbody> 
+								<tbody>
+						            <tr>
+						                <td class="text-center" colspan="6"><h4>No hay solicitudes de Prestamos.</h4></td>
+						            </tr>
+		        				</tbody>
+		        		<?php } ?>
+		    		</table>
+				</form>
+   			</div>
+		</div>
     </div>
     <div class="modal-footer">
     	<button type="button" id="add_newprestamo" class="btn oculto">Aplicar Descuento</button>
         <button  class="modal-close red btn">Cerrar</button>
     </div>
-  </div>
+</div>
 
-  <!-- Modal Structure -->
-  	<div id="modalherramienta" class="modal modal-fixed-footer">
-	    <div class="modal-content">
-	    	<div class="row">
-	    		<div class="col m12 s12">
-	    			<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta</span>
-	    		</div>
+<!-- Modal Structure -->
+<div id="modalherramienta" class="modal modal-fixed-footer">
+	<div class="modal-content">
+	    <div class="row">
+	    	<div class="col m12 s12">
+	    		<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramienta</span>
 	    	</div>
+	    </div>
 
-	    	<div class="row">
-	    		<div class="col m12 s12">
-		    		<form action="/herramienta/requestaplicarcobroherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addherramienta">
+	    <div class="row">
+	    	<div class="col m12 s12">
+		    	<form action="/herramienta/requestaplicarcobroherramienta" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addherramienta">
 		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
 		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
-				    <table class="table text-left table-hover">
-				          <thead>
+		        	
+		        	<table class="table text-left table-hover">
+				        <thead>
 				            <tr style="background-color: #EDEDED">
 				                <th>NO.</th>
 				                <th>Codigo Herramienta</th>
@@ -415,82 +419,80 @@
 				                <th>Descuento</th>
 				                <th></th>
 				            </tr> 
-				          </thead>
-				          <?php
-				          if ($this->herramienta_cobro) { 
-				          foreach ($this->herramienta_cobro as $usr) { ?>
-				          <tbody>
-				            <tr>
-				              <td><?php echo $usr['id_cobro']; ?></td>
-				              <td><?php echo $usr['codigo']; ?></td>
-				              <td><?php echo $usr['nombre']; ?></td>
-				              <td>
-				                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_pago'], 2, '.', ','); ?></span>
-				              </td>
-				              <td>
-				                <?php echo $usr['parcialidad']; ?>
-				              </td>
-				              <td>
-				                <?php echo $usr['cantidad_pago']; ?>
-				              </td>
-				              	<?php 
-				              		$monto_pago = $usr['monto_pago'] / $usr['parcialidad'];
-				              	?>
-
-				              <td>
-				              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
-				              </td>
-				              <td>
-				              	<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
-				              	<?php }else{ ?>
-				 					<p>
-										<label>
-											<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
-											<span></span>
-										</label>
-									</p>
-								<?php } ?>
-				              </td>
-				            </tr>
-				          <?php } }else{ ?>
-				          </tbody> 
-				        <tbody>
-				            <tr>
-				                <td class="text-center" colspan="6"><h4>No hay herramientas por cobrar.</h4></td>
-				            </tr>
-				        </tbody>
-				                    
+				        </thead>
+				        <?php if ($this->herramienta_cobro) {
+				        	foreach ($this->herramienta_cobro as $usr) { ?>
+				        		<tbody>
+				        			<tr>
+				              			<td><?php echo $usr['id_cobro']; ?></td>
+				              			<td><?php echo $usr['codigo']; ?></td>
+				              			<td><?php echo $usr['nombre']; ?></td>
+				              			<td>
+				                			<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_pago'], 2, '.', ','); ?></span>
+				              			</td>
+				              			<td>
+				                			<?php echo $usr['parcialidad']; ?>
+				              			</td>
+				              			<td>
+				                			<?php echo $usr['cantidad_pago']; ?>
+				              			</td>
+				              			<?php
+				              				$monto_pago = $usr['monto_pago'] / $usr['parcialidad'];
+				              			?>
+				              			<td>
+				              				<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
+				              			</td>
+				              			<td>
+				              				<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
+				              				<?php }else{ ?>
+				              					<p>
+													<label>
+														<input type="checkbox" class="check_herramienta" name="validar[]" value="<?php echo $usr['id_cobro']; ?>" />
+														<span></span>
+													</label>
+												</p>
+											<?php } ?>
+				              			</td>
+				            		</tr>
+				        <?php } }else{ ?>
+				          		</tbody>
+				          		<tbody>
+						            <tr>
+						                <td class="text-center" colspan="6"><h4>No hay herramientas por cobrar.</h4></td>
+						            </tr>
+				        		</tbody>
 				        <?php } ?>
 				    </table>
-					</form>
-	    		</div>
+				</form>
 	    	</div>
 	    </div>
-	    <div class="modal-footer">
-	    	<button type="button" id="add_newherramienta" class="btn oculto">Aplicar Descuento</button>
-	     	<button  class="modal-close red btn">Cerrar</button>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="add_newherramienta" class="btn oculto">Aplicar Descuento</button>
+     	<button  class="modal-close red btn">Cerrar</button>
+	</div>
+</div>
+
+<div id="modalepp" class="modal modal-fixed-footer">
+	<div class="modal-content">
+	    <div class="row">
+	    	<div class="col m12 s12">
+	    		<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cobro EPP</span>
+	   		</div>
 	    </div>
-  	</div>
 
-
-  	<div id="modalepp" class="modal modal-fixed-footer">
-	    <div class="modal-content">
-	    	<div class="row">
-	    		<div class="col m12 s12">
-	    			<span style="font-size:21px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Cobro EPP</span>
-	    		</div>
-	    	</div>
-
-	    	<div class="row">
-	    		<div class="col m12 s12">
-		    		<form action="/epp/requestaddeppnominauser" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addepp">
+	    <div class="row">
+	   		<div class="col m12 s12">
+		    	<form action="/epp/requestaddeppnominauser" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addepp">
 		        	<input type="hidden" id="user_prestamo" name="user" value="<?php echo $this->personal_id; ?>">
 		        	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>">
 		        	<input type="hidden" name="id_proyecto" value="<?php echo $this->proyecto; ?>">
+				    
 				    <table class="table text-left table-hover">
-				          <thead>
+				        <thead>
 				            <tr style="background-color: #EDEDED">
-				                <th>NO.</th>
+				            	<th>NO.</th>
 				                <th>Cantidad</th>
 				                <th>Descripción</th> 
 				                <th>Talla</th>
@@ -500,63 +502,61 @@
 				                <th>Descuento</th>
 				                <th></th>
 				            </tr> 
-				          </thead>
-				          <?php
-				          if ($this->nomina_epp) { 
-				          foreach ($this->nomina_epp as $usr) { ?>
-				          <tbody>
-				            <tr>
-				              <td><?php echo $usr['id']; ?></td>
-				              <td><?php echo $usr['cantidad']; ?></td>
-				              <td><?php echo $usr['descripcion']; ?></td>
-				              <td><?php echo $usr['talla']; ?></td>
-				              <td>
-				                <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_pago'], 2, '.', ','); ?></span>
-				              </td>
-				              <td>
-				                <?php echo $usr['parcialidad']; ?>
-				              </td>
-				              <td>
-				                <?php echo $usr['cantidad_pago']; ?>
-				              </td>
-				              	<?php 
-				              		$monto_pago = $usr['monto_pago'] / $usr['parcialidad'];
-				              	?>
-
-				              <td>
-				              	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
-				              </td>
-				              <td>
-				              	<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
-				              	<?php }else{ ?>
-				 					<p>
-										<label>
-											<input type="checkbox" class="check_epp" name="validar[]" value="<?php echo $usr['id']; ?>" />
-											<span></span>
-										</label>
-									</p>
-								<?php } ?>
-				              </td>
-				            </tr>
-				          <?php } }else{ ?>
-				          </tbody> 
-					        <tbody>
-					            <tr>
-					                <td class="text-center" colspan="6"><h4>No hay herramientas por cobrar.</h4></td>
-					            </tr>
-					        </tbody>
-				                    
-				        	<?php } ?>
+				        </thead>
+				        <?php if ($this->nomina_epp) {
+				        	foreach ($this->nomina_epp as $usr) { ?>
+				        		<tbody>
+						            <tr>
+						            	<td><?php echo $usr['id']; ?></td>
+						              	<td><?php echo $usr['cantidad']; ?></td>
+						              	<td><?php echo $usr['descripcion']; ?></td>
+						              	<td><?php echo $usr['talla']; ?></td>
+						              	<td>
+						                	<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($usr['monto_pago'], 2, '.', ','); ?></span>
+						              	</td>
+						              	<td>
+						                	<?php echo $usr['parcialidad']; ?>
+						              	</td>
+						              	<td>
+						                	<?php echo $usr['cantidad_pago']; ?>
+						              	</td>
+						              	<?php 
+						              		$monto_pago = $usr['monto_pago'] / $usr['parcialidad'];
+						              	?>
+						              	<td>
+						              		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto_pago, 2, '.', ','); ?></span>
+						              	</td>
+						              	<td>
+						              		<?php if($usr['parcialidad'] == $usr['cantidad_pago']){ ?>
+						              		<?php }else{ ?>
+						 						<p>
+													<label>
+														<input type="checkbox" class="check_epp" name="validar[]" value="<?php echo $usr['id']; ?>" />
+														<span></span>
+													</label>
+												</p>
+											<?php } ?>
+						              	</td>
+						            </tr>
+				        <?php } }else{ ?>
+				          		</tbody> 
+					        	<tbody>
+					        		<tr>
+					                	<td class="text-center" colspan="6"><h4>No hay herramientas por cobrar.</h4></td>
+					            	</tr>
+					        	</tbody>            
+				        <?php } ?>
 				    </table>
-					</form>
-	    		</div>
+				</form>
 	    	</div>
 	    </div>
-	    <div class="modal-footer">
-	    	<button type="button" id="add_newepp" class="btn oculto">Aplicar Descuento</button>
-	     	<button  class="modal-close red btn">Cerrar</button>
-	    </div>
-  	</div>
+	</div>
+	
+	<div class="modal-footer">
+	  	<button type="button" id="add_newepp" class="btn oculto">Aplicar Descuento</button>
+	   	<button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
 
 <!-- <div class="row">
     <div class="col s12 m12">
@@ -593,448 +593,444 @@
 
 <div class="row">
     <div class="col s12 m12">
-      <div class="card">
-        <div class="card-content">
-        	<div class="row">
-				<div class="col m6 s6">
-					<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
+      	<div class="card">
+        	<div class="card-content">
+	        	<div class="row">
+					<div class="col m6 s6">
+						<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Registro de la asistencia</span>
+					</div>
+					<div class="col m6 s6 text-right">
+						  <!-- <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a> -->
+					</div>
+	        	</div>
+				<div class="row">
+					<div class="col m12 s12 table_wrapper"> 
+				        <table class="table text-left table-hover">
+				            <thead>
+				                <tr style="background-color: #EDEDED">
+									<th>Sitio</th>
+									<th>Asistencia</th>
+									<th>Entrada</th>
+									<th>Salida</th>
+									<th>Horas trabajadas</th>
+									<th>Pago</th>
+									<th></th>
+									<th></th>
+				                </tr> 
+				            </thead>
+
+				            <?php 
+				            $montos = 0;
+				            if ($this->asistencia) { 
+				                foreach ($this->asistencia as $usr) { ?>
+				            <tbody>
+				                <tr>
+				                	<td>
+				                		<?php echo $usr['nombre']; ?>
+				                	</td>
+				                	<td>
+				                		<?php echo $usr['dia']; ?>
+				                	</td>
+
+				                	<?php if($usr['status_asistencia'] == 0){ ?>
+				                	<td>
+				                		<?php if($usr['status_tipos'] == 0){ ?>
+				                			<?php echo $usr['hora_entrada']; ?>
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 1){ ?>
+				                			Descuento
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 2){ ?>
+				                			Herramientas
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 3){ ?>
+				                			EPP
+				                		<?php }?>
+				                	</td>
+				                	<td>
+				                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+				                			<?php echo $usr['hora_salida']; ?>
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 1){ ?>
+				                			Descuento
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 2){ ?>
+				                			Herramientas
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 3){ ?>
+				                			EPP
+				                		<?php }?>
+
+				                	</td>
+				                        <?php 
+				                            $datetime1 = new DateTime($usr['hora_entrada']);
+				                            $datetime2 = new DateTime($usr['hora_salida']);
+				                            $interval = $datetime1->diff($datetime2);
+				                            $diferencia = $interval->format("%H:%I");
+				                        ?>
+				                  	<td>
+				                  		<?php echo $diferencia; ?> Hrs
+				                  	</td>
+
+				                  	<td>
+				                  	<?php if($usr['solicitud_prestamo'] == 0){ ?>
+				                  		<?php if($usr['status_extra'] == 0){ ?>
+
+				                  		<?php 
+					                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
+					                  			$dia_pago = 0;
+					                  		}else{
+					                  			$dia_pago = $usr['dia_pago'];
+					                  		} 
+				                  		?>
+
+			                  			<?php 
+					                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
+					                  			$hora_pago = 0;
+					                  		}else{
+					                  			$hora_pago = $usr['hora_pago'];
+					                  		} 
+				                  		?>
+
+				                  		<?php 
+				                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
+				                  				$rest = substr($diferencia, 0, -3);
+
+
+				                  				if($rest == 5){
+				                  					$monto = $dia_pago;
+				                  				}
+
+					                  			if($rest <= 9){
+
+					                  				$total = $rest - 5;
+					                  				$pagomas = $dia_pago / 5;
+					                  				$suma = $total * $pagomas;
+					                  				$monto = $dia_pago + $suma;
+					                  				// echo "menor";
+
+
+					                  				// $total = $rest - 5;
+					                  				// $suma = $total * $hora_pago;
+					                  				// $monto = $dia_pago + $suma;
+					                  				// echo "menor";
+
+					                  				// Cambios Berri
+					                  			}
+
+				                  				if($rest == 10){
+				                  					$monto = $dia_pago * 2;
+				                  				}
+
+					                  			if($rest > 10){
+					                  				
+					                  				$total = $rest - 10;
+					                  				$pagomas = $dia_pago / 5;
+					                  				$suma = $total * $pagomas;
+					                  				$dia = $dia_pago*2;
+					                  				$monto = $dia + $suma;
+
+					                  				// Berri
+
+					                  				// $total = $rest - 10;
+					                  				// $suma = $total * $hora_pago;
+					                  				// $dia = $dia_pago*2;
+					                  				// $monto = $dia + $suma;
+					                  				// echo "menor";
+					                  			}
+
+
+				                  			}else{
+					                  			$rest = substr($diferencia, 0, -3);
+					                  			if($rest < 10){
+					                  				$total = $rest - 2;
+					                  				$monto = $total * $hora_pago;
+					                  				// echo "menor";
+					                  			}
+
+					                  			if($rest > 10){
+					                  				$total = $rest - 10;
+					                  				$multi = $total * $hora_pago;
+					                  				$monto = $dia_pago + $multi;
+					                  				// echo "mayor";
+					                  			}
+
+					                  			if($rest == 10){
+					                  				$monto = $dia_pago;
+					                  				// echo "igual";
+					                  			}
+
+				                  			}
+				                  		?>
+
+				                  	<?php }else{ ?>
+				                  		<!-- D I A  E X T R A -->
+				                  		<?php 
+				                  		$dia_pago = $usr['dia_pago'];
+				                  		$hora_pago = $usr['hora_pago'];
+				                  			if($usr['day_num'] == 6){
+				                  				$rest = substr($diferencia, 0, -3);
+				                  				// echo $rest;
+				                  				if($rest == 5){
+				                  					$monto = 0;
+				                  				}
+
+					                  			if($rest <= 9){
+					                  				$total = $rest - 5;
+					                  				// echo $total;
+					                  				if($total == 1){
+					                  					$monto_u= $dia_pago / 100;
+					                  					$monto = $monto_u * 20;
+					                  				}
+					                  				if($total == 2){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$monto = $monto_u * 40;
+					                  				}
+					                  				if($total == 3){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 60;
+					                  				}
+					                  				if($total == 4){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$monto = $monto_u * 80;
+					                  				}
+					                  			
+					                  			}
+
+				                  				if($rest == 10){
+				                  					$monto = $dia_pago;
+				                  				}
+
+					                  			if($rest > 10){
+					                  				$total = $rest - 10;
+					                  				if($total == 1){
+					                  					$monto_u= $dia_pago / 100;
+					                  					$suma = $monto_u * 20;
+					                  				}
+					                  				if($total == 2){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$suma = $monto_u * 40;
+					                  				}
+					                  				if($total == 3){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$suma = $monto_u * 60;
+					                  				}
+					                  				if($total == 4){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$suma = $monto_u * 80;
+					                  				}
+
+					                  				// $suma = $total * $hora_pago;
+					                  				$dia = $dia_pago;
+					                  				$monto = $suma + $dia;
+					                  				// echo "menor";
+					                  			}
+				                  			}
+
+
+				                  			if($usr['day_num'] == 7){
+				                  				$rest = substr($diferencia, 0, -3);
+
+				                  				if($rest == 5){
+				                  					$monto = 0;
+				                  				}
+
+					                  			if($rest <= 9){
+					                  				$total = $rest - 5;
+					                  				if($rest == 1){
+					                  					$monto_u= $dia_pago / 100;
+					                  					$monto = $monto_u * 20;
+					                  				}
+					                  				if($rest == 2){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 40;
+					                  				}
+					                  				if($rest == 3){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 60;
+					                  				}
+					                  				if($rest == 4){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 80;
+					                  				}
+					                  				// echo "menor";
+					                  			}
+
+				                  				if($rest == 10){
+				                  					$monto = $dia_pago*2;
+				                  				}
+
+					                  			if($rest > 10){
+					                  				$total = $rest - 10;
+					                  				$suma = $total * $hora_pago;
+					                  				$dia = $dia_pago*2;
+
+					                  				$monto = $suma;
+					                  				// echo "menor";
+					                  			}
+				                  			}
+
+				                  			if($usr['day_num'] == 1 || $usr['day_num'] == 2 || $usr['day_num'] == 3 || $usr['day_num'] == 4){
+					                  			$rest = substr($diferencia, 0, -3);
+					                  			if($rest < 10){
+					                  				$total = $rest - 2;
+					                  				$monto = $total * $hora_pago;
+					                  				// echo "menor";
+					                  			}
+
+					                  			if($rest > 10){
+					                  				$total = $rest - 10;
+					                  				$multi = $total * $hora_pago;
+					                  				$monto = $multi;
+					                  				// echo "mayor";
+					                  			}
+
+					                  			if($rest == 10){
+					                  				$monto = 0;
+					                  				// echo "igual";
+					                  			}
+
+				                  			}
+
+				                  			if($usr['day_num'] == 5){
+				                  				$rest = substr($diferencia, 0, -3);
+					                  			if($rest < 10){
+					                  				$total = $rest - 2;
+					                  				$monto = $total * $hora_pago;
+					                  				// echo "menor";
+					                  			}
+
+					                  			if($rest > 10){
+					                  				$total = $rest - 10;
+					                  				$multi = $total * $hora_pago;
+					                  				$monto = $multi;
+					                  				// echo "mayor";
+					                  			}
+
+					                  			if($rest == 10){
+					                  				$monto = 0;
+					                  				// echo "igual";
+					                  			}
+
+				                  			}
+
+				                  		?>
+
+				                  	<?php  } ?>
+				                <?php }else{ ?>
+
+				                	<?php $monto = $usr['monto_pago']; ?>
+				                <?php } ?>
+
+				                  	<?php if($usr['status_extra'] == 0){ ?>	
+				                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+				                  	<?php }else{ ?>
+				                  		<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+				                  	<?php } ?>
+				                  		
+				                  	</td>
+				                  <?php } ?>
+
+				                  <?php if($usr['status_asistencia'] == 1){ ?>
+				                  	<td>00:00</td>
+				                  	<td>00:00</td>
+				                  	<td>Inasistencia</td>
+				                  	<td>
+				                  		<?php $monto = 0; ?>
+				                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+				                  	</td>
+				                  <?php } ?>
+
+
+				                  <?php if($usr['status_asistencia'] == 2){ ?>
+
+				                  	<td>00:00</td>
+				                  	<td>00:00</td>
+				                  	<td>Otros..</td>
+				                  	<td>
+				                  		<?php $monto = $usr['monto_pago']; ?>
+				                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+				                  	</td>
+				                  <?php } ?>
+
+				                  	<td>
+				                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+				                  	</td>
+
+				                  	<td>
+				                		<?php if($usr['status_tipos'] == 0 && $usr['status_asistencia'] == 0){ ?>
+				                			<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
+				                			<a class="delete_registro" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red; padding-left: 7px;"></i></span></a>
+				                		<?php }?>
+
+				                		<?php if($usr['status_asistencia'] == 1){ ?>
+				                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				                			<!-- DESCUENTO -->
+				                		<?php }?>
+
+
+				                		<?php if($usr['status_asistencia'] == 2){ ?>
+				                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				                			<!-- DESCUENTO -->
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 1){ ?>
+				                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				                			<!-- DESCUENTO -->
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 2){ ?>
+				                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				                			<!-- HERRAMIENTA -->
+				                		<?php }?>
+
+				                		<?php if($usr['status_tipos'] == 3){ ?>
+				                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="3"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+				                			<!-- EPP -->
+				                		<?php }?>
+				                  	</td>
+
+				                  	<?php $montos = $montos + $monto; ?>
+				                </tr>
+				            </tbody>
+				            <?php } }else{ ?>
+				            <tbody>
+				                <tr>
+				                    <td><h3>No hay registros de la asistencia</h3> </td>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                </tr>
+				            </tbody>
+				            <?php } ?>
+				        </table>
+					</div>
 				</div>
-				<div class="col m6 s6 text-right">
-					  <!-- <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a> -->
-				</div>
-        	</div>
-			<div class="row">
-				<div class="col m12 s12"> 
-			        <table class="table text-left table-hover">
-			            <thead>
-			                <tr style="background-color: #EDEDED">
-								<th>Sitio</th>
-								<th>Asistencia</th>
-								<th>Entrada</th>
-								<th>Salida</th>
-								<th>Horas trabajadas</th>
-								<th>Pago</th>
-								<th></th>
-								<th></th>
-			                </tr> 
-			            </thead>
 
-			            <?php 
-			            $montos = 0;
-			            if ($this->asistencia) { 
-			                foreach ($this->asistencia as $usr) { ?>
-			            <tbody>
-			                <tr>
-			                	<td>
-			                		<?php echo $usr['nombre']; ?>
-			                	</td>
-			                	<td>
-			                		<?php echo $usr['dia']; ?>
-			                	</td>
-
-			                	<?php if($usr['status_asistencia'] == 0){ ?>
-			                	<td>
-			                		<?php if($usr['status_tipos'] == 0){ ?>
-			                			<?php echo $usr['hora_entrada']; ?>
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 1){ ?>
-			                			Descuento
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 2){ ?>
-			                			Herramientas
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 3){ ?>
-			                			EPP
-			                		<?php }?>
-			                	</td>
-			                	<td>
-			                		<?php if($usr['solicitud_prestamo'] == 0){ ?>
-			                			<?php echo $usr['hora_salida']; ?>
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 1){ ?>
-			                			Descuento
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 2){ ?>
-			                			Herramientas
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 3){ ?>
-			                			EPP
-			                		<?php }?>
-
-			                	</td>
-			                        <?php 
-			                            $datetime1 = new DateTime($usr['hora_entrada']);
-			                            $datetime2 = new DateTime($usr['hora_salida']);
-			                            $interval = $datetime1->diff($datetime2);
-			                            $diferencia = $interval->format("%H:%I");
-			                        ?>
-			                  	<td>
-			                  		<?php echo $diferencia; ?> Hrs
-			                  	</td>
-
-			                  	<td>
-			                  	<?php if($usr['solicitud_prestamo'] == 0){ ?>
-			                  		<?php if($usr['status_extra'] == 0){ ?>
-
-			                  		<?php 
-				                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
-				                  			$dia_pago = 0;
-				                  		}else{
-				                  			$dia_pago = $usr['dia_pago'];
-				                  		} 
-			                  		?>
-
-		                  			<?php 
-				                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
-				                  			$hora_pago = 0;
-				                  		}else{
-				                  			$hora_pago = $usr['hora_pago'];
-				                  		} 
-			                  		?>
-
-			                  		<?php 
-			                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
-			                  				$rest = substr($diferencia, 0, -3);
-
-
-			                  				if($rest == 5){
-			                  					$monto = $dia_pago;
-			                  				}
-
-				                  			if($rest <= 9){
-
-				                  				$total = $rest - 5;
-				                  				$pagomas = $dia_pago / 5;
-				                  				$suma = $total * $pagomas;
-				                  				$monto = $dia_pago + $suma;
-				                  				// echo "menor";
-
-
-				                  				// $total = $rest - 5;
-				                  				// $suma = $total * $hora_pago;
-				                  				// $monto = $dia_pago + $suma;
-				                  				// echo "menor";
-
-				                  				// Cambios Berri
-				                  			}
-
-			                  				if($rest == 10){
-			                  					$monto = $dia_pago * 2;
-			                  				}
-
-				                  			if($rest > 10){
-				                  				
-				                  				$total = $rest - 10;
-				                  				$pagomas = $dia_pago / 5;
-				                  				$suma = $total * $pagomas;
-				                  				$dia = $dia_pago*2;
-				                  				$monto = $dia + $suma;
-
-				                  				// Berri
-
-				                  				// $total = $rest - 10;
-				                  				// $suma = $total * $hora_pago;
-				                  				// $dia = $dia_pago*2;
-				                  				// $monto = $dia + $suma;
-				                  				// echo "menor";
-				                  			}
-
-
-			                  			}else{
-				                  			$rest = substr($diferencia, 0, -3);
-				                  			if($rest < 10){
-				                  				$total = $rest - 2;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$multi = $total * $hora_pago;
-				                  				$monto = $dia_pago + $multi;
-				                  				// echo "mayor";
-				                  			}
-
-				                  			if($rest == 10){
-				                  				$monto = $dia_pago;
-				                  				// echo "igual";
-				                  			}
-
-			                  			}
-			                  		?>
-
-			                  	<?php }else{ ?>
-			                  		<!-- D I A  E X T R A -->
-			                  		<?php 
-			                  		$dia_pago = $usr['dia_pago'];
-			                  		$hora_pago = $usr['hora_pago'];
-			                  			if($usr['day_num'] == 6){
-			                  				$rest = substr($diferencia, 0, -3);
-			                  				// echo $rest;
-			                  				if($rest == 5){
-			                  					$monto = 0;
-			                  				}
-
-				                  			if($rest <= 9){
-				                  				$total = $rest - 5;
-				                  				// echo $total;
-				                  				if($total == 1){
-				                  					$monto_u= $dia_pago / 100;
-				                  					$monto = $monto_u * 20;
-				                  				}
-				                  				if($total == 2){
-				                  					$monto_u = ($dia_pago / 100);
-				                  					$monto = $monto_u * 40;
-				                  				}
-				                  				if($total == 3){
-				                  					$monto_u = $dia_pago / 100;
-				                  					$monto = $monto_u * 60;
-				                  				}
-				                  				if($total == 4){
-				                  					$monto_u = ($dia_pago / 100);
-				                  					$monto = $monto_u * 80;
-				                  				}
-				                  			
-				                  			}
-
-			                  				if($rest == 10){
-			                  					$monto = $dia_pago;
-			                  				}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				if($total == 1){
-				                  					$monto_u= $dia_pago / 100;
-				                  					$suma = $monto_u * 20;
-				                  				}
-				                  				if($total == 2){
-				                  					$monto_u = ($dia_pago / 100);
-				                  					$suma = $monto_u * 40;
-				                  				}
-				                  				if($total == 3){
-				                  					$monto_u = $dia_pago / 100;
-				                  					$suma = $monto_u * 60;
-				                  				}
-				                  				if($total == 4){
-				                  					$monto_u = ($dia_pago / 100);
-				                  					$suma = $monto_u * 80;
-				                  				}
-
-				                  				// $suma = $total * $hora_pago;
-				                  				$dia = $dia_pago;
-				                  				$monto = $suma + $dia;
-				                  				// echo "menor";
-				                  			}
-			                  			}
-
-
-			                  			if($usr['day_num'] == 7){
-			                  				$rest = substr($diferencia, 0, -3);
-
-			                  				if($rest == 5){
-			                  					$monto = 0;
-			                  				}
-
-				                  			if($rest <= 9){
-				                  				$total = $rest - 5;
-				                  				if($rest == 1){
-				                  					$monto_u= $dia_pago / 100;
-				                  					$monto = $monto_u * 20;
-				                  				}
-				                  				if($rest == 2){
-				                  					$monto_u = $dia_pago / 100;
-				                  					$monto = $monto_u * 40;
-				                  				}
-				                  				if($rest == 3){
-				                  					$monto_u = $dia_pago / 100;
-				                  					$monto = $monto_u * 60;
-				                  				}
-				                  				if($rest == 4){
-				                  					$monto_u = $dia_pago / 100;
-				                  					$monto = $monto_u * 80;
-				                  				}
-				                  				// echo "menor";
-				                  			}
-
-			                  				if($rest == 10){
-			                  					$monto = $dia_pago*2;
-			                  				}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$suma = $total * $hora_pago;
-				                  				$dia = $dia_pago*2;
-
-				                  				$monto = $suma;
-				                  				// echo "menor";
-				                  			}
-			                  			}
-
-			                  			if($usr['day_num'] == 1 || $usr['day_num'] == 2 || $usr['day_num'] == 3 || $usr['day_num'] == 4){
-				                  			$rest = substr($diferencia, 0, -3);
-				                  			if($rest < 10){
-				                  				$total = $rest - 2;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$multi = $total * $hora_pago;
-				                  				$monto = $multi;
-				                  				// echo "mayor";
-				                  			}
-
-				                  			if($rest == 10){
-				                  				$monto = 0;
-				                  				// echo "igual";
-				                  			}
-
-			                  			}
-
-			                  			if($usr['day_num'] == 5){
-			                  				$rest = substr($diferencia, 0, -3);
-				                  			if($rest < 10){
-				                  				$total = $rest - 2;
-				                  				$monto = $total * $hora_pago;
-				                  				// echo "menor";
-				                  			}
-
-				                  			if($rest > 10){
-				                  				$total = $rest - 10;
-				                  				$multi = $total * $hora_pago;
-				                  				$monto = $multi;
-				                  				// echo "mayor";
-				                  			}
-
-				                  			if($rest == 10){
-				                  				$monto = 0;
-				                  				// echo "igual";
-				                  			}
-
-			                  			}
-
-			                  		?>
-
-			                  	<?php  } ?>
-			                <?php }else{ ?>
-
-			                	<?php $monto = $usr['monto_pago']; ?>
-			                <?php } ?>
-
-			                  	<?php if($usr['status_extra'] == 0){ ?>	
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	<?php }else{ ?>
-			                  		<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	<?php } ?>
-			                  		
-			                  	</td>
-			                  <?php } ?>
-
-			                  <?php if($usr['status_asistencia'] == 1){ ?>
-			                  	<td>00:00</td>
-			                  	<td>00:00</td>
-			                  	<td>Inasistencia</td>
-			                  	<td>
-			                  		<?php $monto = 0; ?>
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	</td>
-			                  <?php } ?>
-
-
-			                  <?php if($usr['status_asistencia'] == 2){ ?>
-
-			                  	<td>00:00</td>
-			                  	<td>00:00</td>
-			                  	<td>Otros..</td>
-			                  	<td>
-			                  		<?php $monto = $usr['monto_pago']; ?>
-			                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-			                  	</td>
-			                  <?php } ?>
-
-			                  	<td>
-			                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
-			                  	</td>
-
-			                  	<td>
-			                		<?php if($usr['status_tipos'] == 0 && $usr['status_asistencia'] == 0){ ?>
-			                			<a href="/asistencia/editregistroasistencia/user/<?php echo $this->personal_id; ?>/sitio/<?php echo $this->sitio_name; ?>/id/<?php echo $usr['id_pa'] ?>/proyecto/<?php echo $this->proyecto ?>"><i class="fa fa-2x fa-pencil-square-o" ></i></a>
-			                			<a class="delete_registro" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red; padding-left: 7px;"></i></span></a>
-			                		<?php }?>
-
-			                		<?php if($usr['status_asistencia'] == 1){ ?>
-			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-			                			<!-- DESCUENTO -->
-			                		<?php }?>
-
-
-			                		<?php if($usr['status_asistencia'] == 2){ ?>
-			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-			                			<!-- DESCUENTO -->
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 1){ ?>
-			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="1"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-			                			<!-- DESCUENTO -->
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 2){ ?>
-			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="2"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-			                			<!-- HERRAMIENTA -->
-			                		<?php }?>
-
-			                		<?php if($usr['status_tipos'] == 3){ ?>
-			                			<a class="delete_file" data-id="<?php echo $usr["id_pa"]; ?>" data-op="3"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-			                			<!-- EPP -->
-			                		<?php }?>
-			                  	</td>
-
-			                  	<?php $montos = $montos + $monto; ?>
-			                </tr>
-			            </tbody>
-			            <?php } }else{ ?>
-			            <tbody>
-			                <tr>
-			                    <td><h3>No hay registros de la asistencia</h3> </td>
-			                    <td></td>
-			                    <td></td>
-			                    <td></td>
-			                    <td></td>
-			                </tr>
-			            </tbody>
-			            <?php } ?>
-			        </table>
-				</div>
-			</div>
-
-        	<div class="row">
-        		<div class="col m6 s6"></div>
-        		<div class="col m6 s6 text-right">
-        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: <!-- $<?php echo $montos; ?> -->
-        				$<?php echo number_format($montos, 2, '.', ','); ?>
-        			</span>
-        		</div>
-        	</div>
-
-        </div>
-
-
-        <div class="card-action">
-        	<div class="row">
-        		<div class="col m12 s12 text-center">
-					<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
-        		</div>
-        	</div>
-        </div>
-
-      </div>
+	        	<div class="row">
+	        		<div class="col m6 s6"></div>
+	        		<div class="col m6 s6 text-right">
+	        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: <!-- $<?php echo $montos; ?> -->
+	        				$<?php echo number_format($montos, 2, '.', ','); ?>
+	        			</span>
+	        		</div>
+	        	</div>
+	    	</div>
+	        <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m12 s12 text-center">
+						<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
     </div>
 </div>
 

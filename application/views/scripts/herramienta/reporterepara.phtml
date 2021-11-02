@@ -1,5 +1,5 @@
 <?php 
-function eliminar_acentos($cadena){
+	function eliminar_acentos($cadena){
 		$cadena = str_replace(
 		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
 		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
@@ -40,19 +40,21 @@ function eliminar_acentos($cadena){
 <?php foreach ($this->nreparacion as $np) { $NRepraciones = $np['Reparaciones'];  } ?>
 
 <style> 
- .table_wrapper{
-    overflow-x: auto;
-}
+	.table_wrapper{
+		overflow-x: auto;
+	}
 </style>
 
-	<div class="row" style="margin-top: 10px;">
-		<div class="col m6 s12 text-left">
-			<a href="/herramienta/herramientadetail/id/<?php echo $id_h; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-		</div>
-		<div class="col m6 s12 text-right">
-			<a class=" btn" onclick="exportTableToCSV(null,'Reporte_Reparacion.csv')"><i class="material-icons right">file_download</i>Descargar</a>
-		</div>
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s12 text-left">
+		<a href="/herramienta/herramientadetail/id/<?php echo $id_h; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
 	</div>
+	
+	<div class="col m6 s12 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'Reporte_Reparacion.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
 <div class="col m12 s12 text-right table_wrapper">
 	<table class="table text-left table-hover ">
 		<thead>
@@ -73,39 +75,39 @@ function eliminar_acentos($cadena){
 		Número de reparaciones: <?php echo $NRepraciones; ?>
 		<?php 
 		foreach ($this->reporte as $rh) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $rh["id_reporte"]; ?></td>
-				<td><?php echo $rh["id_herramienta"]; ?></td>
-				<td><?php echo eliminar_acentos( $rh["nombre"]); ?></td>
-				<td><?php echo eliminar_acentos( $rh["motivo"]); ?></td>
-				<td><?php echo $rh["fecha_inicio"]; ?></td>
-				<td><?php echo $rh["fechaa"]; ?></td>
-				<td>
-					<?php if($rh["id_solicitud"] == 0){ ?>
-						Sin Solicitud Asignada
-					<?php } else { ?>
-						<?php echo $rh["id_solicitud"]; ?>
-					<?php } ?>	
-				</td>
-				<td>
-					<?php if($rh["id_solicitud"]== 0){ ?>
-						Sin Solicitud Asignada
-					<?php } else { ?>
-						<?php echo $rh["fecha_pago"]; ?>
-					<?php } ?>
-				</td>
+			<tbody>
+				<tr>
+					<td><?php echo $rh["id_reporte"]; ?></td>
+					<td><?php echo $rh["id_herramienta"]; ?></td>
+					<td><?php echo eliminar_acentos( $rh["nombre"]); ?></td>
+					<td><?php echo eliminar_acentos( $rh["motivo"]); ?></td>
+					<td><?php echo $rh["fecha_inicio"]; ?></td>
+					<td><?php echo $rh["fechaa"]; ?></td>
+					<td>
+						<?php if($rh["id_solicitud"] == 0){ ?>
+							Sin Solicitud Asignada
+						<?php } else { ?>
+							<?php echo $rh["id_solicitud"]; ?>
+						<?php } ?>	
+					</td>
+					<td>
+						<?php if($rh["id_solicitud"]== 0){ ?>
+							Sin Solicitud Asignada
+						<?php } else { ?>
+							<?php echo $rh["fecha_pago"]; ?>
+						<?php } ?>
+					</td>
 
-				<td>
-					<?php if($rh["total"]== null){ ?>
-						<?php echo $rh["costo"]; ?>
-					<?php } else { ?>
-						<?php echo $rh["total"]; ?>
-					<?php } ?>
-				</td>
-				<td><?php echo $rh["asignado"]; ?></td>
-			</tr>
-		</tbody>
+					<td>
+						<?php if($rh["total"]== null){ ?>
+							<?php echo $rh["costo"]; ?>
+						<?php } else { ?>
+							<?php echo $rh["total"]; ?>
+						<?php } ?>
+					</td>
+					<td><?php echo $rh["asignado"]; ?></td>
+				</tr>
+			</tbody>
 		<?php } ?>
 	</table>
 </div>

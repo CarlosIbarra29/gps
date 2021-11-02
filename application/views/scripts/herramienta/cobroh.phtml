@@ -1,327 +1,326 @@
 <html>
 <head>
-    
     <title></title>
-   <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.common.min.css" />
-<!--      <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.black.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.common.min.css" />
+    <!--<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.black.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.black.mobile.min.css" /> -->
-
     <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jszip.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
 </head>
 <body>
-<div id="example">
+    <div id="example">
+        
+        <?php foreach ($this->cobros as $her){ 
+            $id_herramienta = $her['id_herramienta'];
+            $idp = $her['id_personal'];
+            $status_cobro = $her['status_cobro'];
+            $fecha = $her['fecha'];
+            $id_herramienta = $her['id_herramienta']; 
+            $codigo = $her['codigo'];
+            $nombre = $her['nombre'];
+            $unidad = $her['unidad'];
+            $descripcion = $her['descripcion'];
+            $fecha_salida = $her['fecha_salida'];
+            $fecha_entrega = $her['fecha_entrega'];
+            $marca = $her['marca'];
+            $modelo = $her['modelo'];
+            $nombrea = $her['nombrea'];
+            $apellido_pa = $her['apellido_pa'];
+            $apellido_ma = $her['apellido_ma'];
+            $puesto = $her['puesto'];
+            $telefono = $her['telefono'];
+            $email = $her['email_personal'];
+        } ?>
 
-    <?php foreach ($this->cobros as $her){ 
-   
-        $id_herramienta = $her['id_herramienta'];
-        $idp = $her['id_personal'];
-        $status_cobro = $her['status_cobro'];
-        $fecha = $her['fecha'];
-        $id_herramienta = $her['id_herramienta']; 
-        $codigo = $her['codigo'];
-        $nombre = $her['nombre'];
-        $unidad = $her['unidad'];
-        $descripcion = $her['descripcion'];
-        $fecha_salida = $her['fecha_salida'];
-        $fecha_entrega = $her['fecha_entrega'];
-        $marca = $her['marca'];
-        $modelo = $her['modelo'];
-        $nombrea = $her['nombrea'];
-        $apellido_pa = $her['apellido_pa'];
-        $apellido_ma = $her['apellido_ma'];
-        $puesto = $her['puesto'];
-        $telefono = $her['telefono'];
-        $email = $her['email_personal'];
+        <?php foreach ($this->contador as $con){ 
+            $Cobradas = $con['Cobradas'];
+        } ?>
 
-    } ?>
-
-    <?php foreach ($this->contador as $con){ 
-        $Cobradas = $con['Cobradas'];
-    } ?>
-
-
-    <?php 
+        <?php 
             date_default_timezone_set('America/Mexico_City');
             $hoy = date("d/m/Y");
-    ?>
+        ?>
 
-<div class="row" style="margin-top: 10px;">
-    <div class="col m6 s6">
-        <a href="/herramienta/bresponsable?responsable=<?php echo $idp ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
-      
-    </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col m6 s6">
+                <a href="/herramienta/bresponsable?responsable=<?php echo $idp ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+            </div>
 
-    <div class="col m6 s6 text-right">
-        <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar Cobro</button>
-    </div>
-</div>
+            <div class="col m6 s6 text-right">
+                <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar Cobro</button>
+            </div>
+        </div>
 
-<div class="page-container hidden-on-narrow">
-    <div class="pdf-page size-a4">
+        <div class="page-container hidden-on-narrow">
+            <div class="pdf-page size-a4">
 
-        <div class="pdf-header">
-            <span class="company-logo">
-                <!--  <img src="/img/pdfgps.jpg" style="width: 600px;" /> -->
-                <img src="/img/head.png" style="width: 130px;" />
-            </span>
+                <div class="pdf-header">
+                    <span class="company-logo">
+                        <!--  <img src="/img/pdfgps.jpg" style="width: 600px;" /> -->
+                        <img src="/img/head.png" style="width: 130px;" />
+                    </span>
 
-            <span class="invoice-number">
-                <img src="/img/logo-2.png" style="width: 135px;" />
-            </span>
+                    <span class="invoice-number">
+                        <img src="/img/logo-2.png" style="width: 135px;" />
+                    </span>
 
-            <div class="row">
-                <div class="company-logo col m12 s12 text-center">
-                    Cobro de Herramientas
+                    <div class="row">
+                        <div class="company-logo col m12 s12 text-center">
+                            Cobro de Herramientas
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pdf-footer">
+                    <p>Fecha de descarga: <?php echo $hoy; ?><br/>
+                        <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gps Constructivos</span>
+                    </p>
+                </div>
+
+                <div class="for" style="margin-top: 60px;">
+                    <h3> Datos del Personal</h3>
+                    <p style="padding-bottom: 20px;">
+                        <span class="title-pdf">Personal: </span> <?php echo $nombrea; ?> <?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?> <br />
+                        <span class="title-pdf">Puesto:</span> <?php echo $puesto; ?><br />
+                        <span class="title-pdf">Telefono:</span> <?php echo $telefono; ?><br />
+                        <span class="title-pdf">Email:</span> <?php echo $email ?><br/>
+                    </p>
+                </div>
+
+                <div class="from" style="margin-top: 70px;">
+                    <h3 class="text-right"> Fecha: <?php echo $hoy; ?></h3>
+                    <h4 class="text-right"> Htas. por cobrar : <b><?php echo $Cobradas; ?></b></h4>
+                </div>
+
+                <div class="pdf-body" style="margin-top: 20px;">
+                    <div class="row">
+                        <div class="col m12 s12 text-center">
+                            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramientas a Cobrar</span><br>
+                        </div>
+
+                        <div class="col m12 s12">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"><span class="title-pdf">Articulo No.</span></th>
+                                        <th class="text-center"><span class="title-pdf">Código</span></th>
+                                        <th class="text-center"><span class="title-pdf">Nombre</span></th>
+                                        <th class="text-center"><span class="title-pdf">Marca</span></th>
+                                        <th class="text-center"><span class="title-pdf">Fecha Cobro</span></th>
+                                    </tr>
+                                </thead>
+
+                                <?php foreach ($this->cobros as $her){ ?>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo @$contar+=1; ?></td>
+                                            <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['codigo']; ?></td>
+                                            <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['nombre']; ?></td>
+                                            <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['marca']; ?></td>
+                                            <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['fecha']; ?></td>
+                                        </tr>
+                                    </tbody>
+                                <?php } ?>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row signature">
+                        
+                        <div class="col m6 s6 text-center">
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Entregado por:</span><br><br><br>
+                            <hr>
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
+                        </div>
+
+                        <div class="col m6 s6 text-center">
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Recibido por:</span><br><br>
+                            <?php echo $nombrea; ?> <?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?>
+                            <hr>
+                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="responsive-message"><br> </div>
 
-        <div class="pdf-footer">
-            <p>Fecha de descarga: <?php echo $hoy; ?><br/>
-                <span style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Gps Constructivos
-                </span>
-            </p>
-        </div>
+        <style>
+            .pdf-page {
+                font-family: "DejaVu Sans", "Arial", sans-serif;
+            }
+            .pdf-page1 {
+                font-family: "DejaVu Sans", "Arial", sans-serif;
+            }
+        </style>
 
-        <div class="for" style="margin-top: 60px;">
-            <h3> Datos del Personal</h3>
+        <script>
+            kendo.pdf.defineFont({
+                "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+                "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+                "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+                "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+            });
+        </script>
 
-            <p style="padding-bottom: 20px;">
-                <span class="title-pdf">Personal: </span> <?php echo $nombrea; ?> <?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?> <br />
-                <span class="title-pdf">Puesto:</span> <?php echo $puesto; ?><br />
-                <span class="title-pdf">Telefono:</span> <?php echo $telefono; ?><br />
-                <span class="title-pdf">Email:</span> <?php echo $email ?><br/>
-            </p>
-        </div>
+        <script src="../content/shared/js/pako.min.js"></script>
 
-        <div class="from" style="margin-top: 70px;">
-            <h3 class="text-right"> Fecha: <?php echo $hoy; ?></h3>
-            <h4 class="text-right"> Htas. por cobrar : <b><?php echo $Cobradas; ?></b></h4>
-        </div>
+        <script>
+            function getPDF(selector) {
+                kendo.drawing.drawDOM($(selector)).then(function(group){
+                    kendo.drawing.pdf.saveAs(group, "Responsiva<?php echo $nombrea; ?><?php echo $apellido_pa; ?>.pdf");
+                });
+            }
 
-        <div class="pdf-body" style="margin-top: 20px;">
+            $(document).ready(function() {
+                var data = [
+                    { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
+                    { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
+                    { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
+                    { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
+                    { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
+                    { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
+                ];
 
-            <div class="row">
-                <div class="col m12 s12 text-center">
-                    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Herramientas a Cobrar
-                    </span><br>
-                </div>
+                var schema = {
+                    model: {
+                        productName: { type: "string" },
+                        unitPrice: { type: "number", editable: false },
+                        qty: { type: "number" }
+                    },
 
-                <div class="col m12 s12">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-center"><span class="title-pdf">Articulo No.</span></th>
-                                <th class="text-center"><span class="title-pdf">Código</span></th>
-                                <th class="text-center"><span class="title-pdf">Nombre</span></th>
-                                <th class="text-center"><span class="title-pdf">Marca</span></th>
-                                 <th class="text-center"><span class="title-pdf">Fecha Cobro</span></th>
-                            </tr>
-                        </thead>
+                    parse: function (data) {
+                        $.each(data, function(){
+                            this.total = this.qty * this.unitPrice;
+                        });
+                        return data;
+                    }
+                };
 
-                        <?php foreach ($this->cobros as $her){ ?>
-                            <tbody>
-                                <tr>
-                                    <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo @$contar+=1; ?></td>
-                                    <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['codigo']; ?></td>
-                                    <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['nombre']; ?></td>
-                                    <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['marca']; ?></td>
-                                    <td style="padding-bottom: 1px; padding-top: 1px;" class="text-center"><?php echo $her['fecha']; ?></td>
-                                </tr>
-                            </tbody>
-                        <?php } ?>
-                    </table>
-                </div>
-            </div>
+                var aggregate = [
+                    { field: "qty", aggregate: "sum" },
+                    { field: "total", aggregate: "sum" }
+                ];
 
+                var columns = [
+                    { field: "productName", title: "Product", footerTemplate: "Total"},
+                    { field: "unitPrice", title: "Price", width: 120},
+                    { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
+                    { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
+                ];
 
-            <div class="row signature">
-                <div class="col m6 s6 text-center">
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Entregado por:</span><br><br><br>
-                    <hr>
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
-                </div>
-                <div class="col m6 s6 text-center">
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Recibido por:</span><br><br>
-                    <?php echo $nombrea; ?> <?php echo $apellido_pa; ?> <?php echo $apellido_ma; ?>
-                    <hr>
-                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre y Firma</span>
-                </div>
-            </div>
-        </div>
+                var grid = $("#grid").kendoGrid({
+                    editable: false,
+                    sortable: true,
+                    dataSource: {
+                        data: data,
+                        aggregate: aggregate,
+                        schema: schema,
+                    },
+
+                    columns: columns
+                });
+
+                $("#paper").kendoDropDownList({
+                    change: function() {
+                        $(".pdf-page")
+                        .removeClass("size-a8")
+                        .removeClass("size-a4")
+                        .removeClass("size-letter")
+                        .removeClass("size-executive")
+                        .addClass(this.value());
+                    }
+                });
+            });
+        </script>
+
+        <style>
+
+            .title-pdf{
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .pdf-page {
+                margin: 0 auto;
+                box-sizing: border-box;
+                box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+                background-color: #fff;
+                color: #333;
+                position: relative;
+            }
+
+            .pdf-header {
+                position: absolute;
+                top: .1in;
+                height: .6in;
+                left: .5in;
+                right: .5in;
+                /*border-bottom: 1px solid #e5e5e5;*/
+            }
+        
+            .invoice-number {
+                padding-top: .17in;
+                float: right;
+            }
+            
+            .pdf-footer {
+                position: absolute;
+                bottom: .5in;
+                height: .6in;
+                left: .5in;
+                right: .5in;
+                padding-top: 10px;
+                border-top: 1px solid #e5e5e5;
+                text-align: left;
+                color: #787878;
+                font-size: 12px;
+            }
+
+            .pdf-body {
+                position: absolute;
+                top: 3.5in;
+                bottom: 13.2in;
+                left: .5in;
+                right: .5in;
+            }
+
+            /*  5,8 x 8,3 pulgadas*/
+
+            .size-a5 { width: 8.3in; height: 5.8in; }
+            .size-a4 { width: 8.3in; height: 11.7in; }
+            .size-letter { width: 8.5in; height: 11in; }
+            .size-executive { width: 7.25in; height: 10.5in; }
+
+            .company-logo {
+                font-size: 30px;
+                font-weight: bold;
+                color: red;
+            }
+            
+            .for {
+                position: absolute;
+                top: 1.5in;
+                left: .5in;
+                width: 3.5in;
+            }
+            
+            .from {
+                position: absolute;
+                top: 1.5in;
+                right: .5in;
+                width: 3.5in;
+            }
+            
+            .from p, .for p {
+                color: #787878;
+            }
+        
+            .signature {
+                padding-top: .9in;
+            }
+        </style>
     </div>
-</div>
-
-<div class="responsive-message"><br> </div>
-
- 
-
-    <style>
-        .pdf-page {
-            font-family: "DejaVu Sans", "Arial", sans-serif;
-        }
-        .pdf-page1 {
-            font-family: "DejaVu Sans", "Arial", sans-serif;
-        }
-    </style>
-
-    <script>
-        kendo.pdf.defineFont({
-            "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
-            "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
-            "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
-            "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
-        });
-    </script>
-
-
-    <script src="../content/shared/js/pako.min.js"></script>
-
-    <script>
-        function getPDF(selector) {
-            kendo.drawing.drawDOM($(selector)).then(function(group){
-            kendo.drawing.pdf.saveAs(group, "Responsiva<?php echo $nombrea; ?><?php echo $apellido_pa; ?>.pdf");
-            });
-        }
-
-        $(document).ready(function() {
-            var data = [
-              { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
-              { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
-              { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
-              { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
-              { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
-              { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
-            ];
-            var schema = {
-              model: {
-                productName: { type: "string" },
-                unitPrice: { type: "number", editable: false },
-                qty: { type: "number" }
-              },
-              parse: function (data) {
-                    $.each(data, function(){
-                        this.total = this.qty * this.unitPrice;
-                    });
-                    return data;
-              }
-            };
-            var aggregate = [
-              { field: "qty", aggregate: "sum" },
-              { field: "total", aggregate: "sum" }
-            ];
-            var columns = [
-              { field: "productName", title: "Product", footerTemplate: "Total"},
-              { field: "unitPrice", title: "Price", width: 120},
-              { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
-              { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
-            ];
-            var grid = $("#grid").kendoGrid({
-              editable: false,
-              sortable: true,
-              dataSource: {
-                data: data,
-                aggregate: aggregate,
-                schema: schema,
-              },
-              columns: columns
-            });
-
-            $("#paper").kendoDropDownList({
-              change: function() {
-                $(".pdf-page")
-                  .removeClass("size-a8")
-                  .removeClass("size-a4")
-                  .removeClass("size-letter")
-                  .removeClass("size-executive")
-                  .addClass(this.value());
-              }
-            });
-        });
-    </script>
-
-    <style>
-
-        .title-pdf{
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .pdf-page {
-            margin: 0 auto;
-            box-sizing: border-box;
-            box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
-            background-color: #fff;
-            color: #333;
-            position: relative;
-        }
-        .pdf-header {
-            position: absolute;
-            top: .1in;
-            height: .6in;
-            left: .5in;
-            right: .5in;
-            /*border-bottom: 1px solid #e5e5e5;*/
-        }
-        .invoice-number {
-            padding-top: .17in;
-            float: right;
-        }
-        .pdf-footer {
-            position: absolute;
-            bottom: .5in;
-            height: .6in;
-            left: .5in;
-            right: .5in;
-            padding-top: 10px;
-            border-top: 1px solid #e5e5e5;
-            text-align: left;
-            color: #787878;
-            font-size: 12px;
-        }
-        .pdf-body {
-            position: absolute;
-            top: 3.5in;
-            bottom: 13.2in;
-            left: .5in;
-            right: .5in;
-        }
-
-      /*  5,8 x 8,3 pulgadas*/
-
-        .size-a5 { width: 8.3in; height: 5.8in; }
-        .size-a4 { width: 8.3in; height: 11.7in; }
-        .size-letter { width: 8.5in; height: 11in; }
-        .size-executive { width: 7.25in; height: 10.5in; }
-
-        .company-logo {
-            font-size: 30px;
-            font-weight: bold;
-            color: red;
-        }
-        .for {
-            position: absolute;
-            top: 1.5in;
-            left: .5in;
-            width: 3.5in;
-        }
-        .from {
-            position: absolute;
-            top: 1.5in;
-            right: .5in;
-            width: 3.5in;
-        }
-        .from p, .for p {
-            color: #787878;
-        }
-        .signature {
-            padding-top: .9in;
-        }
-    </style>
-
-</div>
-
-
 </body>

@@ -1,10 +1,10 @@
 <?php 
-	function isActhref($nameBtn,$urlname){
-	    if($nameBtn==1 && $urlname==null){
-	    	return "active"; 
-	    }
-	    return ($nameBtn == $urlname)?"active":"";
-	}
+	  function isActhref($nameBtn,$urlname){
+	      if($nameBtn==1 && $urlname==null){
+	    	    return "active"; 
+	      }
+	      return ($nameBtn == $urlname)?"active":"";
+	  }
 
     if (isset($_GET['pagina'])) {
         $pagina = $_GET['pagina'];
@@ -18,158 +18,162 @@
     $links = "";
     $url="";
 
-        if($this->total== 1){
-            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-        }else{
-            if ($this->total >= 1 && $pagina <= $this->total) {
-
-              if (isset($_GET['pagina']) && $this->actpage != 1) {
+    if($this->total== 1){
+        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+    }else{
+        if ($this->total >= 1 && $pagina <= $this->total) {
+            if (isset($_GET['pagina']) && $this->actpage != 1) {
                 $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }else{
+            }else{
                 $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }
-                
-                $i = max(2, $pagina - 3);
-                if ($i > 2)
-                    $links .= " <li><a>...</a></li> ";
-                for (; $i < min($pagina + 3, $this->total); $i++) {
-                  if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }else{
-                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }
-                }
-                if ($i != $this->total)
-                    $links .= " <li><a>...</a></li> ";
+            }
+
+            $i = max(2, $pagina - 3);
+
+            if ($i > 2)
+                $links .= " <li><a>...</a></li> ";
+            for (; $i < min($pagina + 3, $this->total); $i++) {
                 if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }else{
-                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }
-                
-            }           
+            }
+
+            if ($i != $this->total)
+                $links .= " <li><a>...</a></li> ";
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }
         }
+    }
 ?>
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
-  <div class="col m6 s6">
-    <a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
-  </div>
-  <div class="col m6 s6 text-right">
-    <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Categoría</a>
-  </div>
+    
+    <div class="col m6 s6">
+        <a href="/herramienta/inventario" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+    
+    <div class="col m6 s6 text-right">
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Categoría</a>
+    </div>
 </div>
  
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Categoría de Herramientas
-  </div>
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Categoría de Herramientas
+    </div>
 </div>
 <!-- End Inicio Botones -->
 
-
 <!-- Buscador -->
-
 <div class="row">
-	<div class="col m2 s12"></div>
-	<div class="col m8 s12">
-		<form action="/herramienta/buscarcat" enctype="multipart/form-data" class="form-horizontal form-material">
-	        <div class="input-field col m8 s8">
-	          <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
-	          <label for="first_name">Buscar categoría</label>
-	        </div>
-	        <div class="input-field col m4 s4">
-	        	<button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
-	        </div>
-    	</form>
-	</div>
-	<div class="col m2 s12"></div>
-</div>
+    <div class="col m2 s12"></div>
+    <div class="col m8 s12">
+        <form action="/herramienta/buscarcat" enctype="multipart/form-data" class="form-horizontal form-material">
+            
+            <div class="input-field col m8 s8">
+                <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
+	              <label for="first_name">Buscar categoría</label>
+	          </div>
 
+            <div class="input-field col m4 s4">
+	        	    <button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
+	          </div>
+        </form>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
 <!-- End Buscador -->
 
 <!-- Modal Structure 1 -->
-  <div id="modal1" class="modal modal-fixed-footer">
+<div id="modal1" class="modal modal-fixed-footer">
   	<div class="modal-content">
-      <div class="col m12 s12" style="margin-top: 10px;">
-        <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Categoria
-      </div>
-  		<div class="col m12 s12">
-  			<form action="/herramienta/requestaddcat" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cat">
-  				<div class="row">
-  					<div class="input-field col m12 s12">
-  						<i class="material-icons prefix">assignment</i>
-  						<input id="name" type="text" name="name" class="validate" required>
-			          	<label for="name">* Nombre:</label>
-			        </div>
+        
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Categoria
+        </div>
 
-			        <div class="file-field input-field col m12 s12">
-				    	<div class="btn">
-				        	<span>Foto categoria</span>
-				        	<input type="file" name="url">
-				      	</div>
-				      	<div class="file-path-wrapper">
-				        	<input class="file-path validate" type="text">
-				      	</div>
-				    </div>
-				</div>
-		</div>
-	</div>
+        <div class="col m12 s12">
+            <form action="/herramienta/requestaddcat" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_cat">
+                <div class="row">
+                    
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="name" type="text" name="name" class="validate" required>
+                        <label for="name">* Nombre:</label>
+                    </div>
 
-	<div class="modal-footer">
-    		</form>
-    		<button class=" btn" id="addcat">Guardar</button>	
+                    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>Foto categoria</span>
+                            <input type="file" name="url">
+                        </div>
+
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+            </form>
+        <button class=" btn" id="addcat">Guardar</button>	
     		<button  class="modal-close red btn">Cerrar</button>
     </div>
 </div>
 <!-- End Modal -->
 
-  
-  <!-- Table Categorías -->
- <div class="col m12 s12">
- 	<h3>Lista de Categorías</h3>
- 	<table class="table text-left table-hover">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nombre</th>	
-				<th>Imagen</th>
-				<th>Editar</th>
-				<th>Eliminar</th>
-			</tr> 
-		</thead>
+<!-- Table Categorías -->
+<div class="col m12 s12">
+    <h3>Lista de Categorías</h3>
 
-		<?php if ($this->paginator) {
-		foreach ($this->paginator as $cat) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $cat["id_cat"]; ?></td>
-				<td><?php echo $cat["nombre"]; ?></td>
-				<td><img src="/<?php echo $cat["imagen"]; ?>" style="width: 100px;"></td>
-				<td>
-					<a href="/herramienta/catedit/id/<?php echo $cat["id_cat"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-				</td>
-				<td>
-					<a class="delete" data-id="<?php echo $cat["id_cat"]; ?>" data-nombre="<?php echo $cat["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-				</td>
-			</tr>
-		</tbody>
-		<?php } } else{ ?>
-			<tbody>
-				<td></td>
-				<td></td>
-				<td>
-					<h4>No se encontraron Herramientas</h4>
-				</td>
-				<td></td>
-				<td></td>
-			</tbody>
+    <table class="table text-left table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+        				<th>Nombre</th>	
+        				<th>Imagen</th>
+        				<th>Editar</th>
+        				<th>Eliminar</th>
+            </tr> 
+        </thead>
 
-		<?php }?>
-	</table>
+        <?php if ($this->paginator) {
+            foreach ($this->paginator as $cat) { ?>
+                <tbody>
+                    <tr>
+                				<td><?php echo $cat["id_cat"]; ?></td>
+                				<td><?php echo $cat["nombre"]; ?></td>
+                				<td><img src="/<?php echo $cat["imagen"]; ?>" style="width: 100px;"></td>
+                				<td>
+                					<a href="/herramienta/catedit/id/<?php echo $cat["id_cat"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+                				</td>
+                				<td>
+                					<a class="delete" data-id="<?php echo $cat["id_cat"]; ?>" data-nombre="<?php echo $cat["nombre"]; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                				</td>
+                    </tr>
+                </tbody>
+        <?php } } else{ ?>
+            <tbody>
+        				<td></td>
+        				<td></td>
+        				<td>
+        					<h4>No se encontraron Herramientas</h4>
+        				</td>
+        				<td></td>
+        				<td></td>
+            </tbody>
+        <?php }?>
+    </table>
 </div>
-  <!-- End Table Categorías -->
+<!-- End Table Categorías -->
 
 <!-- Paginación  -->
 
@@ -204,81 +208,75 @@
         </div>
     </div> 
 </div>
-
-
 <!-- End Paginacion  -->
+
 <!-- Scripts -->
-  <script type="text/javascript">
-	  
-	  $(document).ready(function(){
-	  	$('.modal').modal();
+<script type="text/javascript">
+    $(document).ready(function(){
+	  	  $('.modal').modal();
 	  });
 	  //Modal script//
 
-	  $("#addcat").click(function(){
-	  	var name = document.getElementById("name").value;
+    $("#addcat").click(function(){
+	  	  var name = document.getElementById("name").value;
 
-            if(name == ""){
-                swal({
-                  title: "Para agregar una categoría llena los datos requeridos (*)",
+        if(name == ""){
+            swal({
+                title: "Para agregar una categoría llena los datos requeridos (*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitForm, 500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_cat").submit()
+    } //Agregar Categoría Script
+
+    //Inicio Delete Ajax
+    $(".delete").click(function(){
+        id=$(this).data('id');
+        nombre=$(this).data('nombre');
+
+        swal({
+            title: "Estas seguro de eliminar la categoría "+nombre+"?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espera un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
                 });
-            }else{
-                 swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-                setTimeout(submitForm, 500);     
+
+                var request = $.ajax({
+                    url:"/herramienta/requestdeletecat",
+                    method:"POST",
+                    data: { id : id },
+                    processData: true,
+                });
+                //-------------------end de ajax---------------------------
+
+                //-------------peticion de respuesta de ajax------------------
+
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+                //-------------------end de respuesta ajax---------------------
+                return false;
+            } else {
+                swal("La accion fue cancelada!");
             }
         });
-
-        function submitForm() {
-            document.getElementById("submit_cat").submit()
-        }
-        //Agregar Categoría Script
-
-//Inicio Delete Ajax
-
-        $(".delete").click(function(){
-    	id=$(this).data('id');
-    	nombre=$(this).data('nombre');
-		swal({
-			title: "Estas seguro de eliminar la categoría "+nombre+"?",
-		  	icon: "warning",
-		  	buttons: true,
-		  	dangerMode: true,
-		})
-
-		.then((willDelete) => {
-			if (willDelete) {
-				 swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-
-            var request = $.ajax({
-            	url:"/herramienta/requestdeletecat",
-                method:"POST",
-                data: { id : id },
-                processData: true,
-            });
-//-------------------end de ajax---------------------------
-
-//-------------peticion de respuesta de ajax------------------
-            request.done(function(response) {
-                console.log(response);//imprime lo que responde el ajax
-                // alert
-                window.location.reload(true);
-            });
-//-------------------end de respuesta ajax---------------------
-             return false;
-
-              } else {
-              	swal("La accion fue cancelada!");
-              }
-          });
-	});
- // End Ajax
-
-
-
+    });
+    // End Ajax
 </script>

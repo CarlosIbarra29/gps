@@ -523,8 +523,7 @@
 		</div>
 	<?php } ?>
 
-
-  		<div class="col m2 s12"></div>
+	<div class="col m2 s12"></div>
 </div>
 <!-- End Buscador -->
 
@@ -885,16 +884,14 @@
 
 
 <!-- End Paginator -->
-
-
 <script type="text/javascript">
-	  $(document).ready(function(){
-    $('.modal').modal();
-    $('select').formSelect();
-     // $('.datepicker').datepicker();
-  });
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('select').formSelect();
+     	// $('.datepicker').datepicker();
+    });
 
-$("#addherramienta").click(function(){
+    $("#addherramienta").click(function(){
 	  	var name = document.getElementById("name").value;
 
             if(name == ""){
@@ -902,23 +899,23 @@ $("#addherramienta").click(function(){
                   title: "Para agregar una herramienta, llena los campos",
                 });
             }else{
-                 swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-                setTimeout(submitForm, 500);     
+                swal("Espera un momento, la información esta siendo procesada", {
+                	icon: "success",
+			 		buttons: false,
+			 	});
+			 	setTimeout(submitForm, 500);     
             }
         });
 
         function submitForm() {
             document.getElementById("submit_herramienta").submit()
-        }
+        }	
 
-//Inicio Delete Ajax
-
-        $(".delete").click(function(){
+    //Inicio Delete Ajax
+    $(".delete").click(function(){
     	id=$(this).data('id');
     	nombre=$(this).data('nombre');
+		
 		swal({
 			title: "Estas seguro de eliminar la herramienta "+nombre+"?",
 		  	icon: "warning",
@@ -939,27 +936,25 @@ $("#addherramienta").click(function(){
                 data: { id : id },
                 processData: true,
             });
-//-------------------end de ajax---------------------------
+		//-------------------end de ajax---------------------------
 
-//-------------peticion de respuesta de ajax------------------
+		//-------------peticion de respuesta de ajax------------------
             request.done(function(response) {
                 console.log(response);//imprime lo que responde el ajax
                 // alert
                 window.location.reload(true);
             });
-//-------------------end de respuesta ajax---------------------
+		//-------------------end de respuesta ajax---------------------
              return false;
 
-              } else {
-              	swal("La accion fue cancelada!");
-              }
-          });
-	});
- // End Ajax
+            } else {
+            	swal("La accion fue cancelada!");
+            }
+        });
+	});	// End Ajax
 
 	//Selected
-
-$('#mySelect').on('change', function() {
+	$('#mySelect').on('change', function() {
   		var value = $(this).val();
   		if(value==1){
 			$("#buscar_nombre").show();
@@ -1012,7 +1007,5 @@ $('#mySelect').on('change', function() {
   			$("#buscar_cat").show();
   		}
 	});	// End Selected
-
-	
 </script>
 

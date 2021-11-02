@@ -1,60 +1,61 @@
-<?php foreach ($this->reporte as $rep) { $herramienta =$rep['id_herramienta'];} ?>
+<?php foreach ($this->reporte as $rep) { 
+	$herramienta =$rep['id_herramienta'];
+} ?>
 <div class="row text-center">
 	<div class="col m12 s12 " style="margin-top: 10px;">
     	<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reparación de herramienta
 	</div>
 </div>
 
-
-		<div class="col m12 s12">
-			<form action="/herramienta/requestupdaterep" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_rep">
-			<?php foreach ($this->reporte as $rep) { ?>
+<div class="col m12 s12">
+	<form action="/herramienta/requestupdaterep" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_rep">
+		<?php foreach ($this->reporte as $rep) { ?>
 			<input type="hidden" name="idsr" value="<?php echo $rep["id_herramienta"]; ?>">
 			<input type="hidden" name="ids" value="<?php echo $rep["id_reporte"]; ?>">
-				<div class="file-field input-field col m12 s12">
-					    <div class="btn">
-					        <span>Foto de Herramienta a reparar</span>
-					        <input type="file" name="url">
-					        <input type="hidden" name="imahidden" value="<?php echo $rep["orden_compra"]; ?>">   
-					    </div>
-					    <div class="file-path-wrapper">
-					        <input class="file-path validate" type="text">
-					    </div>
-				  </div>
 
-				<div class="row">
-			        <div class="input-field col m12 s12">
-			          	<i class="material-icons prefix">account_circle</i>
-			          	<input id="name" type="text" name="name" value="<?php echo $rep["motivo"]; ?>" class="validate" required>
-			          	<label for="name">* Motivo:</label>
-			        </div> 
-		      	</div>
+			<div class="file-field input-field col m12 s12">
+				<div class="btn">
+					<span>Foto de Herramienta a reparar</span>
+					<input type="file" name="url">
+					<input type="hidden" name="imahidden" value="<?php echo $rep["orden_compra"]; ?>">   
+				</div>
 
-		      	
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+			    </div>
+			</div>
 
-				  <div class="row">
-			        <div class="input-field col m6 s12">
-			          	<i class="material-icons prefix">account_circle</i>
-			          	<input id="costo" type="text" name="costo" value="<?php echo $rep["costo"]; ?>" class="validanumeros" required>
-			          	<label for="costo">* Costo:</label>
-			        </div> 
-			        <div class="input-field col m6 s12">
-						<i class="material-icons prefix">today</i>
-						<input type="date" id="fecha" name="fecha"  value="<?php echo $rep["fecha_inicio"]; ?>" class="validate">
-						<label for="fecha">*Fecha de reparación: dd/mm/yyyy</label>
-					</div>
-		      	</div>
-		     <?php } ?>
-		    </form>
-		</div>
-
-		<div class="input-field col m12 s12 text-right">
 			<div class="row">
-				<a href="/herramienta/herramientadetail/id/<?php echo $herramienta; ?>" class="waves-effect red waves-light btn">Cancelar</a>
-				<button  id="updrep" class="waves-effect waves-light btn">Actualizar</button>
-			</div>	
-		</div>
+			    <div class="input-field col m12 s12">
+			        <i class="material-icons prefix">account_circle</i>
+			        <input id="name" type="text" name="name" value="<?php echo $rep["motivo"]; ?>" class="validate" required>
+			        <label for="name">* Motivo:</label>
+			    </div> 
+		    </div>
 
+		    <div class="row">
+		    	<div class="input-field col m6 s12">
+			        <i class="material-icons prefix">account_circle</i>
+			       	<input id="costo" type="text" name="costo" value="<?php echo $rep["costo"]; ?>" class="validanumeros" required>
+			        <label for="costo">* Costo:</label>
+			    </div>
+
+			    <div class="input-field col m6 s12">
+					<i class="material-icons prefix">today</i>
+					<input type="date" id="fecha" name="fecha"  value="<?php echo $rep["fecha_inicio"]; ?>" class="validate">
+					<label for="fecha">*Fecha de reparación: dd/mm/yyyy</label>
+				</div>
+		    </div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/herramienta/herramientadetail/id/<?php echo $herramienta; ?>" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="updrep" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -81,7 +82,6 @@
 			});
             setTimeout(submitForm, 500);     
         }
-
     });
 
 

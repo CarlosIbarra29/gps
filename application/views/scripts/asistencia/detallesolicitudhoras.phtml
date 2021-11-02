@@ -11,13 +11,18 @@
  		$comentario_rechazo = $key['comentario'];
  	} 
 ?>
+<style type="text/css">
+	.table_wrapper{
+        overflow-x: auto;
+    }
+</style>
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
         <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
     </div>
     <div class="col m6 s6 text-right">
-    	<a class="btn" href="/asistencia/pdfasistenciasolicitud/id/<?php echo $this->id_solicitud; ?>"><i class="material-icons right">insert_drive_file</i>Documento</a>
+    	<a class="btn" href="/asistencia/pdfasistenciasolicitud/id/<?php echo $this->id_solicitud; ?>"><i class="material-icons right">insert_drive_file</i>Archivo</a>
     </div>
 </div>
 
@@ -172,7 +177,7 @@
 	        		</div>
 	        		<div class="col m6 s6 text-right">
 	        			<?php if($asistencia_status == 0){ ?>
-<!-- 	        				<a class="btn modal-trigger" href="#modal4"><i class="material-icons left">access_time</i>Modificar Horas</a> -->
+	        				<!-- <a class="btn modal-trigger" href="#modal4"><i class="material-icons left">access_time</i>Modificar Horas</a> -->
 	        			<?php } ?>
 	        		</div>
 	        	</div>
@@ -186,7 +191,7 @@
 	        	<?php } ?>
 
 	        	<div class="row" style="margin-top: 20px;">
-	        		<div class="col m12 s12">
+	        		<div class="col m12 s12 table_wrapper">
 					    <table class="table text-left table-hover">
 					      <thead>
 					        <tr>
@@ -221,11 +226,11 @@
 			                    </td>
 
 			                    <td>
-<!-- 							        <div class="input-field col s12">
+			                    <!-- <div class="input-field col s12">
 							          <input id="first_name" name="hora_extra[]" value="<?php echo $usr['hora_extra']; ?>" max="100" min="0" type="hidden" class="validate">
 
 							          <input type="hidden" name="personal[]" value="<?php echo $usr['id_user']; ?>">
- -->			
+							     -->			
  									<?php if($asistencia_status == 0){ ?>
  										<?php if($usr['status_user'] == 1){ ?>
 	 									    <p>
