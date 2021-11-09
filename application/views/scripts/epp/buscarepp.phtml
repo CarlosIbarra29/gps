@@ -46,7 +46,6 @@ function isActhref($nameBtn,$urlname){
 				}else{
 					$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}&&nombre={$name}\">{$this->total}</a></li>";
 				}
-
 			}           
 		}
 	}
@@ -121,13 +120,13 @@ function isActhref($nameBtn,$urlname){
 	<div class="input-field col m4 s12">
         <select id="mySelect">
             <?php if($this->option == 1){ ?>
-            <option value="1" selected>Nombre EPP</option>
-            <option value="2">Talla</option>
+            	<option value="1" selected>Nombre EPP</option>
+            	<option value="2">Talla</option>
             <?php } ?>
 
             <?php if($this->option == 2){ ?>
-              <option value="1">Nombre EPP</option>
-              <option value="2" selected>Talla</option>
+              	<option value="1">Nombre EPP</option>
+             	<option value="2" selected>Talla</option>
             <?php } ?>
         </select>
         <label>Buscador</label>
@@ -475,6 +474,4 @@ function isActhref($nameBtn,$urlname){
 		}
 	});
 	// End Selected
-
 </script>
-

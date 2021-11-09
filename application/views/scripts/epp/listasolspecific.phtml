@@ -49,8 +49,6 @@
                 
             }           
         }
-
-
  ?>
 
 
@@ -120,7 +118,6 @@
   			<?php }else{ ?>
   				<li class="tab col s3"><a href="/epp/listasolspecific/status/3"><h4>Surtidas</h4></a></li>
   			<?php } ?>
-
   		</ul>
 	</div>
 </div>
@@ -269,13 +266,12 @@
 
 					</tr>
 			    <?php } }else{ ?>
-			    </tbody> 
-			    <tbody>
-			        <tr>
-			            <td class="text-center" colspan="6"><h4>No hay solicitudes de EPP.</h4></td>
-			        </tr>
-			    </tbody>
-			                
+				    </tbody> 
+				    <tbody>
+				        <tr>
+				            <td class="text-center" colspan="6"><h4>No hay solicitudes de EPP.</h4></td>
+				        </tr>
+				    </tbody>    
 			    <?php } ?>
 			</table>
 		</div>
@@ -390,10 +386,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscarspf/status/"+status+"/personal/"+personal+"/op/1";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listasolbuscarspf/status/"+status+"/personal/"+personal+"/op/1";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});	
 
@@ -413,10 +409,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscarspf/status/"+status+"/id/"+id+"/op/2";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listasolbuscarspf/status/"+status+"/id/"+id+"/op/2";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
 
@@ -436,12 +432,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listasolbuscarspf/status/"+status+"/usuario/"+id+"/op/3";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listasolbuscarspf/status/"+status+"/usuario/"+id+"/op/3";
+		  	} else {
+		   		swal("La asignacion fue cancelada!");
+		  	}
 		});
-
    	});
-
 </script>

@@ -1,10 +1,11 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-	if($nameBtn==1 && $urlname==null){
-		return "active"; 
+	function isActhref($nameBtn,$urlname){
+		if($nameBtn==1 && $urlname==null){
+			return "active"; 
+		}
+		return ($nameBtn == $urlname)?"active":"";
 	}
-	return ($nameBtn == $urlname)?"active":"";
-}
+	
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else {
@@ -19,6 +20,7 @@ $url="";
 if($this->total== 1){
 	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
 }else{
+
 	if ($this->total >= 1 && $pagina <= $this->total) {
 
 		if (isset($_GET['pagina']) && $this->actpage != 1) {
@@ -44,7 +46,6 @@ if($this->total== 1){
 		}else{
 			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
 		}
-
 	}           
 }
 
@@ -68,7 +69,6 @@ if($this->total== 1){
  <?php 
 	$status =  $this->status_cobro;
 ?>
-
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
@@ -278,7 +278,4 @@ if($this->total== 1){
 		  }
 		});
    	});	
-
-
 </script>
-

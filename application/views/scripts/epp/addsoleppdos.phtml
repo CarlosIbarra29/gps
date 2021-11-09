@@ -1,7 +1,6 @@
 <?php 
-date_default_timezone_set('America/Mexico_City');
-$hoy = date("Y-m-d");
-
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("Y-m-d");
 ?>
 
 <div class="row" style="margin-top: 10px;">
@@ -147,13 +146,8 @@ $hoy = date("Y-m-d");
                 <div class="input-field col m2 s12 text-center">
 					<button type="button" id="asignareppsol" class="btn">Guardar</button>	
 				</div>
-      
             </div>
-            
         </form>
-
-
-		
 	</div>
 </div>
 <!-- End Epp por Asignar -->
@@ -245,7 +239,7 @@ $hoy = date("Y-m-d");
 <!-- End Terminar Solicitud -->
 
 <script src="/js/materialize.min.js"></script>
-  <script type="text/javascript">
+<script type="text/javascript">
     
     $(document).ready(function(){
     	$('.datepicker').datepicker();
@@ -267,11 +261,11 @@ $hoy = date("Y-m-d");
               title: "Para continuar debes agregar minímo un EPP",
             });
         }else{
-          swal("Espere un momento, la información esta siendo procesada", {
-            icon: "success",
-            buttons: false,
-          }); 
-          setTimeout(submitForm, 1500);     
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitForm, 1500);     
         }
     });
 
@@ -388,15 +382,14 @@ $hoy = date("Y-m-d");
                 	// alert
                 	window.location.reload(true);
             	});
-					//-------------------end de respuesta ajax---------------------
-            	
+					//-------------------end de respuesta ajax---------------------     	
             	return false;
 
             } else {
             	swal("El cambio de status fue cancelado!");
             }
         });
-	 });
+	});
 
 </script>
 

@@ -1,24 +1,24 @@
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
         <?php foreach ($this->personal as $regresar) { ?>
-        <a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+        	<a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
         <?php } ?>    
     </div>
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar de EPP
-  </div>
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar de EPP
+	</div>
 </div>
 
 
 <div class="col m12 s12">
 	<form action="/epp/requestupdateasig" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitepp">
 		<?php foreach ($this->asignado as $epp) { ?>
-		<input type="hidden" name="ids" value="<?php echo $epp["id"]; ?>">
-		<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
-		<input type="hidden" name="id_epp" value="<?php echo $epp["id_epp"]; ?>">
+			<input type="hidden" name="ids" value="<?php echo $epp["id"]; ?>">
+			<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
+			<input type="hidden" name="id_epp" value="<?php echo $epp["id_epp"]; ?>">
 			<div class="input-field col m12 s12">
 				<i class="material-icons prefix">event_available</i>
 				<select id="tipo" name="tipo" required>
@@ -37,7 +37,7 @@
 			     <label for="name">* Nombre:</label>
 			 </div> 
 
-		<!-- 	<div class="input-field col m6 s12">
+			<!-- <div class="input-field col m6 s12">
 			    <i class="material-icons prefix">account_circle</i>
 			    <input id="talla" type="text" name="talla" value="<?php echo $epp["talla"]; ?>" class="validate"  disabled required>
 			    <label for="talla">* Talla:</label>
@@ -74,17 +74,15 @@
 <div class="input-field col m12 s12 text-right">
 	<div class="row">
 		<?php foreach ($this->personal as $regresar) { ?>
-		<a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="waves-effect red waves-light btn">Cancelar</a>
+			<a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="waves-effect red waves-light btn">Cancelar</a>
 		<?php } ?>
 		<button  id="updepp" class="waves-effect waves-light btn">Actualizar</button>
 	</div>	
 </div>
 
-
 <script type="text/javascript">
 
-
-    $("#updepp").click(function(){
+	$("#updepp").click(function(){
         var name = document.getElementById("name").value;
 
         if(name == ""){
@@ -92,13 +90,12 @@
                 title: "Para editar el epp agrega un nombre",
             });
         }else{
-             swal("Espera un momento, la información esta siendo procesada", {
+            swal("Espera un momento, la información esta siendo procesada", {
 				icon: "success",
 			 	buttons: false,
 			});
             setTimeout(submitForm, 500);     
         }
-
     });
 
 

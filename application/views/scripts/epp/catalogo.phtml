@@ -1,53 +1,54 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-	if($nameBtn==1 && $urlname==null){
-		return "active"; 
+	function isActhref($nameBtn,$urlname){
+		if($nameBtn==1 && $urlname==null){
+			return "active"; 
+		}
+		return ($nameBtn == $urlname)?"active":"";
 	}
-	return ($nameBtn == $urlname)?"active":"";
-}
 	if (isset($_GET['pagina'])) {
 		$pagina = $_GET['pagina'];
 	} else { 
 		$pagina = 1;
 	}  
 ?> 
+
 <?php  
 
 $links = "";
 $url="";
 
-if($this->total== 1){
-	$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-}else{
-	if ($this->total >= 1 && $pagina <= $this->total) {
+	if($this->total== 1){
+		$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+	}else{
 
-		if (isset($_GET['pagina']) && $this->actpage != 1) {
-			$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-		}else{
-			$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-		}
-
-		$i = max(2, $pagina - 3);
-		if ($i > 2)
-			$links .= " <li><a>...</a></li> ";
-		for (; $i < min($pagina + 3, $this->total); $i++) {
-			if($i ==$this->actpage){
-				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+		if ($this->total >= 1 && $pagina <= $this->total) {
+			
+			if (isset($_GET['pagina']) && $this->actpage != 1) {
+				$links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
 			}else{
-				$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+				$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
 			}
-		}
-		if ($i != $this->total)
-			$links .= " <li><a>...</a></li> ";
-		if($i ==$this->actpage){
-			$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
-		}else{
-			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
-		}
 
-	}           
-}
+			$i = max(2, $pagina - 3);
 
+			if ($i > 2)
+				$links .= " <li><a>...</a></li> ";
+			for (; $i < min($pagina + 3, $this->total); $i++) {
+				if($i ==$this->actpage){
+					$links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+				}else{
+					$links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+				}
+			}
+			if ($i != $this->total)
+				$links .= " <li><a>...</a></li> ";
+			if($i ==$this->actpage){
+				$links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+			}else{
+				$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+			}
+		}           
+	}
 ?>
 
 <style type="text/css">
@@ -103,7 +104,6 @@ if($this->total== 1){
 <!-- End botones -->
  
 <!-- Notificaciones -->
-
 <div class="col m12 s12">
     <div class="row">
         <div class="col m12 s12" id="alert_box">
@@ -330,17 +330,17 @@ if($this->total== 1){
 							</td>
 						</tr>
 					</tbody>
-				<?php } }else{?>
-					<tbody>
-						<td></td>
-						<td></td>
-						<td>
-							<h4>No se encontró EPP</h4>
-						</td>
-						<td></td>
-						<td></td>
-					</tbody>
-				<?php } ?>
+			<?php } }else{?>
+				<tbody>
+					<td></td>
+					<td></td>
+					<td>
+						<h4>No se encontró EPP</h4>
+					</td>
+					<td></td>
+					<td></td>
+				</tbody>
+			<?php } ?>
 		</table>
 	</div>
 </div>

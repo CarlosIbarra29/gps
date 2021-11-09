@@ -9,14 +9,14 @@
 </style>
 
 <?php 
-date_default_timezone_set('America/Mexico_City');
-$hoy = date("Y-m-d");
-
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("Y-m-d");
 ?>
 
-<?php foreach ($this->personal_epp as $peep) { $id_p = $peep['id'];  } ?>
+<?php foreach ($this->personal_epp as $peep) { 
+    $id_p = $peep['id'];  
+} ?>
 <input type="hidden" name="id_personal" id="id_personal" value="<?php echo $this->idpersonal; ?>">
-
 
 
 <!-- INICIO DETAIL-->
@@ -30,7 +30,7 @@ $hoy = date("Y-m-d");
             <?php } ?> 
         <?php } ?>   
     </div>
-     <div class="col m7 s7 text-right">
+    <div class="col m7 s7 text-right">
         <?php if ($rol_user == 13 || $rol_user == 1 || $rol_user == 8 || $rol_user == 9) { ?>
             <a href="/epp/catalogo" class="waves-effect darken-1 waves-light btn">Inventario</a>
             <a href="/epp/personal" class="waves-effect darken-1 waves-light btn">Buscar Personal</a>
@@ -41,11 +41,10 @@ $hoy = date("Y-m-d");
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Epp Asignado
-  </div>
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Epp Asignado
+    </div>
 </div>
-
 <!-- END INICIO DETAIL-->
 
 <!-- Inicio Tabla Personal -->
@@ -119,24 +118,23 @@ $hoy = date("Y-m-d");
                 <a class="waves-effect green darken-1 waves-light lighten-4 btn modal-trigger" href="#modalasignaepp">Asignar EPP</a>
             </div>
         </div>
-        
+
         <?php foreach ($this->personal_epp as $peep) {  ?>
             <?php if ($this->eppasignado) {  ?>
-        <div class="col m4 s12">
-             <div class="input-field col m12 s12">
-                <a class="waves-effect darken-1 waves-light lighten-4 btn modal-trigger" href="/epp/responsiva/id/<?php echo $peep['id']; ?>">Responsiva</a>
-            </div>
-        </div>
+                <div class="col m4 s12">
+                    <div class="input-field col m12 s12">
+                        <a class="waves-effect darken-1 waves-light lighten-4 btn modal-trigger" href="/epp/responsiva/id/<?php echo $peep['id']; ?>">Responsiva</a>
+                    </div>
+                </div>
             <?php } else {} ?>
-        <div class="col m4 s12">
-             <div class="input-field col m12 s12">
-                <a class="waves-effect darken-1 waves-light lighten-4 btn modal-trigger" href="/epp/historial/id/<?php echo $peep['id']; ?>">Historial Responsiva</a>
+            <div class="col m4 s12">
+                <div class="input-field col m12 s12">
+                    <a class="waves-effect darken-1 waves-light lighten-4 btn modal-trigger" href="/epp/historial/id/<?php echo $peep['id']; ?>">Historial Responsiva</a>
+                </div>
             </div>
-        </div>
         <?php } ?>
     </div>
 </div>
-
 <!--End Botones -->
 
 <!-- Modal Asignar Epp -->
@@ -338,10 +336,7 @@ $hoy = date("Y-m-d");
         </div>
     </div>
 </div>
-
- 
 <!-- End Tabla Epp-->
-
 
 <!-- <script src="/js/lightbox.js"></script> -->
 <script type="text/javascript">
@@ -549,8 +544,5 @@ $hoy = date("Y-m-d");
         document.getElementById('input-tallas').value='';
 
     }
-
-
-
 </script>
 

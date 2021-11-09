@@ -44,7 +44,6 @@ if($this->total== 1){
 		}else{
 			$links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
 		}
-
 	}           
 }
 
@@ -163,7 +162,6 @@ if($this->total== 1){
 				</tr> 
 			</thead>
 			<?php if ($this->paginator ) {
-
 				foreach ($this->paginator as $eppcs) { ?>
 					<tbody>
 						<tr>
@@ -181,25 +179,23 @@ if($this->total== 1){
 							</td>
 						</tr>
 					</tbody>
-				<?php } }else{?>
-					<tbody>
-						<td></td>
-						<td></td>
-						<td>
-							<h4>Ningún Personal debe EPP</h4>
-						</td>
-						<td></td>
-						<td></td>
-					</tbody>
-				<?php } ?>
+			<?php } }else{?>
+				<tbody>
+					<td></td>
+					<td></td>
+					<td>
+						<h4>Ningún Personal debe EPP</h4>
+					</td>
+					<td></td>
+					<td></td>
+				</tbody>
+			<?php } ?>
 		</table>
 	</div>
 </div>
 <!-- End Table Epp -->
 
-
-
-	<!-- Paginador -->
+<!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
 		<div class="white-box">
@@ -265,13 +261,10 @@ if($this->total== 1){
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/eppcostobuscador/status/"+status+"/nombre/"+name+"";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/eppcostobuscador/status/"+status+"/nombre/"+name+"";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});	
-
-
 </script>
-

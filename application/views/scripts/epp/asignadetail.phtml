@@ -8,16 +8,16 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
-        <?php foreach  ($this->personal as $regresar) { ?>
-        <a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+    	<?php foreach  ($this->personal as $regresar) { ?>
+    		<a href="/epp/asignarepp/id/<?php echo $regresar['id_personal'] ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
         <?php } ?>    
     </div>
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de EPP
-  </div>
+	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+		<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles de EPP
+  	</div>
 </div>
 
 <div class="row" >
@@ -27,9 +27,7 @@
 		<?php } ?>
 	</div>
 </div>
-
 <!-- END INICIO DETAIL-->
-
 
 <!-- Inicio Informacion General-->
 <div class="col m12 s12 text-center">
@@ -99,8 +97,8 @@
 <script type="text/javascript">
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+    	'resizeDuration': 200,
+      	'wrapAround': true
     });
 
 	$(document).ready(function(){
@@ -152,6 +150,4 @@
             }
         });
 	});
-
-
 </script>

@@ -3,12 +3,12 @@
 		overflow-x: auto;
 	} 
 
-	 .modal-info {
+	.modal-info {
 	 	width: 450px !important;
 	 	/*height: 300px !important;*/
- /*     max-width: 100% !important;
-      max-height: 100% !important; */
-    /*  overflow-y: auto;*/
+ 		/* max-width: 100% !important;
+     	 max-height: 100% !important; */
+    	/*  overflow-y: auto;*/
     } 
 </style>
 
@@ -22,9 +22,9 @@
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de Responsivas
-  </div>
+  	<div class="col m12 s12 text-center" style="margin-top: 10px;">
+    	<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Historial de Responsivas
+  	</div>
 </div>
 
 
@@ -32,13 +32,12 @@
 	<div class="col m12 s12 text-left" style="margin-top: 10px;">
 		<?php foreach ($this->personales as $per) { ?>
 			<span>Responsivas de <br><b><?php echo $per['nombre'];?> <?php echo $per['apellido_pa'];?> <?php echo $per['apellido_ma'];?></b></span>
-			  	<?php } ?>
+		<?php } ?>
 	</div>
 </div>
 <!-- END INICIO DETAIL-->
 
 <!-- Añadir Responsiva -->
-
 <div class="col m12 s12">
 	<form action="/epp/requestresponsiva" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_res">
 		<?php foreach ($this->personales as $id_per) { ?>
@@ -46,14 +45,14 @@
 		<?php } ?>
 		<div class="file-field input-field col m8 s12">
 			<div class="row">
-			<div class="btn">
-				<span>Añade Responsiva</span>
-				<input type="file" name="url">
+				<div class="btn">
+					<span>Añade Responsiva</span>
+					<input type="file" name="url">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
 			</div>
-			<div class="file-path-wrapper">
-				<input class="file-path validate" type="text">
-			</div>
-		</div>
 		</div>
 		<div class="input-field col m4 s12 text-center">
 			<div class="row">
@@ -62,7 +61,6 @@
 		</div>
 	</form>
 </div>
-
 <!-- End Añadir Responsiva -->
 
 <!-- Inicio Tabla responsivas -->
@@ -114,23 +112,23 @@
 											<?php } ?>
 										</tr>
 									</tbody>
-								<?php } }else{ ?>
-									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-											<td>No se encontraron datos</td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								<?php } ?>
-							</table>
-						</div>
+							<?php } }else{ ?>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+										<td>No se encontraron datos</td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							<?php } ?>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
 <!-- End Tabla responsivas-->
 
@@ -162,8 +160,8 @@
 <script type="text/javascript">
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+      	'resizeDuration': 200,
+      	'wrapAround': true
     });
 
     $(document).ready(function(){
@@ -194,14 +192,14 @@
     }
 
     $(".info_res").click(function(){
-      var id = $(this).data('id');
-      var imagen = $(this).data('imagen');
-      var imagen2 = $(this).data('imagen');
-      var img = "/"+imagen;
-      var img2 = "/"+imagen2;
+      	var id = $(this).data('id');
+      	var imagen = $(this).data('imagen');
+      	var imagen2 = $(this).data('imagen');
+      	var img = "/"+imagen;
+      	var img2 = "/"+imagen2;
      
-      document.getElementById("imagen").src = img;
-      document.getElementById("imagen2").href = img2;
+      	document.getElementById("imagen").src = img;
+      	document.getElementById("imagen2").href = img2;
     }); 
 
 </script>

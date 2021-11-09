@@ -49,8 +49,6 @@
                 
             }           
         }
-
-
  ?>
 
 
@@ -155,49 +153,49 @@
 				<?php
 				if ($this->paginator) { 
 				foreach ($this->paginator as $usr) { ?>
-				<tbody>
-					<tr>
-						<td>
-							<h5><?php echo $usr['id']; ?></h5>
-						</td>
-						<td>
-							<h5><?php echo $usr['name_usuario']; ?> </h5>
-						</td>
-						<td>
-							<h5><?php echo $usr['name_proveedor']; ?></h5>
-						</td>
-						<td>
-							<h5><?php echo $usr['fecha_recibido']; ?></h5>
-						</td>
-						<td>
-							<?php if($usr['status_stock'] == 1){ ?>
-								<div class="chip" id="inactivo_personal">
-							    	<img src="/img/correct.png" >
-							    	<span style="font-size: 11px;">Completo</span>
-							  	</div>
-							<?php } ?>
+					<tbody>
+						<tr>
+							<td>
+								<h5><?php echo $usr['id']; ?></h5>
+							</td>
+							<td>
+								<h5><?php echo $usr['name_usuario']; ?> </h5>
+							</td>
+							<td>
+								<h5><?php echo $usr['name_proveedor']; ?></h5>
+							</td>
+							<td>
+								<h5><?php echo $usr['fecha_recibido']; ?></h5>
+							</td>
+							<td>
+								<?php if($usr['status_stock'] == 1){ ?>
+									<div class="chip" id="inactivo_personal">
+								    	<img src="/img/correct.png" >
+								    	<span style="font-size: 11px;">Completo</span>
+								  	</div>
+								<?php } ?>
 
-							<?php if($usr['status_stock'] == 2){ ?>
-								<div class="chip" id="activo_personal">
-							    	<img src="/img/naranja.png" >
-							    	<span style="font-size: 10px;">Incompleto</span>
-							  	</div>
-							  	
-							<?php } ?>
-						</td>
-				
-						<td class="text-center">
-							<a href="/epp/pedidodetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
-						</td>
+								<?php if($usr['status_stock'] == 2){ ?>
+									<div class="chip" id="activo_personal">
+								    	<img src="/img/naranja.png" >
+								    	<span style="font-size: 10px;">Incompleto</span>
+								  	</div>
+								  	
+								<?php } ?>
+							</td>
+					
+							<td class="text-center">
+								<a href="/epp/pedidodetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+							</td>
 
-					</tr>
+						</tr>
 			    <?php } }else{ ?>
-			    </tbody> 
-			    <tbody>
+			    	</tbody> 
+			    	<tbody>
 			        <tr>
 			            <td class="text-center" colspan="6"><h4>No hay pedidos de EPP.</h4></td>
 			        </tr>
-			    </tbody>
+			    	</tbody>
 			                
 			    <?php } ?>
 			</table>
@@ -281,10 +279,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listapedidobuscar/statusped/"+statusped+"/op/1";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listapedidobuscar/statusped/"+statusped+"/op/1";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});	
 
@@ -304,10 +302,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listapedidobuscar/id/"+id+"/op/2";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listapedidobuscar/id/"+id+"/op/2";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
    	});
 
@@ -326,12 +324,10 @@
 					icon: "success",
 					buttons: false,
 				}); 
-			window.location.href = "/epp/listapedidobuscar/proveedor/"+id+"/op/3";
-		  } else {
-		    swal("La asignacion fue cancelada!");
-		  }
+				window.location.href = "/epp/listapedidobuscar/proveedor/"+id+"/op/3";
+		  	} else {
+		    	swal("La asignacion fue cancelada!");
+		  	}
 		});
-
    	});
-
 </script>

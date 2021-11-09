@@ -1,6 +1,5 @@
 <?php foreach ($this->user as $value) { 
 	$rol_user = $value['fkroles'];
-	// echo $rol_user;
 } ?>
 
 <div class="row" style="margin-top: 10px;">
@@ -28,43 +27,42 @@
 	<?php } else { ?>
 		<form action="/epp/requestudpsolepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitepp">
 	<?php } ?>
-			<?php foreach ($this->asignado as $epp) { ?>
-			<input type="hidden" name="idsol" value="<?php echo $epp["id_sol"]; ?>">
-			<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
-				<div class="input-field col m12 s12">
-					<i class="material-icons prefix">event_available</i>
-					<select id="tipo" name="tipo" disabled required>
-						<?php foreach ($this->tipo as $t) { 
+	<?php foreach ($this->asignado as $epp) { ?>
+		<input type="hidden" name="idsol" value="<?php echo $epp["id_sol"]; ?>">
+		<input type="hidden" name="idea" value="<?php echo $epp["idea"]; ?>">
+			<div class="input-field col m12 s12">
+				<i class="material-icons prefix">event_available</i>
+				<select id="tipo" name="tipo" disabled required>
+					<?php foreach ($this->tipo as $t) { 
 						if ($t['id_tipo']==$epp['tipo_epp']) { ?>
 						    <option value="<?php echo $t["id_tipo"]; ?>" selected ><?php echo $t["nombre"]; ?></option>
 						<?php } if ($t['id_tipo']!=$epp['tipo_epp']) { ?>
 				            <option value="<?php echo $t['id_tipo']; ?>"><?php echo $t["nombre"]; ?></option>
-						<?php } } ?>  
-					</select>
-					<label>Tipo de EPP</label>
-				</div>
-				<div class="input-field col m6 s12">
-				     <i class="material-icons prefix">accessibility</i>
-				     <input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" disabled required>
-				     <label for="name">* Nombre:</label>
-				 </div> 
+					<?php } } ?>  
+				</select>
+				<label>Tipo de EPP</label>
+			</div>
+			
+			<div class="input-field col m6 s12">
+				<i class="material-icons prefix">accessibility</i>
+				<input id="name" type="text" name="name" value="<?php echo $epp["nombre"]; ?>" class="validate" disabled required>
+				<label for="name">* Nombre:</label>
+			</div> 
 
-				<div class="input-field col m6 s12">
-					<i class="material-icons prefix">photo_size_select_small</i>
-					<select id="tallaget" name="tallaget" required>
-						<?php foreach ($this->tallaget as $talla) { 
+			<div class="input-field col m6 s12">
+				<i class="material-icons prefix">photo_size_select_small</i>
+				<select id="tallaget" name="tallaget" required>
+					<?php foreach ($this->tallaget as $talla) { 
 						if ($talla['idepp']==$epp['id_epp']) { ?>
 						    <option value="<?php echo $talla["idepp"]; ?>" selected><?php echo $talla["talla"]; ?></option>
 						<?php } if ($talla['idepp']!=$epp['id_epp']) { ?>
 				            <option value="<?php echo $talla['idepp']; ?>" ><?php echo $talla["talla"]; ?></option>
-						<?php } } ?>  
-					</select>
-					<label>* Talla:</label>
-				</div>
-
-						  
-			<?php } ?>
-		</form>
+					<?php } } ?>  
+				</select>
+				<label>* Talla:</label>
+			</div>	  
+		<?php } ?>
+	</form>
 </div>
 
 <div class="input-field col m12 s12 text-right">
@@ -125,9 +123,7 @@
 			});
             setTimeout(submitForm1, 500);     
         }
-
     });
-
 
     function submitForm1() {
         document.getElementById("submiteppcont").submit()

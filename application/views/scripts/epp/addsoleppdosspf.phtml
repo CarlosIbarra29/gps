@@ -1,7 +1,6 @@
 <?php 
-date_default_timezone_set('America/Mexico_City');
-$hoy = date("Y-m-d");
-
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("Y-m-d");
 ?>
 
 <div class="row" style="margin-top: 10px;">
@@ -97,7 +96,6 @@ $hoy = date("Y-m-d");
 </div>
 <!-- Epp asignado EPP -->
 
-
 <!-- Epp por Asignar  -->
 <div class="col m12 s12">
 	<div class="row">
@@ -147,13 +145,8 @@ $hoy = date("Y-m-d");
                 <div class="input-field col m2 s12 text-center">
 					<button type="button" id="asignareppsol" class="btn">Guardar</button>	
 				</div>
-      
             </div>
-            
         </form>
-
-
-		
 	</div>
 </div>
 <!-- End Epp por Asignar -->
@@ -267,11 +260,11 @@ $hoy = date("Y-m-d");
               title: "Para continuar debes agregar minímo un EPP",
             });
         }else{
-          swal("Espere un momento, la información esta siendo procesada", {
-            icon: "success",
-            buttons: false,
-          }); 
-          setTimeout(submitForm, 1500);     
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitForm, 1500);     
         }
     });
 
@@ -396,8 +389,7 @@ $hoy = date("Y-m-d");
             	swal("El cambio de status fue cancelado!");
             }
         });
-	 });
-
+	});
 </script>
 
 

@@ -9,12 +9,11 @@
 </div>
 
 <div class="row" style="margin-top: 10px; margin-top:15px;">
-  <div class="col m12 s12 text-center">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Pedido de EPP/Stock</span>
-  </div>
+	<div class="col m12 s12 text-center">
+		<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Crear Pedido de EPP/Stock</span>
+  	</div>
 </div>
 
-  
 
 <div class="row">
 	<div class="col m12 s12">
@@ -65,45 +64,44 @@
 </div>
 
 
-	<script type="text/javascript">
-  		$(document).ready(function(){
-    		$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
-    		$('select').formSelect();
-    		$('.modal').modal();
-    		$('.validanumeros').keypress(function(e) {
+<script type="text/javascript">
+  	
+  	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    	$('select').formSelect();
+    	$('.modal').modal();
+    	$('.validanumeros').keypress(function(e) {
 			if(isNaN(this.value + String.fromCharCode(e.charCode))) 
 				return false;
 		})
 		.on("cut copy paste",function(e){
 			e.preventDefault();
 		});
-  		});
+  	});
 
 
-		$("#enviar_pedido").click(function(){
+	$("#enviar_pedido").click(function(){
 
-			var fecha = document.getElementById("fecharecibido").value;
-			var proveedor = document.getElementById("proveedor").value;
-			var comentarios = document.getElementById("comentarios").value;
-			var url = document.getElementById("url").value;
+		var fecha = document.getElementById("fecharecibido").value;
+		var proveedor = document.getElementById("proveedor").value;
+		var comentarios = document.getElementById("comentarios").value;
+		var url = document.getElementById("url").value;
 
-			if(fecha == "" || proveedor == 0 || comentarios == "" || url == ""){
-	            swal({
-	             	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
-	            });
+		if(fecha == "" || proveedor == 0 || comentarios == "" || url == ""){
+	        swal({
+	         	title: "Para continuar debes agregar informacion en los campos marcados por un '*'",
+	        });
 
-	    	}else{
-	    		swal("Espere un momento, la información esta siendo procesada", {
-					icon: "success",
-					buttons: false,
-				}); 
-	    		setTimeout(submit_ser, 1000);   
-	    	}
-		});
+	    }else{
+	    	swal("Espere un momento, la información esta siendo procesada", {
+				icon: "success",
+				buttons: false,
+			}); 	    		
+			setTimeout(submit_ser, 1000);   
+	    }
+	});
 
-		function submit_ser() { 
-			document.getElementById("submit_pedidoepp").submit() 
-		}
-
-
-	</script>
+	function submit_ser() { 
+		document.getElementById("submit_pedidoepp").submit() 
+	}
+</script>
