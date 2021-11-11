@@ -1,5 +1,5 @@
 <style type="text/css">
-  .oculto{display: none;}
+    .oculto{display: none;}
 </style>
 
 <div class="row" style="margin-top: 10px;">
@@ -10,7 +10,7 @@
 
 <div class="row" style="margin-top: 10px; margin-top:15px;">
     <div class="col m12 s12 text-center">
-      <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pedido de EPP/Stock Paso 1</span>
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pedido de EPP/Stock Paso 1</span>
     </div>
 </div> 
 
@@ -18,47 +18,45 @@
 <div class="row" style="margin-top: 19px;">
     <div class="col m12 s12"> 
         <form action="/epp/requestupdpedidoepp" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submitudp">
-          <input type="hidden" name="ids" value="<?php echo $this->ids; ?>">
-          <?php foreach ($this->pedidos as $pedidoepp){ ?>
-              <!-- <div class="input-field col m6 s12"></div> -->
-             
+            <input type="hidden" name="ids" value="<?php echo $this->ids; ?>">
+            <?php foreach ($this->pedidos as $pedidoepp){ ?>
+            <!-- <div class="input-field col m6 s12"></div> -->
 
-              <div class="input-field col m6 s12">
-                  <input id="fecharecibido" name="fecharecibido" value="<?php echo $pedidoepp['fecha_recibido']; ?>" type="text" class="datepicker">
-                  <label for="fecharecibido">* Fecha Requerida</label>
-              </div>
+                <div class="input-field col m6 s12">
+                    <input id="fecharecibido" name="fecharecibido" value="<?php echo $pedidoepp['fecha_recibido']; ?>" type="text" class="datepicker">
+                    <label for="fecharecibido">* Fecha Requerida</label>
+                </div>
 
-              <div class="input-field col m6 s12">
-                  <select id="proveedor" name="proveedor"> 
-                      <option value="0" disabled selected>Selecciona un proveedor</option>
-                      <?php foreach ($this->proveedor as $key){ 
-                          if ($key['id']==$pedidoepp['id_proveedor']) { ?>
-                              <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre_prov']; ?></option>
-                          <?php } if ($key['id']!=$pedidoepp['id_proveedor']) { ?>
-                              <option value="<?php echo $key['id']; ?>"> <?php echo $key['nombre_prov']; ?></option>
-                      <?php } } ?>
-                  </select>
-                  <label>* Proveedor:</label>
-              </div>
+                <div class="input-field col m6 s12">
+                    <select id="proveedor" name="proveedor"> 
+                        <option value="0" disabled selected>Selecciona un proveedor</option>
+                        <?php foreach ($this->proveedor as $key){ 
+                            if ($key['id']==$pedidoepp['id_proveedor']) { ?>
+                                <option value="<?php echo $key['id']; ?>" selected><?php echo $key['nombre_prov']; ?></option>
+                            <?php } if ($key['id']!=$pedidoepp['id_proveedor']) { ?>
+                                <option value="<?php echo $key['id']; ?>"> <?php echo $key['nombre_prov']; ?></option>
+                        <?php } } ?>
+                    </select>
+                    <label>* Proveedor:</label>
+                </div>
 
-              <div class="file-field input-field col m12 s12">
-                  <div class="btn">
-                      <span>Añade Evidencia del Pedido</span>
-                      <input type="file" name="url">
-                      <input type="hidden" name="imahidden" value="<?php echo $pedidoepp["comprobante_doc"]; ?>">   
-                  </div>
-                  
-                  <div class="file-path-wrapper">
-                      <input class="file-path validate" id="url" type="text">
-                  </div>
-              </div>
+                <div class="file-field input-field col m12 s12">
+                    <div class="btn">
+                        <span>Añade Evidencia del Pedido</span>
+                        <input type="file" name="url">
+                        <input type="hidden" name="imahidden" value="<?php echo $pedidoepp["comprobante_doc"]; ?>">   
+                    </div>
 
-               <div class="input-field col m12 s12">
-                  <i class="material-icons prefix">mode_edit</i>
-                  <textarea id="comentarios" name="comentarios" value="<?php echo $pedidoepp['comentarios']; ?>" class="materialize-textarea"><?php echo $pedidoepp['comentarios']; ?></textarea>
-                  <label for="comentarios">* Comentarios de solicitud:  </label>
-              </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" id="url" type="text">
+                    </div>
+                </div>
 
+                <div class="input-field col m12 s12">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea id="comentarios" name="comentarios" value="<?php echo $pedidoepp['comentarios']; ?>" class="materialize-textarea"><?php echo $pedidoepp['comentarios']; ?></textarea>
+                    <label for="comentarios">* Comentarios de solicitud:  </label>
+                </div>
             <?php } ?>
         </form>
 
@@ -87,7 +85,6 @@
         });
     });
 
-
     $("#updatepedido").click(function(){
         var fecha = document.getElementById("fecharecibido").value;
         var proveedor = document.getElementById("proveedor").value;
@@ -111,6 +108,4 @@
     function submit_ser() { 
         document.getElementById("submitudp").submit() 
     }
-
-
 </script>

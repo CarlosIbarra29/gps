@@ -436,8 +436,10 @@ function isActhref($nameBtn,$urlname){
 									$<?php echo $camp["deposito"]; ?>
 								<?php }  ?>
 							</td>
-							<td><?php echo $camp["inicio_renta"]; ?></td>
-							<td><?php echo $camp["fin_renta"]; ?></td>
+							<td>
+								<?php echo  date("d-m-Y", strtotime($camp['inicio_renta'])); ?>
+							</td>
+							<td><?php echo  date("d-m-Y", strtotime($camp['fin_renta'])); ?></td>
 							
 							
 							<td>

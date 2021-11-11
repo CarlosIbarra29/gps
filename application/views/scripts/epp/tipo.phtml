@@ -1,165 +1,158 @@
 <?php 
-function isActhref($nameBtn,$urlname){
-  if($nameBtn==1 && $urlname==null){
-    return "active"; 
-  }
-  return ($nameBtn == $urlname)?"active":"";
-}
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+            return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
+    }
 
-  if (isset($_GET['pagina'])) {
-    $pagina = $_GET['pagina'];
-  } else {
-    $pagina = 1;
-  }  
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
 ?>
 
 <?php 
 
-    $links = "";
-    $url="";
+$links = "";
+$url="";
 
-        if($this->total== 1){
-            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-        }else{
-            if ($this->total >= 1 && $pagina <= $this->total) {
-
-              if (isset($_GET['pagina']) && $this->actpage != 1) {
+    if($this->total== 1){
+        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+    }else{
+        if ($this->total >= 1 && $pagina <= $this->total) {
+            if (isset($_GET['pagina']) && $this->actpage != 1) {
                 $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }else{
+            }else{
                 $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
-              }
-                
-                $i = max(2, $pagina - 3);
-                if ($i > 2)
-                    $links .= " <li><a>...</a></li> ";
-                for (; $i < min($pagina + 3, $this->total); $i++) {
-                  if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }else{
-                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
-                  }
-                }
-                if ($i != $this->total)
-                    $links .= " <li><a>...</a></li> ";
+            }
+
+            $i = max(2, $pagina - 3);
+            if ($i > 2)
+                $links .= " <li><a>...</a></li> ";
+            for (; $i < min($pagina + 3, $this->total); $i++) {
                 if($i ==$this->actpage){
-                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }else{
-                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }
-                
-            }           
-        }
+            }
+
+            if ($i != $this->total)
+                $links .= " <li><a>...</a></li> ";
+            if($i ==$this->actpage){
+                $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }else{
+                $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+            }
+        }           
+    }
 ?>
 
 <!-- Inicio Botones -->
 <div class="row" style="margin-top: 10px;">
-  <div class="col m6 s6">
-    <a href="/epp/catalogo" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
-  </div>
-  <div class="col m6 s6 text-right">
-    <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Tipo</a>
-  </div>
+    <div class="col m6 s6">
+        <a href="/epp/catalogo" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+    <div class="col m6 s6 text-right">
+        <a class="waves-effect green btn modal-trigger" href="#modal1">+ Agregar Tipo</a>
+    </div>
 </div>
 
 <div class="row">
-  <div class="col m12 s12 text-center" style="margin-top: 10px;">
-    <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tipo de EPP
-  </div>
+    <div class="col m12 s12 text-center" style="margin-top: 10px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Tipo de EPP
+    </div>
 </div>
 <!-- End Inicio Botones -->
 
 <!-- Buscador -->
-
 <div class="row">
-  <div class="col m2 s12"></div>
-  <div class="col m8 s12">
-    <form action="/epp/buscartipo" enctype="multipart/form-data" class="form-horizontal form-material">
-      <div class="input-field col m8 s8">
-        <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
-        <label for="first_name">Buscar Tipo de EPP</label>
-      </div>
-      <div class="input-field col m4 s4">
-        <button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
-      </div>
-    </form>
-	</div>
-	<div class="col m2 s12"></div>
-</div>
+    <div class="col m2 s12"></div>
+    <div class="col m8 s12">
+        <form action="/epp/buscartipo" enctype="multipart/form-data" class="form-horizontal form-material">
+            <div class="input-field col m8 s8">
+                <input placeholder="Ingresa nombre" name="nombre" id="first_name" type="text" class="validate" required>
+                <label for="first_name">Buscar Tipo de EPP</label>
+            </div>
 
+            <div class="input-field col m4 s4">
+                <button tyle="submit" id="add_user" class="waves-effect waves-light btn">Buscar <i class="material-icons left">search</i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
 <!-- End Buscador -->
 
 <!-- Modal Structure 1 -->
-  <div id="modal1" class="modal modal-fixed-footer">
+<div id="modal1" class="modal modal-fixed-footer">
   	<div class="modal-content">
-      <div class="col m12 s12" style="margin-top: 10px;">
-        <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar tipo de EPP
-      </div>
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar tipo de EPP
+        </div>
 
-  		<div class="col m12 s12">
-  			<form action="/epp/requestaddtipo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_t">
-  				<div class="row">
-  					<div class="input-field col m12 s12">
-  						<i class="material-icons prefix">assignment</i>
-  						<input id="name" type="text" name="name" class="validate" required>
-			          	<label for="name">* Nombre:</label>
-			        </div>
-				</div>
-		</div>
-	</div>
+        <div class="col m12 s12">
+            <form action="/epp/requestaddtipo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_t">
+                <div class="row">
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">assignment</i>
+                        <input id="name" type="text" name="name" class="validate" required>
+                        <label for="name">* Nombre:</label>
+			              </div>
+                </div>
+        </div>
+    </div>
 
-	<div class="modal-footer">
-    		</form>
+    <div class="modal-footer">
+    		    </form>
     		<button class=" btn" id="addtipo">Guardar</button>	
     		<button  class="modal-close red btn">Cerrar</button>
     </div>
 </div>
 <!-- End Modal -->
 
-  
-  <!-- Table Tipo -->
+<!-- Table Tipo -->
 <div class="col m12 s12">
-  <div class="row">
-    <div class="col m12 s12" style="margin-top: 10px;">
-      <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Tipos
+    <div class="row">
+        <div class="col m12 s12" style="margin-top: 10px;">
+            <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Tipos
+        </div>
     </div>
-  </div>
 
-  <table class="table text-left table-hover">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nombre</th>	
-				<th>Editar</th>
-			</tr> 
-		</thead>
+    <table class="table text-left table-hover">
+        <thead>
+            <tr>
+				        <th>Id</th>
+				        <th>Nombre</th>	
+				        <th>Editar</th>
+			     </tr> 
+		    </thead>
 
-		<?php if ($this->paginator) {
-		foreach ($this->paginator as $tepp) { ?>
-		<tbody>
-			<tr>
-				<td><?php echo $tepp["id_tipo"]; ?></td>
-				<td><?php echo $tepp["nombre"]; ?></td>
-				<td>
-					<a href="/epp/tipoedit/id/<?php echo $tepp["id_tipo"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-				</td>
-			</tr>
-		</tbody>
-		<?php } } else{ ?>
-			<tbody>
-				<td></td>
-				<td>
-					<h4>No se encontraron tipo de EPP</h4>
-				</td>
-				<td></td>
-			</tbody>
-
-		<?php }?>
-	</table>
+        <?php if ($this->paginator) {
+            foreach ($this->paginator as $tepp) { ?>
+                <tbody>
+                    <tr>
+				                <td><?php echo $tepp["id_tipo"]; ?></td>
+				                <td><?php echo $tepp["nombre"]; ?></td>
+				                <td>
+                            <a href="/epp/tipoedit/id/<?php echo $tepp["id_tipo"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+				                </td>
+			              </tr>
+                </tbody>
+        <?php } } else{ ?>
+            <tbody>
+                <td></td>
+                <td><h4>No se encontraron tipo de EPP</h4></td>
+				        <td></td>
+            </tbody>
+        <?php }?>
+    </table>
 </div>
-  <!-- End Table Tipo -->
+<!-- End Table Tipo -->
 
 <!-- Paginación  -->
-
 <div class="row">
     <div class="col m12 s12 text-center">
         <div class="white-box">
@@ -191,38 +184,31 @@ function isActhref($nameBtn,$urlname){
         </div>
     </div> 
 </div>
-
-
 <!-- End Paginacion  -->
+
 <!-- Scripts -->
-  <script type="text/javascript">
-	  
-	  $(document).ready(function(){
-	  	$('.modal').modal();
-	  });
-	  //Modal script//
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.modal').modal();
+	  });  //Modal script//
 
 	  $("#addtipo").click(function(){
-	  	var name = document.getElementById("name").value;
+	  	  var name = document.getElementById("name").value;
 
-            if(name == ""){
-                swal({
-                  title: "Para agregar un tipo de epp coloca el nombre(*)",
-                });
-            }else{
-                 swal("Espera un momento, la información esta siendo procesada", {
-				icon: "success",
-			 	buttons: false,
-			});
-                setTimeout(submitForm, 500);     
-            }
-        });
-
-        function submitForm() {
-            document.getElementById("submit_t").submit()
+        if(name == ""){
+            swal({
+                title: "Para agregar un tipo de epp coloca el nombre(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitForm, 500);     
         }
-        //Agregar Categoría Script
+    });
 
-
-
+    function submitForm() {
+        document.getElementById("submit_t").submit()
+    } //Agregar Categoría Script
 </script>

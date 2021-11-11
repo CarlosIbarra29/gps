@@ -1,86 +1,91 @@
 <style type="text/css">
-*,
-*:after,
-*:before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /*font-family: "Open Sans";*/
-}
-/* Form Progress */
- 
-.progress {
+	*, *:after, *:before {
+		margin: 0;
+  		padding: 0;
+  		box-sizing: border-box;
+  		/*font-family: "Open Sans";*/
+	}
+	/* Form Progress */
 
-  margin: 20px auto;
-  text-align: center;
-  padding-bottom: 80px;
-  background-color: white;
-}
-.progress .circle,
-.progress .bar {
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #d5d5da;
-  vertical-align:top;
-}
-.progress .bar {
-  position: relative;
-  width: 80px;
-  height: 6px;
-  margin: 0 -5px 17px -5px;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
-  top:16px;
-  vertical-align:top
-}
-.progress .circle .label {
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  line-height: 27px;
-  border-radius: 32px;
-  margin-top: 1px;
-  color: #b5b5ba;
-  font-size: 15px;
-}
-.progress .circle .title {
-  color: #b5b5ba;
-  font-size: 13px;
-  line-height: 18px;
-  margin-left: -30px;
-  display: block;
-  width: 100px;
-  margin-top: 5px;
-}
-/* Done / Active */
+	.progress {
+		margin: 20px auto;
+		text-align: center;
+		padding-bottom: 80px;
+		background-color: white;
+	}
+	
+	.progress .circle,
+	.progress .bar {
+		display: inline-block;
+		background: #fff;
+		width: 40px;
+		height: 40px;
+		border-radius: 40px;
+		border: 1px solid #d5d5da;
+  		vertical-align:top;
+  	}
 
-.progress .bar.done,
-.progress .circle.done {
-  background: #eee;
-}
-.progress .bar.active {
-  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
-}
-.progress .circle.done .label {
-  color: #FFF;
-  background: #8bc435;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.done .title {
-  color: #444;
-}
-.progress .circle.active .label {
-  color: #FFF;
-  background: #0c95be;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.active .title {
-  color: #0c95be;
-}
+  	.progress .bar {
+ 		position: relative;
+		width: 80px;
+		height: 6px;
+		margin: 0 -5px 17px -5px;
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
+		top:16px;
+		vertical-align:top
+	}
+	
+	.progress .circle .label {
+		display: inline-block;
+  		width: 36px;
+  		height: 36px;
+  		line-height: 27px;
+  		border-radius: 32px;
+  		margin-top: 1px;
+  		color: #b5b5ba;
+ 	 	font-size: 15px;
+	}
+	
+	.progress .circle .title {
+		color: #b5b5ba;
+		font-size: 13px;
+		line-height: 18px;
+		margin-left: -30px;
+		display: block;
+		width: 100px;
+		margin-top: 5px;
+	}	/* Done / Active */
+
+	.progress .bar.done,
+	.progress .circle.done {
+		background: #eee;
+	}
+
+	.progress .bar.active {
+		background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+	}
+
+	.progress .circle.done .label {
+  		color: #FFF;
+  		background: #8bc435;
+  		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.done .title {
+  		color: #444;
+	}
+
+	.progress .circle.active .label {
+  		color: #FFF;
+  		background: #0c95be;
+  		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.active .title {
+  		color: #0c95be;
+	}
 </style>
 
 <style type="text/css">
@@ -94,29 +99,26 @@
 		
 	</div>
 </div>
-	<?php 
-	foreach ($this->solicitud as $key){
-	    $idsol = $key ['id'];
-		$status_sol = $key['status_solicitud'];
-	}?>
+<?php foreach ($this->solicitud as $key){
+	$idsol = $key ['id'];
+	$status_sol = $key['status_solicitud'];
+}?>
 
-
-    <?php 
-	foreach ($this->detalle as $key){
+<?php foreach ($this->detalle as $key){
 	    
-	    $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
-	    $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
-	    $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
-	    $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
-	    $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
-	    $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
-	    $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
-	    $comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
-	    $user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
+	$idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
+	$fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
+	$id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
+	$status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
+	$fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
+	$name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
+	$user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
+	$comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
+	$user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
 	    
-	    $imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
+	$imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
  
-	}?>
+}?>
 
 <?php foreach ($this->user as $value) { 
 	$rol_user = $value['fkroles'];
@@ -191,7 +193,6 @@
 									</div>
 								<?php } ?>
 
-
 	          					<?php if($status_sol== 3){ ?>
 	          						<div class="col m4 s6">
 										<div class="chip">
@@ -208,7 +209,6 @@
 										</div>
 									</div>
 								<?php } ?>
-
 								
 								<?php if($status_sol == 2){ ?>
 									<div class="col m6 s6">
@@ -220,7 +220,6 @@
 								<?php }?>
 
 	          				<?php } else { ?>
-
 
 	          					<?php if($status_sol == 0){ ?>
 	          						<div class="col m6 s6">
@@ -260,7 +259,6 @@
 									</div>
 								<?php } ?>
 
-
 	          					<?php if($status_sol== 3){ ?>
 	          						<div class="col m4 s6">
 										<div class="chip">
@@ -277,7 +275,6 @@
 										</div>
 									</div>
 								<?php } ?>
-
 								
 								<?php if($status_sol == 2){ ?>
 									<div class="col m6 s6">
@@ -907,8 +904,7 @@
 	 <div class="modal-footer">
 		<button type="button" id="rechazar_sol" class="btn">Guardar</button>
 		<button  class="modal-close red btn">Cerrar</button>
-	</div>
-	  							
+	</div>					
 </div>
 
 <!-- <div id="modal1" class="modal modal-fixed-footer">
@@ -1054,7 +1050,6 @@
         	</div>
         </div>
     </div>
-
 <?php }else{ ?>
 	<div class="row">
 		<div class="col m12 s12">
@@ -1151,8 +1146,8 @@
 
 
     lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+      	'resizeDuration': 200,
+      	'wrapAround': true
     });   
 
 	$(document).ready(function(){
@@ -1172,9 +1167,9 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-		    swal("Bien! El status se cambio!", {
-		      icon: "success",
-		    });
+		    	swal("Bien! El status se cambio!", {
+		      		icon: "success",
+		    	});
 
 	    		var dato = "1";
 	            var request = $.ajax({
@@ -1194,10 +1189,10 @@
 	             return false;
 
 
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+		 	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
     });
 
     
@@ -1212,10 +1207,10 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });
+        		swal("Espere un momento, la información esta siendo procesada", {
+          			icon: "success",
+          			buttons: false,
+        		});
 	    		var dato = "3";
 	    		var	comentario = document.getElementById("cancels").value;
 	            var request = $.ajax({
@@ -1229,13 +1224,11 @@
 	                window.location.reload(true);
 	            });
 	             return false;
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
     });
-
-
 
     $("#rechazar_sol").click(function(){
     	var id = document.getElementById("id_solicitud").value;
@@ -1248,10 +1241,10 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });
+        		swal("Espere un momento, la información esta siendo procesada", {
+          			icon: "success",
+          			buttons: false,
+        		});
 	    		var dato = "2";
 	    		var	comentario = document.getElementById("cancels").value;
 	            var request = $.ajax({
@@ -1265,14 +1258,13 @@
 	                window.location.reload(true);
 	            });
 	             return false;
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
     });
 
-
-            //Inicio Delete Ajax
+    //Inicio Delete Ajax
     $(".delete").click(function(){
         id=$(this).data('id');
         nombre=$(this).data('nombre');
@@ -1314,7 +1306,6 @@
     });
     // End Delete Ajax
 
-
     $(".regresar").click(function(){
         id=$(this).data('id');
         nombre=$(this).data('nombre');
@@ -1355,7 +1346,6 @@
         });
     });
     // End Delete Ajax
-
 
 	$("#addcobro").click(function(){
         var cobroepp = document.getElementById("cobroepp").value;
@@ -1399,7 +1389,7 @@
 	}// End Liberar seleccion Ajax
 
 
-	 $("#addasignado").click(function(){
+	$("#addasignado").click(function(){
         var eppaasignar = document.getElementById("eppaasignar").value;
         if(eppaasignar == "" ){
             swal({
@@ -1447,35 +1437,36 @@
 
     	if(monto == "" || file == ""){
             swal({
-              title: "Para continuar debes llenar todos los datos (Monto y Comprobante de pago)",
+              	title: "Para continuar debes llenar todos los datos (Monto y Comprobante de pago)",
             });
     	}else{
 	        swal("Espere un momento, la información esta siendo procesada", {
-	          icon: "success",
-	          buttons: false,
+	          	icon: "success",
+	          	buttons: false,
 	        });  
 	        setTimeout(submitfileprede, 1500);
     	}
     });
     	
-    function submitfileprede() { document.getElementById("submit_comprobante").submit() }
+    function submitfileprede() { 
+    	document.getElementById("submit_comprobante").submit() 
+    }
 
     $("#btnresponsiva").click(function(){
     	var file = document.getElementById("file_responsiva").value;
 
     	if(file == ""){
             swal({
-              title: "Para continuar debes subir la responsiva firmada",
+              	title: "Para continuar debes subir la responsiva firmada",
             });
     	}else{
 	        swal("Espere un momento, la información esta siendo procesada", {
-	          icon: "success",
-	          buttons: false,
+	          	icon: "success",
+	          	buttons: false,
 	        });  
 	        setTimeout(submitresponsiva, 1500);
     	}
     });
     	
     function submitresponsiva() { document.getElementById("sumbit_responsiva").submit() }
-
 </script>

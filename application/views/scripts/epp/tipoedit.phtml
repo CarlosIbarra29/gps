@@ -14,7 +14,7 @@
 <div class="col m12 s12">
 	<form action="/epp/requestupdatetipo" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_tipo">
 		<?php foreach ($this->tipo_epp as $tip) { ?>
-		<input type="hidden" name="ids" value="<?php echo $tip["id_tipo"]; ?>">
+			<input type="hidden" name="ids" value="<?php echo $tip["id_tipo"]; ?>">
 			<div class="row">
 				<div class="input-field col m12 s12">
 					<i class="material-icons prefix">account_circle</i>
@@ -51,7 +51,6 @@
         }
 
     });
-
 
     function submitForm() {
         document.getElementById("submit_tipo").submit()

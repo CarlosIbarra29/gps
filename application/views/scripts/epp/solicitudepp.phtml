@@ -7,33 +7,31 @@
     <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
 </head>
 <body>
-<div id="example">
-<!--     <div class="box wide hidden-on-narrow">
+    <div id="example">
+    <!--<div class="box wide hidden-on-narrow">
         <div class="box-col">
             <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
         </div>
-    </div>
- -->
-<?php foreach ($this->solicitud as $key){
-        $ids= $key ['id'];
-}?>
-
-<div class="row" style="margin-top: 10px;">
-    <div class="col m6 s6">
-        <a href="/epp/solicituddetail/id/<?php echo $ids; ?>/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
-    </div>
-    <div class="col m6 s6 text-right">
-        <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
-    </div>
-</div>
-
+    </div>-->
         <?php foreach ($this->solicitud as $key){
-                $idsol = $key ['id'];
-                $status_sol = $key['status_solicitud'];
+            $ids= $key ['id'];
         }?>
 
-        <?php 
-        foreach ($this->detalle as $key){
+        <div class="row" style="margin-top: 10px;">
+            <div class="col m6 s6">
+                <a href="/epp/solicituddetail/id/<?php echo $ids; ?>/status/<?php echo $this->status_back; ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+            </div>
+            <div class="col m6 s6 text-right">
+                <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
+            </div>
+        </div>
+
+        <?php foreach ($this->solicitud as $key){
+            $idsol = $key ['id'];
+            $status_sol = $key['status_solicitud'];
+        }?>
+
+        <?php foreach ($this->detalle as $key){
             
             $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
             $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
@@ -50,10 +48,9 @@
         }?>
 
         <?php 
-                date_default_timezone_set('America/Mexico_City');
-                $hoy = date("d-m-Y");
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y");
         ?>
-
 
         <div class="page-container hidden-on-narrow">
             <div class="pdf-page size-a4">
@@ -65,8 +62,8 @@
                     </span>
 
                     <span class="invoice-number">
-                            <img src="/img/logo-2.png" style="width: 125px;" /><br/>
-                            <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
+                        <img src="/img/logo-2.png" style="width: 125px;" /><br/>
+                        <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud No.<?php echo $idsol; ?></span>
                     </span>
 
                     <div class="row">
@@ -98,7 +95,6 @@
                     <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalles Generales</span>
                     
                     <p style="padding-bottom: 10px;">
-                        
                         <span class="title-pdf"><b>Solicito:</b></span> <?php echo $name_usuario; ?> <br />
                         <span class="title-pdf"><b>Fecha Creación:</b></span> <?php echo $fecha_solicitud; ?><br />
                         <?php if ($status_sol==1) { ?>
@@ -114,13 +110,11 @@
                         <?php if ($status_sol == 1 && $status_surtido == 1) { ?>
                             <span class="title-pdf"><b>Surtido por:</b></span> <?php echo $name_usersurtido; ?><br />
                             <span class="title-pdf"><b>Fecha Surtido:</b></span> <?php echo $fecha_surtido; ?><br />
-                        <?php } ?>
-                                    
+                        <?php } ?>              
                     </p>
                 </div>
 
                 <div class="pdf-body">
-
                     <div class="row">
                         <div class="col m12 s12 text-center" style="margin-top: 22px;">
                             <span style="font-size:15px; color: rgb(74,79,84);font-weight: bold; ">EPP entregado anteriormente
@@ -315,7 +309,6 @@
 
         <div class="responsive-message"></div>
 
-
         <style>
             .pdf-page {
                font-family: "DejaVu Sans", "Arial", sans-serif;
@@ -388,7 +381,6 @@
                         aggregate: aggregate,
                         schema: schema,
                     },
-
                     columns: columns
                 });
 

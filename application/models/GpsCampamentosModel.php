@@ -19,7 +19,7 @@ class Application_Model_GpsCampamentosModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN personal_campo p ON p.id = c.id_responsable
                         LEFT JOIN puestos_personal pu ON pu.id = p.puesto
                         LEFT JOIN campamentos_status sc ON sc.id_status = c.status_anticipo
-                        ORDER BY c.status_campamento ASC LIMIT $offset,$no_of_records_per_page");
+                        ORDER BY c.inicio_renta DESC LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

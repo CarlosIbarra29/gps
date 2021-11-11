@@ -1,115 +1,120 @@
 <style type="text/css">
-*,
-*:after,
-*:before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /*font-family: "Open Sans";*/
-}
-/* Form Progress */
+	*,
+	*:after,
+	*:before {
+  		margin: 0;
+  		padding: 0;
+  		box-sizing: border-box;
+  		/*font-family: "Open Sans";*/
+	}/* Form Progress */
  
-.progress {
+	.progress { 
 
-  margin: 20px auto;
-  text-align: center;
-  padding-bottom: 80px;
-  background-color: white;
-}
-.progress .circle,
-.progress .bar {
-  display: inline-block;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #d5d5da;
-  vertical-align:top;
-}
-.progress .bar {
-  position: relative;
-  width: 80px;
-  height: 6px;
-  margin: 0 -5px 17px -5px;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
-  top:16px;
-  vertical-align:top
-}
-.progress .circle .label {
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  line-height: 27px;
-  border-radius: 32px;
-  margin-top: 1px;
-  color: #b5b5ba;
-  font-size: 15px;
-}
-.progress .circle .title {
-  color: #b5b5ba;
-  font-size: 13px;
-  line-height: 18px;
-  margin-left: -30px;
-  display: block;
-  width: 100px;
-  margin-top: 5px;
-}
-/* Done / Active */
+  		margin: 20px auto;
+  		text-align: center;
+  		padding-bottom: 80px;
+  		background-color: white;
+	}
 
-.progress .bar.done,
-.progress .circle.done {
-  background: #eee;
-}
-.progress .bar.active {
-  background: linear-gradient(to right, #EEE 40%, #FFF 60%);
-}
-.progress .circle.done .label {
-  color: #FFF;
-  background: #8bc435;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.done .title {
-  color: #444;
-}
-.progress .circle.active .label {
-  color: #FFF;
-  background: #0c95be;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
-}
-.progress .circle.active .title {
-  color: #0c95be;
-}
+	.progress .circle,
+	.progress .bar {
+  		display: inline-block;
+  		background: #fff;
+  		width: 40px;
+  		height: 40px;
+  		border-radius: 40px;
+  		border: 1px solid #d5d5da;
+  		vertical-align:top;
+	}
+
+	.progress .bar {
+  		position: relative;
+  		width: 80px;
+  		height: 6px;
+  		margin: 0 -5px 17px -5px;
+  		border-left: none;
+  		border-right: none;
+  		border-radius: 0;
+  		top:16px;
+  		vertical-align:top
+	}
+
+	.progress .circle .label {
+  		display: inline-block;
+  		width: 36px;
+  		height: 36px;
+ 	 	line-height: 27px;
+  		border-radius: 32px;
+  		margin-top: 1px;
+  		color: #b5b5ba;
+  		font-size: 15px;
+	}
+	
+	.progress .circle .title {
+  		color: #b5b5ba;
+  		font-size: 13px;
+  		line-height: 18px;
+  		margin-left: -30px;
+  		display: block;
+  		width: 100px;
+  		margin-top: 5px;
+	}
+	/* Done / Active */
+
+	.progress .bar.done,
+	.progress .circle.done {
+  		background: #eee;
+	}
+
+	.progress .bar.active {
+  		background: linear-gradient(to right, #EEE 40%, #FFF 60%);
+	}
+	
+	.progress .circle.done .label {
+  		color: #FFF;
+  		background: #8bc435;
+  		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.done .title {
+  		color: #444;
+	}
+
+	.progress .circle.active .label {
+	  	color: #FFF;
+  		background: #0c95be;
+  		box-shadow: inset 0 0 2px rgba(0, 0, 0, .2);
+	}
+
+	.progress .circle.active .title {
+  		color: #0c95be;
+	}
 </style>
 
 <div class="row">
 	<div class="col m12 s12">
-		
 	</div>
 </div>
-	<?php 
-	foreach ($this->solicitud as $key){
-	    $idsol = $key ['id'];
-		$status_sol = $key['status_solicitud'];
-	}?>
+<?php foreach ($this->solicitud as $key){
+	$idsol = $key ['id'];
+	$status_sol = $key['status_solicitud'];
+}?>
 
-	<?php 
-	foreach ($this->detalle as $key){
+<?php foreach ($this->detalle as $key){
 	    
-	    $idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
-	    $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
-	    $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
-	    $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
-	    $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
-	    $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
-	    $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
-	    $comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
-	    $user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
+	$idsolicitud = $key ['id']; $status_solilitud = $key['status_solicitud']; $id_personal = $key ['id_personal'];
+    $fecha_solicitud = $key ['fecha_solicitud']; $fecha_requerida = $key ['fecha_requerida'];
+    $id_usuario = $key ['id_usuario']; $name_usuario = $key ['name_usuario']; $step_uno = $key ['step_uno'];
+    $status_surtido = $key ['status_surtido']; $comentarios = $key ['comentarios']; $url_responsiva = $key ['url_responsiva'];
+    $fecha_aprobada = $key ['fecha_aprobada']; $user_aprobado = $key ['user_aprobado']; 
+    $name_useraprobado = $key ['name_useraprobado']; $fecha_rechazado = $key ['fecha_rechazado']; 
+    $user_rechazado = $key ['user_rechazado']; $name_userrechazado = $key ['name_userrechazado']; 
+    $comentarios_rechazo = $key ['comentarios_rechazo']; $fecha_surtido = $key ['fecha_surtido']; 
+    $user_surtido = $key ['user_surtido']; $name_usersurtido = $key ['name_usersurtido']; $pname = $key ['pname'];
 	    
-	    $imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
+    $imagen = $key ['imagen']; $nresponsable = $key['nombreres']; $apres = $key['ares']; $amres = $key['amres'];
  
-	}?>
+}?>
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m12 s12">
@@ -154,7 +159,6 @@
 									</div>
 								<?php } ?>
 
-
 	          					<?php if($status_sol== 3){ ?>
 	          						<div class="col m4 s6">
 										<div class="chip">
@@ -171,7 +175,6 @@
 										</div>
 									</div>
 								<?php } ?>
-
 								
 								<?php if($status_sol == 2){ ?>
 									<div class="col m6 s6">
@@ -183,7 +186,6 @@
 								<?php }?>
 
 	          				<?php } else { ?>
-
 
 	          					<?php if($status_sol == 0){ ?>
 	          						<div class="col m6 s6">
@@ -223,7 +225,6 @@
 									</div>
 								<?php } ?>
 
-
 	          					<?php if($status_sol== 3){ ?>
 	          						<div class="col m4 s6">
 										<div class="chip">
@@ -241,7 +242,6 @@
 									</div>
 								<?php } ?>
 
-								
 								<?php if($status_sol == 2){ ?>
 									<div class="col m6 s6">
 										<div class="chip modal-trigger">
@@ -249,8 +249,7 @@
 									    	Rechazado
 									  	</div>
 									</div>
-								<?php }?>
-								
+								<?php }?>								
 	          				<?php } ?>
 	          			</div>
 	          		</div>
@@ -799,7 +798,6 @@
         	</div>
         </div>
     </div>
-
 <?php }else{ ?>
 	<div class="row">
 		<div class="col m12 s12">
@@ -888,16 +886,12 @@
 
   
 <input type="hidden" id="eppaasignar" value="yes">
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
- <script src="/js/lightbox.js"></script>
-
-        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
 <script type="text/javascript">
-
-
-    lightbox.option({
-      'resizeDuration': 200,
-      'wrapAround': true
+	lightbox.option({
+      	'resizeDuration': 200,
+      	'wrapAround': true
     });   
 
 	$(document).ready(function(){
@@ -916,11 +910,11 @@
 		})
 		.then((willDelete) => {
 		  	if (willDelete) {
-        swal("Espere un momento, la información esta siendo procesada", {
-          icon: "success",
-          buttons: false,
-        });
-	    		var dato = "2";
+		  		swal("Espere un momento, la información esta siendo procesada", {
+		  			icon: "success",
+          			buttons: false,
+        		});
+        		var dato = "2";
 	    		var	comentario = document.getElementById("cancels").value;
 	            var request = $.ajax({
 	                url:"/epp/requestchgcanceleppsol",
@@ -933,24 +927,23 @@
 	                window.location.reload(true);
 	            });
 	             return false;
-		  } else {
-		    swal("Accion cancelada!");
-		  }
-		  });
+		  	} else {
+		    	swal("Accion cancelada!");
+		  	}
+		});
     });
-
 
     $("#btnresponsiva").click(function(){
     	var file = document.getElementById("file_responsiva").value;
 
     	if(file == ""){
             swal({
-              title: "Para continuar debes subir la responsiva firmada",
+              	title: "Para continuar debes subir la responsiva firmada",
             });
     	}else{
 	        swal("Espere un momento, la información esta siendo procesada", {
-	          icon: "success",
-	          buttons: false,
+	          	icon: "success",
+	          	buttons: false,
 	        });  
 	        setTimeout(submitresponsiva, 1500);
     	}
@@ -1000,5 +993,4 @@
 	function submitReturn() {
 		document.getElementById("returnentrega").submit()
 	}// End Liberar seleccion Ajax
-
 </script>
