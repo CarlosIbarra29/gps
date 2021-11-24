@@ -6776,6 +6776,29 @@ class PanelController extends Zend_Controller_Action{
 
     }
 
+    public function requestupdateprsAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();  
+        $id=$post["mail"];
+        $table="personal_campo";
+        $wh="email_personal";
+        $usuario= $this->_season->GetSpecific($table,$wh,$id);
+
+        if($this->getRequest()->getPost()){
+            $table="personal_campo";
+            $result = $this->_user->refreshPersonalcont($post,$table);
+            if ($result) {
+                return $this-> _redirect('/panel/personaledit/id/'.$post['ids'].'');
+            }else{
+                print '<script language="JavaScript">'; 
+                print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+                print '</script>'; 
+            }
+        }
+
+    }
+
     public function requestupdatecomentariositioAction(){
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

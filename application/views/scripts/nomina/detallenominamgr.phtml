@@ -1,0 +1,557 @@
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	 .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m12 s12">
+    	 <a href="/nomina/nominamanager" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+       <!--  <a href="/nomina/asistencia/sitio/<?php echo $this->sitio_name; ?>/proyecto/<?php echo $this->proyecto ?>" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a> -->    
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud Nómina / Sitio: <?php echo $this->sitio_name; ?></span>
+    </div>
+</div>
+
+
+<div class="row">
+   <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content">
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Sitio</span>
+
+	        	<div class="row">
+	        		<div class="col m12 s12" style="margin-top: 19px;">
+		        		<?php if($this->sitio_info_taller == 0){ ?>
+		        				<?php foreach ($this->sitio_info as $key) {
+		        					$nombre_sitio = $key['nombre'];
+		        					$direccion = $key['direccion'];
+		        					$estado = $key['estado'];
+		        					$ciudad = $key['ciudad'];
+		        				} ?>
+		        				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
+
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Ciudad: 
+					        			</span> <?php echo $ciudad; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Estado: 
+					        			</span> <?php echo $estado; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Dirección: 
+					        			</span> <?php echo $direccion; ?>
+				        			</div>
+				        		</div>
+		        			
+		        		<?php }elseif($this->sitio_info_taller == 2) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Compensación: 
+					        			</span> El Personal se encuentra en período de compensación.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 3) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Vacaciones: 
+					        			</span> El Personal se encuentra en período de vacaciones actualmente.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 4) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller Foráneos: 
+					        			</span>  Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br>
+				        			</div>
+				        		</div>
+		        		<?php }else{ ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller: 
+					        			</span> Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX <br>
+				        			</div>
+				        		</div>
+		        		<?php } ?>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+
+    <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content" >
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Operaciones</span>
+
+	        	<div class="row" style="margin-top: 30px;">
+	        		<div class="col m12 s12 text-center">
+						<a class="btn modal-trigger green" href="#modal1">Aceptar Nómina</a>
+	        		</div>
+	        		<br/><br/><br/>
+	        		<div class="col m12 s12 text-center">
+						<a class="btn modal-trigger red" href="#modal2">Rechazar Nómina</a>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+        	<div class="card-content">
+	        	<div class="row">
+					<div class="col m6 s6">
+						<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Solicitudes de Nómina</span>
+					</div>
+					<div class="col m6 s6 text-right">
+						  <!-- <a class="btn-floating btn-medium green" href="/asistencia/historialnomina/id/<?php echo $this->personal_id ?>"><i class="material-icons">access_time</i></a> -->
+					</div>
+	        	</div>
+				<div class="row">
+					<div class="col m12 s12 table_wrapper"> 
+				        <table class="table text-left table-hover">
+				            <thead>
+				                <tr style="background-color: #EDEDED;">
+                      			<th>NO.</th>
+                      			<th>Sitio</th> 
+                      			<th>Personal</th>
+                      			<th>Puesto</th>
+                      			<th>Fecha Solicitud</th>
+                      			<th>Monto</th>  
+                      			<th>Status</th>
+                      			<th>Comentarios</th>
+                      			<!-- <th></th> -->
+                      			<th></th>
+                    		</tr> 
+				            </thead>
+
+				            <?php 
+				            $montos = 0;
+				            if ($this->info_nominas) { 
+				                foreach ($this->info_nominas as $usr) { ?>
+				            <tbody>
+				                <tr>
+				                	<td>
+                                        <h5><?php echo $usr['id']; ?></h5>
+                              		</td>
+                              		<td>
+                                        <h5><?php echo $usr['sitio']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['personal']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['nombre']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['solicitud_fecha']; ?></h5>
+                              		</td>
+
+                              		<td>
+                                        <?php 
+                                            $num = $usr['monto_nomina'];
+                                            $multi = 5;
+
+                                            if (fmod($num, $multi) <> 0) {
+                                                $monto = $num-fmod($num, $multi)+$multi;
+                                            } else {
+                                                $monto = $num;
+                                            }
+                                        ?>
+                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto); ?></span>  
+                                    </td>
+
+                                    <td>
+                                        <?php if($usr['status_auditoria'] == 0){ ?>
+                                            <div class="chip" id="inactivo_personal">
+                                                <img src="/img/gris.jpg" >
+                  			                    En proceso
+                			                </div>
+            			                <?php } ?>
+
+                                        <?php if($usr['status_auditoria'] == 1){ ?>
+                                    		<div class="chip" id="activo_personal">
+                                        		<img src="/img/correct.png" >
+                                        		Auditada
+                                      		</div>
+            			                <?php } ?>
+          			                </td>
+
+          			                <td class="text-center">
+				                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id"]; ?>" data-name="<?php echo $usr['personal']; ?>" data-sitio="<?php echo $usr['sitio']; ?>" data-pagonomina="<?php echo $usr['monto_nomina']; ?>" data-comentarionom="<?php echo $usr['comentario_auditoria2']; ?>" href="#modaldelete"><span class="warning"><i class="material-icons center">add_box</i></span></a>
+				                  	</td> 
+
+          			                <td class="text-center">
+                                        <a href="/nomina/detallenomina/id/<?php echo $usr["id"] ?>/user/<?php echo $usr['id_personal']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                              		</td>
+
+                              		<!-- <td class="text-center">
+                                        <p><label>
+                                            <input type="checkbox" checked class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
+                                            <span></span>
+    						           	</label></p>
+                                    </td> -->
+				                  	<?php $montos = $montos + $monto;
+				                  		$montos1 = $montos; 
+				                  	 ?>
+				                  	
+				                </tr>
+				            </tbody>
+				            <?php } }else{ ?>
+				            <tbody>
+				                <tr>
+				                    <td><h3>No hay nóminas para este sitio</h3> </td>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                    <td></td>
+				                </tr>
+				            </tbody>
+				            <?php } ?>
+				        </table>
+					</div>
+				</div>
+
+	        	<div class="row">
+	        		<div class="col m6 s6"></div>
+	        		<div class="col m6 s6 text-right">
+	        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: 
+	        				$<?php echo number_format($montos, 2, '.', ','); ?>
+	        			</span>
+	        		</div>
+	        	</div>
+	    	</div>
+	       <!--  <div class="card-action">
+	        	<div class="row">
+	        		<div class="col m12 s12 text-center">
+						<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
+	        		</div>
+	        	</div>
+	        </div> -->
+      	</div>
+    </div>
+</div>
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Aceptar Nóminas</span>
+
+    	<div class="row">
+    		<div class="col m12 s12">
+    			<form action="/nomina/requestaceptarsol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_addnomina">
+    				<input type="hidden" name="sitio" id="form_sitio" value="<?php echo $this->sitio_name; ?>">
+    				<!-- <input type="hidden" name="user" id="form_user" value="<?php echo $this->personal_id; ?>"> -->
+    				<input type="hidden" name="id_proyecto" id="form_proyecto" value="<?php echo $this->proyecto; ?>">
+    				<input type="hidden" name="monto" value="<?php echo $montos; ?>">
+
+    				<div class="input-field col s12">
+    					<i class="material-icons prefix">assignment</i>
+    					<textarea id="cancels" name="comentarios" class="materialize-textarea"></textarea>
+    					<label for="cancels">Comentarios</label>
+    				</div>
+					
+
+					<div class="col m12 s12 table_wrapper"> 
+						<table class="table text-left table-hover">
+							<thead>
+								<tr style="background-color: #EDEDED; padding: 1px 5px;"> 
+                      				<th>Personal</th>
+                      				<th>Puesto</th>
+                      				<th>Monto</th>  
+                      				<th></th>
+                    			</tr> 
+				            </thead>
+				            <?php
+				            	$montos = 0;
+				            	if ($this->info_nominas) { 
+				            		foreach ($this->info_nominas as $usr) { ?>
+				            			<tbody>
+				            				<tr style="padding: 1px 5px;">
+				            					<td style="padding: 1px 5px;">
+                                  					<h5><?php echo $usr['personal']; ?></h5>
+                              					</td>
+			                              		<td style="padding: 1px 5px;">
+			                                  		<h5><?php echo $usr['nombre']; ?></h5>
+			                              		</td>
+			                              		<td style="padding: 1px 5px;">
+			                                        <?php 
+			                                            $num = $usr['monto_nomina'];
+			                                            $multi = 5;
+
+			                                            if (fmod($num, $multi) <> 0) {
+			                                                $monto = $num-fmod($num, $multi)+$multi;
+			                                            } else {
+			                                                $monto = $num;
+			                                            }
+			                                        ?>
+			                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto); ?></span>  
+			                                    </td>
+			                              		<td style="padding: 1px 5px;" class="text-center">
+			                                        <p><label>
+			                                            <input type="checkbox" checked class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
+			                                            <span></span>
+			    						           	</label></p>
+			                                    </td>
+				                			</tr>
+				            			</tbody>
+				            <?php } }else{ ?>
+					            <tbody>
+					                <tr>
+					                    <td><h3>No hay nóminas para este sitio</h3> </td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                </tr>
+					            </tbody>
+				            <?php } ?>
+				        </table>
+					</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="aceptar_nomina" class="btn">Aceptar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Rechazar Nóminas</span>
+
+    	<div class="row">
+    		<div class="col m12 s12">
+    			<form action="/nomina/requestcancelarnomsol" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_notnomina">
+    				<input type="hidden" name="sitio" id="form_sitio" value="<?php echo $this->sitio_name; ?>">
+    				<input type="hidden" name="id_proyecto" id="form_proyecto" value="<?php echo $this->proyecto; ?>">
+    				<input type="hidden" name="monto" value="<?php echo $montos1; ?>">
+
+    				<div class="input-field col s12">
+    					<i class="material-icons prefix">assignment</i>
+    					<textarea id="cancels" name="comentarios" class="materialize-textarea"></textarea>
+    					<label for="cancels">Motivo del Rechazo</label>
+    				</div>
+					
+
+					<div class="col m12 s12 table_wrapper"> 
+						<table class="table text-left table-hover">
+							<thead>
+								<tr style="background-color: #EDEDED; padding: 1px 5px;"> 
+                      				<th>Personal</th>
+                      				<th>Puesto</th>
+                      				<th>Monto</th>  
+                      				<th></th>
+                    			</tr> 
+				            </thead>
+				            <?php
+				            	$montos = 0;
+				            	if ($this->info_nominas) { 
+				            		foreach ($this->info_nominas as $usr) { ?>
+				            			<tbody>
+				            				<tr style="padding: 1px 5px;">
+				            					<td style="padding: 1px 5px;">
+                                  					<h5><?php echo $usr['personal']; ?></h5>
+                              					</td>
+			                              		<td style="padding: 1px 5px;">
+			                                  		<h5><?php echo $usr['nombre']; ?></h5>
+			                              		</td>
+			                              		<td style="padding: 1px 5px;">
+			                                        <?php 
+			                                            $num = $usr['monto_nomina'];
+			                                            $multi = 5;
+
+			                                            if (fmod($num, $multi) <> 0) {
+			                                                $monto = $num-fmod($num, $multi)+$multi;
+			                                            } else {
+			                                                $monto = $num;
+			                                            }
+			                                        ?>
+			                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto); ?></span>  
+			                                    </td>
+			                              		<td style="padding: 1px 5px;" class="text-center">
+			                                        <p><label>
+			                                            <input type="checkbox" checked class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
+			                                            <span></span>
+			    						           	</label></p>
+			                                    </td>
+				                			</tr>
+				            			</tbody>
+				            <?php } }else{ ?>
+					            <tbody>
+					                <tr>
+					                    <td><h3>No hay nóminas para este sitio</h3> </td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                </tr>
+					            </tbody>
+				            <?php } ?>
+				        </table>
+					</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="rechazar_nomina" class="btn">Rechazar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modaldelete" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de nómina</span>
+        <div class="row div_info">
+
+        	<div class="col m6 s12 text-center" style="margin-top: 20px;">
+        		
+        		<form action="/nomina/comentariosnomina" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_comentarios">
+        			<input type="hidden" name="sitio" id="form_sitio" value="<?php echo $this->sitio_name; ?>">
+					<input type="hidden" name="id_proyecto" id="form_proyecto" value="<?php echo $this->proyecto; ?>">
+        			 <input type="hidden" name="idi" id="id" value="">
+        			
+        			<div class="input-field col s12">
+    					<i class="material-icons prefix">assignment</i>
+    					<textarea id="comentarionomina" name="comentarios" class="materialize-textarea"></textarea>
+    					<label for="comentarionomina">Añade comentarios</label>
+    				</div>
+        		</form>
+
+        		<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentario Actual: </span> <br/> <span style=" color: red;" id="comentarionom_modal"></span><br>
+        	</div>
+
+        	<div class="col m6 s12" style="margin-top: 20px;">
+				<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Sitio Actual:</span> <span id="sitio_modal"></span><br>
+
+        		<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nombre:</span> <span id="name_modal"></span> <br>
+
+        		<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Pago Nomina:</span> $<span id="pagonomina_modal"></span><br>
+
+        		
+        	</div>
+
+        	
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="add_comentarios" class="btn">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+  		$('.timepicker').timepicker();
+    	$('.modal').modal();
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'} ).datepicker("setDate",currentDate);
+
+    	$('select').formSelect();
+    	$('.collapsible').collapsible();
+    	$('.dropdown-trigger').dropdown();
+  	});
+
+
+    $(".delete").click(function(){
+    	var id = $(this).data('id');
+    	document.getElementById("id").value = id;
+    	var name = $(this).data('name');
+    	document.getElementById("name_modal").innerHTML=name;
+
+    	var sitio = $(this).data('sitio');
+    	document.getElementById("sitio_modal").innerHTML=sitio;
+
+    	var pagonomina = $(this).data('pagonomina');
+    	document.getElementById("pagonomina_modal").innerHTML=pagonomina;
+
+    	var comentarionom = $(this).data('comentarionom');
+    	if (comentarionom == "" || comentarionom == null) {
+    		document.getElementById("comentarionom_modal").innerHTML="No hay comentarios en esta nómina";
+    	} else {
+    		document.getElementById("comentarionom_modal").innerHTML=comentarionom;
+    	}
+    	
+    });
+
+
+    $("#add_comentarios").click(function(){
+    	var comentarionomina = document.getElementById("comentarionomina").value;
+
+        if(comentarionomina == ""){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(subcomentarios, 1500);     
+        }
+    });
+    function subcomentarios() { document.getElementById("submit_comentarios").submit() }
+
+
+    $("#aceptar_nomina").click(function(){
+    	var form_sitio = document.getElementById("form_sitio").value;
+    	var form_proyecto = document.getElementById("form_proyecto").value;
+
+        if(form_sitio == "" || form_proyecto == "" ){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitnomina, 1500);     
+        }
+    });
+    function submitnomina() { document.getElementById("submit_addnomina").submit() }
+
+    $("#rechazar_nomina").click(function(){
+    	var form_sitio = document.getElementById("form_sitio").value;
+    	var form_proyecto = document.getElementById("form_proyecto").value;
+
+        if(form_sitio == "" || form_proyecto == "" ){
+            swal({
+                title: "Para continuar es neceario agregar la información solicitada",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            setTimeout(submitnomrechazar, 1500);     
+        }
+    });
+    function submitnomrechazar() { document.getElementById("submit_notnomina").submit() }
+
+
+</script>

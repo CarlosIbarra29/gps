@@ -37,14 +37,16 @@ $url="";
                 }else{
                     $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
                 }
-            if ($i != $this->total)
-                $links .= " <li><a>...</a></li> ";
-            if($i ==$this->actpage){
-                $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
-            }else{
-                $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
             }
-        }           
+        }
     }
 ?>
 
@@ -134,7 +136,7 @@ $url="";
                 </td>
 				        <td></td>
 			      </tbody>
-        <?php }?>
+        <?php } ?>
     </table>
 </div>
 <!-- End Table Grupo -->
@@ -175,6 +177,7 @@ $url="";
 
 <!-- Scripts -->
 <script type="text/javascript">
+
     $(document).ready(function(){
         $('.modal').modal();
 	  });  //Modal script//
@@ -238,5 +241,6 @@ $url="";
                 swal("La accion fue cancelada!");
             }
         });
-    }); // End Delete Ajax
+    });
+
 </script>

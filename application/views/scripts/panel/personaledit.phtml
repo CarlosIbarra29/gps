@@ -13,7 +13,12 @@
 
 <div class="col m12 s12" style="margin-top: 12px;">
 	<div class="white-box">
-		<form action="/panel/requestuodatepersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+		<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 9){ ?>
+			<form action="/panel/requestuodatepersonal" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personal">
+		<?php } else { ?>
+			<form action="/panel/requestupdateprs" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_personalcont">
+		<?php } ?>
+
 			<?php foreach ($this->usuarios as $usr) { ?>
 			<input type="hidden" name="ids" value="<?php echo $usr["id"]; ?>">
 			<div class="input-field col m6 s12">
@@ -165,7 +170,11 @@
 			<div class="input-field col m12 s12 text-right">
 				<div class="row">
 					<a href="/panel/personal" class="waves-effect red waves-light btn">Cancelar</a>
-					<button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+					<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 9){ ?>
+						<button id="addpersonal" class="waves-effect waves-light btn">Actualizar</button>
+					<?php } else { ?>
+						<button id="addpersonalcont" class="waves-effect waves-light btn">Actualizar</button>
+					<?php } ?>
 				</div>	
 			</div>
 
@@ -197,5 +206,31 @@
 
     function submitForm() {
         document.getElementById("submit_personal").submit()
+    } 
+
+
+    $("#addpersonalcont").click(function(){
+     	var status = document.getElementById("status").value;
+        var name = document.getElementById("name").value;
+        var ap = document.getElementById("apa").value;
+        var am = document.getElementById("ama").value;
+        var puesto = document.getElementById("puesto").value;
+        var email = document.getElementById("mail").value;
+
+        if(status == 3 || name == "" || ap == "" || am == "" || puesto == "" ){
+            swal({
+                title: "Para agregar al personal debes llenar todos los campos marcados con un '*'",
+            });
+        }else{
+	        swal("Espere un momento, la información esta siendo procesada", {
+	         icon: "success",
+	         buttons: false,
+	        });    
+            setTimeout(submitForm1, 1500);     
+        }
+    });
+
+    function submitForm1() {
+        document.getElementById("submit_personalcont").submit()
     } 
 </script>

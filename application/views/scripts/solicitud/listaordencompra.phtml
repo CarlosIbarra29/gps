@@ -219,11 +219,17 @@
 				<thead>
 					<tr>
 						<th>NO.</th>
+						<th>Fecha Creación</th>
 						<th>Usuario</th>
 						<th>Sitio</th>		
 						
 						<th>Proveedor</th>
 						<th>Servicio</th>
+
+						<?php if($status == 3){ ?>
+							<th>Fecha Pago</th>
+						<?php } ?>
+
 						<th>Monto</th>
 						<th>Autorización</th>
 						<!-- <th>Documento</th> -->
@@ -238,6 +244,9 @@
 					<tr>
 						<td>
 							<h5><?php echo $usr['id_solicitud']; ?></h5>
+						</td>
+						<td>
+							<h5><?php echo $usr['fecha_creacion']; ?></h5>
 						</td>
 						<td>
 							<h5><?php echo $usr['nombre']; ?> <?php echo $usr['ap']; ?></h5>
@@ -263,6 +272,12 @@
 						<td>
 							<h5><?php echo $usr['nombre_servicio']; ?></h5>
 						</td>
+
+						<?php if($status == 3){ ?>
+							<td>
+								<h5><?php echo $usr['fecha_pago']; ?></h5>
+							</td>
+						<?php } ?>
 						<td>
 							<h5 style="font-weight: bold;">
 								$<?php echo number_format($usr['total'], 2, '.', ','); ?>

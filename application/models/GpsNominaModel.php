@@ -375,4 +375,96 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
         }
     } //END GET PAGINATOR PERSONAL
 
+
+    public function getnominasmanager(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sitio, id_proyecto ,SUM(monto_nomina) as monto_nmn
+                FROM personal_nomina
+                WHERE status_auditoria = 1 and status_pago = 0 and status_auditoria2 = 0
+                GROUP BY sitio");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET NOMINAS MANAGER
+
+
+    public function GetPaginationNmnMng($table,$offset,$no_of_records_per_page){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT sitio, id_proyecto ,SUM(monto_nomina) as monto_nmn
+                FROM personal_nomina
+                WHERE status_auditoria = 1 and status_pago = 0 and status_auditoria2 = 0
+                GROUP BY sitio
+                ORDER BY sitio ASC
+                LIMIT $offset,$no_of_records_per_page");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
+
+
+
+    public function GetNominaSitioMgr($table,$sitio,$proyecto){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.*, p.puesto, pp.nombre FROM personal_nomina pn
+                INNER JOIN personal_campo p ON p.id = pn.id_personal
+                INNER JOIN puestos_personal pp ON pp.id = p.puesto
+                WHERE status_auditoria = 1 and status_pago = 0 and status_auditoria2 = 0 and
+                sitio LIKE '%{$sitio}%' and id_proyecto = ? ORDER BY p.puesto DESC",array($proyecto));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Nominas por sitio
+
+
+    public function GetSitiosDatos($table,$sitio){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT * FROM sitios
+                WHERE nombre LIKE '%{$sitio}%'");
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Nominas por sitio
+
+
+    public function updatecomentariosnomina($table,$post){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET comentario_auditoria2 = ? WHERE id = ?",
+                array($post['comentarios'],$post['idi']));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+    // public function GetCountSolMgr($table){
+    //     try{
+    //         $db = Zend_Db_Table::getDefaultAdapter();
+    //         $qry = $db->query("SELECT COUNT(DISTINCT (sitio)) as notis FROM personal_nomina
+    //             WHERE status_auditoria = 1 and status_pago = 0;");
+    //         $row = $qry->fetchAll();
+    //         return $row;
+    //         $db->closeConnection();
+    //     }catch (Exception $e){
+    //         echo $e;
+    //     }
+    // } //Total de sol MANAGER
 }

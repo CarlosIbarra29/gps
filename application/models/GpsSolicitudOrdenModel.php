@@ -405,7 +405,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, 
+                        soc.fecha_pago, 
+                        soc.fecha_creacion,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -454,9 +456,9 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva,  soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, 
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -506,7 +508,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.importe, soc.iva, 
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, soc.fecha_creacion, soc.fecha_pago,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -584,7 +586,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, soc.fecha_creacion, soc.fecha_pago,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -636,7 +638,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.importe, soc.iva, 
                         soc.retencion_isr,soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno, soc.fecha_creacion, soc.fecha_pago,
                         soc.id_usuario,soc.rol_encargado, soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -2001,7 +2003,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_pago, 
+                        soc.fecha_creacion,
                         soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -2042,6 +2045,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
+                        soc.fecha_creacion, soc.fecha_pago,
                         soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.nombre_sitio,
                         soc.status_documentouno ,soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, 
                         u.nombre, u.ap
@@ -2085,7 +2089,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.name_proveedor, soc.importe, soc.iva, soc.retencion_isr, soc.total, 
-                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.fecha_creacion, soc.fecha_pago, 
                         soc.status_documento, soc.nombre_sitio, soc.status_documentouno ,soc.id_usuario,
                         soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -2128,7 +2132,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.name_proveedor, soc.importe, soc.iva, soc.retencion_isr, soc.total, 
-                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documento, soc.nombre_sitio, soc.status_documentouno ,soc.id_usuario,
                         soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -2171,7 +2175,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.name_proveedor,soc.name_user, soc.importe,soc.iva, soc.retencion_isr,
-                        soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, 
+                        soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,soc.nombre_sitio, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documento, soc.nombre_sitio, soc.status_documentouno,soc.id_usuario,
                         soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -2192,7 +2196,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida,soc.servicio_id, soc.name_user,soc.importe, soc.iva, 
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
-                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
+                        soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, soc.fecha_creacion, soc.fecha_pago,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
@@ -2238,7 +2242,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.name_proveedor, soc.name_user, soc.servicio_id ,soc.importe, soc.iva,
-                        soc.retencion_isr, soc.total,  soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.retencion_isr, soc.total,  soc.condiciones_compra, soc.referencia, soc.descripcion, soc.fecha_creacion, soc.fecha_pago,
                         soc.nombre_sitio, soc.status_documento, soc.nombre_sitio, soc.status_documentouno,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre,u.ap
                         FROM solicitud_ordencompra soc
@@ -2300,7 +2304,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, 
                         soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2323,7 +2327,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, 
                         soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2347,7 +2351,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr,soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, 
                         soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos,
                         soc.facturable
@@ -2371,7 +2375,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2394,7 +2398,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2418,7 +2422,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr,soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -2441,7 +2445,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2463,7 +2467,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2487,7 +2491,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -2511,7 +2515,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor, 
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor,  soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
                         soc.status_pago, soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, 
                         soc.fecha_validaciondos
@@ -2535,7 +2539,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
                         soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor, 
-                        soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
+                        soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_pago, soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, 
                         soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2559,7 +2563,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id, soc.importe, soc.iva, soc.retencion_isr,soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor, 
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.servicio_id,soc.name_proveedor, soc.fecha_creacion, soc.fecha_pago, 
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
                         soc.status_pago, soc.facturable ,u.id, u.nombre, u.ap, s.nombre_servicio, 
                         soc.fecha_validaciondos, soc.facturable
@@ -2583,7 +2587,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2605,7 +2609,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos
                         FROM solicitud_ordencompra soc
@@ -2629,7 +2633,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status,soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio, soc.fecha_validaciondos, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -2653,7 +2657,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia,soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia,soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_pago, 
+                        soc.fecha_creacion, 
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago, soc.facturable,
                         u.id, u.nombre, u.ap, s.nombre_servicio
                         FROM solicitud_ordencompra soc
@@ -2765,6 +2770,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, 
                         soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
                         soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, 
+                        soc.fecha_pago, soc.fecha_creacion,
                         soc.status_pago, soc.status_documentouno,soc.id_usuario,soc.rol_encargado,
                         soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
                         st.id_tipoproyecto, t.nombre_proyecto, soc.facturable, soc.fecha_validaciondos
@@ -2791,7 +2797,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, 
                         soc.proveedor_id,soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, 
-                        soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, 
+                        soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.fecha_creacion, soc.fecha_pago,
                         soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, 
                         soc.status_pago, soc.status_documentouno,soc.id_usuario,soc.rol_encargado,
                         soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
@@ -2847,7 +2853,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -2874,7 +2880,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -2902,7 +2908,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -2929,7 +2935,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -2956,7 +2962,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -2984,7 +2990,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3014,7 +3020,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3041,7 +3047,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3069,7 +3075,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra,soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3097,7 +3103,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3124,7 +3130,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3153,7 +3159,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3182,7 +3188,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3209,7 +3215,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3237,7 +3243,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3282,7 +3288,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_pago, 
+                        soc.fecha_creacion,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3303,7 +3310,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3324,7 +3331,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3345,7 +3352,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3367,7 +3374,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr,soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3389,7 +3396,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, 
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3410,7 +3417,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida, 
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3432,7 +3439,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id,soc.proveedor_id, soc.fecha_requerida, 
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr,soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3454,7 +3461,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3475,7 +3482,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3497,7 +3504,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total,soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago,
                         u.id, u.nombre, u.ap, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3518,7 +3525,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3540,7 +3547,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -3562,7 +3569,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe,soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, soc.status_pago ,u.id, 
                         u.nombre, u.ap,soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3583,7 +3590,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
-                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.fecha_creacion, soc.fecha_pago,
                         soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor,soc.servicio_id, 
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
                         soc.status_pago ,u.id, u.nombre, u.ap
@@ -3604,7 +3611,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
-                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
+                        soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra, soc.fecha_creacion, soc.fecha_pago,
                         soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor,soc.servicio_id, 
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
                         soc.status_pago ,u.id, u.nombre, u.ap
@@ -3627,7 +3634,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr,soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor,soc.servicio_id, 
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor,soc.servicio_id, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, 
                         soc.status_pago ,u.id, u.nombre, u.ap, soc.facturable
                         FROM solicitud_ordencompra soc
@@ -3648,9 +3655,10 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.fecha_pago, soc.fecha_creacion,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
-                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, 
                         s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
@@ -3699,7 +3707,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno, 
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3784,7 +3792,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
@@ -3866,7 +3874,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -3951,7 +3959,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,s.nombre_servicio,
@@ -4033,7 +4041,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -4115,7 +4123,8 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_pago, 
+                        soc.fecha_creacion,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
@@ -4154,7 +4163,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
@@ -4195,7 +4204,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
@@ -4236,7 +4245,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
@@ -4277,7 +4286,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor, soc.servicio_id, 
+                        soc.referencia, soc.descripcion,soc.nombre_sitio,soc.name_proveedor, soc.servicio_id, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documento,soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, 
                         u.nombre, u.ap
                         FROM solicitud_ordencompra soc
@@ -4321,7 +4330,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.proveedor_id, soc.fecha_requerida,
                         soc.servicio_id,soc.importe, soc.iva, soc.retencion_isr, soc.total, soc.condiciones_compra,
-                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento,
+                        soc.referencia, soc.descripcion,soc.nombre_sitio, soc.status_documento, soc.fecha_creacion, soc.fecha_pago,
                         soc.status_documentouno ,soc.id_usuario,soc.delete_status, u.id, u.nombre, u.ap
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
@@ -4363,9 +4372,10 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.fecha_pago, soc.fecha_creacion,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
-                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
+                        soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap, 
                         s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
@@ -4414,7 +4424,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
-                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion, soc.fecha_creacion, soc.fecha_pago,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
                         s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
@@ -4467,7 +4477,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
                         soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
-                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
+                        soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion, soc.fecha_creacion, soc.fecha_pago,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
                         s.nombre_servicio, st.id_tipoproyecto, t.nombre_proyecto
@@ -4519,7 +4529,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -4571,7 +4581,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago, soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,
@@ -4622,7 +4632,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT soc.id as id_solicitud, soc.sitio_id, soc.tipo_proyecto, soc.proveedor_id,
-                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, 
+                        soc.name_proveedor, soc.fecha_requerida, soc.servicio_id, soc.importe, soc.iva, soc.fecha_creacion, soc.fecha_pago,
                         soc.retencion_isr, soc.total, soc.condiciones_compra, soc.referencia, soc.descripcion,
                         soc.nombre_sitio, soc.status_documento, soc.status_pago,soc.status_documentouno ,
                         soc.id_usuario,soc.rol_encargado,soc.delete_status, u.id, u.nombre, u.ap,

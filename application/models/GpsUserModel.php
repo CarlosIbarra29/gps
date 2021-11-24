@@ -366,6 +366,33 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE USER
 
+
+    public function refreshPersonalcont($post,$table){
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, disponibilidad = ?, status_campo = ? WHERE id = ?",array(
+                $post['name'],
+                $post['apellido_pa'],
+                $post['ampellido_ma'],
+                $post['curp'],
+                $post['puesto'],
+                $post['status'],
+                $post['nss'],
+                $post['rfc'],
+                $post['phone'],
+                $post['emergencia'],
+                $post['mail'],
+                $post['disponibilidad'],
+                $post['cuadrilla'],
+                $post["ids"]));
+            $db->closeConnection();               
+            return $qry;
+        } 
+        catch (Exception $e) {
+            echo $e;
+        }
+    }// END UPDATE USER
+
     public function refreshcomentariositio($post,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();

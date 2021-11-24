@@ -9,6 +9,7 @@ class NominaController extends Zend_Controller_Action{
         $this->_personal = new Application_Model_GpsPersonalModel;
         $this->_asistencia = new Application_Model_GpsAsistenciaModel;
         $this->_nomina = new Application_Model_GpsNominaModel;
+        $this->_nomina2 = new Application_Model_GpsNomina2Model;
         if(empty($this->_session->id)){ $this->redirect('/home/login'); }    
     }
 
@@ -507,6 +508,218 @@ class NominaController extends Zend_Controller_Action{
             }
         }        
     }
+
+
+     public function nominamanagerAction(){
+
+        $actualpagina=$this->_getParam('pagina');
+        $this->view->actpage=$actualpagina;
+
+        $table="personal_nomina";
+        $this->view->nominas_mng = $this->_nomina->getnominasmanager($table);
+
+        $nominasmanager=$this->_nomina->getnominasmanager($table);
+        $count=count($nominasmanager);
+
+        if (isset($_GET['pagina'])) {
+    
+            $pagina = $_GET['pagina'];
+    
+        } else {
+    
+            $pagina= $this->view->pagina = 1;
+    
+        } 
+
+        $no_of_records_per_page = 15;
+        $offset = ($pagina-1) * $no_of_records_per_page; 
+        $total_pages= $count;
+
+        $this->view->totalpage = $total_pages;
+        $this->view->total=ceil($total_pages/$no_of_records_per_page);
+        $table="personal_nomina";
+        $sql= $this->view->paginator= $this->_nomina->GetPaginationNmnMng($table,$offset,$no_of_records_per_page);   
+
+    }   // Status Campamentos
+
+
+    public function detallenominamgrAction(){
+        $sitio = $this->_getParam('sitio');
+        $this->view->sitio_name = $sitio;
+        $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
+        
+        $table="personal_nomina";
+        $nominasmgr= $this->view->info_nominas = $this->_nomina->GetNominaSitioMgr($table,$sitio,$proyecto);
+
+        if($sitio == "Taller"){
+            $this->view->sitio_info_taller = 1; 
+        }elseif($sitio == "Compensacion"){
+            $this->view->sitio_info_taller = 2;
+        }elseif($sitio == "Vacaciones"){
+            $this->view->sitio_info_taller = 3; 
+        }elseif($sitio == "Taller Foraneos"){
+            $this->view->sitio_info_taller = 4; 
+        }else{
+            $this->view->sitio_info_taller = 0; 
+            $table = "sitios";
+            $this->view->sitio_info = $this->_nomina->GetSitiosDatos($table,$sitio); 
+        }
+                    
+    }
+
+    public function comentariosnominaAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        $table="personal_nomina";
+        $result=$this->_nomina->updatecomentariosnomina($table,$post);
+        
+        if ($result) {
+            return $this-> _redirect('/nomina/detallenominamgr/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].' ');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }   
+    }
+
+    public function requestaceptarsolAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $us=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $pre = $this->_season->GetSpecific($table,$wh,$us);
+        $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+        $id_user = $pre[0]['id'];
+
+        $montos = 0;
+        foreach ($post['ids'] as $key) {
+            $id= $key;
+            $wh="id";
+            $table="personal_nomina";
+            $pago_nomina = $this->_season->GetSpecific($table,$wh,$id);
+            $num =$pago_nomina[0]['monto_nomina'];
+
+            $multi = 5;
+
+            if (fmod($num, $multi) <> 0) {
+                $monto = $num-fmod($num, $multi)+$multi;
+            } else {
+                $monto = $num;
+            }
+            $montos = $montos + $monto;
+        }
+
+        $status_pack = 1;
+
+        $table = "personal_nominapack";
+        $id_solicitud = $this->_nomina2->insertnominasolicitudfin($id_user,$solicitud_user,$status_pack,$post,$table,$hoy,$montos);
+        // $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+
+        foreach ($post['ids'] as $key) {
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $us=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $pre = $this->_season->GetSpecific($table,$wh,$us);
+            $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+            $id_user = $pre[0]['id'];
+                
+            $status_sol= 1;
+
+            $id= $key;
+            $wh="id";
+            $table="personal_nomina";
+                
+            $result=$this->_nomina2->updatesolnominafin($id,$table,$post,$hoy,$solicitud_user,$id_user,$id_solicitud,$status_sol);
+        }
+       
+        if ($result) {
+            return $this-> _redirect('/nomina/detallenominamgr/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].' ');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }   
+    }
+
+
+    public function requestcancelarnomsolAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $post = $this->getRequest()->getPost();
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
+        $us=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $pre = $this->_season->GetSpecific($table,$wh,$us);
+        $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+        $id_user = $pre[0]['id'];
+
+        $montos = 0;
+        foreach ($post['ids'] as $key) {
+            $id= $key;
+            $wh="id";
+            $table="personal_nomina";
+            $pago_nomina = $this->_season->GetSpecific($table,$wh,$id);
+            $num =$pago_nomina[0]['monto_nomina'];
+
+            $multi = 5;
+
+            if (fmod($num, $multi) <> 0) {
+                $monto = $num-fmod($num, $multi)+$multi;
+            } else {
+                $monto = $num;
+            }
+            $montos = $montos + $monto;
+        }
+
+        $status_pack = 2;
+
+        $table = "personal_nominapack";
+        $id_solicitud = $this->_nomina2->insertnominasolicitudfin($id_user,$solicitud_user,$status_pack,$post,$table,$hoy,$montos);
+        // $ver = $this->view->asistencia =$this->_asistencia->getpersonalasistencianomina($id_user);
+
+        foreach ($post['ids'] as $key) {
+            date_default_timezone_set('America/Mexico_City');
+            $hoy = date("d-m-Y H:i:s");
+            $us=$this->_session->id;
+            $wh="id";
+            $table="usuario";
+            $pre = $this->_season->GetSpecific($table,$wh,$us);
+            $solicitud_user = $pre[0]['nombre']." ".$pre[0]['ap']." ".$pre[0]['am'];
+            $id_user = $pre[0]['id'];
+                
+            $status_sol= 2;
+
+            $id= $key;
+            $wh="id";
+            $table="personal_nomina";
+                
+            $result=$this->_nomina2->updatesolnominafincancel($id,$table,$post,$hoy,$solicitud_user,$id_user,$id_solicitud,$status_sol);
+        }
+       
+        if ($result) {
+            return $this-> _redirect('/nomina/detallenominamgr/sitio/'.$post['sitio'].'/proyecto/'.$post['id_proyecto'].' ');
+        }else{
+            print '<script language="JavaScript">'; 
+            print 'alert("Ocurrio un error: Comprueba los datos.");'; 
+            print '</script>'; 
+        }   
+    }
+
+
+
+
 
     public function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)

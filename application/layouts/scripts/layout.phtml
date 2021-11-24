@@ -963,7 +963,12 @@ setInterval(function() {
 
     $via_sol_cont = $instancevia->GetSolicitudViaContCount();
     $total_solviacont = count($via_sol_cont);
+   // Viaticos
 
+    $instancenominamgr = new Application_Model_GpsNominaModel();
+    
+    $sol_nommgr = $instancenominamgr->getnominasmanager();
+    $total_sol_mgr = count($sol_nommgr);
 
 
     //Contabilidad 
@@ -1025,6 +1030,17 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
                     <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
+
+                <?php if($total_sol_mgr == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/nomina/nominamanager',$actual_link);?>">
+                        <a href="/nomina/nominamanager">Nómina Manager<i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/nomina/nominamanager',$actual_link);?>">
+                        <a href="/nomina/nominamanager">Nómina Manager <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_sol_mgr; ?></span><i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } ?>
+
                 <li class="bold moves <?php echo getUrl('/prestamo/solicitudprestamo',$actual_link); echo getprestamo($actual_link);?>">
                     <a href="/prestamo/solicitudprestamo/status/0">Descuentos<i class="material-icons">attach_money</i></a>
                 </li>
@@ -1739,6 +1755,16 @@ setInterval(function() {
                 <li class="bold moves <?php echo getUrl('/nomina/solicitudnomina',$actual_link); echo getnomina($actual_link);?>">
                     <a href="/nomina/solicitudnomina/status/0">Solicitud Nomina<i class="material-icons">assignment</i></a>
                 </li>
+
+                <?php if($total_sol_mgr == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/nomina/nominamanager',$actual_link);?>">
+                        <a href="/nomina/nominamanager">Nómina Manager<i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/nomina/nominamanager',$actual_link);?>">
+                        <a href="/nomina/nominamanager">Nómina Manager <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_sol_mgr; ?></span><i class="material-icons">assignment</i></a>
+                    </li>
+                <?php } ?>
 
                 <?php if($total_viaticos == 0){ ?>
                     <li class="bold moves <?php echo getUrl('/viaticos/listasolicitudvtc/status/0',$actual_link);?>">

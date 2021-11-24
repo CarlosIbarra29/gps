@@ -1,0 +1,183 @@
+<?php 
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+            return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
+    }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+$links = "";
+$url="";
+
+    if($this->total== 1){
+        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+    }else{
+        if ($this->total >= 1 && $pagina <= $this->total) {
+            if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+            }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+            }
+
+            $i = max(2, $pagina - 3);
+            if ($i > 2)
+                $links .= " <li><a>...</a></li> ";
+            for (; $i < min($pagina + 3, $this->total); $i++) {
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                }
+
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+            }
+        }
+    }
+?>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col m12 s12 text-right"> 
+        <a class="btn" href="/nomina/listanominamgr/status/0"><i class="material-icons right">art_track</i>Lista de Solicitudes</a>
+    </div>
+</div>
+
+<!-- Inicio Botones -->
+<div class="row">
+    <div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Nóminas por Sitio
+    </div>
+</div>
+<!-- End Inicio Botones -->
+
+
+<!-- Table Nóminas Manager -->
+<div class="row">
+    <div class="col m2 s12"></div>
+    <div class="col m8 s12">
+        
+        <table class="table text-center table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Sitio</th>
+                    <th class="text-center">Id Proyecto</th>
+    				<th class="text-center">Monto</th>
+    				<th class="text-center">Detalle</th>
+    			</tr> 
+            </thead>
+
+            <?php if ($this->paginator) {
+                foreach ($this->paginator as $nomina) { ?>
+                    <tbody>
+                        <tr class="text-center">
+                            <td class="text-center"><?php echo $nomina["sitio"]; ?></td>
+                            <td class="text-center"><?php echo $nomina["id_proyecto"]; ?></td>
+                            <td class="text-center">
+                                <?php 
+                                    $num = $nomina['monto_nmn'];
+                                    $multi = 5;
+
+                                    if (fmod($num, $multi) <> 0) {
+                                        $valor_suma = $num-fmod($num, $multi)+$multi;
+                                    } else {
+                                        $valor_suma = $num;
+                                    }
+                                ?>
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$ <?php echo number_format($valor_suma); ?></span>  
+                            </td>
+                            <td class="text-center">
+                                <a href="/nomina/detallenominamgr/sitio/<?php echo $nomina["sitio"] ?>/proyecto/<?php echo $nomina['id_proyecto']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+            <?php } } else{ ?>
+                <tbody>
+                    <td></td>
+                    <td>
+    					<h4>No se encontraron Status de Campamentos</h4>
+                    </td>
+    				<td></td>
+    			</tbody>
+            <?php } ?>
+        </table>
+    </div>
+    <div class="col m2 s12"></div>
+</div>
+<!-- End Table Nóminas Manager -->
+
+<!-- Paginación  -->
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+               		<?php if($pagina - 1 == 0){ ?>
+                    	<li class="page-item disabled">
+                        	<span class="page-link">Anterior</span>
+                    	</li>
+               		<?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+               		<?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+               		<?php if($pagina >= $this->total): ?>
+                       	<li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                       	</li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                   	<?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+<!-- End Paginacion  -->
+
+<!-- Scripts -->
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.modal').modal();
+	  });  //Modal script//
+
+	  $("#addstatus").click(function(){
+	  	  var name = document.getElementById("name").value;
+        if(name == ""){
+            swal({
+                title: "Para agregar un status ingresa el nombre(*)",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+			 	        buttons: false,
+            });
+            setTimeout(submitForm, 500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("sumbit_s").submit()
+    } //Agregar Scripts
+
+</script>

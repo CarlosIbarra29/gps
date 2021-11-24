@@ -778,9 +778,11 @@ class AsistenciaController extends Zend_Controller_Action{
                         }else{
                             $rest = substr($diferencia, 0, -3);
                             if($rest < 10){
-                                $total = $rest - 2;
-                                $monto = $total * $hora_pago;
+                                // $total = $rest - 2;
+                                // $monto = $total * $hora_pago;
                                 // echo "menor";
+                                $prepago = $dia_pago / 8; 
+                                $monto = $prepago * $rest;
                             }
 
                             if($rest > 10){
@@ -805,38 +807,38 @@ class AsistenciaController extends Zend_Controller_Action{
                             if($key['day_num'] == 6){
                                 $rest = substr($diferencia, 0, -3);
 
-                                // if($rest == 5){
-                                //     $monto = 0;
-                                // }
+                                if($rest == 5){
+                                    $monto = $dia_pago;
+                                }
 
-                                // if($rest <= 9){
-                                //     $total = $rest - 5;
-                                //     if($total == 1){
-                                //         $monto = ($dia_pago / 100) * 20;
-                                //     }
-                                //     if($total == 2){
-                                //         $monto = ($dia_pago / 100) * 40;
-                                //     }
-                                //     if($total == 3){
-                                //         $monto = ($dia_pago / 100) * 60;
-                                //     }
-                                //     if($total == 4){
-                                //         $monto = ($dia_pago / 100) * 80;
-                                //     }
-                                //     // echo "menor";
-                                // }
-
-                                    if($rest == 5){
-                                        $monto = $dia_pago;
+                                if($rest <= 9){
+                                    $total = $rest - 5;
+                                    if($total == 1){
+                                        $monto = ($dia_pago / 100) * 20;
                                     }
-
-                                    if($rest <= 9){
-                                        $total = $rest - 5;
-                                        $pagomas = $dia_pago / 5;
-                                        $suma = $total * $pagomas;
-                                        $monto = $dia_pago + $suma;
-
+                                    if($total == 2){
+                                        $monto = ($dia_pago / 100) * 40;
                                     }
+                                    if($total == 3){
+                                        $monto = ($dia_pago / 100) * 60;
+                                    }
+                                    if($total == 4){
+                                        $monto = ($dia_pago / 100) * 80;
+                                    }
+                                    // echo "menor";
+                                }
+
+                                    // if($rest == 5){
+                                    //     $monto = $dia_pago;
+                                    // }
+
+                                    // if($rest <= 9){
+                                    //     $total = $rest - 5;
+                                    //     $pagomas = $dia_pago / 5;
+                                    //     $suma = $total * $pagomas;
+                                    //     $monto = $dia_pago + $suma;
+
+                                    // }
 
                                     if($rest == 10){
                                         $monto = $dia_pago;
@@ -871,38 +873,38 @@ class AsistenciaController extends Zend_Controller_Action{
                             if($key['day_num'] == 7){
                                 $rest = substr($diferencia, 0, -3);
 
-                                // if($rest == 5){
-                                //     $monto = 0;
-                                // }
+                                if($rest == 5){
+                                    $monto = $dia_pago;
+                                }
 
-                                // if($rest <= 9){
-                                //     $total = $rest - 5;
-                                //     if($rest == 1){
-                                //         $monto = ($dia_pago / 100) * 20;
-                                //     }
-                                //     if($rest == 2){
-                                //         $monto = ($dia_pago / 100) * 40;
-                                //     }
-                                //     if($rest == 3){
-                                //         $monto = ($dia_pago / 100) * 60;
-                                //     }
-                                //     if($rest == 4){
-                                //         $monto = ($dia_pago / 100) * 80;
-                                //     }
+                                if($rest <= 9){
+                                    $total = $rest - 5;
+                                    if($rest == 1){
+                                        $monto = ($dia_pago / 100) * 20;
+                                    }
+                                    if($rest == 2){
+                                        $monto = ($dia_pago / 100) * 40;
+                                    }
+                                    if($rest == 3){
+                                        $monto = ($dia_pago / 100) * 60;
+                                    }
+                                    if($rest == 4){
+                                        $monto = ($dia_pago / 100) * 80;
+                                    }
                                    
-                                // }
+                                }
 
-                                    if($rest == 5){
-                                        $monto = $dia_pago;
-                                    }
+                                    // if($rest == 5){
+                                    //     $monto = $dia_pago;
+                                    // }
 
-                                    if($rest <= 9){
-                                        $total = $rest - 5;
-                                        $pagomas = $dia_pago / 5;
-                                        $suma = $total * $pagomas;
-                                        $monto = $dia_pago + $suma;
+                                    // if($rest <= 9){
+                                    //     $total = $rest - 5;
+                                    //     $pagomas = $dia_pago / 5;
+                                    //     $suma = $total * $pagomas;
+                                    //     $monto = $dia_pago + $suma;
 
-                                    }
+                                    // }
 
                                     if($rest == 10){
                                         $monto = $dia_pago*2;

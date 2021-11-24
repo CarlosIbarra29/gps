@@ -749,9 +749,11 @@
 				                  			}else{
 					                  			$rest = substr($diferencia, 0, -3);
 					                  			if($rest < 10){
-					                  				$total = $rest - 2;
-					                  				$monto = $total * $hora_pago;
-					                  				// echo "menor";
+					                  				// $total = $rest - 2;
+					                  				// $monto = $total * $hora_pago;
+					                  				
+					                  				$prepago = $dia_pago / 8; 
+					                  				$monto = $prepago * $rest;
 					                  			}
 
 					                  			if($rest > 10){
@@ -777,44 +779,44 @@
 				                  			if($usr['day_num'] == 6){
 				                  				$rest = substr($diferencia, 0, -3);
 				                  				// echo $rest;
-				                  				// if($rest == 5){
-				                  				// 	$monto = 0;
-				                  				// }
-
-					                  			// if($rest <= 9){
-					                  			// 	$total = $rest - 5;
-					                  			// 	// echo $total;
-					                  			// 	if($total == 1){
-					                  			// 		$monto_u= $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 20;
-					                  			// 	}
-					                  			// 	if($total == 2){
-					                  			// 		$monto_u = ($dia_pago / 100);
-					                  			// 		$monto = $monto_u * 40;
-					                  			// 	}
-					                  			// 	if($total == 3){
-					                  			// 		$monto_u = $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 60;
-					                  			// 	}
-					                  			// 	if($total == 4){
-					                  			// 		$monto_u = ($dia_pago / 100);
-					                  			// 		$monto = $monto_u * 80;
-					                  			// 	}
-					                  			
-					                  			// }
-
-					                  			if($rest == 5){
+				                  				if($rest == 5){
 				                  					$monto = $dia_pago;
 				                  				}
 
 					                  			if($rest <= 9){
-
 					                  				$total = $rest - 5;
-					                  				$pagomas = $dia_pago / 5;
-					                  				$suma = $total * $pagomas;
-					                  				$monto = $dia_pago + $suma;
-					                  				// echo "menor";
+					                  				// echo $total;
+					                  				if($total == 1){
+					                  					$monto_u= $dia_pago / 100;
+					                  					$monto = $monto_u * 20;
+					                  				}
+					                  				if($total == 2){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$monto = $monto_u * 40;
+					                  				}
+					                  				if($total == 3){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 60;
+					                  				}
+					                  				if($total == 4){
+					                  					$monto_u = ($dia_pago / 100);
+					                  					$monto = $monto_u * 80;
+					                  				}
+					                  			
 					                  			}
+
+					                  			// if($rest == 5){
+				                  				// 	$monto = $dia_pago;
+				                  				// }
+
+					                  			// if($rest <= 9){
+
+					                  			// 	$total = $rest - 5;
+					                  			// 	$pagomas = $dia_pago / 5;
+					                  			// 	$suma = $total * $pagomas;
+					                  			// 	$monto = $dia_pago + $suma;
+					                  			// 	// echo "menor";
+					                  			// }
 
 				                  				if($rest == 10){
 				                  					$monto = $dia_pago;
@@ -850,45 +852,45 @@
 				                  			if($usr['day_num'] == 7){
 				                  				$rest = substr($diferencia, 0, -3);
 
-				                  				// if($rest == 5){
-				                  				// 	$monto = 0;
-				                  				// }
-
-					                  			// if($rest <= 9){
-					                  			// 	$total = $rest - 5;
-					                  			// 	if($rest == 1){
-					                  			// 		$monto_u= $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 20;
-					                  			// 	}
-					                  			// 	if($rest == 2){
-					                  			// 		$monto_u = $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 40;
-					                  			// 	}
-					                  			// 	if($rest == 3){
-					                  			// 		$monto_u = $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 60;
-					                  			// 	}
-					                  			// 	if($rest == 4){
-					                  			// 		$monto_u = $dia_pago / 100;
-					                  			// 		$monto = $monto_u * 80;
-					                  			// 	}
-					                  			// 	// echo "menor";
-					                  			// }
-
-					                  			if($rest == 5){
+				                  				if($rest == 5){
 				                  					$monto = $dia_pago;
 				                  				}
 
 					                  			if($rest <= 9){
-
 					                  				$total = $rest - 5;
-					                  				$pagomas = $dia_pago / 5;
-					                  				$suma = $total * $pagomas;
-					                  				$monto = $dia_pago + $suma;
+					                  				if($rest == 1){
+					                  					$monto_u= $dia_pago / 100;
+					                  					$monto = $monto_u * 20;
+					                  				}
+					                  				if($rest == 2){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 40;
+					                  				}
+					                  				if($rest == 3){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 60;
+					                  				}
+					                  				if($rest == 4){
+					                  					$monto_u = $dia_pago / 100;
+					                  					$monto = $monto_u * 80;
+					                  				}
 					                  				// echo "menor";
-
-					                  				// Cambios Berri
 					                  			}
+
+					                  			// if($rest == 5){
+				                  				// 	$monto = $dia_pago;
+				                  				// }
+
+					                  			// if($rest <= 9){
+
+					                  			// 	$total = $rest - 5;
+					                  			// 	$pagomas = $dia_pago / 5;
+					                  			// 	$suma = $total * $pagomas;
+					                  			// 	$monto = $dia_pago + $suma;
+					                  			// 	// echo "menor";
+
+					                  			// 	// Cambios Berri
+					                  			// }
 
 				                  				if($rest == 10){
 				                  					$monto = $dia_pago*2;
