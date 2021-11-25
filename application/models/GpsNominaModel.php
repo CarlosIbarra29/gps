@@ -199,14 +199,14 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
                         pn.solicitud_fecha,pn.solicitud_user,pn.status_auditoria,pn.user_auditoria, 
                         pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
                         FROM personal_nomina pn 
-                        where pn.status_auditoria = ? AND status_pago = ? AND pn.sitio = ?",array($status,$pago,$sitio));
+                        where pn.status_auditoria = ? AND status_pago = ? AND pn.sitio LIKE '%{$sitio}%'",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
         }catch (Exception $e){
             echo $e;
         }
-    } //END GET ASISTENCIA
+    } //END GET ASISTENCIA sitio 
 
     public function getsolicitudnominaid($status,$pago,$id){
         try{
@@ -268,9 +268,9 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
                         pn.solicitud_fecha,pn.solicitud_user, pn.status_auditoria, pn.user_auditoria, 
                         pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
                         FROM personal_nomina pn
-                        where pn.status_auditoria = ? and status_pago = ? AND pn.sitio = ?
+                        where pn.status_auditoria = ? and status_pago = ? AND pn.sitio LIKE '%{$sitio}%'
                         ORDER BY pn.id DESC
-                        LIMIT $offset,$no_of_records_per_page",array($status,$pago,$sitio));
+                        LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();
@@ -454,6 +454,123 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     }//  UPDATE ROL
+
+
+    public function getsolicitudnominamgr($status){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp 
+                        where pnp.status = ? ",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET Solicitudes MANAGER
+
+    public function getnominasolicitudmgr($offset,$no_of_records_per_page,$status){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp 
+                    where pnp.status = ? 
+                    ORDER BY pnp.id DESC
+                    LIMIT $offset,$no_of_records_per_page",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SOLICITUDES manager paginacion
+
+
+    public function getsolnominasitiomgr($status,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp 
+                    WHERE pnp.status = ? AND pnp.sitio LIKE '%{$sitio}%'",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET SITIO
+
+
+    public function getnominasolbuscadorsitiomgr($offset,$no_of_records_per_page,$status,$sitio){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp
+                        where pnp.status = ? AND pnp.sitio LIKE '%{$sitio}%'
+                        ORDER BY pnp.id DESC
+                        LIMIT $offset,$no_of_records_per_page",array($status));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR SITIO
+
+
+    public function getsolicitudnominaidmgr($status,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp 
+                    WHERE pnp.status = ? AND pnp.id = ?",array($status,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET ID
+
+    public function getnominasolbuscadoridmgr($offset,$no_of_records_per_page,$status,$id){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pnp.id, pnp.fecha_creacion, pnp.sitio, pnp.id_proyecto, pnp.status,  
+                    pnp.monto, pnp.id_auditoria, pnp.user_auditoria, pnp.fecha_auditoria, pnp.comentarios_auditoria
+                    FROM personal_nominapack pnp 
+                    WHERE pnp.status = ? AND pnp.id = ?
+                    ORDER BY pnp.id DESC
+                    LIMIT $offset,$no_of_records_per_page",array($status,$id));
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR ID
+
+
+    public function GetNominaPackMgr($table,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pn.*, p.puesto, pp.nombre, ppn.evidencia_pago FROM personal_nomina pn
+                INNER JOIN personal_campo p ON p.id = pn.id_personal
+                INNER JOIN puestos_personal pp ON pp.id = p.puesto
+                LEFT JOIN personal_pagonomina ppn ON pn.id = ppn.solicitud_nomina
+                WHERE id_packnomina = ? ORDER BY p.puesto DESC",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Nominas por sitio
 
     // public function GetCountSolMgr($table){
     //     try{

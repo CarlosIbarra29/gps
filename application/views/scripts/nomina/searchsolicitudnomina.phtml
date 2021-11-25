@@ -296,6 +296,13 @@
                                         				Auditada
                                       			</div>
                                   			<?php } ?>
+
+                                        <?php if($usr['status_auditoria'] == 2){ ?>
+                                            <div class="chip" id="activo_personal">
+                                                <img src="/img/rojo.png" >
+                                                Rechazado
+                                            </div>
+                                        <?php } ?>
                               			</td>
 
                               			<td class="text-center">

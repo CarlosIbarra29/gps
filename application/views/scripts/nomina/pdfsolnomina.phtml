@@ -1,0 +1,427 @@
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.223/styles/kendo.common.min.css" />
+
+
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+</head>
+<body>
+<div id="example">
+
+<?php foreach ($this->info_nominapack as $key) {
+    $fecha_auditoria = $key['fecha_auditoria'];
+    $user_auditoria = $key['user_auditoria'];
+    $monto = $key['monto'];
+    $comentarios_auditoria = $key['comentarios_auditoria'];
+    $id_proyecto = $key['id_proyecto'];
+} ?>
+
+<?php foreach ($this->sitio_info as $key) {
+    $nombre_sitio = $key['nombre'];
+    $direccion = $key['direccion'];
+    $estado = $key['estado'];
+    $ciudad = $key['ciudad'];
+} ?>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+        <a href="javascript:window.history.go(-1);" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>    
+    </div>
+    <div class="col m6 s6 text-right">
+        <button class="export-pdf btn" onclick="getPDF('.pdf-page')">Descargar</button>
+    </div>
+</div>
+
+    <?php 
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d/m/Y");
+    ?>
+
+
+    <div class="page-container hidden-on-narrow">
+        <div class="pdf-page size-a4">
+            <div class="pdf-header">
+                <span class="company-logo">
+                    <img src="/img/head.png" style="width: 120px;" />
+                </span>
+
+                <span class="invoice-number">
+                    <img src="/img/logo-2.png" style="width: 125px;" /><br/>
+                    <span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> No.<?php echo $this->solicitudid_nomina; ?></span>
+                </span>
+                <div class="row">
+                    <div class="company-logo col m12 s12 text-center">
+                        Solicitud Nómina
+                    </div>
+                </div>
+            </div>
+            <div class="pdf-footer">
+                <p>Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br />
+                    Fecha de descarga: <?php echo $hoy; ?><br />
+                </p>
+            </div>
+
+
+            <div class="for" style="margin-top: 90px;">
+                <div class="col m12 s12">
+                    <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle de Sitio:</span><br/>
+                    <?php if($this->sitio_info_taller == 0){ ?>
+                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
+
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col m12 s12">
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Ciudad: 
+                                </span> <?php echo $ciudad; ?> <br>
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Estado: 
+                                </span> <?php echo $estado; ?> <br>
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Dirección: 
+                                </span> <?php echo $direccion; ?>
+                            </div>
+                        </div>
+                            
+                    <?php }elseif($this->sitio_info_taller == 2) { ?>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col m12 s12">
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Compensación: 
+                                </span> El Personal se encuentra en período de compensación.<br>
+                            </div>
+                        </div>
+                    <?php }elseif($this->sitio_info_taller == 3) { ?>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col m12 s12">
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Vacaciones: 
+                                </span> El Personal se encuentra en período de vacaciones actualmente.<br>
+                            </div>
+                        </div>
+                    <?php }elseif($this->sitio_info_taller == 4) { ?>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col m12 s12">
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Taller Foráneos: 
+                                </span>  Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br>
+                            </div>
+                        </div>
+                    <?php }else{ ?>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col m12 s12">
+                                <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                                    Taller: 
+                                </span> Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX <br>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div> 
+            </div>
+
+            <div class="from" style="margin-top: 90px;">
+                <div class="col m12 s12 text-left">
+                    <span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle Solicitud</span><br/>
+
+                    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                        Fecha Auditoria: 
+                    </span> <?php echo $fecha_auditoria; ?> <br>
+                    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                        Personal Auditoria: 
+                    </span> <?php echo $user_auditoria; ?> <br>
+                    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                        Monto a Pagar: 
+                    </span> $ <?php echo $monto; ?> <br>
+                    <?php if ($comentarios_auditoria == "" || $comentarios_auditoria == null) { ?>
+                    <?php } else { ?>
+                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+                            Comentarios Auditoria: 
+                        </span> <?php echo $comentarios_auditoria; ?>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="pdf-body">
+                <div class="row">
+                	<div class="col m12 s12" style="margin-top: 95px;">
+                        <table>
+                            <thead>
+                                <tr style="background-color: white;">
+                                    <th><span class="title-pdf">Lista solicitudes</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                	</div>
+
+                    <div class="col m12 s12">
+                        <table class="table text-left table-hover">
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>Sitio</th> 
+                                    <th>Personal</th>
+                                    <th>Puesto</th>
+                                    <th>Fecha Solicitud</th>
+                                    <th>Monto</th>  
+                                </tr> 
+                            </thead>
+
+                           <?php 
+                            $montos = 0;
+                            if ($this->info_nominas) { 
+                                foreach ($this->info_nominas as $usr) { ?>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h5><?php echo $usr['id']; ?></h5>
+                                    </td>
+                                    <td>
+                                        <h5><?php echo $usr['sitio']; ?></h5>
+                                    </td>
+                                    <td>
+                                        <h5><?php echo $usr['personal']; ?></h5>
+                                    </td>
+                                    <td>
+                                        <h5><?php echo $usr['nombre']; ?></h5>
+                                    </td>
+                                    <td>
+                                        <h5><?php echo $usr['solicitud_fecha']; ?></h5>
+                                    </td>
+
+                                    <td>
+                                        <?php 
+                                            $num = $usr['monto_nomina'];
+                                            $multi = 5;
+
+                                            if (fmod($num, $multi) <> 0) {
+                                                $monto = $num-fmod($num, $multi)+$multi;
+                                            } else {
+                                                $monto = $num;
+                                            }
+                                        ?>
+                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto); ?></span>  
+                                    </td>
+                                    <?php $montos = $montos + $monto; ?>    
+                                </tr>
+                            </tbody>
+                            <?php } }else{ ?>
+                                <tbody>
+                                    <tr>
+                                        <td><h3>No hay nóminas para este sitio</h3> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            <?php } ?>
+                        </table>
+                    </div>
+                    <?php $monto_red = ceil($montos); ?>
+                    <?php 
+                        $num = $montos;
+                        $multi = 5;
+           
+                        if (fmod($num, $multi) <> 0) {
+                            $valor_suma = $num-fmod($num, $multi)+$multi;
+                        } else {
+                            $valor_suma = $num;
+                        }
+                    ?>
+                    <div class="row" >
+                        <div class="col m6 s6 text-center" style="margin-top: 50px;">    
+                        </div>
+                        <div class="col m6 s6 text-right" style="margin-top: 50px;">
+                            <span style="font-size:17px;">Pago de Nomina: </span>
+                            <span style="font-size:17px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($valor_suma); ?></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                </div>
+
+                <div class="row signature">
+                    <div class="col m12 s12 text-center">
+                        <img src="/img/logo-2.png" style="width: 150px;"><br>
+                        Aprobado: ING. Rúben García<br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div class="responsive-message"></div>
+
+    <style>
+        .pdf-page {
+            font-family: "DejaVu Sans", "Arial", sans-serif;
+        }
+    </style>
+
+    <script>
+        kendo.pdf.defineFont({
+            "DejaVu Sans"             : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans.ttf",
+            "DejaVu Sans|Bold"        : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+            "DejaVu Sans|Bold|Italic" : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
+            "DejaVu Sans|Italic"      : "https://kendo.cdn.telerik.com/2016.2.607/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf"
+        });
+    </script>
+
+    <script src="../content/shared/js/pako.min.js"></script>
+    <script>
+        function getPDF(selector) {
+            kendo.drawing.drawDOM($(selector)).then(function(group){
+                kendo.drawing.pdf.saveAs(group, "Solicitud Nomina No.<?php echo $this->solicitudid_nomina; ?> .pdf");
+            });
+        }
+
+        $(document).ready(function() {
+            var data = [
+                { productName: "QUESO CABRALES", unitPrice: 21, qty: 5 },
+                { productName: "ALICE MUTTON", unitPrice: 39, qty: 7 },
+                { productName: "GENEN SHOUYU", unitPrice: 15.50, qty: 3 },
+                { productName: "CHARTREUSE VERTE", unitPrice: 18, qty: 1 },
+                { productName: "MASCARPONE FABIOLI", unitPrice: 32, qty: 2 },
+                { productName: "VALKOINEN SUKLAA", unitPrice: 16.25, qty: 3 }
+            ];
+            var schema = {
+                model: {
+                    productName: { type: "string" },
+                    unitPrice: { type: "number", editable: false },
+                    qty: { type: "number" }
+                },
+
+                parse: function (data) {
+                    $.each(data, function(){
+                        this.total = this.qty * this.unitPrice;
+                    });
+                    return data;
+                }
+            };
+            var aggregate = [
+                { field: "qty", aggregate: "sum" },
+                { field: "total", aggregate: "sum" }
+            ];
+            var columns = [
+                { field: "productName", title: "Product", footerTemplate: "Total"},
+                { field: "unitPrice", title: "Price", width: 120},
+                { field: "qty", title: "Pcs.", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" },
+                { field: "total", title: "Total", width: 120, aggregates: ["sum"], footerTemplate: "#=sum#" }
+            ];
+            var grid = $("#grid").kendoGrid({
+                editable: false,
+                sortable: true,
+                dataSource: {
+                    data: data,
+                    aggregate: aggregate,
+                    schema: schema,
+                },
+                columns: columns
+            });
+
+            $("#paper").kendoDropDownList({
+                change: function() {
+                    $(".pdf-page")
+                    .removeClass("size-a4")
+                    .removeClass("size-letter")
+                    .removeClass("size-executive")
+                    .addClass(this.value());
+                }
+            });
+        });
+    </script>
+    <style>
+
+        .title-pdf{
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .pdf-page {
+            margin: 0 auto;
+            box-sizing: border-box;
+            box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+            background-color: #fff;
+            color: #333;
+            position: relative;
+        }
+        .pdf-header {
+            position: absolute;
+            top: .5in;
+            height: .6in;
+            left: .5in;
+            right: .5in;
+            /*border-bottom: 1px solid #e5e5e5;*/
+        }
+        .invoice-number {
+            padding-top: .17in;
+            float: right;
+        }
+        .pdf-footer {
+            position: absolute;
+            bottom: .5in;
+            height: .6in;
+            left: .5in;
+            right: .5in;
+            padding-top: 10px;
+            border-top: 1px solid #e5e5e5;
+            text-align: left;
+            color: #787878;
+            font-size: 12px;
+        }
+        .pdf-body {
+            position: absolute;
+            top: 2.9in;
+            bottom: 1.2in;
+            left: .5in;
+            right: .5in;
+        }
+
+        .size-a4 { width: 8.3in; height: 11.7in; }
+        .size-letter { width: 8.5in; height: 11in; }
+        .size-executive { width: 7.25in; height: 10.5in; }
+
+        .company-logo {
+            font-size: 34px;
+            font-weight: bold;
+            color: #3aabf0;
+        }
+        .for {
+            position: absolute;
+            top: 1.5in;
+            left: .5in;
+            width: 3.5in;
+        }
+        .from {
+            position: absolute;
+            top: 1.5in;
+            right: .5in;
+            width: 3.5in;
+        }
+        .from p, .for p {
+            color: #787878;
+        }
+        .signature {
+            padding-top: .1in;
+        }
+
+        .text-table{
+            font-size: 12px;
+        }
+
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+            padding: 0px 10px;
+        }
+    </style>
+
+</div>
+
+
+</body>

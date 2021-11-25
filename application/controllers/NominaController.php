@@ -718,8 +718,206 @@ class NominaController extends Zend_Controller_Action{
     }
 
 
+    public function listanominamgrAction(){
+        
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->rol_user = $usr[0]['fkroles'];
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
+        $st = 1; 
+        $enproceo =$this->_nomina->getsolicitudnominamgr($st);
+        $this->view->enproceso = count($enproceo);
+
+        if($status == 1){
+            $st = 1;
+            $enproceo =$this->_nomina->getsolicitudnominamgr($st);    
+            $count=count($enproceo);   
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_nomina->getnominasolicitudmgr($offset,$no_of_records_per_page,$st);
+        }
+
+        if($status == 2){
+            $st = 2;
+            $enproceo =$this->_nomina->getsolicitudnominamgr($st);    
+            $count=count($enproceo);   
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_nomina->getnominasolicitudmgr($offset,$no_of_records_per_page,$st);  
+        }
+
+    }
 
 
+    public function searchsolnominamgrAction(){
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
+        $st = 1; 
+        $enproceo =$this->_nomina->getsolicitudnominamgr($st);
+        $this->view->enproceso = count($enproceo);  
+
+        $op = $this->_getParam('op');
+        $this->view->op_search = $op;
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        if($status == 1){
+            if($op == 1){
+                $st = 1; 
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolnominasitiomgr($st,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolbuscadorsitiomgr($offset,$no_of_records_per_page,$st,$sitio);
+            }
+
+            if($op == 2){
+                $st = 1; 
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaidmgr($st,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolbuscadoridmgr($offset,$no_of_records_per_page,$st,$id);
+            }
+        }
+
+        if($status == 2){
+            
+            if($op == 1){
+                $st = 2; 
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolnominasitiomgr($st,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolbuscadorsitiomgr($offset,$no_of_records_per_page,$st,$sitio);
+            }
+
+            if($op == 2){
+                $st = 2;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaidmgr($st,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolbuscadoridmgr($offset,$no_of_records_per_page,$st,$id);
+            }           
+        }
+    }
+
+    public function detallemgrnomAction(){
+        $id = $this->_getParam('id');
+        $this->view->id_solicitud = $id;
+    
+        $wh="id";
+        $table="personal_nominapack";
+        $pre = $this->_season->GetSpecific($table,$wh,$id);
+        $sitio = $pre[0]['sitio'];
+        $this->view->sitio_name = $sitio;
+
+        $table="personal_nominapack";
+        $nominapack= $this->view->info_nominapack = $this->_season->GetSpecific($table,$wh,$id);
+
+        $table="personal_nomina";
+        $nominasmgr= $this->view->info_nominas = $this->_nomina->GetNominaPackMgr($table,$id);
+
+        if($sitio == "Taller"){
+            $this->view->sitio_info_taller = 1; 
+        }elseif($sitio == "Compensacion"){
+            $this->view->sitio_info_taller = 2;
+        }elseif($sitio == "Vacaciones"){
+            $this->view->sitio_info_taller = 3; 
+        }elseif($sitio == "Taller Foraneos"){
+            $this->view->sitio_info_taller = 4; 
+        }else{
+            $this->view->sitio_info_taller = 0; 
+            $table = "sitios";
+            $this->view->sitio_info = $this->_nomina->GetSitiosDatos($table,$sitio); 
+        }
+                    
+    }
+
+    public function pdfsolnominaAction(){
+        $id = $this->_getParam('id');
+        $this->view->solicitudid_nomina = $id;
+    
+        $wh="id";
+        $table="personal_nominapack";
+        $pre = $this->_season->GetSpecific($table,$wh,$id);
+        $sitio = $pre[0]['sitio'];
+        $this->view->sitio_name = $sitio;
+
+        $table="personal_nominapack";
+        $nominapack= $this->view->info_nominapack = $this->_season->GetSpecific($table,$wh,$id);
+
+        $table="personal_nomina";
+        $nominasmgr= $this->view->info_nominas = $this->_nomina->GetNominaPackMgr($table,$id);
+
+        if($sitio == "Taller"){
+            $this->view->sitio_info_taller = 1; 
+        }elseif($sitio == "Compensacion"){
+            $this->view->sitio_info_taller = 2;
+        }elseif($sitio == "Vacaciones"){
+            $this->view->sitio_info_taller = 3; 
+        }elseif($sitio == "Taller Foraneos"){
+            $this->view->sitio_info_taller = 4; 
+        }else{
+            $this->view->sitio_info_taller = 0; 
+            $table = "sitios";
+            $this->view->sitio_info = $this->_nomina->GetSitiosDatos($table,$sitio); 
+        }        
+    }
 
     public function formatSizeUnits($bytes){
         if ($bytes >= 1073741824)

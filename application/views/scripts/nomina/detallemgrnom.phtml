@@ -1,0 +1,280 @@
+<style type="text/css">
+	.oculto{
+		display: none;
+	}
+
+	 .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col m6 s6">
+    	 <a href="/nomina/listanominamgr/status/1" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
+    </div>
+    <div class="col m6 s6 text-right">
+     	<a class="btn" href="/nomina/pdfsolnomina/id/<?php echo $this->id_solicitud; ?>"><i class="material-icons right">insert_drive_file</i>Documento</a>
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col m12 s12 text-center" style="margin-top: 30px;">
+        <span style="font-size:24px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Solicitud Nómina / No. <?php echo $this->id_solicitud; ?> / Sitio: <?php echo $this->sitio_name; ?></span>
+    </div>
+</div>
+
+
+<div class="row">
+   <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content">
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Información del Sitio</span>
+
+	        	<div class="row">
+	        		<div class="col m12 s12" style="margin-top: 19px;">
+		        		<?php if($this->sitio_info_taller == 0){ ?>
+		        				<?php foreach ($this->sitio_info as $key) {
+		        					$nombre_sitio = $key['nombre'];
+		        					$direccion = $key['direccion'];
+		        					$estado = $key['estado'];
+		        					$ciudad = $key['ciudad'];
+		        				} ?>
+		        				<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $nombre_sitio; ?></span>
+
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Ciudad: 
+					        			</span> <?php echo $ciudad; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Estado: 
+					        			</span> <?php echo $estado; ?> <br>
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Dirección: 
+					        			</span> <?php echo $direccion; ?>
+				        			</div>
+				        		</div>
+		        			
+		        		<?php }elseif($this->sitio_info_taller == 2) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Compensación: 
+					        			</span> El Personal se encuentra en período de compensación.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 3) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Vacaciones: 
+					        			</span> El Personal se encuentra en período de vacaciones actualmente.<br>
+				        			</div>
+				        		</div>
+				        <?php }elseif($this->sitio_info_taller == 4) { ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller Foráneos: 
+					        			</span>  Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX<br>
+				        			</div>
+				        		</div>
+		        		<?php }else{ ?>
+				        		<div class="row" style="margin-top: 20px;">
+				        			<div class="col m12 s12">
+					        			<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        				Taller: 
+					        			</span> Nte 31-A No. 96, col. Lindavista Vallejo III, Gustavo A. Madero, C.P. 07720, CDMX <br>
+				        			</div>
+				        		</div>
+		        		<?php } ?>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+
+    <div class="col s12 m6">
+      	<div class="card" style="height: 300px">
+	        <div class="card-content" >
+	        	
+	        	<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Detalle Solicitud</span>
+
+	        	<div class="row" >
+	        		<div class="col m12 s12 text-left" style="margin-top: 19px;">
+	        			<?php foreach ($this->info_nominapack as $key) {
+		        			$fecha_auditoria = $key['fecha_auditoria'];
+		        			$user_auditoria = $key['user_auditoria'];
+				        	$monto = $key['monto'];
+				        	$comentarios_auditoria = $key['comentarios_auditoria'];
+				        	$id_proyecto = $key['id_proyecto'];
+				        } ?>
+						<span style="font-size:19px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"> Id Solicitud : <?php echo $this->id_solicitud; ?></span>
+
+						<div class="row" style="margin-top: 20px;">
+				        	<div class="col m12 s12">
+					        	<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					       			Fecha Auditoria: 
+					        	</span> <?php echo $fecha_auditoria; ?> <br>
+					        	<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        		Personal Auditoria: 
+					        	</span> <?php echo $user_auditoria; ?> <br>
+					        	<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        		Monto a Pagar: 
+					        	</span> $ <?php echo $monto; ?> <br>
+					        	<?php if ($comentarios_auditoria == "" || $comentarios_auditoria == null) { ?>
+					        	<?php } else { ?>
+					        		<span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+					        			Comentarios Auditoria: 
+					        		</span> <?php echo $comentarios_auditoria; ?>
+					        	<?php } ?>
+				        	</div>
+				        </div>
+	        		</div>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+      	<div class="card">
+        	<div class="card-content">
+	        	<div class="row">
+					<div class="col m6 s6">
+						<span  style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Solicitudes de Nómina</span>
+					</div>
+					<div class="col m6 s6 text-right">
+
+					</div>
+	        	</div>
+				<div class="row">
+					<div class="col m12 s12 table_wrapper"> 
+				        <table class="table text-left table-hover">
+				            <thead>
+				                <tr style="background-color: #EDEDED;">
+	                      			<th>NO.</th>
+	                      			<th>Sitio</th> 
+	                      			<th>Personal</th>
+	                      			<th>Puesto</th>
+	                      			<th>Fecha Solicitud</th>
+	                      			<th>Monto</th>  
+	                      			<th>Status</th>
+	                      			<th>Pago</th>
+	                      			<th></th>
+                    			</tr> 
+				            </thead>
+
+				            <?php 
+				            $montos = 0;
+				            if ($this->info_nominas) { 
+				                foreach ($this->info_nominas as $usr) { ?>
+				            <tbody>
+				                <tr>
+				                	<td>
+                                        <h5><?php echo $usr['id']; ?></h5>
+                              		</td>
+                              		<td>
+                                        <h5><?php echo $usr['sitio']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['personal']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['nombre']; ?></h5>
+                              		</td>
+                              		<td>
+                                  		<h5><?php echo $usr['solicitud_fecha']; ?></h5>
+                              		</td>
+
+                              		<td>
+                                        <?php 
+                                            $num = $usr['monto_nomina'];
+                                            $multi = 5;
+
+                                            if (fmod($num, $multi) <> 0) {
+                                                $monto = $num-fmod($num, $multi)+$multi;
+                                            } else {
+                                                $monto = $num;
+                                            }
+                                        ?>
+                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto); ?></span>  
+                                    </td>
+
+                                    <td>
+                                        <?php if($usr['status_auditoria'] == 0){ ?>
+                                            <div class="chip" id="inactivo_personal">
+                                                <img src="/img/gris.jpg" >
+                  			                    En proceso
+                			                </div>
+            			                <?php } ?>
+
+                                        <?php if($usr['status_auditoria'] == 1){ ?>
+                                    		<div class="chip" id="activo_personal">
+                                        		<img src="/img/correct.png" >
+                                        		Auditada
+                                      		</div>
+            			                <?php } ?>
+          			                </td>
+
+          			                <td class="text-center">
+          			                	<?php if ($usr['status_pago'] == 0) { ?>
+          			                		<span style="font-size:12px; color: black; font-weight: bold;">Pago en Proceso</span>
+          			                	<?php } ?>
+
+          			                	<?php if ($usr['status_pago'] == 1) { ?>
+          			                		<span style="font-size:12px; color: green; font-weight: bold;">Pago Realizado</span>
+          			                		<a title="Descargar Archivo" href="/<?php echo $usr["evidencia_pago"]; ?>" download="<?php echo substr(strrchr($usr["evidencia_pago"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+          			                	<?php } ?>
+				                  	</td> 
+
+          			                <td class="text-center">
+                                        <a href="/nomina/detallenomina/id/<?php echo $usr["id"] ?>/user/<?php echo $usr['id_personal']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                              		</td>
+				                  	<?php $montos = $montos + $monto; ?>	
+				                </tr>
+				            </tbody>
+				            <?php } }else{ ?>
+					            <tbody>
+					                <tr>
+					                    <td><h3>No hay nóminas para este sitio</h3> </td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                    <td></td>
+					                </tr>
+					            </tbody>
+				            <?php } ?>
+				        </table>
+					</div>
+				</div>
+
+	        	<div class="row">
+	        		<div class="col m6 s6"></div>
+	        		<div class="col m6 s6 text-right">
+	        			<span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Total: 
+	        				$<?php echo number_format($montos, 2, '.', ','); ?>
+	        			</span>
+	        		</div>
+	        	</div>
+	    	</div>
+      	</div>
+    </div>
+</div>
+
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+  	$(document).ready(function(){
+  		$('.timepicker').timepicker();
+    	$('.modal').modal();
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'});
+    	var currentDate = document.getElementById("today_picker").value; 
+    	$('.datepicker').datepicker( {"format":'dd-mm-yyyy'} ).datepicker("setDate",currentDate);
+
+    	$('select').formSelect();
+    	$('.collapsible').collapsible();
+    	$('.dropdown-trigger').dropdown();
+  	});
+</script>
