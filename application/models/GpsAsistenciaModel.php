@@ -106,6 +106,66 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
         }
     }//  UPDATE ROL
 
+
+    public function insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
+        $tipo_nomina = 1;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$id_personal,
+                'nombre'=>$name_sitio,
+                'hora_entrada'=>$hora_entrada,
+                'hora_salida'=>$hora_salida,
+                'dia'=>$dia,
+                'day_num'=>$dia_num,
+                'hora_extra'=>$hora_extra,
+                'id_solicitudhora'=>$id_solicitudhora,
+                'id_proyecto'=>$proyecto_entrada,
+                'id_proyecto_salida'=>$proyecto_salida,
+                'ev_entrada'=>$ev_entrada,
+                'ev_salida'=>$ev_salida,
+                'status_asistencia'=>$status_asistencia,
+                'motivo_inasistencia'=>$motivo,
+                'tipo_nomina'=> $tipo_nomina
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
+
+    public function insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
+        $tipo_nomina = 2;
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $datasave = array(
+                'id_personal'=>$id_personal,
+                'nombre'=>$name_sitio,
+                'hora_entrada'=>$hora_entrada,
+                'hora_salida'=>$hora_salida,
+                'dia'=>$dia,
+                'day_num'=>$dia_num,
+                'hora_extra'=>$hora_extra,
+                'id_solicitudhora'=>$id_solicitudhora,
+                'id_proyecto'=>$proyecto_entrada,
+                'id_proyecto_salida'=>$proyecto_salida,
+                'ev_entrada'=>$ev_entrada,
+                'ev_salida'=>$ev_salida,
+                'status_asistencia'=>$status_asistencia,
+                'motivo_inasistencia'=>$motivo,
+                'tipo_nomina'=> $tipo_nomina
+            ); 
+            $res = $db->insert($table, $datasave);
+            $db->closeConnection();               
+            return $res;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }//  UPDATE ROL
+
     public function insertsitiocuadrilla($nombre,$cliente,$tipo_proyecto,$key,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -541,7 +601,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
                         pa.dia,pa.day_num, pa.hora_extra,pa.id_solicitudhora,pa.id_proyecto,pa.id_proyecto_salida, 
                         pa.ev_entrada, pa.ev_salida, pa.status_asistencia,pa.motivo_inasistencia,pa.status_nomina, 
                         pc.dia_pago, pc.hora_pago,pc.nombre as name_personal, pc.apellido_pa, pc.apellido_ma, 
-                        pa.status_extra, pa.solicitud_prestamo, pa.monto_pago, pa.status_tipos
+                        pa.status_extra, pa.solicitud_prestamo, pa.monto_pago, pa.status_tipos, pa.tipo_nomina
                         FROM personal_asistencia pa 
                         LEFT JOIN personal_campo pc on pc.id = pa.id_personal
                         where pa.id_personal = ? and status_nomina = 0",array($id));

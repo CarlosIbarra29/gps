@@ -609,6 +609,7 @@
 				            <thead>
 				                <tr style="background-color: #EDEDED">
 									<th>Sitio</th>
+									<th>Tipo</th>
 									<th>Asistencia</th>
 									<th>Entrada</th>
 									<th>Salida</th>
@@ -628,6 +629,21 @@
 				                	<td>
 				                		<?php echo $usr['nombre']; ?>
 				                	</td>
+				                	<td>
+				                		<!-- Tambien agregado -->
+				                  		<?php if($usr['tipo_nomina'] == 0) { ?>
+					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 1) { ?>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo IMMS</span>
+					                  	<?php } ?>
+
+					                 	<?php if($usr['tipo_nomina'] == 2) { ?>
+					                  		<span  style=" color: orange; font-weight: bold;">Complemento</span>
+					               		<?php } ?>
+					               		<!-- Tambien agregado -->
+				                  	</td>
 				                	<td>
 				                		<?php echo $usr['dia']; ?>
 				                	</td>
@@ -677,295 +693,304 @@
 				                  	<td>
 				                  		<?php echo $diferencia; ?> Hrs
 				                  	</td>
-
+				                  	
 				                  	<td>
-				                  	<?php if($usr['solicitud_prestamo'] == 0){ ?>
-				                  		<?php if($usr['status_extra'] == 0){ ?>
+				                  		<?php if($usr['solicitud_prestamo'] == 0){ ?>
+				                  			<?php if($usr['status_extra'] == 0){ ?>
+				                  				<?php 
+				                  					if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
+					                  					$dia_pago = 0;
+					                  				}else{
+					                  					$dia_pago = $usr['dia_pago'];
+					                  				} 
+				                  				?>
 
-				                  		<?php 
-					                  		if($usr['dia_pago'] == "" || $usr['dia_pago'] == NULL){
-					                  			$dia_pago = 0;
-					                  		}else{
-					                  			$dia_pago = $usr['dia_pago'];
-					                  		} 
-				                  		?>
+				                  				<?php 
+					                  				if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
+					                  					$hora_pago = 0;
+					                  				}else{
+					                  					$hora_pago = $usr['hora_pago'];
+					                  				} 
+				                  				?>
 
-			                  			<?php 
-					                  		if($usr['hora_pago'] == "" || $usr['hora_pago'] == NULL){
-					                  			$hora_pago = 0;
-					                  		}else{
-					                  			$hora_pago = $usr['hora_pago'];
-					                  		} 
-				                  		?>
+				                  				<?php if($usr['day_num'] == 6 || $usr['day_num'] == 7){
+				                  					
+				                  					$rest = substr($diferencia, 0, -3);
 
-				                  		<?php 
-				                  			if($usr['day_num'] == 6 || $usr['day_num'] == 7){
-				                  				$rest = substr($diferencia, 0, -3);
+				                  					if($rest == 5){
+				                  						$monto = $dia_pago;
+				                  					}
 
+				                  					if($rest <= 9){
 
-				                  				if($rest == 5){
-				                  					$monto = $dia_pago;
-				                  				}
+				                  						$total = $rest - 5;
+					                  					$pagomas = $dia_pago / 5;
+					                  					$suma = $total * $pagomas;
+							                 			$monto = $dia_pago + $suma;
+							                  			// echo "menor";
 
-					                  			if($rest <= 9){
+							                  			// $total = $rest - 5;
+							                  			// $suma = $total * $hora_pago;
+							                  			// $monto = $dia_pago + $suma;
+							                  			// echo "menor";
 
-					                  				$total = $rest - 5;
-					                  				$pagomas = $dia_pago / 5;
-					                  				$suma = $total * $pagomas;
-					                  				$monto = $dia_pago + $suma;
-					                  				// echo "menor";
-
-
-					                  				// $total = $rest - 5;
-					                  				// $suma = $total * $hora_pago;
-					                  				// $monto = $dia_pago + $suma;
-					                  				// echo "menor";
-
-					                  				// Cambios Berri
-					                  			}
-
-				                  				if($rest == 10){
-				                  					$monto = $dia_pago * 2;
-				                  				}
-
-					                  			if($rest > 10){
-					                  				
-					                  				$total = $rest - 10;
-					                  				$pagomas = $dia_pago / 5;
-					                  				$suma = $total * $pagomas;
-					                  				$dia = $dia_pago*2;
-					                  				$monto = $dia + $suma;
-
-					                  				// Berri
-
-					                  				// $total = $rest - 10;
-					                  				// $suma = $total * $hora_pago;
-					                  				// $dia = $dia_pago*2;
-					                  				// $monto = $dia + $suma;
-					                  				// echo "menor";
-					                  			}
-
-
-				                  			}else{
-					                  			$rest = substr($diferencia, 0, -3);
-					                  			if($rest < 10){
-					                  				// $total = $rest - 2;
-					                  				// $monto = $total * $hora_pago;
-					                  				
-					                  				$prepago = $dia_pago / 8; 
-					                  				$monto = $prepago * $rest;
-					                  			}
-
-					                  			if($rest > 10){
-					                  				$total = $rest - 10;
-					                  				$multi = $total * $hora_pago;
-					                  				$monto = $dia_pago + $multi;
-					                  				// echo "mayor";
-					                  			}
-
-					                  			if($rest == 10){
-					                  				$monto = $dia_pago;
-					                  				// echo "igual";
-					                  			}
-
-				                  			}
-				                  		?>
-
-				                  	<?php }else{ ?>
-				                  		<!-- D I A  E X T R A -->
-				                  		<?php 
-				                  		$dia_pago = $usr['dia_pago'];
-				                  		$hora_pago = $usr['hora_pago'];
-				                  			if($usr['day_num'] == 6){
-				                  				$rest = substr($diferencia, 0, -3);
-				                  				// echo $rest;
-				                  				if($rest == 5){
-				                  					$monto = $dia_pago;
-				                  				}
-
-					                  			if($rest <= 9){
-					                  				$total = $rest - 5;
-					                  				// echo $total;
-					                  				if($total == 1){
-					                  					$monto_u= $dia_pago / 100;
-					                  					$monto = $monto_u * 20;
-					                  				}
-					                  				if($total == 2){
-					                  					$monto_u = ($dia_pago / 100);
-					                  					$monto = $monto_u * 40;
-					                  				}
-					                  				if($total == 3){
-					                  					$monto_u = $dia_pago / 100;
-					                  					$monto = $monto_u * 60;
-					                  				}
-					                  				if($total == 4){
-					                  					$monto_u = ($dia_pago / 100);
-					                  					$monto = $monto_u * 80;
-					                  				}
-					                  			
-					                  			}
-
-					                  			// if($rest == 5){
-				                  				// 	$monto = $dia_pago;
-				                  				// }
-
-					                  			// if($rest <= 9){
-
-					                  			// 	$total = $rest - 5;
-					                  			// 	$pagomas = $dia_pago / 5;
-					                  			// 	$suma = $total * $pagomas;
-					                  			// 	$monto = $dia_pago + $suma;
-					                  			// 	// echo "menor";
-					                  			// }
-
-				                  				if($rest == 10){
-				                  					$monto = $dia_pago;
-				                  				}
-
-					                  			if($rest > 10){
-					                  				$total = $rest - 10;
-					                  				if($total == 1){
-					                  					$monto_u= $dia_pago / 100;
-					                  					$suma = $monto_u * 20;
-					                  				}
-					                  				if($total == 2){
-					                  					$monto_u = ($dia_pago / 100);
-					                  					$suma = $monto_u * 40;
-					                  				}
-					                  				if($total == 3){
-					                  					$monto_u = $dia_pago / 100;
-					                  					$suma = $monto_u * 60;
-					                  				}
-					                  				if($total == 4){
-					                  					$monto_u = ($dia_pago / 100);
-					                  					$suma = $monto_u * 80;
+							                  			// Cambios Berri
 					                  				}
 
-					                  				// $suma = $total * $hora_pago;
-					                  				$dia = $dia_pago;
-					                  				$monto = $suma + $dia;
-					                  				// echo "menor";
-					                  			}
-				                  			}
+						                  			if($rest == 10){
+						                  				$monto = $dia_pago * 2;
+						                  			}
 
+							                  		if($rest > 10){
+							                  				
+							                  			$total = $rest - 10;
+							                  			$pagomas = $dia_pago / 5;
+							                 			$suma = $total * $pagomas;
+							                  			$dia = $dia_pago*2;
+							                  			$monto = $dia + $suma;
 
-				                  			if($usr['day_num'] == 7){
-				                  				$rest = substr($diferencia, 0, -3);
+							                  			// Berri
 
-				                  				if($rest == 5){
-				                  					$monto = $dia_pago;
-				                  				}
+							                  			// $total = $rest - 10;
+							                  			// $suma = $total * $hora_pago;
+							                  			// $dia = $dia_pago*2;
+							                  			// $monto = $dia + $suma;
+							                  			// echo "menor";
+							                  		}
 
-					                  			if($rest <= 9){
-					                  				$total = $rest - 5;
-					                  				if($rest == 1){
-					                  					$monto_u= $dia_pago / 100;
-					                  					$monto = $monto_u * 20;
-					                  				}
-					                  				if($rest == 2){
-					                  					$monto_u = $dia_pago / 100;
-					                  					$monto = $monto_u * 40;
-					                  				}
-					                  				if($rest == 3){
-					                  					$monto_u = $dia_pago / 100;
-					                  					$monto = $monto_u * 60;
-					                  				}
-					                  				if($rest == 4){
-					                  					$monto_u = $dia_pago / 100;
-					                  					$monto = $monto_u * 80;
-					                  				}
-					                  				// echo "menor";
-					                  			}
+							                  	}else{
+							                  		
+							                  		$rest = substr($diferencia, 0, -3);
+							                  			
+							                  		if($rest < 10){
+							                  			// $total = $rest - 2;
+							                  			// $monto = $total * $hora_pago;	
+							                  			$prepago = $dia_pago / 8; 
+							                  			$monto = $prepago * $rest;
+							                  		}
 
-					                  			// if($rest == 5){
-				                  				// 	$monto = $dia_pago;
-				                  				// }
+							                  		if($rest > 10){
+							                  			$total = $rest - 10;
+							                  			$multi = $total * $hora_pago;
+							                  			$monto = $dia_pago + $multi;
+							                  			// echo "mayor";
+							                 		}
 
-					                  			// if($rest <= 9){
+							                  		if($rest == 10){
+							                  			$monto = $dia_pago;
+							                  			// echo "igual";
+							                  		}
+							                  	} ?>
 
-					                  			// 	$total = $rest - 5;
-					                  			// 	$pagomas = $dia_pago / 5;
-					                  			// 	$suma = $total * $pagomas;
-					                  			// 	$monto = $dia_pago + $suma;
-					                  			// 	// echo "menor";
+							                <?php }else{ ?>
+							                  	<!-- D I A  E X T R A -->
+							                  	<?php 
+							                  		$dia_pago = $usr['dia_pago'];
+				                  					$hora_pago = $usr['hora_pago'];
 
-					                  			// 	// Cambios Berri
-					                  			// }
+				                  					if($usr['day_num'] == 6){
+				                  						$rest = substr($diferencia, 0, -3);
+				                  						// echo $rest;
+							                  				
+							                  			if($rest == 5){
+							                  				$monto = $dia_pago;
+							                  			}
 
-				                  				if($rest == 10){
-				                  					$monto = $dia_pago*2;
-				                  				}
+							                  			if($rest <= 9){
+					                  						$total = $rest - 5;
+					                  						// echo $total;
+								                  			if($total == 1){
+								                  				$monto_u= $dia_pago / 100;
+								                  				$monto = $monto_u * 20;
+								                  			}
+								                  			if($total == 2){
+								                  				$monto_u = ($dia_pago / 100);
+								                  				$monto = $monto_u * 40;
+								                  			}
+								                  			if($total == 3){
+								                  				$monto_u = $dia_pago / 100;
+								                  				$monto = $monto_u * 60;
+								                  			}
+								                  			if($total == 4){
+								                  				$monto_u = ($dia_pago / 100);
+								                  				$monto = $monto_u * 80;
+								                  			}
+					                  					}
 
-					                  			if($rest > 10){
-					                  				$total = $rest - 10;
-					                  				$suma = $total * $hora_pago;
-					                  				$dia = $dia_pago*2;
+								                  		// if($rest == 5){
+							                  			// 	$monto = $dia_pago;
+							                  			// }
 
-					                  				$monto = $suma;
-					                  				// echo "menor";
-					                  			}
-				                  			}
+								                  		// if($rest <= 9){
 
-				                  			if($usr['day_num'] == 1 || $usr['day_num'] == 2 || $usr['day_num'] == 3 || $usr['day_num'] == 4){
-					                  			$rest = substr($diferencia, 0, -3);
-					                  			if($rest < 10){
-					                  				$total = $rest - 2;
-					                  				$monto = $total * $hora_pago;
-					                  				// echo "menor";
-					                  			}
+								                  		// 	$total = $rest - 5;
+								                  		// 	$pagomas = $dia_pago / 5;
+								                  		// 	$suma = $total * $pagomas;
+								                 		// 	$monto = $dia_pago + $suma;
+								                  		// 	// echo "menor";
+								                  		// }
 
-					                  			if($rest > 10){
-					                  				$total = $rest - 10;
-					                  				$multi = $total * $hora_pago;
-					                  				$monto = $multi;
-					                  				// echo "mayor";
-					                  			}
+							                  			if($rest == 10){
+							                  				$monto = $dia_pago;
+							                  			}
 
-					                  			if($rest == 10){
-					                  				$monto = 0;
-					                  				// echo "igual";
-					                  			}
+								                  		if($rest > 10){
+								                  			$total = $rest - 10;
+								                  			if($total == 1){
+								                  				$monto_u= $dia_pago / 100;
+								                  				$suma = $monto_u * 20;
+								                  			}
+								                  			if($total == 2){
+								                  				$monto_u = ($dia_pago / 100);
+								                  				$suma = $monto_u * 40;
+								                  			}
+								                  			if($total == 3){
+								                  				$monto_u = $dia_pago / 100;
+								                  				$suma = $monto_u * 60;
+								                  			}
+								                  			if($total == 4){
+								                  				$monto_u = ($dia_pago / 100);
+								                  				$suma = $monto_u * 80;
+								                  			}
 
-				                  			}
+								                  			// $suma = $total * $hora_pago;
+								                  			$dia = $dia_pago;
+								                  			$monto = $suma + $dia;
+								                  				// echo "menor";
+								                  		}
+				                  					}
 
-				                  			if($usr['day_num'] == 5){
-				                  				$rest = substr($diferencia, 0, -3);
-					                  			if($rest < 10){
-					                  				$total = $rest - 2;
-					                  				$monto = $total * $hora_pago;
-					                  				// echo "menor";
-					                  			}
+				                  					if($usr['day_num'] == 7){
 
-					                  			if($rest > 10){
-					                  				$total = $rest - 10;
-					                  				$multi = $total * $hora_pago;
-					                  				$monto = $multi;
-					                  				// echo "mayor";
-					                  			}
+				                  						$rest = substr($diferencia, 0, -3);
 
-					                  			if($rest == 10){
-					                  				$monto = 0;
-					                  				// echo "igual";
-					                  			}
+				                  						if($rest == 5){
+				                  							$monto = $dia_pago;
+				                  						}
 
-				                  			}
+								                  		if($rest <= 9){
+								                  			$total = $rest - 5;
+								                  			
+								                  			if($rest == 1){
+								                  				$monto_u= $dia_pago / 100;
+								                  				$monto = $monto_u * 20;
+								                  			}
+								                  			if($rest == 2){
+								                  				$monto_u = $dia_pago / 100;
+								                  				$monto = $monto_u * 40;
+								                  			}
+								                  			if($rest == 3){
+								                  				$monto_u = $dia_pago / 100;
+								                  				$monto = $monto_u * 60;
+								                  			}
+								                  			if($rest == 4){
+								                  				$monto_u = $dia_pago / 100;
+								                  				$monto = $monto_u * 80;
+								                  			}
+								                  			// echo "menor";
+								                  		}
 
-				                  		?>
+								                  		// if($rest == 5){
+							                  			// 	$monto = $dia_pago;
+							                  			// }
 
-				                  	<?php  } ?>
-				                <?php }else{ ?>
+								                  		// if($rest <= 9){
 
-				                	<?php $monto = $usr['monto_pago']; ?>
-				                <?php } ?>
+								                  		// 	$total = $rest - 5;
+								                  		// 	$pagomas = $dia_pago / 5;
+								                  		// 	$suma = $total * $pagomas;
+								                  		// 	$monto = $dia_pago + $suma;
+								                  		// 	// echo "menor";
 
-				                  	<?php if($usr['status_extra'] == 0){ ?>	
-				                  		<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-				                  	<?php }else{ ?>
-				                  		<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
-				                  	<?php } ?>
+								                  		// 	// Cambios Berri
+								                  		// }
+
+							                  			if($rest == 10){
+							                  				$monto = $dia_pago*2;
+							                  			}
+
+								                  		if($rest > 10){
+								                  			$total = $rest - 10;
+								                  			$suma = $total * $hora_pago;
+								                  			$dia = $dia_pago*2;
+
+								                  			$monto = $suma;
+								                  			// echo "menor";
+								                  		}
+				                  					}
+
+				                  					if($usr['day_num'] == 1 || $usr['day_num'] == 2 || $usr['day_num'] == 3 || $usr['day_num'] == 4){
+
+				                  						$rest = substr($diferencia, 0, -3);
+
+				                  						if($rest < 10){
+								                  			$total = $rest - 2;
+								                  			$monto = $total * $hora_pago;
+								                  			// echo "menor";
+					                  					}
+
+								                  		if($rest > 10){
+								                  			$total = $rest - 10;
+								                  			$multi = $total * $hora_pago;
+								                  			$monto = $multi;
+								                  			// echo "mayor";
+								                  		}
+
+								                  		if($rest == 10){
+								                  			$monto = 0;
+								                  			// echo "igual";
+								                  		}
+				                  					}
+
+				                  					if($usr['day_num'] == 5){
+				                  						$rest = substr($diferencia, 0, -3);
+								                  			
+								                  		if($rest < 10){
+								                  			$total = $rest - 2;
+								                  			$monto = $total * $hora_pago;
+								                  			// echo "menor";
+								                  		}
+
+								                  		if($rest > 10){
+								                  			$total = $rest - 10;
+								                  			$multi = $total * $hora_pago;
+								                  			$monto = $multi;
+								                  			// echo "mayor";
+								                  		}
+
+								                  		if($rest == 10){
+								                  			$monto = 0;
+								                  			// echo "igual";
+								                  		}
+				                  					}
+				                  				?>
+				                  			<?php  } ?>
+					                  		
+					                  		<!-- Se agrego esto para el 70 30 de la nomina -->
+					                  		<?php if($usr['tipo_nomina'] == 0) {
+					                  			$monto=$monto;
+					                  		} ?>
+
+					                  		<?php if($usr['tipo_nomina'] == 1) {
+					                  			$monto=$monto * .7;
+					                  		} ?>
+
+					                  		<?php if($usr['tipo_nomina'] == 2) {
+					                  			$monto=$monto * .3;
+					                  		} ?> 
+				                  			<!-- Se agrego esto para el 70 30 de la nomina -->
 				                  		
-				                  	</td>
-				                  <?php } ?>
+				                  		<?php }else{ ?>
+				                  			<?php $monto = $usr['monto_pago']; ?>
+				                		<?php } ?>
+
+				                		<?php if($usr['status_extra'] == 0){ ?>	
+				                  			<span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+						                <?php }else{ ?>
+						                  	<span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
+						                <?php } ?>
+				     				</td>
+				                <?php } ?>
 
 				                  <?php if($usr['status_asistencia'] == 1){ ?>
 				                  	<td>00:00</td>

@@ -513,7 +513,7 @@ class SolicitudController extends Zend_Controller_Action{
         }
 
         if($status == 1){
-	        $solicitud=$this->_ordencompra->getusernamesolicitudcountacept();
+	        $solicitud=$this->_ordencompra->getusernamesolicitudcountaceptmgr();
 
 	        $count=count($solicitud);
 
@@ -526,7 +526,7 @@ class SolicitudController extends Zend_Controller_Action{
 	        $this->view->totalpage = $total_pages;
 	        $this->view->total=ceil($total_pages/$no_of_records_per_page);
 	        $table="solicitud_ordencompra";
-	        $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudacept($table,$offset,$no_of_records_per_page);
+	        $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptmgr($table,$offset,$no_of_records_per_page);
         }
 
         if($status == 2){
@@ -1161,7 +1161,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $sitio = $this->_getParam('sitio');
                 $this->view->nombre_sitio=$sitio;
 
-                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearch($sitio);
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchmgr($sitio);
                 // var_dump($solicitud);exit;
                 $count=count($solicitud);
 
@@ -1178,7 +1178,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptsitio($table,$offset,$no_of_records_per_page,$sitio);
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptsitiomgr($table,$offset,$no_of_records_per_page,$sitio);
             }
 
             if($opcion == 2){
@@ -1188,7 +1188,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $prov = $this->_getParam('proveedor');
                 $this->view->nombre_prov=$prov;
 
-                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchprov($prov);
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchprovmgr($prov);
                 $count=count($solicitud);
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
                 $no_of_records_per_page = 20;
@@ -1198,7 +1198,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptprov($table,$offset,$no_of_records_per_page,$prov);
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptprovmgr($table,$offset,$no_of_records_per_page,$prov);
             }
 
             if($opcion == 3){
@@ -1207,7 +1207,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $id = $this->_getParam('id');
                 $this->view->id_search=$id; 
 
-                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchid($id);
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchidmgr($id);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
@@ -1218,7 +1218,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptid($table,$offset,$no_of_records_per_page,$id);
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptidmgr($table,$offset,$no_of_records_per_page,$id);
             }
 
             if($opcion == 4){
@@ -1227,7 +1227,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $user = $this->_getParam('usuario'); 
                 $this->view->user_search=$user; 
 
-                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchuser($user);
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchusermgr($user);
                 $count=count($solicitud);
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
                 $no_of_records_per_page = 20;
@@ -1237,7 +1237,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptuser($table,$offset,$no_of_records_per_page,$user);
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptusermgr($table,$offset,$no_of_records_per_page,$user);
             }
 
             if($opcion == 5){
@@ -1245,7 +1245,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->actpage=$actualpagina;
                 $servicio = $this->_getParam('servicio'); 
                 $this->view->servicio_search=$servicio; 
-                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchservicio($servicio);
+                $solicitud=$this->view->total_sitio=$this->_ordencompra->getusernamesolicitudcountjefesearchserviciomgr($servicio);
                 $count=count($solicitud);
 
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1; } 
@@ -1256,7 +1256,7 @@ class SolicitudController extends Zend_Controller_Action{
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
                 $table="solicitud_ordencompra";
-                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptservicio($table,$offset,$no_of_records_per_page,$servicio);
+                $sql= $this->view->paginator= $this->_ordencompra->getusernamesolicitudaceptserviciomgr($table,$offset,$no_of_records_per_page,$servicio);
             }
 
         }

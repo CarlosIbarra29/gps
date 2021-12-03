@@ -650,7 +650,15 @@ class AsistenciaController extends Zend_Controller_Action{
             $table="personal_asistencia";
             $status_asistencia = $key['status_asistencia'];
             $motivo = $key['motivo_inasistencia'];
-            $result=$this->_asistencia->insertfinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            
+            // Agregado nuevo
+            $this->_asistencia->insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+
+            $result=$this->_asistencia->insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            // Agregado nuevo
+            
+
+            // $result=$this->_asistencia->insertfinalizarproceso($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
         } 
         // END INSERT PERSONAL (personal_asistencia)
 
@@ -964,7 +972,18 @@ class AsistenciaController extends Zend_Controller_Action{
 
                             }
 
+                    }
+                    // Se agrego esto para el tipo de registro de nomina 
+                    if($key['tipo_nomina'] == 0) {
+                        $monto=$monto;
                     } 
+                    if($key['tipo_nomina'] == 1) {
+                        $monto=$monto * .7;
+                    } 
+                    if($key['tipo_nomina'] == 2) {
+                        $monto=$monto * .3;
+                    } 
+                    // Se agrego esto para el tipo de registro de nomina 
                 }else{
                     $monto = $key['monto_pago']; 
                 } 

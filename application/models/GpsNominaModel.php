@@ -233,7 +233,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
              			pn.fecha_auditoria, pn.status_pago, pn.fecha_pago, pn.user_pago
 						FROM personal_nomina pn
 						where pn.status_auditoria = ? and status_pago = ?
-                        ORDER BY pn.id DESC
+                        ORDER BY pn.sitio ASC
                         LIMIT $offset,$no_of_records_per_page",array($status,$pago));
             $row = $qry->fetchAll();
             return $row;
