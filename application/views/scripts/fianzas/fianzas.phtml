@@ -1,0 +1,442 @@
+<?php 
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+            return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
+    }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php  
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            
+            if ($this->total >= 1 && $pagina <= $this->total) {
+                if (isset($_GET['pagina']) && $this->actpage != 1) {
+                    $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+                }
+
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                    if($i ==$this->actpage){
+                        $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                    }else{
+                        $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                    }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                } 
+            }           
+        }
+ ?>
+
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("d-m-Y");
+?>
+
+<style type="text/css">
+    .oculto{display: none;}
+
+    .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+<div class="row">
+    <div class="col m4 s4" style="margin-top: 10px;"></div>
+
+    <div class="col m8 s8 text-right" style="margin-top: 10px;">
+        <a class="green btn modal-trigger" href="#modal2">Reporte</a>
+        <a class="green btn modal-trigger" href="#modal1">Agregar Fianza</a>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col m12 s12 text-center">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fianzas por OC</span>
+    </div>
+</div>
+
+
+<!-- Buscador -->
+<div class="row" style="margin-top:10px;">
+    <div class="col m1 s12"></div>
+    <div class="col m4 s12">
+        <div class="input-field col s12">
+            <select id="search_tipo">
+                <option value="1" selected>Sitio</option>
+            </select>
+            <label>Buscar por:</label>
+        </div>
+    </div>
+    <div class="col m6 s12"> 
+        <div class="col m12 s12" id="search_sitio">
+            <div class="input-field col m10 s8">
+                <select id="sitio" name="sitio" required>
+                    <option value="" disabled selected>* Selecciona una opcion:</option>
+                    <?php foreach ($this->sitio as $sitio) { ?>
+                    <option value="<?php echo $sitio["id"]; ?>"><?php echo $sitio["nombre"]; ?> - <?php echo $sitio["id_cliente"]; ?> </option>
+                    <?php } ?>
+                </select>
+                <label>Sitio</label>
+            </div>
+            <!-- <input type="hidden" id="status_search" value="<?php echo $status; ?>"> -->
+            <div class="input-field col m2 s4">
+                <button tyle="submit" id="buscador" class="waves-effect waves-light btn"><i class="material-icons left">search</i></button>
+            </div>
+        </div>
+    </div>
+    <div class="col m1 s12"></div>
+</div>
+<!-- End Buscador -->
+
+
+<div class="row">
+    <div class="col m12 s12">   
+        <div class="row" style="margin-top: 20px;">
+            <div class="col m12 s12">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de Fianzas</span>
+            </div>
+        </div>
+
+        <div class="col m12 s12 table_wrapper">
+            <table class="table text-left table-hover ">
+                <thead>
+                    <tr>
+                        <th class="text-center"><b>ID</b></th>
+                        <th  class="text-center"><b>Sitio</b></th>
+                        <th  class="text-center"><b>Vigencia</b></th>
+                        <th  class="text-center"><b>Comentario</b></th>
+                        <th  class="text-center"><b>Status</b></th>
+                        <th  class="text-center"><b>Documento</b></th>
+                        <th  class="text-center"><b>Modificar</b></th>
+                        <?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
+                        <th  class="text-center"><b>Eliminar</b></th>
+                        <?php }else{ } ?>
+                    </tr> 
+                </thead>
+
+                <?php
+                if ($this->paginator) { 
+                    foreach ($this->paginator as $data) { ?>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <h5><?php echo $data['id']; ?></h5>
+                                </td>
+                                <td class="text-center">
+                                    <h5 style="font-weight: bold;"><?php echo $data['name_sitio']; ?> - <?php echo $data['id_cliente']; ?> </h5>
+                                </td>
+                                <td class="text-center">
+                                    <h5><?php echo date("d-m-Y",strtotime($data['fecha_vigencia'])) ?><h5> 
+                                </td>
+
+                                <td  class="text-center">
+                                    <?php if($data['comentario'] == null || $data['comentario'] == "") { ?>
+                                        <h5>No Hay comentarios</h5>
+                                    <?php } else { ?>
+                                        <h5><?php echo $data['comentario']; ?></h5>
+                                    <?php } ?>
+                                </td>
+
+                                <td  class="text-center">
+                                    <?php if (date("d-m-Y",strtotime($data['fecha_vigencia'])) >= $hoy) { ?>
+                                        <span  style="font-size:15px; color: green; letter-spacing: 0.1em; font-weight: bold;">Vigente</span>
+                                    <?php } else { ?>
+                                        <span  style="font-size:15px; color: red; letter-spacing: 0.1em; font-weight: bold;">Vencida</span>
+                                    <?php } ?>
+                                </td>
+                                
+                                <td  class="text-center">
+                                    <a title="Descargar Archivo" href="/<?php echo $data["archivo_fianza"]; ?>" download="<?php echo substr(strrchr($data["archivo_fianza"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
+                                           
+                                    <a title="Visualizar" href="/<?php echo $data["archivo_fianza"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
+                                    
+                                </td>
+
+                                <td  class="text-center">
+                                    <a style="color: blue;" href="/fianzas/fianzaedit/id/<?php echo $data["id"] ?>"><i class="fa fa-2x fa-edit"></i></a> 
+                                </td>
+                                <?php if($this->user_rol == 8 || $this->user_rol == 1){ ?>
+
+                                    <td  class="text-center">
+                                        <a class="delete" data-id="<?php echo $data["id"]; ?>" ><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                    </td>
+                                <?php }else{ } ?>
+                            </tr>
+                <?php } }else{ ?>
+                    </tbody> 
+                    <tbody>
+                        <tr>
+                            <td class="text-center" colspan="7"><h4>No hay Fianzas registradas.</h4></td>
+                        </tr>
+                    </tbody>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<!-- Inicio Modal -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="col m12 s12 text-left" style="margin-top: 10px;">
+            <span style="font-size:22px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Agregar Fianza
+        </div>
+        <div class="col m12 s12">
+            <form action="/fianzas/requestaddfianza" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fianza">
+                <div class="row">
+                    <div class="file-field input-field col m12 s12">
+                        <div class="btn">
+                            <span>* Añade Fianza</span>
+                            <input type="file" name="url">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="url" type="text">
+                        </div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select id="sitio" name="sitio" required>
+                            <option value="0" disabled selected>* Selecciona una opcion:</option>
+                            <?php foreach ($this->sitio as $sitioa) { ?>
+                                <option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <label>* Sitio</label>
+                    </div>
+
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input id="vigencia" type="date" name="vigencia" class="validate">
+                        <label for="vigencia">* Vigencia: dd/mm/yyyy</label>
+                    </div>
+
+                    <div class="input-field col m12 s12">
+                        <i class="material-icons prefix">event_available</i>
+                        <input id="comentario" type="text" name="comentario" class="validate">
+                        <label for="comentario">Comentario:</label>
+                    </div>
+                </div>
+            </form>
+        </div> 
+    </div>
+   
+    <div class="modal-footer">
+        <button class=" btn" id="addfianza">Guardar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+<!-- End Module -->
+
+
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte Fianzas</span>
+        <div class="row">
+            <div class="col m12 s12" style="margin-top: 20px;">
+                <div class="col m6 s6">
+                    <span>* Agrega el periodo de fechas que requieras para el reporte.</span> <br>
+                </div>
+                <div class="col m6 s6 text-right">
+                    <a href="/fianzas/excelhistorico"  class="blue lighten-2 btn" style="color:white">Historico<i class="material-icons right">arrow_forward</i></a>
+                </div> 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m12 s12">
+                <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal form-material">
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input id="finicio" type="date" name="finicio" class="validate">
+                        <label for="finicio">* Fecha inicio</label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                        <i class="material-icons prefix">today</i>
+                        <input id="ffin" type="date" name="ffin" class="validate">
+                        <label for="ffin">* Fecha Fin</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" id="add_reporte" class="btn">Generar</button>
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+    	  $('select').formSelect();
+        $('.modal').modal();
+  	});
+
+
+    $("#addfianza").click(function(){
+        var url = document.getElementById("url").value;
+        var sitio = document.getElementById("sitio").value;
+        var vigencia = document.getElementById("vigencia").value;
+
+
+        if(url == "" || sitio == 0 || vigencia == ""){
+            swal({
+                title: "Para agregar una fianza, llena los campos '*' ",
+            });
+        }else{
+            swal("Espera un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            });
+            setTimeout(submitForm, 500);     
+        }
+    });
+
+    function submitForm() {
+        document.getElementById("submit_fianza").submit()
+    }
+    // End Add Fianza
+
+
+
+    $("#add_reporte").click(function(){
+        var finicio = document.getElementById("finicio").value;
+        var ffin = document.getElementById("ffin").value;
+
+        if(finicio == "" || ffin == ""){
+            swal({
+                title: "Para continuar debes agregar las fechas",
+            });
+        }else{
+            swal("Espere un momento, la información esta siendo procesada", {
+                icon: "success",
+                buttons: false,
+            }); 
+            window.location.href = "/fianzas/excelfechas/inicio/"+finicio+"/final/"+ffin+""; 
+        }
+    });
+
+
+    $(".delete").click(function(){
+        swal({
+            title: "¿Estás seguro de eliminar la fianza seleccionada?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                });  
+
+                var id = $(this).data('id')
+                var request = $.ajax({
+                    url:"/fianzas/requestdelfianza",
+                    method:"POST",
+                    data: { id: id },
+                    processData: true,
+                    // contentType: false,
+                });
+                //-------------------end de ajax---------------------------
+
+                //-------------peticion de respuesta de ajax------------------
+                request.done(function(response) {
+                    console.log(response);//imprime lo que responde el ajax
+                    // alert
+                    window.location.reload(true);
+                });
+                //-------------------end de respuesta ajax---------------------
+                return false;
+            } else {
+                swal("El cambio de status fue cancelado!");
+            }
+        });
+    });
+
+
+    $("#buscador").click(function(){
+        var sitio = document.getElementById("sitio").value;
+        swal({
+            title: "La busqueda será por sitio, Desea continuar?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                }); 
+
+                window.location.href = "/fianzas/buscarfianzas/sitio/"+sitio+"/op/1";
+            } else {
+                swal("La asignacion fue cancelada!");
+            }
+        });
+    }); 
+
+</script>

@@ -255,7 +255,7 @@
 
                                     <?php if($usr['status_extra'] == 1){ ?>
                                         <td>
-                                            <span style="font-size:10px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Horas extra</span>
+                                            <span style="font-size:10px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">H/extra</span>
                                         </td>
                                     <?php }?>
 
@@ -265,11 +265,23 @@
                                         </td>
                                     <?php }?>
 
+                                    <?php if($usr['tipo_nomina'] == 1) { ?>
+                                        <td>
+                                            <span style="font-size:10px; color: green; font-weight: bold;">S/IMMS</span>
+                                        </td>
+                                    <?php } ?>
 
+                                    <?php if($usr['tipo_nomina'] == 2) { ?>
+                                        <td>
+                                            <span style="font-size:8px; color: orange; font-weight: bold;">Gratificación</span>
+                                        </td>
+                                    <?php } ?>
+                                        <!-- Tambien agregado -->
+                                    
 
                                   <?php } ?>
 
-                                  <?php if($usr['status_asistencia'] == 1){ ?>
+                                <?php if($usr['status_asistencia'] == 1){ ?>
                                     <td>00:00</td>
                                     <td>00:00</td>
                                     <td>Inasistencia</td>

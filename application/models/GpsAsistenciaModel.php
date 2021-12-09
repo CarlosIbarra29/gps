@@ -108,7 +108,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
 
 
     public function insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
-        $tipo_nomina = 1;
+        $tipo_nomina = 2;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -138,7 +138,7 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
 
 
     public function insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo){
-        $tipo_nomina = 2;
+        $tipo_nomina = 1;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(

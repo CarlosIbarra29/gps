@@ -1,0 +1,113 @@
+<div class="row" style="margin-top: 10px;">
+	<div class="col m12 s12">
+		<a href="/fianzas/fianzas"  class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>
+	</div>
+</div>
+
+<div class="row text-center">
+	<div class="col m12 s12 " style="margin-top: 10px;">
+			<span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Editar Fianza</span>
+	</div>
+</div>
+
+
+<div class="col m12 s12" style="margin-top: 12px;">
+	<div class="white-box">
+		<form action="/fianzas/requestupdatefianza" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_fianzaudp">
+			<?php foreach ($this->fianzasid as $data) {  ?> 
+			<input type="hidden" name="ids" value="<?php echo $data["id"]; ?>">
+
+			<div class="file-field input-field col m12 s12">
+				
+				<div class="btn">
+					<span>Insertar Fianza</span>
+					<input type="file" name="url">
+					<input type="hidden" name="imahidden" value="<?php echo $data["archivo_fianza"]; ?>">   
+				</div>
+
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+
+
+			<div class="input-field col m6 s12">
+				<select id="sitio" name="sitio" required>
+					<?php if ($data['id_sitio'] == 0) { ?>
+						<option value="0" disabled selected>* Selecciona una opcion:</option>
+						<?php foreach ($this->sitio as $sitioa) { ?>
+							<option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+						<?php } ?>
+
+					<?php } else { ?>
+						<?php foreach ($this->sitio as $sitioa) {
+							if ($sitioa['id']== $data['id_sitio']) { ?>
+								<option value="<?php echo $sitioa['id']; ?>" selected><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+						    <?php } if ($sitioa['id']!= $data['id_sitio']) { ?>
+						     	<!-- <option value="0" disabled selected>* Selecciona una opcion:</option> -->
+						        <option value="<?php echo $sitioa['id']; ?>" ><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
+						<?php } } ?>  
+					<?php } ?>
+				</select>
+				<label>Sitio</label>
+			</div>
+
+			<div class="input-field col m6 s12">
+                <i class="material-icons prefix">today</i>
+                <input id="vigencia" type="date" value="<?php echo $data["fecha_vigencia"]; ?>"  name="vigencia" class="validate">
+                <label for="vigencia">* Vigencia: dd/mm/yyyy</label>
+            </div>
+
+
+			<div class="input-field col m12 s12">
+				<i class="material-icons prefix">account_circle</i>
+			    <input id="comentario" type="text" name="comentario" value="<?php echo $data["comentario"]; ?>" class="validate" required>
+			    <label for="comentario">Comentario: </label>
+			</div>
+		</div>
+		<?php } ?>
+	</form>
+</div>
+
+<div class="input-field col m12 s12 text-right">
+	<div class="row">
+		<a href="/fianzas/fianzas" class="waves-effect red waves-light btn">Cancelar</a>
+		<button  id="udpfianza" class="waves-effect waves-light btn">Actualizar</button>
+	</div>	
+</div>
+
+<script src="/js/materialize.min.js"></script>
+<script src="/js/lightbox.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+  	});
+
+
+    $("#udpfianza").click(function(){
+        var vigencia = document.getElementById("vigencia").value;
+
+        if(vigencia == ""){
+            swal({
+                title: "Para editar una herramienta llena todos los datos",
+            });
+        }else{
+             swal("Espera un momento, la información esta siendo procesada", {
+				icon: "success",
+			 	buttons: false,
+			});
+            setTimeout(submitForm, 500);     
+        }
+
+    });
+
+	lightbox.option({
+      	'resizeDuration': 200,
+      	'wrapAround': true
+    });
+
+    function submitForm() {
+        document.getElementById("submit_fianzaudp").submit()
+    }
+</script>

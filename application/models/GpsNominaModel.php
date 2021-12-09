@@ -306,7 +306,7 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             			pa.day_num, pa.hora_extra, pa.id_solicitudhora, pa.id_proyecto, pa.id_proyecto_salida, 
             			pa.ev_entrada,pa.ev_salida, pa.status_asistencia, pa.motivo_inasistencia,pa.status_nomina, 
 						pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra, pa.monto_pago, 
-                        pa.solicitud_prestamo, pa.status_tipos
+                        pa.solicitud_prestamo, pa.status_tipos, pa.tipo_nomina
 						FROM personal_asistencia pa
 						INNER JOIN personal_campo pc on pc.id=pa.id_personal 
 						where pa.solicitud_nomina = ?",array($id));

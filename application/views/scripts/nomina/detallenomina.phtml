@@ -366,6 +366,7 @@
 				            <thead>
 				                <tr>
 				                	<th>Id</th>
+				                	<th>tipo</th>
 									<th>Sitio</th>
 									<th>Asistencia</th>
 									<th>Entrada</th>
@@ -383,6 +384,21 @@
 				            <tbody>
 				                <tr>
 				                	<td><?php echo $usr['id']; ?></td>
+				                	<td>
+				                		<!-- Tambien agregado -->
+				                  		<?php if($usr['tipo_nomina'] == 0) { ?>
+					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 1) { ?>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo IMMS</span>
+					                  	<?php } ?>
+
+					                 	<?php if($usr['tipo_nomina'] == 2) { ?>
+					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
+					               		<?php } ?>
+					               		<!-- Tambien agregado -->
+				                  	</td>
 				                	<td>
 				                		<?php echo $usr['nombre']; ?>
 				                	</td>

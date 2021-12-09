@@ -652,9 +652,9 @@ class AsistenciaController extends Zend_Controller_Action{
             $motivo = $key['motivo_inasistencia'];
             
             // Agregado nuevo
-            $this->_asistencia->insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            $this->_asistencia->insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
 
-            $result=$this->_asistencia->insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            $result=$this->_asistencia->insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
             // Agregado nuevo
             
 

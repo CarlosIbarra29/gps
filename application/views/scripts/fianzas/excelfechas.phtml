@@ -1,0 +1,137 @@
+
+<?php 
+	function eliminar_acentos($cadena){
+		$cadena = str_replace(
+		array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+		array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+		$cadena
+		);
+
+		$cadena = str_replace(
+		array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+		array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+		array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+		array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+		array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+		$cadena );
+
+		$cadena = str_replace(
+		array('Ñ', 'ñ', 'Ç', 'ç'),
+		array('N', 'n', 'C', 'c'),
+		$cadena
+		);
+		
+		return $cadena;
+	}
+?>
+
+
+<?php 
+    date_default_timezone_set('America/Mexico_City');
+    $hoy = date("d-m-Y");
+?>
+
+<style> 
+	.table_wrapper{
+    	overflow-x: auto;
+	}
+</style>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col m6 s12 text-left">
+		<a href="/fianzas/fianzas" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>			
+	</div>
+	<div class="col m6 s12 text-right">
+		<a class=" btn" onclick="exportTableToCSV(null,'fechas-fianzas.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m12 s12 text-center" style="margin-top: 20px;">
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Fianzas OC <br/> <?php echo $this->inicio ?> / <?php echo $this->final ?> </span>
+    </div>
+</div>
+
+<div class="col m12 s12 text-right table_wrapper">
+	<table class="table text-left table-hover ">
+		<thead>
+			<tr>
+				<th><b>ID</b></th>
+                <th><b>Sitio</b></th>
+                <th><b>ID Cliente</b></th>
+                <th><b>Vigencia</b></th>
+                <th><b>Comentario</b></th>
+                <th><b>Status</b></th>
+			</tr> 
+		</thead>
+		<?php 
+		foreach ($this->excelfianzas as $fianzas) { ?>
+			<tbody>
+				<tr>
+					<td><?php echo $fianzas["id"]; ?></td>
+					<td><?php echo $fianzas["name_sitio"]; ?></td>
+					<td><?php echo $fianzas["id_cliente"]; ?></td>
+					<td><?php echo date("d-m-Y",strtotime($fianzas['fecha_vigencia']))?></td>
+					<td>
+						<?php if($fianzas['comentario'] == null || $fianzas['comentario'] == "") { ?>
+                            No Hay comentarios
+                        <?php } else { ?>
+                            <?php echo eliminar_acentos($fianzas["comentario"]); ?>
+                        <?php } ?>    	
+                    </td>
+					<td>
+						<?php if (date("d-m-Y",strtotime($fianzas['fecha_vigencia'])) >= $hoy) { ?>
+                            Vigente
+                        <?php } else { ?>
+                            Vencida
+                        <?php } ?>
+					</td>
+				</tr>
+			</tbody>
+		<?php } ?>
+	</table>
+</div>
+
+<script type="text/javascript">
+	function exportTableToCSV(html, filename) {
+		var csv = [];
+	    var rows = document.querySelectorAll("table tr");
+	    for(var i = 0; i < rows.length; i++){
+	    	var row = [], cols = rows[i].querySelectorAll("td, th");
+	        for(var j = 0; j < cols.length; j++){
+	            row.push(cols[j].innerText);
+	        }
+	        csv.push(row.join(","));
+	    }
+	    downloadCSV(csv.join("\n"), filename);
+	}
+
+	function downloadCSV(csv, filename) {
+	    var csvFile;
+	    var downloadLink;
+		if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+			alert("Your browser doesn't support Blobs");
+			return;
+		}
+		
+	    csvFile = new Blob([csv], {type:"text/csv"});
+	    downloadLink = document.createElement("a");
+	    downloadLink.download = filename;
+	    downloadLink.href = window.URL.createObjectURL(csvFile);
+	    downloadLink.style.display = "none";
+	    document.body.appendChild(downloadLink);
+	    downloadLink.click();
+	}
+</script>
