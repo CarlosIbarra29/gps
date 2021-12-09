@@ -269,7 +269,7 @@
                     </div>
 
                     <div class="input-field col s12">
-                        <select id="sitio" name="sitio" required>
+                        <select id="sitios" name="sitio" required>
                             <option value="0" disabled selected>* Selecciona una opcion:</option>
                             <?php foreach ($this->sitio as $sitioa) { ?>
                                 <option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
@@ -305,13 +305,14 @@
 
 <div id="modal2" class="modal">
     <div class="modal-content">
-        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte Consumo TAG</span>
+        <span style="font-size:25px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte Fianzas</span>
         <div class="row">
             <div class="col m12 s12" style="margin-top: 20px;">
                 <div class="col m6 s6">
                     <span>* Agrega el periodo de fechas que requieras para el reporte.</span> <br>
                 </div>
-                <div class="col m6 s6">
+                <div class="col m6 s6 text-right">
+                    <a href="/fianzas/excelhistorico"  class="blue lighten-2 btn" style="color:white">Historico<i class="material-icons right">arrow_forward</i></a>
                 </div> 
             </div>
         </div>
@@ -351,7 +352,7 @@
 
     $("#addfianza").click(function(){
         var url = document.getElementById("url").value;
-        var sitio = document.getElementById("sitio").value;
+        var sitio = document.getElementById("sitios").value;
         var vigencia = document.getElementById("vigencia").value;
 
 
@@ -388,7 +389,7 @@
                 icon: "success",
                 buttons: false,
             }); 
-            window.location.href = "/tag/excelcargas/inicio/"+finicio+"/final/"+ffin+""; 
+            window.location.href = "/fianzas/excelfechas/inicio/"+finicio+"/final/"+ffin+""; 
         }
     });
 

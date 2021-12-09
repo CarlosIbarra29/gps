@@ -97,7 +97,7 @@
                 <select id="sitio" name="sitio" required>
                     <option value="" disabled selected>* Selecciona una opcion:</option>
                     <?php foreach ($this->sitio as $sitio) { ?>
-                    <option value="<?php echo $sitio["id"]; ?>"><?php echo $sitio["nombre"]; ?> - <?php echo $sitio["id_cliente"]; ?> </option>
+                        <option value="<?php echo $sitio["id"]; ?>"><?php echo $sitio["nombre"]; ?> - <?php echo $sitio["id_cliente"]; ?> </option>
                     <?php } ?>
                 </select>
                 <label>Sitio</label>
@@ -172,8 +172,7 @@
                                 <td  class="text-center">
                                     <a title="Descargar Archivo" href="/<?php echo $data["archivo_fianza"]; ?>" download="<?php echo substr(strrchr($data["archivo_fianza"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons center">file_download</i> </a>
                                            
-                                    <a title="Visualizar" href="/<?php echo $data["archivo_fianza"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>
-                                    
+                                    <a title="Visualizar" href="/<?php echo $data["archivo_fianza"]; ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a>    
                                 </td>
 
                                 <td  class="text-center">
@@ -253,7 +252,7 @@
                     </div>
 
                     <div class="input-field col s12">
-                        <select id="sitio" name="sitio" required>
+                        <select id="sitios" name="sitio" required>
                             <option value="0" disabled selected>* Selecciona una opcion:</option>
                             <?php foreach ($this->sitio as $sitioa) { ?>
                                 <option value="<?php echo $sitioa["id"]; ?>"><?php echo $sitioa["nombre"]; ?> - <?php echo $sitioa["id_cliente"]; ?></option>
@@ -336,7 +335,7 @@
 
     $("#addfianza").click(function(){
         var url = document.getElementById("url").value;
-        var sitio = document.getElementById("sitio").value;
+        var sitio = document.getElementById("sitios").value;
         var vigencia = document.getElementById("vigencia").value;
 
 
