@@ -1478,6 +1478,26 @@ setInterval(function() {
                     <a href="/epp/listasolalmacen/status/0">Surtir EPP<i class="material-icons">nature_people</i></a>
                 </li>
 
+                <?php if($total_solicitudesnormal == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidad',$actual_link); echo getlistasolicitudcontabilidad($actual_link)?>">
+                        <a href="/solicitud/listarolsolicitudescontabilidad/status/0">Lista Solicitudes Yas<i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidad',$actual_link); echo getlistasolicitudcontabilidad($actual_link)?>">
+                        <a href="/solicitud/listarolsolicitudescontabilidad/status/0">Lista Solicitudes Yas<span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solicitudesnormal; ?></span><i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php } ?>
+
+                <?php if($total_solvehconta == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontabilidad/status/0">Solicitud Vehículos Yas<i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php }else{ ?>
+                    <li class="bold moves <?php echo getUrl('/vehiculos/listasolcontabilidad/status/0',$actual_link);?>">
+                        <a href="/vehiculos/listasolcontabilidad/status/0">Solicitud Vehículos Yas<span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solvehconta; ?></span><i class="material-icons">local_car_wash</i></a>
+                    </li>
+                <?php } ?>
+
             <?php } ?>
 
             <!-- TODOS LOS MODULOS -->
