@@ -97,6 +97,9 @@
 	.oculto{
 		display: none;
 	}
+    .table_wrapper{
+        overflow-x: auto;
+    }
 </style>
 
 <div class="row" style="margin-top: 40px;">
@@ -182,74 +185,75 @@
             </div>
         </div>
     </div>
-    <table class="table text-left table-hover">
-        <thead>
-            <tr style="background-color: #EDEDED">
-                <th>Apellido Paterno</th>   
-                <th>Apellido Materno</th>
-                <th>Nombre</th> 
-                <!-- <th>Puesto</th> -->
-                <th>Telefono</th>
-                <th>Correo Electronico</th>
-                <th>Status Personal</th>
-                <th></th>
-            </tr> 
-        </thead>
-        <?php if ($this->paginator) { 
-            foreach ($this->paginator as $usr) { ?>
-        <tbody>
-            <tr>
-                <td><?php echo $usr["apellido_pa"]; ?></td>
-                <td><?php echo $usr["apellido_ma"]; ?></td>
-                <td><?php echo $usr["nombre"]; ?></td>
-                <td><?php echo $usr["name_puesto"]; ?></td>
-                <td>
-                    <?php echo $usr['telefono']; ?>
-                </td>
-                <td>
-                    <?php echo $usr['email_personal']; ?>
-                </td>
+    <div class="col m12 s12 table_wrapper">
+        <table class="table text-left table-hover">
+            <thead>
+                <tr style="background-color: #EDEDED">
+                    <th>Apellido Paterno</th>   
+                    <th>Apellido Materno</th>
+                    <th>Nombre</th> 
+                    <!-- <th>Puesto</th> -->
+                    <th>Telefono</th>
+                    <th>Correo Electronico</th>
+                    <th>Status Personal</th>
+                    <th></th>
+                </tr> 
+            </thead>
+            <?php if ($this->paginator) { 
+                foreach ($this->paginator as $usr) { ?>
+            <tbody>
+                <tr>
+                    <td><?php echo $usr["apellido_pa"]; ?></td>
+                    <td><?php echo $usr["apellido_ma"]; ?></td>
+                    <td><?php echo $usr["nombre"]; ?></td>
+                    <td><?php echo $usr["name_puesto"]; ?></td>
+                    <td>
+                        <?php echo $usr['telefono']; ?>
+                    </td>
+                    <td>
+                        <?php echo $usr['email_personal']; ?>
+                    </td>
 
 
-                <td>
-                    <?php if($usr['status_personal'] == 0){ ?>
-                        <div class="chip" id="activo_personal">
-                            <img src="/img/correct.png" >
-                            Activo
-                        </div>
-                    <?php } ?>
+                    <td>
+                        <?php if($usr['status_personal'] == 0){ ?>
+                            <div class="chip" id="activo_personal">
+                                <img src="/img/correct.png" >
+                                Activo
+                            </div>
+                        <?php } ?>
 
-                    <?php if($usr['status_personal'] == 1){ ?>
-                        <div class="chip" id="inactivo_personal">
-                            <img src="/img/naranja.png" >
-                            Inactivo
-                        </div>
-                    <?php } ?>
+                        <?php if($usr['status_personal'] == 1){ ?>
+                            <div class="chip" id="inactivo_personal">
+                                <img src="/img/naranja.png" >
+                                Inactivo
+                            </div>
+                        <?php } ?>
 
-                    <?php if($usr['status_personal'] == 2){ ?>
-                        <div class="chip" id="inactivo_personal">
-                            <img src="/img/rojo.png" >
-                            Inactivo
-                        </div>
-                    <?php } ?>
-                </td>
+                        <?php if($usr['status_personal'] == 2){ ?>
+                            <div class="chip" id="inactivo_personal">
+                                <img src="/img/rojo.png" >
+                                Inactivo
+                            </div>
+                        <?php } ?>
+                    </td>
 
-            </tr>
-        </tbody>
-        <?php } }else{ ?>
-        <tbody>
-            <tr>
-                <td>No se ha agregado personal </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-        <?php } ?>
-    </table>
+                </tr>
+            </tbody>
+            <?php } }else{ ?>
+            <tbody>
+                <tr>
+                    <td>No se ha agregado personal </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <?php } ?>
+        </table>
+    </div>
 </div>
-
 
 <?php if($this->condicion == 1){ ?>
     <div class="row">
@@ -259,11 +263,11 @@
                     <ul class="pagination justify-content-center">
                         <?php if($pagina - 1 == 0){ ?>
                             <li class="page-item disabled">
-                                <span class="page-link">Anterior</span>
+                                <span class="page-link"><i class="fa fa-chevron-left" style="color:gray;"></i></span>
                             </li>
                         <?php }else{ ?>
                             <li class="page-item">
-                                <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&nombre=<?php echo $this->name_per ?>"> Anterior </a>
+                                <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&nombre=<?php echo $this->name_per ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                             </li>
                         <?php } ?>
                             <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
@@ -271,11 +275,11 @@
                             </li>
                         <?php if($pagina >= $this->total): ?>
                             <li class="page-item disabled">
-                                <span class="page-link">Siguente</span>
+                                <span class="page-link"><i class="fa fa-chevron-right" style="color:gray;"></i></span>
                             </li>
                         <?php else: ?>
                             <li class="page-item">
-                                <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&nombre=<?php echo $this->name_per ?>">Siguiente</a>
+                                <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&nombre=<?php echo $this->name_per ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a>
                             </li>
                         <?php endif; ?>
                     </ul>
@@ -292,11 +296,11 @@
                     <ul class="pagination justify-content-center">
                         <?php if($pagina - 1 == 0){ ?>
                             <li class="page-item disabled">
-                                <span class="page-link">Anterior</span>
+                                <span class="page-link"><i class="fa fa-chevron-left" style="color:gray;"></i></span>
                             </li>
                         <?php }else{ ?>
                             <li class="page-item">
-                                <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&puesto=<?php echo $this->puesto ?>"> Anterior </a>
+                                <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&puesto=<?php echo $this->puesto ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                             </li>
                         <?php } ?>
                             <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
@@ -304,11 +308,11 @@
                             </li>
                         <?php if($pagina >= $this->total): ?>
                             <li class="page-item disabled">
-                                <span class="page-link">Siguente</span>
+                                <span class="page-link"><i class="fa fa-chevron-right" style="color:gray;"></i></span>
                             </li>
                         <?php else: ?>
                             <li class="page-item">
-                                <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&puesto=<?php echo $this->puesto ?>">Siguiente</a>
+                                <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&puesto=<?php echo $this->puesto ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a>
                             </li>
                         <?php endif; ?>
                     </ul>

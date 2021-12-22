@@ -469,6 +469,7 @@ function isActhref($nameBtn,$urlname){
 </div>
 <!-- End Table Campamentos -->
 
+
 <!-- Paginador -->
 <div class="row">
 	<div class="col m12 s12 text-center">
@@ -477,17 +478,17 @@ function isActhref($nameBtn,$urlname){
 				<ul class="pagination justify-content-center">
 					<?php if($pagina - 1 == 0){ ?>
 					<li class="page-item disabled">
-						<span class="page-link">Anterior</span>
+						<a><span class="page-link"><i class="fa fa-chevron-left" style="color:gray;"></i></span></a>
 					</li>
 					<?php }else{ ?>
 						<?php if($this->option == 1){ ?>
                         	<li class="page-item">
-                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&sitio=<?php echo $this->name_sitio ?>"> Anterior </a>
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&sitio=<?php echo $this->name_sitio ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                         	</li>
                         <?php } ?>
                         <?php if($this->option == 2){ ?>
                         	<li class="page-item">
-                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&status=<?php echo $this->status_c ?>"> Anterior </a>
+                            	<a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&status=<?php echo $this->status_c ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                         	</li>
                         <?php } ?>
 					<?php } ?>
@@ -496,15 +497,15 @@ function isActhref($nameBtn,$urlname){
 					</li>
 					<?php if($pagina >= $this->total): ?>
 					<li class="page-item disabled">
-						<span class="page-link">Siguente</span>
+						<a><span class="page-link"><i class="fa fa-chevron-right" style="color:gray;"></i></span></a>
 					</li>
 					<?php else: ?>
 						<li class="page-item">
 							<?php if($this->option == 1){ ?>
-								<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&sitio=<?php echo $this->name_sitio ?>">Siguiente</a>
+								<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&sitio=<?php echo $this->name_sitio ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a>
 		                    <?php } ?>
 		                    <?php if($this->option == 2){ ?>
-		                    	<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&status=<?php echo $this->status_c ?>">Siguiente</a>
+		                    	<a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&status=<?php echo $this->status_c ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a>
 		                    <?php } ?>
 						</li>
 					<?php endif; ?>

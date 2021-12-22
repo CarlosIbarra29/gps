@@ -196,6 +196,7 @@
 </div>
 <!-- End Table Clientes -->
 
+
 <!-- Paginación  -->
 <div class="row">
     <div class="col m12 s12 text-center">
@@ -204,11 +205,11 @@
                 <ul class="pagination justify-content-center">
                		<?php if($pagina - 1 == 0){ ?>
                     	<li class="page-item disabled">
-                        	<span class="page-link">Anterior</span>
+                        	<a><span class="page-link"><i class="fa fa-chevron-left" style="color:gray;"></i></span></a>
                     	</li>
                		<?php }else{ ?>
                         <li class="page-item">
-                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&nombre=<?php echo $this->name_search ?>"> Anterior </a>
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1);} ?>&&nombre=<?php echo $this->name_search ?>"> <i class="fa fa-chevron-left" style="color: #FCA007;"></i> </a>
                         </li>
                		<?php } ?>
                         <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
@@ -216,11 +217,11 @@
                         </li>
                		<?php if($pagina >= $this->total): ?>
                        	<li class="page-item disabled">
-                            <span class="page-link">Siguente</span>
+                            <A><span class="page-link"><i class="fa fa-chevron-right" style="color:gray;"></i></span></A>
                        	</li>
                     <?php else: ?>
                         <li class="page-item">
-                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&nombre=<?php echo $this->name_search ?>">Siguiente</a>
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>&&nombre=<?php echo $this->name_search ?>"><i class="fa fa-chevron-right" style="color:#FCA007;"></i></a>
                         </li>
                    	<?php endif; ?>
                 </ul>
