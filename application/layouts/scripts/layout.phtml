@@ -1355,6 +1355,16 @@ setInterval(function() {
             <?php } ?> 
 
             <?php if ($usuarios[0]['fkroles'] == 9) { ?>
+
+                <li class="bold moves <?php echo getUrl('/panel/ordencompraspendiente',$actual_link); echo getsolicitudcompra($actual_link);?>">
+                    <a href="/panel/ordencompraspendiente">Crear Solicitud Compra<i class="material-icons">assignment</i></a>
+                </li>
+                <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudes',$actual_link); echo getlistasolicitud($actual_link)?>">
+                    <a href="/solicitud/listarolsolicitudes/status/0">Lista de Solicitudes<i class="material-icons">format_list_numbered</i></a>
+                </li>
+
+                <!-- Aignado el 27/122021 -->
+
                 <li class="bold moves <?php echo getUrl('/archivos/reportes',$actual_link); ?>">
                     <a href="/archivos/reportes">Reportes <i class="material-icons">filter_none</i></a>
                 </li>
@@ -1485,6 +1495,16 @@ setInterval(function() {
                 <?php } else { ?>
                     <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidad',$actual_link); echo getlistasolicitudcontabilidad($actual_link)?>">
                         <a href="/solicitud/listarolsolicitudescontabilidad/status/0">Lista Solicitudes Yas<span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solicitudesnormal; ?></span><i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php } ?>
+
+                <?php if($total_solicitudesclavos == 0){ ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidadcyh',$actual_link); echo getlistasolicitudcontabilidadcyh($actual_link)?>">
+                        <a href="/solicitud/listarolsolicitudescontabilidadcyh/status/0">Solicitudes (C y H)<i class="material-icons">format_list_numbered</i></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="bold moves <?php echo getUrl('/solicitud/listarolsolicitudescontabilidadcyh',$actual_link); echo getlistasolicitudcontabilidadcyh($actual_link)?>">
+                        <a href="/solicitud/listarolsolicitudescontabilidadcyh/status/0">Solicitudes (C y H) <span style="color: red; font-weight: bold; font-size: 12px;"><?php echo $total_solicitudesclavos; ?></span><i class="material-icons">format_list_numbered</i></a>
                     </li>
                 <?php } ?>
 

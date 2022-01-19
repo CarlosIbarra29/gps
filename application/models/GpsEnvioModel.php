@@ -161,13 +161,15 @@ class Application_Model_GpsEnvioModel extends Zend_Db_Table_Abstract{
         }
     }// END UPDATE ENVIO
 
-    public function updateacuse($post,$table,$urldb){
+    public function updateacuse($post,$table,$urldb,$nombre,$hoy){
         $status = 1;
             try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET acuse = ?, status_solicitud = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET acuse = ?, status_solicitud = ?, user_auditoria = ? , fecha_auditoria = ? WHERE id = ?",array(
                 $urldb,
                 $status,
+                $nombre,
+                $hoy,
                 $post['ids']));
             $db->closeConnection();              
             return $qry;

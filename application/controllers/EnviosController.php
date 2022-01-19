@@ -1030,6 +1030,14 @@ class EnviosController extends Zend_Controller_Action{
         $this->_helper->viewRenderer->setNoRender(true);
         $post = $this->getRequest()->getPost();
 
+        $id= $this->_session->id;
+        $table="usuario";
+        $wh="id";
+        $person= $this->_season->GetSpecific($table,$wh,$id);
+        $nombre = $person[0]['nombre']." ".$person[0]['ap']." ".$person[0]['am'];
+
+        date_default_timezone_set('America/Mexico_City');
+        $hoy = date("d-m-Y H:i:s");
 
             $name = $_FILES['url']['name'];
             if(empty($name)){ 
@@ -1054,7 +1062,7 @@ class EnviosController extends Zend_Controller_Action{
 
         // var_dump($urldb);exit;
         $table="envios_solicitud";
-        $result = $this->_envio->updateacuse($post,$table,$urldb);
+        $result = $this->_envio->updateacuse($post,$table,$urldb,$nombre,$hoy);
 
         if ($result) {
             return $this-> _redirect('/envios/enviodetail/id/'.$post['ids'].'/status/'.$post['status'].' ');

@@ -38,7 +38,7 @@
 
 <?php 
     date_default_timezone_set('America/Mexico_City');
-    $hoy = date("d-m-Y");
+    $hoy = date("Y-m-d");
 ?>
 
 <style> 
@@ -91,7 +91,7 @@
                         <?php } ?>    	
                     </td>
 					<td>
-						<?php if (date("d-m-Y",strtotime($fianzas['fecha_vigencia'])) >= $hoy) { ?>
+						<?php if (date("Y-m-d",strtotime($fianzas['fecha_vigencia'])) >= $hoy) { ?>
                             Vigente
                         <?php } else { ?>
                             Vencida

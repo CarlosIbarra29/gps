@@ -95,8 +95,8 @@ class Application_Model_GpsArchivosModel extends Zend_Db_Table_Abstract{
                         pa.solicitud_nomina, pc.hora_pago, pc.dia_pago, pa.status_extra, pa.monto_pago, pn.personal,
                         pa.solicitud_prestamo, pa.status_tipos, pa.id_proyecto, pn.status_pago, pn.fecha_pago,
                         year(date(CONCAT(SUBSTRING(pn.fecha_pago, 7, 4),  '-', SUBSTRING(pn.fecha_pago, 4, 2), '-', SUBSTRING(pn.fecha_pago, 1, 2)))) AS years,
-                        month(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS mes ,
-                        day(date(CONCAT(SUBSTRING(pa.dia, 7, 4),  '-', SUBSTRING(pa.dia, 4, 2), '-', SUBSTRING(pa.dia, 1, 2)))) AS dia_count
+                        month(date(CONCAT(SUBSTRING(pn.fecha_pago, 7, 4),  '-', SUBSTRING(pn.fecha_pago, 4, 2), '-', SUBSTRING(pn.fecha_pago, 1, 2)))) AS mes ,
+                        day(date(CONCAT(SUBSTRING(pn.fecha_pago, 7, 4),  '-', SUBSTRING(pn.fecha_pago, 4, 2), '-', SUBSTRING(pn.fecha_pago, 1, 2)))) AS dia_count
                         FROM personal_asistencia pa
                         LEFT JOIN personal_campo pc on pc.id=pa.id_personal 
                         LEFT JOIN personal_nomina pn on pn.id = pa.solicitud_nomina

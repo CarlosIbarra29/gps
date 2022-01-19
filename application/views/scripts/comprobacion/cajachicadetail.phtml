@@ -23,6 +23,7 @@
   $pago_fecha = $key['pago_fecha'];
   $monto_comprobado = $key['monto_anterior'];
   $status_resta = $key['status_resta'];
+  $evidencia = $key['evidencia_caja'];
 
   if($status_resta == 1){
     $total = $monto_comprobado - $monto;
@@ -241,13 +242,29 @@
 </div> -->
 
 <div class="row">
-  <div class="col m12 s12">
-    <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentario: </span>
-  </div>
+    <div class="col m6">
+        <div class="col m12 s12">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Comentario: </span>
+        </div>
 
-  <div class="col m12 s12">
-    <span style="font-size:15px;  color: red; letter-spacing: 0.1em; font-weight: bold;"><?php echo $comentario; ?></span>
-  </div>
+        <div class="col m12 s12">
+            <span style="font-size:15px;  color: red; letter-spacing: 0.1em; font-weight: bold;"><?php echo $comentario; ?></span>
+        </div>
+    </div>
+
+    <div class="col m6">
+        <div class="col m12 s12">
+            <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Evidencia digital: </span>
+        </div>
+
+        <div class="col m12 s12 text-">
+            <?php if($evidencia == null){ ?>
+                <span style="font-size:15px;  color: red; letter-spacing: 0.1em; font-weight: bold;">Caja chica sin evidencia digital</span>
+            <?php }else{ ?>
+                 <span><a title="Visualizar" href="/<?php echo $evidencia ?>" target="_blank" style="color: blue; font-size:18px;"><i class="material-icons center">gamepad</i> </a></span>
+            <?php } ?>
+        </div>
+    </div>
 </div>
 
 

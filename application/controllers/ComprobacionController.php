@@ -1021,9 +1021,41 @@ class ComprobacionController extends Zend_Controller_Action{
         $name = $this->_comprobacion->Gettiporpoyecto($sitio);
         $tipo_proyecto = $name[0]['nombre_proyecto'];
         $monto = 0;
+
         if($this->getRequest()->getPost()){
+
+            $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+        
+            }else{
+        
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+        
+                if($res == 0){ 
+        
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+        
+                }else{
+        
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/evidenciacmp/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+                }
+            }
+
             $table="comprobacion_solicitud";
-            $result = $this->_comprobacion->insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$tipo_proyecto,$monto);
+            $result = $this->_comprobacion->insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$tipo_proyecto,$urldb,$monto);
 
             if ($result) {
                 return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['id_residente'].' ');  
@@ -1062,8 +1094,39 @@ class ComprobacionController extends Zend_Controller_Action{
         $monto = $post['monto_anterior'];
         $this->_comprobacion->refreshssolicitudcomprobada($post,$table);
         if($this->getRequest()->getPost()){
+
+             $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+        
+            }else{
+        
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+        
+                if($res == 0){ 
+        
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+        
+                }else{
+        
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/evidenciacmp/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+                }
+            }
+
             $table="comprobacion_solicitud";
-            $result = $this->_comprobacion->insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$tipo_proyecto,$monto);
+            $result = $this->_comprobacion->insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$tipo_proyecto,$urldb,$monto);
 
             if ($result) {
                 return $this-> _redirect('/solicitud/comprobacionesresidente/id/'.$post['id_residente'].' ');  

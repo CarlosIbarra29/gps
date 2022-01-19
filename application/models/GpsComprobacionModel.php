@@ -22,7 +22,7 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
         }
     }// END INSERT COMPROBACIONES
 
-    public function insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$nombre_proyecto,$monto){
+    public function insertfirstcomprobacion($post,$table,$hoy,$nombre,$name_sitio,$nombre_proyecto,$urldb,$monto){
         // $monto = 0;
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -37,6 +37,7 @@ class Application_Model_GpsComprobacionModel extends Zend_Db_Table_Abstract{
                 'comentario'=> $post['comentario'],
                 'fecha_solicitud'=>$hoy,
                 'user_solicitud'=>$nombre,
+                'evidencia_caja'=>$urldb,
                 'monto_anterior'=>$monto
             ); 
             $res = $db->insert($table, $datasave);
