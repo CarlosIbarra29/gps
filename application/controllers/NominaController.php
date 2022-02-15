@@ -48,7 +48,7 @@ class NominaController extends Zend_Controller_Action{
 
         if($status == 1){
             $st = 1; $pago =0;
-            $enproceo =$this->_nomina->getsolicitudnomina($st,$pago);    
+            $enproceo =$this->_nomina->getsolicitudnomina2($st,$pago);    
             $count=count($enproceo);   
             if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
 
@@ -58,7 +58,7 @@ class NominaController extends Zend_Controller_Action{
 
             $this->view->totalpage = $total_pages;
             $this->view->total=ceil($total_pages/$no_of_records_per_page);
-            $this->view->paginator=$this->_nomina->getnominasolicitud($offset,$no_of_records_per_page,$st,$pago);  
+            $this->view->paginator=$this->_nomina->getnominasolicitud2($offset,$no_of_records_per_page,$st,$pago);  
         }
 
         if($status == 2){
@@ -164,7 +164,7 @@ class NominaController extends Zend_Controller_Action{
                 $st = 1; $pago =0;
                 $personal = $this->_getParam('usuario');
                 $this->view->user = $personal;
-                $enproceo =$this->_nomina->getsolicitudnominausuario($st,$pago,$personal);    
+                $enproceo =$this->_nomina->getsolicitudnominausuario2($st,$pago,$personal);    
                 $count=count($enproceo);   
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
 
@@ -174,14 +174,14 @@ class NominaController extends Zend_Controller_Action{
 
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
-                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador($offset,$no_of_records_per_page,$st,$pago,$personal);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador2($offset,$no_of_records_per_page,$st,$pago,$personal);
             }
 
             if($op == 2){
                 $st = 1; $pago =0;
                 $sitio = $this->_getParam('sitio');
                 $this->view->sitio = $sitio;
-                $enproceo =$this->_nomina->getsolicitudnominasitio($st,$pago,$sitio);    
+                $enproceo =$this->_nomina->getsolicitudnominasitio2($st,$pago,$sitio);    
                 $count=count($enproceo);   
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
 
@@ -191,14 +191,14 @@ class NominaController extends Zend_Controller_Action{
 
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
-                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio($offset,$no_of_records_per_page,$st,$pago,$sitio);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio2($offset,$no_of_records_per_page,$st,$pago,$sitio);
             }
 
             if($op == 3){
                 $st = 1; $pago =0;
                 $id = $this->_getParam('id');
                 $this->view->id = $id;
-                $enproceo =$this->_nomina->getsolicitudnominaid($st,$pago,$id);    
+                $enproceo =$this->_nomina->getsolicitudnominaid2($st,$pago,$id);    
                 $count=count($enproceo);   
                 if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
 
@@ -208,7 +208,7 @@ class NominaController extends Zend_Controller_Action{
 
                 $this->view->totalpage = $total_pages;
                 $this->view->total=ceil($total_pages/$no_of_records_per_page);
-                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid($offset,$no_of_records_per_page,$st,$pago,$id);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid2($offset,$no_of_records_per_page,$st,$pago,$id);
             }           
         }
 
@@ -325,6 +325,107 @@ class NominaController extends Zend_Controller_Action{
         
     }
 
+
+    public function nominaspendientesAction(){
+        
+        $id=$this->_session->id;
+        $wh="id";
+        $table="usuario";
+        $usr = $this->_season->GetSpecific($table,$wh,$id);
+        $this->view->rol_user = $usr[0]['fkroles'];
+
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
+        $st = 1; $pago = 0; $st2 = 0;
+        $enproceo =$this->_nomina->getsolicitudnomina3($st,$pago);
+        $this->view->enproceso = count($enproceo);
+
+        if($status == 1){
+            $st = 1; $pago =0; $st2 = 0;
+            $enproceo =$this->_nomina->getsolicitudnomina3($st,$pago);    
+            $count=count($enproceo);   
+            if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+            $no_of_records_per_page = 25;
+            $offset = ($pagina-1) * $no_of_records_per_page; 
+            $total_pages= $count;
+
+            $this->view->totalpage = $total_pages;
+            $this->view->total=ceil($total_pages/$no_of_records_per_page);
+            $this->view->paginator=$this->_nomina->getnominasolicitud3($offset,$no_of_records_per_page,$st,$pago);
+        }
+    }
+
+    public function searchsolpendientesAction(){
+        $id=1;
+        $this->view->select_personal = $this->_nomina->getusernominabuscador($id);
+
+        $st = 1; $pago =0;
+        $enproceo =$this->_nomina->getsolicitudnomina3($st,$pago);
+        $this->view->enproceso = count($enproceo);  
+
+        $op = $this->_getParam('op');
+        $this->view->op_search = $op;
+        $status = $this->_getParam('status');
+        $this->view->status_documento = $status;
+
+        if($status == 1){
+            if($op == 1){
+                $st = 1; $pago =0;
+                $personal = $this->_getParam('usuario');
+                $this->view->user = $personal;
+                $enproceo =$this->_nomina->getsolicitudnominausuario3($st,$pago,$personal);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscador3($offset,$no_of_records_per_page,$st,$pago,$personal);
+            }
+
+            if($op == 2){
+                $st = 1; $pago =0;
+                $sitio = $this->_getParam('sitio');
+                $this->view->sitio = $sitio;
+                $enproceo =$this->_nomina->getsolicitudnominasitio3($st,$pago,$sitio);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorsitio3($offset,$no_of_records_per_page,$st,$pago,$sitio);
+            }
+
+            if($op == 3){
+                $st = 1; $pago =0;
+                $id = $this->_getParam('id');
+                $this->view->id = $id;
+                $enproceo =$this->_nomina->getsolicitudnominaid3($st,$pago,$id);    
+                $count=count($enproceo);   
+                if (isset($_GET['pagina'])) { $pagina = $_GET['pagina']; } else { $pagina= $this->view->pagina = 1;}
+
+                $no_of_records_per_page = 25;
+                $offset = ($pagina-1) * $no_of_records_per_page; 
+                $total_pages= $count;
+
+                $this->view->totalpage = $total_pages;
+                $this->view->total=ceil($total_pages/$no_of_records_per_page);
+                $this->view->paginator=$this->_nomina->getnominasolicitudbuscadorid3($offset,$no_of_records_per_page,$st,$pago,$id);
+            }           
+        }
+    }
 
 
     public function detallenominaAction(){

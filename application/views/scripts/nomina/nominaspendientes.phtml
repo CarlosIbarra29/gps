@@ -73,10 +73,10 @@
 <div class="row" style="margin-top: 20px;">
   	<div class="col m12 s12">
     		<ul >
-      			<?php if($status == 0){ ?>
+      			<?php if($status == 1){ ?>
       	    		<li class="tab col s3 active_menu">
-        	    			<a class="" href="/nomina/solicitudnomina/status/0">
-            	    			<h4>En Proceso
+        	    			<a class="" href="/nomina/nominaspendientes/status/1">
+            	    			<h4>En Espera de Autorización
             	  					  <div class="chip">
             	    					    <?php echo $this->enproceso; ?>
             	  					  </div>
@@ -85,42 +85,14 @@
       	    		</li>
       			<?php }else{ ?>
       	    		<li class="tab col s3">
-        	    			<a class="" href="/nomina/solicitudnomina/status/0">
-            	    			<h4>En Proceso
+        	    			<a class="" href="/nomina/nominaspendientes/status/1">
+            	    			<h4>En Espera de Autorización
               	  					<div class="chip">
               	    					  <?php echo $this->enproceso; ?>
               	  					</div>
             	    			</h4>
         	    			</a>
       	    		</li>
-      			<?php } ?>
-
-      			<?php if($status == 2){ ?>
-        				<li class="tab col s3 active_menu">
-          					<a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a>
-          					<div></div>
-        				</li>
-      			<?php }else{ ?>
-      				  <li class="tab col s3"><a href="/nomina/solicitudnomina/status/2"><h4>Rechazadas</h4></a></li>
-      			<?php } ?>	
-
-
-      			<?php if($status == 1){ ?>
-        				<li class="tab col s3 active_menu">
-          					<a href="/nomina/solicitudnomina/1"><h4>Auditadas</h4></a>
-          					<div></div>
-        				</li>
-      			<?php }else{ ?>
-      				  <li class="tab col s3"><a href="/nomina/solicitudnomina/status/1"><h4>Auditadas</h4></a></li>
-      			<?php } ?>
-
-      			<?php if($status == 3){ ?>
-        				<li class="tab col s3 active_menu">
-          					<a href="/nomina/solicitudnomina/status/3"><h4>Pagadas</h4></a>
-          					<div></div>
-        				</li>
-      			<?php }else{ ?>
-      				  <li class="tab col s3"><a href="/nomina/solicitudnomina/status/3"><h4>Pagadas</h4></a></li>
       			<?php } ?>
     		</ul>
   	</div>
@@ -188,7 +160,7 @@
 	      	  </div>
 	      	  <div class="col m4 s4 text-center">
               <?php if($status == 1){ ?>
-                  <a href="/nomina/nominaspendientes/status/1" class="waves-effect blue btn modal-trigger">Nóminas Pendientes</a>
+                  <a href="/nomina/solicitudnomina/status/0" class="waves-effect orange btn modal-trigger">Regresar a menú anterior</a>
               <?php }?>
             </div>
 	      </div>
@@ -359,7 +331,7 @@
                   icon: "success",
 					        buttons: false,
 				      }); 
-			        window.location.href = "/nomina/searchsolicitudnomina/status/"+status+"/usuario/"+person+"/op/1";
+			        window.location.href = "/nomina/searchsolpendientes/status/"+status+"/usuario/"+person+"/op/1";
 		      } else {
 		          swal("La asignacion fue cancelada!");
 		      }
@@ -382,7 +354,7 @@
                   icon: "success",
 					        buttons: false,
 				      }); 
-			        window.location.href = "/nomina/searchsolicitudnomina/status/"+status+"/sitio/"+sitio+"/op/2";
+			        window.location.href = "/nomina/searchsolpendientes/status/"+status+"/sitio/"+sitio+"/op/2";
 		      } else {
 		          swal("La asignacion fue cancelada!");
 		      }
@@ -405,7 +377,7 @@
                   icon: "success",
 					        buttons: false,
 				      }); 
-			        window.location.href = "/nomina/searchsolicitudnomina/status/"+status+"/id/"+id+"/op/3";
+			        window.location.href = "/nomina/searchsolpendientes/status/"+status+"/id/"+id+"/op/3";
 		      } else {
               swal("La asignacion fue cancelada!");
 		      }

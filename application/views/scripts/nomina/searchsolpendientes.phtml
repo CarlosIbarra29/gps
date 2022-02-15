@@ -1,0 +1,432 @@
+
+<?php 
+    function isActhref($nameBtn,$urlname){
+        if($nameBtn==1 && $urlname==null){
+            return "active"; 
+        }
+        return ($nameBtn == $urlname)?"active":"";
+    }
+
+    if (isset($_GET['pagina'])) {
+        $pagina = $_GET['pagina'];
+    } else {
+        $pagina = 1;
+    }  
+?>
+
+<?php 
+
+    $links = "";
+    $url="";
+
+        if($this->total== 1){
+            $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+        }else{
+            if ($this->total >= 1 && $pagina <= $this->total) {
+
+              if (isset($_GET['pagina']) && $this->actpage != 1) {
+                $links .= "<li class=\"page-item\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }else{
+                $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina=1\">1</a></li>";
+              }
+                
+                $i = max(2, $pagina - 3);
+                if ($i > 2)
+                    $links .= " <li><a>...</a></li> ";
+                for (; $i < min($pagina + 3, $this->total); $i++) {
+                  if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }else{
+                    $links .= "<li class=\"page-item \" ><a href=\"{$url}?pagina={$i}\">{$i}</a></li>";
+                  }
+                }
+                if ($i != $this->total)
+                    $links .= " <li><a>...</a></li> ";
+                if($i ==$this->actpage){
+                    $links .= "<li class=\"page-item active\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }else{
+                    $links .= "<li class=\"page-item\"><a href=\"{$url}?pagina={$this->total}\">{$this->total}</a></li>";
+                }
+                
+            }           
+        }
+
+
+ ?>
+
+<style type="text/css">
+    .oculto{display: none;}
+    .active_menu{
+        -webkit-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+        -moz-box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+        box-shadow: 0px 6px 3px -1px rgba(255,72,60,1);
+    }
+    .table_wrapper{
+        overflow-x: auto;
+    }
+</style>
+
+<?php 
+    $status =  $this->status_documento;
+?>
+<div class="row" style="margin-top: 20px;">
+    <div class="col m12 s12">
+        <ul >
+            <?php if($status == 1){ ?>
+                <li class="tab col s3 active_menu">
+                    <a class="" href="/nomina/nominaspendientes/status/1">
+                        <h4>En Espera de Autorización
+                            <div class="chip">
+                                <?php echo $this->enproceso; ?>
+                            </div>
+                        </h4>
+                    </a>
+                </li>
+            <?php }else{ ?>
+                <li class="tab col s3">
+                    <a class="" href="/nomina/nominaspendientes/status/1">
+                        <h4>En Espera de Autorización
+                            <div class="chip">
+                                <?php echo $this->enproceso; ?>
+                            </div>
+                        </h4>
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+
+
+<div class="row">
+  	
+    <div class="col m1 s12"></div>
+  	
+    <div class="col m10 s12">
+    		<div class="row">
+            <div class="col m5 s6">
+                <div class="input-field col s12">
+                    <select id="search_op">
+                        <?php if($this->op_search == 1){?>
+                            <option value="1" selected>Personal</option>
+                            <option value="2">Sitio</option>
+                            <option value="3">Id solicitud</option>
+                        <?php } ?>
+
+                        <?php if($this->op_search == 2){?>
+                            <option value="1">Personal</option>
+                            <option value="2" selected>Sitio</option>
+                            <option value="3">Id solicitud</option>
+                        <?php } ?>
+
+                        <?php if($this->op_search == 3){?>
+                            <option value="1">Personal</option>
+                            <option value="2">Sitio</option>
+                            <option value="3" selected>Id solicitud</option>
+                        <?php } ?>
+                    </select>
+    			    	    <label>Buscar por:</label>
+    			  	  </div>
+            </div>
+
+            <div class="col m5 s6">
+                <?php if($this->op_search == 1){?>
+                    <div class="input-field col s12 op_person">
+                <?php }else{ ?>
+                    <div class="input-field col s12 op_person oculto">
+                <?php } ?>
+                    <select id="rol" name="rol" required>
+                        <?php foreach ($this->select_personal as $rl) {
+                            if ($rl['id']==$this->user) { ?>
+                                <option value="<?php echo $rl["id"]; ?>" selected><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+                            <?php } if ($rl['id']!=$this->user) { ?>
+                                <option value="<?php echo $rl["id"]; ?>"><?php echo $rl["nombre"]; ?> <?php echo $rl["apellido_pa"]; ?> <?php echo $rl["apellido_ma"]; ?></option>
+                        <?php } } ?>  
+                    </select>
+                    <label>Personal</label>
+                </div>
+
+                <?php if($this->op_search == 2){?>
+                    <div class="input-field col s12 op_sitio">
+                <?php }else{ ?>
+                    <div class="input-field col s12 oculto op_sitio">
+                <?php } ?>
+    		          	<input placeholder="Ingresa el nombre del sitio" value="<?php echo $this->sitio; ?>" id="sitio_search" type="text" class="validate">
+    		          	<label for="sitio_search">Sitio</label>
+                </div>
+
+                <?php if($this->op_search == 3){?>
+                    <div class="input-field col s12 op_id">
+                <?php }else{ ?>
+                    <div class="input-field col s12 oculto op_id">
+                <?php } ?>
+    		          	<input  id="id_search" type="number" value="<?php echo $this->id; ?>" class="validate">
+    		          	<label for="id_search">Id solicitud</label>
+    		        </div>
+            </div>
+
+            <?php if($this->op_search == 1){?>
+                <div class="col m2 s12 text-center op_person">
+            <?php }else{ ?>
+                <div class="col m2 s12 text-center op_person oculto">
+            <?php } ?>
+    				    <a class="btn" id="btn_person"><i class="material-icons right">search</i></a>
+    			  </div>
+
+            <?php if($this->op_search == 2){?>
+                <div class="col m2 s12 text-center op_sitio">
+            <?php }else{ ?>
+                <div class="col m2 s12 text-center oculto op_sitio">
+            <?php } ?>
+    				    <a class="btn" id="btn_sitio"><i class="material-icons right">search</i></a>
+    			  </div>
+
+            <?php if($this->op_search == 3){?>
+                <div class="col m2 s12 text-center op_id">
+            <?php }else{ ?>
+                <div class="col m2 s12 text-center oculto op_id">
+            <?php } ?>
+    				    <a class="btn" id="btn_id"><i class="material-icons right">search</i></a>
+    			  </div>
+        </div>
+    </div>
+  	<div class="col m1 s12"></div>
+</div>
+
+
+<div class="row">
+  	<div class="col m12 s12">
+        <div class="row">
+            <div class="col m8 s8">
+                <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Lista de solicitudes de Nomina</span>
+	      	  </div>
+
+            <div class="col m4 s4 text-center">
+              <?php if($status == 1){ ?>
+                  <a href="/nomina/solicitudnomina/status/0" class="waves-effect orange btn modal-trigger">Regresar a menú anterior</a>
+              <?php }?>
+            </div>
+	      </div>
+
+        <div class="row">
+            <div class="col m12 s12 table_wrapper">
+                <table class="table text-left table-hover">
+                    <thead>
+                        <!-- FFF8B7 -->
+                        <tr style="background-color: #EDEDED;">
+                      			<th>NO.</th>
+                      			<th>Sitio</th>
+                      			<th>Personal</th>
+                      			<th>Fecha Solicitud</th>
+                      			<th>Monto</th>  
+                      			<th>Status</th>
+                      			<th></th>
+                    		</tr> 
+      		          </thead>
+                    <?php if ($this->paginator) { 
+                        foreach ($this->paginator as $usr) { ?>
+                            <tbody>
+                            		<tr>
+                              			<td>
+                                        <h5><?php echo $usr['id']; ?></h5>
+                              			</td>
+                              			<td>
+                                        <h5><?php echo $usr['sitio']; ?></h5>
+                              			</td>
+                              			<td>
+                                  			<h5>
+                                    				<?php echo $usr['personal']; ?>
+                                  			</h5>
+                              			</td>
+                              			<td>
+                                  			<h5>
+                                    				<?php echo $usr['solicitud_fecha']; ?>
+                                  			</h5>
+                              			</td>
+
+                              			<td>
+                                        <?php 
+                                            $num = $usr['monto_nomina'];
+                                            $multi = 5;
+                               
+                                            if (fmod($num, $multi) <> 0) {
+                                                $valor_suma = $num-fmod($num, $multi)+$multi;
+                                            } else {
+                                                $valor_suma = $num;
+                                            }
+                                        ?>
+                                        <span style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($valor_suma); ?></span>
+                              			</td>
+                              			<td>
+                                        <?php if($usr['status_auditoria'] == 0){ ?>
+                                    				<div class="chip" id="inactivo_personal">
+                                        				<img src="/img/gris.jpg" >
+                                        				En proceso
+                                      			</div>
+                                			  <?php } ?>
+
+                                  			<?php if($usr['status_auditoria'] == 1){ ?>
+                                    				<div class="chip" id="activo_personal">
+                                        				<img src="/img/correct.png" >
+                                        				Auditada
+                                      			</div>
+                                  			<?php } ?>
+
+                                        <?php if($usr['status_auditoria'] == 2){ ?>
+                                            <div class="chip" id="activo_personal">
+                                                <img src="/img/rojo.png" >
+                                                Rechazado
+                                            </div>
+                                        <?php } ?>
+                              			</td>
+
+                              			<td class="text-center">
+                                        <a href="/nomina/detallenomina/id/<?php echo $usr["id"] ?>/user/<?php echo $usr['id_personal']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
+                              			</td>
+                                    <!--<td class="text-center">
+                                        <a class="delete_cotizacion" data-id="<?php echo $usr["id_solicitud"]; ?>" data-nombre="cotizacion"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+                                    </td> -->
+                            		</tr>
+        	          <?php } }else{ ?>
+        	                  </tbody> 
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="6"><h4>No hay solicitudes de Nominas.</h4></td>
+                                    </tr>
+                                </tbody>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 s12 text-center">
+        <div class="white-box">
+            <div class="paginationControl">
+                <ul class="pagination justify-content-center">
+                  <?php if($pagina - 1 == 0){ ?>
+                      <li class="page-item disabled">
+                          <span class="page-link">Anterior</span>
+                      </li>
+                  <?php }else{ ?>
+                        <li class="page-item">
+                            <a class="page-link <?php if($pagina <= 1){ echo 'disabled'; } ?> " href="<?php if($pagina <= 1){ echo '#'; } else { echo "?pagina=".($pagina - 1); } ?>"> Anterior </a>
+                        </li>
+                  <?php } ?>
+                        <li class="page-item <?php echo isActhref($links,$this->actpage);?>">
+                            <?php echo $links; ?>
+                        </li>
+                  <?php if($pagina >= $this->total): ?>
+                        <li class="page-item disabled">
+                            <span class="page-link">Siguente</span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"  href="<?php echo "?pagina=".($pagina + 1); ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<input type="hidden" id="status_op" value="<?php echo $this->status_documento; ?>">
+<input type="hidden" id="buscador" value="1">
+<script type="text/javascript">
+  	$("#search_op").on('change', function() {
+        var value = this.value;
+  		  document.getElementById("buscador").value= value;
+
+        if(value == 1){
+            $(".op_person").show();
+  			    $(".op_sitio").hide();
+  			    $(".op_id").hide();
+  		  }
+
+        if(value == 2){
+            $(".op_sitio").show();
+  			    $(".op_person").hide();
+  	        $(".op_id").hide();
+  		  }
+  		  
+        if(value == 3){
+            $(".op_id").show();
+  			    $(".op_person").hide();
+  			    $(".op_sitio").hide();
+        }
+    });
+
+    $("#btn_person").click(function(){
+		    var person = document.getElementById("rol").value;
+		    var status = document.getElementById("status_op").value;
+        swal({
+            title: "La busqueda sera por el personal, Desea continuar?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                }); 
+                window.location.href = "/nomina/searchsolpendientes/status/"+status+"/usuario/"+person+"/op/1";
+		        } else {
+                swal("La asignacion fue cancelada!");
+            }
+        });
+    });
+
+    $("#btn_sitio").click(function(){
+        var sitio = document.getElementById("sitio_search").value;
+		    var status = document.getElementById("status_op").value;
+
+        swal({
+            title: "La busqueda sera por el sitio, Desea continuar?",
+			      icon: "warning",
+		        buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                }); 
+                window.location.href = "/nomina/searchsolpendientes/status/"+status+"/sitio/"+sitio+"/op/2";
+		        } else {
+                swal("La asignacion fue cancelada!");
+		        }
+        });
+    });
+
+    $("#btn_id").click(function(){
+        var id = document.getElementById("id_search").value;
+		    var status = document.getElementById("status_op").value;
+
+        swal({
+            title: "La busqueda sera por el sitio, Desea continuar?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Espere un momento, la información esta siendo procesada", {
+                    icon: "success",
+                    buttons: false,
+                }); 
+                window.location.href = "/nomina/searchsolpendientes/status/"+status+"/id/"+id+"/op/3";
+            } else {
+                swal("La asignacion fue cancelada!");
+            }
+        });
+    });
+</script>
