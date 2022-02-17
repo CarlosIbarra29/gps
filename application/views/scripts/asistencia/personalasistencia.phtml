@@ -646,11 +646,30 @@
 					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
 					                  	<?php } ?>
 
-					                  	<?php if($usr['tipo_nomina'] == 1) { ?>
+					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 ) { ?>
+					                  		<span  style="color: green; font-weight: bold;">Sabatino IMMS</span>
+					                  	<?php } ?>
+
+
+					                  	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 6 ) { ?>
+					                  		<span  style="color: orange; font-weight: bold;">Sabatino Gratificación</span>
+					                  	<?php } ?>
+
+
+					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
+					                  		<span  style="color: green; font-weight: bold;">Domingo IMMS</span>
+					                  	<?php } ?>
+
+
+					                  	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 7 ) { ?>
+					                  		<span  style="color: orange; font-weight: bold;">Domingo Gratificación</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Sueldo IMMS</span>
 					                  	<?php } ?>
 
-					                 	<?php if($usr['tipo_nomina'] == 2) { ?>
+					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
 

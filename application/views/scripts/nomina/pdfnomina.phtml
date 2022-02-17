@@ -267,7 +267,7 @@
 
                                     <?php if($usr['tipo_nomina'] == 1) { ?>
                                         <td>
-                                            <span style="font-size:10px; color: green; font-weight: bold;">S/IMMS</span>
+                                            <span style="font-size:10px; color: green; font-weight: bold;">S/IMMS1</span>
                                         </td>
                                     <?php } ?>
 
@@ -276,6 +276,10 @@
                                             <span style="font-size:8px; color: orange; font-weight: bold;">Gratificación</span>
                                         </td>
                                     <?php } ?>
+
+
+
+                                    
                                         <!-- Tambien agregado -->
                                     
 
@@ -296,10 +300,36 @@
                                     <td>00:00</td>
                                     <td>00:00</td>
                                     <td>Otros..</td>
+
                                     <td>
                                         <?php $monto = $usr['monto_pago']; ?>
                                         <span  style="font-size:15px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">$<?php echo number_format($monto, 2, '.', ','); ?></span>
                                     </td>
+                                    <!-- Agregado -->
+                                    <?php if($usr['tipo_nomina'] == 6) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Kilómetros</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 7) { ?>
+                                        <td>
+                                            <span  style="font-size:8px;  color: blue; font-weight: bold;">Incapacidad</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 8) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Prestamos</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 9) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">IMMS</span>
+                                        </td>
+                                    <?php } ?>
+                                    <!-- Agregado -->
                                   <?php } ?>
 
 <!--                                    <td>
