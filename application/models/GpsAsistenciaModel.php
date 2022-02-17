@@ -54,7 +54,8 @@ class Application_Model_GpsAsistenciaModel extends Zend_Db_Table_Abstract{
                 'id_proyecto_salida'=>$post['proyecto'],
                 'status_asistencia'=>$status,
                 'motivo_inasistencia' =>$post['motivo'],
-                'monto_pago' => $post['monto_add']
+                'monto_pago' => $post['monto_add'],
+                'tipo_nomina' => $post['concepto']
             ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               

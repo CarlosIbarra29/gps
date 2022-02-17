@@ -164,16 +164,26 @@
 
                     <div class="input-field col m6 s12">
                         <input name="monto_add" id="monto_form" type="number" class="validate">
-                      <label for="monto">Monto</label>
+                      	<label for="monto">Monto</label>
                     </div>
 
 
                     <div class="input-field col m6 s12">
-                        <input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>"></input>
+                    	<input type="hidden" name="sitio" value="<?php echo $this->sitio_name; ?>"></input>
                         <input type="hidden" name="proyecto" value="<?php echo $this->proyecto; ?>">
                         <input type="hidden" name="user" value="<?php echo $this->personal_id ?>">
-                        <input placeholder="Agregar el motivo de la inasistencia" name="motivo" id="motivo_form" type="text" class="validate">
-                      <label for="motivo_form">Motivo</label>
+                        <input placeholder="Agregar el motivo" name="motivo" id="motivo_form" type="text" class="validate">
+                        <label for="motivo_form">Motivo</label>
+                    </div>
+
+                    <div class="input-field col m12 s12">
+                    	<select id="concepto" name="concepto">
+                    		<option value="0" disabled selected>* Selecciona un concepto</option>
+                    		<option value="6">Kilómetros</option>
+                    		<option value="7">Incapacidad</option>
+                    		<option value="8">Prestamo</option>		      	
+						</select>
+						<label>Tipo de concepto:</label>
                     </div>                    
                 </div>
             </form>
@@ -642,6 +652,19 @@
 					                 	<?php if($usr['tipo_nomina'] == 2) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
+
+
+					                  	<?php if($usr['tipo_nomina'] == 6) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Kilómetros</span>
+					                  	<?php } ?>
+
+					                 	<?php if($usr['tipo_nomina'] == 7) { ?>
+					                  		<span  style=" color: blue; font-weight: bold;">Incapacidad</span>
+					               		<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 8) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Prestamos</span>
+					                  	<?php } ?>
 					               		<!-- Tambien agregado -->
 				                  	</td>
 				                	<td>
@@ -1015,7 +1038,14 @@
 				                  <?php } ?>
 
 				                  	<td>
-				                  		<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+				                  		 <?php if($usr['tipo_nomina'] == 0 || $usr['tipo_nomina'] == 1 || $usr['tipo_nomina'] == 2 || $usr['tipo_nomina'] == 3 || $usr['tipo_nomina'] == 4 || $usr['tipo_nomina'] == 5){ ?>
+
+				                  			<a class="delete modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-tipo="<?php echo $usr['tipo_nomina']; ?>" href="#modaldelete"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+				                  		<?php } else { ?>
+				                  			<a class="otros modal-trigger" data-id="<?php echo $usr["id_pa"]; ?>" data-name="<?php echo $usr['name_personal']; ?> <?php echo $usr['apellido_pa']; ?> <?php echo $usr['apellido_ma']; ?>" data-sitio="<?php echo $usr['nombre']; ?>" data-diapago="<?php echo $usr['dia_pago']; ?>" data-horapago="<?php echo $usr['hora_pago']; ?>" data-dia="<?php echo $usr['day_num']; ?>" data-today="<?php echo $usr['dia']; ?>" data-eventrada="/<?php echo $usr['ev_entrada']; ?>" data-hentrada="<?php echo $usr['hora_entrada']; ?>" data-evsalida="/<?php echo $usr['ev_salida']; ?>" data-hsalida="<?php echo $usr['hora_salida']; ?>" data-extra="<?php echo $usr['status_extra']; ?>"
+					                  			data-motivo="<?php echo $usr['motivo_inasistencia']; ?>" href="#modalotros"><span class="warning"><i class="fa fa-2x fa-address-card-o" ></i></span></a>
+				                  		
+				                  		<?php } ?>
 				                  	</td>
 
 				                  	<td>
@@ -1133,7 +1163,6 @@
         		
         	</div>
         </div>
-
         <div class="row div_info">
         	<div class="col m6 s12 text-center">
         		<div>
@@ -1187,6 +1216,42 @@
 			       	<label for="hora_salida">Hora de Salida</label>
 			    </div>
 
+        	</div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" id="add_inasistencia" class="btn">Guardar</button> -->
+        <button  class="modal-close red btn">Cerrar</button>
+    </div>
+</div>
+
+<div id="modalotros" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <span style="font-size:20px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Otro Concepto de pago</span>
+        <div class="row div_info">
+        	<div class="col m8 s12" style="margin-top: 20px;">
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Pago:</span> $<span id="diapago_modal_ot"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Hora Pago:</span> $<span id="horapago_modal_ot"></span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Día Asistencia:</span> <span id="dia_modal_ot"></span> <span id="today_modal_ot"></span><br>
+        		<span style="font-size:16px; color:green; letter-spacing: 0.1em; font-weight: bold;" id="extra_modal_ot" class="oculto">Horas Extra</span><br>
+
+        		<span style="font-size:14px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Motivo:</span> <span id="motivo_modal_ot"></span> 
+        	</div>
+
+        	<div class="col m4 s12 text-center">
+        		
+        	</div>
+        </div>
+
+        <div class="row div_editinfo oculto">
+        	<div class="col m12 s12" style="margin-top: 20px;">
+		        <div class="input-field col s6">
+		        	<input placeholder="" id="edit_day" type="hidden" class="validate">
+		        </div>
         	</div>
         </div>
 
@@ -1274,7 +1339,49 @@
 
     	var hsalida = $(this).data('hsalida');
     	document.getElementById("hsalida_modal").innerHTML=hsalida;
+
+    	var tipo = $(this).data('tipo');
+    	document.getElementById("tipo_nomina").innerHTML=tipo;
     });
+
+
+    $(".otros").click(function(){
+    	var id = $(this).data('id');
+
+    	var diapago = $(this).data('diapago');
+    	document.getElementById("diapago_modal_ot").innerHTML=diapago;
+
+    	var motivo = $(this).data('motivo');
+    	document.getElementById("motivo_modal_ot").innerHTML=motivo;
+
+    	var horapago = $(this).data('horapago');
+    	document.getElementById("horapago_modal_ot").innerHTML=horapago;
+
+    	var dia = $(this).data('dia');
+    	if(dia == 1){ day = "Lunes";} if(dia == 2){ day = "Martes";} if(dia == 3){ day = "Miercoles";}
+    	if(dia == 4){ day = "Jueves";} if(dia == 5){ day = "Viernes";} if(dia == 6){ day = "Sabado";}
+    	if(dia == 7){ day = "Domingo";}
+    	document.getElementById("dia_modal_ot").innerHTML=day;
+
+    	var today = $(this).data('today');
+    	document.getElementById("today_modal_ot").innerHTML= "("+today+")";
+    	document.getElementById("edit_day_ot").value = today;
+
+    	var element =document.getElementById("href_entrada_ot");
+    	element.href =entrada;
+
+    	var hentrada = $(this).data('hentrada');
+    	document.getElementById("hentrada_modal_ot").innerHTML=hentrada;
+
+    	var elements =document.getElementById("href_salida_ot");
+    	elements.href =salida;
+
+    	var hsalida = $(this).data('hsalida');
+    	document.getElementById("hsalida_modal_ot").innerHTML=hsalida;
+
+    	
+    });
+
 
 
     $("#edit_registro").click(function(){
