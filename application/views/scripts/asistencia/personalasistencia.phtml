@@ -181,7 +181,8 @@
                     		<option value="0" disabled selected>* Selecciona un concepto</option>
                     		<option value="6">Kilómetros</option>
                     		<option value="7">Incapacidad</option>
-                    		<option value="8">Prestamo</option>		      	
+                    		<option value="8">Prestamo</option>	
+                    		<option value="9">Sueldo IMMS</option>	      	
 						</select>
 						<label>Tipo de concepto:</label>
                     </div>                    
@@ -664,6 +665,10 @@
 
 					                  	<?php if($usr['tipo_nomina'] == 8) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Prestamos</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 9) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Sueldo IMMS</span>
 					                  	<?php } ?>
 					               		<!-- Tambien agregado -->
 				                  	</td>
