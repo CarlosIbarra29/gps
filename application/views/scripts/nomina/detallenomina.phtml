@@ -416,6 +416,17 @@
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
 
+					               		<?php if($usr['tipo_nomina'] == 3) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Sabado Ordinario</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 4) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Sabado Extra</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 5) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Domingo Extra</span>
+					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 6) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Kilómetros</span>
