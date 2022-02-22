@@ -182,7 +182,10 @@
                     		<option value="6">Kilómetros</option>
                     		<option value="7">Incapacidad</option>
                     		<option value="8">Prestamo</option>	
-                    		<option value="9">Sueldo IMMS</option>	      	
+                    		<option value="9">Sueldo IMSS</option>	
+                    		<option value="10">Retención IMSS</option>
+                    		<option value="11">ISR Mensual</option>	
+                    		<option value="12">Séptimo Día</option>      	
 						</select>
 						<label>Tipo de concepto:</label>
                     </div>                    
@@ -666,7 +669,7 @@
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Sueldo IMMS</span>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo IMSS</span>
 					                  	<?php } ?>
 
 					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
@@ -689,7 +692,19 @@
 					                  	<?php if($usr['tipo_nomina'] == 9) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Sueldo IMMS</span>
 					                  	<?php } ?>
-					               		<!-- Tambien agregado -->
+
+					                  	<?php if($usr['tipo_nomina'] == 10) { ?>
+					                  		<span  style=" color: red; font-weight: bold;">Retención IMSS</span>
+					               		<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 11) { ?>
+					                  		<span  style="color: red; font-weight: bold;">ISR Mensual</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 12) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Séptimo Día</span>
+					                  	<?php } ?>
+				               		<!-- Tambien agregado -->
 				                  	</td>
 				                	<td>
 				                		<?php echo $usr['dia']; ?>

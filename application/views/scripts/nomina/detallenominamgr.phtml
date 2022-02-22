@@ -133,10 +133,10 @@
                       			<th>Sitio</th> 
                       			<th>Personal</th>
                       			<th>Puesto</th>
-                      			<th>Fecha Solicitud</th>
+                      			<th>Periodo</th>
                       			<th>Monto</th>  
                       			<th>Status</th>
-                      			<th>Comentarios</th>
+                      			<th>Comentar</th>
                       			<!-- <th></th> -->
                       			<th></th>
                     		</tr> 
@@ -149,20 +149,20 @@
 				            <tbody>
 				                <tr>
 				                	<td>
-                                        <h5><?php echo $usr['id']; ?></h5>
+                                        <h5 style="font-size:13px; color: rgb(74,79,84);"><?php echo $usr['id']; ?></h5>
                               		</td>
                               		<td>
-                                        <h5><?php echo $usr['sitio']; ?></h5>
+                                        <h5 style="font-size:13px; color: rgb(74,79,84);"><?php echo $usr['sitio']; ?></h5>
                               		</td>
                               		<td>
-                                  		<h5><?php echo $usr['personal']; ?></h5>
+                                  		<h5 style="font-size:13px; color: rgb(74,79,84);"><?php echo $usr['personal']; ?></h5>
                               		</td>
                               		<td>
-                                  		<h5><?php echo $usr['nombre']; ?></h5>
+                                  		<h5 style="font-size:12px; color: rgb(74,79,84);"><?php echo $usr['nombre']; ?></h5>
                               		</td>
                               		<td>
-                                  		<h5><?php echo $usr['solicitud_fecha']; ?></h5>
-                              		</td>
+			                            <h5 style="font-size:12px; color: rgb(74,79,84);  font-weight: bold;"><?php echo $usr['periodonomina'][0]['periodo']; ?></h5>
+			                        </td>
 
                               		<td>
                                         <?php 
@@ -202,12 +202,6 @@
                                         <a href="/nomina/detallenomina/id/<?php echo $usr["id"] ?>/user/<?php echo $usr['id_personal']; ?>"><i class="fa fa-2x fa-id-card-o"></i></a>
                               		</td>
 
-                              		<!-- <td class="text-center">
-                                        <p><label>
-                                            <input type="checkbox" checked class="type_check" name="ids[]" value="<?php echo $usr["id"]; ?>" />
-                                            <span></span>
-    						           	</label></p>
-                                    </td> -->
 				                  	<?php $montos = $montos + $monto;
 				                  		$montos1 = $montos; 
 				                  	 ?>
@@ -238,13 +232,7 @@
 	        		</div>
 	        	</div>
 	    	</div>
-	       <!--  <div class="card-action">
-	        	<div class="row">
-	        		<div class="col m12 s12 text-center">
-						<a class="btn modal-trigger" href="#modal1">Generar Nomina</a>
-	        		</div>
-	        	</div>
-	        </div> -->
+
       	</div>
     </div>
 </div>
@@ -274,6 +262,7 @@
 								<tr style="background-color: #EDEDED; padding: 1px 5px;"> 
                       				<th>Personal</th>
                       				<th>Puesto</th>
+                      				<th>Periodo</th>
                       				<th>Monto</th>  
                       				<th></th>
                     			</tr> 
@@ -288,8 +277,14 @@
                                   					<h5><?php echo $usr['personal']; ?></h5>
                               					</td>
 			                              		<td style="padding: 1px 5px;">
-			                                  		<h5><?php echo $usr['nombre']; ?></h5>
+			                                  		<h5 style="font-size:10px;"><?php echo $usr['nombre']; ?></h5>
 			                              		</td>
+
+			                              		<td style="padding: 1px 5px;">
+			                              			<h5 style="font-size:12px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['periodonomina'][0]['periodo']; ?></h5>
+						                        </td>
+			                              		
+
 			                              		<td style="padding: 1px 5px;">
 			                                        <?php 
 			                                            $num = $usr['monto_nomina'];
@@ -358,6 +353,7 @@
 								<tr style="background-color: #EDEDED; padding: 1px 5px;"> 
                       				<th>Personal</th>
                       				<th>Puesto</th>
+                      				<th>Periodo</th>
                       				<th>Monto</th>  
                       				<th></th>
                     			</tr> 
@@ -372,8 +368,12 @@
                                   					<h5><?php echo $usr['personal']; ?></h5>
                               					</td>
 			                              		<td style="padding: 1px 5px;">
-			                                  		<h5><?php echo $usr['nombre']; ?></h5>
+			                                  		<h5 style="font-size:10px;"><?php echo $usr['nombre']; ?></h5>
 			                              		</td>
+
+			                              		<td style="padding: 1px 5px;">
+						                            <h5 style="font-size:12px;  color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;"><?php echo $usr['periodonomina'][0]['periodo']; ?></h5>
+						                        </td>
 			                              		<td style="padding: 1px 5px;">
 			                                        <?php 
 			                                            $num = $usr['monto_nomina'];

@@ -650,7 +650,23 @@ class NominaController extends Zend_Controller_Action{
         $proyecto=$this->_getParam('proyecto'); $this->view->proyecto=$proyecto;
         
         $table="personal_nomina";
-        $nominasmgr= $this->view->info_nominas = $this->_nomina->GetNominaSitioMgr($table,$sitio,$proyecto);
+
+        $nominasmgr = $this->_nomina->GetNominaSitioMgr($table,$sitio,$proyecto);
+
+        $id_sol= @$nominasmgr[0]['id'];
+
+        foreach ($nominasmgr as $key => $value) {
+
+            $id= $value['id'];
+            
+            $periodoNomina= $this->view->periodoNomina = $this->_nomina->GetPeriodoNominas($table,$id);
+
+            $nominasmgr[$key]['periodonomina'] = $periodoNomina;
+
+        }
+
+        $this->view->info_nominas = $nominasmgr;
+
 
         if($sitio == "Taller"){
             $this->view->sitio_info_taller = 1; 

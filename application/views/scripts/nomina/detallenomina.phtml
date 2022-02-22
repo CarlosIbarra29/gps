@@ -385,8 +385,7 @@
 				                <tr>
 				                	<td><?php echo $usr['id']; ?></td>
 				                	<td>
-				                		<!-- Tambien agregado -->
-				                  		<?php if($usr['tipo_nomina'] == 0) { ?>
+				                		<?php if($usr['tipo_nomina'] == 0) { ?>
 					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
 					                  	<?php } ?>
 
@@ -433,7 +432,18 @@
 					                  	<?php if($usr['tipo_nomina'] == 9) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Sueldo IMMS</span>
 					                  	<?php } ?>
-					               		<!-- Tambien agregado -->
+
+					                  	<?php if($usr['tipo_nomina'] == 10) { ?>
+					                  		<span  style=" color: red; font-weight: bold;">Retención IMSS</span>
+					               		<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 11) { ?>
+					                  		<span  style="color: red; font-weight: bold;">ISR Mensual</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 12) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Séptimo Día</span>
+					                  	<?php } ?>
 				                  	</td>
 				                	<td>
 				                		<?php echo $usr['nombre']; ?>

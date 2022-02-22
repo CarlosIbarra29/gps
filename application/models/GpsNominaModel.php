@@ -708,6 +708,20 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
     } // Nominas por sitio
 
 
+
+    public function GetPeriodoNominas($table,$id){
+         try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT concat('De ', min(dia), '<br> Al ', max(dia) ) as periodo from personal_asistencia where solicitud_nomina = ?",array($id));
+            $row = $qry->fetchAll();
+            $db->closeConnection();
+            return $row;
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } // Nominas por sitio
+
+
     public function GetSitiosDatos($table,$sitio){
          try {
             $db = Zend_Db_Table::getDefaultAdapter();
