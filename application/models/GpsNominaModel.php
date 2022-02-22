@@ -36,7 +36,8 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
                 'id_proyecto_salida'=>$post['proyecto_salida'],
                 'ev_entrada'=>$urldb_entrada,
                 'ev_salida'=>$url_salida,
-                'status_extra'=>$status
+                'status_extra'=>$status,
+                'tipo_nomina'=>$post['tipo_nomina']
             ); 
             $res = $db->insert($table, $datasave);
             $db->closeConnection();               
