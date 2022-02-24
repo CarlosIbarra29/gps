@@ -409,14 +409,15 @@
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Sueldo IMMS</span>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo IMSS</span>
 					                  	<?php } ?>
 
 					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
 
-					               		<?php if($usr['tipo_nomina'] == 3) { ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 3) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Sabado Ordinario</span>
 					                  	<?php } ?>
 
@@ -441,7 +442,7 @@
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 9) { ?>
-					                  		<span  style="color: blue; font-weight: bold;">Sueldo IMSS</span>
+					                  		<span  style="color: blue; font-weight: bold;">Sueldo IMMS</span>
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 10) { ?>
@@ -454,6 +455,10 @@
 
 					                  	<?php if($usr['tipo_nomina'] == 12) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Séptimo Día</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 13) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Viernes Extra</span>
 					                  	<?php } ?>
 				                  	</td>
 				                	<td>

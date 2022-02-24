@@ -257,6 +257,7 @@
 							    <option value="3">Sabado Ordinario</option>
 							    <option value="4">Sabado Extra</option>
 							    <option value="5">Domingo Extra</option>
+							    <option value="13">Viernes Extra</option>
 							</select>
 							<label>Tipo :</label>
 						</div>    			
@@ -727,6 +728,11 @@
 					                  	<?php if($usr['tipo_nomina'] == 12) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Séptimo Día</span>
 					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 13) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Viernes Extra</span>
+					                  	<?php } ?>
+
 				               		<!-- Tambien agregado -->
 				                  	</td>
 				                	<td>
