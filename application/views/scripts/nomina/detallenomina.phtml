@@ -389,14 +389,15 @@
 					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
 					                  	<?php } ?>
 
-					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Sabatino IMMS</span>
-					                  	<?php } ?>
+				                  		<?php $hora_entrada =  substr($usr['hora_entrada'], 0,2); ?>
+						                  	<?php 	if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada < "13"){ ?>
+						                  			<span  style="color: green; font-weight: bold;">Sabado Ordinario</span>
+						                  	<?php 	}?> 
 
+						                  	<?php 	if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada >= "13"){ ?>
+						              			<span  style="color: green; font-weight: bold;">Sabado Extra</span>
 
-					                  	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 6 ) { ?>
-					                  		<span  style="color: orange; font-weight: bold;">Sabatino Gratificación</span>
-					                  	<?php } ?>
+						                  	<?php 	}?> 
 
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
