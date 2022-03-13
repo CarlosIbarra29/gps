@@ -410,8 +410,8 @@ class AsistenciaController extends Zend_Controller_Action{
             }
 
             foreach ($post['ids'] as $key) {
-                $fecha = date("N");
                 date_default_timezone_set('America/Mexico_City');
+                $fecha = date("N");                
                 $hoy = date("d-m-Y");
                 $id= $key;
                 $wh="id";
@@ -652,9 +652,9 @@ class AsistenciaController extends Zend_Controller_Action{
             $motivo = $key['motivo_inasistencia'];
             
             // Agregado nuevo
-            $this->_asistencia->insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            // $this->_asistencia->insertfinalizarprocesoimms($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
 
-            $result=$this->_asistencia->insertfinalizarprocesocomplemento($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
+            $result=$this->_asistencia->insertfinprocesocompleto($id_personal,$name_sitio,$hora_entrada,$hora_salida,$dia,$dia_num,$hora_extra,$id_solicitudhora,$proyecto_entrada,$proyecto_salida,$ev_entrada,$ev_salida,$table,$status_asistencia,$motivo);
             // Agregado nuevo
             
 
@@ -978,10 +978,7 @@ class AsistenciaController extends Zend_Controller_Action{
                         $monto=$monto;
                     } 
                     if($key['tipo_nomina'] == 1) {
-                        $monto=$monto * .7;
-                    } 
-                    if($key['tipo_nomina'] == 2) {
-                        $monto=$monto * .3;
+                        $monto=$monto;
                     } 
                     // Se agrego esto para el tipo de registro de nomina 
                 }else{

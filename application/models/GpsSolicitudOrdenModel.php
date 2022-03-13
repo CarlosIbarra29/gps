@@ -2449,7 +2449,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND name_proveedor 
                         like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
@@ -2540,7 +2540,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND name_user  like '%{$nombre}%' order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -2634,7 +2634,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.servicio_id = ? 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -2726,7 +2726,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         LEFT JOIN servicios s on s.id= soc.servicio_id 
                         WHERE soc.status_documento= 1  AND soc.status_pago != 1 AND soc.id = ?
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -3186,7 +3186,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37) 
                         AND name_proveedor like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -3298,7 +3298,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND name_user like '%{$nombre}%' ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -3408,7 +3408,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND soc.id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -3520,7 +3520,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago != 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND soc.servicio_id =? ORDER BY STR_TO_DATE(soc.fecha_validaciondos,'%d-%m-%Y') DESC
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -3651,7 +3651,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37) 
                         AND nombre_sitio like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3716,7 +3716,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND name_proveedor like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3781,7 +3781,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND soc.id=? order by soc.id DESC", array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -3846,7 +3846,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37) 
                         AND name_user like '%{$nombre}%'  order by soc.id DESC");
             $row = $qry->fetchAll();
             return $row;
@@ -3911,7 +3911,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         FROM solicitud_ordencompra soc
                         LEFT JOIN usuario u on soc.id_usuario = u.id 
                         WHERE soc.delete_status =0 AND soc.status_documento= 1 AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND soc.servicio_id = ?  order by soc.id DESC",array($nombre));
             $row = $qry->fetchAll();
             return $row;
@@ -4039,7 +4039,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND nombre_sitio like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -4122,7 +4122,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75) 
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37) 
                         AND name_proveedor like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -4206,7 +4206,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND name_user like '%{$nombre}%' order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page");
             $row = $qry->fetchAll();
@@ -4289,7 +4289,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)   
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)   
                         AND soc.servicio_id = ? order by soc.id DESC 
                         LIMIT $offset,$no_of_records_per_page",array($nombre));
             $row = $qry->fetchAll();
@@ -4372,7 +4372,7 @@ class Application_Model_GpsSolicitudOrdenModel extends Zend_Db_Table_Abstract{
                         LEFT JOIN sitios_tipoproyecto st on st.id = soc.tipo_proyecto
                         LEFT JOIN tipo_proyecto t on t.id = st.id_tipoproyecto
                         WHERE soc.delete_status =0 AND soc.status_documento= 1  AND soc.status_pago = 1 
-                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75)
+                        AND (soc.proveedor_id = 74 OR soc.proveedor_id = 75 OR soc.proveedor_id = 37)
                         AND soc.id = ? order by soc.id DESC LIMIT $offset,$no_of_records_per_page", array($nombre));
             $row = $qry->fetchAll();
             return $row;

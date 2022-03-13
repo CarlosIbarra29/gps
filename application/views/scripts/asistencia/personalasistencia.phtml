@@ -1063,13 +1063,9 @@
 					                  		} ?>
 
 					                  		<?php if($usr['tipo_nomina'] == 1) {
-					                  			$monto=$monto * .7;
+					                  			$monto=$monto;
 					                  		} ?>
-
-					                  		<?php if($usr['tipo_nomina'] == 2) {
-					                  			$monto=$monto * .3;
-					                  		} ?> 
-				                  			<!-- Se agrego esto para el 70 30 de la nomina -->
+					             			<!-- Se agrego esto para el 70 30 de la nomina -->
 				                  		
 				                  		<?php }else{ ?>
 				                  			<?php $monto = $usr['monto_pago']; ?>
