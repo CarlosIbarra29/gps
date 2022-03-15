@@ -385,49 +385,38 @@
 				                <tr>
 				                	<td><?php echo $usr['id']; ?></td>
 				                	<td>
+				                		<?php $hora_entrada =  substr($usr['hora_entrada'], 0,2); ?>
+				                		
 				                		<?php if($usr['tipo_nomina'] == 0) { ?>
 					                  		<span  style="color: gray; font-weight: bold;">Otros</span>
 					                  	<?php } ?>
 
-				                  		<?php $hora_entrada =  substr($usr['hora_entrada'], 0,2); ?>
-						                  	<?php 	if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada < "13"){ ?>
-						                  			<span  style="color: green; font-weight: bold;">Sabado Ordinario</span>
-						                  	<?php 	}?> 
+				                  		<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada < "13"){ ?>
+						                  	<span  style="color: green; font-weight: bold;">Sabado Ordinario</span>
+						                <?php }?> 
 
-						                  	<?php 	if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada >= "13"){ ?>
-						              			<span  style="color: green; font-weight: bold;">Sabado Extra</span>
-
-						                  	<?php 	}?> 
-
+						                <?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 6 && $hora_entrada >= "13"){ ?>
+						              		<span  style="color: green; font-weight: bold;">Sabado Extra</span>
+						              	<?php } ?> 
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Domingo IMMS</span>
-					                  	<?php } ?>
-
-
-					                  	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 7 ) { ?>
-					                  		<span  style="color: orange; font-weight: bold;">Domingo Gratificación</span>
+					                  		<span  style="color: green; font-weight: bold;">Domingo Extra</span>
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Sueldo IMSS</span>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo Ordinario</span>
 					                  	<?php } ?>
 
 					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
 
-
-					                  	<?php if($usr['tipo_nomina'] == 3) { ?>
-					                  		<span  style="color: blue; font-weight: bold;">Sabado Ordinario</span>
-					                  	<?php } ?>
-
 					                  	<?php if($usr['tipo_nomina'] == 4) { ?>
-					                  		<span  style="color: blue; font-weight: bold;">Sabado Extra</span>
+					                  		<span  style="color: blue; font-weight: bold;">Sabado H/Extra</span>
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 5) { ?>
-					                  		<span  style="color: blue; font-weight: bold;">Domingo Extra</span>
+					                  		<span  style="color: blue; font-weight: bold;">Domingo H/Extra</span>
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 6) { ?>
@@ -460,6 +449,14 @@
 
 					                  	<?php if($usr['tipo_nomina'] == 13) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Viernes Extra</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 14) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Limpieza</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 15) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Apoyo a Taller</span>
 					                  	<?php } ?>
 				                  	</td>
 				                	<td>

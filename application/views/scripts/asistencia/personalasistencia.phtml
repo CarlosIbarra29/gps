@@ -185,7 +185,10 @@
                     		<option value="9">Sueldo IMSS</option>	
                     		<option value="10">Retención IMSS</option>
                     		<option value="11">ISR Mensual</option>	
-                    		<option value="12">Séptimo Día</option>      	
+                    		<option value="12">Séptimo Día</option>
+                    		<option value="14">Limpieza</option>	
+                    		<option value="15">Apoyo a Taller</option>
+
 						</select>
 						<label>Tipo de concepto:</label>
                     </div>                    
@@ -254,7 +257,6 @@
 							<select id="tipo_nomina" name="tipo_nomina">
 							    <option value="0" disabled selected>Selecciona opcion</option>
 							    <option value="0">Otros</option>
-							    <option value="3">Sabado Ordinario</option>
 							    <option value="4">Sabado Extra</option>
 							    <option value="5">Domingo Extra</option>
 							    <option value="13">Viernes Extra</option>
@@ -673,22 +675,17 @@
 
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Domingo IMMS</span>
-					                  	<?php } ?>
-
-
-					                  	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 7 ) { ?>
-					                  		<span  style="color: orange; font-weight: bold;">Domingo Gratificación</span>
+					                  		<span  style="color: green; font-weight: bold;">Domingo Extra</span>
 					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
-					                  		<span  style="color: green; font-weight: bold;">Sueldo IMSS</span>
+					                  		<span  style="color: green; font-weight: bold;">Sueldo Ordinario</span>
 					                  	<?php } ?>
 
-					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
+					                 	<!-- <?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
-
+ -->
 <!-- 
 					                  	<?php if($usr['tipo_nomina'] == 3) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Sabado Ordinario</span>
@@ -732,6 +729,14 @@
 
 					                  	<?php if($usr['tipo_nomina'] == 13) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Viernes Extra</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 14) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Limpieza</span>
+					                  	<?php } ?>
+
+					                  	<?php if($usr['tipo_nomina'] == 15) { ?>
+					                  		<span  style="color: blue; font-weight: bold;">Apoyo a Taller</span>
 					                  	<?php } ?>
 
 				               		<!-- Tambien agregado -->

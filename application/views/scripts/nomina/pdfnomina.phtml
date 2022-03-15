@@ -263,25 +263,7 @@
                                         <td>
                                             <span style="font-size:10px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">No. <?php echo $usr['solicitud_prestamo']; ?> </span>
                                         </td>
-                                    <?php }?>
-
-                                    <?php if($usr['tipo_nomina'] == 1) { ?>
-                                        <td>
-                                            <span style="font-size:10px; color: green; font-weight: bold;">S/IMMS1</span>
-                                        </td>
-                                    <?php } ?>
-
-                                    <?php if($usr['tipo_nomina'] == 2) { ?>
-                                        <td>
-                                            <span style="font-size:8px; color: orange; font-weight: bold;">Gratificación</span>
-                                        </td>
-                                    <?php } ?>
-
-
-
-                                    
-                                        <!-- Tambien agregado -->
-                                    
+                                    <?php }?>                                   
 
                                   <?php } ?>
 
@@ -327,6 +309,36 @@
                                     <?php if($usr['tipo_nomina'] == 9) { ?>
                                         <td>
                                             <span  style="font-size:8px; color: blue; font-weight: bold;">IMMS</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 10) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Retención IMSS</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 11) { ?>
+                                        <td>
+                                            <span  style="font-size:8px;  color: blue; font-weight: bold;">ISR Mensual</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 12) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Séptimo Día</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 14) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Limpieza</span>
+                                        </td>
+                                    <?php } ?>
+
+                                    <?php if($usr['tipo_nomina'] == 15) { ?>
+                                        <td>
+                                            <span  style="font-size:8px; color: blue; font-weight: bold;">Apoyo/Taller</span>
                                         </td>
                                     <?php } ?>
                                     <!-- Agregado -->
