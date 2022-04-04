@@ -399,10 +399,15 @@
 						              		<span  style="color: green; font-weight: bold;">Sabado Extra</span>
 						              	<?php } ?> 
 
+
+						              	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 6 ) { ?>
+					                  		<span  style="color: green; font-weight: bold;">Sabado Extra</span>
+					                  	<?php } ?>
+
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Domingo Extra</span>
 					                  	<?php } ?>
-
+					                 
 					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Sueldo Ordinario</span>
 					                  	<?php } ?>

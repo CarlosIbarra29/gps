@@ -16,7 +16,8 @@ class ArchivosController extends Zend_Controller_Action{
         $this->_comprobacion = new Application_Model_GpsComprobacionModel;
         $this->_envio = new Application_Model_GpsEnvioModel;
         $this->_material = new Application_Model_GpsMaterialesModel;
-
+        $this->_nomina = new Application_Model_GpsNominaModel;
+ 
         if(empty($this->_session->id)){
             $this->redirect('/home/login');
         }
@@ -290,6 +291,12 @@ class ArchivosController extends Zend_Controller_Action{
             $this->view->usuarioexc = $this->_ordencompra->getsolicitudesUsrAll($usuario);
 
         }
+
+    }
+
+    public function excelnominasAction(){
+
+        $this->view->nominas_pagadas = $this->_nomina->getnominapagadaexcel(); 
 
     }
 
