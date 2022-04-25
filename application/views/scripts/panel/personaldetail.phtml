@@ -242,11 +242,12 @@
       	<table class="table text-left table-hover">
 	        <thead>
 	          <tr style="background-color: #EDEDED">
-	              <th>Nombre(s):</th>
-	              <th>Apellido Paterno:</th>
-	              <th>Apellido Materno:</th>
-	              <th>Puesto:</th>
-	              <th>Telefono:</th>
+	              <th>Nombre(s)</th>
+	              <th>Apellido Paterno</th>
+	              <th>Apellido Materno</th>
+	              <th>Puesto</th>
+	              <th>Telefono</th>
+	              <th>Ingreso</th>
 	          </tr>
 	        </thead>
 			<?php foreach ($this->personaldetail as $usr) { ?>
@@ -256,7 +257,28 @@
 					<td><?php echo $usr["apellido_pa"]; ?></td>
 					<td><?php echo $usr["apellido_ma"]; ?></td>
 					<td><?php echo $usr["name_puesto"]; ?></td>
-					<td><?php echo $usr["telefono"]; ?></td>
+					<td>
+						<?php if ($usr["telefono"] == null) { ?>
+							
+							S/N
+						
+						<?php } else { ?>
+						
+							<?php echo $usr["telefono"]; ?>
+						
+						<?php } ?>
+					</td>
+					<td>
+						<?php if ($usr["fecha_ingreso"] == null) { ?>
+
+							S/F
+
+						<?php } else { ?>
+
+							<?php echo $usr["fecha_ingreso"]; ?>
+						
+						<?php } ?>	
+					</td>
 				</tr>
 			</tbody>
 			<?php } ?>

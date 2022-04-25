@@ -98,6 +98,12 @@
 			</div>
 
 			<div class="input-field col m6 s12">
+				<i class="material-icons prefix">account_circle</i>
+			    <input id="fingreso" type="text" name="fingreso" value="<?php echo $usr["fecha_ingreso"]; ?>" class="datepicker" required>
+			    <label for="fingreso">Fecha Ingreso: dd/mm/yyyy </label>
+			</div>
+
+			<div class="input-field col m6 s12">
 			    <i class="material-icons prefix">event_available</i>
 			    <input id="curp" type="text" name="curp" value="<?php echo $usr["curp"]; ?>" class="validate">
 			    <label for="curp">CURP:</label>
@@ -151,7 +157,7 @@
 			        <label for="tarjeta">No. Tarjeta</label>
 			    </div>
 
-			    <div class="input-field col m12 s12">
+			    <div class="input-field col m6 s12">
 			        <i class="material-icons prefix">style</i>
 			        <input id="viaticos" type="text" name="viaticos" value="<?php echo $usr['viaticos']; ?>" class="validate">
 			        <label for="viaticos">Viáticos X día</label>
@@ -183,6 +189,11 @@
 
 
 <script type="text/javascript">
+
+	$(document).ready(function(){
+    	$('.datepicker').datepicker( {"format":'dd/mm/yyyy'});
+  	});
+
     $("#addpersonal").click(function(){
      	var status = document.getElementById("status").value;
         var name = document.getElementById("name").value;

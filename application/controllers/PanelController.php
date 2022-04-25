@@ -2775,8 +2775,13 @@ class PanelController extends Zend_Controller_Action{
             $table="personal_campo";
             $wh="email_personal";
         if($this->getRequest()->getPost()){
+
+            $fechainicial = $post["fingreso"];
+            $timestamp = strtotime($fechainicial); 
+            $fechafinal = date("d/m/Y", $timestamp );
+
             $table="personal_campo";
-            $result = $this->_user->insertpersonal($post,$table);
+            $result = $this->_user->insertpersonal($post,$table,$fechafinal);
             if ($result) {
                 return $this-> _redirect('/panel/personal');
             }else{

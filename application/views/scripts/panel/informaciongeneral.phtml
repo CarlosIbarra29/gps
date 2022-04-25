@@ -79,7 +79,8 @@
                 <th>Apellido Materno:</th>
                 <th>Puesto:</th>
                 <th>Teléfono:</th>
-                <th>Tel Emergencia:</th>
+                <th>Emergencia:</th>
+                <th>Ingreso:</th>
             </tr>
           </thead>
       <?php foreach ($this->personal as $usr) { ?>
@@ -100,6 +101,18 @@
           <?php }else{ ?>
             <td>No disponible</td>
           <?php } ?>
+
+          <td>
+            <?php if ($usr["fecha_ingreso"] == null) { ?>
+
+              No disponible
+
+            <?php } else { ?>
+
+              <?php echo $usr["fecha_ingreso"]; ?>
+            
+            <?php } ?>  
+          </td>
 
         </tr>
       </tbody>

@@ -116,7 +116,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     }//  UPDATE ROL
 
 // END MODULO DE ROLES 
-	public function insertpersonal($post,$table){
+	public function insertpersonal($post,$table,$fechafinal){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -131,6 +131,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
                 'tel_emergencia'=>$post['emergencia'],
             	'email_personal'=>$post['mail'],
                 'nss'=>$post['nss'],
+                'fecha_ingreso'=>$fechafinal,
                 'dia_pago'=>$post['dia_pago'],
                 'hora_pago'=>$post['hora_pago'],
                 'tarjeta'=>$post['tarjeta'],
@@ -339,10 +340,11 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
 	public function refreshPersonal($post,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, viaticos = ?, status_campo = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, viaticos = ?, status_campo = ? WHERE id = ?",array(
                	$post['name'],
             	$post['apellido_pa'],
             	$post['ampellido_ma'],
+                $post['fingreso'],
             	$post['curp'],
                 $post['puesto'],
                 $post['status'],
@@ -370,10 +372,11 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     public function refreshPersonalcont($post,$table){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, disponibilidad = ?, status_campo = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, disponibilidad = ?, status_campo = ? WHERE id = ?",array(
                 $post['name'],
                 $post['apellido_pa'],
                 $post['ampellido_ma'],
+                $post['fingreso'],
                 $post['curp'],
                 $post['puesto'],
                 $post['status'],
@@ -493,7 +496,8 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
-                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,pc.dia_pago,
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
+                        pc.dia_pago, pc.fecha_ingreso,
                         pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
                         pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
                         pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 
@@ -872,7 +876,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT p.id, p.nombre, p.apellido_pa, p.apellido_ma, p.imagen, p.curp, p.puesto, 
                         p.status_expediente, p.telefono, p.email_personal, p.nss, p.rfc, p.dia_pago, p.hora_pago, 
-                        p.status_personal, p.fecha_personal, p.status_cuadrilla, p. tipo_proyectopersonal, 
+                        p.status_personal, p.fecha_personal, p.status_cuadrilla, p.tipo_proyectopersonal, p.fecha_ingreso, 
                         pu.id as idp,pu.nombre as name_puesto 
                         FROM personal_campo p
                         LEFT join puestos_personal pu on pu.id = p.puesto where p.id = ?",array($id));
