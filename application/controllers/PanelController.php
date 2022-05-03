@@ -2780,8 +2780,42 @@ class PanelController extends Zend_Controller_Action{
             $timestamp = strtotime($fechainicial); 
             $fechafinal = date("d/m/Y", $timestamp );
 
+            $fechainicialv = $post["vigencialic"];
+            $timestampv = strtotime($fechainicialv); 
+            $fechavig = date("d/m/Y", $timestampv );
+
+            $name = $_FILES['url']['name'];
+        
+            if(empty($name)){ 
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("Agrega una imagen");'; 
+                print '</script>'; 
+            
+            }else{
+            
+                $bytes = $_FILES['url']['size'];
+                $res = $this->formatSizeUnits($bytes);
+                
+                if($res == 0){ 
+                
+                    print '<script language="JavaScript">'; 
+                    print 'alert("El pdf supera el maximo de tamaño");'; 
+                    print '</script>'; 
+                
+                }else{
+                
+                    $info1 = new SplFileInfo($_FILES['url']['name']);
+                    $ext1 = $info1->getExtension();
+                    $url1 = 'img/licencias/';
+                    $urldb = $url1.$info1;
+                    move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+                
+                }
+            }
+
             $table="personal_campo";
-            $result = $this->_user->insertpersonal($post,$table,$fechafinal);
+            $result = $this->_user->insertpersonal($post,$table,$fechafinal,$fechavig,$urldb);
             if ($result) {
                 return $this-> _redirect('/panel/personal');
             }else{
@@ -6767,9 +6801,35 @@ class PanelController extends Zend_Controller_Action{
         $wh="email_personal";
         $usuario= $this->_season->GetSpecific($table,$wh,$id);
 
+        $name = $_FILES['url']['name'];
+        $urldb = $post["imahidden"];
+        
+        if(!empty($_FILES["url"]["name"])) {
+        
+            $bytes = $_FILES['url']['size'];
+            $res = $this->formatSizeUnits($bytes);
+        
+            if ($res == 0) {
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("La imagen supera el maximo de tamaño");'; 
+                print '</script>';
+        
+            } else {
+        
+                unlink($post['imahidden']);
+                $info1 = new SplFileInfo($_FILES['url']['name']);
+                $ext1 = $info1->getExtension();
+                $url1 = 'img/licencias/';
+                $urldb = $url1.$info1;
+                move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+            }
+        }//end de if
+
         if($this->getRequest()->getPost()){
             $table="personal_campo";
-            $result = $this->_user->refreshPersonal($post,$table);
+            $result = $this->_user->refreshPersonal($post,$table,$urldb);
             if ($result) {
                 return $this-> _redirect('/panel/personaledit/id/'.$post['ids'].'');
             }else{
@@ -6790,9 +6850,35 @@ class PanelController extends Zend_Controller_Action{
         $wh="email_personal";
         $usuario= $this->_season->GetSpecific($table,$wh,$id);
 
+        $name = $_FILES['url']['name'];
+        $urldb = $post["imahidden"];
+        
+        if(!empty($_FILES["url"]["name"])) {
+        
+            $bytes = $_FILES['url']['size'];
+            $res = $this->formatSizeUnits($bytes);
+        
+            if ($res == 0) {
+        
+                print '<script language="JavaScript">'; 
+                print 'alert("La imagen supera el maximo de tamaño");'; 
+                print '</script>';
+        
+            } else {
+        
+                unlink($post['imahidden']);
+                $info1 = new SplFileInfo($_FILES['url']['name']);
+                $ext1 = $info1->getExtension();
+                $url1 = 'img/licencias/';
+                $urldb = $url1.$info1;
+                move_uploaded_file($_FILES['url']['tmp_name'],$urldb);
+        
+            }
+        }//end de if
+
         if($this->getRequest()->getPost()){
             $table="personal_campo";
-            $result = $this->_user->refreshPersonalcont($post,$table);
+            $result = $this->_user->refreshPersonalcont($post,$table,$urldb);
             if ($result) {
                 return $this-> _redirect('/panel/personaledit/id/'.$post['ids'].'');
             }else{

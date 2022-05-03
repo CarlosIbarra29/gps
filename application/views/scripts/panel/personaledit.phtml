@@ -98,7 +98,7 @@
 			</div>
 
 			<div class="input-field col m6 s12">
-				<i class="material-icons prefix">account_circle</i>
+				<i class="material-icons prefix">today</i>
 			    <input id="fingreso" type="text" name="fingreso" value="<?php echo $usr["fecha_ingreso"]; ?>" class="datepicker" required>
 			    <label for="fingreso">Fecha Ingreso: dd/mm/yyyy </label>
 			</div>
@@ -138,6 +138,25 @@
 			    <input id="mail" type="text" name="mail" value="<?php echo $usr["email_personal"]; ?>" class="validate">
 			    <label for="mail">Correo Electronico:</label>
 			</div>
+
+			<div class="input-field col m6 s12">
+				<i class="material-icons prefix">today</i>
+			    <input id="vigencialic" type="text" name="vigencialic" value="<?php echo $usr["fecha_vigencia"]; ?>" class="datepicker" required>
+			    <label for="vigencialic">Vigencia Licencia: dd/mm/yyyy </label>
+			</div>
+
+			<div class="file-field input-field col m6 s12">
+				<div class="btn">
+					<span>Actualiza Licencia</span>
+					<input type="file" name="url">
+					<input type="hidden" name="imahidden" value="<?php echo $usr["licencia_imagen"]; ?>">   
+				</div>
+
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+
 
 			<?php if($this->rol_user == 1 || $this->rol_user == 4 || $this->rol_user == 9){ ?>
 				<div class="input-field col m6 s12">

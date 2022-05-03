@@ -116,7 +116,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     }//  UPDATE ROL
 
 // END MODULO DE ROLES 
-	public function insertpersonal($post,$table,$fechafinal){
+	public function insertpersonal($post,$table,$fechafinal,$fechavig,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $datasave = array(
@@ -132,6 +132,8 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             	'email_personal'=>$post['mail'],
                 'nss'=>$post['nss'],
                 'fecha_ingreso'=>$fechafinal,
+                'licencia_imagen'=>$urldb,
+                'fecha_vigencia'=>$fechavig,
                 'dia_pago'=>$post['dia_pago'],
                 'hora_pago'=>$post['hora_pago'],
                 'tarjeta'=>$post['tarjeta'],
@@ -337,14 +339,16 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
 
     }// END INSERT CERTIFICADO MEDICO PERSONAL DE CAMPO
 
-	public function refreshPersonal($post,$table){
+	public function refreshPersonal($post,$table,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, viaticos = ?, status_campo = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, licencia_imagen = ? , fecha_vigencia = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, dia_pago = ?, hora_pago =?, disponibilidad = ?, tarjeta = ?, viaticos = ?, status_campo = ? WHERE id = ?",array(
                	$post['name'],
             	$post['apellido_pa'],
             	$post['ampellido_ma'],
                 $post['fingreso'],
+                $urldb,
+                $post['vigencialic'],
             	$post['curp'],
                 $post['puesto'],
                 $post['status'],
@@ -369,14 +373,16 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
     }// END UPDATE USER
 
 
-    public function refreshPersonalcont($post,$table){
+    public function refreshPersonalcont($post,$table,$urldb){
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, disponibilidad = ?, status_campo = ? WHERE id = ?",array(
+            $qry = $db->query("UPDATE $table SET nombre = ?, apellido_pa = ?, apellido_ma = ?, fecha_ingreso = ?, licencia_imagen = ? , fecha_vigencia = ?, curp = ?, puesto = ?, status_expediente=?, nss = ?, rfc = ?, telefono = ?, tel_emergencia = ?, email_personal = ?, disponibilidad = ?, status_campo = ? WHERE id = ?",array(
                 $post['name'],
                 $post['apellido_pa'],
                 $post['ampellido_ma'],
                 $post['fingreso'],
+                $urldb,
+                $post['vigencialic'],
                 $post['curp'],
                 $post['puesto'],
                 $post['status'],
@@ -497,7 +503,7 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
             $db = Zend_Db_Table::getDefaultAdapter();
             $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
                         pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
-                        pc.dia_pago, pc.fecha_ingreso,
+                        pc.dia_pago, pc.fecha_ingreso, pc.licencia_imagen, pc.fecha_vigencia,
                         pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
                         pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
                         pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto 

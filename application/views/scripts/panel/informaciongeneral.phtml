@@ -9,7 +9,12 @@
   .font-check{
     font-size: 11px;
   }
+
+  .table_wrapper{
+    overflow-x: auto;
+  }
 </style>
+
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
@@ -70,7 +75,7 @@
 </div>
 
 <div class="row">
-  <div class="col m12 s12" style="margin-top: 20px;">
+  <div class="col m12 s12 table_wrapper"  style="margin-top: 20px;">
         <table class="table text-left table-hover">
           <thead>
             <tr style="background-color: #EDEDED">
@@ -124,13 +129,15 @@
 
 <div class="row">
 
-  <div class="col m12 s12" style="margin-top: 20px;">
+  <div class="col m12 s12 table_wrapper" style="margin-top: 20px;">
         <table class="table text-left table-hover">
           <thead>
             <tr style="background-color: #EDEDED">
                 <th>CURP:</th>
                 <th>NSS:</th>
                 <th>RFC:</th>
+                <th>Vigencia Licencia</th>
+                <th>Licencia</th>
                 <th>Status personal:</th>
             </tr>
           </thead>
@@ -153,6 +160,27 @@
             <td><?php echo $usr["rfc"]; ?></td>
           <?php }else{ ?>
             <td>No disponible</td>
+          <?php } ?>
+
+          <?php if($usr["fecha_vigencia"] != ""){ ?>
+            <td><?php echo $usr["fecha_vigencia"]; ?></td>
+          <?php }else{ ?>
+            <td>Sin Licencia</td>
+          <?php } ?>
+
+          <?php if($usr["licencia_imagen"] != ""){ ?>
+          
+            <td> <a title="Descargar Archivo" href="/<?php echo $usr["licencia_imagen"]; ?>" download="<?php echo substr(strrchr($usr["licencia_imagen"], "/"), 1); ?>" style="color: blue; font-size:18px;"> <i class="material-icons left">get_app</i> Licencia </a></td>
+          
+          <?php }else{ ?>
+          
+            <td>
+              <div class="chip">
+                <img src="/img/incorrect.png" alt="Contact Person">
+                No disponible
+              </div>
+            </td>
+          
           <?php } ?>
           
 
@@ -259,7 +287,7 @@
   </div>
 </div>
 
-  <div class="col m12 s12">
+  <div class="col m12 s12 table_wrapper">
         <table class="table text-left table-hover">
           <thead>
               <tr style="background-color: #EDEDED">
