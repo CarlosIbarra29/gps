@@ -399,22 +399,25 @@
 						              		<span  style="color: green; font-weight: bold;">Sabado Extra</span>
 						              	<?php } ?> 
 
-
-						              	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 6 ) { ?>
+						              	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] == 6 && $usr['hora_entrada'] != 0) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Sabado Extra</span>
 					                  	<?php } ?>
 
-					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 ) { ?>
+					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] == 7 && $usr['hora_entrada'] != 0) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Domingo Extra</span>
 					                  	<?php } ?>
 					                 
-					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  ) { ?>
+					                  	<?php if($usr['tipo_nomina'] == 1 && $usr['day_num'] <= 5  && $usr['hora_entrada'] != 0) { ?>
 					                  		<span  style="color: green; font-weight: bold;">Sueldo Ordinario</span>
 					                  	<?php } ?>
 
-					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 ) { ?>
+					                 	<?php if($usr['tipo_nomina'] == 2 && $usr['day_num'] <= 5 && $usr['hora_entrada'] != 0) { ?>
 					                  		<span  style=" color: orange; font-weight: bold;">Gratificación</span>
 					               		<?php } ?>
+
+					               		<?php if($usr['tipo_nomina'] == 1 && $usr['hora_entrada'] == 0  ) { ?>
+					                  		<span  style="color: red; font-weight: bold;">Inasistencia</span>
+					                  	<?php } ?>
 
 					                  	<?php if($usr['tipo_nomina'] == 4) { ?>
 					                  		<span  style="color: blue; font-weight: bold;">Sabado H/Extra</span>
