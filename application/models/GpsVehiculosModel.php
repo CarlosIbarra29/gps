@@ -2956,7 +2956,7 @@ class Application_Model_GpsVehiculosModel extends Zend_Db_Table_Abstract{
                 LEFT JOIN vehiculos v ON v.id_vehiculos = vs.id_vehiculo
                 LEFT JOIN vehiculo_servicios sv ON sv.id = vs.id_servicios
                 LEFT JOIN proveedor p ON p.id = vs.id_proveedor
-                where vs.step_veh= 1 and vs.status_solicitud = 1 and vs.status_comprobante = 1 order by vs.id DESC");
+                where vs.step_veh= 1 order by vs.id DESC");
             $row = $qry->fetchAll();
             return $row;
             $db->closeConnection();

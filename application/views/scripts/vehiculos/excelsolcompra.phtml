@@ -65,9 +65,10 @@ function eliminar_acentos($cadena){
 
 <div class="row excel-div" id="tab1">
 	<table class="table text-left table-hover" >
-        <thead>
+        <thead> and vs.status_solicitud = 1 and vs.status_comprobante = 1
             <tr>
                 <th>Id Solicitud</th>
+                <th>Estatus</th>
                 <th>Usuario</th>
                 <th>Vehiculo</th>
                 <th>Placas</th>
@@ -83,6 +84,19 @@ function eliminar_acentos($cadena){
             <tbody>
                 <tr>
                     <td><?php echo $usr['id']; ?></td>
+                    <td>
+                        <?php if($usr["status_solicitud"]== 0 && $usr["status_comprobante"]== 0 ){ ?>
+                            Por aprobar
+                        <?php } elseif ($usr["status_solicitud"]== 2 && $usr["status_comprobante"]== 0 ){ ?>
+                            Solicitud Cancelada
+                        <?php } elseif ($usr["status_solicitud"]== 3 && $usr["status_comprobante"]== 0 ){ ?>
+                            Solicitud Cancelada
+                        <?php } elseif ($usr["status_solicitud"]== 1 && $usr["status_comprobante"]== 0 ){ ?>
+                            Por Pagar
+                        <?php } elseif ($usr["status_solicitud"]== 1 && $usr["status_comprobante"]== 1 ){ ?>
+                            Pagada
+                        <?php } ?> 
+                    </td>
                     <td><?php echo $usr['nombre']; ?> <?php echo eliminar_acentos($usr["ap"]);?> <?php echo eliminar_acentos($usr["am"]);?></td>
                     <td>
                         <?php if($usr["id_vehiculo"]==0){ ?>
@@ -102,7 +116,13 @@ function eliminar_acentos($cadena){
                     <td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>    
                     
                     <td><?php echo $usr['fecha_sol']; ?></td>
-                    <td><?php echo $usr['fecha_pagada']; ?></td>
+                    <td>
+                        <?php if($usr["status_solicitud"]== 2 || $usr["status_solicitud"]== 3 ){ ?>
+                            Cancelada
+                        <?php } else { ?> 
+                            <?php echo $usr['fecha_pagada']; ?>
+                        <?php } ?>         
+                    </td>
                     <td>$<?php echo $usr['monto']; ?> </td>
                 </tr>
             </tbody>
