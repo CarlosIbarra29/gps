@@ -6440,6 +6440,13 @@ class VehiculosController extends Zend_Controller_Action{
 
     }
 
+    public function excelsolcompraAction(){
+        
+        $table="vehiculos_solicitudes";
+        $this->view->solicitudes_vehiculos= $this->_veh->GetSolicitudesPagadas($table);
+
+    }
+
     public function formatSizeUnits($bytes){ 
 
         if ($bytes >= 1073741824) {

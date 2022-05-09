@@ -657,6 +657,49 @@ class Application_Model_GpsNominaModel extends Zend_Db_Table_Abstract{
             echo $e;
         }
     } //END GET PAGINATOR PERSONAL
+    
+    
+    public function getnominapagadaexcel1(){
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT 
+                                pn.id AS solicitud_nomina,
+                                pn.id_personal,
+                                pn.personal,
+                                pn.solicitud_fecha,
+                                pn.sitio,
+                                pn.id_proyecto,
+                                tp.nombre_proyecto,
+                                pn.monto_nomina,
+                                pp.nombre AS puesto,
+                                s.id_cliente AS id_sitio,
+                                s.estado,
+                                s.ciudad,
+                                IF(pn.fecha_pago IS NULL,
+                                    'Solicitud no pagada',
+                                    pn.fecha_pago) AS fecha_pago
+                            FROM
+                                personal_nomina pn
+                                    LEFT JOIN
+                                personal_campo pc ON pc.id = pn.id_personal
+                                    LEFT JOIN
+                                puestos_personal pp ON pp.id = pc.puesto
+                                    LEFT JOIN
+                                sitios s ON pn.sitio = s.nombre
+                                    LEFT JOIN
+                                sitios_tipoproyecto stp ON stp.id = pn.id_proyecto
+                                    LEFT JOIN 
+                                tipo_proyecto tp ON tp.id = stp.id_tipoproyecto
+                            WHERE
+                                pn.status_auditoria2 = 1
+                            ORDER BY pn.id ASC");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }catch (Exception $e){
+            echo $e;
+        }
+    } //END GET PAGINATOR PERSONAL
 
 
     public function getnominasmanager(){

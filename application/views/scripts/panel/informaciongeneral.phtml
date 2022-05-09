@@ -13,8 +13,32 @@
   .table_wrapper{
     overflow-x: auto;
   }
-</style>
 
+  .icon_style{
+      font-size: 20px;
+      cursor:pointer; 
+  }
+
+  .colorfont strong{
+    color: rgb(169,68,66);
+    font-weight: bold;
+  }
+
+  .colorfont span{
+    color: rgb(169,68,66);
+    font-weight: 350;
+  }
+
+  .colorfont1 strong{
+    color: rgb(114,97,40);
+    font-weight: bold;
+  }
+
+  .colorfont1 span{
+    color: rgb(114,97,40);
+    font-weight: 350;
+  }
+</style>
 
 <div class="row" style="margin-top: 10px;">
     <div class="col m6 s6">
@@ -35,6 +59,53 @@
       <?php } ?>
     </div>
 </div>
+
+<?php foreach ($this->user as $value) {
+  $rol_user = $value['fkroles'];
+  // echo $rol_user;
+} ?>
+
+<!-- Alertas -->
+<?php if($rol_user == 10 || $rol_user == 1){ ?> 
+  <div class="col m12 s12" style="margin-top: 15px;">
+        <div class="row">
+            <div class="col m12 s12" id="alert_box">
+                <?php if ($this->alertas || $this->alertasvencidas) { ?>
+                  <?php foreach ($this->alertasvencidas as $vencidas) { ?>
+                        <div style="background: rgb(242,222,222);"  class="card darken-1">
+                            <div style="padding: 10px;" class="card-content white-text colorfont">
+                                <strong>¡Cuidado!</strong> 
+                                <span>
+                                    La licencia de <?php echo $vencidas['nombre']; ?> <?php echo $vencidas['apellido_pa']; ?> 
+                                    esta vencida desde el: <b><?php echo $vencidas['fecha_vigencia']; ?></b> Actualizala pronto.
+                                </span> &nbsp;  
+                                <a href="/panel/personaledit/id/<?php echo $vencidas["id"] ?>">
+                                   <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                                </a>
+                            </div>    
+                            <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                        </div>              
+                    <?php } ?> 
+                    <?php foreach ($this->alertas as $not) { ?>
+                        <div style="background: rgb(250,252,217);"  class="card darken-1">
+                            <div style="padding: 10px;" class="card-content white-text colorfont1">
+                                <strong>¡Advertencia!</strong> 
+                                <span>
+                                    La licencia de <?php echo $not['nombre']; ?> <?php echo $not['apellido_pa']; ?> esta por vencer el <b><?php echo $not['fecha_vigencia']; ?></b> Atiéndelo Pronto.
+                                </span> &nbsp; 
+                                <a href="/panel/personaledit/id/<?php echo $not["id"] ?>">
+                                   <i style="color: rgb(114,97,40);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+                                </a>
+                            </div>    
+                            <!-- <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i> -->
+                        </div>              
+                    <?php } ?> 
+                <?php } else { } ?>
+            </div>
+        </div>
+    </div>
+<?php } else { }?>
+<!-- end alertas -->
 
 <form action="/panel/requestupdatestatuscomprobacion" method="POST" enctype="multipart/form-data" class="form-horizontal form-material" id="submit_file_prede">
   <input type="hidden" name="ids" value="<?php echo $id; ?>">

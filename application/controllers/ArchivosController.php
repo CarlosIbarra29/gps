@@ -296,7 +296,7 @@ class ArchivosController extends Zend_Controller_Action{
 
     public function excelnominasAction(){
 
-        $this->view->nominas_pagadas = $this->_nomina->getnominapagadaexcel(); 
+        $this->view->nominas_pagadas = $this->_nomina->getnominapagadaexcel1(); 
 
     }
 

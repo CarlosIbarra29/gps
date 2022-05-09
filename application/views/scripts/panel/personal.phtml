@@ -57,8 +57,42 @@
 	.oculto{
 		display: none;
 	}
+
+	.table_wrapper{
+		overflow-x: auto;
+	}
+
+	.icon_style{
+	    font-size: 17px;
+	    font-family: "Nunito", sans-serif;
+	    cursor:pointer; 
+	}
+
+	.colorfont strong{
+		color: rgb(169,68,66);
+		font-weight: bold;
+	}
+
+	.colorfont span{
+		color: rgb(169,68,66);
+		font-weight: 350;
+	}
+
+	.colorfont1 strong{
+		color: rgb(114,97,40);
+		font-weight: bold;
+	}
+
+	.colorfont1 span{
+		color: rgb(114,97,40);
+		font-weight: 350;
+	}
 </style>
 
+<?php foreach ($this->user as $value) {
+	$rol_user = $value['fkroles'];
+	// echo $rol_user;
+} ?> 
 
 <div class="row mt-4">
 	<div class="col m4 s12 text-center">
@@ -70,6 +104,52 @@
 	</div>
 </div>
 
+<?php if($rol_user == 10 || $rol_user == 1){ ?> 
+	<div class="col m12 s12">
+	    <div class="row">
+	        <div class="col m12 s12" id="alert_box">
+	            <?php if ($this->alertas || $this->alertasvencidas) { ?>
+
+	                <?php foreach ($this->alertasvencidas as $vencidas) { ?>
+	                    <div style="background: rgb(242,222,222);"  class="card darken-1">
+	                        <div style="padding: 10px;" class="card-content white-text colorfont">
+	                            <strong>¡Cuidado!</strong> 
+	                            <span>
+	                                La licencia de <?php echo $vencidas['nombre']; ?> <?php echo $vencidas['apellido_pa']; ?> 
+                                    esta vencida desde el: <b><?php echo $vencidas['fecha_vigencia']; ?></b> Actualizala pronto.
+	                            </span> &nbsp; 
+	                               <a href="/panel/personaledit/id/<?php echo $vencidas["id"] ?>">
+	                               <i style="color: rgb(171,68,68);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+	                            </a>
+	                        </div>    
+
+	                    </div>              
+	                <?php } ?>
+
+	                <?php foreach ($this->alertas as $not) { ?>
+	                    <div style="background: rgb(250,252,217);"  class="card darken-1">
+	                        <div style="padding: 10px;" class="card-content white-text colorfont1">
+	                            <strong>¡Advertencia!</strong> 
+	                            <span>
+	                                La licencia de <?php echo $not['nombre']; ?> <?php echo $not['apellido_pa']; ?> esta por vencer el <b><?php echo $not['fecha_vigencia']; ?></b> Atiéndelo Pronto.
+	                            </span> &nbsp; 
+	                            <a href="/panel/personaledit/id/<?php echo $not["id"] ?>">
+	                               <i style="color: rgb(114,97,40);" class="fa fa-2x fa-arrow-circle-right text-right"></i>
+	                            </a>
+	                        </div>    
+
+	                    </div>              
+	                <?php } ?>
+
+	                <div class="col m12 s12 text-right">
+	                    <a><i class="icon_style"  id="alert_close" aria-hidden="true"> Cerrar todo </i></a>
+	                </div> 
+	            <?php } else { } ?>
+	        </div>
+	    </div>
+	</div>
+<?php } else { }?>
+<!-- end alertas -->
 
 <div class="row">
     <div class="col m12 s12 text-center">
@@ -301,93 +381,95 @@
 			</div>
 		</div>
 	</div>
-	<table class="table text-left table-hover">
-		<thead>
-			<tr style="background-color: #EDEDED">
-				<th>Nombre</th>	
-				<th>Apellido Paterno</th>	
-				<th>Apellido Materno</th>
-				<th>Puesto</th>
-				<th>Status Expediente</th>
-				<th>Status Personal</th>
-				<th>Status Operativo</th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr> 
-		</thead>
-		<?php if ($this->paginator) { 
-			foreach ($this->paginator as $usr) { ?>
-		<tbody>
-			<tr>
-				<td><a href="/panel/informaciongeneral/id/<?php echo $usr["id"]; ?>"><?php echo $usr["nombre"]; ?></a></td>
-				<td><?php echo $usr["apellido_pa"]; ?></td>
-				<td><?php echo $usr["apellido_ma"]; ?></td>
-				<td><?php echo $usr["name_puesto"]; ?></td>
-				<?php if($usr["status_expediente"]== 1){ ?>
-					<td>Completo</td>
-				<?php }else{ ?>
-					<td>Incompleto</td>
-				<?php } ?>
-				<td>
-					<?php if($usr['status_personal'] == 0){ ?>
-						<div class="chip" id="activo_personal">
-					    	<img src="/img/correct.png" >
-					    	Activo
-					  	</div>
+	<div class="table_wrapper">
+		<table class="table text-left table-hover">
+			<thead>
+				<tr style="background-color: #EDEDED">
+					<th>Nombre</th>	
+					<th>Apellido Paterno</th>	
+					<th>Apellido Materno</th>
+					<th>Puesto</th>
+					<th>Status Expediente</th>
+					<th>Status Personal</th>
+					<th>Status Operativo</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr> 
+			</thead>
+			<?php if ($this->paginator) { 
+				foreach ($this->paginator as $usr) { ?>
+			<tbody>
+				<tr>
+					<td><a href="/panel/informaciongeneral/id/<?php echo $usr["id"]; ?>"><?php echo $usr["nombre"]; ?></a></td>
+					<td><?php echo $usr["apellido_pa"]; ?></td>
+					<td><?php echo $usr["apellido_ma"]; ?></td>
+					<td><?php echo $usr["name_puesto"]; ?></td>
+					<?php if($usr["status_expediente"]== 1){ ?>
+						<td>Completo</td>
+					<?php }else{ ?>
+						<td>Incompleto</td>
 					<?php } ?>
+					<td>
+						<?php if($usr['status_personal'] == 0){ ?>
+							<div class="chip" id="activo_personal">
+						    	<img src="/img/correct.png" >
+						    	Activo
+						  	</div>
+						<?php } ?>
 
-					<?php if($usr['status_personal'] == 1){ ?>
-						<div class="chip" id="inactivo_personal">
-					    	<img src="/img/naranja.png" >
-					    	Inactivo
-					  	</div>
-					<?php } ?>
+						<?php if($usr['status_personal'] == 1){ ?>
+							<div class="chip" id="inactivo_personal">
+						    	<img src="/img/naranja.png" >
+						    	Inactivo
+						  	</div>
+						<?php } ?>
 
-					<?php if($usr['status_personal'] == 2){ ?>
-						<div class="chip" id="inactivo_personal">
-					    	<img src="/img/rojo.png" >
-					    	Baja
-					  	</div>
-					<?php } ?>
-				</td>
-				<td>
-					<?php if($usr['status_operativo'] == 0){ ?>
-						Sin Información
-					<?php } ?>
-					<?php if($usr['status_operativo'] == 1){ ?>
-						Taller
-					<?php } ?>
-					<?php if($usr['status_operativo'] == 2){ ?>
-						En sitio
-					<?php } ?>
-					<?php if($usr['status_operativo'] == 3){ ?>
-						Compensación
-					<?php } ?>
-				</td>
-				<td>
-					<a href="/panel/personaldetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
-				</td>
-				<td>
-					<a href="/panel/personaledit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
-				</td>
-				<td>
-					<a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
-				</td>
-			</tr>
-		</tbody>
-		<?php } }else{ ?>
-		<tbody>
-			<tr>
-				<td>No se ha agregado personal </td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-		<?php } ?>
-	</table>
+						<?php if($usr['status_personal'] == 2){ ?>
+							<div class="chip" id="inactivo_personal">
+						    	<img src="/img/rojo.png" >
+						    	Baja
+						  	</div>
+						<?php } ?>
+					</td>
+					<td>
+						<?php if($usr['status_operativo'] == 0){ ?>
+							Sin Información
+						<?php } ?>
+						<?php if($usr['status_operativo'] == 1){ ?>
+							Taller
+						<?php } ?>
+						<?php if($usr['status_operativo'] == 2){ ?>
+							En sitio
+						<?php } ?>
+						<?php if($usr['status_operativo'] == 3){ ?>
+							Compensación
+						<?php } ?>
+					</td>
+					<td>
+						<a href="/panel/personaldetail/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-id-card-o"></i></a>	
+					</td>
+					<td>
+						<a href="/panel/personaledit/id/<?php echo $usr["id"] ?>"><i class="fa fa-2x fa-edit"></i></a>
+					</td>
+					<td>
+						<a class="delete" data-id="<?php echo $usr["id"]; ?>" data-nombre="<?php echo $usr["nombre"]; ?>" data-apellido="<?php echo $usr['apellido_pa']; ?>"><span class="warning"><i class="fa fa-2x fa-trash" style="color: red"></i></span></a>
+					</td>
+				</tr>
+			</tbody>
+			<?php } }else{ ?>
+			<tbody>
+				<tr>
+					<td>No se ha agregado personal </td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+			<?php } ?>
+		</table> 
+	</div>
 </div>
 
 <div class="row">
@@ -520,5 +602,9 @@
     function submitForm() {
         document.getElementById("submit_personal").submit()
     } 
+
+    $('#alert_close').click(function(){
+	    $( "#alert_box" ).fadeOut( );
+	});
 
 </script>

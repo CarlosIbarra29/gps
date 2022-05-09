@@ -53,49 +53,57 @@ function eliminar_acentos($cadena){
 			<a href="/archivos/reportes" class="orange lighten-2 btn" style="color:black"><i class="material-icons left">arrow_back</i>Regresar</a>  
 	</div>
 	<div class="col m6 s6 text-right">
-		<a class=" btn" onclick="exportTableToCSV(null,'nominas_pagadas.csv')"><i class="material-icons right">file_download</i>Descargar</a>
+		<a class=" btn" onclick="exportTableToCSV(null,'sol_vehiculos.csv')"><i class="material-icons right">file_download</i>Descargar</a>
 	</div>
 </div>
 
 <div class="row">
     <div class="col m12 s12 text-center" style="margin-top: 20px;">
-        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Nóminas Pagadas</span>
+        <span style="font-size:30px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Reporte de Solicitudes de Vehículos</span>
     </div>
 </div>
-
 
 <div class="row excel-div" id="tab1">
 	<table class="table text-left table-hover" >
         <thead>
             <tr>
-                <th>Id Nomina</th>
-                <th>Personal</th>
-                <th>Puesto</th>
-                <th>Id sitio</th>
-                <th>Sitio</th>
-                <th>Proyecto</th>
-                <th>Estado</th>
-                <th>Ciudad</th>
-                <th>Fecha Solicitud</th>
-                <th>Fecha Pago</th>
+                <th>Id Solicitud</th>
+                <th>Usuario</th>
+                <th>Vehiculo</th>
+                <th>Placas</th>
+                <th>Proveedor</th>
+                <th>Servicio</th>
+                <th>Fecha Requerida</th>
+                <th>Fecha Pagado</th>
                 <th>Monto</th>
             </tr> 
         </thead>
          <?php 
-            foreach ($this->nominas_pagadas as $usr) { ?>
+            foreach ($this->solicitudes_vehiculos as $usr) { ?>
             <tbody>
                 <tr>
-                    <td><?php echo eliminar_acentos($usr["solicitud_nomina"]); ?></td>
-                    <td><?php echo eliminar_acentos($usr["personal"]); ?></td>
-                    <td><?php echo eliminar_acentos($usr["puesto"]); ?></td>    
-                    <td><?php echo eliminar_acentos($usr["id_sitio"]); ?></td>
-                    <td><?php echo eliminar_acentos($usr["sitio"]); ?></td>
-                    <td><?php echo $usr['id_proyecto']; ?> - <?php echo eliminar_acentos($usr["nombre_proyecto"]); ?></td>
-                    <td><?php echo eliminar_acentos($usr["estado"]); ?></td>
-                    <td><?php echo eliminar_acentos($usr["ciudad"]); ?></td>
-                    <td><?php echo $usr['solicitud_fecha']; ?></td>
-                    <td><?php echo $usr['fecha_pago']; ?></td>
-                    <td>$<?php echo $usr['monto_nomina']; ?> </td>
+                    <td><?php echo $usr['id']; ?></td>
+                    <td><?php echo $usr['nombre']; ?> <?php echo eliminar_acentos($usr["ap"]);?> <?php echo eliminar_acentos($usr["am"]);?></td>
+                    <td>
+                        <?php if($usr["id_vehiculo"]==0){ ?>
+                            Oficina
+                        <?php } else { ?>
+                            <?php echo $usr['marca']; ?> <?php echo eliminar_acentos($usr["submarca"]);?> <?php echo eliminar_acentos($usr["modelo"]);?>
+                        <?php } ?>  
+                    </td>
+                    <td>
+                        <?php if($usr["id_vehiculo"]==0){ ?>
+                            Sin Placas
+                        <?php } else { ?>
+                            <?php echo eliminar_acentos($usr["placas"]); ?>
+                        <?php } ?>
+                    </td>
+                    <td><?php echo eliminar_acentos($usr["nombre_prov"]); ?></td>
+                    <td><?php echo eliminar_acentos($usr["nombre_servicio"]); ?></td>    
+                    
+                    <td><?php echo $usr['fecha_sol']; ?></td>
+                    <td><?php echo $usr['fecha_pagada']; ?></td>
+                    <td>$<?php echo $usr['monto']; ?> </td>
                 </tr>
             </tbody>
             <?php } ?>

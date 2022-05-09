@@ -748,6 +748,19 @@ class PanelController extends Zend_Controller_Action{
 
 
     public function personalAction(){ 
+
+        $id_user=$this->_session->id;
+        $this->view->usuario = $id_user;
+        $wh="id";
+        $table="usuario";
+        $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+        
+        $table = "personal_campo"; 
+        $this->view->alertas=$this->_user->GetVigLicAll($table);
+
+        $table = "personal_campo"; 
+        $this->view->alertasvencidas=$this->_user->GetVigLicven($table);
+
         $table="puestos_personal";
         $this->view->puestos = $this->_season->GetAll($table);
 
@@ -918,11 +931,24 @@ class PanelController extends Zend_Controller_Action{
     }
 
     public function informaciongeneralAction(){
+
+        $id_user=$this->_session->id;
+        $this->view->usuario = $id_user;
+        $wh="id";
+        $table="usuario";
+        $this->view->user = $this->_season->GetSpecific($table,$wh,$id_user);
+       
         if($this->_hasParam('id')){
             $id = $this->_getParam('id');
             $table="personal_campo";
             $wh="id";
             $this->view->personal = $this->_user->Informaciongeneral($id);
+
+            $table = "personal_campo"; 
+            $this->view->alertas=$this->_user->GetVigLic($table,$id);
+
+            $table = "personal_campo"; 
+            $this->view->alertasvencidas=$this->_user->GetxVencer($table,$id);
 
             $table="documentos_personal";
             $wh="id_personal";

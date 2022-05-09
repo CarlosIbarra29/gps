@@ -78,9 +78,10 @@
                 </tr>
 
                 <tr>
-                  <td style="font-size: 15px; font-weight: bold;">Vehiculos</td>
+                  <td style="font-size: 15px; font-weight: bold;">Vehículos</td>
                   <td>
-                    <a href="/vehiculos/excelv/status/0">Generar Excel</a>
+                    <a class="modal-trigger" href="#modalvehiculo">Generar Excel</a>
+                    <!-- <a href="/vehiculos/excelv/status/0">Generar Excel</a> -->
                   </td>
                 </tr>
 
@@ -136,19 +137,6 @@
                   </td>
                 </tr>
 
-                <tr>
-                  <td style="font-size: 15px; font-weight: bold;">EPP</td>
-                  <td>
-                    <a class="modal-trigger" href="#modalepp">Generar Excel</a>
-                    <!-- <a href="/epp/excelepp/status/0">Generar Excel</a> -->
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-size: 15px; font-weight: bold;">Herramientas</td>
-                  <td>
-                    <a href="/herramienta/excelherramienta/status/0">Generar Excel</a>
-                  </td>
-                </tr>
 <?php } ?>
 
 <?php if($this->rol_user == 14 ){ ?>
@@ -797,6 +785,153 @@
     <div class="modal-footer">
       <button  class="modal-close red btn">Cerrar</button>
     </div>
+</div>
+
+<div id="modalvehiculo" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <span style="font-size:27px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">Vehiculos</span>
+
+    <div class="row" style="margin-top: 40px;" id="div_veh">
+      
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="inv_veh">
+            Inventario Vehículos
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="sol_veh">
+            Solicitudes Vehículos
+        </div>
+      </div>
+    
+    </div>
+      
+    <div class="row oculto" style="margin-top: 40px;" id="div_inveh">
+      
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/correct.png" class="inv_veh">
+            Inventario Vehículos
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        <div class="chip">
+          <img src="/img/gris.jpg" class="sol_veh">
+            Solicitudes Vehículos
+        </div>
+      </div>
+
+      <div class="row">
+        
+        <div class="col m12 s12" style="margin-top: 30px;">
+          <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+            Inventario Vehículos
+          </span>
+        </div>
+
+
+        <div class="col m12 s12" style="margin-top: 20px;">
+          
+          Esté excel de Vehículos EPP arrojará los siguientes campos:
+            
+          <div class="row">
+                     
+            <div class="col m4 s6">
+              <ul>
+                <li class="">Id </li>
+                <li class="">Marca</li>
+                <li class="">Modelo</li>
+                <li class="">Placas</li>
+                <li class="">Color</li>
+                <li class="">No. Serie</li>
+              </ul>
+            </div>
+
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">TAG</li>
+                  <li class="">Efecticard</li>
+                  <li class="">Status</li>
+                  <li class="">Grupo</li>
+                  <li class="">Asignacion Actual</li>
+                  <li class="">Comentarios</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6 text-center" style="margin-top: 30px;">
+                <a class="btn"href="/vehiculos/excelv/status/0"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row oculto" style="margin-top: 40px;" id="div_solveh">
+        <div class="col m6 s12">
+          <div class="chip">
+            <img src="/img/gris.jpg" class="inv_veh">
+            Inventario Vehículos
+          </div>
+        </div>
+
+        <div class="col m6 s12">
+          <div class="chip">
+            <img src="/img/correct.png" class="sol_veh">
+            Solicitudes Vehículos
+          </div>
+        </div>
+
+        <div class="row">
+          
+          <div class="col m12 s12" style="margin-top: 30px;">
+            <span style="font-size:18px; color: rgb(74,79,84); letter-spacing: 0.1em; font-weight: bold;">
+              Solicitudes Vehículos
+            </span>
+          </div>
+
+          <div class="col m12 s12" style="margin-top: 20px;">
+          
+          Esté excel muestra las solicitudes de compra a vehículos y arrojará los siguientes campos:
+            
+          <div class="row">
+
+            <div class="col m4 s6">
+              <ul>
+                <li class="">Id Solicitud</li>
+                <li class="">Usuario</li>
+                <li class="">Vehículo</li>
+                <li class="">Placas</li>
+                <li class="">Proveedor</li>
+              </ul>
+            </div>
+
+              <div class="col m4 s6">
+                <ul>
+                  <li class="">Servicio</li>
+                  <li class="">Fecha Requerida</li>
+                  <li class="">Fecha Pagado</li>
+                  <li class="">Monto</li>
+                </ul>
+              </div>
+
+              <div class="col m4 s6 text-center" style="margin-top: 30px;">
+                <a class="btn"href="/vehiculos/excelsolcompra"><i class="material-icons right">insert_drive_file</i>Ver excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button  class="modal-close red btn">Cerrar</button>
+    </div>
   </div>
         
 
@@ -1021,6 +1156,19 @@
     $("#div_epp").hide();
     $("#div_invepp").hide();
     $("#div_asgepp").show();
+  });
+
+  // Vehiculos
+  $(".inv_veh").click(function(){
+    $("#div_veh").hide();
+    $("#div_inveh").show();
+    $("#div_solveh").hide();
+  });
+
+  $(".sol_veh").click(function(){
+    $("#div_veh").hide();
+    $("#div_inveh").hide();
+    $("#div_solveh").show();
   });
 
 

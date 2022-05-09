@@ -517,6 +517,124 @@ class Application_Model_GpsUserModel extends Zend_Db_Table_Abstract{
         }
     }
 
+    public function GetVigLic($table,$id){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
+                        pc.dia_pago, pc.fecha_ingreso, pc.licencia_imagen, pc.fecha_vigencia,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,
+
+                        CONCAT(YEAR(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2), '-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        MONTH(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        DAY(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-', SUBSTRING(pc.fecha_vigencia,1,2))))) AS Vigencia_lic
+
+                        FROM personal_campo pc 
+                        LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        HAVING Vigencia_lic between curdate() and date_add(curdate(), interval 30 day) AND pc.id = $id");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Vigencia para alertas.
+    
+    public function GetxVencer($table,$id){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc.apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
+                        pc.dia_pago, pc.fecha_ingreso, pc.licencia_imagen, pc.fecha_vigencia,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,
+
+                        CONCAT(YEAR(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2), '-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        MONTH(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        DAY(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-', SUBSTRING(pc.fecha_vigencia,1,2))))) AS Vigencia_lic
+
+                        FROM personal_campo pc 
+                        LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        HAVING Vigencia_lic BETWEEN NOW() - INTERVAL 30 DAY AND NOW() - INTERVAL 1 DAY AND pc.id = $id");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Vigencia para alertas Vencidas.
+
+
+     public function GetVigLicAll($table){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
+                        pc.dia_pago, pc.fecha_ingreso, pc.licencia_imagen, pc.fecha_vigencia,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,
+
+                        CONCAT(YEAR(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2), '-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        MONTH(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        DAY(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-', SUBSTRING(pc.fecha_vigencia,1,2))))) AS Vigencia_lic
+
+                        FROM personal_campo pc 
+                        LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        HAVING Vigencia_lic between curdate() and date_add(curdate(), interval 30 day) and pc.delete_status =0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Vigencia para alertas.
+
+
+    public function GetVigLicven($table){
+        
+        try{
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $qry = $db->query("SELECT pc.id, pc.nombre, pc. apellido_pa, pc.apellido_ma, pc.imagen, pc.curp, 
+                        pc.puesto, pc.status_expediente, pc.telefono, pc.tel_emergencia, pc.email_personal, pc.nss, pc.rfc,
+                        pc.dia_pago, pc.fecha_ingreso, pc.licencia_imagen, pc.fecha_vigencia,
+                        pc.hora_pago, pc.status_personal, pc.fecha_personal, pc.status_cuadrilla, 
+                        pc.tipo_proyectopersonal,pc.sitio_tipoproyectopersonal, pc. id_sitiopersonal, pc.name_sitio,
+                        pc.status_comprobacion,pc.delete_status ,pp.id as idpuesto, pp.nombre as name_puesto,
+
+                        CONCAT(YEAR(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2), '-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        MONTH(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-',SUBSTRING(pc.fecha_vigencia,1,2)))), '-',
+                        DAY(DATE(CONCAT(SUBSTRING(pc.fecha_vigencia,7,4),'-',SUBSTRING(pc.fecha_vigencia,4,2),'-', SUBSTRING(pc.fecha_vigencia,1,2))))) AS Vigencia_lic
+
+                        FROM personal_campo pc 
+                        LEFT JOIN puestos_personal pp on pc.puesto = pp.id 
+                        HAVING Vigencia_lic BETWEEN NOW() - INTERVAL 30 DAY AND NOW() - INTERVAL 1 DAY and pc.delete_status = 0");
+            $row = $qry->fetchAll();
+            return $row;
+            $db->closeConnection();
+        }
+        catch (Exception $e){
+        
+            echo $e;
+        
+        }
+    }   // Vigencia para alertas Vencidas.
+
     public function Getcountpersonalcero(){
         try{
             $db = Zend_Db_Table::getDefaultAdapter();
